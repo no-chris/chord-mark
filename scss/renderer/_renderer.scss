@@ -1,3 +1,23 @@
-body {
-  background-color: green;
+.cp2-song {
+  font-family: consolas, courier, monospace;
+  font-size: 1.4rem;
+
+  .cp2-chord-line {
+    font-weight: bold;
+    white-space: pre-wrap;
+    background-color: rgba(black, .1);
+
+    .cp2-bar-separator {
+      margin: 0 10px;
+      color: #999;
+
+      &:first-of-type {
+        margin-left: 0;
+      }
+
+      &:last-of-type {
+        margin-right: 0;
+      }
+    }
+  }
 }

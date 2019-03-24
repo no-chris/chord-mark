@@ -1,1 +1,5 @@
 @import '../../node_modules/prosemirror-view/style/prosemirror';
+
+.ProseMirror-focused:focus {
+  outline: none;
+}
