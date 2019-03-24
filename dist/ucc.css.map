@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"file": "ucc.css",
+	"sources": [
+		"../scss/ucc.scss",
+		"../scss/renderer/_renderer.scss"
+	],
+	"names": [],
+	"mappings": "ACAA,AAAA,IAAI,AAAC,CACH,gBAAgB,CAAE,KAAK,CACxB"
+}
