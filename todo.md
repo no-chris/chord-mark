@@ -1,8 +1,10 @@
 # Tech debt
-- mock renderers instead of passing them as parameters
++ mock renderers instead of passing them as parameters
 - add unit tests for song renderer
 - delegate event to inner event emitter instead of wrapping it
 - rename cp2 classes
+- change API of components
+- unsafe rendering of handlebars templates: {{{ }}}
 
 /perso/universal-chords-charts/ucc/src/parser/parseChordLine.js
   37:16  warning  function 'parseChordLine' has too many lines (67). Maximum allowed is 50  max-lines-per-function

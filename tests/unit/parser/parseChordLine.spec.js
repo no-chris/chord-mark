@@ -1,9 +1,9 @@
 jest.mock('../../../src/parser/parseChord');
-jest.mock('../../../src/renderer/getChordSymbol');
+jest.mock('../../../src/renderer/helpers/getChordSymbol');
 
 import parseChord from '../../../src/parser/parseChord';
 import parseChordLine from '../../../src/parser/parseChordLine';
-import getChordSymbol from '../../../src/renderer/getChordSymbol';
+import getChordSymbol from '../../../src/renderer/helpers/getChordSymbol';
 import parseTimeSignature from '../../../src/parser/parseTimeSignature';
 
 import IncorrectBeatCountException from '../../../src/parser/exceptions/IncorrectBeatCountException';

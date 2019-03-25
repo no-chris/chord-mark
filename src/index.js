@@ -1,5 +1,5 @@
 import parseSongLib from './parser/parseSong';
-import songRendererFactory from './renderer/song/song';
+import songRendererFactory from './renderer/components/renderSong';
 
 import '../scss/ucc.scss';
 

@@ -60,7 +60,6 @@
     "size": "size-limit",
     "sloc": "echo \"Source code:\" > SLOC && npx sloc src >> SLOC && echo \"Tests:\" >> SLOC && npx sloc tests >> SLOC && echo \"Total:\" >> SLOC && npx sloc src tests >> SLOC",
     "outdated": "npm outdated",
-
     "build": "npm run lint && npm run test && npm run bundle-js && npm run bundle-css && npm run size && npm run sloc && npm outdated"
   },
   "size-limit": [
