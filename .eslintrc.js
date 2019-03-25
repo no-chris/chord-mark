@@ -21,6 +21,12 @@ module.exports = {
 	},
 
 	'rules': {
+		'complexity': [
+			'error',
+			{
+				max: 10
+			}
+		],
 		'indent': [
 			'error',
 			'tab',
@@ -32,6 +38,12 @@ module.exports = {
 			'error',
 			'unix'
 		],
+		'no-shadow': [
+			'error',
+			{
+				'builtinGlobals': true
+			}
+		],
 		'quotes': [
 			'error',
 			'single'
@@ -39,12 +51,6 @@ module.exports = {
 		'semi': [
 			'error',
 			'always'
-		],
-		'no-shadow': [
-			'error',
-			{
-				'builtinGlobals': true
-			}
 		],
 
 		'import/no-restricted-paths': [
