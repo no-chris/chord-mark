@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import _cloneDeep from 'lodash/cloneDeep';
 
 const allMasks = {
 	0: {
@@ -30,7 +30,7 @@ const allMasks = {
 };
 
 export default function space(chordLineInput) {
-	const chordLine = _.cloneDeep(chordLineInput);
+	const chordLine = _cloneDeep(chordLineInput);
 
 	let beatCount = 0;
 	let chordPattern = '';

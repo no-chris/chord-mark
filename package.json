@@ -35,6 +35,7 @@
     "sloc": "^0.2.1",
     "terser-webpack-plugin": "^1.2.3",
     "webpack": "^4.29.6",
+    "webpack-bundle-analyzer": "^3.1.0",
     "webpack-cli": "^3.3.0"
   },
   "dependencies": {
@@ -56,7 +57,22 @@
     "test": "jest",
     "bundle-js": "webpack",
     "bundle-css": "node-sass scss -o dist --output-style compressed --source-map true",
+    "size": "size-limit",
     "sloc": "echo \"Source code:\" > SLOC && npx sloc src >> SLOC && echo \"Tests:\" >> SLOC && npx sloc tests >> SLOC && echo \"Total:\" >> SLOC && npx sloc src tests >> SLOC",
-    "build": "npm run lint && npm run test && npm run bundle-js && npm run bundle-css && npm run sloc && npm outdated"
-  }
+    "outdated": "npm outdated",
+
+    "build": "npm run lint && npm run test && npm run bundle-js && npm run bundle-css && npm run size && npm run sloc && npm outdated"
+  },
+  "size-limit": [
+    {
+      "path": "./dist/ucc.js",
+      "webpack": false,
+      "limit": "30 KB"
+    },
+    {
+      "path": "./dist/ucc-editor.js",
+      "webpack": false,
+      "limit": "90 KB"
+    }
+  ]
 }

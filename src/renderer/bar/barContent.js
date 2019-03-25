@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import _isFinite from 'lodash/isFinite';
 
 import isRenderer from '../isRenderer';
 
@@ -19,8 +19,8 @@ export default {
 		}
 
 		const barContent = bar.allChords.reduce((rendering, chord) => {
-			spacesWithin = _.isFinite(chord.spacesWithin) ? chord.spacesWithin : defaultSpacesWithin;
-			spacesAfter = _.isFinite(chord.spacesAfter) ? chord.spacesAfter : defaultSpacesAfter;
+			spacesWithin = _isFinite(chord.spacesWithin) ? chord.spacesWithin : defaultSpacesWithin;
+			spacesAfter = _isFinite(chord.spacesAfter) ? chord.spacesAfter : defaultSpacesAfter;
 
 			rendering +=
 				chordRenderer.render(chord.symbol) +

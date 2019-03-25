@@ -1,10 +1,10 @@
-import _ from 'lodash';
+import _cloneDeep from 'lodash/cloneDeep';
 
 const spacesAfterDefault = 2;
 const emptyBeatSpaces = 1;
 
 export default function space(chordLineInput, maxBeatsWidth) {
-	const chordLine = _.cloneDeep(chordLineInput);
+	const chordLine = _cloneDeep(chordLineInput);
 
 	let beatMaxWidth;
 

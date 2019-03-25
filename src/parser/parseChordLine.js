@@ -1,4 +1,5 @@
-import _ from 'lodash';
+import _isEqual from 'lodash/isEqual';
+import _cloneDeep from 'lodash/cloneDeep';
 
 import parseChord from './parseChord';
 import parseTimeSignature from './parseTimeSignature';
@@ -67,7 +68,7 @@ export default function parseChordLine(
 
 		if (bar.allChords.length > 0) {
 			previousChord = bar.allChords[bar.allChords.length - 1];
-			if (_.isEqual(previousChord.model, chord.model)) {
+			if (_isEqual(previousChord.model, chord.model)) {
 				throw new InvalidChordRepetitionException({
 					string: chord.string,
 				});
@@ -80,7 +81,7 @@ export default function parseChordLine(
 		if (currentBeatCount === beatCount) {
 			bar.timeSignature = timeSignature;
 
-			allBars.push(_.cloneDeep(bar));
+			allBars.push(_cloneDeep(bar));
 
 			bar = { allChords: []};
 			currentBeatCount = 0;

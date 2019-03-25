@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import _isArray from 'lodash/isArray';
 
 import isChordLine from './isChordLine';
 import isTimeSignature from './isTimeSignatureString';
@@ -43,7 +43,7 @@ export default function parseSong(song) {
 
 	let timeSignature = parseTimeSignature(defaultTimeSignature);
 
-	const songLines = (!_.isArray(song)) ? song.split('\n') : song;
+	const songLines = (!_isArray(song)) ? song.split('\n') : song;
 
 	const allLines = songLines
 		.map(string => ({ string }))

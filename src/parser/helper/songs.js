@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import _cloneDeep from 'lodash/cloneDeep';
 
 /**
  * @param {SongLine[]} allLines
@@ -6,7 +6,7 @@ import _ from 'lodash';
  * @returns {SongLine[]}
  */
 export function forEachChordInSong(allLines, fn) {
-	const newLines = _.cloneDeep(allLines);
+	const newLines = _cloneDeep(allLines);
 
 	newLines.forEach(line => {
 		if (line.type === 'chord') {
@@ -26,7 +26,7 @@ export function forEachChordInSong(allLines, fn) {
  * @returns {ChordLine[]}
  */
 export function forEachChordInChordLine(chordLine, fn) {
-	const newChordLine = _.cloneDeep(chordLine);
+	const newChordLine = _cloneDeep(chordLine);
 
 	newChordLine.allBars.forEach(bar => {
 		bar.allChords.forEach(chord => {

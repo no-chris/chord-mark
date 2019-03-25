@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import _cloneDeep from 'lodash/cloneDeep';
 import transposeChord from './transposeChord';
 import getMainAccidental from './getMainAccidental';
 
@@ -17,7 +17,7 @@ export default function transposeSong(allLines, allChords, {
 	accidentalsType = 'auto',
 	harmonizeAccidentals = true
 } = {}) {
-	let transposed = _.cloneDeep(allLines);
+	let transposed = _cloneDeep(allLines);
 
 	let accidental = (accidentalsType === 'auto')
 		? getMainAccidental(allChords)

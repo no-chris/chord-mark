@@ -1,4 +1,6 @@
-import _ from 'lodash';
+import _findIndex from 'lodash/findIndex';
+import _isEqual from 'lodash/isEqual';
+import _cloneDeep from 'lodash/cloneDeep';
 
 import { forEachChordInSong } from './helper/songs';
 
@@ -11,11 +13,11 @@ export default function getAllChordsInSong(allLines) {
 	let i;
 
 	forEachChordInSong(allLines, chord => {
-		i = _.findIndex(allChords, o => _.isEqual(o.model, chord.model));
+		i = _findIndex(allChords, o => _isEqual(o.model, chord.model));
 
 		if (i === -1) {
 			allChords.push({
-				model: _.cloneDeep(chord.model),
+				model: _cloneDeep(chord.model),
 				occurrences: 1
 			});
 		} else {

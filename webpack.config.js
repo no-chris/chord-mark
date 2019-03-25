@@ -5,6 +5,7 @@ const webpack = require('webpack');
 
 const CleanWebpackPlugin    = require('clean-webpack-plugin');
 const TerserPlugin       	= require('terser-webpack-plugin');
+const BundleAnalyzerPlugin 	= require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const buildDir = 'dist';
 
@@ -33,7 +34,11 @@ const config = {
 
 	plugins: [
 		new CleanWebpackPlugin(),
-		new webpack.IgnorePlugin(/\.scss|sass|css$/)
+		new webpack.IgnorePlugin(/\.scss|sass|css$/),
+		new BundleAnalyzerPlugin({
+			analyzerMode: 'static',
+			openAnalyzer: false,
+		}),
 	],
 
 	module: {

@@ -1,4 +1,5 @@
-import _ from 'lodash';
+import _cloneDeep from 'lodash/cloneDeep';
+import _invert from 'lodash/invert';
 
 const notes = [
 	'C',
@@ -23,7 +24,7 @@ const sharpsToFlats = {
 	'A#': 'Bb',
 };
 
-const flatsToSharps = _.invert(sharpsToFlats);
+const flatsToSharps = _invert(sharpsToFlats);
 
 function convertToSharp(note) {
 	return flatsToSharps[note] || note;
@@ -44,7 +45,7 @@ function transposeNote(note, value, useFlats) {
 }
 
 export default function transposeChord(chord, value, useFlats) {
-	const transposedChord = _.cloneDeep(chord); // check immutability
+	const transposedChord = _cloneDeep(chord); // check immutability
 
 	const root = transposedChord.symbol.rootNote;
 	const bass = transposedChord.symbol.bassNote;

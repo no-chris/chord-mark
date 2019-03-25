@@ -1,5 +1,6 @@
-import _ from 'lodash';
+import _isObject from 'lodash/isObject';
+import _isFunction from 'lodash/isFunction';
 
 export default function isRenderer(renderer) {
-	return (_.isObject(renderer) && _.isFunction(renderer.render));
+	return (_isObject(renderer) && _isFunction(renderer.render));
 }
