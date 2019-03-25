@@ -21,48 +21,21 @@ module.exports = {
 	},
 
 	'rules': {
-		'complexity': [
-			'error',
-			{
-				max: 10
-			}
-		],
-		'indent': [
-			'error',
-			'tab',
-			{
-				'SwitchCase': 1
-			}
-		],
-		'linebreak-style': [
-			'error',
-			'unix'
-		],
-		'max-lines': [
-			'error',
-			{
-				max: 300,
-				skipBlankLines: true,
-				skipComments: true,
-			}
-		],
-		'no-shadow': [
-			'error',
-			{
-				'builtinGlobals': true
-			}
-		],
-		'quotes': [
-			'error',
-			'single'
-		],
-		'semi': [
-			'error',
-			'always'
-		],
+		'complexity': 				[ 'error', { max: 10 } ],
+		'indent': 					[ 'error', 'tab', { 'SwitchCase': 1 } ],
+		'linebreak-style': 			[ 'error', 'unix' ],
+		'max-depth': 				[ 'error', 4 ],
+		'max-len': 					[ 'error', {'code': 150 } ],
+		'max-lines': 				[ 'error', { max: 300, skipBlankLines: true, skipComments: true, } ],
+		'max-lines-per-function': 	[ 'warn', { max: 50, skipBlankLines: true, skipComments: true, }],
+		'max-nested-callbacks': 	[ 'error', { max: 5 } ],
+		'max-params': 				[ 'warn', { max: 3 } ],
+		'max-statements': 			[ 'warn', { max: 10 } ],
+		'no-shadow': 				[ 'error', { 'builtinGlobals': true } ],
+		'quotes': 					[ 'error', 'single' ],
+		'semi': 					[ 'error', 'always'],
 
-		'import/no-restricted-paths': [
-			'error',
+		'import/no-restricted-paths': [ 'error',
 			{
 				'zones': [
 					{ 'target': './src/parser', 'from': './src/renderer' },
