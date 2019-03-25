@@ -1,7 +1,6 @@
-import parseSongLib from './parser/parseSong';
-import songRendererFactory from './renderer/components/renderSong';
+import parseSong from './parser/parseSong';
+import renderSong from './renderer/components/renderSong';
 
 import '../scss/ucc.scss';
 
-export const parseSong = parseSongLib;
-export const songRenderer = songRendererFactory;
+export { parseSong, renderSong };

@@ -1,9 +1,7 @@
-import parseSongLib from './parser/parseSong';
-import editorFactoryLib from './editor/prosemirror/editor';
-import songRendererFactory from './renderer/components/renderSong';
+import parseSong from './parser/parseSong';
+import editorFactory from './editor/prosemirror/editor';
+import renderSong from './renderer/components/renderSong';
 
 import '../scss/ucc-editor.scss';
 
-export const parseSong = parseSongLib;
-export const editorFactory = editorFactoryLib;
-export const songRenderer = songRendererFactory;
+export { parseSong, editorFactory, renderSong };

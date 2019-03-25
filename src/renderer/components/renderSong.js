@@ -1,5 +1,3 @@
-import parseSong from '../../parser/parseSong';
-
 import getMaxBeatsWidth from '../spacers/chord/getMaxBeatsWidth';
 
 import simpleChordSpacer from '../spacers/chord/simple';
@@ -15,19 +13,18 @@ import songTpl from './tpl/song.hbs';
 import getChordSymbol from '../helpers/getChordSymbol';
 
 /**
- * @param {String} songTxt
+ * @param {Song} parsedSong
  * @param {Boolean} alignBars
  * @param {Number} transposeValue
  * @param {('auto'|'flat'|'sharp')} accidentalsType
  * @param {Boolean} harmonizeAccidentals
  */
-export default function renderSong(songTxt, {
+export default function renderSong(parsedSong, {
 	alignBars = false,
 	transposeValue = 0,
 	accidentalsType = 'auto',
 	harmonizeAccidentals = true
 }) {
-	const parsedSong = parseSong(songTxt);
 	let { allLines, allChords } = parsedSong;
 
 	allLines = transposeSong(allLines, allChords,  {
