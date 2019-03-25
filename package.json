@@ -56,7 +56,7 @@
     "test": "jest",
     "bundle-js": "webpack",
     "bundle-css": "node-sass scss -o dist --output-style compressed --source-map true",
-    "sloc": "echo \"Source code:\" > SLOC.md && npx sloc src >> SLOC.md && echo \"Tests:\" >> SLOC.md && npx sloc tests >> SLOC.md && echo \"Total:\" >> SLOC.md && npx sloc src tests >> SLOC.md" ,
-    "build": "npm run lint && npm run test && npm run bundle-js && npm run bundle-css && npm run sloc"
+    "sloc": "echo \"Source code:\" > SLOC && npx sloc src >> SLOC && echo \"Tests:\" >> SLOC && npx sloc tests >> SLOC && echo \"Total:\" >> SLOC && npx sloc src tests >> SLOC",
+    "build": "npm run lint && npm run test && npm run bundle-js && npm run bundle-css && npm run sloc && npm outdated"
   }
 }
