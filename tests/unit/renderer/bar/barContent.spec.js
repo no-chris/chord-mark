@@ -6,7 +6,7 @@ import getChordSymbol from '../../../../src/renderer/getChordSymbol';
 import stripTags from '../../../../src/core/dom/stripTags';
 import htmlToElement from '../../../../src/core/dom/htmlToElement';
 
-import { forEachChordInChordLine } from '../../../../src/renderer/helper/songs';
+import { forEachChordInChordLine } from '../../../../src/parser/helper/songs';
 
 const chordRenderer = {
 	render : chordSymbol => chordSymbol

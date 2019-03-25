@@ -23,6 +23,7 @@
     "copy-webpack-plugin": "^5.0.2",
     "css-loader": "^2.1.1",
     "eslint": "^5.15.3",
+    "eslint-plugin-import": "^2.16.0",
     "handlebars-loader": "^1.7.1",
     "jest": "^24.5.0",
     "jest-handlebars": "^1.0.1",
@@ -30,6 +31,7 @@
     "node-sass": "^4.11.0",
     "raw-loader": "^2.0.0",
     "sass-loader": "^7.1.0",
+    "size-limit": "^0.21.1",
     "terser-webpack-plugin": "^1.2.3",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0"

@@ -1,4 +1,4 @@
-import { forEachChordInSong, forEachChordInChordLine } from '../../../../src/renderer/helper/songs';
+import { forEachChordInSong, forEachChordInChordLine } from '../../../../src/parser/helper/songs';
 
 import parseSong from '../../../../src/parser/parseSong';
 import parseChordLine from '../../../../src/parser/parseChordLine';

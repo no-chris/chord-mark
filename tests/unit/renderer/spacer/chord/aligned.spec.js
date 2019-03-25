@@ -1,7 +1,7 @@
 import alignedSpacer from '../../../../../src/renderer/spacer/chord/aligned';
 import parseChordLine from '../../../../../src/parser/parseChordLine';
 import getChordSymbol from '../../../../../src/renderer/getChordSymbol';
-import { forEachChordInChordLine } from '../../../../../src/renderer/helper/songs';
+import { forEachChordInChordLine } from '../../../../../src/parser/helper/songs';
 
 describe('alignedSpacer', () => {
 	test('Module', () => {

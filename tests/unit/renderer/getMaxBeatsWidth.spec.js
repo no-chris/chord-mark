@@ -3,7 +3,7 @@ import getMaxBeatsWidth from '../../../src/renderer/getMaxBeatsWidth';
 import parseSong from '../../../src/parser/parseSong';
 
 import getChordSymbol from '../../../src/renderer/getChordSymbol';
-import { forEachChordInSong } from '../../../src/renderer/helper/songs';
+import { forEachChordInSong } from '../../../src/parser/helper/songs';
 
 describe('getMaxBeatsWidth', () => {
 	test('Module', () => {

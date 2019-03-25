@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import { forEachChordInSong } from '../renderer/helper/songs';
+import { forEachChordInSong } from './helper/songs';
 
 /**
  * @param {SongLine[]} allLines

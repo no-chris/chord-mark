@@ -2,7 +2,7 @@ import _ from 'lodash';
 import transposeChord from './transposeChord';
 import getMainAccidental from './getMainAccidental';
 
-import { forEachChordInSong } from './helper/songs';
+import { forEachChordInSong } from '../parser/helper/songs';
 
 /**
  * @param {SongLine[]} allLines

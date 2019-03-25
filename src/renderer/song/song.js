@@ -6,7 +6,7 @@ import simpleChordSpacer from '../spacer/chord/simple';
 import alignedChordSpacer from '../spacer/chord/aligned';
 
 import transposeSong from '../transposeSong';
-import { forEachChordInSong } from '../helper/songs';
+import { forEachChordInSong } from '../../parser/helper/songs';
 
 import barContentRenderer from '../bar/barContent';
 import chordLineRenderer from '../chord/chordLine';
