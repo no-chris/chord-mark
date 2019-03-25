@@ -38,6 +38,14 @@ module.exports = {
 			'error',
 			'unix'
 		],
+		'max-lines': [
+			'error',
+			{
+				max: 300,
+				skipBlankLines: true,
+				skipComments: true,
+			}
+		],
 		'no-shadow': [
 			'error',
 			{
