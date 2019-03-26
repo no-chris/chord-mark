@@ -40,6 +40,7 @@
     "webpack-cli": "^3.3.0"
   },
   "dependencies": {
+    "core-js": "^3.0.0",
     "dompurify": "^1.0.10",
     "handlebars": "^4.1.1",
     "lodash": "^4.17.11",
@@ -68,12 +69,12 @@
     {
       "path": "./dist/ucc.js",
       "webpack": false,
-      "limit": "25 KB"
+      "limit": "45 KB"
     },
     {
       "path": "./dist/ucc-editor.js",
       "webpack": false,
-      "limit": "85 KB"
+      "limit": "100 KB"
     }
   ]
 }

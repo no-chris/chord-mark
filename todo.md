@@ -2,19 +2,17 @@
 + mock renderers instead of passing them as parameters
 + delegate event to inner event emitter instead of wrapping it
 + change API of components
-= rename cp2 classes
-- add unit tests for song renderer
-- unsafe rendering of handlebars templates: {{{ }}}
-- jscore warning webpack
++ rename cp2 classes
++ coverage 100%
++ unsafe rendering of handlebars templates: {{{ }}}
++ js-core warning webpack
+
+
 
 /perso/universal-chords-charts/ucc/src/parser/parseChordLine.js
-  37:16  warning  function 'parseChordLine' has too many lines (67). Maximum allowed is 50  max-lines-per-function
+  38:16  warning  function 'parseChordLine' has too many lines (67). Maximum allowed is 50       max-lines-per-function
 
-/perso/universal-chords-charts/ucc/tests/integration/parser/parseSong.spec.js
-  7:23  warning  arrow function has too many lines (78). Maximum allowed is 50  max-lines-per-function
 
-/perso/universal-chords-charts/ucc/tests/unit/parser/parseSong.spec.js
-  22:24  warning  arrow function has too many lines (60). Maximum allowed is 50  max-lines-per-function
 
 
 - Reconfigure PhpStorm once this is fixed:
