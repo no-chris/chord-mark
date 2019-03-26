@@ -66,12 +66,12 @@
     {
       "path": "./dist/ucc.js",
       "webpack": false,
-      "limit": "30 KB"
+      "limit": "25 KB"
     },
     {
       "path": "./dist/ucc-editor.js",
       "webpack": false,
-      "limit": "90 KB"
+      "limit": "85 KB"
     }
   ]
 }
