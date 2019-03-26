@@ -6,7 +6,7 @@ module.exports = {
 				paths: [
 					{
 						name: 'lodash',
-						message: 'Please do not import lodash as a whole: import submodules instead.'
+						message: 'Please do not import lodash as a whole: import individual lodash functions instead.'
 					}
 				]
 			}

@@ -23,4 +23,8 @@ module.exports = {
 		'\\.hbs$': 'jest-handlebars',
 	},
 
+	moduleNameMapper: {
+		'\\.(css|scss)$': '<rootDir>/scss/__mocks__/styleMock.js'
+	}
+
 };

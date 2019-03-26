@@ -2,7 +2,7 @@
   "name": "@touffi/ucc",
   "version": "0.1.0",
   "description": "Universal Chords Charts libraries",
-  "main": "src/index.js",
+  "main": "src/ucc.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/no-chris/ucc.git"

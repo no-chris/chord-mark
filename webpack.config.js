@@ -15,8 +15,8 @@ const config = {
 	devtool: 'source-map',
 
 	entry: {
-		'ucc': './src/index.js',
-		'ucc-editor': './src/index-editor.js'
+		'ucc': './src/ucc.js',
+		'ucc-editor': './src/ucc-editor.js'
 	},
 
 	output: {
