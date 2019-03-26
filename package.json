@@ -1,7 +1,7 @@
 {
   "name": "@touffi/ucc",
-  "version": "0.1.0",
-  "description": "Universal Chords Charts libraries",
+  "version": "0.2.0",
+  "description": "Universal Chords Charts - lib",
   "main": "src/ucc.js",
   "repository": {
     "type": "git",
