@@ -87,6 +87,24 @@ Let it be`;
 		const parsed = parseSong(input);
 		expect(parsed).toEqual(expected);
 	});
+
+	test('Remove any html tag', () => {
+		getAllChordsInSong.mockReturnValue([]);
+		parseChordLine.mockImplementation(chordLine => { throw new Error(chordLine); });
+
+		const input =
+			'<p>this is a text line</p>';
+
+		const expected = {
+			allLines: [
+				{ type: 'text',	string: 'this is a text line' }
+			],
+			allChords: []
+		};
+
+		const parsed = parseSong(input);
+		expect(parsed).toEqual(expected);
+	});
 });
 
 
