@@ -1,6 +1,7 @@
 import onStateChange from '../../../../src/editor/prosemirror/plugins/onStateChange';
 
-import EventEmitter from 'eventemitter2';
+import addEventEmitter from '../../../../src/core/addEventEmitter';
+
 import { Plugin as pmPlugin } from 'prosemirror-state';
 
 describe('onStateChange', () => {
@@ -14,7 +15,7 @@ describe('onStateChange', () => {
 
 describe('Behaviour', () => {
 	test('Trigger statechange event on view call', (done) => {
-		const editor = new EventEmitter();
+		const editor = addEventEmitter({});
 		const plugin = onStateChange(editor);
 		const state = 'I am a state';
 

@@ -6,7 +6,7 @@ import editorSchema from './schema';
 
 import stateToArray from './helpers/stateToArray';
 
-import { EventEmitter2 } from 'eventemitter2';
+import addEventEmitter from '../../core/addEventEmitter';
 
 import 'prosemirror-view/style/prosemirror.css';
 
@@ -16,7 +16,7 @@ import 'prosemirror-view/style/prosemirror.css';
  */
 export default function editorFactory(renderTo) {
 
-	const editor = new EventEmitter2();
+	const editor = addEventEmitter({});
 	const editorPlugins = getPlugins(editor);
 
 	let editorView;
