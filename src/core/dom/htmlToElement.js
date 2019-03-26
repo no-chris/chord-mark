@@ -1,7 +1,8 @@
-// https://stackoverflow.com/questions/494143/creating-a-new-dom-element-from-an-html-string-using-built-in-dom-methods-or-pro
+import escapeHTML from './escapeHTML';
+
 export default function htmlToElement(html) {
 	const template = document.createElement('template');
-	html = html.trim();
-	template.innerHTML = html;
+	template.innerHTML = escapeHTML(html);
+
 	return template.content.firstChild;
 }

@@ -24,6 +24,7 @@
     "css-loader": "^2.1.1",
     "eslint": "^5.15.3",
     "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-no-unsanitized": "^3.0.2",
     "handlebars-loader": "^1.7.1",
     "jest": "^24.5.0",
     "jest-handlebars": "^1.0.1",
@@ -39,6 +40,7 @@
     "webpack-cli": "^3.3.0"
   },
   "dependencies": {
+    "dompurify": "^1.0.10",
     "handlebars": "^4.1.1",
     "lodash": "^4.17.11",
     "momo-chords": "^0.4.3",

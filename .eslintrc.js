@@ -4,10 +4,13 @@ module.exports = {
 		'es6': true
 	},
 
-	'extends': 'eslint:recommended',
+	'extends': [
+		'eslint:recommended'
+	],
 
 	'plugins': [
-		'import'
+		'import',
+		'no-unsanitized'
 	],
 
 	'globals': {
@@ -32,6 +35,11 @@ module.exports = {
 		'no-shadow': 				[ 'error', { 'builtinGlobals': true } ],
 		'quotes': 					[ 'error', 'single' ],
 		'semi': 					[ 'error', 'always'],
+
+
+		'no-unsanitized/property': 	[ 'error', { escape: { methods: ['escapeHTML'] } } ],
+		'no-unsanitized/method': 	[ 'error' ],
+
 
 		'import/no-restricted-paths': [ 'error',
 			{

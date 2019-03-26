@@ -8,5 +8,7 @@ module.exports = {
 		'max-lines':	 		  [ 'error', { max: 500, skipBlankLines: true, skipComments: true, } ],
 		'max-lines-per-function': [ 'error', { max: 100, skipBlankLines: true, skipComments: true, } ],
 		'max-params': 			  [ 'error', { max: 10 } ],
+
+		'no-unsanitized/property':[ 'off' ],
 	}
 };
