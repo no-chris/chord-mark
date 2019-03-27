@@ -36,6 +36,17 @@ module.exports = {
 		'quotes': 					[ 'error', 'single' ],
 		'semi': 					[ 'error', 'always'],
 
+		'no-restricted-imports': 	[
+			'error',
+			{
+				paths: [
+					{
+						name: 'lodash',
+						message: 'Please do not import lodash as a whole: import individual lodash functions instead.'
+					}
+				]
+			}
+		],
 
 		'no-unsanitized/property': 	[ 'error', { escape: { methods: ['escapeHTML'] } } ],
 		'no-unsanitized/method': 	[ 'error' ],
