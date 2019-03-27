@@ -2,13 +2,17 @@
   "name": "@touffi/ucc",
   "version": "0.2.0",
   "description": "Universal Chords Charts - lib",
+  "private": false,
   "main": "src/ucc.js",
+  "author": "Christophe Noël",
+  "license": "MIT",
+  "engines": {
+    "node": ">=11.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/no-chris/ucc.git"
   },
-  "author": "Christophe Noël",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/no-chris/ucc/issues"
   },
