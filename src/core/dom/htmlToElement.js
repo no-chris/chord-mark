@@ -1,8 +1,7 @@
-import escapeHTML from './escapeHTML';
+import domPurify from 'dompurify';
 
 export default function htmlToElement(html) {
-	const template = document.createElement('template');
-	template.innerHTML = escapeHTML(html);
-
-	return template.content.firstChild;
+	return domPurify.sanitize(html, {
+		RETURN_DOM_FRAGMENT: true
+	}).firstChild;
 }

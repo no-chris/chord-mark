@@ -8,6 +8,7 @@ describe('stripTags', () => {
 
 describe.each([
 
+	[undefined, ''],
 	['', ''],
 	['plain text', 'plain text'],
 	['<div><p>Content</p></div>', 'Content'],
