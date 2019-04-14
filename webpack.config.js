@@ -16,7 +16,6 @@ const config = {
 
 	entry: {
 		'ucc': './src/ucc.js',
-		'ucc-editor': './src/ucc-editor.js'
 	},
 
 	output: {
