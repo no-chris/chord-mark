@@ -28,6 +28,6 @@ describe('Behaviour', () => {
 
 		expect(element).toBeInstanceOf(Node);
 		expect(element.nodeName).toBe('SPAN');
-		expect(element.classList.contains('ucc-chord-symbol')).toBe(true);
+		expect(element.classList.contains('cmChordSymbol')).toBe(true);
 	});
 });

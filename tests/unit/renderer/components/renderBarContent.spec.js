@@ -99,6 +99,6 @@ describe('Behaviour', () => {
 
 		expect(element).toBeInstanceOf(Node);
 		expect(element.nodeName).toBe('SPAN');
-		expect(element.classList.contains('ucc-bar-content')).toBe(true);
+		expect(element.classList.contains('cmBarContent')).toBe(true);
 	});
 });

@@ -7,7 +7,7 @@ describe('htmlToElement', () => {
 });
 
 describe('Behavior', () => {
-	test('Module', () => {
+	test('Should return valid html from string', () => {
 		const html = '<div class="test-container"><p class="test-content">Content</p></div>';
 
 		const element = htmlToElement(html);

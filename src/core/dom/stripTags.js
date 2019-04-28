@@ -1,5 +1,8 @@
-import htmlToElement from './htmlToElement';
+import domPurify from 'dompurify';
 
 export default function stripTags(html) {
-	return (html === '') ? '' : htmlToElement(html).textContent;
+	return domPurify.sanitize(html, {
+		ALLOWED_TAGS: ['#text'],
+		KEEP_CONTENT: true,
+	});
 }

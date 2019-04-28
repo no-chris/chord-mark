@@ -5,7 +5,7 @@ const webpack = require('webpack');
 
 const CleanWebpackPlugin    = require('clean-webpack-plugin');
 const TerserPlugin       	= require('terser-webpack-plugin');
-//const BundleAnalyzerPlugin 	= require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin 	= require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const buildDir = 'dist';
 
@@ -15,8 +15,7 @@ const config = {
 	devtool: 'source-map',
 
 	entry: {
-		'ucc': './src/ucc.js',
-		'ucc-editor': './src/ucc-editor.js'
+		'chord-mark': './src/chordMark.js',
 	},
 
 	output: {
@@ -35,10 +34,10 @@ const config = {
 	plugins: [
 		new CleanWebpackPlugin(),
 		new webpack.IgnorePlugin(/\.scss|sass|css$/),
-		// new BundleAnalyzerPlugin({
-		// 	analyzerMode: 'static',
-		// 	openAnalyzer: true,
-		// }),
+		new BundleAnalyzerPlugin({
+			analyzerMode: 'static',
+			openAnalyzer: false,
+		}),
 	],
 
 	module: {
