@@ -26,7 +26,6 @@ describe.each([
 	[' 4/4 ',false],
 
 	['5/2',  false],
-	['2/4',  false],
 	['3/3',  false],
 	['13/8', false],
 

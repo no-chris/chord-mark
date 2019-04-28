@@ -5,6 +5,7 @@
 #### New features:
 
 - Removed editor
+- Renamed to ChordMark
 
 ---
 

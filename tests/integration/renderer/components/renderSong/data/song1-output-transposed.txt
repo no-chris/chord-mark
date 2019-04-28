@@ -1,6 +1,6 @@
 Imagine
 John Lennon
-
+&nbsp;
 |G     Gmaj7|C   |
 Imagine there's no heaven
 |G     Gmaj7|C   |
@@ -9,7 +9,7 @@ It's easy if you try
 No hell below us
 |G     Gmaj7|C   |
 Above us only sky
-
+&nbsp;
 |C   Em/B  |Am7   C/G  |
 Imagine all the people
 |D     G/D|D7   |
