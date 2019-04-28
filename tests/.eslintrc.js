@@ -9,6 +9,8 @@ module.exports = {
 		'max-lines-per-function': [ 'error', { max: 100, skipBlankLines: true, skipComments: true, } ],
 		'max-params': 			  [ 'error', { max: 10 } ],
 
+		'no-restricted-imports':  [ 'off' ],
+
 		'no-unsanitized/property':[ 'off' ],
 	}
 };

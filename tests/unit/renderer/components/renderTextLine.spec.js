@@ -14,6 +14,6 @@ describe('Behaviour', () => {
 
 		expect(element).toBeInstanceOf(Node);
 		expect(element.nodeName).toBe('P');
-		expect(element.classList.contains('ucc-text-line')).toBe(true);
+		expect(element.classList.contains('cmTextLine')).toBe(true);
 	});
 });

@@ -7,7 +7,7 @@ const presets = [
 				browsers: 'defaults',
 			},
 			useBuiltIns: 'usage',
-			corejs: '3.0',
+			corejs: '3',
 		},
 	],
 ];

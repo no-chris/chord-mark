@@ -18,13 +18,14 @@ import getChordSymbol from '../helpers/getChordSymbol';
  * @param {Number} transposeValue
  * @param {('auto'|'flat'|'sharp')} accidentalsType
  * @param {Boolean} harmonizeAccidentals
+ * @returns {String} rendered HTML
  */
 export default function renderSong(parsedSong, {
 	alignBars = false,
 	transposeValue = 0,
 	accidentalsType = 'auto',
 	harmonizeAccidentals = true
-}) {
+} = {}) {
 	let { allLines, allChords } = parsedSong;
 
 	allLines = transposeSong(allLines, allChords,  {

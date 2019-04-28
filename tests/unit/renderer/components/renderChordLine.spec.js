@@ -24,7 +24,7 @@ describe('Behaviour', () => {
 
 		expect(element).toBeInstanceOf(Node);
 		expect(element.nodeName).toBe('P');
-		expect(element.classList.contains('ucc-chord-line')).toBe(true);
+		expect(element.classList.contains('cmChordLine')).toBe(true);
 	});
 });
 
