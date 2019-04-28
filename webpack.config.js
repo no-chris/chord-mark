@@ -15,7 +15,7 @@ const config = {
 	devtool: 'source-map',
 
 	entry: {
-		'ucc': './src/ucc.js',
+		'chord-mark': './src/chordMark.js',
 	},
 
 	output: {

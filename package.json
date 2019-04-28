@@ -1,9 +1,9 @@
 {
-  "name": "@touffi/ucc",
+  "name": "@touffi/chord-mark",
   "version": "0.2.0",
-  "description": "Universal Chords Charts - lib",
+  "description": "ChordMark - the most powerful syntax to write chords charts",
   "private": false,
-  "main": "src/ucc.js",
+  "main": "src/chordMark.js",
   "author": "Christophe Noël",
   "license": "MIT",
   "engines": {
@@ -64,7 +64,7 @@
   },
   "size-limit": [
     {
-      "path": "./dist/ucc.js",
+      "path": "./dist/chord-mark.js",
       "webpack": false,
       "limit": "45 KB"
     }

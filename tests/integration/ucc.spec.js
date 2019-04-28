@@ -1,9 +1,9 @@
-import * as ucc from '../../src/ucc';
+import * as chordMark from '../../src/chordMark';
 
 describe('Public API', () => {
-	test('ucc', () => {
-		expect(Object.keys(ucc).length).toEqual(2);
-		expect(ucc.parseSong).toBeInstanceOf(Function);
-		expect(ucc.renderSong).toBeInstanceOf(Function);
+	test('chordMark', () => {
+		expect(Object.keys(chordMark).length).toEqual(2);
+		expect(chordMark.parseSong).toBeInstanceOf(Function);
+		expect(chordMark.renderSong).toBeInstanceOf(Function);
 	});
 });
