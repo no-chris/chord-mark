@@ -1,6 +1,6 @@
 # Changelog
 
-## v0.2.0 (xxx)
+## v0.2.0 (28/04/2019)
 
 #### New features:
 
