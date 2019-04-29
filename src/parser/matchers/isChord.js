@@ -1,6 +1,6 @@
 import _isString from 'lodash/isString';
 
-import { Chords } from 'momo-chords';
+import { Chords } from 'momo-chords/lib/index';
 
 const chords = new Chords();
 

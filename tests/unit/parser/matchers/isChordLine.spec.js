@@ -1,4 +1,4 @@
-import isChordLine from '../../../src/parser/isChordLine';
+import isChordLine from '../../../../src/parser/matchers/isChordLine';
 
 describe('isChordLine', () => {
 	test('Module', () => {

@@ -3,8 +3,8 @@ import _isArray from 'lodash/isArray';
 import escapeHTML from '../core/dom/escapeHTML';
 import stripTags from '../core/dom/stripTags';
 
-import isChordLine from './isChordLine';
-import isTimeSignature from './isTimeSignatureString';
+import isChordLine from './matchers/isChordLine';
+import isTimeSignature from './matchers/isTimeSignatureString';
 
 import parseTimeSignature from './parseTimeSignature';
 import parseChordLine from './parseChordLine';

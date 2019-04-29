@@ -1,4 +1,4 @@
-import isChord from '../../../src/parser/isChord';
+import isChord from '../../../../src/parser/matchers/isChord';
 
 describe('isChord', () => {
 	test('Module', () => {
