@@ -4,10 +4,12 @@ import escapeHTML from '../core/dom/escapeHTML';
 import stripTags from '../core/dom/stripTags';
 
 import isChordLine from './matchers/isChordLine';
+import isSectionLabel from './matchers/isSectionLabel';
 import isTimeSignature from './matchers/isTimeSignatureString';
 
-import parseTimeSignature from './parseTimeSignature';
 import parseChordLine from './parseChordLine';
+import parseSectionLabel from './parseSectionLabel';
+import parseTimeSignature from './parseTimeSignature';
 
 import getAllChordsInSong from './getAllChordsInSong';
 
@@ -45,8 +47,15 @@ const defaultTimeSignature = '4/4';
 export default function parseSong(song) {
 	const songLines = (!_isArray(song)) ? song.split('\n') : song;
 
+	let sectionLabel = '';
+	let sectionIndex = 0;
 	let timeSignature = parseTimeSignature(defaultTimeSignature);
 
+	const allSectionLabels = [];
+
+	/**
+	 * @type {SongLine[]}
+	 */
 	const allLines = songLines
 		.map(escapeHTML)
 		.map(stripTags)
@@ -57,6 +66,17 @@ export default function parseSong(song) {
 
 				line.type = 'time-signature';
 				line.model = timeSignature;
+
+			} else if (isSectionLabel(line.string)) {
+				sectionLabel = parseSectionLabel(line.string);
+				sectionIndex = getSectionIndex(sectionLabel.label, allSectionLabels);
+
+				line.type = 'sectionLabel';
+				line.model = sectionLabel;
+				line.index = sectionIndex;
+				line.id = sectionLabel.label + sectionIndex;
+
+				allSectionLabels.push(sectionLabel);
 
 			} else if (isChordLine(line.string)) {
 				try {
@@ -80,4 +100,8 @@ export default function parseSong(song) {
 		allLines,
 		allChords
 	};
+}
+
+function getSectionIndex(currentLabel, allSectionsIds) {
+	return allSectionsIds.filter(sectionLabel => sectionLabel.id === currentLabel ).length + 1;
 }
