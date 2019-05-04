@@ -182,15 +182,15 @@ describe('sectionId', () => {
 
 		const expected = {
 			allLines: [
-				{ type: 'sectionId', string: '#i', model: sectionsParsed[0], index: 1, id: 'i1' },
-				{ type: 'sectionId', string: '#v', model: sectionsParsed[1], index: 1, id: 'v1' },
-				{ type: 'sectionId', string: '#v', model: sectionsParsed[2], index: 2, id: 'v2' },
-				{ type: 'sectionId', string: '#c', model: sectionsParsed[3], index: 1, id: 'c1' },
-				{ type: 'sectionId', string: '#v', model: sectionsParsed[4], index: 3, id: 'v3' },
-				{ type: 'sectionId', string: '#c', model: sectionsParsed[5], index: 2, id: 'c2' },
-				{ type: 'sectionId', string: '#v', model: sectionsParsed[6], index: 4, id: 'v4' },
-				{ type: 'sectionId', string: '#c x2', model: sectionsParsed[7], index: 3, id: 'c3' },
-				{ type: 'sectionId', string: '#o', model: sectionsParsed[8], index: 1, id: 'o1' },
+				{ type: 'sectionLabel', string: '#i', model: sectionsParsed[0], index: 1, id: 'i1' },
+				{ type: 'sectionLabel', string: '#v', model: sectionsParsed[1], index: 1, id: 'v1' },
+				{ type: 'sectionLabel', string: '#v', model: sectionsParsed[2], index: 2, id: 'v2' },
+				{ type: 'sectionLabel', string: '#c', model: sectionsParsed[3], index: 1, id: 'c1' },
+				{ type: 'sectionLabel', string: '#v', model: sectionsParsed[4], index: 3, id: 'v3' },
+				{ type: 'sectionLabel', string: '#c', model: sectionsParsed[5], index: 2, id: 'c2' },
+				{ type: 'sectionLabel', string: '#v', model: sectionsParsed[6], index: 4, id: 'v4' },
+				{ type: 'sectionLabel', string: '#c x2', model: sectionsParsed[7], index: 3, id: 'c3' },
+				{ type: 'sectionLabel', string: '#o', model: sectionsParsed[8], index: 1, id: 'o1' },
 			],
 			allChords: []
 		};
@@ -199,7 +199,7 @@ describe('sectionId', () => {
 		expect(parsed).toEqual(expected);
 	});
 
-	test.skip('automatically apply chords of previously defined identical section', () => {
+	test.only('automatically apply chords of previously defined identical section', () => {
 		getAllChordsInSong.mockReturnValue([]);
 		parseChordLine.mockImplementation(chordLine => chordLine);
 
@@ -214,7 +214,7 @@ F. Em. Dm. C.
 Let it be
 
 #v
-And in my hour of darkness 
+And in my hour of darkness
 she is standing right in front of me
 Speaking words of wisdom
 Let it be
@@ -242,7 +242,7 @@ Whispers words of wisdom
 Let it be`;
 
 		const allLines = [
-			{ type: 'sectionId', string: '#v', index: 1, model: parseSectionLabel('#v') },
+			{ type: 'sectionLabel', string: '#v', index: 1, model: parseSectionLabel('#v'), id: 'v1' },
 			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
 			{ type: 'text', string: 'When I find myself in times of trouble'},
 			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
@@ -252,7 +252,7 @@ Let it be`;
 			{ type: 'chord', string: 'F. Em. Dm. C.', model: 'F. Em. Dm. C.' },
 			{ type: 'text', string: 'Let it be'},
 			{ type: 'text', string: ''},
-			{ type: 'sectionId', string: '#v', index: 2, model: parseSectionLabel('#v') },
+			{ type: 'sectionLabel', string: '#v', index: 2, model: parseSectionLabel('#v'), id: 'v2' },
 			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
 			{ type: 'text', string: 'And in my hour of darkness'},
 			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
@@ -262,7 +262,7 @@ Let it be`;
 			{ type: 'chord', string: 'F. Em. Dm. C.', model: 'F. Em. Dm. C.' },
 			{ type: 'text', string: 'Let it be'},
 			{ type: 'text', string: ''},
-			{ type: 'sectionId', string: '#c', index: 1, model: parseSectionLabel('#c') },
+			{ type: 'sectionLabel', string: '#c', index: 1, model: parseSectionLabel('#c'), id: 'c1' },
 			{ type: 'chord', string: 'Am.. G..', model: 'Am.. G..' },
 			{ type: 'text', string: 'Let it be, let it be'},
 			{ type: 'chord', string: 'C.. F..', model: 'C.. F..' },
@@ -272,26 +272,7 @@ Let it be`;
 			{ type: 'chord', string: 'F. Em. Dm. C.', model: 'F. Em. Dm. C.' },
 			{ type: 'text', string: 'Let it be'},
 			{ type: 'text', string: ''},
-			{ type: 'sectionId', string: '#v', index: 3, model: parseSectionLabel('#v') },
-			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
-			{ type: 'text', string: 'And in my hour of darkness'},
-			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
-			{ type: 'text', string: 'she is standing right in front of me'},
-			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
-			{ type: 'text', string: 'Speaking words of wisdom'},
-			{ type: 'chord', string: 'F. Em. Dm. C.', model: 'F. Em. Dm. C.' },
-			{ type: 'text', string: 'Let it be'},
-			{ type: 'text', string: ''},
-			{ type: 'sectionId', string: '#c', index: 1, model: parseSectionLabel('#c') },
-			{ type: 'chord', string: 'Am.. G..', model: 'Am.. G..' },
-			{ type: 'text', string: 'Let it be, let it be'},
-			{ type: 'chord', string: 'C.. F..', model: 'C.. F..' },
-			{ type: 'text', string: 'Let it be, let it be'},
-			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
-			{ type: 'text', string: 'Whispers words of wisdom'},
-			{ type: 'chord', string: 'F. Em. Dm. C.', model: 'F. Em. Dm. C.' },
-			{ type: 'text', string: 'Let it be'},
-			{ type: 'sectionId', string: '#v', index: 3, model: parseSectionLabel('#v') },
+			{ type: 'sectionLabel', string: '#v', index: 3, model: parseSectionLabel('#v'), id: 'v3' },
 			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
 			{ type: 'text', string: 'And when the broken hearted people'},
 			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
@@ -301,7 +282,7 @@ Let it be`;
 			{ type: 'chord', string: 'F. Em. Dm. C.', model: 'F. Em. Dm. C.' },
 			{ type: 'text', string: 'Let it be'},
 			{ type: 'text', string: ''},
-			{ type: 'sectionId', string: '#c', index: 2, model: parseSectionLabel('#c') },
+			{ type: 'sectionLabel', string: '#c', index: 2, model: parseSectionLabel('#c'), id: 'c2' },
 			{ type: 'chord', string: 'Am.. G..', model: 'Am.. G..' },
 			{ type: 'text', string: 'Let it be, let it be'},
 			{ type: 'chord', string: 'C.. F..', model: 'C.. F..' },

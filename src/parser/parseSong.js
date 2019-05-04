@@ -1,4 +1,5 @@
 import _isArray from 'lodash/isArray';
+import _cloneDeep from 'lodash/cloneDeep';
 
 import escapeHTML from '../core/dom/escapeHTML';
 import stripTags from '../core/dom/stripTags';
@@ -12,13 +13,16 @@ import parseSectionLabel from './parseSectionLabel';
 import parseTimeSignature from './parseTimeSignature';
 
 import getAllChordsInSong from './getAllChordsInSong';
+import { getNthOfLabel } from './helper/songs';
 
 /**
  * @typedef {Object} SongLine
  * @type {Object}
  * @property {String} string - original line in source file
- * @property {String} type - chord|text|time-signature|...
- * @property {ChordLine|TimeSignature} model
+ * @property {String} type - chord|text|timeSignature|sectionLabel...
+ * @property {ChordLine|TimeSignature|SectionLabel} model
+ * @property {Number} [index] - if sectionLabel, index of the section for a given label
+ * @property {Number} [id] - if sectionLabel, section id
  */
 
 /**
@@ -49,18 +53,24 @@ export default function parseSong(song) {
 
 	let sectionLabel = '';
 	let sectionIndex = 0;
+	let sectionBlueprint = [];
+	let blueprintIndex = 0;
+	let blueprintLine;
+	let isRepeatingChords = false;
+
 	let timeSignature = parseTimeSignature(defaultTimeSignature);
 
 	const allSectionLabels = [];
+	const allLines = [];
 
 	/**
 	 * @type {SongLine[]}
 	 */
-	const allLines = songLines
+	songLines
 		.map(escapeHTML)
 		.map(stripTags)
 		.map(string => ({ string }))
-		.map(line => {
+		.forEach((line) => {
 			if (isTimeSignature(line.string)) {
 				timeSignature = parseTimeSignature(line.string);
 
@@ -78,6 +88,14 @@ export default function parseSong(song) {
 
 				allSectionLabels.push(sectionLabel);
 
+				if (!isFirstOfType(sectionLabel, allLines)) {
+					sectionBlueprint = getNthOfLabel(allLines, sectionLabel.label, 1);
+					isRepeatingChords = true;
+					blueprintIndex = 0;
+				} else {
+					isRepeatingChords = false;
+				}
+
 			} else if (isChordLine(line.string)) {
 				try {
 					line.type = 'chord';
@@ -90,7 +108,18 @@ export default function parseSong(song) {
 			} else {
 				line.type = 'text';
 			}
-			return line;
+
+			if (isRepeatingChords && line.type !== 'sectionLabel') {
+				blueprintLine = sectionBlueprint[blueprintIndex];
+				while (blueprintLine && blueprintLine.type !== 'text' && blueprintLine.type !== line.type) {
+					allLines.push(_cloneDeep(blueprintLine));
+					blueprintIndex++;
+					blueprintLine = sectionBlueprint[blueprintIndex];
+				}
+				blueprintIndex++;
+			}
+
+			allLines.push(line);
 		});
 
 
@@ -102,6 +131,12 @@ export default function parseSong(song) {
 	};
 }
 
-function getSectionIndex(currentLabel, allSectionsIds) {
-	return allSectionsIds.filter(sectionLabel => sectionLabel.id === currentLabel ).length + 1;
+function getSectionIndex(currentLabel, allSectionLabels) {
+	return allSectionLabels.filter(sectionLabel => sectionLabel.label === currentLabel ).length + 1;
+}
+
+function isFirstOfType(currentLabel, allLines) {
+	return allLines.filter(line =>
+		(line.type === 'sectionLabel' && line.model.label === currentLabel.label)
+	).length === 0;
 }

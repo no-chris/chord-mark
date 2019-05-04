@@ -13,23 +13,23 @@ describe.each([
 	['#C', 'C', 0],
 	['#D', 'D', 0],
 	['#d', 'd', 0],
-	['#i', 'intro', 0],
-	['#v', 'verse', 0],
-	['#p', 'pre-chorus', 0],
-	['#c', 'chorus', 0],
-	['#b', 'bridge', 0],
-	['#s', 'solo', 0],
-	['#o', 'outro', 0],
-	['#a', 'adlib', 0],
+	['#i', 'i', 0],
+	['#v', 'v', 0],
+	['#p', 'p', 0],
+	['#c', 'c', 0],
+	['#b', 'b', 0],
+	['#s', 's', 0],
+	['#o', 'o', 0],
+	['#a', 'a', 0],
 	['#other', 'other', 0],
 	['#whatever', 'whatever', 0],
 
-	['#v x2', 'verse', 2],
-	['#i x9', 'intro', 9],
+	['#v x2', 'v', 2],
+	['#i x9', 'i', 9],
 
-	['#i', 'intro', 0],
+	['#i', 'i', 0],
 
-	['#c x3', 'chorus', 3],
+	['#c x3', 'c', 3],
 
 ])('Section identifier %s => %s', (string, label, repeatTimes) => {
 	test('Correctly gets identifier', () => {

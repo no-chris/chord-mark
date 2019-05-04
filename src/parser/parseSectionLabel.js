@@ -30,13 +30,10 @@ export default function parseSectionLabel(string) {
 
 	const [ labelSrc, repeatSrc ] = string.trim().split(' ');
 
-	const labelUnmapped = labelSrc.substring(1);
-	const label = labelsShortcuts[labelUnmapped] || labelUnmapped;
-
-	const repeatTimes = (repeatSrc) ?
-		Number.parseInt(repeatSrc.substring(1))
-		: 0;
-
-	return { string, label, repeatTimes };
+	return {
+		string,
+		label: labelSrc.substring(1),
+		repeatTimes: (repeatSrc) ? Number.parseInt(repeatSrc.substring(1)) : 0
+	};
 }
 
