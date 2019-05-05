@@ -70,12 +70,12 @@ export default function parseSong(song) {
 	songLines
 		.map(escapeHTML)
 		.map(stripTags)
-		.map(string => ({ string }))
+		.map(string => ({ string, type: '' }))
 		.forEach((line) => {
 			if (isTimeSignature(line.string)) {
 				timeSignature = parseTimeSignature(line.string);
 
-				line.type = 'time-signature';
+				line.type = 'timeSignature';
 				line.model = timeSignature;
 
 			} else if (isSectionLabel(line.string)) {

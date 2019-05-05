@@ -123,9 +123,9 @@ describe('timeSignature', () => {
 
 		const expected = {
 			allLines: [
-				{ type: 'time-signature', string: '6/8', model: ts6_8 },
-				{ type: 'time-signature', string: '4/4', model: ts4_4 },
-				{ type: 'time-signature', string: '3/4', model: ts3_4 },
+				{ type: 'timeSignature', string: '6/8', model: ts6_8 },
+				{ type: 'timeSignature', string: '4/4', model: ts4_4 },
+				{ type: 'timeSignature', string: '3/4', model: ts3_4 },
 			],
 			allChords: []
 		};
