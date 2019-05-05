@@ -39,7 +39,7 @@ Let it be`;
 				{ type: 'text', string: 'Speaking words of wisdom' },
 				{ type: 'chord', string: 'F. Em. Dm. C.', model: parseChordLine('F. Em. Dm. C.') },
 				{ type: 'text', string: 'Let it be' },
-				{ type: 'text', string: '' },
+				{ type: 'emptyLine', string: '' },
 				{ type: 'chord', string: 'Am.. G..', model: parseChordLine('Am.. G..') },
 				{ type: 'text', string: 'Let it be, let it be' },
 				{ type: 'chord', string: 'C.. F..', model: parseChordLine('C.. F..') },

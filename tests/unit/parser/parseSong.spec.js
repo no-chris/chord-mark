@@ -52,7 +52,7 @@ Let it be`;
 			{ type: 'text', string: 'Speaking words of wisdom'},
 			{ type: 'chord', string: 'F. Em. Dm. C.', model: 'F. Em. Dm. C.' },
 			{ type: 'text', string: 'Let it be'},
-			{ type: 'text', string: ''},
+			{ type: 'emptyLine', string: ''},
 			{ type: 'chord', string: 'Am.. G..', model: 'Am.. G..' },
 			{ type: 'text', string: 'Let it be, let it be'},
 			{ type: 'chord', string: 'C.. F..', model: 'C.. F..' },
@@ -199,7 +199,7 @@ describe('sectionId', () => {
 		expect(parsed).toEqual(expected);
 	});
 
-	test.only('automatically apply chords of previously defined identical section', () => {
+	test('automatically apply chords of previously defined identical section', () => {
 		getAllChordsInSong.mockReturnValue([]);
 		parseChordLine.mockImplementation(chordLine => chordLine);
 
@@ -251,7 +251,7 @@ Let it be`;
 			{ type: 'text', string: 'Speaking words of wisdom'},
 			{ type: 'chord', string: 'F. Em. Dm. C.', model: 'F. Em. Dm. C.' },
 			{ type: 'text', string: 'Let it be'},
-			{ type: 'text', string: ''},
+			{ type: 'emptyLine', string: ''},
 			{ type: 'sectionLabel', string: '#v', index: 2, model: parseSectionLabel('#v'), id: 'v2' },
 			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
 			{ type: 'text', string: 'And in my hour of darkness'},
@@ -261,7 +261,7 @@ Let it be`;
 			{ type: 'text', string: 'Speaking words of wisdom'},
 			{ type: 'chord', string: 'F. Em. Dm. C.', model: 'F. Em. Dm. C.' },
 			{ type: 'text', string: 'Let it be'},
-			{ type: 'text', string: ''},
+			{ type: 'emptyLine', string: ''},
 			{ type: 'sectionLabel', string: '#c', index: 1, model: parseSectionLabel('#c'), id: 'c1' },
 			{ type: 'chord', string: 'Am.. G..', model: 'Am.. G..' },
 			{ type: 'text', string: 'Let it be, let it be'},
@@ -271,7 +271,7 @@ Let it be`;
 			{ type: 'text', string: 'Whispers words of wisdom'},
 			{ type: 'chord', string: 'F. Em. Dm. C.', model: 'F. Em. Dm. C.' },
 			{ type: 'text', string: 'Let it be'},
-			{ type: 'text', string: ''},
+			{ type: 'emptyLine', string: ''},
 			{ type: 'sectionLabel', string: '#v', index: 3, model: parseSectionLabel('#v'), id: 'v3' },
 			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
 			{ type: 'text', string: 'And when the broken hearted people'},
@@ -281,7 +281,7 @@ Let it be`;
 			{ type: 'text', string: 'There will be an answer'},
 			{ type: 'chord', string: 'F. Em. Dm. C.', model: 'F. Em. Dm. C.' },
 			{ type: 'text', string: 'Let it be'},
-			{ type: 'text', string: ''},
+			{ type: 'emptyLine', string: ''},
 			{ type: 'sectionLabel', string: '#c', index: 2, model: parseSectionLabel('#c'), id: 'c2' },
 			{ type: 'chord', string: 'Am.. G..', model: 'Am.. G..' },
 			{ type: 'text', string: 'Let it be, let it be'},
@@ -291,6 +291,61 @@ Let it be`;
 			{ type: 'text', string: 'Whispers words of wisdom'},
 			{ type: 'chord', string: 'F. Em. Dm. C.', model: 'F. Em. Dm. C.' },
 			{ type: 'text', string: 'Let it be'},
+		];
+
+		const expected = {
+			allLines,
+			allChords: []
+		};
+
+		const parsed = parseSong(input);
+		expect(parsed).toEqual(expected);
+	});
+
+	test.skip('blueprint overflows repeat', () => {
+		getAllChordsInSong.mockReturnValue([]);
+		parseChordLine.mockImplementation(chordLine => chordLine);
+
+		const input = `#v
+C.. G..
+line1-1
+Am.. F..
+line1-2
+C.. G..
+line1-3
+F. Em. Dm. C.
+line1-4
+
+#v
+line2-1
+line2-2
+
+#v
+line3-1
+line3-2`;
+
+		const allLines = [
+			{ type: 'sectionLabel', string: '#v', index: 1, model: parseSectionLabel('#v'), id: 'v1' },
+			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
+			{ type: 'text', string: 'line1-1'},
+			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
+			{ type: 'text', string: 'line1-2'},
+			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
+			{ type: 'text', string: 'line1-3'},
+			{ type: 'chord', string: 'F. Em. Dm. C.', model: 'F. Em. Dm. C.' },
+			{ type: 'text', string: 'line1-4'},
+			{ type: 'emptyLine', string: ''},
+			{ type: 'sectionLabel', string: '#v', index: 2, model: parseSectionLabel('#v'), id: 'v2' },
+			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
+			{ type: 'text', string: 'line2-1'},
+			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
+			{ type: 'text', string: 'line2-2'},
+			{ type: 'emptyLine', string: ''},
+			{ type: 'sectionLabel', string: '#v', index: 3, model: parseSectionLabel('#v'), id: 'v3' },
+			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
+			{ type: 'text', string: 'line3-1'},
+			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
+			{ type: 'text', string: 'line3-2'},
 		];
 
 		const expected = {

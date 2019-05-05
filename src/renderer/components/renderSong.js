@@ -7,6 +7,7 @@ import transposeSong from '../modifiers/transposeSong';
 import { forEachChordInSong } from '../../parser/helper/songs';
 
 import renderChordLine from './renderChordLine';
+import renderEmptyLine from './renderEmptyLine';
 import renderTextLine from './renderTextLine';
 import renderSectionLabel from './renderSectionLabel';
 
@@ -50,6 +51,9 @@ export default function renderSong(parsedSong, {
 					: simpleChordSpacer(line.model);
 
 				line.rendered = renderChordLine(spaced);
+
+			} else if (line.type === 'emptyLine') {
+				line.rendered = renderEmptyLine();
 
 			} else if (line.type === 'sectionLabel') {
 				line.rendered = renderSectionLabel(line.model, line.index);
