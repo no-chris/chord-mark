@@ -56,7 +56,7 @@ export default function parseSong(song) {
 	let sectionIndex = 0;
 	let sectionBlueprint = [];
 	let blueprintIndex = 0;
-	let blueprintLine;
+	let blueprintLine = '';
 	let isRepeatingChords = false;
 
 	let timeSignature = parseTimeSignature(defaultTimeSignature);
@@ -115,7 +115,7 @@ export default function parseSong(song) {
 
 			if (isRepeatingChords && line.type !== 'sectionLabel') {
 				blueprintLine = sectionBlueprint[blueprintIndex];
-				while (blueprintLine && blueprintLine.type !== 'text' && blueprintLine.type !== line.type && blueprintLine.type !== line.type) {
+				while (shouldRepeatLineFromBlueprint(blueprintLine, line)) {
 					allLines.push(_cloneDeep(blueprintLine));
 					blueprintIndex++;
 					blueprintLine = sectionBlueprint[blueprintIndex];
@@ -143,4 +143,12 @@ function isFirstOfLabel(currentLabel, allLines) {
 	return allLines.filter(line =>
 		(line.type === 'sectionLabel' && line.model.label === currentLabel.label)
 	).length === 0;
+}
+
+function shouldRepeatLineFromBlueprint(blueprintLine, currentLine) {
+	return blueprintLine
+		&& blueprintLine.type !== 'text'
+		&& blueprintLine.type !== 'emptyLine'
+		&& blueprintLine.type !== currentLine.type
+		&& currentLine.type !== 'emptyLine';
 }

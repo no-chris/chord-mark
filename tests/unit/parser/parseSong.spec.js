@@ -199,7 +199,7 @@ describe('sectionId', () => {
 		expect(parsed).toEqual(expected);
 	});
 
-	test('automatically apply chords of previously defined identical section', () => {
+	test('automatically apply chords of previously defined identical section. Sections can contain empty lines.', () => {
 		getAllChordsInSong.mockReturnValue([]);
 		parseChordLine.mockImplementation(chordLine => chordLine);
 
@@ -208,6 +208,7 @@ C.. G..
 When I find myself in times of trouble
 Am.. F..
 Mother mary comes to me
+
 C.. G..
 Speaking words of wisdom
 F. Em. Dm. C.
@@ -216,6 +217,7 @@ Let it be
 #v
 And in my hour of darkness
 she is standing right in front of me
+
 Speaking words of wisdom
 Let it be
 
@@ -232,6 +234,7 @@ Let it be
 #v
 And when the broken hearted people
 Living in the world agree
+
 There will be an answer
 Let it be
 
@@ -247,6 +250,7 @@ Let it be`;
 			{ type: 'text', string: 'When I find myself in times of trouble'},
 			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
 			{ type: 'text', string: 'Mother mary comes to me'},
+			{ type: 'emptyLine', string: ''},
 			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
 			{ type: 'text', string: 'Speaking words of wisdom'},
 			{ type: 'chord', string: 'F. Em. Dm. C.', model: 'F. Em. Dm. C.' },
@@ -257,6 +261,7 @@ Let it be`;
 			{ type: 'text', string: 'And in my hour of darkness'},
 			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
 			{ type: 'text', string: 'she is standing right in front of me'},
+			{ type: 'emptyLine', string: ''},
 			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
 			{ type: 'text', string: 'Speaking words of wisdom'},
 			{ type: 'chord', string: 'F. Em. Dm. C.', model: 'F. Em. Dm. C.' },
@@ -277,6 +282,7 @@ Let it be`;
 			{ type: 'text', string: 'And when the broken hearted people'},
 			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
 			{ type: 'text', string: 'Living in the world agree'},
+			{ type: 'emptyLine', string: ''},
 			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
 			{ type: 'text', string: 'There will be an answer'},
 			{ type: 'chord', string: 'F. Em. Dm. C.', model: 'F. Em. Dm. C.' },
@@ -302,7 +308,7 @@ Let it be`;
 		expect(parsed).toEqual(expected);
 	});
 
-	test.skip('blueprint overflows repeat', () => {
+	test('blueprint overflows repeat, last empty line of repeat is not "chorded"', () => {
 		getAllChordsInSong.mockReturnValue([]);
 		parseChordLine.mockImplementation(chordLine => chordLine);
 
@@ -322,7 +328,11 @@ line2-2
 
 #v
 line3-1
-line3-2`;
+line3-2
+line3-3
+
+
+`;
 
 		const allLines = [
 			{ type: 'sectionLabel', string: '#v', index: 1, model: parseSectionLabel('#v'), id: 'v1' },
@@ -346,6 +356,94 @@ line3-2`;
 			{ type: 'text', string: 'line3-1'},
 			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
 			{ type: 'text', string: 'line3-2'},
+			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
+			{ type: 'text', string: 'line3-3'},
+			{ type: 'emptyLine', string: ''},
+			{ type: 'emptyLine', string: ''},
+			{ type: 'emptyLine', string: ''},
+		];
+
+		const expected = {
+			allLines,
+			allChords: []
+		};
+
+		const parsed = parseSong(input);
+		expect(parsed).toEqual(expected);
+	});
+
+	test('repeat overflows blueprint', () => {
+		getAllChordsInSong.mockReturnValue([]);
+		parseChordLine.mockImplementation(chordLine => chordLine);
+
+		const input = `#v
+C.. G..
+line1-1
+Am.. F..
+line1-2
+
+#v
+line2-1
+line2-2
+C.. G..
+line2-3
+F. Em. Dm. C.
+line2-4`;
+
+		const allLines = [
+			{ type: 'sectionLabel', string: '#v', index: 1, model: parseSectionLabel('#v'), id: 'v1' },
+			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
+			{ type: 'text', string: 'line1-1'},
+			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
+			{ type: 'text', string: 'line1-2'},
+			{ type: 'emptyLine', string: ''},
+			{ type: 'sectionLabel', string: '#v', index: 2, model: parseSectionLabel('#v'), id: 'v2' },
+			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
+			{ type: 'text', string: 'line2-1'},
+			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
+			{ type: 'text', string: 'line2-2'},
+			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
+			{ type: 'text', string: 'line2-3'},
+			{ type: 'chord', string: 'F. Em. Dm. C.', model: 'F. Em. Dm. C.' },
+			{ type: 'text', string: 'line2-4'},
+		];
+
+		const expected = {
+			allLines,
+			allChords: []
+		};
+
+		const parsed = parseSong(input);
+		expect(parsed).toEqual(expected);
+	});
+
+	test('allow chords override in repeat', () => {
+		getAllChordsInSong.mockReturnValue([]);
+		parseChordLine.mockImplementation(chordLine => chordLine);
+
+		const input = `#v
+C.. G..
+line1-1
+Am.. F..
+line1-2
+
+#v
+line2-1
+F. Em. Dm. C.
+line2-2`;
+
+		const allLines = [
+			{ type: 'sectionLabel', string: '#v', index: 1, model: parseSectionLabel('#v'), id: 'v1' },
+			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
+			{ type: 'text', string: 'line1-1'},
+			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
+			{ type: 'text', string: 'line1-2'},
+			{ type: 'emptyLine', string: ''},
+			{ type: 'sectionLabel', string: '#v', index: 2, model: parseSectionLabel('#v'), id: 'v2' },
+			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
+			{ type: 'text', string: 'line2-1'},
+			{ type: 'chord', string: 'F. Em. Dm. C.', model: 'F. Em. Dm. C.' },
+			{ type: 'text', string: 'line2-2'},
 		];
 
 		const expected = {

@@ -2,6 +2,7 @@ Imagine
 John Lennon
 4/4
 
+#v
 C... CM7. F
 Imagine there's no heaven
 C... CM7. F
