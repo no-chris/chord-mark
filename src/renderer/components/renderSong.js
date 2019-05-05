@@ -8,6 +8,7 @@ import { forEachChordInSong } from '../../parser/helper/songs';
 
 import renderChordLine from './renderChordLine';
 import renderTextLine from './renderTextLine';
+import renderSectionLabel from './renderSectionLabel';
 
 import songTpl from './tpl/song.hbs';
 import getChordSymbol from '../helpers/getChordSymbol';
@@ -49,6 +50,9 @@ export default function renderSong(parsedSong, {
 					: simpleChordSpacer(line.model);
 
 				line.rendered = renderChordLine(spaced);
+
+			} else if (line.type === 'sectionLabel') {
+				line.rendered = renderSectionLabel(line.model, line.index);
 
 			} else if (line.type === 'text') {
 				line.rendered = renderTextLine(line.string);

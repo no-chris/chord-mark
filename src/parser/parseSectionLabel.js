@@ -1,16 +1,5 @@
 import isSectionLabel from './matchers/isSectionLabel';
 
-const labelsShortcuts = {
-	i: 'intro',
-	v: 'verse',
-	p: 'pre-chorus',
-	c: 'chorus',
-	b: 'bridge',
-	s: 'solo',
-	o: 'outro',
-	a: 'adlib',
-};
-
 /**
  * @typedef {Object} SectionLabel
  * @type {Object}
