@@ -58,6 +58,7 @@ export default function parseSong(song) {
 	let blueprintIndex = 0;
 	let blueprintLine = '';
 	let isRepeatingChords = false;
+	let previousChordLine;
 
 	let timeSignature = parseTimeSignature(defaultTimeSignature);
 
@@ -101,6 +102,7 @@ export default function parseSong(song) {
 				try {
 					line.type = 'chord';
 					line.model = parseChordLine(line.string, { timeSignature });
+					previousChordLine = _cloneDeep(line);
 
 				} catch (e) {
 					line.type = 'text';

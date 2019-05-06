@@ -1,11 +1,16 @@
 import _isEqual from 'lodash/isEqual';
 import _cloneDeep from 'lodash/cloneDeep';
 
+import syntax from './syntax';
+import clearSpaces from './helper/clearSpaces';
+
 import parseChord from './parseChord';
 import parseTimeSignature from './parseTimeSignature';
 
 import IncorrectBeatCountException from './exceptions/IncorrectBeatCountException';
 import InvalidChordRepetitionException from './exceptions/InvalidChordRepetitionException';
+
+const chordBeatCountSymbols = new RegExp(syntax.chordBeatCount, 'g');
 
 /**
  * @typedef {Object} ChordLine
@@ -43,9 +48,7 @@ export default function parseChordLine(
 ) {
 	const { beatCount } = timeSignature;
 
-	const allLineChords = chordLine
-		.replace(/  +/g, ' ')
-		.trim()
+	const allTokens = clearSpaces(chordLine)
 		.split(' ');
 	const allBars = [];
 
@@ -56,11 +59,11 @@ export default function parseChordLine(
 	let chordCount = 0;
 	let previousChord = {};
 
-	allLineChords.forEach(chordString => {
-		model = parseChord(chordString.replace(/\./g, ''));
+	allTokens.forEach(token => {
+		model = parseChord(token.replace(chordBeatCountSymbols, ''));
 		chord = {
-			string: chordString,
-			duration: ((chordString.match(/\./g) || []).length) || beatCount,
+			string: token,
+			duration: ((token.match(chordBeatCountSymbols) || []).length) || beatCount,
 			model,
 		};
 		chord.beat = currentBeatCount + 1;

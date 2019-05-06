@@ -8,9 +8,13 @@ describe('isEmptyLine', () => {
 
 describe.each([
 
-	['',  true],
-	[' ',  true],
-	['    ',  true],
+	['',  	 	true],
+	[' ',    	true],
+	['    ', 	true],
+	['		',	true], //tab
+	['	',		true], //tab
+	['\t',   	true],
+	['\t\t',   	true],
 
 	['  . ',  false],
 
