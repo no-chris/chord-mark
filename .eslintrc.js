@@ -31,7 +31,7 @@ module.exports = {
 		'max-len': 					[ 'error', {'code': 150 } ],
 		'max-lines': 				[ 'error', { max: 300, skipBlankLines: true, skipComments: true, } ],
 		'max-lines-per-function': 	[ 'warn', { max: 50, skipBlankLines: true, skipComments: true, }],
-		'max-params': 				[ 'warn', { max: 3 } ],
+		'max-params': 				[ 'warn', { max: 4 } ],
 		'no-shadow': 				[ 'error', { 'builtinGlobals': true } ],
 		'quotes': 					[ 'error', 'single' ],
 		'semi': 					[ 'error', 'always'],
