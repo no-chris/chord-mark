@@ -22,9 +22,9 @@ export function forEachChordInSong(allLines, fn) {
 
 
 /**
- * @param {ChordLine[]} chordLine
+ * @param {ChordLine} chordLine
  * @param {Function} fn - to execute on each chord
- * @returns {ChordLine[]}
+ * @returns {ChordLine}
  */
 export function forEachChordInChordLine(chordLine, fn) {
 	const newChordLine = _cloneDeep(chordLine);

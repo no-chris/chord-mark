@@ -11,6 +11,7 @@ import IncorrectBeatCountException from './exceptions/IncorrectBeatCountExceptio
 import InvalidChordRepetitionException from './exceptions/InvalidChordRepetitionException';
 
 const chordBeatCountSymbols = new RegExp(syntax.chordBeatCount, 'g');
+const barRepeatSymbols = new RegExp('^' + syntax.barRepeat + '+$');
 const defaultTimeSignature = parseTimeSignature('4/4');
 
 /**
@@ -56,31 +57,46 @@ export default function parseChordLine(
 	let chord = {};
 	let currentBeatCount = 0;
 	let chordCount = 0;
+	let previousBar;
 
 	const allTokens = clearSpaces(chordLine).split(' ');
 	allTokens.forEach((token, tokenIndex) => {
-		chord = {
-			string: token,
-			duration: getChordDuration(token, beatCount),
-			model: parseChord(token.replace(chordBeatCountSymbols, '')),
-			beat: currentBeatCount + 1,
-		};
-		currentBeatCount += chord.duration;
-
-		checkInvalidChordRepetition(bar, chord);
-
-		bar.allChords.push(chord);
-		chordCount++;
-
-		if (shouldChangeBar(currentBeatCount, beatCount)) {
-			bar.timeSignature = timeSignature;
-			allBars.push(_cloneDeep(bar));
-
-			bar = _cloneDeep(emptyBar);
-			currentBeatCount = 0;
+		if (token.match(barRepeatSymbols)) {
+			if (previousBar) {
+				for(let i = 0; i < token.length; i++) {
+					allBars.push(_cloneDeep(previousBar));
+				}
+			} else {
+				throw new Error('A chord line cannot start with the barRepeat symbol');
+			}
 
 		} else {
-			checkInvalidBeatCount(chord, currentBeatCount, beatCount, (allTokens.length === (tokenIndex + 1)));
+			chord = {
+				string: token,
+				duration: getChordDuration(token, beatCount),
+				model: parseChord(token.replace(chordBeatCountSymbols, '')),
+				beat: currentBeatCount + 1,
+			};
+			currentBeatCount += chord.duration;
+
+			checkInvalidChordRepetition(bar, chord);
+
+			bar.allChords.push(chord);
+			chordCount++;
+
+			if (shouldChangeBar(currentBeatCount, beatCount)) {
+				bar.timeSignature = timeSignature;
+				const barClone = _cloneDeep(bar);
+
+				allBars.push(barClone);
+				previousBar = barClone;
+
+				bar = _cloneDeep(emptyBar);
+				currentBeatCount = 0;
+
+			} else {
+				checkInvalidBeatCount(chord, currentBeatCount, beatCount, (allTokens.length === (tokenIndex + 1)));
+			}
 		}
 	});
 

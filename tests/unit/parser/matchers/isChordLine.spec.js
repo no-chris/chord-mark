@@ -18,7 +18,9 @@ describe.each([
 	[ 'A		C', 	true ], // with 2 tabs
 	[ 'A	 	C', 	true ], // with tab + space + tav
 	[ 'A /', 			true ],
+	[ 'A ///', 			true ],
 	[ 'A.. B.. /',		true ],
+	[ 'A.. B.. ///',	true ],
 
 	[ undefined,		false ],
 	[ '',	 			false ],
