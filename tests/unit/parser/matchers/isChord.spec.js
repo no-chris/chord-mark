@@ -1,8 +1,8 @@
-import isChordLineToken from '../../../../src/parser/matchers/isChordLineToken';
+import isChord from '../../../../src/parser/matchers/isChord';
 
-describe('isChordLineToken', () => {
+describe('isChord', () => {
 	test('Module', () => {
-		expect(isChordLineToken).toBeInstanceOf(Function);
+		expect(isChord).toBeInstanceOf(Function);
 	});
 });
 
@@ -15,8 +15,6 @@ describe.each([
 	[ 'AM7', 	true],
 	[ 'Asus4', 	true],
 
-	[ '/', 	true],
-
 	[ undefined,false],
 	[ {},	 	false],
 	[ '',	 	false],
@@ -26,6 +24,6 @@ describe.each([
 
 ])('When given %s', (input, output) => {
 	test('Properly recognize as chord', () => {
-		expect(isChordLineToken(input)).toEqual(output);
+		expect(isChord(input)).toEqual(output);
 	});
 });

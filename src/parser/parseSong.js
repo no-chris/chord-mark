@@ -5,6 +5,7 @@ import escapeHTML from '../core/dom/escapeHTML';
 import stripTags from '../core/dom/stripTags';
 
 import isChordLine from './matchers/isChordLine';
+import isChordLineRepeater from './matchers/isChordLineRepeater';
 import isSectionLabel from './matchers/isSectionLabel';
 import isTimeSignature from './matchers/isTimeSignatureString';
 import isEmptyLine from './matchers/isEmptyLine';
@@ -102,9 +103,16 @@ export default function parseSong(song) {
 				try {
 					line.type = 'chord';
 					line.model = parseChordLine(line.string, { timeSignature });
-					previousChordLine = _cloneDeep(line);
+					previousChordLine = line;
 
 				} catch (e) {
+					line.type = 'text';
+				}
+
+			} else if (isChordLineRepeater(line.string)) {
+				if (previousChordLine) {
+					line = _cloneDeep(previousChordLine);
+				} else {
 					line.type = 'text';
 				}
 
@@ -118,6 +126,9 @@ export default function parseSong(song) {
 			if (isRepeatingChords && line.type !== 'sectionLabel') {
 				blueprintLine = sectionBlueprint[blueprintIndex];
 				while (shouldRepeatLineFromBlueprint(blueprintLine, line)) {
+					if (blueprintLine.type === 'chord') {
+						previousChordLine = _cloneDeep(blueprintLine);
+					}
 					allLines.push(_cloneDeep(blueprintLine));
 					blueprintIndex++;
 					blueprintLine = sectionBlueprint[blueprintIndex];
@@ -142,9 +153,9 @@ function getSectionIndex(currentLabel, allSectionLabels) {
 }
 
 function isFirstOfLabel(currentLabel, allLines) {
-	return allLines.filter(line =>
-		(line.type === 'sectionLabel' && line.model.label === currentLabel.label)
-	).length === 0;
+	return allLines.every(line =>
+		(line.type === 'sectionLabel' && line.model.label !== currentLabel.label)
+	);
 }
 
 function shouldRepeatLineFromBlueprint(blueprintLine, currentLine) {

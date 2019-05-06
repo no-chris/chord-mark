@@ -17,15 +17,21 @@ describe.each([
 	[ 'A.	C..', 		true ], // with 1 tab
 	[ 'A		C', 	true ], // with 2 tabs
 	[ 'A	 	C', 	true ], // with tab + space + tav
+	[ 'A /', 			true ],
+	[ 'A.. B.. /',		true ],
 
 	[ undefined,		false ],
 	[ '',	 			false ],
 	[ 'AB ', 			false ],
-	[ 'A H ', 			false ],
-	[ 'A C/H ', 		false ],
+	[ 'A X ', 			false ],
+	[ 'A C/R ', 		false ],
 	[ '  .A  ..C  ', 	false ],
 	[ '  .A  C./F  ', 	false ],
 	[ 'A | B', 			false ],
+	[ '/', 				false ],
+	[ '/ A',			false ],
+	[ '/..', 			false ],
+	[ 'A B /.', 		false ],
 
 ])('Test Chord line %s', (line, output) => {
 	test('Correctly detect chord line', () => {

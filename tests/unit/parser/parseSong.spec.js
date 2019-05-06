@@ -200,10 +200,13 @@ describe('sectionId', () => {
 	});
 
 	test('automatically apply chords of previously defined identical section. Sections can contain empty lines.', () => {
+		const ts4_4 = parseTimeSignature('4/4');
+
 		getAllChordsInSong.mockReturnValue([]);
 		parseChordLine.mockImplementation(chordLine => chordLine);
 
 		const input = `#v
+4/4
 C.. G..
 When I find myself in times of trouble
 Am.. F..
@@ -246,6 +249,7 @@ Let it be`;
 
 		const allLines = [
 			{ type: 'sectionLabel', string: '#v', index: 1, model: parseSectionLabel('#v'), id: 'v1' },
+			{ type: 'timeSignature', string: '4/4', model: ts4_4 },
 			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
 			{ type: 'text', string: 'When I find myself in times of trouble'},
 			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
@@ -257,6 +261,7 @@ Let it be`;
 			{ type: 'text', string: 'Let it be'},
 			{ type: 'emptyLine', string: ''},
 			{ type: 'sectionLabel', string: '#v', index: 2, model: parseSectionLabel('#v'), id: 'v2' },
+			{ type: 'timeSignature', string: '4/4', model: ts4_4 },
 			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
 			{ type: 'text', string: 'And in my hour of darkness'},
 			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
@@ -278,6 +283,7 @@ Let it be`;
 			{ type: 'text', string: 'Let it be'},
 			{ type: 'emptyLine', string: ''},
 			{ type: 'sectionLabel', string: '#v', index: 3, model: parseSectionLabel('#v'), id: 'v3' },
+			{ type: 'timeSignature', string: '4/4', model: ts4_4 },
 			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
 			{ type: 'text', string: 'And when the broken hearted people'},
 			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
@@ -443,6 +449,108 @@ line2-2`;
 			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
 			{ type: 'text', string: 'line2-1'},
 			{ type: 'chord', string: 'F. Em. Dm. C.', model: 'F. Em. Dm. C.' },
+			{ type: 'text', string: 'line2-2'},
+		];
+
+		const expected = {
+			allLines,
+			allChords: []
+		};
+
+		const parsed = parseSong(input);
+		expect(parsed).toEqual(expected);
+	});
+});
+
+describe('chordLineRepeater', () => {
+	test('should allow to repeat last chordLine', () => {
+		getAllChordsInSong.mockReturnValue([]);
+		parseChordLine.mockImplementation(chordLine => chordLine);
+
+		const input = `C.. G..
+line1-1
+/
+line1-2
+
+
+/
+line2-1`;
+
+		const allLines = [
+			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
+			{ type: 'text', string: 'line1-1'},
+			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
+			{ type: 'text', string: 'line1-2'},
+			{ type: 'emptyLine', string: ''},
+			{ type: 'emptyLine', string: ''},
+			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
+			{ type: 'text', string: 'line2-1'},
+		];
+
+		const expected = {
+			allLines,
+			allChords: []
+		};
+
+		const parsed = parseSong(input);
+		expect(parsed).toEqual(expected);
+	});
+
+	test('should be parsed as text line if there is no chordLine before', () => {
+		getAllChordsInSong.mockReturnValue([]);
+		parseChordLine.mockImplementation(chordLine => chordLine);
+
+		const input = `/
+line1-1
+/
+line1-2
+/
+line1-3`;
+
+		const allLines = [
+			{ type: 'text', string: '/'},
+			{ type: 'text', string: 'line1-1'},
+			{ type: 'text', string: '/'},
+			{ type: 'text', string: 'line1-2'},
+			{ type: 'text', string: '/'},
+			{ type: 'text', string: 'line1-3'},
+		];
+
+		const expected = {
+			allLines,
+			allChords: []
+		};
+
+		const parsed = parseSong(input);
+		expect(parsed).toEqual(expected);
+	});
+
+	test('should be usable in repeated section', () => {
+		getAllChordsInSong.mockReturnValue([]);
+		parseChordLine.mockImplementation(chordLine => chordLine);
+
+		const input = `#v
+C.. G..
+line1-1
+Am.. F..
+line1-2
+
+#v
+line2-1
+/
+line2-2`;
+
+		const allLines = [
+			{ type: 'sectionLabel', string: '#v', index: 1, model: parseSectionLabel('#v'), id: 'v1' },
+			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
+			{ type: 'text', string: 'line1-1'},
+			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
+			{ type: 'text', string: 'line1-2'},
+			{ type: 'emptyLine', string: ''},
+			{ type: 'sectionLabel', string: '#v', index: 2, model: parseSectionLabel('#v'), id: 'v2' },
+			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
+			{ type: 'text', string: 'line2-1'},
+			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
 			{ type: 'text', string: 'line2-2'},
 		];
 
