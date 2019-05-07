@@ -1,6 +1,8 @@
 jest.mock('../../../src/parser/getAllChordsInSong');
 jest.mock('../../../src/parser/parseChordLine');
 
+import _ from 'lodash';
+
 import parseSong from '../../../src/parser/parseSong';
 
 import getAllChordsInSong from '../../../src/parser/getAllChordsInSong';
@@ -164,7 +166,7 @@ describe('timeSignature', () => {
 });
 
 
-describe('sectionId', () => {
+describe('sectionLabels and autoRepeatChords', () => {
 	test('correctly parse section labels', () => {
 		const input = [
 			'#i',
@@ -190,6 +192,8 @@ describe('sectionId', () => {
 				{ type: 'sectionLabel', string: '#c', model: sectionsParsed[5], index: 2, id: 'c2' },
 				{ type: 'sectionLabel', string: '#v', model: sectionsParsed[6], index: 4, id: 'v4' },
 				{ type: 'sectionLabel', string: '#c x2', model: sectionsParsed[7], index: 3, id: 'c3' },
+				{ type: 'sectionLabel', string: '#c x2',
+					model: _.cloneDeep(sectionsParsed[7]), index: 4, id: 'c4', isRepeated: true },
 				{ type: 'sectionLabel', string: '#o', model: sectionsParsed[8], index: 1, id: 'o1' },
 			],
 			allChords: []
@@ -552,6 +556,44 @@ line2-2`;
 			{ type: 'text', string: 'line2-1'},
 			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
 			{ type: 'text', string: 'line2-2'},
+		];
+
+		const expected = {
+			allLines,
+			allChords: []
+		};
+
+		const parsed = parseSong(input);
+		expect(parsed).toEqual(expected);
+	});
+});
+
+
+describe('Repeat directive (x3, x5...)', () => {
+	test('should allow to repeat section', () => {
+		getAllChordsInSong.mockReturnValue([]);
+		parseChordLine.mockImplementation(chordLine => chordLine);
+
+		const input = `#v x2
+C.. G..
+line1-1
+Am.. F..
+line1-2
+`;
+
+		const allLines = [
+			{ type: 'sectionLabel', string: '#v x2', index: 1, model: parseSectionLabel('#v x2'), id: 'v1' },
+			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
+			{ type: 'text', string: 'line1-1'},
+			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
+			{ type: 'text', string: 'line1-2'},
+			{ type: 'emptyLine', string: ''},
+			{ type: 'sectionLabel', string: '#v x2', index: 2, model: parseSectionLabel('#v x2'), id: 'v2', isRepeated: true },
+			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
+			{ type: 'text', string: 'line1-1'},
+			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
+			{ type: 'text', string: 'line1-2'},
+			{ type: 'emptyLine', string: ''},
 		];
 
 		const expected = {

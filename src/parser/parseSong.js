@@ -60,6 +60,8 @@ export default function parseSong(song) {
 	let blueprintLine = '';
 	let isRepeatingChords = false;
 	let previousChordLine;
+	let shouldRepeatSection = false;
+	let lastSectionLabelLine;
 
 	let timeSignature = parseTimeSignature(defaultTimeSignature);
 
@@ -73,7 +75,7 @@ export default function parseSong(song) {
 		.map(escapeHTML)
 		.map(stripTags)
 		.map(string => ({ string, type: '' }))
-		.forEach((line) => {
+		.forEach((line, lineIndex, allSrcLines) => {
 			if (isTimeSignature(line.string)) {
 				timeSignature = parseTimeSignature(line.string);
 
@@ -90,6 +92,9 @@ export default function parseSong(song) {
 				line.id = sectionLabel.label + sectionIndex;
 
 				allSectionLabels.push(sectionLabel);
+
+				shouldRepeatSection = (sectionLabel.repeatTimes > 0);
+				lastSectionLabelLine = _cloneDeep(line);
 
 				if (!isFirstOfLabel(sectionLabel, allLines)) {
 					sectionBlueprint = getNthOfLabel(allLines, sectionLabel.label, 1);
@@ -137,6 +142,21 @@ export default function parseSong(song) {
 			}
 
 			allLines.push(line);
+
+			if (shouldRepeatSection && isLastLineOfSection(lineIndex, allSrcLines)) {
+				const toRepeat = getNthOfLabel(allLines, sectionLabel.label, sectionIndex);
+				let sectionLabelLine;
+				for (let i = 1; i < sectionLabel.repeatTimes; i++) {
+					sectionLabelLine = {
+						..._cloneDeep(lastSectionLabelLine),
+						index: ++sectionIndex,
+						id: sectionLabel.label + sectionIndex,
+						isRepeated: true,
+					};
+					allLines.push(sectionLabelLine);
+					allLines.push(..._cloneDeep(toRepeat));
+				}
+			}
 		});
 
 
@@ -164,4 +184,9 @@ function shouldRepeatLineFromBlueprint(blueprintLine, currentLine) {
 		&& blueprintLine.type !== 'emptyLine'
 		&& blueprintLine.type !== currentLine.type
 		&& currentLine.type !== 'emptyLine';
+}
+
+function isLastLineOfSection(lineIndex, allSrcLines) {
+	const nextLine = allSrcLines[lineIndex + 1];
+	return !nextLine || isSectionLabel(nextLine.string);
 }

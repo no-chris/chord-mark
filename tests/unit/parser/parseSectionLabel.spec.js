@@ -25,11 +25,8 @@ describe.each([
 	['#whatever', 'whatever', 0],
 
 	['#v x2', 'v', 2],
-	['#i x9', 'i', 9],
-
-	['#i', 'i', 0],
-
 	['#c x3', 'c', 3],
+	['#i x9', 'i', 9],
 
 ])('Section identifier %s => %s', (string, label, repeatTimes) => {
 	test('Correctly gets identifier', () => {
