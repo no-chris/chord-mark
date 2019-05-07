@@ -13,9 +13,7 @@ describe('chordLine renderer', () => {
 	test('Module', () => {
 		expect(renderChordLine).toBeInstanceOf(Function);
 	});
-});
 
-describe('Behaviour', () => {
 	test('Should return valid html', () => {
 		renderBarContent.mockReturnValue('C');
 

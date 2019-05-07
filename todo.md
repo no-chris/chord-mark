@@ -7,3 +7,4 @@
 - refactor chordMark CSS
 - rename section => stanza ?
 - remove manual mocks
+- expandSectionRepeats as user option

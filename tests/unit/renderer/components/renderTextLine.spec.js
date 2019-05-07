@@ -5,9 +5,7 @@ describe('renderTextLine', () => {
 	test('Module', () => {
 		expect(renderTextLine).toBeInstanceOf(Function);
 	});
-});
 
-describe('Behaviour', () => {
 	test('Should return valid html', () => {
 		const rendered = renderTextLine('textContent');
 		const element = htmlToElement(rendered);

@@ -7,6 +7,15 @@ describe('chordSymbol renderer', () => {
 	test('Module', () => {
 		expect(renderChordSymbol).toBeInstanceOf(Object);
 	});
+
+	test('Should return valid html', () => {
+		const rendered = renderChordSymbol('C');
+		const element = htmlToElement(rendered);
+
+		expect(element).toBeInstanceOf(Node);
+		expect(element.nodeName).toBe('SPAN');
+		expect(element.classList.contains('cmChordSymbol')).toBe(true);
+	});
 });
 
 describe.each([
@@ -18,16 +27,5 @@ describe.each([
 	test('expected rendering', () => {
 		const rendered = renderChordSymbol(input);
 		expect(stripTags(rendered)).toEqual(output);
-	});
-});
-
-describe('Behaviour', () => {
-	test('Should return valid html', () => {
-		const rendered = renderChordSymbol('C');
-		const element = htmlToElement(rendered);
-
-		expect(element).toBeInstanceOf(Node);
-		expect(element.nodeName).toBe('SPAN');
-		expect(element.classList.contains('cmChordSymbol')).toBe(true);
 	});
 });

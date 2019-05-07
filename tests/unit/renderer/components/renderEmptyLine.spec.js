@@ -5,9 +5,7 @@ describe('renderEmptyLine', () => {
 	test('Module', () => {
 		expect(renderEmptyLine).toBeInstanceOf(Function);
 	});
-});
 
-describe('Behaviour', () => {
 	test('Should return valid html', () => {
 		const rendered = renderEmptyLine();
 		const element = htmlToElement(rendered);
@@ -16,7 +14,10 @@ describe('Behaviour', () => {
 		expect(element.nodeName).toBe('P');
 		expect(element.classList.contains('cmEmptyLine')).toBe(true);
 	});
+});
 
+
+describe('Behaviour', () => {
 	test('renders empty line as non-breaking space', () => {
 		const rendered = renderEmptyLine();
 		const element = htmlToElement(rendered);

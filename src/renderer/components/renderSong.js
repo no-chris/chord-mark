@@ -20,13 +20,15 @@ import getChordSymbol from '../helpers/getChordSymbol';
  * @param {Number} transposeValue
  * @param {('auto'|'flat'|'sharp')} accidentalsType
  * @param {Boolean} harmonizeAccidentals
+ * @param {Boolean} expandSectionRepeats
  * @returns {String} rendered HTML
  */
 export default function renderSong(parsedSong, {
 	alignBars = false,
 	transposeValue = 0,
 	accidentalsType = 'auto',
-	harmonizeAccidentals = true
+	harmonizeAccidentals = true,
+	expandSectionRepeats = true,
 } = {}) {
 	let { allLines, allChords } = parsedSong;
 
@@ -42,8 +44,15 @@ export default function renderSong(parsedSong, {
 	});
 
 	const maxBeatsWidth = getMaxBeatsWidth(allLines);
+	let shouldSkipRepeatedSectionLine = false;
 
 	const song = allLines
+		.filter(line => {
+			if (line.type === 'sectionLabel') {
+				shouldSkipRepeatedSectionLine = (line.isRepeated === true && !expandSectionRepeats);
+			}
+			return !shouldSkipRepeatedSectionLine;
+		})
 		.map(line => {
 			if (line.type === 'chord') {
 				const spaced = (alignBars)
@@ -56,7 +65,7 @@ export default function renderSong(parsedSong, {
 				line.rendered = renderEmptyLine();
 
 			} else if (line.type === 'sectionLabel') {
-				line.rendered = renderSectionLabel(line.model, line.index);
+				line.rendered = renderSectionLabel(line.model, line.index, { expandSectionRepeats });
 
 			} else if (line.type === 'text') {
 				line.rendered = renderTextLine(line.string);

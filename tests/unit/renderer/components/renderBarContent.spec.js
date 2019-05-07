@@ -16,6 +16,18 @@ describe('renderBarContent', () => {
 	test('Module', () => {
 		expect(renderBarContent).toBeInstanceOf(Function);
 	});
+
+	test('Should return valid html', () => {
+		let parsed = parseChordLine('C.. G. F.');
+		parsed = forEachChordInChordLine(parsed, chord => chord.symbol = getChordSymbol(chord.model));
+
+		const rendered = renderBarContent(parsed.allBars[0]);
+		const element = htmlToElement(rendered);
+
+		expect(element).toBeInstanceOf(Node);
+		expect(element.nodeName).toBe('SPAN');
+		expect(element.classList.contains('cmBarContent')).toBe(true);
+	});
 });
 
 describe.each([
@@ -86,19 +98,5 @@ describe.each([
 		const rendered = renderBarContent(parsed.allBars[0]);
 
 		expect(stripTags(rendered)).toEqual(output);
-	});
-});
-
-describe('Behaviour', () => {
-	test('Should return valid html', () => {
-		let parsed = parseChordLine('C.. G. F.');
-		parsed = forEachChordInChordLine(parsed, chord => chord.symbol = getChordSymbol(chord.model));
-
-		const rendered = renderBarContent(parsed.allBars[0]);
-		const element = htmlToElement(rendered);
-
-		expect(element).toBeInstanceOf(Node);
-		expect(element.nodeName).toBe('SPAN');
-		expect(element.classList.contains('cmBarContent')).toBe(true);
 	});
 });

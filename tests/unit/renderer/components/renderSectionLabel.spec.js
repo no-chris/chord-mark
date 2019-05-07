@@ -6,9 +6,7 @@ describe('renderSectionLabel', () => {
 	test('Module', () => {
 		expect(renderSectionLabel).toBeInstanceOf(Function);
 	});
-});
 
-describe('Behaviour', () => {
 	test('Should return valid html', () => {
 		const rendered = renderSectionLabel(parseSectionLabel('#v'), 1);
 		const element = htmlToElement(rendered);
@@ -17,11 +15,19 @@ describe('Behaviour', () => {
 		expect(element.nodeName).toBe('P');
 		expect(element.classList.contains('cmSectionLabel')).toBe(true);
 	});
+});
 
+describe('Shortcuts and case', () => {
 	describe.each([
-		[ '#v', 1, 'Verse 1' ],
-		[ '#c', 1, 'Chorus 1' ],
+		[ '#a', 1, 'Adlib 1' ],
 		[ '#b', 1, 'Bridge 1' ],
+		[ '#c', 1, 'Chorus 1' ],
+		[ '#i', 1, 'Intro 1' ],
+		[ '#o', 1, 'Outro 1' ],
+		[ '#p', 1, 'Pre-chorus 1' ],
+		[ '#s', 1, 'Solo 1' ],
+		[ '#u', 1, 'Interlude 1' ],
+		[ '#v', 1, 'Verse 1' ],
 	])('Should replace shortcuts', (string, index, output) => {
 		test('expands ' + string + ' to ' + output, () => {
 			const rendered = renderSectionLabel(parseSectionLabel(string), index);
@@ -45,7 +51,10 @@ describe('Behaviour', () => {
 			expect(element.innerHTML).toBe(output);
 		});
 	});
+});
 
+
+describe('Label indexes', () => {
 	describe.each([
 		[ '#v', 5, 'Verse 5' ],
 		[ '#c', 3, 'Chorus 3' ],
@@ -59,5 +68,23 @@ describe('Behaviour', () => {
 			expect(element.innerHTML).toBe(output);
 		});
 	});
+});
 
+
+describe('Repeat indications', () => {
+	test('should NOT append repeat indication if expandSectionRepeats === true', () => {
+		const rendered = renderSectionLabel(parseSectionLabel('#v x5'), 2, { expandSectionRepeats: true });
+		const element = htmlToElement(rendered);
+
+		expect(element).toBeInstanceOf(Node);
+		expect(element.innerHTML).toBe('Verse 2');
+	});
+
+	test('should append repeat indication if expandSectionRepeats === false', () => {
+		const rendered = renderSectionLabel(parseSectionLabel('#v x5'), 2, { expandSectionRepeats: false });
+		const element = htmlToElement(rendered);
+
+		expect(element).toBeInstanceOf(Node);
+		expect(element.innerHTML).toBe('Verse 2 x5');
+	});
 });
