@@ -8,3 +8,5 @@
 - rename section => stanza ?
 - remove manual mocks
 - expandSectionRepeats as user option
+- autoRepeatChords as user option
+- extract default settings (time signature, etc.) ?

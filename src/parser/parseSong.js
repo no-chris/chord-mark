@@ -1,31 +1,11 @@
 import _isArray from 'lodash/isArray';
-import _cloneDeep from 'lodash/cloneDeep';
 
 import escapeHTML from '../core/dom/escapeHTML';
 import stripTags from '../core/dom/stripTags';
 
-import isChordLine from './matchers/isChordLine';
-import isChordLineRepeater from './matchers/isChordLineRepeater';
-import isSectionLabel from './matchers/isSectionLabel';
-import isTimeSignature from './matchers/isTimeSignatureString';
-import isEmptyLine from './matchers/isEmptyLine';
-
-import parseChordLine from './parseChordLine';
-import parseSectionLabel from './parseSectionLabel';
-import parseTimeSignature from './parseTimeSignature';
+import songLinesFactory from './songLinesFactory';
 
 import getAllChordsInSong from './getAllChordsInSong';
-import { getNthOfLabel } from './helper/songs';
-
-/**
- * @typedef {Object} SongLine
- * @type {Object}
- * @property {String} string - original line in source file
- * @property {String} type - chord|text|timeSignature|sectionLabel...
- * @property {ChordLine|TimeSignature|SectionLabel} model
- * @property {Number} [index] - if sectionLabel, index of the section for a given label
- * @property {Number} [id] - if sectionLabel, section id
- */
 
 /**
  * @typedef {Object} Song
@@ -42,151 +22,27 @@ import { getNthOfLabel } from './helper/songs';
  */
 
 /**
- * @type {string}
- */
-const defaultTimeSignature = '4/4';
-
-/**
- * @param {string|array} song
+ * @param {string|array} songSrc
  * @returns {Song}
  */
-export default function parseSong(song) {
-	const songLines = (!_isArray(song)) ? song.split('\n') : song;
+export default function parseSong(songSrc) {
+	const songArray = (!_isArray(songSrc)) ? songSrc.split('\n') : songSrc;
 
-	let sectionLabel = '';
-	let sectionIndex = 0;
-	let sectionBlueprint = [];
-	let blueprintIndex = 0;
-	let blueprintLine = '';
-	let isRepeatingChords = false;
-	let previousChordLine;
-	let shouldRepeatSection = false;
-	let lastSectionLabelLine;
-
-	let timeSignature = parseTimeSignature(defaultTimeSignature);
-
-	const allSectionLabels = [];
-	const allLines = [];
+	const songLines = songLinesFactory();
 
 	/**
 	 * @type {SongLine[]}
 	 */
-	songLines
+	songArray
 		.map(escapeHTML)
 		.map(stripTags)
-		.map(string => ({ string, type: '' }))
-		.forEach((line, lineIndex, allSrcLines) => {
-			if (isTimeSignature(line.string)) {
-				timeSignature = parseTimeSignature(line.string);
+		.forEach(songLines.addLine);
 
-				line.type = 'timeSignature';
-				line.model = timeSignature;
-
-			} else if (isSectionLabel(line.string)) {
-				sectionLabel = parseSectionLabel(line.string);
-				sectionIndex = getSectionIndex(sectionLabel.label, allSectionLabels);
-
-				line.type = 'sectionLabel';
-				line.model = sectionLabel;
-				line.index = sectionIndex;
-				line.id = sectionLabel.label + sectionIndex;
-
-				allSectionLabels.push(sectionLabel);
-
-				shouldRepeatSection = (sectionLabel.repeatTimes > 0);
-				lastSectionLabelLine = _cloneDeep(line);
-
-				if (!isFirstOfLabel(sectionLabel, allLines)) {
-					sectionBlueprint = getNthOfLabel(allLines, sectionLabel.label, 1);
-					isRepeatingChords = true;
-					blueprintIndex = 0;
-				} else {
-					isRepeatingChords = false;
-				}
-
-			} else if (isChordLine(line.string)) {
-				try {
-					line.type = 'chord';
-					line.model = parseChordLine(line.string, { timeSignature });
-					previousChordLine = line;
-
-				} catch (e) {
-					line.type = 'text';
-				}
-
-			} else if (isChordLineRepeater(line.string)) {
-				if (previousChordLine) {
-					line = _cloneDeep(previousChordLine);
-				} else {
-					line.type = 'text';
-				}
-
-			} else if (isEmptyLine(line.string)) {
-				line.type = 'emptyLine';
-
-			} else {
-				line.type = 'text';
-			}
-
-			if (isRepeatingChords && line.type !== 'sectionLabel') {
-				blueprintLine = sectionBlueprint[blueprintIndex];
-				while (shouldRepeatLineFromBlueprint(blueprintLine, line)) {
-					if (blueprintLine.type === 'chord') {
-						previousChordLine = _cloneDeep(blueprintLine);
-					}
-					allLines.push(_cloneDeep(blueprintLine));
-					blueprintIndex++;
-					blueprintLine = sectionBlueprint[blueprintIndex];
-				}
-				blueprintIndex++;
-			}
-
-			allLines.push(line);
-
-			if (shouldRepeatSection && isLastLineOfSection(lineIndex, allSrcLines)) {
-				const toRepeat = getNthOfLabel(allLines, sectionLabel.label, sectionIndex);
-				let sectionLabelLine;
-				for (let i = 1; i < sectionLabel.repeatTimes; i++) {
-					sectionLabelLine = {
-						..._cloneDeep(lastSectionLabelLine),
-						index: ++sectionIndex,
-						id: sectionLabel.label + sectionIndex,
-						isRepeated: true,
-					};
-					allLines.push(sectionLabelLine);
-					allLines.push(..._cloneDeep(toRepeat));
-				}
-			}
-		});
-
-
+	const allLines = songLines.asArray();
 	const allChords = getAllChordsInSong(allLines);
 
 	return {
 		allLines,
 		allChords
 	};
-}
-
-function getSectionIndex(currentLabel, allSectionLabels) {
-	return allSectionLabels.filter(sectionLabel => sectionLabel.label === currentLabel ).length + 1;
-}
-
-function isFirstOfLabel(currentLabel, allLines) {
-	return allLines.every(line =>
-		(line.type === 'sectionLabel' && line.model.label !== currentLabel.label)
-	);
-}
-
-function shouldRepeatLineFromBlueprint(blueprintLine, currentLine) {
-	return blueprintLine
-		&& blueprintLine.type !== 'text'
-		&& blueprintLine.type !== 'emptyLine'
-		&& blueprintLine.type !== currentLine.type
-		&& currentLine.type !== 'emptyLine';
-}
-
-function isLastLineOfSection(lineIndex, allSrcLines) {
-	const nextLine = allSrcLines[lineIndex + 1];
-	return !nextLine || isSectionLabel(nextLine.string);
 }

@@ -14,6 +14,8 @@ import renderSectionLabel from './renderSectionLabel';
 import songTpl from './tpl/song.hbs';
 import getChordSymbol from '../helpers/getChordSymbol';
 
+import lineTypes from '../../parser/lineTypes';
+
 /**
  * @param {Song} parsedSong
  * @param {Boolean} alignBars
@@ -47,27 +49,22 @@ export default function renderSong(parsedSong, {
 	let shouldSkipRepeatedSectionLine = false;
 
 	const song = allLines
-		.filter(line => {
-			if (line.type === 'sectionLabel') {
-				shouldSkipRepeatedSectionLine = (line.isRepeated === true && !expandSectionRepeats);
-			}
-			return !shouldSkipRepeatedSectionLine;
-		})
+		.filter(shouldRenderLine)
 		.map(line => {
-			if (line.type === 'chord') {
+			if (line.type === lineTypes.CHORD) {
 				const spaced = (alignBars)
 					? alignedChordSpacer(line.model, maxBeatsWidth)
 					: simpleChordSpacer(line.model);
 
 				line.rendered = renderChordLine(spaced);
 
-			} else if (line.type === 'emptyLine') {
+			} else if (line.type === lineTypes.EMPTY_LINE) {
 				line.rendered = renderEmptyLine();
 
-			} else if (line.type === 'sectionLabel') {
+			} else if (line.type === lineTypes.SECTION_LABEL) {
 				line.rendered = renderSectionLabel(line.model, line.index, { expandSectionRepeats });
 
-			} else if (line.type === 'text') {
+			} else if (line.type === lineTypes.TEXT) {
 				line.rendered = renderTextLine(line.string);
 			}
 			return line;
@@ -75,6 +72,14 @@ export default function renderSong(parsedSong, {
 		.filter(line => line.rendered)
 		.map(line => line.rendered)
 		.join('\n');
+
+
+	function shouldRenderLine(line) {
+		if (line.type === lineTypes.SECTION_LABEL) {
+			shouldSkipRepeatedSectionLine = (line.isRepeated === true && !expandSectionRepeats);
+		}
+		return !shouldSkipRepeatedSectionLine;
+	}
 
 	return songTpl({ song });
 }

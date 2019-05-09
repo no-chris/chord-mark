@@ -56,11 +56,6 @@ module.exports = {
 			{
 				'zones': [
 					{ 'target': './src/parser', 'from': './src/renderer' },
-					{ 'target': './src/parser', 'from': './src/editor' },
-
-					{ 'target': './src/renderer', 'from': './src/editor' },
-
-					{ 'target': './src/editor', 'from': './src/renderer' },
 				]
 			}
 		],
