@@ -8,8 +8,9 @@ import { forEachChordInSong } from '../../parser/helper/songs';
 
 import renderChordLine from './renderChordLine';
 import renderEmptyLine from './renderEmptyLine';
-import renderTextLine from './renderTextLine';
 import renderSectionLabel from './renderSectionLabel';
+import renderTextLine from './renderTextLine';
+import renderTimeSignature from './renderTimeSignature';
 
 import songTpl from './tpl/song.hbs';
 import getChordSymbol from '../helpers/getChordSymbol';
@@ -72,7 +73,10 @@ export default function renderSong(parsedSong, {
 			} else if (line.type === lineTypes.SECTION_LABEL) {
 				rendered = renderSectionLabel(line, { sectionsStats, expandSectionRepeats });
 
-			} else if (line.type === lineTypes.TEXT) {
+			} else if (line.type === lineTypes.TIME_SIGNATURE) {
+				rendered = renderTimeSignature(line);
+
+			} else {
 				rendered = renderTextLine(line);
 			}
 			return rendered;
