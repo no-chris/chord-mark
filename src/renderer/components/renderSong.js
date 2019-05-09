@@ -24,6 +24,7 @@ import lineTypes from '../../parser/lineTypes';
  * @param {('auto'|'flat'|'sharp')} accidentalsType
  * @param {Boolean} harmonizeAccidentals
  * @param {Boolean} expandSectionRepeats
+ * @param {Boolean} autoRepeatChords
  * @returns {String} rendered HTML
  */
 export default function renderSong(parsedSong, {
@@ -32,6 +33,7 @@ export default function renderSong(parsedSong, {
 	accidentalsType = 'auto',
 	harmonizeAccidentals = true,
 	expandSectionRepeats = true,
+	autoRepeatChords = true,
 } = {}) {
 	let { allLines, allChords } = parsedSong;
 
@@ -54,27 +56,28 @@ export default function renderSong(parsedSong, {
 	const song = allLines
 		.filter(shouldRenderLine)
 		.map(line => {
+			let rendered;
+
 			if (line.type === lineTypes.CHORD) {
 				// todo: move this in renderChordLine
 				const spaced = (alignBars)
 					? alignedChordSpacer(line.model, maxBeatsWidth)
 					: simpleChordSpacer(line.model);
 
-				line.rendered = renderChordLine(spaced);
+				rendered = renderChordLine(spaced);
 
 			} else if (line.type === lineTypes.EMPTY_LINE) {
-				line.rendered = renderEmptyLine();
+				rendered = renderEmptyLine();
 
 			} else if (line.type === lineTypes.SECTION_LABEL) {
-				line.rendered = renderSectionLabel(line, { sectionsStats, expandSectionRepeats });
+				rendered = renderSectionLabel(line, { sectionsStats, expandSectionRepeats });
 
 			} else if (line.type === lineTypes.TEXT) {
-				line.rendered = renderTextLine(line);
+				rendered = renderTextLine(line);
 			}
-			return line;
+			return rendered;
 		})
-		.filter(line => line.rendered)
-		.map(line => line.rendered)
+		.filter(Boolean)
 		.join('\n');
 
 
@@ -82,7 +85,9 @@ export default function renderSong(parsedSong, {
 		if (line.type === lineTypes.SECTION_LABEL) {
 			shouldSkipRepeatedSectionLine = (line.isFromSectionRepeat === true && !expandSectionRepeats);
 		}
-		return !shouldSkipRepeatedSectionLine;
+		const shouldSkipAutoRepeatChordLine = (line.isFromAutoRepeatChords && !autoRepeatChords);
+
+		return !shouldSkipRepeatedSectionLine && !shouldSkipAutoRepeatChordLine;
 	}
 
 	return songTpl({ song });

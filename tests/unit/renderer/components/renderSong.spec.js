@@ -27,6 +27,63 @@ verseLine2`;
 });
 
 
+describe('autoRepeatChords', () => {
+	test('Should render auto repeated chords & other lines if autoRepeatChords === true', () => {
+		const input =
+`#v
+C G
+line1-1
+A D
+line1-2
+
+#v
+line2-1
+line2-2`;
+		const expected =
+`Verse 1
+|C   |G   |
+line1-1
+|A   |D   |
+line1-2
+\xa0
+Verse 2
+|C   |G   |
+line2-1
+|A   |D   |
+line2-2`;
+		const rendered = renderSongText(input, { autoRepeatChords: true });
+		const element = htmlToElement(rendered);
+		expect(element.textContent).toBe(expected);
+	});
+
+	test('Should NOT render auto repeated chords & other lines if autoRepeatChords === false', () => {
+		const input =
+`#v
+C G
+line1-1
+A D
+line1-2
+
+#v
+line2-1
+line2-2`;
+		const expected =
+`Verse 1
+|C   |G   |
+line1-1
+|A   |D   |
+line1-2
+\xa0
+Verse 2
+line2-1
+line2-2`;
+		const rendered = renderSongText(input, { autoRepeatChords: false });
+		const element = htmlToElement(rendered);
+		expect(element.textContent).toBe(expected);
+	});
+});
+
+
 describe('expandSectionRepeat', () => {
 	test('Should repeat section when expandSectionRepeat === true', () => {
 		const input =
