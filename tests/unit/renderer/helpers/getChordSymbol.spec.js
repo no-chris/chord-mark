@@ -9,12 +9,12 @@ describe('getChordSymbol', () => {
 
 describe.each([
 
-	['AM7', 'Amaj7'],
-	['A+',  'Aaug'],
+	['AM7', parseChord('AM7'), 'Amaj7'],
+	['A+', parseChord('A+'),  'Aaug'],
+	['NC', 'NC', 'NC'],
 
-])('getChordSymbol() for %s', (input, output) => {
+])('getChordSymbol() for %s', (title, input, output) => {
 	test('returns ' + output, () => {
-		const parsed = parseChord(input);
-		expect(getChordSymbol(parsed)).toEqual(output);
+		expect(getChordSymbol(input)).toEqual(output);
 	});
 });

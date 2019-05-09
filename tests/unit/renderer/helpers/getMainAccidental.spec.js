@@ -17,6 +17,7 @@ describe.each([
 	['1 flat, 3 sharp',		'Ab F# D# G#', 'sharp'],
 	['all sharps',			'A# F# D# G#', 'sharp'],
 
+	['NC symbol does not count', 'A# Eb NC', 'sharp'],
 	['number of chord occurrences have priority over number of distinct chords', 'Ab Ab Ab G# C#', 'flat'],
 
 ])('Detect accidentals for: %s', (title, input, output) => {

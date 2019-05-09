@@ -283,6 +283,37 @@ describe.each([
 		chordCount: 2
 	}],
 
+	['handle the "no-chord" symbol', 'C NC B.. NC.. D', ts4_4, {
+		allBars: [
+			{
+				allChords: [
+					{ string: 'C', model: { symbol: 'C' }, duration: 4, beat: 1 },
+				],
+				timeSignature: ts4_4,
+			},
+			{
+				allChords: [
+					{ string: 'NC', model: 'NC', duration: 4, beat: 1 },
+				],
+				timeSignature: ts4_4,
+			},
+			{
+				allChords: [
+					{ string: 'B..', model: { symbol: 'B' }, duration: 2, beat: 1 },
+					{ string: 'NC..', model: 'NC', duration: 2, beat: 3 },
+				],
+				timeSignature: ts4_4,
+			},
+			{
+				allChords: [
+					{ string: 'D', model: { symbol: 'D' }, duration: 4, beat: 1 },
+				],
+				timeSignature: ts4_4,
+			},
+		],
+		chordCount: 5
+	}],
+
 ])('Should parses correctly %s: %s', (title, input, timeSignature, expected) => {
 	test('is correctly parsed', () => {
 		const options = { timeSignature };

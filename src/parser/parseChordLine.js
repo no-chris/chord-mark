@@ -32,7 +32,7 @@ const defaultTimeSignature = parseTimeSignature('4/4');
  * @typedef {Object} ChordLineChord
  * @type {Object}
  * @property {String} string - original chord string
- * @property {ChordDef} model
+ * @property {ChordDef|String} model - parsed chord or "NC" if "no chord" symbol
  * @property {Number} duration - number of beats the chord lasts
  * @property {Number} beat - beat on which the chord starts
  */
@@ -55,6 +55,7 @@ export default function parseChordLine(
 
 	let bar = _cloneDeep(emptyBar);
 	let chord = {};
+	let tokenWithoutBeatCount;
 	let currentBeatCount = 0;
 	let chordCount = 0;
 	let previousBar;
@@ -71,10 +72,11 @@ export default function parseChordLine(
 			}
 
 		} else {
+			tokenWithoutBeatCount = token.replace(chordBeatCountSymbols, '');
 			chord = {
 				string: token,
 				duration: getChordDuration(token, beatCount),
-				model: parseChord(token.replace(chordBeatCountSymbols, '')),
+				model: isNoChordSymbol(tokenWithoutBeatCount) ? syntax.noChord : parseChord(tokenWithoutBeatCount),
 				beat: currentBeatCount + 1,
 			};
 			currentBeatCount += chord.duration;
@@ -104,6 +106,10 @@ export default function parseChordLine(
 		chordCount,
 		allBars
 	};
+}
+
+function isNoChordSymbol(token) {
+	return (token === syntax.noChord);
 }
 
 function getChordDuration(token, beatCount) {
