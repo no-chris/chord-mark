@@ -68,6 +68,35 @@ verseLine2`;
 		const element = htmlToElement(rendered);
 		expect(element.textContent).toBe(expected);
 	});
+
+	test('Should number repeats incrementally when expandSectionRepeat === true', () => {
+		const input =
+`#v
+#v x2
+#v`;
+		const expected =
+`Verse 1
+Verse 2
+Verse 3
+Verse 4`;
+		const rendered = renderSongText(input, { expandSectionRepeats: true });
+		const element = htmlToElement(rendered);
+		expect(element.textContent).toBe(expected);
+	});
+
+	test('Should number repeats incrementally when expandSectionRepeat === false', () => {
+		const input =
+`#v
+#v x2
+#v`;
+		const expected =
+`Verse 1
+Verse 2 x2
+Verse 3`;
+		const rendered = renderSongText(input, { expandSectionRepeats: false });
+		const element = htmlToElement(rendered);
+		expect(element.textContent).toBe(expected);
+	});
 });
 
 

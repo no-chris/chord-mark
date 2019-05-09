@@ -20,10 +20,10 @@ const labelsMapping = {
  * @returns {String} rendered html
  */
 export default function renderSectionLabel(sectionLabelLine, {
-	expandSectionRepeats = false,
+	expandSectionRepeats = true,
 	sectionsStats = {},
 } = {}) {
-	const { model, index } = sectionLabelLine;
+	const { model, index, indexWithoutRepeats } = sectionLabelLine;
 	const labelRaw = labelsMapping[model.label]
 		? labelsMapping[model.label]
 		: model.label;
@@ -32,7 +32,8 @@ export default function renderSectionLabel(sectionLabelLine, {
 	let rendered = labelRaw[0].toUpperCase() + labelRaw.substring(1);
 
 	if (sectionsStats[model.label] > 1) {
-		rendered += ' ' + index;
+		rendered += ' ';
+		rendered += (expandSectionRepeats) ? index : indexWithoutRepeats;
 	}
 
 	if (!expandSectionRepeats && model.repeatTimes) {

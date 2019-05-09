@@ -91,7 +91,7 @@ describe('getNthOfLabel', () => {
 		expect(getNthOfLabel).toBeInstanceOf(Function);
 	});
 
-	test('XXXX', () => {
+	test('Should return the section identified by its label and index', () => {
 		const song = `
 #v
 Verse1-line1

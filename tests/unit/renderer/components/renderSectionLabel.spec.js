@@ -71,13 +71,31 @@ describe('Label indexes', () => {
 		[ '#v', 5, { v: 10 }, 'Verse 5' ],
 		[ '#c', 3, { c: 5 }, 'Chorus 3' ],
 		[ '#b', 7, { b: 8 }, 'Bridge 7' ],
-	])('Should append index to section label', (string, index, sectionsStats, output) => {
+	])('Should append index to section label if expandSectionRepeats === true', (string, index, sectionsStats, output) => {
 		test('appends ' + index, () => {
 			const line = {
 				model: parseSectionLabel(string),
 				index,
 			};
-			const rendered = renderSectionLabel(line, { sectionsStats });
+			const rendered = renderSectionLabel(line, { sectionsStats, expandSectionRepeats: true });
+			const element = htmlToElement(rendered);
+
+			expect(element).toBeInstanceOf(Node);
+			expect(element.innerHTML).toBe(output);
+		});
+	});
+
+	describe.each([
+		[ '#v', 5, { v: 10 }, 'Verse 5' ],
+		[ '#c', 3, { c: 5 }, 'Chorus 3' ],
+		[ '#b', 7, { b: 8 }, 'Bridge 7' ],
+	])('Should append indexWithoutRepeats if expandSectionRepeats === false', (string, indexWithoutRepeats, sectionsStats, output) => {
+		test('appends ' + indexWithoutRepeats, () => {
+			const line = {
+				model: parseSectionLabel(string),
+				indexWithoutRepeats,
+			};
+			const rendered = renderSectionLabel(line, { sectionsStats, expandSectionRepeats: false });
 			const element = htmlToElement(rendered);
 
 			expect(element).toBeInstanceOf(Node);

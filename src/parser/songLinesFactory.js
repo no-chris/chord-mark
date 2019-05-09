@@ -39,17 +39,18 @@ const defaultTimeSignature = '4/4';
  * @typedef {SongLine} SongSectionLabelLine
  * @type {Object}
  * @property {SectionLabel} model
- * @property {Number} index - index of the section for a given label
+ * @property {Number} index - index of the section for a given label (#v, #v x2, #v => 1, 2, 3, 4)
+ * @property {Number} indexWithoutRepeats - idem, but not taking repeats into account (#v, #v x2, #v => 1, 2, 3)
  * @property {String} id
  */
 
 export default function songLinesFactory() {
 	const allLines = [];
-	const allSectionLabels = [];
+	const sectionsStats = {};
 
 	let currentTimeSignature = parseTimeSignature(defaultTimeSignature);
 	let currentSectionLabel;
-	let currentSectionIndex;
+	let currentSectionStats;
 
 	let previousChordLine;
 	let previousSectionLabelLine;
@@ -76,17 +77,18 @@ export default function songLinesFactory() {
 	 */
 	function getSectionLabelLine(string) {
 		currentSectionLabel = parseSectionLabel(string);
-		currentSectionIndex = getSectionIndex(currentSectionLabel.label, allSectionLabels);
+
+		increaseSectionStats(currentSectionLabel.label);
+		currentSectionStats = getSectionCount(currentSectionLabel.label);
 
 		const line = {
 			string,
 			type: lineTypes.SECTION_LABEL,
 			model: currentSectionLabel,
-			index: currentSectionIndex,
-			id: currentSectionLabel.label + currentSectionIndex,
+			index: currentSectionStats.count,
+			indexWithoutRepeats: currentSectionStats.withoutRepeats,
+			id: currentSectionLabel.label + currentSectionStats.count,
 		};
-
-		allSectionLabels.push(currentSectionLabel);
 
 		shouldRepeatSection = (currentSectionLabel.repeatTimes > 0);
 		previousSectionLabelLine = _cloneDeep(line);
@@ -147,6 +149,24 @@ export default function songLinesFactory() {
 			type: lineTypes.TEXT,
 		};
 	}
+	
+	function increaseSectionStats(label, isRepeated = false) {
+		if (!sectionsStats[label]) {
+			sectionsStats[label] = {
+				count: 1,
+				withoutRepeats: 1,
+			};
+		} else {
+			sectionsStats[label].count++;
+			if (!isRepeated) {
+				sectionsStats[label].withoutRepeats++;
+			}
+		}
+	}
+
+	function getSectionCount(label) {
+		return sectionsStats[label];
+	}
 
 	function repeatLinesFromBlueprint(line) {
 		if (isRepeatingChords && line.type !== lineTypes.SECTION_LABEL) {
@@ -165,13 +185,18 @@ export default function songLinesFactory() {
 
 	function repeatSection(lineIndex, allSrcLines) {
 		if (shouldRepeatSection && isLastLineOfSection(lineIndex, allSrcLines)) {
-			const toRepeat = getNthOfLabel(allLines, currentSectionLabel.label, currentSectionIndex);
+			const toRepeat = getNthOfLabel(allLines, currentSectionLabel.label, currentSectionStats.count);
 			let sectionLabelLine;
+
 			for (let i = 1; i < currentSectionLabel.repeatTimes; i++) {
+				increaseSectionStats(currentSectionLabel.label, true);
+				currentSectionStats = getSectionCount(currentSectionLabel.label);
+
 				sectionLabelLine = {
 					..._cloneDeep(previousSectionLabelLine),
-					index: ++currentSectionIndex,
-					id: currentSectionLabel.label + currentSectionIndex,
+					index: currentSectionStats.count,
+					indexWithoutRepeats: currentSectionStats.withoutRepeats,
+					id: currentSectionLabel.label + currentSectionStats.count,
 					isRepeated: true,
 				};
 				allLines.push(sectionLabelLine);
@@ -217,11 +242,6 @@ export default function songLinesFactory() {
 			return _cloneDeep(allLines);
 		}
 	};
-}
-
-
-function getSectionIndex(currentLabel, allSectionLabels) {
-	return allSectionLabels.filter(sectionLabel => sectionLabel.label === currentLabel ).length + 1;
 }
 
 function isFirstOfLabel(currentLabel, allLines) {

@@ -160,23 +160,24 @@ describe('sectionLabels and autoRepeatChords', () => {
 			'#c',
 			'#v',
 			'#c x2',
+			'#c',
 			'#o',
 		];
 
 		const sectionsParsed = input.map(parseSectionLabel);
 
 		const expected = [
-			{ type: 'sectionLabel', string: '#i', model: sectionsParsed[0], index: 1, id: 'i1' },
-			{ type: 'sectionLabel', string: '#v', model: sectionsParsed[1], index: 1, id: 'v1' },
-			{ type: 'sectionLabel', string: '#v', model: sectionsParsed[2], index: 2, id: 'v2' },
-			{ type: 'sectionLabel', string: '#c', model: sectionsParsed[3], index: 1, id: 'c1' },
-			{ type: 'sectionLabel', string: '#v', model: sectionsParsed[4], index: 3, id: 'v3' },
-			{ type: 'sectionLabel', string: '#c', model: sectionsParsed[5], index: 2, id: 'c2' },
-			{ type: 'sectionLabel', string: '#v', model: sectionsParsed[6], index: 4, id: 'v4' },
-			{ type: 'sectionLabel', string: '#c x2', model: sectionsParsed[7], index: 3, id: 'c3' },
-			{ type: 'sectionLabel', string: '#c x2',
-				model: _.cloneDeep(sectionsParsed[7]), index: 4, id: 'c4', isRepeated: true },
-			{ type: 'sectionLabel', string: '#o', model: sectionsParsed[8], index: 1, id: 'o1' },
+			{ type: 'sectionLabel', string: '#i', model: sectionsParsed[0], index: 1, indexWithoutRepeats: 1, id: 'i1' },
+			{ type: 'sectionLabel', string: '#v', model: sectionsParsed[1], index: 1, indexWithoutRepeats: 1, id: 'v1' },
+			{ type: 'sectionLabel', string: '#v', model: sectionsParsed[2], index: 2, indexWithoutRepeats: 2, id: 'v2' },
+			{ type: 'sectionLabel', string: '#c', model: sectionsParsed[3], index: 1, indexWithoutRepeats: 1, id: 'c1' },
+			{ type: 'sectionLabel', string: '#v', model: sectionsParsed[4], index: 3, indexWithoutRepeats: 3, id: 'v3' },
+			{ type: 'sectionLabel', string: '#c', model: sectionsParsed[5], index: 2, indexWithoutRepeats: 2, id: 'c2' },
+			{ type: 'sectionLabel', string: '#v', model: sectionsParsed[6], index: 4, indexWithoutRepeats: 4, id: 'v4' },
+			{ type: 'sectionLabel', string: '#c x2', model: sectionsParsed[7], index: 3, indexWithoutRepeats: 3, id: 'c3' },
+			{ type: 'sectionLabel', string: '#c x2', model: _.cloneDeep(sectionsParsed[7]), index: 4, indexWithoutRepeats: 3, id: 'c4', isRepeated: true },
+			{ type: 'sectionLabel', string: '#c', model: sectionsParsed[8], index: 5, indexWithoutRepeats: 4, id: 'c5' },
+			{ type: 'sectionLabel', string: '#o', model: sectionsParsed[9], index: 1, indexWithoutRepeats: 1, id: 'o1' },
 		];
 
 		const songLines = songLinesFactory();
@@ -185,7 +186,7 @@ describe('sectionLabels and autoRepeatChords', () => {
 		expect(songLines.asArray()).toEqual(expected);
 	});
 
-	test('automatically apply chords of previously defined identical section. Sections can contain empty lines.', () => {
+	test('automatically apply chords - and other lines - of previously defined identical section. Sections can contain empty lines.', () => {
 		const ts4_4 = parseTimeSignature('4/4');
 
 		parseChordLine.mockImplementation(chordLine => chordLine);
@@ -233,8 +234,8 @@ Whispers words of wisdom
 Let it be`;
 
 		const expected = [
-			{ type: 'sectionLabel', string: '#v', index: 1, model: parseSectionLabel('#v'), id: 'v1' },
-			{ type: 'timeSignature', string: '4/4', model: ts4_4 },
+			{ type: 'sectionLabel', string: '#v', index: 1, indexWithoutRepeats: 1, model: parseSectionLabel('#v'), id: 'v1' },
+			{ type: 'timeSignature', string: '4/4', model: _.cloneDeep(ts4_4) },
 			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
 			{ type: 'text', string: 'When I find myself in times of trouble'},
 			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
@@ -245,8 +246,8 @@ Let it be`;
 			{ type: 'chord', string: 'F. Em. Dm. C.', model: 'F. Em. Dm. C.' },
 			{ type: 'text', string: 'Let it be'},
 			{ type: 'emptyLine', string: ''},
-			{ type: 'sectionLabel', string: '#v', index: 2, model: parseSectionLabel('#v'), id: 'v2' },
-			{ type: 'timeSignature', string: '4/4', model: ts4_4 },
+			{ type: 'sectionLabel', string: '#v', index: 2, indexWithoutRepeats: 2, model: parseSectionLabel('#v'), id: 'v2' },
+			{ type: 'timeSignature', string: '4/4', model: _.cloneDeep(ts4_4) },
 			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
 			{ type: 'text', string: 'And in my hour of darkness'},
 			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
@@ -257,7 +258,7 @@ Let it be`;
 			{ type: 'chord', string: 'F. Em. Dm. C.', model: 'F. Em. Dm. C.' },
 			{ type: 'text', string: 'Let it be'},
 			{ type: 'emptyLine', string: ''},
-			{ type: 'sectionLabel', string: '#c', index: 1, model: parseSectionLabel('#c'), id: 'c1' },
+			{ type: 'sectionLabel', string: '#c', index: 1, indexWithoutRepeats: 1, model: parseSectionLabel('#c'), id: 'c1' },
 			{ type: 'chord', string: 'Am.. G..', model: 'Am.. G..' },
 			{ type: 'text', string: 'Let it be, let it be'},
 			{ type: 'chord', string: 'C.. F..', model: 'C.. F..' },
@@ -267,8 +268,8 @@ Let it be`;
 			{ type: 'chord', string: 'F. Em. Dm. C.', model: 'F. Em. Dm. C.' },
 			{ type: 'text', string: 'Let it be'},
 			{ type: 'emptyLine', string: ''},
-			{ type: 'sectionLabel', string: '#v', index: 3, model: parseSectionLabel('#v'), id: 'v3' },
-			{ type: 'timeSignature', string: '4/4', model: ts4_4 },
+			{ type: 'sectionLabel', string: '#v', index: 3, indexWithoutRepeats: 3, model: parseSectionLabel('#v'), id: 'v3' },
+			{ type: 'timeSignature', string: '4/4', model: _.cloneDeep(ts4_4) },
 			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
 			{ type: 'text', string: 'And when the broken hearted people'},
 			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
@@ -279,7 +280,7 @@ Let it be`;
 			{ type: 'chord', string: 'F. Em. Dm. C.', model: 'F. Em. Dm. C.' },
 			{ type: 'text', string: 'Let it be'},
 			{ type: 'emptyLine', string: ''},
-			{ type: 'sectionLabel', string: '#c', index: 2, model: parseSectionLabel('#c'), id: 'c2' },
+			{ type: 'sectionLabel', string: '#c', index: 2, indexWithoutRepeats: 2, model: parseSectionLabel('#c'), id: 'c2' },
 			{ type: 'chord', string: 'Am.. G..', model: 'Am.. G..' },
 			{ type: 'text', string: 'Let it be, let it be'},
 			{ type: 'chord', string: 'C.. F..', model: 'C.. F..' },
@@ -322,7 +323,7 @@ line3-3
 `;
 
 		const expected = [
-			{ type: 'sectionLabel', string: '#v', index: 1, model: parseSectionLabel('#v'), id: 'v1' },
+			{ type: 'sectionLabel', string: '#v', index: 1, indexWithoutRepeats: 1, model: parseSectionLabel('#v'), id: 'v1' },
 			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
 			{ type: 'text', string: 'line1-1'},
 			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
@@ -332,13 +333,13 @@ line3-3
 			{ type: 'chord', string: 'F. Em. Dm. C.', model: 'F. Em. Dm. C.' },
 			{ type: 'text', string: 'line1-4'},
 			{ type: 'emptyLine', string: ''},
-			{ type: 'sectionLabel', string: '#v', index: 2, model: parseSectionLabel('#v'), id: 'v2' },
+			{ type: 'sectionLabel', string: '#v', index: 2, indexWithoutRepeats: 2, model: parseSectionLabel('#v'), id: 'v2' },
 			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
 			{ type: 'text', string: 'line2-1'},
 			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
 			{ type: 'text', string: 'line2-2'},
 			{ type: 'emptyLine', string: ''},
-			{ type: 'sectionLabel', string: '#v', index: 3, model: parseSectionLabel('#v'), id: 'v3' },
+			{ type: 'sectionLabel', string: '#v', index: 3, indexWithoutRepeats: 3, model: parseSectionLabel('#v'), id: 'v3' },
 			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
 			{ type: 'text', string: 'line3-1'},
 			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
@@ -374,13 +375,13 @@ F. Em. Dm. C.
 line2-4`;
 
 		const expected = [
-			{ type: 'sectionLabel', string: '#v', index: 1, model: parseSectionLabel('#v'), id: 'v1' },
+			{ type: 'sectionLabel', string: '#v', index: 1, indexWithoutRepeats: 1, model: parseSectionLabel('#v'), id: 'v1' },
 			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
 			{ type: 'text', string: 'line1-1'},
 			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
 			{ type: 'text', string: 'line1-2'},
 			{ type: 'emptyLine', string: ''},
-			{ type: 'sectionLabel', string: '#v', index: 2, model: parseSectionLabel('#v'), id: 'v2' },
+			{ type: 'sectionLabel', string: '#v', index: 2, indexWithoutRepeats: 2, model: parseSectionLabel('#v'), id: 'v2' },
 			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
 			{ type: 'text', string: 'line2-1'},
 			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
@@ -412,13 +413,13 @@ F. Em. Dm. C.
 line2-2`;
 
 		const expected = [
-			{ type: 'sectionLabel', string: '#v', index: 1, model: parseSectionLabel('#v'), id: 'v1' },
+			{ type: 'sectionLabel', string: '#v', index: 1, indexWithoutRepeats: 1, model: parseSectionLabel('#v'), id: 'v1' },
 			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
 			{ type: 'text', string: 'line1-1'},
 			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
 			{ type: 'text', string: 'line1-2'},
 			{ type: 'emptyLine', string: ''},
-			{ type: 'sectionLabel', string: '#v', index: 2, model: parseSectionLabel('#v'), id: 'v2' },
+			{ type: 'sectionLabel', string: '#v', index: 2, indexWithoutRepeats: 2, model: parseSectionLabel('#v'), id: 'v2' },
 			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
 			{ type: 'text', string: 'line2-1'},
 			{ type: 'chord', string: 'F. Em. Dm. C.', model: 'F. Em. Dm. C.' },
@@ -502,13 +503,13 @@ line2-1
 line2-2`;
 
 		const expected = [
-			{ type: 'sectionLabel', string: '#v', index: 1, model: parseSectionLabel('#v'), id: 'v1' },
+			{ type: 'sectionLabel', string: '#v', index: 1, indexWithoutRepeats: 1, model: parseSectionLabel('#v'), id: 'v1' },
 			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
 			{ type: 'text', string: 'line1-1'},
 			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
 			{ type: 'text', string: 'line1-2'},
 			{ type: 'emptyLine', string: ''},
-			{ type: 'sectionLabel', string: '#v', index: 2, model: parseSectionLabel('#v'), id: 'v2' },
+			{ type: 'sectionLabel', string: '#v', index: 2, indexWithoutRepeats: 2, model: parseSectionLabel('#v'), id: 'v2' },
 			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
 			{ type: 'text', string: 'line2-1'},
 			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
@@ -533,15 +534,14 @@ line1-1
 Am.. F..
 line1-2
 `;
-
 		const expected = [
-			{ type: 'sectionLabel', string: '#v x2', index: 1, model: parseSectionLabel('#v x2'), id: 'v1' },
+			{ type: 'sectionLabel', string: '#v x2', index: 1, indexWithoutRepeats: 1, model: parseSectionLabel('#v x2'), id: 'v1' },
 			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
 			{ type: 'text', string: 'line1-1'},
 			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
 			{ type: 'text', string: 'line1-2'},
 			{ type: 'emptyLine', string: ''},
-			{ type: 'sectionLabel', string: '#v x2', index: 2, model: parseSectionLabel('#v x2'), id: 'v2', isRepeated: true },
+			{ type: 'sectionLabel', string: '#v x2', index: 2, indexWithoutRepeats: 1, model: parseSectionLabel('#v x2'), id: 'v2', isRepeated: true },
 			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
 			{ type: 'text', string: 'line1-1'},
 			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
