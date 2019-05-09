@@ -21,13 +21,21 @@ const defaultTimeSignature = '4/4';
  * @type {Object}
  * @property {String} string - original line in source file
  * @property {String} type - chord|text|timeSignature|sectionLabel...
- * @property {Boolean} [isRepeated] - if this automatically repeated (section repeat, auto repeat chords...)
+ * @property {Boolean} [isFromSectionRepeat] - line created by a section repeat directive (x3...)
+ * @property {Boolean} [isFromAutoRepeatChords] - line created by auto repeats of chords from a section to another
  */
 
 /**
  * @typedef {SongLine} SongChordLine
  * @type {Object}
  * @property {ChordLine} model
+ * @property {Boolean} [isFromChordLineRepeater] - line created by the chordLine repeat symbol
+ */
+
+/**
+ * @typedef {SongLine} SongTimeSignatureLine
+ * @type {Object}
+ * @property {TimeSignature} model
  */
 
 /**
@@ -62,6 +70,9 @@ export default function songLinesFactory() {
 	let isRepeatingChords = false;
 	let shouldRepeatSection = false;
 
+	/**
+	 * @returns {SongTimeSignatureLine}
+	 */
 	function getTimeSignatureLine(string) {
 		currentTimeSignature = parseTimeSignature(string);
 
@@ -137,7 +148,13 @@ export default function songLinesFactory() {
 	 * @returns {SongChordLine|SongTextLine}
 	 */
 	function getPreviousChordLine(string) {
-		return (previousChordLine) ? _cloneDeep(previousChordLine) : getTextLine(string);
+		if (previousChordLine) {
+			return {
+				..._cloneDeep(previousChordLine),
+				isFromChordLineRepeater: true
+			};
+		}
+		return getTextLine(string);
 	}
 
 	/**
@@ -171,11 +188,17 @@ export default function songLinesFactory() {
 	function repeatLinesFromBlueprint(line) {
 		if (isRepeatingChords && line.type !== lineTypes.SECTION_LABEL) {
 			blueprintLine = blueprint[blueprintIndex];
+			let repeatedLine;
+
 			while (shouldRepeatLineFromBlueprint(blueprintLine, line)) {
 				if (blueprintLine.type === lineTypes.CHORD) {
 					previousChordLine = _cloneDeep(blueprintLine);
 				}
-				allLines.push(_cloneDeep(blueprintLine));
+				repeatedLine = {
+					..._cloneDeep(blueprintLine),
+					isFromAutoRepeatChords: true,
+				};
+				allLines.push(repeatedLine);
 				blueprintIndex++;
 				blueprintLine = blueprint[blueprintIndex];
 			}
@@ -185,7 +208,11 @@ export default function songLinesFactory() {
 
 	function repeatSection(lineIndex, allSrcLines) {
 		if (shouldRepeatSection && isLastLineOfSection(lineIndex, allSrcLines)) {
-			const toRepeat = getNthOfLabel(allLines, currentSectionLabel.label, currentSectionStats.count);
+			const toRepeat = getNthOfLabel(allLines, currentSectionLabel.label, currentSectionStats.count)
+				.map(line => ({
+					..._cloneDeep(line),
+					isFromSectionRepeat: true
+				}));
 			let sectionLabelLine;
 
 			for (let i = 1; i < currentSectionLabel.repeatTimes; i++) {
@@ -197,7 +224,7 @@ export default function songLinesFactory() {
 					index: currentSectionStats.count,
 					indexWithoutRepeats: currentSectionStats.withoutRepeats,
 					id: currentSectionLabel.label + currentSectionStats.count,
-					isRepeated: true,
+					isFromSectionRepeat: true,
 				};
 				allLines.push(sectionLabelLine);
 				allLines.push(..._cloneDeep(toRepeat));

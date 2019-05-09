@@ -80,7 +80,7 @@ export default function renderSong(parsedSong, {
 
 	function shouldRenderLine(line) {
 		if (line.type === lineTypes.SECTION_LABEL) {
-			shouldSkipRepeatedSectionLine = (line.isRepeated === true && !expandSectionRepeats);
+			shouldSkipRepeatedSectionLine = (line.isFromSectionRepeat === true && !expandSectionRepeats);
 		}
 		return !shouldSkipRepeatedSectionLine;
 	}

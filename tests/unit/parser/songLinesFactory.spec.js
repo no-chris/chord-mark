@@ -175,7 +175,7 @@ describe('sectionLabels and autoRepeatChords', () => {
 			{ type: 'sectionLabel', string: '#c', model: sectionsParsed[5], index: 2, indexWithoutRepeats: 2, id: 'c2' },
 			{ type: 'sectionLabel', string: '#v', model: sectionsParsed[6], index: 4, indexWithoutRepeats: 4, id: 'v4' },
 			{ type: 'sectionLabel', string: '#c x2', model: sectionsParsed[7], index: 3, indexWithoutRepeats: 3, id: 'c3' },
-			{ type: 'sectionLabel', string: '#c x2', model: _.cloneDeep(sectionsParsed[7]), index: 4, indexWithoutRepeats: 3, id: 'c4', isRepeated: true },
+			{ type: 'sectionLabel', string: '#c x2', model: _.cloneDeep(sectionsParsed[7]), index: 4, indexWithoutRepeats: 3, id: 'c4', isFromSectionRepeat: true },
 			{ type: 'sectionLabel', string: '#c', model: sectionsParsed[8], index: 5, indexWithoutRepeats: 4, id: 'c5' },
 			{ type: 'sectionLabel', string: '#o', model: sectionsParsed[9], index: 1, indexWithoutRepeats: 1, id: 'o1' },
 		];
@@ -247,17 +247,17 @@ Let it be`;
 			{ type: 'text', string: 'Let it be'},
 			{ type: 'emptyLine', string: ''},
 			{ type: 'sectionLabel', string: '#v', index: 2, indexWithoutRepeats: 2, model: parseSectionLabel('#v'), id: 'v2' },
-			{ type: 'timeSignature', string: '4/4', model: _.cloneDeep(ts4_4) },
-			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
-			{ type: 'text', string: 'And in my hour of darkness'},
-			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
-			{ type: 'text', string: 'she is standing right in front of me'},
-			{ type: 'emptyLine', string: ''},
-			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
-			{ type: 'text', string: 'Speaking words of wisdom'},
-			{ type: 'chord', string: 'F. Em. Dm. C.', model: 'F. Em. Dm. C.' },
-			{ type: 'text', string: 'Let it be'},
-			{ type: 'emptyLine', string: ''},
+			{ type: 'timeSignature', string: '4/4', model: _.cloneDeep(ts4_4), isFromAutoRepeatChords: true },
+			{ type: 'chord', string: 'C.. G..', model: 'C.. G..', isFromAutoRepeatChords: true },
+			{ type: 'text', string: 'And in my hour of darkness' },
+			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..', isFromAutoRepeatChords: true },
+			{ type: 'text', string: 'she is standing right in front of me' },
+			{ type: 'emptyLine', string: '' },
+			{ type: 'chord', string: 'C.. G..', model: 'C.. G..', isFromAutoRepeatChords: true },
+			{ type: 'text', string: 'Speaking words of wisdom' },
+			{ type: 'chord', string: 'F. Em. Dm. C.', model: 'F. Em. Dm. C.', isFromAutoRepeatChords: true },
+			{ type: 'text', string: 'Let it be' },
+			{ type: 'emptyLine', string: '' },
 			{ type: 'sectionLabel', string: '#c', index: 1, indexWithoutRepeats: 1, model: parseSectionLabel('#c'), id: 'c1' },
 			{ type: 'chord', string: 'Am.. G..', model: 'Am.. G..' },
 			{ type: 'text', string: 'Let it be, let it be'},
@@ -269,26 +269,26 @@ Let it be`;
 			{ type: 'text', string: 'Let it be'},
 			{ type: 'emptyLine', string: ''},
 			{ type: 'sectionLabel', string: '#v', index: 3, indexWithoutRepeats: 3, model: parseSectionLabel('#v'), id: 'v3' },
-			{ type: 'timeSignature', string: '4/4', model: _.cloneDeep(ts4_4) },
-			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
-			{ type: 'text', string: 'And when the broken hearted people'},
-			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
-			{ type: 'text', string: 'Living in the world agree'},
-			{ type: 'emptyLine', string: ''},
-			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
-			{ type: 'text', string: 'There will be an answer'},
-			{ type: 'chord', string: 'F. Em. Dm. C.', model: 'F. Em. Dm. C.' },
-			{ type: 'text', string: 'Let it be'},
-			{ type: 'emptyLine', string: ''},
+			{ type: 'timeSignature', string: '4/4', model: _.cloneDeep(ts4_4), isFromAutoRepeatChords: true },
+			{ type: 'chord', string: 'C.. G..', model: 'C.. G..', isFromAutoRepeatChords: true   },
+			{ type: 'text', string: 'And when the broken hearted people', },
+			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..', isFromAutoRepeatChords: true },
+			{ type: 'text', string: 'Living in the world agree' },
+			{ type: 'emptyLine', string: '' },
+			{ type: 'chord', string: 'C.. G..', model: 'C.. G..', isFromAutoRepeatChords: true },
+			{ type: 'text', string: 'There will be an answer' },
+			{ type: 'chord', string: 'F. Em. Dm. C.', model: 'F. Em. Dm. C.', isFromAutoRepeatChords: true },
+			{ type: 'text', string: 'Let it be' },
+			{ type: 'emptyLine', string: '' },
 			{ type: 'sectionLabel', string: '#c', index: 2, indexWithoutRepeats: 2, model: parseSectionLabel('#c'), id: 'c2' },
-			{ type: 'chord', string: 'Am.. G..', model: 'Am.. G..' },
-			{ type: 'text', string: 'Let it be, let it be'},
-			{ type: 'chord', string: 'C.. F..', model: 'C.. F..' },
-			{ type: 'text', string: 'Let it be, let it be'},
-			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
-			{ type: 'text', string: 'Whispers words of wisdom'},
-			{ type: 'chord', string: 'F. Em. Dm. C.', model: 'F. Em. Dm. C.' },
-			{ type: 'text', string: 'Let it be'},
+			{ type: 'chord', string: 'Am.. G..', model: 'Am.. G..', isFromAutoRepeatChords: true },
+			{ type: 'text', string: 'Let it be, let it be', },
+			{ type: 'chord', string: 'C.. F..', model: 'C.. F..', isFromAutoRepeatChords: true },
+			{ type: 'text', string: 'Let it be, let it be' },
+			{ type: 'chord', string: 'C.. G..', model: 'C.. G..', isFromAutoRepeatChords: true },
+			{ type: 'text', string: 'Whispers words of wisdom' },
+			{ type: 'chord', string: 'F. Em. Dm. C.', model: 'F. Em. Dm. C.', isFromAutoRepeatChords: true },
+			{ type: 'text', string: 'Let it be' },
 		];
 
 		const songLines = songLinesFactory();
@@ -334,17 +334,17 @@ line3-3
 			{ type: 'text', string: 'line1-4'},
 			{ type: 'emptyLine', string: ''},
 			{ type: 'sectionLabel', string: '#v', index: 2, indexWithoutRepeats: 2, model: parseSectionLabel('#v'), id: 'v2' },
-			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
+			{ type: 'chord', string: 'C.. G..', model: 'C.. G..', isFromAutoRepeatChords: true },
 			{ type: 'text', string: 'line2-1'},
-			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
+			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..', isFromAutoRepeatChords: true },
 			{ type: 'text', string: 'line2-2'},
 			{ type: 'emptyLine', string: ''},
 			{ type: 'sectionLabel', string: '#v', index: 3, indexWithoutRepeats: 3, model: parseSectionLabel('#v'), id: 'v3' },
-			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
+			{ type: 'chord', string: 'C.. G..', model: 'C.. G..', isFromAutoRepeatChords: true },
 			{ type: 'text', string: 'line3-1'},
-			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
+			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..', isFromAutoRepeatChords: true },
 			{ type: 'text', string: 'line3-2'},
-			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
+			{ type: 'chord', string: 'C.. G..', model: 'C.. G..', isFromAutoRepeatChords: true },
 			{ type: 'text', string: 'line3-3'},
 			{ type: 'emptyLine', string: ''},
 			{ type: 'emptyLine', string: ''},
@@ -382,9 +382,9 @@ line2-4`;
 			{ type: 'text', string: 'line1-2'},
 			{ type: 'emptyLine', string: ''},
 			{ type: 'sectionLabel', string: '#v', index: 2, indexWithoutRepeats: 2, model: parseSectionLabel('#v'), id: 'v2' },
-			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
+			{ type: 'chord', string: 'C.. G..', model: 'C.. G..', isFromAutoRepeatChords: true },
 			{ type: 'text', string: 'line2-1'},
-			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
+			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..', isFromAutoRepeatChords: true },
 			{ type: 'text', string: 'line2-2'},
 			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
 			{ type: 'text', string: 'line2-3'},
@@ -420,7 +420,7 @@ line2-2`;
 			{ type: 'text', string: 'line1-2'},
 			{ type: 'emptyLine', string: ''},
 			{ type: 'sectionLabel', string: '#v', index: 2, indexWithoutRepeats: 2, model: parseSectionLabel('#v'), id: 'v2' },
-			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
+			{ type: 'chord', string: 'C.. G..', model: 'C.. G..', isFromAutoRepeatChords: true },
 			{ type: 'text', string: 'line2-1'},
 			{ type: 'chord', string: 'F. Em. Dm. C.', model: 'F. Em. Dm. C.' },
 			{ type: 'text', string: 'line2-2'},
@@ -449,11 +449,11 @@ line2-1`;
 		const expected = [
 			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
 			{ type: 'text', string: 'line1-1'},
-			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
+			{ type: 'chord', string: 'C.. G..', model: 'C.. G..', isFromChordLineRepeater: true },
 			{ type: 'text', string: 'line1-2'},
 			{ type: 'emptyLine', string: ''},
 			{ type: 'emptyLine', string: ''},
-			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
+			{ type: 'chord', string: 'C.. G..', model: 'C.. G..', isFromChordLineRepeater: true },
 			{ type: 'text', string: 'line2-1'},
 		];
 
@@ -510,9 +510,9 @@ line2-2`;
 			{ type: 'text', string: 'line1-2'},
 			{ type: 'emptyLine', string: ''},
 			{ type: 'sectionLabel', string: '#v', index: 2, indexWithoutRepeats: 2, model: parseSectionLabel('#v'), id: 'v2' },
-			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
+			{ type: 'chord', string: 'C.. G..', model: 'C.. G..', isFromAutoRepeatChords: true },
 			{ type: 'text', string: 'line2-1'},
-			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
+			{ type: 'chord', string: 'C.. G..', model: 'C.. G..', isFromChordLineRepeater: true },
 			{ type: 'text', string: 'line2-2'},
 		];
 
@@ -541,12 +541,58 @@ line1-2
 			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
 			{ type: 'text', string: 'line1-2'},
 			{ type: 'emptyLine', string: ''},
-			{ type: 'sectionLabel', string: '#v x2', index: 2, indexWithoutRepeats: 1, model: parseSectionLabel('#v x2'), id: 'v2', isRepeated: true },
+			{ type: 'sectionLabel', string: '#v x2', index: 2, indexWithoutRepeats: 1, model: parseSectionLabel('#v x2'), id: 'v2', isFromSectionRepeat: true },
+			{ type: 'chord', string: 'C.. G..', model: 'C.. G..', isFromSectionRepeat: true },
+			{ type: 'text', string: 'line1-1', isFromSectionRepeat: true },
+			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..', isFromSectionRepeat: true },
+			{ type: 'text', string: 'line1-2', isFromSectionRepeat: true },
+			{ type: 'emptyLine', string: '', isFromSectionRepeat: true },
+		];
+
+		const songLines = songLinesFactory();
+		input.split('\n').forEach(songLines.addLine);
+
+		expect(songLines.asArray()).toEqual(expected);
+	});
+
+	test('should allow to repeat section that contains other kinds of repeats', () => {
+		parseChordLine.mockImplementation(chordLine => chordLine);
+
+		const input = `#v
+C.. G..
+line1-1
+Am.. F..
+line1-2
+
+#v x2
+line2-1
+line2-2
+/
+line2-3
+`;
+		const expected = [
+			{ type: 'sectionLabel', string: '#v', index: 1, indexWithoutRepeats: 1, model: parseSectionLabel('#v'), id: 'v1' },
 			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
 			{ type: 'text', string: 'line1-1'},
 			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
 			{ type: 'text', string: 'line1-2'},
 			{ type: 'emptyLine', string: ''},
+			{ type: 'sectionLabel', string: '#v x2', index: 2, indexWithoutRepeats: 2, model: parseSectionLabel('#v x2'), id: 'v2' },
+			{ type: 'chord', string: 'C.. G..', model: 'C.. G..', isFromAutoRepeatChords: true },
+			{ type: 'text', string: 'line2-1'},
+			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..', isFromAutoRepeatChords: true },
+			{ type: 'text', string: 'line2-2'},
+			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..', isFromChordLineRepeater: true },
+			{ type: 'text', string: 'line2-3'},
+			{ type: 'emptyLine', string: ''},
+			{ type: 'sectionLabel', string: '#v x2', index: 3, indexWithoutRepeats: 2, model: parseSectionLabel('#v x2'), id: 'v3', isFromSectionRepeat: true },
+			{ type: 'chord', string: 'C.. G..', model: 'C.. G..', isFromSectionRepeat: true, isFromAutoRepeatChords: true },
+			{ type: 'text', string: 'line2-1', isFromSectionRepeat: true },
+			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..', isFromSectionRepeat: true, isFromAutoRepeatChords: true },
+			{ type: 'text', string: 'line2-2', isFromSectionRepeat: true },
+			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..', isFromSectionRepeat: true, isFromChordLineRepeater: true },
+			{ type: 'text', string: 'line2-3', isFromSectionRepeat: true },
+			{ type: 'emptyLine', string: '', isFromSectionRepeat: true},
 		];
 
 		const songLines = songLinesFactory();
