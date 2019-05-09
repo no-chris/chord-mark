@@ -13,6 +13,7 @@ import renderSectionLabel from './renderSectionLabel';
 
 import songTpl from './tpl/song.hbs';
 import getChordSymbol from '../helpers/getChordSymbol';
+import getSectionsStats from '../helpers/getSectionsStats';
 
 import lineTypes from '../../parser/lineTypes';
 
@@ -45,7 +46,9 @@ export default function renderSong(parsedSong, {
 			: getChordSymbol(chord.model);
 	});
 
+	const sectionsStats = getSectionsStats(allLines);
 	const maxBeatsWidth = getMaxBeatsWidth(allLines);
+
 	let shouldSkipRepeatedSectionLine = false;
 
 	const song = allLines
@@ -63,7 +66,7 @@ export default function renderSong(parsedSong, {
 				line.rendered = renderEmptyLine();
 
 			} else if (line.type === lineTypes.SECTION_LABEL) {
-				line.rendered = renderSectionLabel(line, { expandSectionRepeats });
+				line.rendered = renderSectionLabel(line, { sectionsStats, expandSectionRepeats });
 
 			} else if (line.type === lineTypes.TEXT) {
 				line.rendered = renderTextLine(line);

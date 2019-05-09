@@ -70,3 +70,34 @@ verseLine2`;
 	});
 });
 
+
+describe('sectionsStats', () => {
+	test('Should number section only if it is repeated', () => {
+		const input =
+`#i
+#v
+#c
+#v
+#c
+#s x2
+#b
+#c x2
+#o`;
+		const expected =
+`Intro
+Verse 1
+Chorus 1
+Verse 2
+Chorus 2
+Solo 1
+Solo 2
+Bridge
+Chorus 3
+Chorus 4
+Outro`;
+		const rendered = renderSongText(input, { expandSectionRepeats: true });
+		const element = htmlToElement(rendered);
+		expect(element.textContent).toBe(expected);
+	});
+});
+

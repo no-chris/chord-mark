@@ -23,20 +23,20 @@ describe('renderSectionLabel', () => {
 
 describe('Shortcuts and case', () => {
 	describe.each([
-		[ '#a', 1, 'Adlib 1' ],
-		[ '#b', 1, 'Bridge 1' ],
-		[ '#c', 1, 'Chorus 1' ],
-		[ '#i', 1, 'Intro 1' ],
-		[ '#o', 1, 'Outro 1' ],
-		[ '#p', 1, 'Pre-chorus 1' ],
-		[ '#s', 1, 'Solo 1' ],
-		[ '#u', 1, 'Interlude 1' ],
-		[ '#v', 1, 'Verse 1' ],
-	])('Should replace shortcuts', (string, index, output) => {
+		[ '#a', 'Adlib' ],
+		[ '#b', 'Bridge' ],
+		[ '#c', 'Chorus' ],
+		[ '#i', 'Intro' ],
+		[ '#o', 'Outro' ],
+		[ '#p', 'Pre-chorus' ],
+		[ '#s', 'Solo' ],
+		[ '#u', 'Interlude' ],
+		[ '#v', 'Verse' ],
+	])('Should replace shortcuts', (string, output) => {
 		test('expands ' + string + ' to ' + output, () => {
 			const line = {
 				model: parseSectionLabel(string),
-				index,
+				index: 1,
 			};
 			const rendered = renderSectionLabel(line);
 			const element = htmlToElement(rendered);
@@ -47,14 +47,14 @@ describe('Shortcuts and case', () => {
 	});
 
 	describe.each([
-		[ '#inter', 1, 'Inter 1' ],
-		[ '#special', 1, 'Special 1' ],
-		[ '#other', 1, 'Other 1' ],
-	])('Should render custom sections with a capital first letter', (string, index, output) => {
+		[ '#inter', 'Inter' ],
+		[ '#special', 'Special' ],
+		[ '#other', 'Other' ],
+	])('Should render custom sections with a capital first letter', (string, output) => {
 		test('renders ' + string + ' to ' + output, () => {
 			const line = {
 				model: parseSectionLabel(string),
-				index,
+				index: 1,
 			};
 			const rendered = renderSectionLabel(line);
 			const element = htmlToElement(rendered);
@@ -68,16 +68,33 @@ describe('Shortcuts and case', () => {
 
 describe('Label indexes', () => {
 	describe.each([
-		[ '#v', 5, 'Verse 5' ],
-		[ '#c', 3, 'Chorus 3' ],
-		[ '#b', 7, 'Bridge 7' ],
-	])('Should append index to section label', (string, index, output) => {
+		[ '#v', 5, { v: 10 }, 'Verse 5' ],
+		[ '#c', 3, { c: 5 }, 'Chorus 3' ],
+		[ '#b', 7, { b: 8 }, 'Bridge 7' ],
+	])('Should append index to section label', (string, index, sectionsStats, output) => {
 		test('appends ' + index, () => {
 			const line = {
 				model: parseSectionLabel(string),
 				index,
 			};
-			const rendered = renderSectionLabel(line);
+			const rendered = renderSectionLabel(line, { sectionsStats });
+			const element = htmlToElement(rendered);
+
+			expect(element).toBeInstanceOf(Node);
+			expect(element.innerHTML).toBe(output);
+		});
+	});
+
+	describe.each([
+		[ '#v', 1, { v: 1 }, 'Verse' ],
+		[ '#c', 1, { c: 2 }, 'Chorus 1' ],
+	])('Should not append index to section label if section is unique', (string, index, sectionsStats, output) => {
+		test('appends ' + index, () => {
+			const line = {
+				model: parseSectionLabel(string),
+				index,
+			};
+			const rendered = renderSectionLabel(line, { sectionsStats });
 			const element = htmlToElement(rendered);
 
 			expect(element).toBeInstanceOf(Node);
@@ -91,24 +108,24 @@ describe('Repeat indications', () => {
 	test('should NOT append repeat indication if expandSectionRepeats === true', () => {
 		const line = {
 			model: parseSectionLabel('#v x5'),
-			index: 2,
+			index: 1,
 		};
 		const rendered = renderSectionLabel(line, { expandSectionRepeats: true });
 		const element = htmlToElement(rendered);
 
 		expect(element).toBeInstanceOf(Node);
-		expect(element.innerHTML).toBe('Verse 2');
+		expect(element.innerHTML).toBe('Verse');
 	});
 
 	test('should append repeat indication if expandSectionRepeats === false', () => {
 		const line = {
 			model: parseSectionLabel('#v x5'),
-			index: 2,
+			index: 1,
 		};
 		const rendered = renderSectionLabel(line, { expandSectionRepeats: false });
 		const element = htmlToElement(rendered);
 
 		expect(element).toBeInstanceOf(Node);
-		expect(element.innerHTML).toBe('Verse 2 x5');
+		expect(element.innerHTML).toBe('Verse x5');
 	});
 });

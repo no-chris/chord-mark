@@ -25,18 +25,18 @@ const defaultTimeSignature = '4/4';
  */
 
 /**
- * @typedef {Object} SongChordLine extends SongLine
+ * @typedef {SongLine} SongChordLine
  * @type {Object}
  * @property {ChordLine} model
  */
 
 /**
- * @typedef {Object} SongTextLine extends SongLine
+ * @typedef {SongLine} SongTextLine
  * @type {Object}
  */
 
 /**
- * @typedef {Object} SongSectionLabelLine extends SongLine
+ * @typedef {SongLine} SongSectionLabelLine
  * @type {Object}
  * @property {SectionLabel} model
  * @property {Number} index - index of the section for a given label

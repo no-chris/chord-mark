@@ -16,17 +16,24 @@ const labelsMapping = {
 /**
  * @param {SongSectionLabelLine} sectionLabelLine
  * @param {Boolean} expandSectionRepeats
+ * @param {Object} sectionsStats - key = section label, value = section count in song
  * @returns {String} rendered html
  */
 export default function renderSectionLabel(sectionLabelLine, {
 	expandSectionRepeats = false,
+	sectionsStats = {},
 } = {}) {
 	const { model, index } = sectionLabelLine;
 	const labelRaw = labelsMapping[model.label]
 		? labelsMapping[model.label]
 		: model.label;
 
-	let rendered = labelRaw[0].toUpperCase() + labelRaw.substring(1) + ' ' + index;
+
+	let rendered = labelRaw[0].toUpperCase() + labelRaw.substring(1);
+
+	if (sectionsStats[model.label] > 1) {
+		rendered += ' ' + index;
+	}
 
 	if (!expandSectionRepeats && model.repeatTimes) {
 		rendered += ' x' + model.repeatTimes;
