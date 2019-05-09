@@ -14,22 +14,22 @@ const labelsMapping = {
 
 
 /**
- * @param {SectionLabel} sectionLabel
- * @param {Number} index
+ * @param {SongSectionLabelLine} sectionLabelLine
  * @param {Boolean} expandSectionRepeats
  * @returns {String} rendered html
  */
-export default function renderSectionLabel(sectionLabel, index, {
+export default function renderSectionLabel(sectionLabelLine, {
 	expandSectionRepeats = false,
 } = {}) {
-	const labelRaw = labelsMapping[sectionLabel.label]
-		? labelsMapping[sectionLabel.label]
-		: sectionLabel.label;
+	const { model, index } = sectionLabelLine;
+	const labelRaw = labelsMapping[model.label]
+		? labelsMapping[model.label]
+		: model.label;
 
 	let rendered = labelRaw[0].toUpperCase() + labelRaw.substring(1) + ' ' + index;
 
-	if (!expandSectionRepeats && sectionLabel.repeatTimes) {
-		rendered += ' x' + sectionLabel.repeatTimes;
+	if (!expandSectionRepeats && model.repeatTimes) {
+		rendered += ' x' + model.repeatTimes;
 	}
 
 	return sectionLabelTpl({ sectionLabel: rendered });

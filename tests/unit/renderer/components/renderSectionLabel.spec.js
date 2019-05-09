@@ -8,7 +8,11 @@ describe('renderSectionLabel', () => {
 	});
 
 	test('Should return valid html', () => {
-		const rendered = renderSectionLabel(parseSectionLabel('#v'), 1);
+		const line = {
+			model: parseSectionLabel('#v'),
+			index: 1,
+		};
+		const rendered = renderSectionLabel(line);
 		const element = htmlToElement(rendered);
 
 		expect(element).toBeInstanceOf(Node);
@@ -30,7 +34,11 @@ describe('Shortcuts and case', () => {
 		[ '#v', 1, 'Verse 1' ],
 	])('Should replace shortcuts', (string, index, output) => {
 		test('expands ' + string + ' to ' + output, () => {
-			const rendered = renderSectionLabel(parseSectionLabel(string), index);
+			const line = {
+				model: parseSectionLabel(string),
+				index,
+			};
+			const rendered = renderSectionLabel(line);
 			const element = htmlToElement(rendered);
 
 			expect(element).toBeInstanceOf(Node);
@@ -44,7 +52,11 @@ describe('Shortcuts and case', () => {
 		[ '#other', 1, 'Other 1' ],
 	])('Should render custom sections with a capital first letter', (string, index, output) => {
 		test('renders ' + string + ' to ' + output, () => {
-			const rendered = renderSectionLabel(parseSectionLabel(string), index);
+			const line = {
+				model: parseSectionLabel(string),
+				index,
+			};
+			const rendered = renderSectionLabel(line);
 			const element = htmlToElement(rendered);
 
 			expect(element).toBeInstanceOf(Node);
@@ -61,7 +73,11 @@ describe('Label indexes', () => {
 		[ '#b', 7, 'Bridge 7' ],
 	])('Should append index to section label', (string, index, output) => {
 		test('appends ' + index, () => {
-			const rendered = renderSectionLabel(parseSectionLabel(string), index);
+			const line = {
+				model: parseSectionLabel(string),
+				index,
+			};
+			const rendered = renderSectionLabel(line);
 			const element = htmlToElement(rendered);
 
 			expect(element).toBeInstanceOf(Node);
@@ -73,7 +89,11 @@ describe('Label indexes', () => {
 
 describe('Repeat indications', () => {
 	test('should NOT append repeat indication if expandSectionRepeats === true', () => {
-		const rendered = renderSectionLabel(parseSectionLabel('#v x5'), 2, { expandSectionRepeats: true });
+		const line = {
+			model: parseSectionLabel('#v x5'),
+			index: 2,
+		};
+		const rendered = renderSectionLabel(line, { expandSectionRepeats: true });
 		const element = htmlToElement(rendered);
 
 		expect(element).toBeInstanceOf(Node);
@@ -81,7 +101,11 @@ describe('Repeat indications', () => {
 	});
 
 	test('should append repeat indication if expandSectionRepeats === false', () => {
-		const rendered = renderSectionLabel(parseSectionLabel('#v x5'), 2, { expandSectionRepeats: false });
+		const line = {
+			model: parseSectionLabel('#v x5'),
+			index: 2,
+		};
+		const rendered = renderSectionLabel(line, { expandSectionRepeats: false });
 		const element = htmlToElement(rendered);
 
 		expect(element).toBeInstanceOf(Node);

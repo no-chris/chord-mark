@@ -52,6 +52,7 @@ export default function renderSong(parsedSong, {
 		.filter(shouldRenderLine)
 		.map(line => {
 			if (line.type === lineTypes.CHORD) {
+				// todo: move this in renderChordLine
 				const spaced = (alignBars)
 					? alignedChordSpacer(line.model, maxBeatsWidth)
 					: simpleChordSpacer(line.model);
@@ -62,10 +63,10 @@ export default function renderSong(parsedSong, {
 				line.rendered = renderEmptyLine();
 
 			} else if (line.type === lineTypes.SECTION_LABEL) {
-				line.rendered = renderSectionLabel(line.model, line.index, { expandSectionRepeats });
+				line.rendered = renderSectionLabel(line, { expandSectionRepeats });
 
 			} else if (line.type === lineTypes.TEXT) {
-				line.rendered = renderTextLine(line.string);
+				line.rendered = renderTextLine(line);
 			}
 			return line;
 		})

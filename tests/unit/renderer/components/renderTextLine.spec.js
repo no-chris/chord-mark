@@ -7,7 +7,7 @@ describe('renderTextLine', () => {
 	});
 
 	test('Should return valid html', () => {
-		const rendered = renderTextLine('textContent');
+		const rendered = renderTextLine({ string: 'textContent' });
 		const element = htmlToElement(rendered);
 
 		expect(element).toBeInstanceOf(Node);

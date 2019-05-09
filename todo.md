@@ -1,12 +1,13 @@
 # Tech debt
++ add "interlude" shortcut
+= only add section index if multiple labels of same type
+- expandSectionRepeats as user option
+- autoRepeatChords as user option
+
 - memoize most parsing functions
-- only add section index if multiple labels of same type
-- add "interlude" shortcut
 - Bug Momo Chords : AmM
 - render time signature
 - refactor chordMark CSS
 - rename section => stanza ?
 - remove manual mocks
-- expandSectionRepeats as user option
-- autoRepeatChords as user option
 - extract default settings (time signature, etc.) ?
