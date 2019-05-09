@@ -11,7 +11,7 @@ describe('renderTextLine', () => {
 		const element = htmlToElement(rendered);
 
 		expect(element).toBeInstanceOf(Node);
-		expect(element.nodeName).toBe('P');
+		expect(element.nodeName).toBe('SPAN');
 		expect(element.classList.contains('cmTextLine')).toBe(true);
 	});
 });

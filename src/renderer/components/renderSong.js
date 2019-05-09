@@ -8,6 +8,7 @@ import { forEachChordInSong } from '../../parser/helper/songs';
 
 import renderChordLine from './renderChordLine';
 import renderEmptyLine from './renderEmptyLine';
+import renderLine from './renderLine';
 import renderSectionLabel from './renderSectionLabel';
 import renderTextLine from './renderTextLine';
 import renderTimeSignature from './renderTimeSignature';
@@ -79,7 +80,11 @@ export default function renderSong(parsedSong, {
 			} else {
 				rendered = renderTextLine(line);
 			}
-			return rendered;
+			return renderLine(rendered, {
+				isFromSectionRepeat: line.isFromSectionRepeat,
+				isFromAutoRepeatChords: line.isFromAutoRepeatChords,
+				isFromChordLineRepeater: line.isFromChordLineRepeater,
+			});
 		})
 		.filter(Boolean)
 		.join('\n');
