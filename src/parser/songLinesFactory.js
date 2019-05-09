@@ -226,16 +226,16 @@ function getSectionIndex(currentLabel, allSectionLabels) {
 
 function isFirstOfLabel(currentLabel, allLines) {
 	return allLines.every(line =>
-		(line.type === 'sectionLabel' && line.model.label !== currentLabel.label)
+		(line.type === lineTypes.SECTION_LABEL && line.model.label !== currentLabel.label)
 	);
 }
 
 function shouldRepeatLineFromBlueprint(blueprintLine, currentLine) {
 	return blueprintLine
-		&& blueprintLine.type !== 'text'
-		&& blueprintLine.type !== 'emptyLine'
+		&& blueprintLine.type !== lineTypes.TEXT
+		&& blueprintLine.type !== lineTypes.EMPTY_LINE
 		&& blueprintLine.type !== currentLine.type
-		&& currentLine.type !== 'emptyLine';
+		&& currentLine.type !== lineTypes.EMPTY_LINE;
 }
 
 function isLastLineOfSection(lineIndex, allSrcLines) {

@@ -1,5 +1,7 @@
 import _cloneDeep from 'lodash/cloneDeep';
 
+import lineTypes from '../lineTypes';
+
 /**
  * @param {SongLine[]} allLines
  * @param {Function} fn - to execute on each chord
@@ -9,7 +11,7 @@ export function forEachChordInSong(allLines, fn) {
 	const newLines = _cloneDeep(allLines);
 
 	newLines.forEach(line => {
-		if (line.type === 'chord') {
+		if (line.type === lineTypes.CHORD) {
 			line.model.allBars.forEach(bar => {
 				bar.allChords.forEach(chord => {
 					fn(chord);
@@ -53,7 +55,7 @@ export function getNthOfLabel(allLines, label, n) {
 	let currentLabel = '';
 
 	allLines.forEach(line => {
-		if (line.type === 'sectionLabel') {
+		if (line.type === lineTypes.SECTION_LABEL) {
 			currentLabel = line.model.label;
 
 			if (! typesCount[currentLabel]) {

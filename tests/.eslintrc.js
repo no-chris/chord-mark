@@ -5,9 +5,9 @@ module.exports = {
 	},
 	'rules': {
 		'max-len':                [ 'off' ],
-		'max-lines':	 		  [ 'error', { max: 500, skipBlankLines: true, skipComments: true, } ],
+		'max-lines':	 		  [ 'off' ],
 		'max-lines-per-function': [ 'off' ],
-		'max-params': 			  [ 'error', { max: 10 } ],
+		'max-params': 			  [ 'off' ],
 
 		'no-restricted-imports':  [ 'off' ],
 
