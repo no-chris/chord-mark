@@ -1,4 +1,4 @@
-import isTimeSignatureString from './isTimeSignatureString';
+import isTimeSignatureString from './matchers/isTimeSignatureString';
 
 /**
  * @typedef {Object} TimeSignature

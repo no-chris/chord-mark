@@ -13,9 +13,7 @@ describe('chordLine renderer', () => {
 	test('Module', () => {
 		expect(renderChordLine).toBeInstanceOf(Function);
 	});
-});
 
-describe('Behaviour', () => {
 	test('Should return valid html', () => {
 		renderBarContent.mockReturnValue('C');
 
@@ -23,7 +21,7 @@ describe('Behaviour', () => {
 		const element = htmlToElement(rendered);
 
 		expect(element).toBeInstanceOf(Node);
-		expect(element.nodeName).toBe('P');
+		expect(element.nodeName).toBe('SPAN');
 		expect(element.classList.contains('cmChordLine')).toBe(true);
 	});
 });

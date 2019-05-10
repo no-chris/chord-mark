@@ -60,3 +60,16 @@ describe.each([
 	});
 });
 
+describe('"No Chord" symbol', () => {
+	test('should leave the "no chord" symbol alone', () => {
+		const parsed = parseSong('A C NC D');
+		const transposed = transposeSong(parsed.allLines, parsed.allChords, { transposeValue: 2 });
+
+		expect(transposed[0].model.allBars[0].allChords[0].transposedModel.symbol.rootNote).toBe('B');
+		expect(transposed[0].model.allBars[1].allChords[0].transposedModel.symbol.rootNote).toBe('D');
+		expect(transposed[0].model.allBars[2].allChords[0].transposedModel).toBeUndefined();
+		expect(transposed[0].model.allBars[2].allChords[0].model).toBe('NC');
+		expect(transposed[0].model.allBars[3].allChords[0].transposedModel.symbol.rootNote).toBe('E');
+	});
+});
+

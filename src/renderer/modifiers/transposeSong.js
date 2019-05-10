@@ -1,6 +1,7 @@
 import _cloneDeep from 'lodash/cloneDeep';
 import transposeChord from './transposeChord';
 import getMainAccidental from '../helpers/getMainAccidental';
+import syntax from '../../parser/syntax';
 
 import { forEachChordInSong } from '../../parser/helper/songs';
 
@@ -25,11 +26,13 @@ export default function transposeSong(allLines, allChords, {
 
 	if (harmonizeAccidentals || transposeValue !== 0) {
 		transposed = forEachChordInSong(transposed, (chord) => {
-			chord.transposedModel = transposeChord(
-				chord.model,
-				transposeValue,
-				accidental === 'flat'
-			);
+			if (chord.model !== syntax.noChord) {
+				chord.transposedModel = transposeChord(
+					chord.model,
+					transposeValue,
+					accidental === 'flat'
+				);
+			}
 		});
 	}
 

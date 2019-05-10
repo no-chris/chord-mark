@@ -9,6 +9,8 @@ import parseTimeSignature from '../../../src/parser/parseTimeSignature';
 import IncorrectBeatCountException from '../../../src/parser/exceptions/IncorrectBeatCountException';
 import InvalidChordRepetitionException from '../../../src/parser/exceptions/InvalidChordRepetitionException';
 
+import { forEachChordInChordLine } from '../../../src/parser/helper/songs';
+
 describe('parseChordLine', () => {
 	test('Module', () => {
 		expect(parseChordLine).toBeInstanceOf(Function);
@@ -281,15 +283,45 @@ describe.each([
 		chordCount: 2
 	}],
 
-])('Should parses correctly %s: %s',
-	(title, input, timeSignature, expected) => {
-		test('is correctly parsed', () => {
-			const options = { timeSignature };
-			const parsed = parseChordLine(input, options);
+	['handle the "no-chord" symbol', 'C NC B.. NC.. D', ts4_4, {
+		allBars: [
+			{
+				allChords: [
+					{ string: 'C', model: { symbol: 'C' }, duration: 4, beat: 1 },
+				],
+				timeSignature: ts4_4,
+			},
+			{
+				allChords: [
+					{ string: 'NC', model: 'NC', duration: 4, beat: 1 },
+				],
+				timeSignature: ts4_4,
+			},
+			{
+				allChords: [
+					{ string: 'B..', model: { symbol: 'B' }, duration: 2, beat: 1 },
+					{ string: 'NC..', model: 'NC', duration: 2, beat: 3 },
+				],
+				timeSignature: ts4_4,
+			},
+			{
+				allChords: [
+					{ string: 'D', model: { symbol: 'D' }, duration: 4, beat: 1 },
+				],
+				timeSignature: ts4_4,
+			},
+		],
+		chordCount: 5
+	}],
 
-			expect(parsed).toEqual(expected);
-		});
+])('Should parses correctly %s: %s', (title, input, timeSignature, expected) => {
+	test('is correctly parsed', () => {
+		const options = { timeSignature };
+		const parsed = parseChordLine(input, options);
+
+		expect(parsed).toEqual(expected);
 	});
+});
 
 
 describe.each([
@@ -363,5 +395,45 @@ describe.each([
 			expect(e.string).toBe(string);
 		}
 	});
-
 });
+
+
+describe.each([
+
+	['A /', 			'A A'],
+	['A / / /', 		'A A A A'],
+	['A / B /', 		'A A B B'],
+
+	['A ///', 			'A A A A'],
+	['A // /', 			'A A A A'],
+	['A / // /', 		'A A A A A'],
+	['A / // B / //', 	'A A A A B B B B'],
+
+])('barRepeat: %s', (input, expected) => {
+	test('should correctly repeat previous bar', () => {
+		const parsed = parseChordLine(input);
+		const parsedArray = [];
+		forEachChordInChordLine(parsed, chord => {
+			parsedArray.push(chord.model.symbol);
+		});
+
+		expect(parsedArray.join(' ')).toEqual(expected);
+	});
+});
+
+describe.each([
+
+	['/ A'],
+	['// A'],
+	[' / A'],
+	['	/ A'],
+
+])('Throw if line starts with repeatBar symbol: %s', (input) => {
+	const throwingFn = () => { parseChordLine(input); };
+
+	test('Throw Error', () => {
+		expect(throwingFn).toThrow(Error);
+		expect(throwingFn).toThrow('A chord line cannot start with the barRepeat symbol');
+	});
+});
+

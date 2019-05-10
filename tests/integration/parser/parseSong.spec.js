@@ -30,7 +30,7 @@ F. Em. Dm. C.
 Let it be`;
 		const expected = {
 			allLines: [
-				{ type: 'time-signature', string: '4/4', model: parseTimeSignature('4/4') },
+				{ type: 'timeSignature', string: '4/4', model: parseTimeSignature('4/4') },
 				{ type: 'chord', string: 'C.. G..', model: parseChordLine('C.. G..')} ,
 				{ type: 'text', string: 'When I find myself in times of trouble' },
 				{ type: 'chord', string: 'Am.. F..', model: parseChordLine('Am.. F..') },
@@ -39,7 +39,7 @@ Let it be`;
 				{ type: 'text', string: 'Speaking words of wisdom' },
 				{ type: 'chord', string: 'F. Em. Dm. C.', model: parseChordLine('F. Em. Dm. C.') },
 				{ type: 'text', string: 'Let it be' },
-				{ type: 'text', string: '' },
+				{ type: 'emptyLine', string: '' },
 				{ type: 'chord', string: 'Am.. G..', model: parseChordLine('Am.. G..') },
 				{ type: 'text', string: 'Let it be, let it be' },
 				{ type: 'chord', string: 'C.. F..', model: parseChordLine('C.. F..') },

@@ -1,11 +1,18 @@
 import _isEqual from 'lodash/isEqual';
 import _cloneDeep from 'lodash/cloneDeep';
 
+import syntax from './syntax';
+import clearSpaces from './helper/clearSpaces';
+
 import parseChord from './parseChord';
 import parseTimeSignature from './parseTimeSignature';
 
 import IncorrectBeatCountException from './exceptions/IncorrectBeatCountException';
 import InvalidChordRepetitionException from './exceptions/InvalidChordRepetitionException';
+
+const chordBeatCountSymbols = new RegExp(syntax.chordBeatCount, 'g');
+const barRepeatSymbols = new RegExp('^' + syntax.barRepeat + '+$');
+const defaultTimeSignature = parseTimeSignature('4/4');
 
 /**
  * @typedef {Object} ChordLine
@@ -25,7 +32,7 @@ import InvalidChordRepetitionException from './exceptions/InvalidChordRepetition
  * @typedef {Object} ChordLineChord
  * @type {Object}
  * @property {String} string - original chord string
- * @property {ChordDef} model
+ * @property {ChordDef|String} model - parsed chord or "NC" if "no chord" symbol
  * @property {Number} duration - number of beats the chord lasts
  * @property {Number} beat - beat on which the chord starts
  */
@@ -38,67 +45,94 @@ import InvalidChordRepetitionException from './exceptions/InvalidChordRepetition
 export default function parseChordLine(
 	chordLine,
 	{
-		timeSignature = parseTimeSignature('4/4')
+		timeSignature = defaultTimeSignature
 	} = {}
 ) {
 	const { beatCount } = timeSignature;
 
-	const allLineChords = chordLine
-		.replace(/  +/g, ' ')
-		.trim()
-		.split(' ');
 	const allBars = [];
+	const emptyBar = { allChords: [] };
 
-	let bar = { allChords: []};
+	let bar = _cloneDeep(emptyBar);
 	let chord = {};
-	let model = {};
+	let tokenWithoutBeatCount;
 	let currentBeatCount = 0;
 	let chordCount = 0;
-	let previousChord = {};
+	let previousBar;
 
-	allLineChords.forEach(chordString => {
-		model = parseChord(chordString.replace(/\./g, ''));
-		chord = {
-			string: chordString,
-			duration: ((chordString.match(/\./g) || []).length) || beatCount,
-			model,
-		};
-		chord.beat = currentBeatCount + 1;
-		currentBeatCount += chord.duration;
-
-		if (bar.allChords.length > 0) {
-			previousChord = bar.allChords[bar.allChords.length - 1];
-			if (_isEqual(previousChord.model, chord.model)) {
-				throw new InvalidChordRepetitionException({
-					string: chord.string,
-				});
+	const allTokens = clearSpaces(chordLine).split(' ');
+	allTokens.forEach((token, tokenIndex) => {
+		if (token.match(barRepeatSymbols)) {
+			if (previousBar) {
+				for(let i = 0; i < token.length; i++) {
+					allBars.push(_cloneDeep(previousBar));
+				}
+			} else {
+				throw new Error('A chord line cannot start with the barRepeat symbol');
 			}
-		}
 
-		bar.allChords.push(chord);
-		chordCount++;
+		} else {
+			tokenWithoutBeatCount = token.replace(chordBeatCountSymbols, '');
+			chord = {
+				string: token,
+				duration: getChordDuration(token, beatCount),
+				model: isNoChordSymbol(tokenWithoutBeatCount) ? syntax.noChord : parseChord(tokenWithoutBeatCount),
+				beat: currentBeatCount + 1,
+			};
+			currentBeatCount += chord.duration;
 
-		if (currentBeatCount === beatCount) {
-			bar.timeSignature = timeSignature;
+			checkInvalidChordRepetition(bar, chord);
 
-			allBars.push(_cloneDeep(bar));
+			bar.allChords.push(chord);
+			chordCount++;
 
-			bar = { allChords: []};
-			currentBeatCount = 0;
-			previousChord = {};
+			if (shouldChangeBar(currentBeatCount, beatCount)) {
+				bar.timeSignature = timeSignature;
+				const barClone = _cloneDeep(bar);
 
-		} else if (currentBeatCount > beatCount) {
-			throw new IncorrectBeatCountException({
-				message: '',
-				string: chord.string,
-				duration: chord.duration,
-				currentBeatCount,
-				beatCount,
-			});
+				allBars.push(barClone);
+				previousBar = barClone;
+
+				bar = _cloneDeep(emptyBar);
+				currentBeatCount = 0;
+
+			} else {
+				checkInvalidBeatCount(chord, currentBeatCount, beatCount, (allTokens.length === (tokenIndex + 1)));
+			}
 		}
 	});
 
-	if (currentBeatCount > 0 && (currentBeatCount < beatCount)) {
+	return {
+		chordCount,
+		allBars
+	};
+}
+
+function isNoChordSymbol(token) {
+	return (token === syntax.noChord);
+}
+
+function getChordDuration(token, beatCount) {
+	return ((token.match(chordBeatCountSymbols) || []).length) || beatCount;
+}
+
+function checkInvalidChordRepetition(bar, currentChord) {
+	if (bar.allChords.length > 0) {
+		const previousChord = bar.allChords[bar.allChords.length - 1];
+		if (_isEqual(previousChord.model, currentChord.model)) {
+			throw new InvalidChordRepetitionException({
+				string: currentChord.string,
+			});
+		}
+	}
+}
+
+function shouldChangeBar(currentBeatCount, beatCount) {
+	return currentBeatCount === beatCount;
+}
+
+function checkInvalidBeatCount(chord, currentBeatCount, beatCount, isLast) {
+	if (hasInvalidBeatCount(currentBeatCount, beatCount, isLast)) {
 		throw new IncorrectBeatCountException({
 			message: '',
 			string: chord.string,
@@ -107,9 +141,14 @@ export default function parseChordLine(
 			beatCount,
 		});
 	}
-
-	return {
-		chordCount,
-		allBars
-	};
+}
+function hasInvalidBeatCount(currentBeatCount, barBeatCount, isLast) {
+	return hasTooManyBeats(currentBeatCount, barBeatCount)
+		|| hasTooFewBeats(currentBeatCount, barBeatCount, isLast);
+}
+function hasTooManyBeats(currentBeatCount, barBeatCount) {
+	return currentBeatCount > barBeatCount;
+}
+function hasTooFewBeats(currentBeatCount, barBeatCount, isLast) {
+	return isLast && currentBeatCount < barBeatCount;
 }

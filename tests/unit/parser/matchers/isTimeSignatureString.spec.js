@@ -1,4 +1,4 @@
-import isTimeSignatureString from '../../../src/parser/isTimeSignatureString';
+import isTimeSignatureString from '../../../../src/parser/matchers/isTimeSignatureString';
 
 describe('isTimeSignatureString', () => {
 	test('Module', () => {

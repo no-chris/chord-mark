@@ -1,3 +1,5 @@
+import lineTypes from '../../../parser/lineTypes';
+
 /**
  * @param {SongLine[]} allLines
  * @returns {Array}
@@ -6,7 +8,7 @@ export default function getMaxBeatsWidth(allLines) {
 	const maxBeatsWidth = [];
 
 	allLines
-		.filter(line => line.type === 'chord')
+		.filter(line => line.type === lineTypes.CHORD)
 		.forEach(line => {
 			line.model.allBars.forEach((bar, barIndex) => {
 				if (!maxBeatsWidth[barIndex]) {

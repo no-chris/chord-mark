@@ -3,21 +3,9 @@ import _isArray from 'lodash/isArray';
 import escapeHTML from '../core/dom/escapeHTML';
 import stripTags from '../core/dom/stripTags';
 
-import isChordLine from './isChordLine';
-import isTimeSignature from './isTimeSignatureString';
-
-import parseTimeSignature from './parseTimeSignature';
-import parseChordLine from './parseChordLine';
+import songLinesFactory from './songLinesFactory';
 
 import getAllChordsInSong from './getAllChordsInSong';
-
-/**
- * @typedef {Object} SongLine
- * @type {Object}
- * @property {String} string - original line in source file
- * @property {String} type - chord|text|time-signature|...
- * @property {ChordLine|TimeSignature} model
- */
 
 /**
  * @typedef {Object} Song
@@ -34,46 +22,23 @@ import getAllChordsInSong from './getAllChordsInSong';
  */
 
 /**
- * @type {string}
- */
-const defaultTimeSignature = '4/4';
-
-/**
- * @param {string|array} song
+ * @param {string|array} songSrc
  * @returns {Song}
  */
-export default function parseSong(song) {
-	const songLines = (!_isArray(song)) ? song.split('\n') : song;
+export default function parseSong(songSrc) {
+	const songArray = (!_isArray(songSrc)) ? songSrc.split('\n') : songSrc;
 
-	let timeSignature = parseTimeSignature(defaultTimeSignature);
+	const songLines = songLinesFactory();
 
-	const allLines = songLines
+	/**
+	 * @type {SongLine[]}
+	 */
+	songArray
 		.map(escapeHTML)
 		.map(stripTags)
-		.map(string => ({ string }))
-		.map(line => {
-			if (isTimeSignature(line.string)) {
-				timeSignature = parseTimeSignature(line.string);
+		.forEach(songLines.addLine);
 
-				line.type = 'time-signature';
-				line.model = timeSignature;
-
-			} else if (isChordLine(line.string)) {
-				try {
-					line.type = 'chord';
-					line.model = parseChordLine(line.string, { timeSignature });
-
-				} catch (e) {
-					line.type = 'text';
-				}
-
-			} else {
-				line.type = 'text';
-			}
-			return line;
-		});
-
-
+	const allLines = songLines.asArray();
 	const allChords = getAllChordsInSong(allLines);
 
 	return {

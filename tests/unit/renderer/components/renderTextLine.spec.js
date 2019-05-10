@@ -5,15 +5,13 @@ describe('renderTextLine', () => {
 	test('Module', () => {
 		expect(renderTextLine).toBeInstanceOf(Function);
 	});
-});
 
-describe('Behaviour', () => {
 	test('Should return valid html', () => {
-		const rendered = renderTextLine('textContent');
+		const rendered = renderTextLine({ string: 'textContent' });
 		const element = htmlToElement(rendered);
 
 		expect(element).toBeInstanceOf(Node);
-		expect(element.nodeName).toBe('P');
+		expect(element.nodeName).toBe('SPAN');
 		expect(element.classList.contains('cmTextLine')).toBe(true);
 	});
 });
