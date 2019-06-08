@@ -45,11 +45,11 @@
     "webpack-cli": "^3.3.2"
   },
   "dependencies": {
+    "chord-symbol": "^0.3.0",
     "core-js": "^3.0.1",
     "dompurify": "^1.0.10",
     "handlebars": "^4.1.2",
     "lodash": "^4.17.11",
-    "momo-chords": "^0.4.3",
     "tiny-emitter": "^2.1.0"
   },
   "scripts": {

@@ -1,9 +1,7 @@
 import _isString from 'lodash/isString';
 
-import { Chords } from 'momo-chords/lib/index';
-
-const chords = new Chords();
+import { parseChord }  from 'chord-symbol';
 
 export default function isChord(potentialChord) {
-	return _isString(potentialChord) && chords.isChord(potentialChord);
+	return _isString(potentialChord) && !(parseChord(potentialChord) === null);
 }

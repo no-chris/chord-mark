@@ -36,10 +36,10 @@ describe.each([
 		const parsed = parseSong(song);
 		const transposed = transposeSong(parsed.allLines, parsed.allChords, options);
 
-		expect(transposed[0].model.allBars[0].allChords[0].transposedModel.symbol.rootNote).toBe(transposedRootNotes[0]);
-		expect(transposed[0].model.allBars[1].allChords[0].transposedModel.symbol.rootNote).toBe(transposedRootNotes[1]);
-		expect(transposed[0].model.allBars[2].allChords[0].transposedModel.symbol.rootNote).toBe(transposedRootNotes[2]);
-		expect(transposed[0].model.allBars[3].allChords[0].transposedModel.symbol.rootNote).toBe(transposedRootNotes[3]);
+		expect(transposed[0].model.allBars[0].allChords[0].transposedModel.formatted.rootNote).toBe(transposedRootNotes[0]);
+		expect(transposed[0].model.allBars[1].allChords[0].transposedModel.formatted.rootNote).toBe(transposedRootNotes[1]);
+		expect(transposed[0].model.allBars[2].allChords[0].transposedModel.formatted.rootNote).toBe(transposedRootNotes[2]);
+		expect(transposed[0].model.allBars[3].allChords[0].transposedModel.formatted.rootNote).toBe(transposedRootNotes[3]);
 	});
 });
 
@@ -65,11 +65,11 @@ describe('"No Chord" symbol', () => {
 		const parsed = parseSong('A C NC D');
 		const transposed = transposeSong(parsed.allLines, parsed.allChords, { transposeValue: 2 });
 
-		expect(transposed[0].model.allBars[0].allChords[0].transposedModel.symbol.rootNote).toBe('B');
-		expect(transposed[0].model.allBars[1].allChords[0].transposedModel.symbol.rootNote).toBe('D');
+		expect(transposed[0].model.allBars[0].allChords[0].transposedModel.formatted.rootNote).toBe('B');
+		expect(transposed[0].model.allBars[1].allChords[0].transposedModel.formatted.rootNote).toBe('D');
 		expect(transposed[0].model.allBars[2].allChords[0].transposedModel).toBeUndefined();
 		expect(transposed[0].model.allBars[2].allChords[0].model).toBe('NC');
-		expect(transposed[0].model.allBars[3].allChords[0].transposedModel.symbol.rootNote).toBe('E');
+		expect(transposed[0].model.allBars[3].allChords[0].transposedModel.formatted.rootNote).toBe('E');
 	});
 });
 

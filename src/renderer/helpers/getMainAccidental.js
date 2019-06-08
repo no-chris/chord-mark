@@ -14,7 +14,7 @@ export default function getMainAccidental(allChords) {
 	allChords
 		.filter(chord => (chord.model !== syntax.noChord))
 		.forEach(chord => {
-			rootNote = chord.model.symbol.rootNote;
+			rootNote = chord.model.formatted.rootNote;
 
 			if (rootNote.length === 2) {
 				let accidental = rootNote[1];

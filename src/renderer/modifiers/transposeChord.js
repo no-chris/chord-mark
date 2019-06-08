@@ -47,15 +47,15 @@ function transposeNote(note, value, useFlats) {
 export default function transposeChord(chord, value, useFlats) {
 	const transposedChord = _cloneDeep(chord); // check immutability
 
-	const root = transposedChord.symbol.rootNote;
-	const bass = transposedChord.symbol.bassNote;
+	const root = transposedChord.formatted.rootNote;
+	const bass = transposedChord.formatted.bassNote;
 
 	const rootSharp = convertToSharp(root);
-	transposedChord.symbol.rootNote = transposeNote(rootSharp, value, useFlats);
+	transposedChord.formatted.rootNote = transposeNote(rootSharp, value, useFlats);
 
 	if (bass) {
 		const bassSharp = convertToSharp(bass);
-		transposedChord.symbol.bassNote = transposeNote(bassSharp, value, useFlats);
+		transposedChord.formatted.bassNote = transposeNote(bassSharp, value, useFlats);
 	}
 
 	return transposedChord;

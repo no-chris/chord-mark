@@ -105,8 +105,8 @@ describe.each([
 		const chord = parseChord(symbol);
 
 		const transposed = transposeChord(chord, value, useFlats);
-		chord.symbol.rootNote = transposedRoot;
-		chord.symbol.bassNote = transposedBass;
+		chord.formatted.rootNote = transposedRoot;
+		chord.formatted.bassNote = transposedBass;
 
 		expect(transposed).toEqual(chord);
 	});

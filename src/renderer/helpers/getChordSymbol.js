@@ -1,13 +1,13 @@
 import syntax from '../../parser/syntax';
-import { Chords } from 'momo-chords';
+import { chordRendererFactory } from 'chord-symbol';
 
 const noChordSymbol = 'NC';
-const chords = new Chords();
+const renderChord = chordRendererFactory({ useShortNamings: true});
 
 /**
- * @param {ChordDef|String} model
+ * @param {Chord|String} model
  * @returns {string}
  */
 export default function(model) {
-	return (model === syntax.noChord) ? noChordSymbol : chords.print(model.symbol);
+	return (model === syntax.noChord) ? noChordSymbol : renderChord(model);
 }

@@ -95,7 +95,7 @@ describe.each([
 		[
 			'A. Bm7. C. Dm7.',
 			'E7. A7. G7. D7.',
-			'E7/G. A. G. Dadd9.'
+			'E7/G. A. G. D(b5).'
 		],
 		[
 			{ 1: 4, 	2: 3, 	3: 2, 	4: 5 },
@@ -108,7 +108,7 @@ describe.each([
 			'A',
 			'E7. A7...',
 			'D7.. A..',
-			'Dm7... Cmaj7.',
+			'Dm7... C(b5).',
 		],
 		[
 			{ 1: 3, 	2: 2, 	3: 1, 	4: 5 },
@@ -119,9 +119,9 @@ describe.each([
 		'3 lines / 3 bars / different beat per line ',
 		[
 			'A             A             B',
-			'E7. A7...     E7... A7.     Gadd11',
-			'D7.. A..      D7.. Aadd9..  D7.. Csus4..',
-			'Dm7... Cmaj7. Gmaj7. Dm7... B7',
+			'E7. A7...     E7... A7.     G(no5)',
+			'D7.. A..      D7.. A(b5)..  D7.. C(b5)..',
+			'Dm7... C(b5). G(b5). Dm7... B7',
 		],
 		[
 			{ 1: 3, 	2: 2, 	3: 1, 	4: 5 },
