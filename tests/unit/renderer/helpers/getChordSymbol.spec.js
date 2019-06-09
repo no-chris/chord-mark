@@ -9,7 +9,7 @@ describe('getChordSymbol', () => {
 
 describe.each([
 
-	['AM7', parseChord('AMaj7'), 'AM7'],
+	['AM7', parseChord('AMaj7'), 'Ama7'],
 	['A+', parseChord('Aaug'),  'A+'],
 	['NC', 'NC', 'NC'],
 
