@@ -26,7 +26,7 @@ describe.each([
 	['base rendering', 		'song1-input.txt', 'song1-output-simple.txt', 		{} ],
 	['no transposing', 		'song1-input.txt', 'song1-output-simple.txt', 		{ alignBars: false, harmonizeAccidentals: false } ],
 	['aligned rendering', 	'song1-input.txt', 'song1-output-aligned.txt', 		{ alignBars: true } ],
-	['transposed', 			'song1-input.txt', 'song1-output-transposed.txt', 	{ transposeValue: -5 } ],
+	['transposed', 			'song1-input.txt', 'song1-output-transposed.txt', 	{ transposeValue: -4, accidentalsType: 'flat' } ],
 
 ])('Render components: %s', (title, inputFile, outputFile, options) => {
 	test('produces expected rendering', () => {

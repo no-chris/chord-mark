@@ -39,7 +39,7 @@ describe.each([
 	['1 bar / 3 chords / 4 bpb (1/1/2)',  	'C. G. F..',	'C  G  F  '],
 	['1 bar / 3 chords / 4 bpb (1/2/1)',  	'C. G.. F.',	'C  G  F  '],
 	['1 bar / 3 chords / 4 bpb (2/1/1)',  	'C.. G. F.',	'C  G  F  '],
-	['1 bar / 4 chords / 4 bpb (1/1/1/1)', 	'C. G. F. Am.',	'C  G  F  Am  '],
+	['1 bar / 4 chords / 4 bpb (1/1/1/1)', 	'C. G. F. Am.',	'C  G  F  Ami  '],
 
 ])('%s: %s', (title, input, output) => {
 	test('Renders with default spacing: ' + output, () => {

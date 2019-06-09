@@ -3,7 +3,6 @@ import getMaxBeatsWidth from '../spacers/chord/getMaxBeatsWidth';
 import simpleChordSpacer from '../spacers/chord/simple';
 import alignedChordSpacer from '../spacers/chord/aligned';
 
-import transposeSong from '../modifiers/transposeSong';
 import { forEachChordInSong } from '../../parser/helper/songs';
 
 import renderChordLine from './renderChordLine';
@@ -16,6 +15,9 @@ import renderTimeSignature from './renderTimeSignature';
 import songTpl from './tpl/song.hbs';
 import getChordSymbol from '../helpers/getChordSymbol';
 import getSectionsStats from '../helpers/getSectionsStats';
+import getMainAccidental from '../helpers/getMainAccidental';
+
+import { chordRendererFactory } from 'chord-symbol';
 
 import lineTypes from '../../parser/lineTypes';
 
@@ -27,6 +29,8 @@ import lineTypes from '../../parser/lineTypes';
  * @param {Boolean} harmonizeAccidentals
  * @param {Boolean} expandSectionRepeats
  * @param {Boolean} autoRepeatChords
+ * @param {Boolean|('max'|'core')} simplifyChords
+ * @param {Boolean} useShortNamings
  * @returns {String} rendered HTML
  */
 export default function renderSong(parsedSong, {
@@ -36,18 +40,34 @@ export default function renderSong(parsedSong, {
 	harmonizeAccidentals = true,
 	expandSectionRepeats = true,
 	autoRepeatChords = true,
+	simplifyChords = false,
+	useShortNamings = true,
 } = {}) {
+
 	let { allLines, allChords } = parsedSong;
 
+	/*
 	allLines = transposeSong(allLines, allChords,  {
 		transposeValue,
 		accidentalsType,
 		harmonizeAccidentals
 	});
+	*/
+
+	const accidental = (accidentalsType === 'auto')
+		? getMainAccidental(allChords)
+		: accidentalsType;
+
+	const renderChord = chordRendererFactory({
+		simplify: simplifyChords,
+		useShortNamings,
+		transposeValue,
+		harmonizeAccidentals,
+		useFlats: (accidental === 'flat'),
+	});
+
 	allLines = forEachChordInSong(allLines, (chord) => {
-		chord.symbol = (chord.transposedModel)
-			? getChordSymbol(chord.transposedModel)
-			: getChordSymbol(chord.model);
+		chord.symbol = getChordSymbol(chord.model, renderChord);
 	});
 
 	const sectionsStats = getSectionsStats(allLines);
