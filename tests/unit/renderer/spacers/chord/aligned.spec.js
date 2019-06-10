@@ -46,9 +46,9 @@ describe.each([
 
 	[
 		'fills third beat',
-		'A. Dm7.. E7.',
+		'A. Dmi7.. E7.',
 		[
-			{ 1: 1, 2: 3, 3: 0, 4: 2 }
+			{ 1: 1, 2: 4, 3: 0, 4: 2 }
 		],
 		[ 0, 0, 0 ],
 		[ defaultSpacesAfter, defaultSpacesAfter + emptyBeatSpaces, 0 ]
@@ -56,11 +56,11 @@ describe.each([
 
 	[
 		'fills space within for "full" beats',
-		'A. Dm7.. E7.',
+		'A. Dmi7.. E7.',
 		[
 			{ 1: 3, 2: 6, 3: 0, 4: 3 }
 		],
-		[ 2, 3, 1 ],
+		[ 2, 2, 1 ],
 		[ defaultSpacesAfter, defaultSpacesAfter + emptyBeatSpaces, 0 ]
 	],
 
