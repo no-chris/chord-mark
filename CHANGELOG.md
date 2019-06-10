@@ -1,3 +1,10 @@
+#### 0.5.1 (2019-06-10)
+
+##### Build System / Dependencies
+
+*  build ([ac1bc408](https://github.com/no-chris/chord-mark/commit/ac1bc408051e4cfa1f3c5dea83cbb3b2e820bb3e))
+*  Fix npm module ([918fb552](https://github.com/no-chris/chord-mark/commit/918fb552e73740e1ca384d60aeea1fdea42f21a7))
+
 ### 0.5.0 (2019-06-10)
 
 ##### Build System / Dependencies
