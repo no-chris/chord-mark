@@ -1,3 +1,18 @@
+### 0.4.0 (2019-06-10)
+
+##### Build System / Dependencies
+
+*  build ([e73b9de3](https://github.com/no-chris/chord-mark/commit/e73b9de312ceb71bfccac603461e743361d5ef5a))
+*  Add scripts for changelog generation ([c434fd09](https://github.com/no-chris/chord-mark/commit/c434fd0983363da0b61299016e8f3c5bf4df7a9d))
+*  Update dependencies ([4ba7a5c0](https://github.com/no-chris/chord-mark/commit/4ba7a5c05e9a4c134504f459ad0f290ff3502a0b))
+
+##### New Features
+
+* **parser-renderer:**
+  *  Use Chord-Symbol for simplify and transpose ([def07105](https://github.com/no-chris/chord-mark/commit/def0710581c60c7e9e12655f2da9312c7237c0fe))
+  *  Use Chord-Symbol for simplify and transpose ([300b0a93](https://github.com/no-chris/chord-mark/commit/300b0a932a3444771eb8b3442177c3315f0bf414))
+  *  Replace MomoChord by ChordSymbol ([06a1fd3d](https://github.com/no-chris/chord-mark/commit/06a1fd3d5585efe0d665b16534e2f98ad8ba8a6d))
+
 ### 0.3.0 (2019-05-10)
 
 ##### Build System / Dependencies
