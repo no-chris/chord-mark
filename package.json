@@ -61,7 +61,10 @@
     "sloc": "echo \"Source code:\" > SLOC && npx sloc src >> SLOC && echo \"Tests:\" >> SLOC && npx sloc tests >> SLOC && echo \"Total:\" >> SLOC && npx sloc src tests >> SLOC",
     "outdated": "npm outdated",
     "audit": "npm audit",
-    "build": "npm run lint && npm run test && npm run bundle-js && npm run bundle-css && npm run size && npm run sloc && npm run outdated && npm run audit"
+    "build": "npm run lint && npm run test && npm run bundle-js && npm run bundle-css && npm run size && npm run sloc && npm run outdated && npm run audit",
+    "release:major": "changelog -M && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version major && git push origin && git push origin --tags",
+    "release:minor": "changelog -m && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version minor && git push origin && git push origin --tags",
+    "release:patch": "changelog -p && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version patch && git push origin && git push origin --tags"
   },
   "size-limit": [
     {
