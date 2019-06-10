@@ -46,14 +46,6 @@ export default function renderSong(parsedSong, {
 
 	let { allLines, allChords } = parsedSong;
 
-	/*
-	allLines = transposeSong(allLines, allChords,  {
-		transposeValue,
-		accidentalsType,
-		harmonizeAccidentals
-	});
-	*/
-
 	const accidental = (accidentalsType === 'auto')
 		? getMainAccidental(allChords)
 		: accidentalsType;
