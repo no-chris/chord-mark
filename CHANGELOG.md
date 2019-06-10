@@ -1,3 +1,9 @@
+### 0.5.0 (2019-06-10)
+
+##### Build System / Dependencies
+
+*  Make build UMD compatible ([d7c3ff83](https://github.com/no-chris/chord-mark/commit/d7c3ff83c77eedfb052ad0671dd2ac6dfb7dce24))
+
 ### 0.4.0 (2019-06-10)
 
 ##### Build System / Dependencies
