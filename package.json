@@ -68,9 +68,15 @@
   },
   "size-limit": [
     {
-      "path": "./dist/chord-mark.js",
+      "path": "./lib/chord-mark.js",
       "webpack": false,
       "limit": "65 KB"
     }
+  ],
+  "files": [
+    "lib",
+    "src",
+    "scss",
+    "tests"
   ]
 }
