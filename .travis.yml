@@ -9,8 +9,8 @@ cache:
     - node_modules
 before_install:
   - npm update
-install:
-  - npm install
 script:
   - npm test
+install:
+  - npm install
 - npm run-script coveralls
