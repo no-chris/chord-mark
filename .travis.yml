@@ -13,4 +13,3 @@ script:
   - npm test
 install:
   - npm install
-- npm run-script coveralls
