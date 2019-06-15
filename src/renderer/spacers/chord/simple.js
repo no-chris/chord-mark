@@ -1,5 +1,7 @@
 import _cloneDeep from 'lodash/cloneDeep';
 
+const defaultSpacesAfter = 2;
+
 const allMasks = {
 	0: {
 		'': []
@@ -18,37 +20,47 @@ const allMasks = {
 	},
 
 	4: {
-		'4': 	[3], 		// 'A   ',
-		'13': 	[1, 4], 	// 'A B    ',
-		'22': 	[3, 2], 	// 'A   B  ',
-		'31':   [5, 0], 	// 'A     B',
-		'112':  [1, 1, 3], 	// 'A B C   ',
-		'121':  [1, 4, 0], 	// 'A B    C',
-		'211': 	[4, 1, 0], 	// 'A    B C',
-		'1111': [2, 2, 2], 	// 'A  B  C  D',
+		'4': 	[3], 			// 'A   ',
+		'13': 	[1, 4], 		// 'A B    ',
+		'22': 	[3, 2], 		// 'A   B  ',
+		'31':   [5, 0], 		// 'A     B',
+		'112':  [1, 1, 3], 		// 'A B C   ',
+		'121':  [1, 4, 0], 		// 'A B    C',
+		'211': 	[4, 1, 0], 		// 'A    B C',
+		'1111': [2, 2, 2, 0], 	// 'A  B  C  D',
 	},
 };
 
+/**
+ * @param {ChordLine} chordLineInput
+ */
 export default function space(chordLineInput) {
 	const chordLine = _cloneDeep(chordLineInput);
 
 	let beatCount = 0;
+	let chordCount = 0;
 	let chordPattern = '';
 	let chordSpaces = [];
 
 	chordLine.allBars.forEach(bar => {
 		beatCount = 0;
 		chordPattern = '';
+		chordSpaces = [];
+		chordCount = bar.allChords.length;
 
 		bar.allChords.forEach(chord => {
 			chordPattern += chord.duration.toString();
 			beatCount += chord.duration;
 		});
 
-		chordSpaces = allMasks[beatCount][chordPattern];
+		if (allMasks[beatCount] && allMasks[beatCount][chordPattern]) {
+			chordSpaces = allMasks[beatCount][chordPattern];
+		}
 
-		for (let i = 0; i < chordPattern.length; i++) {
-			bar.allChords[i].spacesAfter = chordSpaces[i];
+		for (let i = 0; i < chordCount; i++) {
+			bar.allChords[i].spacesAfter = (typeof(chordSpaces[i]) !== 'undefined')
+				? chordSpaces[i]
+				: defaultSpacesAfter;
 		}
 	});
 

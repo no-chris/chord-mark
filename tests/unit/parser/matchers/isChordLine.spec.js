@@ -34,6 +34,7 @@ describe.each([
 	[ '/ A',			false ],
 	[ '/..', 			false ],
 	[ 'A B /.', 		false ],
+	[ '5/4\n', 			false ],
 
 ])('Test Chord line %s', (line, output) => {
 	test('Correctly detect chord line', () => {
