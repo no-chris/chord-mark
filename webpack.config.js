@@ -4,7 +4,6 @@ const path = require('path');
 const webpack = require('webpack');
 
 const { CleanWebpackPlugin }= require('clean-webpack-plugin');
-const TerserPlugin       	= require('terser-webpack-plugin');
 const BundleAnalyzerPlugin 	= require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const buildDir = 'lib';
@@ -28,11 +27,11 @@ const config = {
 	},
 
 	optimization: {
-		minimizer: [
-			new TerserPlugin({
-				sourceMap: true,
-			}),
-		],
+		minimize: false,
+	},
+
+	performance: {
+		hints: false
 	},
 
 	plugins: [
