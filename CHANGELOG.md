@@ -1,3 +1,9 @@
+#### 0.5.3 (2019-06-15)
+
+##### Bug Fixes
+
+*  Do not minify build ([3b733cf2](https://github.com/no-chris/chord-mark/commit/3b733cf2882680935a7327364bb7dda8593314f3))
+
 #### 0.5.2 (2019-06-15)
 
 ##### Build System / Dependencies
