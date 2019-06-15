@@ -1,3 +1,16 @@
+#### 0.5.2 (2019-06-15)
+
+##### Build System / Dependencies
+
+* **deps-dev:**
+  *  bump webpack from 4.33.0 to 4.34.0 ([8e37c366](https://github.com/no-chris/chord-mark/commit/8e37c3669009b22b36865d1af58afb2aa459049a))
+  *  bump css-loader from 2.1.1 to 3.0.0 ([96cec9d2](https://github.com/no-chris/chord-mark/commit/96cec9d226c359a100b23166e504828d734eed77))
+  *  bump webpack-cli from 3.3.3 to 3.3.4 ([bda6117e](https://github.com/no-chris/chord-mark/commit/bda6117e982a627a8aea5e6cb2d68b732931306d))
+
+##### Bug Fixes
+
+* **renderer:**  Add support for unknown time signatures to simple spacer ([f286370c](https://github.com/no-chris/chord-mark/commit/f286370c29381f7e96a0eb0c9016a44526500e5b))
+
 #### 0.5.1 (2019-06-10)
 
 ##### Build System / Dependencies
