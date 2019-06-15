@@ -11,6 +11,7 @@ describe('simpleSpacer', () => {
 const ts4_4 = parseTimeSignature('4/4');
 const ts3_4 = parseTimeSignature('3/4');
 const ts6_8 = parseTimeSignature('6/8');
+const ts5_4 = parseTimeSignature('5/4');
 
 describe.each([
 
@@ -29,7 +30,12 @@ describe.each([
 	['1 bar / 3 chords (1/1/2) / 4/4', 		ts4_4, 'C. F. G..', 	[1, 1, 3] ],
 	['1 bar / 3 chords (1/2/1) / 4/4', 		ts4_4, 'C. F.. G.', 	[1, 4, 0] ],
 	['1 bar / 3 chords (2/1/1) / 4/4', 		ts4_4, 'C.. F. G.', 	[4, 1, 0] ],
-	['1 bar / 4 chords / 4/4', 				ts4_4, 'C. F. G. Em.',	[2, 2, 2] ],
+	['1 bar / 4 chords / 4/4', 				ts4_4, 'C. F. G. Em.',	[2, 2, 2, 0] ],
+
+	['1 bar / 1 chords / 5/4', 				ts5_4, 'C',				[2] ],
+	['1 bar / 2 chords (1/4) / 5/4', 		ts5_4, 'C. F....',		[2, 2] ],
+	['1 bar / 2 chords (2/3) / 5/4', 		ts5_4, 'C.. F...',		[2, 2] ],
+	['1 bar / 3 chords (1/2/2) / 5/4', 		ts5_4, 'C. F.. G..',	[2, 2, 2] ],
 
 ])('%s', (title, timeSignature, input, spacesAfter) => {
 	test('Correctly compute .spacesAfter', () => {

@@ -23,6 +23,7 @@ describe.each([
 	[ '',	 	false],
 	[ 'I', 		false],
 	[ 'Amm', 	false],
+	[ '5/4', 	false],
 
 ])('When given %s', (input, output) => {
 	test('Properly recognize as chord', () => {
