@@ -36,7 +36,7 @@
     "jest": "^24.9.0",
     "jest-handlebars": "^1.0.1",
     "mini-css-extract-plugin": "^0.8.0",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.13.1",
     "raw-loader": "^3.1.0",
     "sass": "^1.23.0",
     "sass-loader": "^8.0.0",
