@@ -1,6 +1,6 @@
 {
   "name": "chord-mark",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "description": "ChordMark - the most powerful syntax to write chords charts",
   "private": false,
   "main": "lib/chord-mark.js",
