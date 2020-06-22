@@ -1,3 +1,31 @@
+#### 0.5.4 (2020-06-22)
+
+##### Build System / Dependencies
+
+* **deps-dev:**
+  *  bump @babel/preset-env from 7.8.4 to 7.8.6 ([71ea0a02](https://github.com/no-chris/chord-mark/commit/71ea0a02934146cd13b2d8016c9a044f4df66af9))
+  *  bump @babel/core from 7.8.4 to 7.8.6 ([7bf00366](https://github.com/no-chris/chord-mark/commit/7bf0036660e2de6f7880604b3a607a9b5513f179))
+  *  bump sass from 1.25.0 to 1.26.1 ([99b82234](https://github.com/no-chris/chord-mark/commit/99b822345f0e34d206d7ce2f7c9537eaaf667e74))
+  *  bump webpack-cli from 3.3.7 to 3.3.8 ([4a9065f7](https://github.com/no-chris/chord-mark/commit/4a9065f78dc0ac08adc4f1a2fa57ecdecec032d1))
+  *  bump webpack from 4.35.0 to 4.35.2 ([d950992a](https://github.com/no-chris/chord-mark/commit/d950992a20ba5584b675bc1ed23277e31e8a956f))
+  *  bump eslint-plugin-import from 2.17.3 to 2.18.0 ([ef92e4cd](https://github.com/no-chris/chord-mark/commit/ef92e4cda3eca8ae883d5dbafae804749e147eb8))
+  *  bump generate-changelog from 1.7.1 to 1.8.0 ([28767de6](https://github.com/no-chris/chord-mark/commit/28767de624855055829d650287f546ecb9eb378c))
+  *  bump webpack-cli from 3.3.4 to 3.3.5 ([e1f2fa55](https://github.com/no-chris/chord-mark/commit/e1f2fa55954d6e265ccdb1ecfe12d2752390cdad))
+  *  bump webpack from 4.34.0 to 4.35.0 ([387ca354](https://github.com/no-chris/chord-mark/commit/387ca3548fd348e0ee2292918d78fe871efca50a))
+* **deps:**
+  *  Update dependencies ([543c4e0d](https://github.com/no-chris/chord-mark/commit/543c4e0daa4366da6857b6e4e49db530a4b92429))
+  *  bump dompurify from 2.0.3 to 2.0.4 ([ca616419](https://github.com/no-chris/chord-mark/commit/ca61641900d09bd0f96c854e6020aae63c94cf30))
+  *  bump handlebars from 4.4.0 to 4.4.2 ([9a784ad4](https://github.com/no-chris/chord-mark/commit/9a784ad4c794e32652a32778dd5d1eef1141af3c))
+  *  [security] bump mixin-deep from 1.3.1 to 1.3.2 ([ab11dac7](https://github.com/no-chris/chord-mark/commit/ab11dac7ef6501afe2502d0f50da9ef2adb21545))
+  *  [security] bump eslint-utils from 1.4.0 to 1.4.2 ([b3955dd3](https://github.com/no-chris/chord-mark/commit/b3955dd32f561670e040e6cdf8b1b33d2e28732e))
+  *  bump dompurify from 1.0.10 to 1.0.11 ([49362162](https://github.com/no-chris/chord-mark/commit/49362162c994917be35875a85841fbec59b659db))
+  *  bump core-js from 3.1.3 to 3.1.4 ([af0b29d6](https://github.com/no-chris/chord-mark/commit/af0b29d6814d6732e3e8d2b45779d42499c16e8f))
+
+##### Other Changes
+
+* no-chris/chord-mark ([f856eab9](https://github.com/no-chris/chord-mark/commit/f856eab9bce1230b1ef341266ace6d35386700d0))
+* no-chris/chord-mark ([bfab121b](https://github.com/no-chris/chord-mark/commit/bfab121bc14102d995914fcab0c187b528d67acf))
+
 #### 0.5.3 (2019-06-15)
 
 ##### Bug Fixes
