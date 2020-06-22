@@ -45,7 +45,7 @@
     "webpack-cli": "^3.3.12"
   },
   "dependencies": {
-    "chord-symbol": "^0.4.2",
+    "chord-symbol": "^0.5.1",
     "core-js": "^3.6.5",
     "dompurify": "^2.0.11",
     "handlebars": "^4.7.6",
