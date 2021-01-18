@@ -1,7 +1,7 @@
-import _isString from 'lodash/isString';
-
-import { parseChord }  from 'chord-symbol';
+import { chordParserFactory }  from 'chord-symbol';
 
 export default function isChord(potentialChord) {
-	return _isString(potentialChord) && !(parseChord(potentialChord) === null);
+	const parseChord = chordParserFactory();
+	const parsed = parseChord(potentialChord);
+	return !(parsed.error);
 }
