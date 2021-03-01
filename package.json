@@ -49,7 +49,7 @@
     "core-js": "^3.8.3",
     "dompurify": "^2.2.6",
     "handlebars": "^4.7.6",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "tiny-emitter": "^2.1.0"
   },
   "scripts": {
