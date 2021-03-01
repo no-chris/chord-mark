@@ -42,7 +42,7 @@
     "sloc": "^0.2.1",
     "webpack": "^5.19.0",
     "webpack-bundle-analyzer": "^4.4.0",
-    "webpack-cli": "^4.4.0"
+    "webpack-cli": "^4.5.0"
   },
   "dependencies": {
     "chord-symbol": "^2.1.0",
