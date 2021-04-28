@@ -8,15 +8,3 @@ updates:
   assignees:
   - no-chris
   versioning-strategy: increase
-  ignore:
-  - dependency-name: y18n
-    versions:
-    - 4.0.1
-  - dependency-name: css-loader
-    versions:
-    - 5.1.0
-    - 5.1.1
-  - dependency-name: sass-loader
-    versions:
-    - 10.1.1
-    - 11.0.1
