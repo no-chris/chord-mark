@@ -46,7 +46,7 @@
   },
   "dependencies": {
     "chord-symbol": "^2.1.0",
-    "core-js": "^3.12.1",
+    "core-js": "^3.15.2",
     "dompurify": "^2.2.6",
     "handlebars": "^4.7.7",
     "lodash": "^4.17.21",
