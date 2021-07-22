@@ -5,4 +5,5 @@ export default {
 	noChord: 'NC',
 	noLyrics: 'NL',
 	sectionLabel: '#',
+	chordPositionMarker: '_',
 };

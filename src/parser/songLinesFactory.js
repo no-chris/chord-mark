@@ -11,6 +11,7 @@ import isEmptyLine from './matchers/isEmptyLine';
 import parseTimeSignature from './parseTimeSignature';
 import parseChordLine from './parseChordLine';
 import parseSectionLabel from './parseSectionLabel';
+import parseLyricLine from './parseLyricLine';
 
 import { getNthOfLabel } from './helper/songs';
 
@@ -165,6 +166,7 @@ export default function songLinesFactory() {
 		return {
 			string,
 			type: lineTypes.TEXT,
+			model: parseLyricLine(string),
 		};
 	}
 

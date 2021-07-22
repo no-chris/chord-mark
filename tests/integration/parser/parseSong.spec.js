@@ -2,6 +2,7 @@ import parseChordLine from '../../../src/parser/parseChordLine';
 import parseChord from '../../../src/parser/parseChord';
 import parseSong from '../../../src/parser/parseSong';
 import parseTimeSignature from '../../../src/parser/parseTimeSignature';
+import parseLyricLine from '../../../src/parser/parseLyricLine';
 
 describe('parseSong', () => {
 	test('', () => {
@@ -42,50 +43,81 @@ Let it be`;
 				{
 					type: 'text',
 					string: 'When I find myself in times of trouble',
+					model: parseLyricLine(
+						'When I find myself in times of trouble'
+					),
 				},
 				{
 					type: 'chord',
 					string: 'Am.. F..',
 					model: parseChordLine('Am.. F..'),
 				},
-				{ type: 'text', string: 'Mother mary comes to me' },
+				{
+					type: 'text',
+					string: 'Mother mary comes to me',
+					model: parseLyricLine('Mother mary comes to me'),
+				},
 				{
 					type: 'chord',
 					string: 'C.. G..',
 					model: parseChordLine('C.. G..'),
 				},
-				{ type: 'text', string: 'Speaking words of wisdom' },
+				{
+					type: 'text',
+					string: 'Speaking words of wisdom',
+					model: parseLyricLine('Speaking words of wisdom'),
+				},
 				{
 					type: 'chord',
 					string: 'F. Em. Dm. C.',
 					model: parseChordLine('F. Em. Dm. C.'),
 				},
-				{ type: 'text', string: 'Let it be' },
+				{
+					type: 'text',
+					string: 'Let it be',
+					model: parseLyricLine('Let it be'),
+				},
 				{ type: 'emptyLine', string: '' },
 				{
 					type: 'chord',
 					string: 'Am.. G..',
 					model: parseChordLine('Am.. G..'),
 				},
-				{ type: 'text', string: 'Let it be, let it be' },
+				{
+					type: 'text',
+					string: 'Let it be, let it be',
+					model: parseLyricLine('Let it be, let it be'),
+				},
 				{
 					type: 'chord',
 					string: 'C.. F..',
 					model: parseChordLine('C.. F..'),
 				},
-				{ type: 'text', string: 'Let it be, let it be' },
+				{
+					type: 'text',
+					string: 'Let it be, let it be',
+					model: parseLyricLine('Let it be, let it be'),
+				},
 				{
 					type: 'chord',
 					string: 'C.. G..',
 					model: parseChordLine('C.. G..'),
 				},
-				{ type: 'text', string: 'Whispers words of wisdom' },
+				{
+					type: 'text',
+					string: 'Whispers words of wisdom',
+					model: parseLyricLine('Whispers words of wisdom'),
+				},
 				{
 					type: 'chord',
 					string: 'F. Em. Dm. C.',
 					model: parseChordLine('F. Em. Dm. C.'),
 				},
-				{ type: 'text', string: 'Let it be' },
+				{
+					type: 'text',
+					string: 'Let it be',
+					model: parseLyricLine('Let it be'),
+				},
 			],
 			allChords: [
 				{ model: parseChord('C'), occurrences: 6 },
@@ -117,13 +149,20 @@ Let it be`;
 				{
 					type: 'text',
 					string: 'When I find myself in times of trouble',
+					model: parseLyricLine(
+						'When I find myself in times of trouble'
+					),
 				},
 				{
 					type: 'chord',
 					string: 'Am.. F..',
 					model: parseChordLine('Am.. F..'),
 				},
-				{ type: 'text', string: 'Mother mary comes to me' },
+				{
+					type: 'text',
+					string: 'Mother mary comes to me',
+					model: parseLyricLine('Mother mary comes to me'),
+				},
 			],
 			allChords: [
 				{ model: parseChord('C'), occurrences: 1 },

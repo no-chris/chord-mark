@@ -1,4 +1,5 @@
 jest.mock('../../../src/parser/parseChordLine');
+jest.mock('../../../src/parser/parseLyricLine');
 
 import _ from 'lodash';
 
@@ -7,6 +8,7 @@ import songLinesFactory from '../../../src/parser/songLinesFactory';
 import parseChordLine from '../../../src/parser/parseChordLine';
 import parseSectionLabel from '../../../src/parser/parseSectionLabel';
 import parseTimeSignature from '../../../src/parser/parseTimeSignature';
+import parseLyricLine from '../../../src/parser/parseLyricLine';
 
 describe('songLinesFactory', () => {
 	test('Module', () => {
@@ -23,11 +25,13 @@ describe('songLinesFactory', () => {
 
 beforeEach(() => {
 	parseChordLine.mockClear();
+	parseLyricLine.mockClear();
 });
 
 describe('ChordLines', () => {
 	test('Correctly detect and parses chord lines', () => {
 		parseChordLine.mockImplementation((chordLine) => chordLine);
+		parseLyricLine.mockImplementation((lyricLine) => lyricLine);
 
 		const input = `C.. G..
 When I find myself in times of trouble
@@ -49,22 +53,46 @@ Let it be`;
 
 		const expected = [
 			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
-			{ type: 'text', string: 'When I find myself in times of trouble' },
+			{
+				type: 'text',
+				model: 'When I find myself in times of trouble',
+				string: 'When I find myself in times of trouble',
+			},
 			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
-			{ type: 'text', string: 'Mother mary comes to me' },
+			{
+				type: 'text',
+				model: 'Mother mary comes to me',
+				string: 'Mother mary comes to me',
+			},
 			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
-			{ type: 'text', string: 'Speaking words of wisdom' },
+			{
+				type: 'text',
+				model: 'Speaking words of wisdom',
+				string: 'Speaking words of wisdom',
+			},
 			{ type: 'chord', string: 'F. Em. Dm. C.', model: 'F. Em. Dm. C.' },
-			{ type: 'text', string: 'Let it be' },
+			{ type: 'text', model: 'Let it be', string: 'Let it be' },
 			{ type: 'emptyLine', string: '' },
 			{ type: 'chord', string: 'Am.. G..', model: 'Am.. G..' },
-			{ type: 'text', string: 'Let it be, let it be' },
+			{
+				type: 'text',
+				model: 'Let it be, let it be',
+				string: 'Let it be, let it be',
+			},
 			{ type: 'chord', string: 'C.. F..', model: 'C.. F..' },
-			{ type: 'text', string: 'Let it be, let it be' },
+			{
+				type: 'text',
+				model: 'Let it be, let it be',
+				string: 'Let it be, let it be',
+			},
 			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
-			{ type: 'text', string: 'Whispers words of wisdom' },
+			{
+				type: 'text',
+				model: 'Whispers words of wisdom',
+				string: 'Whispers words of wisdom',
+			},
 			{ type: 'chord', string: 'F. Em. Dm. C.', model: 'F. Em. Dm. C.' },
-			{ type: 'text', string: 'Let it be' },
+			{ type: 'text', model: 'Let it be', string: 'Let it be' },
 		];
 
 		const songLines = songLinesFactory();
@@ -80,7 +108,7 @@ Let it be`;
 
 		const input = 'C. D.. E..';
 
-		const expected = [{ type: 'text', string: input }];
+		const expected = [{ type: 'text', string: input, model: input }];
 
 		const songLines = songLinesFactory();
 		input.split('\n').forEach(songLines.addLine);
@@ -318,14 +346,26 @@ Let it be`;
 			},
 			{ type: 'timeSignature', string: '4/4', model: _.cloneDeep(ts4_4) },
 			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
-			{ type: 'text', string: 'When I find myself in times of trouble' },
+			{
+				type: 'text',
+				model: 'When I find myself in times of trouble',
+				string: 'When I find myself in times of trouble',
+			},
 			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
-			{ type: 'text', string: 'Mother mary comes to me' },
+			{
+				type: 'text',
+				model: 'Mother mary comes to me',
+				string: 'Mother mary comes to me',
+			},
 			{ type: 'emptyLine', string: '' },
 			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
-			{ type: 'text', string: 'Speaking words of wisdom' },
+			{
+				type: 'text',
+				model: 'Speaking words of wisdom',
+				string: 'Speaking words of wisdom',
+			},
 			{ type: 'chord', string: 'F. Em. Dm. C.', model: 'F. Em. Dm. C.' },
-			{ type: 'text', string: 'Let it be' },
+			{ type: 'text', model: 'Let it be', string: 'Let it be' },
 			{ type: 'emptyLine', string: '' },
 			{
 				type: 'sectionLabel',
@@ -347,14 +387,22 @@ Let it be`;
 				model: 'C.. G..',
 				isFromAutoRepeatChords: true,
 			},
-			{ type: 'text', string: 'And in my hour of darkness' },
+			{
+				type: 'text',
+				model: 'And in my hour of darkness',
+				string: 'And in my hour of darkness',
+			},
 			{
 				type: 'chord',
 				string: 'Am.. F..',
 				model: 'Am.. F..',
 				isFromAutoRepeatChords: true,
 			},
-			{ type: 'text', string: 'she is standing right in front of me' },
+			{
+				type: 'text',
+				model: 'she is standing right in front of me',
+				string: 'she is standing right in front of me',
+			},
 			{ type: 'emptyLine', string: '' },
 			{
 				type: 'chord',
@@ -362,14 +410,18 @@ Let it be`;
 				model: 'C.. G..',
 				isFromAutoRepeatChords: true,
 			},
-			{ type: 'text', string: 'Speaking words of wisdom' },
+			{
+				type: 'text',
+				model: 'Speaking words of wisdom',
+				string: 'Speaking words of wisdom',
+			},
 			{
 				type: 'chord',
 				string: 'F. Em. Dm. C.',
 				model: 'F. Em. Dm. C.',
 				isFromAutoRepeatChords: true,
 			},
-			{ type: 'text', string: 'Let it be' },
+			{ type: 'text', model: 'Let it be', string: 'Let it be' },
 			{ type: 'emptyLine', string: '' },
 			{
 				type: 'sectionLabel',
@@ -380,13 +432,25 @@ Let it be`;
 				id: 'c1',
 			},
 			{ type: 'chord', string: 'Am.. G..', model: 'Am.. G..' },
-			{ type: 'text', string: 'Let it be, let it be' },
+			{
+				type: 'text',
+				model: 'Let it be, let it be',
+				string: 'Let it be, let it be',
+			},
 			{ type: 'chord', string: 'C.. F..', model: 'C.. F..' },
-			{ type: 'text', string: 'Let it be, let it be' },
+			{
+				type: 'text',
+				model: 'Let it be, let it be',
+				string: 'Let it be, let it be',
+			},
 			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
-			{ type: 'text', string: 'Whispers words of wisdom' },
+			{
+				type: 'text',
+				model: 'Whispers words of wisdom',
+				string: 'Whispers words of wisdom',
+			},
 			{ type: 'chord', string: 'F. Em. Dm. C.', model: 'F. Em. Dm. C.' },
-			{ type: 'text', string: 'Let it be' },
+			{ type: 'text', model: 'Let it be', string: 'Let it be' },
 			{ type: 'emptyLine', string: '' },
 			{
 				type: 'sectionLabel',
@@ -408,14 +472,22 @@ Let it be`;
 				model: 'C.. G..',
 				isFromAutoRepeatChords: true,
 			},
-			{ type: 'text', string: 'And when the broken hearted people' },
+			{
+				type: 'text',
+				model: 'And when the broken hearted people',
+				string: 'And when the broken hearted people',
+			},
 			{
 				type: 'chord',
 				string: 'Am.. F..',
 				model: 'Am.. F..',
 				isFromAutoRepeatChords: true,
 			},
-			{ type: 'text', string: 'Living in the world agree' },
+			{
+				type: 'text',
+				model: 'Living in the world agree',
+				string: 'Living in the world agree',
+			},
 			{ type: 'emptyLine', string: '' },
 			{
 				type: 'chord',
@@ -423,14 +495,18 @@ Let it be`;
 				model: 'C.. G..',
 				isFromAutoRepeatChords: true,
 			},
-			{ type: 'text', string: 'There will be an answer' },
+			{
+				type: 'text',
+				model: 'There will be an answer',
+				string: 'There will be an answer',
+			},
 			{
 				type: 'chord',
 				string: 'F. Em. Dm. C.',
 				model: 'F. Em. Dm. C.',
 				isFromAutoRepeatChords: true,
 			},
-			{ type: 'text', string: 'Let it be' },
+			{ type: 'text', model: 'Let it be', string: 'Let it be' },
 			{ type: 'emptyLine', string: '' },
 			{
 				type: 'sectionLabel',
@@ -446,28 +522,40 @@ Let it be`;
 				model: 'Am.. G..',
 				isFromAutoRepeatChords: true,
 			},
-			{ type: 'text', string: 'Let it be, let it be' },
+			{
+				type: 'text',
+				model: 'Let it be, let it be',
+				string: 'Let it be, let it be',
+			},
 			{
 				type: 'chord',
 				string: 'C.. F..',
 				model: 'C.. F..',
 				isFromAutoRepeatChords: true,
 			},
-			{ type: 'text', string: 'Let it be, let it be' },
+			{
+				type: 'text',
+				model: 'Let it be, let it be',
+				string: 'Let it be, let it be',
+			},
 			{
 				type: 'chord',
 				string: 'C.. G..',
 				model: 'C.. G..',
 				isFromAutoRepeatChords: true,
 			},
-			{ type: 'text', string: 'Whispers words of wisdom' },
+			{
+				type: 'text',
+				model: 'Whispers words of wisdom',
+				string: 'Whispers words of wisdom',
+			},
 			{
 				type: 'chord',
 				string: 'F. Em. Dm. C.',
 				model: 'F. Em. Dm. C.',
 				isFromAutoRepeatChords: true,
 			},
-			{ type: 'text', string: 'Let it be' },
+			{ type: 'text', model: 'Let it be', string: 'Let it be' },
 		];
 
 		const songLines = songLinesFactory();
@@ -511,13 +599,13 @@ line3-3
 				id: 'v1',
 			},
 			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
-			{ type: 'text', string: 'line1-1' },
+			{ type: 'text', string: 'line1-1', model: 'line1-1' },
 			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
-			{ type: 'text', string: 'line1-2' },
+			{ type: 'text', string: 'line1-2', model: 'line1-2' },
 			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
-			{ type: 'text', string: 'line1-3' },
+			{ type: 'text', string: 'line1-3', model: 'line1-3' },
 			{ type: 'chord', string: 'F. Em. Dm. C.', model: 'F. Em. Dm. C.' },
-			{ type: 'text', string: 'line1-4' },
+			{ type: 'text', string: 'line1-4', model: 'line1-4' },
 			{ type: 'emptyLine', string: '' },
 			{
 				type: 'sectionLabel',
@@ -533,14 +621,14 @@ line3-3
 				model: 'C.. G..',
 				isFromAutoRepeatChords: true,
 			},
-			{ type: 'text', string: 'line2-1' },
+			{ type: 'text', string: 'line2-1', model: 'line2-1' },
 			{
 				type: 'chord',
 				string: 'Am.. F..',
 				model: 'Am.. F..',
 				isFromAutoRepeatChords: true,
 			},
-			{ type: 'text', string: 'line2-2' },
+			{ type: 'text', string: 'line2-2', model: 'line2-2' },
 			{ type: 'emptyLine', string: '' },
 			{
 				type: 'sectionLabel',
@@ -556,21 +644,21 @@ line3-3
 				model: 'C.. G..',
 				isFromAutoRepeatChords: true,
 			},
-			{ type: 'text', string: 'line3-1' },
+			{ type: 'text', string: 'line3-1', model: 'line3-1' },
 			{
 				type: 'chord',
 				string: 'Am.. F..',
 				model: 'Am.. F..',
 				isFromAutoRepeatChords: true,
 			},
-			{ type: 'text', string: 'line3-2' },
+			{ type: 'text', string: 'line3-2', model: 'line3-2' },
 			{
 				type: 'chord',
 				string: 'C.. G..',
 				model: 'C.. G..',
 				isFromAutoRepeatChords: true,
 			},
-			{ type: 'text', string: 'line3-3' },
+			{ type: 'text', string: 'line3-3', model: 'line3-3' },
 			{ type: 'emptyLine', string: '' },
 			{ type: 'emptyLine', string: '' },
 			{ type: 'emptyLine', string: '' },
@@ -609,9 +697,9 @@ line2-4`;
 				id: 'v1',
 			},
 			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
-			{ type: 'text', string: 'line1-1' },
+			{ type: 'text', string: 'line1-1', model: 'line1-1' },
 			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
-			{ type: 'text', string: 'line1-2' },
+			{ type: 'text', string: 'line1-2', model: 'line1-2' },
 			{ type: 'emptyLine', string: '' },
 			{
 				type: 'sectionLabel',
@@ -627,18 +715,18 @@ line2-4`;
 				model: 'C.. G..',
 				isFromAutoRepeatChords: true,
 			},
-			{ type: 'text', string: 'line2-1' },
+			{ type: 'text', string: 'line2-1', model: 'line2-1' },
 			{
 				type: 'chord',
 				string: 'Am.. F..',
 				model: 'Am.. F..',
 				isFromAutoRepeatChords: true,
 			},
-			{ type: 'text', string: 'line2-2' },
+			{ type: 'text', string: 'line2-2', model: 'line2-2' },
 			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
-			{ type: 'text', string: 'line2-3' },
+			{ type: 'text', string: 'line2-3', model: 'line2-3' },
 			{ type: 'chord', string: 'F. Em. Dm. C.', model: 'F. Em. Dm. C.' },
-			{ type: 'text', string: 'line2-4' },
+			{ type: 'text', string: 'line2-4', model: 'line2-4' },
 		];
 
 		const songLines = songLinesFactory();
@@ -671,9 +759,9 @@ line2-2`;
 				id: 'v1',
 			},
 			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
-			{ type: 'text', string: 'line1-1' },
+			{ type: 'text', string: 'line1-1', model: 'line1-1' },
 			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
-			{ type: 'text', string: 'line1-2' },
+			{ type: 'text', string: 'line1-2', model: 'line1-2' },
 			{ type: 'emptyLine', string: '' },
 			{
 				type: 'sectionLabel',
@@ -689,9 +777,9 @@ line2-2`;
 				model: 'C.. G..',
 				isFromAutoRepeatChords: true,
 			},
-			{ type: 'text', string: 'line2-1' },
+			{ type: 'text', string: 'line2-1', model: 'line2-1' },
 			{ type: 'chord', string: 'F. Em. Dm. C.', model: 'F. Em. Dm. C.' },
-			{ type: 'text', string: 'line2-2' },
+			{ type: 'text', string: 'line2-2', model: 'line2-2' },
 		];
 
 		const songLines = songLinesFactory();
@@ -716,14 +804,14 @@ line2-1`;
 
 		const expected = [
 			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
-			{ type: 'text', string: 'line1-1' },
+			{ type: 'text', string: 'line1-1', model: 'line1-1' },
 			{
 				type: 'chord',
 				string: 'C.. G..',
 				model: 'C.. G..',
 				isFromChordLineRepeater: true,
 			},
-			{ type: 'text', string: 'line1-2' },
+			{ type: 'text', string: 'line1-2', model: 'line1-2' },
 			{ type: 'emptyLine', string: '' },
 			{ type: 'emptyLine', string: '' },
 			{
@@ -732,7 +820,7 @@ line2-1`;
 				model: 'C.. G..',
 				isFromChordLineRepeater: true,
 			},
-			{ type: 'text', string: 'line2-1' },
+			{ type: 'text', string: 'line2-1', model: 'line2-1' },
 		];
 
 		const songLines = songLinesFactory();
@@ -752,12 +840,12 @@ line1-2
 line1-3`;
 
 		const expected = [
-			{ type: 'text', string: '/' },
-			{ type: 'text', string: 'line1-1' },
-			{ type: 'text', string: '/' },
-			{ type: 'text', string: 'line1-2' },
-			{ type: 'text', string: '/' },
-			{ type: 'text', string: 'line1-3' },
+			{ type: 'text', string: '/', model: '/' },
+			{ type: 'text', string: 'line1-1', model: 'line1-1' },
+			{ type: 'text', string: '/', model: '/' },
+			{ type: 'text', string: 'line1-2', model: 'line1-2' },
+			{ type: 'text', string: '/', model: '/' },
+			{ type: 'text', string: 'line1-3', model: 'line1-3' },
 		];
 
 		const songLines = songLinesFactory();
@@ -790,9 +878,9 @@ line2-2`;
 				id: 'v1',
 			},
 			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
-			{ type: 'text', string: 'line1-1' },
+			{ type: 'text', string: 'line1-1', model: 'line1-1' },
 			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
-			{ type: 'text', string: 'line1-2' },
+			{ type: 'text', string: 'line1-2', model: 'line1-2' },
 			{ type: 'emptyLine', string: '' },
 			{
 				type: 'sectionLabel',
@@ -808,14 +896,14 @@ line2-2`;
 				model: 'C.. G..',
 				isFromAutoRepeatChords: true,
 			},
-			{ type: 'text', string: 'line2-1' },
+			{ type: 'text', string: 'line2-1', model: 'line2-1' },
 			{
 				type: 'chord',
 				string: 'C.. G..',
 				model: 'C.. G..',
 				isFromChordLineRepeater: true,
 			},
-			{ type: 'text', string: 'line2-2' },
+			{ type: 'text', string: 'line2-2', model: 'line2-2' },
 		];
 
 		const songLines = songLinesFactory();
@@ -845,9 +933,9 @@ line1-2
 				id: 'v1',
 			},
 			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
-			{ type: 'text', string: 'line1-1' },
+			{ type: 'text', string: 'line1-1', model: 'line1-1' },
 			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
-			{ type: 'text', string: 'line1-2' },
+			{ type: 'text', string: 'line1-2', model: 'line1-2' },
 			{ type: 'emptyLine', string: '' },
 			{
 				type: 'sectionLabel',
@@ -864,14 +952,24 @@ line1-2
 				model: 'C.. G..',
 				isFromSectionRepeat: true,
 			},
-			{ type: 'text', string: 'line1-1', isFromSectionRepeat: true },
+			{
+				type: 'text',
+				string: 'line1-1',
+				model: 'line1-1',
+				isFromSectionRepeat: true,
+			},
 			{
 				type: 'chord',
 				string: 'Am.. F..',
 				model: 'Am.. F..',
 				isFromSectionRepeat: true,
 			},
-			{ type: 'text', string: 'line1-2', isFromSectionRepeat: true },
+			{
+				type: 'text',
+				string: 'line1-2',
+				model: 'line1-2',
+				isFromSectionRepeat: true,
+			},
 			{ type: 'emptyLine', string: '', isFromSectionRepeat: true },
 		];
 
@@ -906,9 +1004,9 @@ line2-3
 				id: 'v1',
 			},
 			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
-			{ type: 'text', string: 'line1-1' },
+			{ type: 'text', string: 'line1-1', model: 'line1-1' },
 			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
-			{ type: 'text', string: 'line1-2' },
+			{ type: 'text', string: 'line1-2', model: 'line1-2' },
 			{ type: 'emptyLine', string: '' },
 			{
 				type: 'sectionLabel',
@@ -924,21 +1022,21 @@ line2-3
 				model: 'C.. G..',
 				isFromAutoRepeatChords: true,
 			},
-			{ type: 'text', string: 'line2-1' },
+			{ type: 'text', string: 'line2-1', model: 'line2-1' },
 			{
 				type: 'chord',
 				string: 'Am.. F..',
 				model: 'Am.. F..',
 				isFromAutoRepeatChords: true,
 			},
-			{ type: 'text', string: 'line2-2' },
+			{ type: 'text', string: 'line2-2', model: 'line2-2' },
 			{
 				type: 'chord',
 				string: 'Am.. F..',
 				model: 'Am.. F..',
 				isFromChordLineRepeater: true,
 			},
-			{ type: 'text', string: 'line2-3' },
+			{ type: 'text', string: 'line2-3', model: 'line2-3' },
 			{ type: 'emptyLine', string: '' },
 			{
 				type: 'sectionLabel',
@@ -956,7 +1054,12 @@ line2-3
 				isFromSectionRepeat: true,
 				isFromAutoRepeatChords: true,
 			},
-			{ type: 'text', string: 'line2-1', isFromSectionRepeat: true },
+			{
+				type: 'text',
+				string: 'line2-1',
+				model: 'line2-1',
+				isFromSectionRepeat: true,
+			},
 			{
 				type: 'chord',
 				string: 'Am.. F..',
@@ -964,7 +1067,12 @@ line2-3
 				isFromSectionRepeat: true,
 				isFromAutoRepeatChords: true,
 			},
-			{ type: 'text', string: 'line2-2', isFromSectionRepeat: true },
+			{
+				type: 'text',
+				string: 'line2-2',
+				model: 'line2-2',
+				isFromSectionRepeat: true,
+			},
 			{
 				type: 'chord',
 				string: 'Am.. F..',
@@ -972,7 +1080,12 @@ line2-3
 				isFromSectionRepeat: true,
 				isFromChordLineRepeater: true,
 			},
-			{ type: 'text', string: 'line2-3', isFromSectionRepeat: true },
+			{
+				type: 'text',
+				string: 'line2-3',
+				model: 'line2-3',
+				isFromSectionRepeat: true,
+			},
 			{ type: 'emptyLine', string: '', isFromSectionRepeat: true },
 		];
 
