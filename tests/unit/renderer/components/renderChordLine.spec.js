@@ -27,15 +27,12 @@ describe('chordLine renderer', () => {
 });
 
 describe.each([
-
-	['A B C', 			'|A|B|C|'],
-	['A.. B.. C.. D..',	'|A B|C D|'],
-
+	['A B C', '|A|B|C|'],
+	['A.. B.. C.. D..', '|A B|C D|'],
 ])('Render chordLine "%s" as "%s"', (input, output) => {
 	test('expected rendering', () => {
-		renderBarContent.mockImplementation(bar => bar.allChords
-			.map(chord => getChordSymbol(chord.model))
-			.join(' ')
+		renderBarContent.mockImplementation((bar) =>
+			bar.allChords.map((chord) => getChordSymbol(chord.model)).join(' ')
 		);
 
 		const chordLine = parseChordLine(input);

@@ -21,17 +21,34 @@ function removeLastLine(fileContent) {
 }
 
 describe.each([
-
-	['base rendering', 		'song1-input.txt', 'song1-output-simple.txt'],
-	['base rendering', 		'song1-input.txt', 'song1-output-simple.txt', 		{} ],
-	['no transposing', 		'song1-input.txt', 'song1-output-simple.txt', 		{ alignBars: false, harmonizeAccidentals: false } ],
-	['aligned rendering', 	'song1-input.txt', 'song1-output-aligned.txt', 		{ alignBars: true } ],
-	['transposed', 			'song1-input.txt', 'song1-output-transposed.txt', 	{ transposeValue: -4, accidentalsType: 'flat' } ],
-
+	['base rendering', 'song1-input.txt', 'song1-output-simple.txt'],
+	['base rendering', 'song1-input.txt', 'song1-output-simple.txt', {}],
+	[
+		'no transposing',
+		'song1-input.txt',
+		'song1-output-simple.txt',
+		{ alignBars: false, harmonizeAccidentals: false },
+	],
+	[
+		'aligned rendering',
+		'song1-input.txt',
+		'song1-output-aligned.txt',
+		{ alignBars: true },
+	],
+	[
+		'transposed',
+		'song1-input.txt',
+		'song1-output-transposed.txt',
+		{ transposeValue: -4, accidentalsType: 'flat' },
+	],
 ])('Render components: %s', (title, inputFile, outputFile, options) => {
 	test('produces expected rendering', () => {
-		const input = removeLastLine(fs.readFileSync(path.resolve(dataFolder, inputFile), 'utf8'));
-		const output = removeLastLine(fs.readFileSync(path.resolve(dataFolder, outputFile), 'utf8'));
+		const input = removeLastLine(
+			fs.readFileSync(path.resolve(dataFolder, inputFile), 'utf8')
+		);
+		const output = removeLastLine(
+			fs.readFileSync(path.resolve(dataFolder, outputFile), 'utf8')
+		);
 
 		const parsedSong = parseSong(input);
 		const rendered = renderSong(parsedSong, options);

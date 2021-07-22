@@ -9,17 +9,22 @@ export default function space(chordLineInput, maxBeatsWidth) {
 	let beatMaxWidth;
 
 	chordLine.allBars.forEach((bar, barIndex) => {
-		bar.allChords.forEach(chord => {
-			chord.spacesWithin = maxBeatsWidth[barIndex][chord.beat] - chord.symbol.length;
+		bar.allChords.forEach((chord) => {
+			chord.spacesWithin =
+				maxBeatsWidth[barIndex][chord.beat] - chord.symbol.length;
 			chord.spacesAfter = 0;
 
 			if (chord.beat !== bar.timeSignature.beatCount) {
 				chord.spacesAfter = spacesAfterDefault;
 
-				for (let i = (chord.beat + 1); i < (chord.beat + chord.duration); i++) {
+				for (
+					let i = chord.beat + 1;
+					i < chord.beat + chord.duration;
+					i++
+				) {
 					beatMaxWidth = maxBeatsWidth[barIndex][i];
 
-					chord.spacesAfter += (beatMaxWidth)
+					chord.spacesAfter += beatMaxWidth
 						? beatMaxWidth
 						: emptyBeatSpaces;
 

@@ -8,8 +8,8 @@ export default function getMaxBeatsWidth(allLines) {
 	const maxBeatsWidth = [];
 
 	allLines
-		.filter(line => line.type === lineTypes.CHORD)
-		.forEach(line => {
+		.filter((line) => line.type === lineTypes.CHORD)
+		.forEach((line) => {
 			line.model.allBars.forEach((bar, barIndex) => {
 				if (!maxBeatsWidth[barIndex]) {
 					maxBeatsWidth[barIndex] = {};
@@ -18,7 +18,7 @@ export default function getMaxBeatsWidth(allLines) {
 						maxBeatsWidth[barIndex][i] = 0;
 					}
 				}
-				bar.allChords.forEach(chord => {
+				bar.allChords.forEach((chord) => {
 					maxBeatsWidth[barIndex][chord.beat] = Math.max(
 						maxBeatsWidth[barIndex][chord.beat],
 						chord.symbol.length

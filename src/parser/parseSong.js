@@ -26,23 +26,20 @@ import getAllChordsInSong from './getAllChordsInSong';
  * @returns {Song}
  */
 export default function parseSong(songSrc) {
-	const songArray = (!_isArray(songSrc)) ? songSrc.split('\n') : songSrc;
+	const songArray = !_isArray(songSrc) ? songSrc.split('\n') : songSrc;
 
 	const songLines = songLinesFactory();
 
 	/**
 	 * @type {SongLine[]}
 	 */
-	songArray
-		.map(escapeHTML)
-		.map(stripTags)
-		.forEach(songLines.addLine);
+	songArray.map(escapeHTML).map(stripTags).forEach(songLines.addLine);
 
 	const allLines = songLines.asArray();
 	const allChords = getAllChordsInSong(allLines);
 
 	return {
 		allLines,
-		allChords
+		allChords,
 	};
 }

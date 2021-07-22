@@ -35,6 +35,7 @@
     "jest-handlebars": "^1.0.1",
     "mini-css-extract-plugin": "^2.0.0",
     "node-sass": "^6.0.1",
+    "prettier": "^2.3.2",
     "raw-loader": "^4.0.2",
     "sass": "^1.32.13",
     "sass-loader": "^12.1.0",
@@ -53,6 +54,7 @@
     "tiny-emitter": "^2.1.0"
   },
   "scripts": {
+    "format": "prettier --write \"**/*.{js,jsx,json,ts,md}\"",
     "lint": "eslint src tests",
     "test": "jest",
     "bundle-js": "webpack",

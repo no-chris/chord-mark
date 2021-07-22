@@ -17,7 +17,7 @@ describe('getSectionsStats()', () => {
 			'#c x2',
 			'#solo',
 			'#c x2',
-			'#o'
+			'#o',
 		];
 		const parsed = parseSong(input);
 		const expected = {

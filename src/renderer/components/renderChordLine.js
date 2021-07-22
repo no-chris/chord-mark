@@ -8,14 +8,14 @@ import barSeparatorTpl from './tpl/barSeparator.hbs';
  * @returns {String} rendered html
  */
 export default function renderChordLine(chordLineModel) {
-	const allBarsRendered = chordLineModel.allBars
-		.map(bar => renderBarContent(bar));
+	const allBarsRendered = chordLineModel.allBars.map((bar) =>
+		renderBarContent(bar)
+	);
 
 	const barSeparator = barSeparatorTpl();
 
-	const chordLine = barSeparator +
-		allBarsRendered.join(barSeparator) +
-		barSeparator;
+	const chordLine =
+		barSeparator + allBarsRendered.join(barSeparator) + barSeparator;
 
 	return chordLineTpl({ chordLine });
 }

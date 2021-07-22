@@ -12,13 +12,13 @@ export default function getAllChordsInSong(allLines) {
 	const allChords = [];
 	let i;
 
-	forEachChordInSong(allLines, chord => {
-		i = _findIndex(allChords, o => _isEqual(o.model, chord.model));
+	forEachChordInSong(allLines, (chord) => {
+		i = _findIndex(allChords, (o) => _isEqual(o.model, chord.model));
 
 		if (i === -1) {
 			allChords.push({
 				model: _cloneDeep(chord.model),
-				occurrences: 1
+				occurrences: 1,
 			});
 		} else {
 			allChords[i].occurrences++;

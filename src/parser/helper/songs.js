@@ -10,10 +10,10 @@ import lineTypes from '../lineTypes';
 export function forEachChordInSong(allLines, fn) {
 	const newLines = _cloneDeep(allLines);
 
-	newLines.forEach(line => {
+	newLines.forEach((line) => {
 		if (line.type === lineTypes.CHORD) {
-			line.model.allBars.forEach(bar => {
-				bar.allChords.forEach(chord => {
+			line.model.allBars.forEach((bar) => {
+				bar.allChords.forEach((chord) => {
 					fn(chord);
 				});
 			});
@@ -21,7 +21,6 @@ export function forEachChordInSong(allLines, fn) {
 	});
 	return newLines;
 }
-
 
 /**
  * @param {ChordLine} chordLine
@@ -31,15 +30,14 @@ export function forEachChordInSong(allLines, fn) {
 export function forEachChordInChordLine(chordLine, fn) {
 	const newChordLine = _cloneDeep(chordLine);
 
-	newChordLine.allBars.forEach(bar => {
-		bar.allChords.forEach(chord => {
+	newChordLine.allBars.forEach((bar) => {
+		bar.allChords.forEach((chord) => {
 			fn(chord);
 		});
 	});
 
 	return newChordLine;
 }
-
 
 /**
  * @param {SongLine[]} allLines
@@ -54,18 +52,17 @@ export function getNthOfLabel(allLines, label, n) {
 	let enableSelect = false;
 	let currentLabel = '';
 
-	allLines.forEach(line => {
+	allLines.forEach((line) => {
 		if (line.type === lineTypes.SECTION_LABEL) {
 			currentLabel = line.model.label;
 
-			if (! typesCount[currentLabel]) {
+			if (!typesCount[currentLabel]) {
 				typesCount[currentLabel] = 1;
 			} else {
 				typesCount[currentLabel]++;
 			}
 
-			enableSelect = (line.id === (label + n));
-
+			enableSelect = line.id === label + n;
 		} else if (enableSelect) {
 			selected.push(line);
 		}

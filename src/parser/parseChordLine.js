@@ -44,9 +44,7 @@ const defaultTimeSignature = parseTimeSignature('4/4');
  */
 export default function parseChordLine(
 	chordLine,
-	{
-		timeSignature = defaultTimeSignature
-	} = {}
+	{ timeSignature = defaultTimeSignature } = {}
 ) {
 	const { beatCount } = timeSignature;
 
@@ -64,19 +62,22 @@ export default function parseChordLine(
 	allTokens.forEach((token, tokenIndex) => {
 		if (token.match(barRepeatSymbols)) {
 			if (previousBar) {
-				for(let i = 0; i < token.length; i++) {
+				for (let i = 0; i < token.length; i++) {
 					allBars.push(_cloneDeep(previousBar));
 				}
 			} else {
-				throw new Error('A chord line cannot start with the barRepeat symbol');
+				throw new Error(
+					'A chord line cannot start with the barRepeat symbol'
+				);
 			}
-
 		} else {
 			tokenWithoutBeatCount = token.replace(chordBeatCountSymbols, '');
 			chord = {
 				string: token,
 				duration: getChordDuration(token, beatCount),
-				model: isNoChordSymbol(tokenWithoutBeatCount) ? syntax.noChord : parseChord(tokenWithoutBeatCount),
+				model: isNoChordSymbol(tokenWithoutBeatCount)
+					? syntax.noChord
+					: parseChord(tokenWithoutBeatCount),
 				beat: currentBeatCount + 1,
 			};
 			currentBeatCount += chord.duration;
@@ -95,25 +96,29 @@ export default function parseChordLine(
 
 				bar = _cloneDeep(emptyBar);
 				currentBeatCount = 0;
-
 			} else {
-				checkInvalidBeatCount(chord, currentBeatCount, beatCount, (allTokens.length === (tokenIndex + 1)));
+				checkInvalidBeatCount(
+					chord,
+					currentBeatCount,
+					beatCount,
+					allTokens.length === tokenIndex + 1
+				);
 			}
 		}
 	});
 
 	return {
 		chordCount,
-		allBars
+		allBars,
 	};
 }
 
 function isNoChordSymbol(token) {
-	return (token === syntax.noChord);
+	return token === syntax.noChord;
 }
 
 function getChordDuration(token, beatCount) {
-	return ((token.match(chordBeatCountSymbols) || []).length) || beatCount;
+	return (token.match(chordBeatCountSymbols) || []).length || beatCount;
 }
 
 function checkInvalidChordRepetition(bar, currentChord) {
@@ -143,8 +148,10 @@ function checkInvalidBeatCount(chord, currentBeatCount, beatCount, isLast) {
 	}
 }
 function hasInvalidBeatCount(currentBeatCount, barBeatCount, isLast) {
-	return hasTooManyBeats(currentBeatCount, barBeatCount)
-		|| hasTooFewBeats(currentBeatCount, barBeatCount, isLast);
+	return (
+		hasTooManyBeats(currentBeatCount, barBeatCount) ||
+		hasTooFewBeats(currentBeatCount, barBeatCount, isLast)
+	);
 }
 function hasTooManyBeats(currentBeatCount, barBeatCount) {
 	return currentBeatCount > barBeatCount;

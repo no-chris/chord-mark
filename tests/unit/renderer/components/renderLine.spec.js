@@ -17,15 +17,57 @@ describe('renderLine', () => {
 });
 
 describe.each([
+	[
+		'none',
+		{
+			isFromSectionRepeat: false,
+			isFromAutoRepeatChords: false,
+			isFromChordLineRepeater: false,
+		},
+		[],
+	],
 
-	['none', { isFromSectionRepeat: false, isFromAutoRepeatChords: false, isFromChordLineRepeater: false }, []],
+	[
+		'isFromSectionRepeat',
+		{
+			isFromSectionRepeat: true,
+			isFromAutoRepeatChords: false,
+			isFromChordLineRepeater: false,
+		},
+		['cmLine--isFromSectionRepeat'],
+	],
+	[
+		'isFromAutoRepeatChords',
+		{
+			isFromSectionRepeat: false,
+			isFromAutoRepeatChords: true,
+			isFromChordLineRepeater: false,
+		},
+		['cmLine--isFromAutoRepeatChords'],
+	],
+	[
+		'isFromChordLineRepeater',
+		{
+			isFromSectionRepeat: false,
+			isFromAutoRepeatChords: false,
+			isFromChordLineRepeater: true,
+		},
+		['cmLine--isFromChordLineRepeater'],
+	],
 
-	['isFromSectionRepeat', { isFromSectionRepeat: true, isFromAutoRepeatChords: false, isFromChordLineRepeater: false }, ['cmLine--isFromSectionRepeat']],
-	['isFromAutoRepeatChords', { isFromSectionRepeat: false, isFromAutoRepeatChords: true, isFromChordLineRepeater: false }, ['cmLine--isFromAutoRepeatChords']],
-	['isFromChordLineRepeater', { isFromSectionRepeat: false, isFromAutoRepeatChords: false, isFromChordLineRepeater: true }, ['cmLine--isFromChordLineRepeater']],
-
-	['all', { isFromSectionRepeat: true, isFromAutoRepeatChords: true, isFromChordLineRepeater: true }, ['cmLine--isFromSectionRepeat', 'cmLine--isFromAutoRepeatChords', 'cmLine--isFromChordLineRepeater']],
-
+	[
+		'all',
+		{
+			isFromSectionRepeat: true,
+			isFromAutoRepeatChords: true,
+			isFromChordLineRepeater: true,
+		},
+		[
+			'cmLine--isFromSectionRepeat',
+			'cmLine--isFromAutoRepeatChords',
+			'cmLine--isFromChordLineRepeater',
+		],
+	],
 ])('repeat identifier classes', (title, options, expected) => {
 	test('correctly adds expected classes', () => {
 		const rendered = renderLine({ line: 'myLine' }, options);
@@ -33,7 +75,7 @@ describe.each([
 
 		expect.assertions(expected.length + 1);
 		expect(element).toBeInstanceOf(Node);
-		expected.forEach(className => {
+		expected.forEach((className) => {
 			expect(element.classList.contains(className)).toBe(true);
 		});
 	});

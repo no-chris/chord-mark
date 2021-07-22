@@ -33,29 +33,32 @@ import lineTypes from '../../parser/lineTypes';
  * @param {Boolean} useShortNamings
  * @returns {String} rendered HTML
  */
-export default function renderSong(parsedSong, {
-	alignBars = false,
-	transposeValue = 0,
-	accidentalsType = 'auto',
-	harmonizeAccidentals = true,
-	expandSectionRepeats = true,
-	autoRepeatChords = true,
-	simplifyChords = 'none',
-	useShortNamings = true,
-} = {}) {
-
+export default function renderSong(
+	parsedSong,
+	{
+		alignBars = false,
+		transposeValue = 0,
+		accidentalsType = 'auto',
+		harmonizeAccidentals = true,
+		expandSectionRepeats = true,
+		autoRepeatChords = true,
+		simplifyChords = 'none',
+		useShortNamings = true,
+	} = {}
+) {
 	let { allLines, allChords } = parsedSong;
 
-	const accidental = (accidentalsType === 'auto')
-		? getMainAccidental(allChords)
-		: accidentalsType;
+	const accidental =
+		accidentalsType === 'auto'
+			? getMainAccidental(allChords)
+			: accidentalsType;
 
 	const renderChord = chordRendererFactory({
 		simplify: simplifyChords,
 		useShortNamings,
 		transposeValue,
 		harmonizeAccidentals,
-		useFlats: (accidental === 'flat'),
+		useFlats: accidental === 'flat',
 	});
 
 	allLines = forEachChordInSong(allLines, (chord) => {
@@ -69,26 +72,25 @@ export default function renderSong(parsedSong, {
 
 	const song = allLines
 		.filter(shouldRenderLine)
-		.map(line => {
+		.map((line) => {
 			let rendered;
 
 			if (line.type === lineTypes.CHORD) {
 				// todo: move this in renderChordLine
-				const spaced = (alignBars)
+				const spaced = alignBars
 					? alignedChordSpacer(line.model, maxBeatsWidth)
 					: simpleChordSpacer(line.model);
 
 				rendered = renderChordLine(spaced);
-
 			} else if (line.type === lineTypes.EMPTY_LINE) {
 				rendered = renderEmptyLine();
-
 			} else if (line.type === lineTypes.SECTION_LABEL) {
-				rendered = renderSectionLabel(line, { sectionsStats, expandSectionRepeats });
-
+				rendered = renderSectionLabel(line, {
+					sectionsStats,
+					expandSectionRepeats,
+				});
 			} else if (line.type === lineTypes.TIME_SIGNATURE) {
 				rendered = renderTimeSignature(line);
-
 			} else {
 				rendered = renderTextLine(line);
 			}
@@ -101,17 +103,16 @@ export default function renderSong(parsedSong, {
 		.filter(Boolean)
 		.join('\n');
 
-
 	function shouldRenderLine(line) {
 		if (line.type === lineTypes.SECTION_LABEL) {
-			shouldSkipRepeatedSectionLine = (line.isFromSectionRepeat === true && !expandSectionRepeats);
+			shouldSkipRepeatedSectionLine =
+				line.isFromSectionRepeat === true && !expandSectionRepeats;
 		}
-		const shouldSkipAutoRepeatChordLine = (line.isFromAutoRepeatChords && !autoRepeatChords);
+		const shouldSkipAutoRepeatChordLine =
+			line.isFromAutoRepeatChords && !autoRepeatChords;
 
 		return !shouldSkipRepeatedSectionLine && !shouldSkipAutoRepeatChordLine;
 	}
 
 	return songTpl({ song });
 }
-
-

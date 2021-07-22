@@ -12,8 +12,8 @@ export default function getMainAccidental(allChords) {
 	let sharpCount = 0;
 
 	allChords
-		.filter(chord => (chord.model !== syntax.noChord))
-		.forEach(chord => {
+		.filter((chord) => chord.model !== syntax.noChord)
+		.forEach((chord) => {
 			rootNote = chord.model.formatted.rootNote;
 
 			if (rootNote.length === 2) {
@@ -27,5 +27,5 @@ export default function getMainAccidental(allChords) {
 			}
 		});
 
-	return (flatCount > sharpCount) ? 'flat' : 'sharp';
+	return flatCount > sharpCount ? 'flat' : 'sharp';
 }

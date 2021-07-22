@@ -22,19 +22,16 @@ describe('parseSong()', () => {
 			},
 			asArray() {
 				return allLines;
-			}
+			},
 		};
 	});
 
 	test('Remove any html tag', () => {
-		const input =
-			'<p>this is a text line</p>';
+		const input = '<p>this is a text line</p>';
 
 		const expected = {
-			allLines: [
-				'this is a text line'
-			],
-			allChords: []
+			allLines: ['this is a text line'],
+			allChords: [],
 		};
 
 		const parsed = parseSong(input);
@@ -42,21 +39,11 @@ describe('parseSong()', () => {
 	});
 
 	test('Accept an array as input', () => {
-		const input = [
-			'C.. G..',
-			'line1-1',
-			'Am.. F..',
-			'line1-2',
-		];
+		const input = ['C.. G..', 'line1-1', 'Am.. F..', 'line1-2'];
 
 		const expected = {
-			allLines: [
-				'C.. G..',
-				'line1-1',
-				'Am.. F..',
-				'line1-2',
-			],
-			allChords: []
+			allLines: ['C.. G..', 'line1-1', 'Am.. F..', 'line1-2'],
+			allChords: [],
 		};
 
 		const parsed = parseSong(input);
@@ -70,17 +57,11 @@ Am.. F..
 line1-2`;
 
 		const expected = {
-			allLines: [
-				'C.. G..',
-				'line1-1',
-				'Am.. F..',
-				'line1-2',
-			],
-			allChords: []
+			allLines: ['C.. G..', 'line1-1', 'Am.. F..', 'line1-2'],
+			allChords: [],
 		};
 
 		const parsed = parseSong(input);
 		expect(parsed).toEqual(expected);
 	});
 });
-

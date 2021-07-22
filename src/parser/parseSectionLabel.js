@@ -14,15 +14,16 @@ import isSectionLabel from './matchers/isSectionLabel';
  */
 export default function parseSectionLabel(string) {
 	if (!isSectionLabel(string)) {
-		throw new TypeError('Expected section identifier string, received: ' + string);
+		throw new TypeError(
+			'Expected section identifier string, received: ' + string
+		);
 	}
 
-	const [ labelSrc, repeatSrc ] = string.trim().split(' ');
+	const [labelSrc, repeatSrc] = string.trim().split(' ');
 
 	return {
 		string,
 		label: labelSrc.substring(1),
-		repeatTimes: (repeatSrc) ? Number.parseInt(repeatSrc.substring(1)) : 0
+		repeatTimes: repeatSrc ? Number.parseInt(repeatSrc.substring(1)) : 0,
 	};
 }
-
