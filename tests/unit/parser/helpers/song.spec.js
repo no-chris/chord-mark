@@ -88,6 +88,44 @@ describe('forEachChordInChordLine', () => {
 			});
 		});
 	});
+
+	test('Should provide the proper barIndex and chordIndex', () => {
+		expect.assertions(32);
+
+		const chordLine = 'Am... G/B.   C    E. F. G. B7.    Em';
+		const parsed = parseChordLine(chordLine);
+		const applied = forEachChordInChordLine(
+			parsed,
+			(chord, chordIndex, barIndex) => {
+				chord.chordIndex = chordIndex;
+				chord.barIndex = barIndex;
+			}
+		);
+
+		let i = 0;
+		const expected = [
+			[0, 0],
+			[0, 1],
+
+			[1, 0],
+
+			[2, 0],
+			[2, 1],
+			[2, 2],
+			[2, 3],
+
+			[3, 0],
+		];
+		applied.allBars.forEach((bar, barIndex) => {
+			bar.allChords.forEach((chord, chordIndex) => {
+				expect(chord.barIndex).toBe(expected[i][0]);
+				expect(chord.barIndex).toBe(barIndex);
+				expect(chord.chordIndex).toBe(expected[i][1]);
+				expect(chord.chordIndex).toBe(chordIndex);
+				i++;
+			});
+		});
+	});
 });
 
 describe('getNthOfLabel', () => {

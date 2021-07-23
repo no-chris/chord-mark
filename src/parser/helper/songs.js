@@ -30,9 +30,9 @@ export function forEachChordInSong(allLines, fn) {
 export function forEachChordInChordLine(chordLine, fn) {
 	const newChordLine = _cloneDeep(chordLine);
 
-	newChordLine.allBars.forEach((bar) => {
-		bar.allChords.forEach((chord) => {
-			fn(chord);
+	newChordLine.allBars.forEach((bar, barIndex) => {
+		bar.allChords.forEach((chord, chordIndex) => {
+			fn(chord, chordIndex, barIndex);
 		});
 	});
 
