@@ -47,7 +47,7 @@
   "dependencies": {
     "chord-symbol": "^2.1.0",
     "core-js": "^3.15.2",
-    "dompurify": "^2.2.6",
+    "dompurify": "^2.3.0",
     "handlebars": "^4.7.7",
     "lodash": "^4.17.21",
     "tiny-emitter": "^2.1.0"
