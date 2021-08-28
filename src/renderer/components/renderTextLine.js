@@ -5,5 +5,5 @@ import textLineTpl from './tpl/textLine.hbs';
  * @returns {String} rendered html
  */
 export default function render(textLine) {
-	return textLineTpl({ textLine: textLine.string });
+	return textLineTpl({ textLine: textLine.lyrics });
 }
