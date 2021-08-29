@@ -2,6 +2,7 @@ import chordLineTpl from './tpl/chordLine.hbs';
 
 import renderBarContent from './renderBarContent';
 import barSeparatorTpl from './tpl/barSeparator.hbs';
+import syntax from '../syntax';
 
 /**
  * @param {ChordLine} chordLineModel
@@ -17,5 +18,9 @@ export default function renderChordLine(chordLineModel) {
 	const chordLine =
 		barSeparator + allBarsRendered.join(barSeparator) + barSeparator;
 
-	return chordLineTpl({ chordLine });
+	const chordLineOffset = syntax.chordLineOffsetSpacer.repeat(
+		chordLineModel.offset || 0
+	);
+
+	return chordLineTpl({ chordLineOffset, chordLine });
 }
