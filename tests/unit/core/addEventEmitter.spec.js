@@ -6,12 +6,7 @@ describe('addEventEmitter', () => {
 	});
 });
 
-describe.each([
-	'on',
-	'once',
-	'off',
-	'emit'
-])('API: .%s()', (method) => {
+describe.each(['on', 'once', 'off', 'emit'])('API: .%s()', (method) => {
 	test('Method exists', () => {
 		const withEmitter = addEventEmitter({});
 		expect(withEmitter[method]).toBeInstanceOf(Function);
@@ -45,18 +40,18 @@ describe('.on()', () => {
 		const withEmitter = addEventEmitter({});
 		const listener = jest.fn();
 
-		const params = [
-			{ test: 'test' },
-			['4', '5'],
-			'string',
-			69
-		];
+		const params = [{ test: 'test' }, ['4', '5'], 'string', 69];
 
 		withEmitter.on('test', listener);
 		withEmitter.emit('test', params[0], params[1], params[2], params[3]);
 
 		expect(listener).toHaveBeenCalledTimes(1);
-		expect(listener).toHaveBeenLastCalledWith(params[0], params[1], params[2], params[3]);
+		expect(listener).toHaveBeenLastCalledWith(
+			params[0],
+			params[1],
+			params[2],
+			params[3]
+		);
 	});
 });
 

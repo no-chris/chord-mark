@@ -7,17 +7,15 @@ describe('isEmptyLine', () => {
 });
 
 describe.each([
+	['', true],
+	[' ', true],
+	['    ', true],
+	['		', true], //tab
+	['	', true], //tab
+	['\t', true],
+	['\t\t', true],
 
-	['',  	 	true],
-	[' ',    	true],
-	['    ', 	true],
-	['		',	true], //tab
-	['	',		true], //tab
-	['\t',   	true],
-	['\t\t',   	true],
-
-	['  . ',  false],
-
+	['  . ', false],
 ])('Empty line string %s', (string, result) => {
 	test('Correctly detect empty line', () => {
 		expect(isEmptyLine(string)).toEqual(result);

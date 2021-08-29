@@ -17,8 +17,12 @@ export default function renderBarContent(bar) {
 	let spacesAfter = 0;
 
 	const barContent = bar.allChords.reduce((rendering, chord) => {
-		spacesWithin = _isFinite(chord.spacesWithin) ? chord.spacesWithin : defaultSpacesWithin;
-		spacesAfter = _isFinite(chord.spacesAfter) ? chord.spacesAfter : defaultSpacesAfter;
+		spacesWithin = _isFinite(chord.spacesWithin)
+			? chord.spacesWithin
+			: defaultSpacesWithin;
+		spacesAfter = _isFinite(chord.spacesAfter)
+			? chord.spacesAfter
+			: defaultSpacesAfter;
 
 		rendering +=
 			renderChord(chord.symbol) +

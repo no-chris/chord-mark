@@ -8,7 +8,8 @@ describe('htmlToElement', () => {
 
 describe('Behavior', () => {
 	test('Should return valid html from string', () => {
-		const html = '<div class="test-container"><p class="test-content">Content</p></div>';
+		const html =
+			'<div class="test-container"><p class="test-content">Content</p></div>';
 
 		const element = htmlToElement(html);
 
@@ -19,7 +20,9 @@ describe('Behavior', () => {
 
 		expect(element.firstChild.nodeType).toEqual(1);
 		expect(element.firstChild.nodeName).toEqual('P');
-		expect(element.firstChild.classList.contains('test-content')).toEqual(true);
+		expect(element.firstChild.classList.contains('test-content')).toEqual(
+			true
+		);
 
 		expect(element.firstChild.textContent).toEqual('Content');
 	});

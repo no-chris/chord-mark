@@ -27,18 +27,37 @@ describe('chordLine renderer', () => {
 });
 
 describe.each([
-
-	['A B C', 			'|A|B|C|'],
-	['A.. B.. C.. D..',	'|A B|C D|'],
-
+	['A B C', '|A|B|C|'],
+	['A.. B.. C.. D..', '|A B|C D|'],
 ])('Render chordLine "%s" as "%s"', (input, output) => {
 	test('expected rendering', () => {
-		renderBarContent.mockImplementation(bar => bar.allChords
-			.map(chord => getChordSymbol(chord.model))
-			.join(' ')
+		renderBarContent.mockImplementation((bar) =>
+			bar.allChords.map((chord) => getChordSymbol(chord.model)).join(' ')
 		);
 
 		const chordLine = parseChordLine(input);
+
+		const rendered = renderChordLine(chordLine);
+
+		expect(stripTags(rendered)).toEqual(output);
+	});
+});
+
+describe.each([
+	['A B C', undefined, '|A|B|C|'],
+	['A B C', 0, '|A|B|C|'],
+	['A B C', 1, ' |A|B|C|'],
+	['A B C', 2, '  |A|B|C|'],
+	['A B C', 3, '   |A|B|C|'],
+	['A B C', 10, '          |A|B|C|'],
+])('respect offset parameter', (input, offset, output) => {
+	test('offset chordline by ' + (offset || '0'), () => {
+		renderBarContent.mockImplementation((bar) =>
+			bar.allChords.map((chord) => getChordSymbol(chord.model)).join(' ')
+		);
+
+		const chordLine = parseChordLine(input);
+		chordLine.offset = offset;
 
 		const rendered = renderChordLine(chordLine);
 

@@ -7,11 +7,14 @@ import lineTpl from './tpl/line.hbs';
  * @param {Boolean} isFromChordLineRepeater
  * @returns {String} rendered html
  */
-export default function render(line, {
-	isFromSectionRepeat = false,
-	isFromAutoRepeatChords = false,
-	isFromChordLineRepeater = false,
-} = {}) {
+export default function render(
+	line,
+	{
+		isFromSectionRepeat = false,
+		isFromAutoRepeatChords = false,
+		isFromChordLineRepeater = false,
+	} = {}
+) {
 	const lineClasses = ['cmLine'];
 	if (isFromSectionRepeat) {
 		lineClasses.push('cmLine--isFromSectionRepeat');

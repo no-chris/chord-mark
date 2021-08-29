@@ -42,12 +42,15 @@ D D
 I just want your extra time and your...Kiss
 		`;
 		const parsed = parseSong(song);
-		const applied = forEachChordInSong(parsed.allLines, chord => chord.applied = true);
+		const applied = forEachChordInSong(
+			parsed.allLines,
+			(chord) => (chord.applied = true)
+		);
 
-		applied.forEach(line => {
+		applied.forEach((line) => {
 			if (line.type === 'chord') {
-				line.model.allBars.forEach(bar => {
-					bar.allChords.forEach(chord => {
+				line.model.allBars.forEach((bar) => {
+					bar.allChords.forEach((chord) => {
 						expect(chord.applied).toBe(true);
 					});
 				});
@@ -55,7 +58,6 @@ I just want your extra time and your...Kiss
 		});
 	});
 });
-
 
 describe('forEachChordInChordLine', () => {
 	test('Module', () => {
@@ -75,16 +77,56 @@ describe('forEachChordInChordLine', () => {
 
 		const chordLine = 'Am... G/B. C';
 		const parsed = parseChordLine(chordLine);
-		const applied = forEachChordInChordLine(parsed, chord => chord.applied = true);
+		const applied = forEachChordInChordLine(
+			parsed,
+			(chord) => (chord.applied = true)
+		);
 
-		applied.allBars.forEach(bar => {
-			bar.allChords.forEach(chord => {
+		applied.allBars.forEach((bar) => {
+			bar.allChords.forEach((chord) => {
 				expect(chord.applied).toBe(true);
 			});
 		});
 	});
-});
 
+	test('Should provide the proper barIndex and chordIndex', () => {
+		expect.assertions(32);
+
+		const chordLine = 'Am... G/B.   C    E. F. G. B7.    Em';
+		const parsed = parseChordLine(chordLine);
+		const applied = forEachChordInChordLine(
+			parsed,
+			(chord, chordIndex, barIndex) => {
+				chord.chordIndex = chordIndex;
+				chord.barIndex = barIndex;
+			}
+		);
+
+		let i = 0;
+		const expected = [
+			[0, 0],
+			[0, 1],
+
+			[1, 0],
+
+			[2, 0],
+			[2, 1],
+			[2, 2],
+			[2, 3],
+
+			[3, 0],
+		];
+		applied.allBars.forEach((bar, barIndex) => {
+			bar.allChords.forEach((chord, chordIndex) => {
+				expect(chord.barIndex).toBe(expected[i][0]);
+				expect(chord.barIndex).toBe(barIndex);
+				expect(chord.chordIndex).toBe(expected[i][1]);
+				expect(chord.chordIndex).toBe(chordIndex);
+				i++;
+			});
+		});
+	});
+});
 
 describe('getNthOfLabel', () => {
 	test('Module', () => {
@@ -112,15 +154,37 @@ Verse3-line3
 Verse3-line4`;
 		const parsed = parseSong(song);
 
-		const v1 = ['Verse1-line1', 'Verse1-line2', 'Verse1-line3', 'Verse1-line4', ''];
-		const v2 = ['Verse2-line1', 'Verse2-line2', 'Verse2-line3', 'Verse2-line4', ''];
-		const v3 = ['Verse3-line1', 'Verse3-line2', 'Verse3-line3', 'Verse3-line4'];
+		const v1 = [
+			'Verse1-line1',
+			'Verse1-line2',
+			'Verse1-line3',
+			'Verse1-line4',
+			'',
+		];
+		const v2 = [
+			'Verse2-line1',
+			'Verse2-line2',
+			'Verse2-line3',
+			'Verse2-line4',
+			'',
+		];
+		const v3 = [
+			'Verse3-line1',
+			'Verse3-line2',
+			'Verse3-line3',
+			'Verse3-line4',
+		];
 
 		expect(getNthOfLabel(parsed.allLines, 'v', 0)).toEqual([]);
-		expect(getNthOfLabel(parsed.allLines, 'v', 1).map(line => line.string)).toEqual(v1);
-		expect(getNthOfLabel(parsed.allLines, 'v', 2).map(line => line.string)).toEqual(v2);
-		expect(getNthOfLabel(parsed.allLines, 'v', 3).map(line => line.string)).toEqual(v3);
+		expect(
+			getNthOfLabel(parsed.allLines, 'v', 1).map((line) => line.string)
+		).toEqual(v1);
+		expect(
+			getNthOfLabel(parsed.allLines, 'v', 2).map((line) => line.string)
+		).toEqual(v2);
+		expect(
+			getNthOfLabel(parsed.allLines, 'v', 3).map((line) => line.string)
+		).toEqual(v3);
 		expect(getNthOfLabel(parsed.allLines, 'v', 4)).toEqual([]);
-
 	});
 });

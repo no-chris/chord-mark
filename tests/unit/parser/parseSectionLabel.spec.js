@@ -7,7 +7,6 @@ describe('parseSectionLabel', () => {
 });
 
 describe.each([
-
 	['#A', 'A', 0],
 	['#B', 'B', 0],
 	['#C', 'C', 0],
@@ -27,7 +26,6 @@ describe.each([
 	['#v x2', 'v', 2],
 	['#c x3', 'c', 3],
 	['#i x9', 'i', 9],
-
 ])('Section identifier %s => %s', (string, label, repeatTimes) => {
 	test('Correctly gets identifier', () => {
 		expect(parseSectionLabel(string)).toEqual({
@@ -38,17 +36,12 @@ describe.each([
 	});
 });
 
-
-describe.each([
-
-	['#'],
-	['#'],
-	['#a x'],
-	['#a x33'],
-
-])('Invalid section identifier of %s', (string) => {
-	test('Throws TypeError', () => {
-		const throwingFn = () => parseSectionLabel(string);
-		expect(throwingFn).toThrow(TypeError);
-	});
-});
+describe.each([['#'], ['#'], ['#a x'], ['#a x33']])(
+	'Invalid section identifier of %s',
+	(string) => {
+		test('Throws TypeError', () => {
+			const throwingFn = () => parseSectionLabel(string);
+			expect(throwingFn).toThrow(TypeError);
+		});
+	}
+);

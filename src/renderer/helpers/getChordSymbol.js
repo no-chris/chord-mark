@@ -9,6 +9,6 @@ const defaultRenderChord = chordRendererFactory();
  * @param {Function} renderChord
  * @returns {string}
  */
-export default function(model, renderChord = defaultRenderChord) {
-	return (model === syntax.noChord) ? noChordSymbol : renderChord(model);
+export default function (model, renderChord = defaultRenderChord) {
+	return model === syntax.noChord ? noChordSymbol : renderChord(model);
 }

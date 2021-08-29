@@ -16,7 +16,6 @@ describe('renderEmptyLine', () => {
 	});
 });
 
-
 describe('Behaviour', () => {
 	test('renders empty line as non-breaking space', () => {
 		const rendered = renderEmptyLine();

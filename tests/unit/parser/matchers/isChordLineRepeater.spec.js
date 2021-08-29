@@ -7,15 +7,13 @@ describe('isChordLineRepeater', () => {
 });
 
 describe.each([
+	['/', true],
+	[' / ', true],
+	['	/	', true],
 
-	['/',  	 	true],
-	[' / ',    	true],
-	['	/	', 	true],
-
-	['/..',  false],
-	['/ /',  false],
-	['/1',  false],
-
+	['/..', false],
+	['/ /', false],
+	['/1', false],
 ])('Chord line repeater string %s', (string, result) => {
 	test('Correctly detect chord line repeater', () => {
 		expect(isChordLineRepeater(string)).toEqual(result);

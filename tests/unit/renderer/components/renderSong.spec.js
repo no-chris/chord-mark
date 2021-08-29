@@ -12,8 +12,7 @@ describe('renderSong', () => {
 	});
 
 	test('Should return valid html', () => {
-		const song =
-`A B
+		const song = `A B
 verseLine1
 C.. D.. E
 verseLine2`;
@@ -26,11 +25,9 @@ verseLine2`;
 	});
 });
 
-
 describe('autoRepeatChords', () => {
 	test('Should render auto repeated chords & other lines if autoRepeatChords === true', () => {
-		const input =
-`#v
+		const input = `#v
 C G
 line1-1
 A D
@@ -39,8 +36,7 @@ line1-2
 #v
 line2-1
 line2-2`;
-		const expected =
-`Verse 1
+		const expected = `Verse 1
 |C   |G   |
 line1-1
 |A   |D   |
@@ -57,8 +53,7 @@ line2-2`;
 	});
 
 	test('Should NOT render auto repeated chords & other lines if autoRepeatChords === false', () => {
-		const input =
-`#v
+		const input = `#v
 C G
 line1-1
 A D
@@ -67,8 +62,7 @@ line1-2
 #v
 line2-1
 line2-2`;
-		const expected =
-`Verse 1
+		const expected = `Verse 1
 |C   |G   |
 line1-1
 |A   |D   |
@@ -83,17 +77,42 @@ line2-2`;
 	});
 });
 
+describe('alignChordsWithLyrics', () => {
+	test('Should align chords with lyrics placeholders', () => {
+		const input = `#v
+C... CM7. F
+_Imagine there's _no hea_ven`;
+		const expected = `Verse
+|C              CM7   |F |
+Imagine there's no heaven`;
+		const rendered = renderSongText(input, { alignChordsWithLyrics: true });
+		const element = htmlToElement(rendered);
+		expect(element.textContent).toBe(expected);
+	});
+
+	test('Should ignore placeholders if chords positioning is disabled (default behavior)', () => {
+		const input = `#v
+C... CM7. F
+_Imagine there's _no hea_ven`;
+		const expected = `Verse
+|C     CM7|F   |
+Imagine there's no heaven`;
+		const rendered = renderSongText(input, {
+			alignChordsWithLyrics: false,
+		});
+		const element = htmlToElement(rendered);
+		expect(element.textContent).toBe(expected);
+	});
+});
 
 describe('expandSectionRepeat', () => {
 	test('Should repeat section when expandSectionRepeat === true', () => {
-		const input =
-`#v x2
+		const input = `#v x2
 A B
 verseLine1
 C.. D.. E
 verseLine2`;
-		const expected =
-`Verse 1
+		const expected = `Verse 1
 |A   |B   |
 verseLine1
 |C   D  |E   |
@@ -109,14 +128,12 @@ verseLine2`;
 	});
 
 	test('Should not repeat section when expandSectionRepeat === false, and display repeat string (x3) after label', () => {
-		const input =
-`#v x2
+		const input = `#v x2
 A B
 verseLine1
 C.. D.. E
 verseLine2`;
-		const expected =
-`Verse 1 x2
+		const expected = `Verse 1 x2
 |A   |B   |
 verseLine1
 |C   D  |E   |
@@ -127,12 +144,10 @@ verseLine2`;
 	});
 
 	test('Should number repeats incrementally when expandSectionRepeat === true', () => {
-		const input =
-`#v
+		const input = `#v
 #v x2
 #v`;
-		const expected =
-`Verse 1
+		const expected = `Verse 1
 Verse 2
 Verse 3
 Verse 4`;
@@ -142,12 +157,10 @@ Verse 4`;
 	});
 
 	test('Should number repeats incrementally when expandSectionRepeat === false', () => {
-		const input =
-`#v
+		const input = `#v
 #v x2
 #v`;
-		const expected =
-`Verse 1
+		const expected = `Verse 1
 Verse 2 x2
 Verse 3`;
 		const rendered = renderSongText(input, { expandSectionRepeats: false });
@@ -156,11 +169,9 @@ Verse 3`;
 	});
 });
 
-
 describe('sectionsStats', () => {
 	test('Should number section only if it is repeated', () => {
-		const input =
-`#i
+		const input = `#i
 #v
 #c
 #v
@@ -169,8 +180,7 @@ describe('sectionsStats', () => {
 #b
 #c x2
 #o`;
-		const expected =
-`Intro
+		const expected = `Intro
 Verse 1
 Chorus 1
 Verse 2
@@ -186,4 +196,3 @@ Outro`;
 		expect(element.textContent).toBe(expected);
 	});
 });
-

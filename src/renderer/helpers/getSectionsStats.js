@@ -10,11 +10,10 @@ export default function getSectionsStats(allLines) {
 	const stats = {};
 
 	allLines
-		.filter(line => line.type === lineTypes.SECTION_LABEL)
-		.forEach(line => {
+		.filter((line) => line.type === lineTypes.SECTION_LABEL)
+		.forEach((line) => {
 			if (!stats[line.model.label]) {
 				stats[line.model.label] = 1;
-
 			} else {
 				stats[line.model.label]++;
 			}

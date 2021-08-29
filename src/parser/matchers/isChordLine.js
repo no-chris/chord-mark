@@ -10,9 +10,14 @@ export default function isChordLine(line = '') {
 	return clearSpaces(line)
 		.split(' ')
 		.every((potentialChordToken, index) => {
-			const withoutBeatCount = potentialChordToken.replace(chordBeatCountSymbols, '');
-			return isChord(withoutBeatCount)
-				|| (potentialChordToken.match(barRepeatSymbols) && index > 0)
-				|| (withoutBeatCount === syntax.noChord);
+			const withoutBeatCount = potentialChordToken.replace(
+				chordBeatCountSymbols,
+				''
+			);
+			return (
+				isChord(withoutBeatCount) ||
+				(potentialChordToken.match(barRepeatSymbols) && index > 0) ||
+				withoutBeatCount === syntax.noChord
+			);
 		});
 }

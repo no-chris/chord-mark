@@ -19,10 +19,8 @@ describe('chordSymbol renderer', () => {
 });
 
 describe.each([
-
-	['A', 		'A'],
-	['AM7',		'AM7'],
-
+	['A', 'A'],
+	['AM7', 'AM7'],
 ])('Render chord %s as %s', (input, output) => {
 	test('expected rendering', () => {
 		const rendered = renderChordSymbol(input);

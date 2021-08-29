@@ -1,22 +1,19 @@
 /* eslint-env node */
 module.exports = {
 	testEnvironment: 'jsdom',
-	
+
 	collectCoverage: true,
-	collectCoverageFrom: [
-		'src/**/*.js',
-		'!**/node_modules/**'
-	],
+	collectCoverageFrom: ['src/**/*.js', '!**/node_modules/**'],
 	coverageDirectory: '<rootDir>/coverage',
 	coveragePathIgnorePatterns: ['node_modules'],
 	coverageReporters: ['json', 'lcov', 'text', 'clover'],
 	coverageThreshold: {
-		'global': {
-			'branches': 99,
-			'functions': 100,
-			'lines': 100,
-			'statements': 0
-		}
+		global: {
+			branches: 99,
+			functions: 100,
+			lines: 100,
+			statements: 0,
+		},
 	},
 
 	transform: {
@@ -25,7 +22,6 @@ module.exports = {
 	},
 
 	moduleNameMapper: {
-		'\\.(css|scss)$': '<rootDir>/scss/__mocks__/styleMock.js'
-	}
-
+		'\\.(css|scss)$': '<rootDir>/scss/__mocks__/styleMock.js',
+	},
 };

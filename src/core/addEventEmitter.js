@@ -18,7 +18,7 @@ export default function addEventEmitter(object) {
 
 		emit(eventName, ...args) {
 			this._emitter.emit(eventName, ...args);
-		}
+		},
 	};
 
 	return Object.assign(object, eventEmitter);

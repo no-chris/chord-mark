@@ -18,41 +18,42 @@
   },
   "homepage": "https://github.com/no-chris/chord-mark#readme",
   "devDependencies": {
-    "@babel/cli": "^7.14.3",
-    "@babel/core": "^7.14.3",
-    "@babel/preset-env": "^7.14.2",
-    "@size-limit/preset-small-lib": "^5.0.1",
-    "babel-jest": "^27.0.6",
+    "@babel/cli": "^7.14.8",
+    "@babel/core": "^7.15.0",
+    "@babel/preset-env": "^7.15.0",
+    "@size-limit/preset-small-lib": "^5.0.3",
+    "babel-jest": "^27.1.0",
     "babel-loader": "^8.2.2",
     "clean-webpack-plugin": "^3.0.0",
-    "css-loader": "^5.0.1",
-    "eslint": "^7.26.0",
-    "eslint-plugin-import": "^2.23.4",
+    "eslint": "^7.32.0",
+    "eslint-plugin-import": "^2.24.2",
     "eslint-plugin-no-unsanitized": "^3.1.4",
     "generate-changelog": "^1.8.0",
     "handlebars-loader": "^1.7.1",
-    "jest": "^27.0.6",
+    "jest": "^27.1.0",
     "jest-handlebars": "^1.0.1",
-    "mini-css-extract-plugin": "^2.0.0",
+    "mini-css-extract-plugin": "^2.2.0",
     "node-sass": "^6.0.1",
+    "prettier": "^2.3.2",
     "raw-loader": "^4.0.2",
-    "sass": "^1.32.13",
+    "sass": "^1.38.2",
     "sass-loader": "^12.1.0",
-    "size-limit": "^5.0.1",
+    "size-limit": "^5.0.3",
     "sloc": "^0.2.1",
-    "webpack": "^5.37.0",
+    "webpack": "^5.51.1",
     "webpack-bundle-analyzer": "^4.4.2",
-    "webpack-cli": "^4.7.0"
+    "webpack-cli": "^4.8.0"
   },
   "dependencies": {
     "chord-symbol": "^2.1.0",
-    "core-js": "^3.15.2",
-    "dompurify": "^2.2.6",
+    "core-js": "^3.16.4",
+    "dompurify": "^2.3.1",
     "handlebars": "^4.7.7",
     "lodash": "^4.17.21",
     "tiny-emitter": "^2.1.0"
   },
   "scripts": {
+    "format": "prettier --write \"**/*.{js,jsx,json,ts,md}\"",
     "lint": "eslint src tests",
     "test": "jest",
     "bundle-js": "webpack",
@@ -70,7 +71,7 @@
     {
       "path": "./lib/chord-mark.js",
       "webpack": false,
-      "limit": "190 KB"
+      "limit": "195 KB"
     }
   ],
   "files": [
