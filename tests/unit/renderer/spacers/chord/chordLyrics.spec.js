@@ -65,10 +65,10 @@ describe.each([
 		'Put me on top',
 	],
 	[
-		'Spacing of extra chords should be kept (2 by default)',
+		'Spacing of extra chords should be reset to 1 (default spacing for chordLyricsSpacer)',
 		'A7 B C7 B7 F7',
 		'_Put me _on top',
-		'|A7    |B    |C7  |B7  |F7  |',
+		'|A7    |B    |C7 |B7 |F7 |',
 		'Put me on top',
 	],
 	[
@@ -82,7 +82,7 @@ describe.each([
 		'Edge case: no lyrics, single character chord!',
 		'A B C D',
 		'_ _ _ _',
-		'|A |B |C |D  |',
+		'|A |B |C |D |',
 		'',
 	],
 	[

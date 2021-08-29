@@ -63,8 +63,10 @@ export default function space(chordLineInput, lyricsLineInput) {
 					lyricToken += symbols.lyricsSpacer.repeat(lyricsSpaceAfter);
 				}
 				spacedLyricsLine += lyricToken;
-				chord.spacesWithin = 0;
+			} else {
+				chord.spacesAfter = chordSpaceAfterDefault;
 			}
+			chord.spacesWithin = 0;
 		}
 	);
 
