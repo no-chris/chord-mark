@@ -6,11 +6,11 @@ import chordLyricsSpacer from '../spacers/chord/chordLyrics';
 
 import { forEachChordInSong } from '../../parser/helper/songs';
 
-import renderChordLine from './renderChordLine'; //fixme should be renderChordLineModel
+import renderChordLineModel from './renderChordLine';
 import renderEmptyLine from './renderEmptyLine';
 import renderLine from './renderLine';
 import renderSectionLabel from './renderSectionLabel';
-import renderTextLine from './renderTextLine';
+import renderLyricLine from './renderLyricLine';
 import renderTimeSignature from './renderTimeSignature';
 
 import songTpl from './tpl/song.hbs';
@@ -79,17 +79,12 @@ export default function renderSong(
 			let rendered;
 
 			if (line.type === lineTypes.CHORD) {
-				// todo: move this in renderChordLine?
 				let spaced = alignBars
 					? alignedChordSpacer(line.model, maxBeatsWidth)
 					: simpleChordSpacer(line.model);
 
 				const nextLine = allFilteredLines[lineIndex + 1];
-				if (
-					alignChordsWithLyrics &&
-					nextLine &&
-					nextLine.type === lineTypes.TEXT
-				) {
+				if (shouldAlignChords(alignChordsWithLyrics, nextLine)) {
 					const { chordLine, lyricsLine } = chordLyricsSpacer(
 						spaced,
 						nextLine.model
@@ -98,7 +93,7 @@ export default function renderSong(
 					spaced = chordLine;
 				}
 
-				rendered = renderChordLine(spaced);
+				rendered = renderChordLineModel(spaced);
 			} else if (line.type === lineTypes.EMPTY_LINE) {
 				rendered = renderEmptyLine();
 			} else if (line.type === lineTypes.SECTION_LABEL) {
@@ -109,7 +104,7 @@ export default function renderSong(
 			} else if (line.type === lineTypes.TIME_SIGNATURE) {
 				rendered = renderTimeSignature(line);
 			} else {
-				rendered = renderTextLine(line);
+				rendered = renderLyricLine(line);
 			}
 			return renderLine(rendered, {
 				isFromSectionRepeat: line.isFromSectionRepeat,
@@ -132,4 +127,10 @@ export default function renderSong(
 	}
 
 	return songTpl({ song });
+}
+
+function shouldAlignChords(alignChordsWithLyrics, nextLine) {
+	return (
+		alignChordsWithLyrics && nextLine && nextLine.type === lineTypes.LYRIC
+	);
 }

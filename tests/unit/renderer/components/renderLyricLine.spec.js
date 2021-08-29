@@ -1,13 +1,13 @@
-import renderTextLine from '../../../../src/renderer/components/renderTextLine';
+import renderLyricLine from '../../../../src/renderer/components/renderLyricLine';
 import htmlToElement from '../../../../src/core/dom/htmlToElement';
 
-describe('renderTextLine', () => {
+describe('renderLyricLine', () => {
 	test('Module', () => {
-		expect(renderTextLine).toBeInstanceOf(Function);
+		expect(renderLyricLine).toBeInstanceOf(Function);
 	});
 
 	test('Should return valid html', () => {
-		const rendered = renderTextLine({
+		const rendered = renderLyricLine({
 			string: 'textContent',
 			model: {
 				lyrics: 'textContent',
@@ -18,6 +18,6 @@ describe('renderTextLine', () => {
 
 		expect(element).toBeInstanceOf(Node);
 		expect(element.nodeName).toBe('SPAN');
-		expect(element.classList.contains('cmTextLine')).toBe(true);
+		expect(element.classList.contains('cmLyricLine')).toBe(true);
 	});
 });

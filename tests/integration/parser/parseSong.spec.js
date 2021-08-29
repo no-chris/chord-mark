@@ -41,7 +41,7 @@ Let it be`;
 					model: parseChordLine('C.. G..'),
 				},
 				{
-					type: 'text',
+					type: 'lyric',
 					string: 'When I find myself in times of trouble',
 					model: parseLyricLine(
 						'When I find myself in times of trouble'
@@ -53,7 +53,7 @@ Let it be`;
 					model: parseChordLine('Am.. F..'),
 				},
 				{
-					type: 'text',
+					type: 'lyric',
 					string: 'Mother mary comes to me',
 					model: parseLyricLine('Mother mary comes to me'),
 				},
@@ -63,7 +63,7 @@ Let it be`;
 					model: parseChordLine('C.. G..'),
 				},
 				{
-					type: 'text',
+					type: 'lyric',
 					string: 'Speaking words of wisdom',
 					model: parseLyricLine('Speaking words of wisdom'),
 				},
@@ -73,7 +73,7 @@ Let it be`;
 					model: parseChordLine('F. Em. Dm. C.'),
 				},
 				{
-					type: 'text',
+					type: 'lyric',
 					string: 'Let it be',
 					model: parseLyricLine('Let it be'),
 				},
@@ -84,7 +84,7 @@ Let it be`;
 					model: parseChordLine('Am.. G..'),
 				},
 				{
-					type: 'text',
+					type: 'lyric',
 					string: 'Let it be, let it be',
 					model: parseLyricLine('Let it be, let it be'),
 				},
@@ -94,7 +94,7 @@ Let it be`;
 					model: parseChordLine('C.. F..'),
 				},
 				{
-					type: 'text',
+					type: 'lyric',
 					string: 'Let it be, let it be',
 					model: parseLyricLine('Let it be, let it be'),
 				},
@@ -104,7 +104,7 @@ Let it be`;
 					model: parseChordLine('C.. G..'),
 				},
 				{
-					type: 'text',
+					type: 'lyric',
 					string: 'Whispers words of wisdom',
 					model: parseLyricLine('Whispers words of wisdom'),
 				},
@@ -114,7 +114,7 @@ Let it be`;
 					model: parseChordLine('F. Em. Dm. C.'),
 				},
 				{
-					type: 'text',
+					type: 'lyric',
 					string: 'Let it be',
 					model: parseLyricLine('Let it be'),
 				},
@@ -147,7 +147,7 @@ Let it be`;
 					model: parseChordLine('C.. G..'),
 				},
 				{
-					type: 'text',
+					type: 'lyric',
 					string: 'When I find myself in times of trouble',
 					model: parseLyricLine(
 						'When I find myself in times of trouble'
@@ -159,7 +159,7 @@ Let it be`;
 					model: parseChordLine('Am.. F..'),
 				},
 				{
-					type: 'text',
+					type: 'lyric',
 					string: 'Mother mary comes to me',
 					model: parseLyricLine('Mother mary comes to me'),
 				},

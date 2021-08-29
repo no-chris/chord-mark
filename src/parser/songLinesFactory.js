@@ -21,7 +21,7 @@ const defaultTimeSignature = '4/4';
  * @typedef {Object} SongLine
  * @type {Object}
  * @property {String} string - original line in source file
- * @property {String} type - chord|text|timeSignature|sectionLabel...
+ * @property {String} type - chord|lyric|timeSignature|sectionLabel...
  * @property {Boolean} [isFromSectionRepeat] - line created by a section repeat directive (x3...)
  * @property {Boolean} [isFromAutoRepeatChords] - line created by auto repeats of chords from a section to another
  */
@@ -40,8 +40,9 @@ const defaultTimeSignature = '4/4';
  */
 
 /**
- * @typedef {SongLine} SongTextLine
+ * @typedef {SongLine} SongLyricLine
  * @type {Object}
+ * @property {LyricLine} model
  */
 
 /**
@@ -116,7 +117,7 @@ export default function songLinesFactory() {
 	}
 
 	/**
-	 * @returns {SongTextLine}
+	 * @returns {SongLyricLine}
 	 */
 	function getEmptyLine(string) {
 		return {
@@ -126,7 +127,7 @@ export default function songLinesFactory() {
 	}
 
 	/**
-	 * @returns {SongChordLine|SongTextLine}
+	 * @returns {SongChordLine|SongLyricLine}
 	 */
 	function getChordLine(string) {
 		let line;
@@ -141,13 +142,13 @@ export default function songLinesFactory() {
 			};
 			previousChordLine = line;
 		} catch (e) {
-			line = getTextLine(string);
+			line = getLyricLine(string);
 		}
 		return line;
 	}
 
 	/**
-	 * @returns {SongChordLine|SongTextLine}
+	 * @returns {SongChordLine|SongLyricLine}
 	 */
 	function getPreviousChordLine(string) {
 		if (previousChordLine) {
@@ -156,16 +157,16 @@ export default function songLinesFactory() {
 				isFromChordLineRepeater: true,
 			};
 		}
-		return getTextLine(string);
+		return getLyricLine(string);
 	}
 
 	/**
-	 * @returns {SongTextLine}
+	 * @returns {SongLyricLine}
 	 */
-	function getTextLine(string) {
+	function getLyricLine(string) {
 		return {
 			string,
-			type: lineTypes.TEXT,
+			type: lineTypes.LYRIC,
 			model: parseLyricLine(string),
 		};
 	}
@@ -257,7 +258,7 @@ export default function songLinesFactory() {
 			} else if (isEmptyLine(lineSrc)) {
 				line = getEmptyLine(lineSrc);
 			} else {
-				line = getTextLine(lineSrc);
+				line = getLyricLine(lineSrc);
 			}
 
 			repeatLinesFromBlueprint(line);
@@ -287,7 +288,7 @@ function isFirstOfLabel(currentLabel, allLines) {
 function shouldRepeatLineFromBlueprint(blueprintLine, currentLine) {
 	return (
 		blueprintLine &&
-		blueprintLine.type !== lineTypes.TEXT &&
+		blueprintLine.type !== lineTypes.LYRIC &&
 		blueprintLine.type !== lineTypes.EMPTY_LINE &&
 		blueprintLine.type !== currentLine.type &&
 		currentLine.type !== lineTypes.EMPTY_LINE

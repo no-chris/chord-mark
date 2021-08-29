@@ -4,7 +4,7 @@ import { forEachChordInChordLine } from '../../../../../src/parser/helper/songs'
 import chordLyricsSpacer from '../../../../../src/renderer/spacers/chord/chordLyrics';
 import parseLyricLine from '../../../../../src/parser/parseLyricLine';
 import parseChordLine from '../../../../../src/parser/parseChordLine';
-import renderTextLine from '../../../../../src/renderer/components/renderTextLine';
+import renderLyricLine from '../../../../../src/renderer/components/renderLyricLine';
 import renderChordLine from '../../../../../src/renderer/components/renderChordLine';
 import getChordSymbol from '../../../../../src/renderer/helpers/getChordSymbol';
 
@@ -124,7 +124,7 @@ describe.each([
 			);
 
 			const renderedChords = renderChordLine(chordLine);
-			const renderedLyrics = renderTextLine({ model: lyricsLine });
+			const renderedLyrics = renderLyricLine({ model: lyricsLine });
 
 			expect(stripTags(renderedChords)).toEqual(chordsLineOutput);
 			expect(stripTags(renderedLyrics)).toEqual(LyricsLineOutput);
