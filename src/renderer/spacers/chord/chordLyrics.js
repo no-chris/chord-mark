@@ -1,7 +1,7 @@
 import _cloneDeep from 'lodash/cloneDeep';
 import { forEachChordInChordLine } from '../../../parser/helper/songs';
 
-import syntax from '../../syntax'; //fixme rename
+import symbols from '../../symbols';
 
 const chordSpaceAfterDefault = 1;
 
@@ -40,15 +40,15 @@ export default function space(chordLineInput, lyricsLineInput) {
 			if (lyricToken) {
 				chordToken = chord.symbol;
 				if (isFirstChord(barIndex, chordIndex)) {
-					chordToken = syntax.barSeparator + chordToken;
+					chordToken = symbols.barSeparator + chordToken;
 				} else if (isNewBar(currentBarIndex, barIndex)) {
-					chordToken = syntax.barSeparator + chordToken;
+					chordToken = symbols.barSeparator + chordToken;
 					currentBarIndex = barIndex;
 				}
 
 				if (startsWithSpace(lyricToken)) {
 					lyricToken =
-						syntax.lyricsSpacer.repeat(chordToken.length) +
+						symbols.lyricsSpacer.repeat(chordToken.length) +
 						lyricToken;
 				}
 
@@ -60,7 +60,7 @@ export default function space(chordLineInput, lyricsLineInput) {
 						chordToken.length -
 						lyricToken.length +
 						chordSpaceAfterDefault;
-					lyricToken += syntax.lyricsSpacer.repeat(lyricsSpaceAfter);
+					lyricToken += symbols.lyricsSpacer.repeat(lyricsSpaceAfter);
 				}
 				spacedLyricsLine += lyricToken;
 				chord.spacesWithin = 0;
