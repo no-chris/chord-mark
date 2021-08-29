@@ -65,11 +65,39 @@ describe.each([
 		'Put me on top',
 	],
 	[
-		'Spacing of extra chords should stay untouched (2 by default)',
+		'Spacing of extra chords should be kept (2 by default)',
 		'A7 B C7 B7 F7',
 		'_Put me _on top',
 		'|A7    |B    |C7  |B7  |F7  |',
 		'Put me on top',
+	],
+	[
+		'No position markers: default spacing should be kept (2 by default)',
+		'A B C D',
+		'I do not know where to put the chords',
+		'|A  |B  |C  |D  |',
+		'I do not know where to put the chords',
+	],
+	[
+		'Edge case: no lyrics, single character chord!',
+		'A B C D',
+		'_ _ _ _',
+		'|A |B |C |D  |',
+		'',
+	],
+	[
+		'A position marker followed by a space should create space for the full chord name',
+		'Ami7(#11) B7(b9)',
+		'_ A _ second chord shortly after the first one',
+		'|Ami7(#11)   |B7(b9)                                         |',
+		'           A         second chord shortly after the first one',
+	],
+	[
+		'offset the chord rendering if the first position marker is > 0',
+		'Ami7(#11) B7(b9)',
+		'The first chord comes a bit _later, nice _hu?',
+		'                            |Ami7(#11)  |B7(b9) |',
+		'The first chord comes a bit later, nice hu?',
 	],
 ])(
 	'%s',
@@ -96,7 +124,7 @@ describe.each([
 			);
 
 			const renderedChords = renderChordLine(chordLine);
-			const renderedLyrics = renderTextLine(lyricsLine);
+			const renderedLyrics = renderTextLine({ model: lyricsLine });
 
 			expect(stripTags(renderedChords)).toEqual(chordsLineOutput);
 			expect(stripTags(renderedLyrics)).toEqual(LyricsLineOutput);

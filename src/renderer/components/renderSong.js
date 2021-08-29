@@ -2,10 +2,11 @@ import getMaxBeatsWidth from '../spacers/chord/getMaxBeatsWidth';
 
 import simpleChordSpacer from '../spacers/chord/simple';
 import alignedChordSpacer from '../spacers/chord/aligned';
+import chordLyricsSpacer from '../spacers/chord/chordLyrics';
 
 import { forEachChordInSong } from '../../parser/helper/songs';
 
-import renderChordLine from './renderChordLine';
+import renderChordLine from './renderChordLine'; //fixme should be renderChordLineModel
 import renderEmptyLine from './renderEmptyLine';
 import renderLine from './renderLine';
 import renderSectionLabel from './renderSectionLabel';
@@ -24,6 +25,7 @@ import lineTypes from '../../parser/lineTypes';
 /**
  * @param {Song} parsedSong
  * @param {Boolean} alignBars
+ * @param {Boolean} alignChordsWithLyrics
  * @param {Number} transposeValue
  * @param {('auto'|'flat'|'sharp')} accidentalsType
  * @param {Boolean} harmonizeAccidentals
@@ -37,6 +39,7 @@ export default function renderSong(
 	parsedSong,
 	{
 		alignBars = false,
+		alignChordsWithLyrics = true,
 		transposeValue = 0,
 		accidentalsType = 'auto',
 		harmonizeAccidentals = true,
@@ -72,14 +75,28 @@ export default function renderSong(
 
 	const song = allLines
 		.filter(shouldRenderLine)
-		.map((line) => {
+		.map((line, lineIndex, allFilteredLines) => {
 			let rendered;
 
 			if (line.type === lineTypes.CHORD) {
-				// todo: move this in renderChordLine
-				const spaced = alignBars
+				// todo: move this in renderChordLine?
+				let spaced = alignBars
 					? alignedChordSpacer(line.model, maxBeatsWidth)
 					: simpleChordSpacer(line.model);
+
+				const nextLine = allFilteredLines[lineIndex + 1];
+				if (
+					alignChordsWithLyrics &&
+					nextLine &&
+					nextLine.type === lineTypes.TEXT
+				) {
+					const { chordLine, lyricsLine } = chordLyricsSpacer(
+						spaced,
+						nextLine.model
+					);
+					allFilteredLines[lineIndex + 1].model = lyricsLine;
+					spaced = chordLine;
+				}
 
 				rendered = renderChordLine(spaced);
 			} else if (line.type === lineTypes.EMPTY_LINE) {

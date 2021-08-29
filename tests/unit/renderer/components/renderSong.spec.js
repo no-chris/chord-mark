@@ -77,6 +77,34 @@ line2-2`;
 	});
 });
 
+describe('alignChordsWithLyrics', () => {
+	test('Should align chords with lyrics placeholders', () => {
+		const input = `#v
+C... CM7. F
+_Imagine there's _no hea_ven`;
+		const expected = `Verse
+|C              CM7   |F |
+Imagine there's no heaven`;
+		const rendered = renderSongText(input, { alignChordsWithLyrics: true });
+		const element = htmlToElement(rendered);
+		expect(element.textContent).toBe(expected);
+	});
+
+	test('Should ignore placeholders if chords positioning is disabled (default behavior)', () => {
+		const input = `#v
+C... CM7. F
+_Imagine there's _no hea_ven`;
+		const expected = `Verse
+|C     CM7|F   |
+Imagine there's no heaven`;
+		const rendered = renderSongText(input, {
+			alignChordsWithLyrics: false,
+		});
+		const element = htmlToElement(rendered);
+		expect(element.textContent).toBe(expected);
+	});
+});
+
 describe('expandSectionRepeat', () => {
 	test('Should repeat section when expandSectionRepeat === true', () => {
 		const input = `#v x2
