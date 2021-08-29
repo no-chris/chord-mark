@@ -7,7 +7,13 @@ describe('renderTextLine', () => {
 	});
 
 	test('Should return valid html', () => {
-		const rendered = renderTextLine({ string: 'textContent' });
+		const rendered = renderTextLine({
+			string: 'textContent',
+			model: {
+				lyrics: 'textContent',
+				chordPositions: [],
+			},
+		});
 		const element = htmlToElement(rendered);
 
 		expect(element).toBeInstanceOf(Node);

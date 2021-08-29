@@ -1,9 +1,9 @@
 import textLineTpl from './tpl/textLine.hbs';
 
 /**
- * @param {SongTextLine} textLine
+ * @param {LyricLine} textLine
  * @returns {String} rendered html
  */
 export default function render(textLine) {
-	return textLineTpl({ textLine: textLine.lyrics });
+	return textLineTpl({ textLine: textLine.model.lyrics });
 }
