@@ -32,7 +32,7 @@
     "handlebars-loader": "^1.7.1",
     "jest": "^27.1.0",
     "jest-handlebars": "^1.0.1",
-    "mini-css-extract-plugin": "^2.2.0",
+    "mini-css-extract-plugin": "^2.2.2",
     "node-sass": "^6.0.1",
     "prettier": "^2.3.2",
     "raw-loader": "^4.0.2",
