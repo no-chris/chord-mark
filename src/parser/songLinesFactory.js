@@ -13,7 +13,7 @@ import parseChordLine from './parseChordLine';
 import parseSectionLabel from './parseSectionLabel';
 import parseLyricLine from './parseLyricLine';
 
-import { getNthOfLabel } from './helper/songs';
+import { forEachChordInChordLine, getNthOfLabel } from './helper/songs';
 
 const defaultTimeSignature = '4/4';
 
@@ -274,6 +274,37 @@ export default function songLinesFactory() {
 		asArray() {
 			return _cloneDeep(allLines);
 		},
+
+		flagPositionedChords() {
+			let nextLine;
+			let lineChordCount;
+
+			allLines.forEach((line, lineIndex) => {
+				nextLine = allLines[lineIndex + 1];
+
+				if (shouldPositionChords(line, nextLine)) {
+					lineChordCount = 0;
+					line.model.hasPositionedChords = true;
+					line.model = forEachChordInChordLine(
+						line.model,
+						(chord) => {
+							chord.isPositioned =
+								lineChordCount <
+								nextLine.model.chordPositions.length;
+							lineChordCount++;
+						}
+					);
+				} else if (line.type === lineTypes.CHORD) {
+					line.model.hasPositionedChords = false;
+					line.model = forEachChordInChordLine(
+						line.model,
+						(chord) => {
+							chord.isPositioned = false;
+						}
+					);
+				}
+			});
+		},
 	};
 }
 
@@ -298,4 +329,13 @@ function shouldRepeatLineFromBlueprint(blueprintLine, currentLine) {
 function isLastLineOfSection(lineIndex, allSrcLines) {
 	const nextLine = allSrcLines[lineIndex + 1];
 	return typeof nextLine === 'undefined' || isSectionLabel(nextLine);
+}
+
+function shouldPositionChords(line, nextLine) {
+	return (
+		line.type === lineTypes.CHORD &&
+		nextLine &&
+		nextLine.type === lineTypes.LYRIC &&
+		nextLine.model.chordPositions.length > 0
+	);
 }
