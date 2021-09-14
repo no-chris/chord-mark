@@ -1,7 +1,5 @@
 import _cloneDeep from 'lodash/cloneDeep';
-
-const spacesAfterDefault = 2;
-const emptyBeatSpaces = 1;
+import symbols from '../../symbols';
 
 export default function space(chordLineInput, maxBeatsWidth) {
 	const chordLine = _cloneDeep(chordLineInput);
@@ -15,7 +13,7 @@ export default function space(chordLineInput, maxBeatsWidth) {
 			chord.spacesAfter = 0;
 
 			if (chord.beat !== bar.timeSignature.beatCount) {
-				chord.spacesAfter = spacesAfterDefault;
+				chord.spacesAfter = symbols.spacesAfterDefault;
 
 				for (
 					let i = chord.beat + 1;
@@ -26,10 +24,10 @@ export default function space(chordLineInput, maxBeatsWidth) {
 
 					chord.spacesAfter += beatMaxWidth
 						? beatMaxWidth
-						: emptyBeatSpaces;
+						: symbols.emptyBeatSpaces;
 
 					if (i !== bar.timeSignature.beatCount && beatMaxWidth) {
-						chord.spacesAfter += spacesAfterDefault;
+						chord.spacesAfter += symbols.spacesAfterDefault;
 					}
 				}
 			}
