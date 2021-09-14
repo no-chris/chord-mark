@@ -26,6 +26,8 @@ const defaultTimeSignature = parseTimeSignature('4/4');
  * @type {Object}
  * @property {TimeSignature} timeSignature
  * @property {ChordLineChord[]} allChords
+ * @property {Boolean} isRepeated
+ * @property {Boolean} hasPositionedChords
  */
 
 /**
@@ -35,6 +37,7 @@ const defaultTimeSignature = parseTimeSignature('4/4');
  * @property {ChordDef|String} model - parsed chord or "NC" if "no chord" symbol
  * @property {Number} duration - number of beats the chord lasts
  * @property {Number} beat - beat on which the chord starts
+ * @property {Boolean} isPositioned - whether this chord has been positioned over a specific lyric or not
  */
 
 /**
@@ -62,8 +65,11 @@ export default function parseChordLine(
 	allTokens.forEach((token, tokenIndex) => {
 		if (token.match(barRepeatSymbols)) {
 			if (previousBar) {
+				const repeatedBar = _cloneDeep(previousBar);
+				repeatedBar.isRepeated = true;
+
 				for (let i = 0; i < token.length; i++) {
-					allBars.push(_cloneDeep(previousBar));
+					allBars.push(_cloneDeep(repeatedBar));
 				}
 			} else {
 				throw new Error(
@@ -91,7 +97,10 @@ export default function parseChordLine(
 				bar.timeSignature = timeSignature;
 				const barClone = _cloneDeep(bar);
 
-				allBars.push(barClone);
+				bar.isRepeated = _isEqual(bar, previousBar);
+
+				allBars.push(_cloneDeep(bar));
+
 				previousBar = barClone;
 
 				bar = _cloneDeep(emptyBar);
