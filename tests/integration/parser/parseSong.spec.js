@@ -4,7 +4,9 @@ import parseSong from '../../../src/parser/parseSong';
 import parseTimeSignature from '../../../src/parser/parseTimeSignature';
 import parseLyricLine from '../../../src/parser/parseLyricLine';
 
-describe('parseSong', () => {
+const ts4_4 = parseTimeSignature('4/4');
+
+describe.skip('parseSong', () => {
 	test('', () => {
 		expect(true).toBe(true);
 	});
@@ -14,7 +16,7 @@ describe('parseSong', () => {
 C.. G..
 When I find myself in times of trouble
 Am.. F..
-Mother mary comes to me
+_Mother mary _comes to me
 C.. G..
 Speaking words of wisdom
 F. Em. Dm. C.
@@ -33,12 +35,37 @@ Let it be`;
 				{
 					type: 'timeSignature',
 					string: '4/4',
-					model: parseTimeSignature('4/4'),
+					model: ts4_4,
 				},
 				{
 					type: 'chord',
 					string: 'C.. G..',
-					model: parseChordLine('C.. G..'),
+					model: {
+						allBars: [
+							{
+								allChords: [
+									{
+										string: 'C',
+										model: parseChord('C'),
+										duration: 2,
+										beat: 1,
+										isPositioned: false,
+									},
+									{
+										string: 'G',
+										model: parseChord('G'),
+										duration: 2,
+										beat: 3,
+										isPositioned: false,
+									},
+								],
+								timeSignature: ts4_4,
+								isRepeated: false,
+								hasPositionedChords: false,
+							},
+						],
+						chordCount: 2,
+					},
 				},
 				{
 					type: 'lyric',
