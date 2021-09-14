@@ -13,7 +13,9 @@ export default function renderChordLine(chordLineModel) {
 		renderBarContent(bar)
 	);
 
-	const barSeparator = barSeparatorTpl();
+	const barSeparator = barSeparatorTpl({
+		barSeparator: symbols.barSeparator,
+	});
 
 	const chordLine =
 		barSeparator + allBarsRendered.join(barSeparator) + barSeparator;

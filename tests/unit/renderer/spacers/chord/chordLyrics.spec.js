@@ -93,6 +93,13 @@ describe.each([
 		'           A         second chord shortly after the first one',
 	],
 	[
+		'Starts with a chord before the lyric',
+		'A B7',
+		'_ A lyric _line',
+		'|A         |B7 |',
+		'   A lyric line',
+	],
+	[
 		'offset the chord rendering if the first position marker is > 0',
 		'Ami7(#11) B7(b9)',
 		'The first chord comes a bit _later, nice _hu?',
@@ -124,7 +131,7 @@ describe.each([
 			);
 
 			const renderedChords = renderChordLine(chordLine);
-			const renderedLyrics = renderLyricLine({ model: lyricsLine });
+			const renderedLyrics = renderLyricLine({ model: lyricsLine }, true);
 
 			expect(stripTags(renderedChords)).toEqual(chordsLineOutput);
 			expect(stripTags(renderedLyrics)).toEqual(LyricsLineOutput);

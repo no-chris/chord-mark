@@ -1,6 +1,5 @@
 import _cloneDeep from 'lodash/cloneDeep';
-
-const defaultSpacesAfter = 2;
+import symbols from '../../symbols';
 
 const allMasks = {
 	0: {
@@ -61,7 +60,7 @@ export default function space(chordLineInput) {
 			bar.allChords[i].spacesAfter =
 				typeof chordSpaces[i] !== 'undefined'
 					? chordSpaces[i]
-					: defaultSpacesAfter;
+					: symbols.spacesAfterDefault;
 		}
 	});
 

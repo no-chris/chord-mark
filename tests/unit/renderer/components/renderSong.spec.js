@@ -97,9 +97,7 @@ _Imagine there's _no hea_ven`;
 		const expected = `Verse
 |C     CM7|F   |
 Imagine there's no heaven`;
-		const rendered = renderSongText(input, {
-			alignChordsWithLyrics: false,
-		});
+		const rendered = renderSongText(input);
 		const element = htmlToElement(rendered);
 		expect(element.textContent).toBe(expected);
 	});
@@ -157,10 +155,12 @@ Verse 4`;
 	});
 
 	test('Should number repeats incrementally when expandSectionRepeat === false', () => {
-		const input = `#v
+		const input = `4/4
+#v
 #v x2
 #v`;
-		const expected = `Verse 1
+		const expected = `4/4
+Verse 1
 Verse 2 x2
 Verse 3`;
 		const rendered = renderSongText(input, { expandSectionRepeats: false });

@@ -4,6 +4,24 @@ import lineTypes from '../lineTypes';
 
 /**
  * @param {SongLine[]} allLines
+ * @param {Function} fn - to execute on each bar
+ * @returns {SongLine[]}
+ */
+export function forEachBarInSong(allLines, fn) {
+	const newLines = _cloneDeep(allLines);
+
+	newLines.forEach((line) => {
+		if (line.type === lineTypes.CHORD) {
+			line.model.allBars.forEach((bar) => {
+				fn(bar);
+			});
+		}
+	});
+	return newLines;
+}
+
+/**
+ * @param {SongLine[]} allLines
  * @param {Function} fn - to execute on each chord
  * @returns {SongLine[]}
  */

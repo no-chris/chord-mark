@@ -1,4 +1,5 @@
 import {
+	forEachBarInSong,
 	forEachChordInSong,
 	forEachChordInChordLine,
 	getNthOfLabel,
@@ -7,21 +8,49 @@ import {
 import parseSong from '../../../../src/parser/parseSong';
 import parseChordLine from '../../../../src/parser/parseChordLine';
 
+const song = `
+E E... Eb.
+You don't have to be rich to be my girl
+D D... Eb.
+You don't have to be cool to rule my world
+E E... Eb.
+Ain't no particular sign I'm more compatible with
+D D... Eb.
+I just want your extra time and your...Kiss`;
+
+describe('forEachBarInSong', () => {
+	test('Does not mutate input', () => {
+		const parsed = parseSong(song);
+		const applied = forEachBarInSong(parsed.allLines, () => true);
+
+		expect(parsed).not.toBe(applied);
+	});
+
+	test('Should apply function on each bar', () => {
+		expect.assertions(8);
+
+		const parsed = parseSong(song);
+		const applied = forEachBarInSong(
+			parsed.allLines,
+			(bar) => (bar.applied = true)
+		);
+
+		applied.forEach((line) => {
+			if (line.type === 'chord') {
+				line.model.allBars.forEach((bar) => {
+					expect(bar.applied).toBe(true);
+				});
+			}
+		});
+	});
+});
+
 describe('forEachChordInSong', () => {
 	test('Module', () => {
 		expect(forEachChordInSong).toBeInstanceOf(Function);
 	});
 
 	test('Does not mutate input', () => {
-		const song = `
-E E
-You don't have to be rich to be my girl
-D D
-You don't have to be cool to rule my world
-E E
-Ain't no particular sign I'm more compatible with
-D D
-I just want your extra time and your...Kiss`;
 		const parsed = parseSong(song);
 		const applied = forEachChordInSong(parsed.allLines, () => true);
 
@@ -29,18 +58,8 @@ I just want your extra time and your...Kiss`;
 	});
 
 	test('Should apply function on each chord', () => {
-		expect.assertions(8);
+		expect.assertions(12);
 
-		const song = `
-E E
-You don't have to be rich to be my girl
-D D
-You don't have to be cool to rule my world
-E E
-Ain't no particular sign I'm more compatible with
-D D
-I just want your extra time and your...Kiss
-		`;
 		const parsed = parseSong(song);
 		const applied = forEachChordInSong(
 			parsed.allLines,
@@ -134,7 +153,7 @@ describe('getNthOfLabel', () => {
 	});
 
 	test('Should return the section identified by its label and index', () => {
-		const song = `
+		const song2 = `
 #v
 Verse1-line1
 Verse1-line2
@@ -152,7 +171,7 @@ Verse3-line1
 Verse3-line2
 Verse3-line3
 Verse3-line4`;
-		const parsed = parseSong(song);
+		const parsed = parseSong(song2);
 
 		const v1 = [
 			'Verse1-line1',

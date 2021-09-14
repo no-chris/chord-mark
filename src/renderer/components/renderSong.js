@@ -21,6 +21,7 @@ import getMainAccidental from '../helpers/getMainAccidental';
 import { chordRendererFactory } from 'chord-symbol';
 
 import lineTypes from '../../parser/lineTypes';
+import replaceRepeatedBars from '../replaceRepeatedBars';
 
 /**
  * @param {Song} parsedSong
@@ -39,7 +40,7 @@ export default function renderSong(
 	parsedSong,
 	{
 		alignBars = false,
-		alignChordsWithLyrics = true,
+		alignChordsWithLyrics = false,
 		transposeValue = 0,
 		accidentalsType = 'auto',
 		harmonizeAccidentals = true,
@@ -66,6 +67,8 @@ export default function renderSong(
 
 	allLines = forEachChordInSong(allLines, (chord) => {
 		chord.symbol = getChordSymbol(chord.model, renderChord);
+	}).map((line) => {
+		return replaceRepeatedBars(line, { alignChordsWithLyrics });
 	});
 
 	const sectionsStats = getSectionsStats(allLines);
@@ -84,7 +87,7 @@ export default function renderSong(
 					: simpleChordSpacer(line.model);
 
 				const nextLine = allFilteredLines[lineIndex + 1];
-				if (shouldAlignChords(alignChordsWithLyrics, nextLine)) {
+				if (shouldAlignChords(alignChordsWithLyrics, line)) {
 					const { chordLine, lyricsLine } = chordLyricsSpacer(
 						spaced,
 						nextLine.model
@@ -104,7 +107,7 @@ export default function renderSong(
 			} else if (line.type === lineTypes.TIME_SIGNATURE) {
 				rendered = renderTimeSignature(line);
 			} else {
-				rendered = renderLyricLine(line);
+				rendered = renderLyricLine(line, alignChordsWithLyrics);
 			}
 			return renderLine(rendered, {
 				isFromSectionRepeat: line.isFromSectionRepeat,
@@ -129,8 +132,6 @@ export default function renderSong(
 	return songTpl({ song });
 }
 
-function shouldAlignChords(alignChordsWithLyrics, nextLine) {
-	return (
-		alignChordsWithLyrics && nextLine && nextLine.type === lineTypes.LYRIC
-	);
+function shouldAlignChords(alignChordsWithLyrics, line) {
+	return alignChordsWithLyrics && line.model.hasPositionedChords;
 }

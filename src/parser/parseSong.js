@@ -35,6 +35,8 @@ export default function parseSong(songSrc) {
 	 */
 	songArray.map(escapeHTML).map(stripTags).forEach(songLines.addLine);
 
+	songLines.flagPositionedChords();
+
 	const allLines = songLines.asArray();
 	const allChords = getAllChordsInSong(allLines);
 
