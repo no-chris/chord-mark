@@ -260,6 +260,27 @@ Verse 2
 		expect(element.textContent).toBe(expected);
 	});
 
+	test('= "chordsFirstLyricLine"', () => {
+		const expected = `Verse 1
+|A7     |%      |%      |%      |
+v1-line-1
+|D7     |%      |A7     |%      |
+|E7     |D7     |A7     |E7     |
+\xa0
+Verse 2
+|A7     |%      |%      |%      |
+v2-line-1
+|D7     |%      |A7     |%      |
+|E7     |D7     |A7     |E7     |
+\xa0`;
+		const rendered = renderSongText(input, {
+			chordsAndLyricsDisplay: 'chordsFirstLyricLine',
+			alignBars: true,
+		});
+		const element = htmlToElement(rendered);
+		expect(element.textContent).toBe(expected);
+	});
+
 	test('= "lyrics"', () => {
 		const expected = `Verse 1
 v1-line-1

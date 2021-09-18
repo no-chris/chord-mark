@@ -3,7 +3,7 @@ import lyricLineTpl from './tpl/lyricLine.hbs';
 /**
  * @param {SongLyricLine} lyricLine
  * @param {Boolean} alignChordsWithLyrics
- * @param {('all'|'lyrics'|'chords')} chordsAndLyricsDisplay
+ * @param {('all'|'lyrics'|'chords'|'chordsFirstLyricLine')} chordsAndLyricsDisplay
  * @returns {String} rendered html
  */
 export default function render(
