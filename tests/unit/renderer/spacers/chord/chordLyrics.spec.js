@@ -131,7 +131,10 @@ describe.each([
 			);
 
 			const renderedChords = renderChordLine(chordLine);
-			const renderedLyrics = renderLyricLine({ model: lyricsLine }, true);
+			const renderedLyrics = renderLyricLine(
+				{ model: lyricsLine },
+				{ alignChordsWithLyrics: true }
+			);
 
 			expect(stripTags(renderedChords)).toEqual(chordsLineOutput);
 			expect(stripTags(renderedLyrics)).toEqual(LyricsLineOutput);

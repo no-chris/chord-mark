@@ -81,10 +81,14 @@ describe('alignChordsWithLyrics', () => {
 	test('Should align chords with lyrics placeholders', () => {
 		const input = `#v
 C... CM7. F
-_Imagine there's _no hea_ven`;
+_Imagine there's _no hea_ven
+/
+Imagine there's not placeholder`;
 		const expected = `Verse
 |C              CM7   |F |
-Imagine there's no heaven`;
+Imagine there's no heaven
+|C     CM7|F   |
+Imagine there's not placeholder`;
 		const rendered = renderSongText(input, { alignChordsWithLyrics: true });
 		const element = htmlToElement(rendered);
 		expect(element.textContent).toBe(expected);
@@ -192,6 +196,85 @@ Chorus 3
 Chorus 4
 Outro`;
 		const rendered = renderSongText(input, { expandSectionRepeats: true });
+		const element = htmlToElement(rendered);
+		expect(element.textContent).toBe(expected);
+	});
+});
+
+describe('chordsAndLyricsDisplay', () => {
+	const input = `#v
+A7 / / /
+v1-line-1
+D7 / A7 /
+v1-line-2
+E7 D7 A7 E7
+v1-line-3
+
+#v
+v2-line-1
+v2-line-2
+v2-line-3
+`;
+
+	test('="all"', () => {
+		const expected = `Verse 1
+|A7     |%      |%      |%      |
+v1-line-1
+|D7     |%      |A7     |%      |
+v1-line-2
+|E7     |D7     |A7     |E7     |
+v1-line-3
+\xa0
+Verse 2
+|A7     |%      |%      |%      |
+v2-line-1
+|D7     |%      |A7     |%      |
+v2-line-2
+|E7     |D7     |A7     |E7     |
+v2-line-3
+\xa0`;
+		const rendered = renderSongText(input, {
+			chordsAndLyricsDisplay: 'all',
+			alignBars: true,
+		});
+		const element = htmlToElement(rendered);
+		expect(element.textContent).toBe(expected);
+	});
+
+	test('= "chords"', () => {
+		const expected = `Verse 1
+|A7     |%      |%      |%      |
+|D7     |%      |A7     |%      |
+|E7     |D7     |A7     |E7     |
+\xa0
+Verse 2
+|A7     |%      |%      |%      |
+|D7     |%      |A7     |%      |
+|E7     |D7     |A7     |E7     |
+\xa0`;
+		const rendered = renderSongText(input, {
+			chordsAndLyricsDisplay: 'chords',
+			alignBars: true,
+		});
+		const element = htmlToElement(rendered);
+		expect(element.textContent).toBe(expected);
+	});
+
+	test('= "lyrics"', () => {
+		const expected = `Verse 1
+v1-line-1
+v1-line-2
+v1-line-3
+\xa0
+Verse 2
+v2-line-1
+v2-line-2
+v2-line-3
+\xa0`;
+		const rendered = renderSongText(input, {
+			chordsAndLyricsDisplay: 'lyrics',
+			alignBars: true,
+		});
 		const element = htmlToElement(rendered);
 		expect(element.textContent).toBe(expected);
 	});

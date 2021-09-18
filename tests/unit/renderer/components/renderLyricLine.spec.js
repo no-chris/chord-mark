@@ -22,18 +22,39 @@ describe('renderLyricLine', () => {
 		expect(element.classList.contains('cmLyricLine')).toBe(true);
 	});
 
-	test('should trim lyric line if chords are NOT aligned with lyrics', () => {
+	test('should trim lyric line if chords are NOT aligned with lyrics OR if chords are not displayed', () => {
 		const rendered = renderLyricLine(
 			{
-				string: 'textContent',
+				string: '  textContent  ',
 				model: {
 					lyrics: '  textContent  ',
 					chordPositions: [],
 				},
 			},
-			false
+			{ alignChordsWithLyrics: false, chordsAndLyricsDisplay: 'lyrics' }
 		);
 		expect(stripTags(rendered)).toBe('textContent');
+	});
+
+	test('should NOT trim lyric line if chords are displayed', () => {
+		const lyricLine = {
+			string: 'textContent',
+			model: {
+				lyrics: '  textContent  ',
+				chordPositions: [],
+			},
+		};
+		let rendered = renderLyricLine(lyricLine, {
+			chordsAndLyricsDisplay: 'all',
+			alignChordsWithLyrics: true,
+		});
+		expect(stripTags(rendered)).toBe('  textContent  ');
+
+		rendered = renderLyricLine(lyricLine, {
+			chordsAndLyricsDisplay: 'chords',
+			alignChordsWithLyrics: true,
+		});
+		expect(stripTags(rendered)).toBe('  textContent  ');
 	});
 
 	test('should NOT trim lyric line if chords ARE aligned with lyrics', () => {
@@ -45,7 +66,7 @@ describe('renderLyricLine', () => {
 					chordPositions: [],
 				},
 			},
-			true
+			{ alignChordsWithLyrics: true }
 		);
 		expect(stripTags(rendered)).toBe('  textContent  ');
 	});
