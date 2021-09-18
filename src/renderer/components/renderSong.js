@@ -33,10 +33,11 @@ import replaceRepeatedBars from '../replaceRepeatedBars';
  * @param {Boolean} harmonizeAccidentals
  * @param {Boolean} expandSectionRepeats
  * @param {Boolean} autoRepeatChords
- * @param {Boolean|('max'|'core')} simplifyChords
+ * @param {Boolean|('none'|'max'|'core')} simplifyChords
  * @param {Boolean} useShortNamings
  * @returns {String} rendered HTML
  */
+// eslint-disable-next-line max-lines-per-function
 export default function renderSong(
 	parsedSong,
 	{
@@ -54,23 +55,10 @@ export default function renderSong(
 ) {
 	let { allLines, allChords } = parsedSong;
 
-	const accidental =
-		accidentalsType === 'auto'
-			? getMainAccidental(allChords)
-			: accidentalsType;
+	let shouldSkipRepeatedSectionLine = false;
 
-	const renderChord = chordRendererFactory({
-		simplify: simplifyChords,
-		useShortNamings,
-		transposeValue,
-		harmonizeAccidentals,
-		useFlats: accidental === 'flat',
-	});
-
-	allLines = forEachChordInSong(allLines, (chord) => {
-		chord.symbol = getChordSymbol(chord.model, renderChord);
-	})
-		.filter(shouldDisplayLine.bind(null, chordsAndLyricsDisplay))
+	allLines = renderChords()
+		.filter(shouldRenderLine)
 		.map((line) => {
 			return replaceRepeatedBars(line, { alignChordsWithLyrics });
 		});
@@ -78,60 +66,34 @@ export default function renderSong(
 	const sectionsStats = getSectionsStats(allLines);
 	const maxBeatsWidth = getMaxBeatsWidth(allLines);
 
-	let shouldSkipRepeatedSectionLine = false;
+	const song = renderAllLines().join('\n');
 
-	const song = allLines
-		.filter(shouldRenderLine)
-		.map((line, lineIndex, allFilteredLines) => {
-			let rendered;
+	return songTpl({ song });
 
-			if (line.type === lineTypes.CHORD) {
-				let spaced = alignBars
-					? alignedChordSpacer(line.model, maxBeatsWidth)
-					: simpleChordSpacer(line.model);
+	function renderChords() {
+		const accidental =
+			accidentalsType === 'auto'
+				? getMainAccidental(allChords)
+				: accidentalsType;
 
-				const nextLine = allFilteredLines[lineIndex + 1];
-				if (
-					shouldAlignChords(
-						chordsAndLyricsDisplay,
-						alignChordsWithLyrics,
-						line
-					)
-				) {
-					const { chordLine, lyricsLine } = chordLyricsSpacer(
-						spaced,
-						nextLine.model
-					);
-					allFilteredLines[lineIndex + 1].model = lyricsLine;
-					spaced = chordLine;
-				}
+		const renderChord = chordRendererFactory({
+			simplify: simplifyChords,
+			useShortNamings,
+			transposeValue,
+			harmonizeAccidentals,
+			useFlats: accidental === 'flat',
+		});
 
-				rendered = renderChordLineModel(spaced);
-			} else if (line.type === lineTypes.EMPTY_LINE) {
-				rendered = renderEmptyLine();
-			} else if (line.type === lineTypes.SECTION_LABEL) {
-				rendered = renderSectionLabel(line, {
-					sectionsStats,
-					expandSectionRepeats,
-				});
-			} else if (line.type === lineTypes.TIME_SIGNATURE) {
-				rendered = renderTimeSignature(line);
-			} else {
-				rendered = renderLyricLine(line, {
-					alignChordsWithLyrics,
-					chordsAndLyricsDisplay,
-				});
-			}
-			return renderLine(rendered, {
-				isFromSectionRepeat: line.isFromSectionRepeat,
-				isFromAutoRepeatChords: line.isFromAutoRepeatChords,
-				isFromChordLineRepeater: line.isFromChordLineRepeater,
-			});
-		})
-		.filter(Boolean)
-		.join('\n');
+		return forEachChordInSong(allLines, (chord) => {
+			chord.symbol = getChordSymbol(chord.model, renderChord);
+		});
+	}
 
 	function shouldRenderLine(line) {
+		return shouldRepeatLines(line) && !isFiltered(line);
+	}
+
+	function shouldRepeatLines(line) {
 		if (line.type === lineTypes.SECTION_LABEL) {
 			shouldSkipRepeatedSectionLine =
 				line.isFromSectionRepeat === true && !expandSectionRepeats;
@@ -142,27 +104,65 @@ export default function renderSong(
 		return !shouldSkipRepeatedSectionLine && !shouldSkipAutoRepeatChordLine;
 	}
 
-	return songTpl({ song });
-}
+	function isFiltered(line) {
+		return (
+			(chordsAndLyricsDisplay === 'chords' &&
+				line.type === lineTypes.LYRIC) ||
+			(chordsAndLyricsDisplay === 'lyrics' &&
+				line.type === lineTypes.CHORD)
+		);
+	}
 
-function shouldAlignChords(
-	chordsAndLyricsDisplay,
-	alignChordsWithLyrics,
-	line
-) {
-	return (
-		chordsAndLyricsDisplay === 'all' &&
-		alignChordsWithLyrics &&
-		line.model.hasPositionedChords
-	);
-}
+	function renderAllLines() {
+		return allLines
+			.map((line, lineIndex, allFilteredLines) => {
+				let rendered;
 
-function shouldDisplayLine(chordsAndLyricsDisplay, line) {
-	if (chordsAndLyricsDisplay === 'chords' && line.type === lineTypes.LYRIC)
-		return false;
+				if (line.type === lineTypes.CHORD) {
+					let spaced = alignBars
+						? alignedChordSpacer(line.model, maxBeatsWidth)
+						: simpleChordSpacer(line.model);
 
-	if (chordsAndLyricsDisplay === 'lyrics' && line.type === lineTypes.CHORD)
-		return false;
+					const nextLine = allFilteredLines[lineIndex + 1];
+					if (shouldAlignChords(line)) {
+						const { chordLine, lyricsLine } = chordLyricsSpacer(
+							spaced,
+							nextLine.model
+						);
+						allFilteredLines[lineIndex + 1].model = lyricsLine;
+						spaced = chordLine;
+					}
 
-	return true;
+					rendered = renderChordLineModel(spaced);
+				} else if (line.type === lineTypes.EMPTY_LINE) {
+					rendered = renderEmptyLine();
+				} else if (line.type === lineTypes.SECTION_LABEL) {
+					rendered = renderSectionLabel(line, {
+						sectionsStats,
+						expandSectionRepeats,
+					});
+				} else if (line.type === lineTypes.TIME_SIGNATURE) {
+					rendered = renderTimeSignature(line);
+				} else {
+					rendered = renderLyricLine(line, {
+						alignChordsWithLyrics,
+						chordsAndLyricsDisplay,
+					});
+				}
+				return renderLine(rendered, {
+					isFromSectionRepeat: line.isFromSectionRepeat,
+					isFromAutoRepeatChords: line.isFromAutoRepeatChords,
+					isFromChordLineRepeater: line.isFromChordLineRepeater,
+				});
+			})
+			.filter(Boolean);
+	}
+
+	function shouldAlignChords(line) {
+		return (
+			chordsAndLyricsDisplay === 'all' &&
+			alignChordsWithLyrics &&
+			line.model.hasPositionedChords
+		);
+	}
 }

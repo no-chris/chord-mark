@@ -129,13 +129,13 @@ verseLine2`;
 		expect(element.textContent).toBe(expected);
 	});
 
-	test('Should not repeat section when expandSectionRepeat === false, and display repeat string (x3) after label', () => {
+	test('Should not repeat section when expandSectionRepeat === false, and display repeat string ("x2") after label', () => {
 		const input = `#v x2
 A B
 verseLine1
 C.. D.. E
 verseLine2`;
-		const expected = `Verse 1 x2
+		const expected = `Verse x2
 |A   |B   |
 verseLine1
 |C   D  |E   |
