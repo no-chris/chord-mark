@@ -28,6 +28,7 @@ const defaultTimeSignature = parseTimeSignature('4/4');
  * @property {ChordLineChord[]} allChords
  * @property {Boolean} isRepeated
  * @property {Boolean} hasPositionedChords
+ * @property {Boolean} hasUnevenChordsDurations
  */
 
 /**
@@ -95,6 +96,7 @@ export default function parseChordLine(
 
 			if (shouldChangeBar(currentBeatCount, beatCount)) {
 				bar.timeSignature = timeSignature;
+				bar.hasUnevenChordsDurations = hasUnevenChordsDurations(bar);
 				const barClone = _cloneDeep(bar);
 
 				bar.isRepeated = _isEqual(bar, previousBar);
@@ -167,4 +169,9 @@ function hasTooManyBeats(currentBeatCount, barBeatCount) {
 }
 function hasTooFewBeats(currentBeatCount, barBeatCount, isLast) {
 	return isLast && currentBeatCount < barBeatCount;
+}
+
+function hasUnevenChordsDurations(bar) {
+	let firstChordDuration = bar.allChords[0].duration;
+	return bar.allChords.some((chord) => chord.duration !== firstChordDuration);
 }

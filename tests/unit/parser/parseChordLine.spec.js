@@ -43,6 +43,7 @@ describe.each([
 					],
 					timeSignature: ts4_4,
 					isRepeated: false,
+					hasUnevenChordsDurations: false,
 				},
 			],
 			chordCount: 1,
@@ -72,6 +73,7 @@ describe.each([
 					],
 					timeSignature: ts4_4,
 					isRepeated: false,
+					hasUnevenChordsDurations: false,
 				},
 			],
 			chordCount: 2,
@@ -107,6 +109,7 @@ describe.each([
 					],
 					timeSignature: ts4_4,
 					isRepeated: false,
+					hasUnevenChordsDurations: true,
 				},
 			],
 			chordCount: 3,
@@ -148,6 +151,7 @@ describe.each([
 					],
 					timeSignature: ts4_4,
 					isRepeated: false,
+					hasUnevenChordsDurations: false,
 				},
 			],
 			chordCount: 4,
@@ -171,6 +175,7 @@ describe.each([
 					],
 					timeSignature: ts4_4,
 					isRepeated: false,
+					hasUnevenChordsDurations: false,
 				},
 				{
 					allChords: [
@@ -183,6 +188,7 @@ describe.each([
 					],
 					timeSignature: ts4_4,
 					isRepeated: false,
+					hasUnevenChordsDurations: false,
 				},
 			],
 			chordCount: 2,
@@ -206,6 +212,7 @@ describe.each([
 					],
 					timeSignature: ts4_4,
 					isRepeated: false,
+					hasUnevenChordsDurations: false,
 				},
 				{
 					allChords: [
@@ -224,6 +231,7 @@ describe.each([
 					],
 					timeSignature: ts4_4,
 					isRepeated: false,
+					hasUnevenChordsDurations: false,
 				},
 			],
 			chordCount: 3,
@@ -253,6 +261,7 @@ describe.each([
 					],
 					timeSignature: ts4_4,
 					isRepeated: false,
+					hasUnevenChordsDurations: true,
 				},
 				{
 					allChords: [
@@ -271,6 +280,7 @@ describe.each([
 					],
 					timeSignature: ts4_4,
 					isRepeated: false,
+					hasUnevenChordsDurations: true,
 				},
 			],
 			chordCount: 4,
@@ -294,6 +304,7 @@ describe.each([
 					],
 					timeSignature: ts4_4,
 					isRepeated: false,
+					hasUnevenChordsDurations: false,
 				},
 				{
 					allChords: [
@@ -312,6 +323,7 @@ describe.each([
 					],
 					timeSignature: ts4_4,
 					isRepeated: false,
+					hasUnevenChordsDurations: true,
 				},
 				{
 					allChords: [
@@ -324,6 +336,7 @@ describe.each([
 					],
 					timeSignature: ts4_4,
 					isRepeated: false,
+					hasUnevenChordsDurations: false,
 				},
 			],
 			chordCount: 4,
@@ -347,6 +360,7 @@ describe.each([
 					],
 					timeSignature: ts3_4,
 					isRepeated: false,
+					hasUnevenChordsDurations: false,
 				},
 			],
 			chordCount: 1,
@@ -376,6 +390,7 @@ describe.each([
 					],
 					timeSignature: ts3_4,
 					isRepeated: false,
+					hasUnevenChordsDurations: true,
 				},
 			],
 			chordCount: 2,
@@ -405,6 +420,7 @@ describe.each([
 					],
 					timeSignature: ts3_4,
 					isRepeated: false,
+					hasUnevenChordsDurations: true,
 				},
 			],
 			chordCount: 2,
@@ -440,6 +456,7 @@ describe.each([
 					],
 					timeSignature: ts3_4,
 					isRepeated: false,
+					hasUnevenChordsDurations: false,
 				},
 			],
 			chordCount: 3,
@@ -463,6 +480,7 @@ describe.each([
 					],
 					timeSignature: ts3_8,
 					isRepeated: false,
+					hasUnevenChordsDurations: false,
 				},
 				{
 					allChords: [
@@ -475,6 +493,7 @@ describe.each([
 					],
 					timeSignature: ts3_8,
 					isRepeated: false,
+					hasUnevenChordsDurations: false,
 				},
 				{
 					allChords: [
@@ -487,6 +506,7 @@ describe.each([
 					],
 					timeSignature: ts3_8,
 					isRepeated: false,
+					hasUnevenChordsDurations: false,
 				},
 			],
 			chordCount: 3,
@@ -510,6 +530,7 @@ describe.each([
 					],
 					timeSignature: ts4_4,
 					isRepeated: false,
+					hasUnevenChordsDurations: false,
 				},
 			],
 			chordCount: 1,
@@ -533,6 +554,7 @@ describe.each([
 					],
 					timeSignature: ts4_4,
 					isRepeated: false,
+					hasUnevenChordsDurations: false,
 				},
 			],
 			chordCount: 1,
@@ -556,6 +578,7 @@ describe.each([
 					],
 					timeSignature: ts4_4,
 					isRepeated: false,
+					hasUnevenChordsDurations: false,
 				},
 			],
 			chordCount: 1,
@@ -585,6 +608,7 @@ describe.each([
 					],
 					timeSignature: ts4_4,
 					isRepeated: false,
+					hasUnevenChordsDurations: false,
 				},
 			],
 			chordCount: 2,
@@ -608,6 +632,7 @@ describe.each([
 					],
 					timeSignature: ts4_4,
 					isRepeated: false,
+					hasUnevenChordsDurations: false,
 				},
 				{
 					allChords: [
@@ -615,6 +640,7 @@ describe.each([
 					],
 					timeSignature: ts4_4,
 					isRepeated: false,
+					hasUnevenChordsDurations: false,
 				},
 				{
 					allChords: [
@@ -628,6 +654,7 @@ describe.each([
 					],
 					timeSignature: ts4_4,
 					isRepeated: false,
+					hasUnevenChordsDurations: false,
 				},
 				{
 					allChords: [
@@ -640,6 +667,7 @@ describe.each([
 					],
 					timeSignature: ts4_4,
 					isRepeated: false,
+					hasUnevenChordsDurations: false,
 				},
 			],
 			chordCount: 5,
@@ -663,6 +691,7 @@ describe.each([
 					],
 					timeSignature: ts4_4,
 					isRepeated: false,
+					hasUnevenChordsDurations: false,
 				},
 				{
 					allChords: [
@@ -675,6 +704,7 @@ describe.each([
 					],
 					timeSignature: ts4_4,
 					isRepeated: true,
+					hasUnevenChordsDurations: false,
 				},
 				{
 					allChords: [
@@ -687,6 +717,7 @@ describe.each([
 					],
 					timeSignature: ts4_4,
 					isRepeated: false,
+					hasUnevenChordsDurations: false,
 				},
 				{
 					allChords: [
@@ -699,6 +730,7 @@ describe.each([
 					],
 					timeSignature: ts4_4,
 					isRepeated: true,
+					hasUnevenChordsDurations: false,
 				},
 			],
 			chordCount: 2,
@@ -734,6 +766,7 @@ describe.each([
 					],
 					timeSignature: ts4_4,
 					isRepeated: false,
+					hasUnevenChordsDurations: true,
 				},
 				{
 					allChords: [
@@ -758,6 +791,7 @@ describe.each([
 					],
 					timeSignature: ts4_4,
 					isRepeated: true,
+					hasUnevenChordsDurations: true,
 				},
 			],
 			chordCount: 3,
