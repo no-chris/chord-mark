@@ -1,4 +1,5 @@
 import lineTypes from '../../../parser/lineTypes';
+import symbols from '../../symbols';
 
 /**
  * @param {SongLine[]} allLines
@@ -18,10 +19,17 @@ export default function getMaxBeatsWidth(allLines) {
 						maxBeatsWidth[barIndex][i] = 0;
 					}
 				}
+
 				bar.allChords.forEach((chord) => {
+					let symbolLength = chord.symbol.length;
+					if (bar.shouldPrintChordsDuration) {
+						symbolLength += symbols.chordBeat.repeat(
+							chord.duration
+						).length;
+					}
 					maxBeatsWidth[barIndex][chord.beat] = Math.max(
 						maxBeatsWidth[barIndex][chord.beat],
-						chord.symbol.length
+						symbolLength
 					);
 				});
 			});
