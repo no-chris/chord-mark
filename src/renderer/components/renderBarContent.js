@@ -1,6 +1,6 @@
 import _isFinite from 'lodash/isFinite';
 
-import renderChord from './renderChordSymbol';
+import renderChordSymbol from './renderChordSymbol';
 import barContentTpl from './tpl/barContent.hbs';
 
 const space = ' ';
@@ -25,7 +25,7 @@ export default function renderBarContent(bar) {
 			: defaultSpacesAfter;
 
 		rendering +=
-			renderChord(chord.symbol) +
+			renderChordSymbol(chord, bar.shouldPrintChordsDuration) +
 			space.repeat(spacesWithin) +
 			space.repeat(spacesAfter);
 
