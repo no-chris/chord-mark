@@ -1,7 +1,4 @@
-jest.mock('../../../../src/renderer/components/renderChordSymbol');
-
 import renderBarContent from '../../../../src/renderer/components/renderBarContent';
-import renderChordSymbol from '../../../../src/renderer/components/renderChordSymbol';
 
 import parseChordLine from '../../../../src/parser/parseChordLine';
 import getChordSymbol from '../../../../src/renderer/helpers/getChordSymbol';
@@ -9,8 +6,6 @@ import stripTags from '../../../../src/core/dom/stripTags';
 import htmlToElement from '../../../../src/core/dom/htmlToElement';
 
 import { forEachChordInChordLine } from '../../../../src/parser/helper/songs';
-
-renderChordSymbol.mockImplementation((chordSymbol) => chordSymbol);
 
 describe('renderBarContent', () => {
 	test('Module', () => {
@@ -106,3 +101,35 @@ describe.each([
 		expect(stripTags(rendered)).toEqual(output);
 	});
 });
+
+describe.each([
+	[
+		'do not display chord duration (default)',
+		'C. G. F..',
+		undefined,
+		'C  G  F  ',
+	],
+	['do not display chord duration', 'C. G. F..', false, 'C  G  F  '],
+	['display chord duration', 'C. G. F..', true, 'C.  G.  F..  '],
+])(
+	'Chord duration markers',
+	(title, input, shouldPrintChordsDuration, output) => {
+		test(title, () => {
+			let parsed = parseChordLine(input);
+			parsed = forEachChordInChordLine(
+				parsed,
+				(chord) => (chord.symbol = getChordSymbol(chord.model))
+			);
+
+			parsed.allBars[0].shouldPrintChordsDuration =
+				shouldPrintChordsDuration;
+			parsed.allBars[0].allChords.forEach((chord) => {
+				chord.spacesAfter = 2;
+			});
+
+			const rendered = renderBarContent(parsed.allBars[0]);
+
+			expect(stripTags(rendered)).toEqual(output);
+		});
+	}
+);
