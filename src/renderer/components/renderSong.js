@@ -35,6 +35,7 @@ import replaceRepeatedBars from '../replaceRepeatedBars';
  * @param {Boolean} autoRepeatChords
  * @param {Boolean|('none'|'max'|'core')} simplifyChords
  * @param {Boolean} useShortNamings
+ * @param {('never'|'uneven'|'always')} printChordsDuration
  * @returns {String} rendered HTML
  */
 // eslint-disable-next-line max-lines-per-function
@@ -51,6 +52,7 @@ export default function renderSong(
 		autoRepeatChords = true,
 		simplifyChords = 'none',
 		useShortNamings = true,
+		printChordsDuration = 'never',
 	} = {}
 ) {
 	let { allLines, allChords } = parsedSong;
@@ -59,6 +61,7 @@ export default function renderSong(
 	let isFirstLyricLineOfSection = false;
 
 	allLines = renderChords()
+		.map(addPrintChordDurationsFlag)
 		.filter(shouldRenderLine)
 		.map((line) => {
 			return replaceRepeatedBars(line, { alignChordsWithLyrics });
@@ -88,6 +91,24 @@ export default function renderSong(
 		return forEachChordInSong(allLines, (chord) => {
 			chord.symbol = getChordSymbol(chord.model, renderChord);
 		});
+	}
+
+	function addPrintChordDurationsFlag(line) {
+		if (line.type === lineTypes.CHORD) {
+			line.model.allBars.forEach((bar) => {
+				bar.shouldPrintChordsDuration = shouldPrintChordsDuration(bar);
+			});
+		}
+		return line;
+	}
+
+	function shouldPrintChordsDuration(bar) {
+		return (
+			bar.allChords.length > 1 &&
+			((printChordsDuration === 'uneven' &&
+				bar.hasUnevenChordsDurations) ||
+				printChordsDuration === 'always')
+		);
 	}
 
 	function shouldRenderLine(line) {

@@ -300,3 +300,97 @@ v2-line-3
 		expect(element.textContent).toBe(expected);
 	});
 });
+
+describe('printChordsDuration', () => {
+	const input = `4/4
+A7
+A7. B...
+A7.. B..
+A7... B.
+A7.. B. C7.
+A7. B.. C7.
+A7. B. C7..
+A7. B. C7. D.
+
+3/4
+A7
+A7. B..
+A7.. B.
+A7. B. C7.
+`;
+
+	test('="never"', () => {
+		const expected = `4/4
+|A7           |
+|A7  B        |
+|A7     B     |
+|A7         B |
+|A7     B   C7|
+|A7  B      C7|
+|A7  B  C7    |
+|A7  B  C7  D |
+\xa0
+3/4
+|A7       |
+|A7  B    |
+|A7     B |
+|A7  B  C7|
+\xa0`;
+		const rendered = renderSongText(input, {
+			printChordsDuration: 'never',
+			alignBars: true,
+		});
+		const element = htmlToElement(rendered);
+		expect(element.textContent).toBe(expected);
+	});
+
+	test('="uneven"', () => {
+		const expected = `4/4
+|A7                    |
+|A7.    B...           |
+|A7           B        |
+|A7...              B. |
+|A7..         B.    C7.|
+|A7.    B..         C7.|
+|A7.    B.    C7..     |
+|A7     B     C7    D  |
+\xa0
+3/4
+|A7               |
+|A7.    B..       |
+|A7..         B.  |
+|A7     B     C7  |
+\xa0`;
+		const rendered = renderSongText(input, {
+			printChordsDuration: 'uneven',
+			alignBars: true,
+		});
+		const element = htmlToElement(rendered);
+		expect(element.textContent).toBe(expected);
+	});
+
+	test('="always"', () => {
+		const expected = `4/4
+|A7                    |
+|A7.    B...           |
+|A7..         B..      |
+|A7...              B. |
+|A7..         B.    C7.|
+|A7.    B..         C7.|
+|A7.    B.    C7..     |
+|A7.    B.    C7.   D. |
+\xa0
+3/4
+|A7               |
+|A7.    B..       |
+|A7..         B.  |
+|A7.    B.    C7. |
+\xa0`;
+		const rendered = renderSongText(input, {
+			printChordsDuration: 'always',
+			alignBars: true,
+		});
+		const element = htmlToElement(rendered);
+		expect(element.textContent).toBe(expected);
+	});
+});
