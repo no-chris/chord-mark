@@ -61,7 +61,7 @@ export default function renderSong(
 	let isFirstLyricLineOfSection = false;
 
 	allLines = renderChords()
-		.map(addPrintChordDurationsFlag)
+		.map(addPrintChordsDurationsFlag)
 		.filter(shouldRenderLine)
 		.map((line) => {
 			return replaceRepeatedBars(line, { alignChordsWithLyrics });
@@ -93,7 +93,7 @@ export default function renderSong(
 		});
 	}
 
-	function addPrintChordDurationsFlag(line) {
+	function addPrintChordsDurationsFlag(line) {
 		if (line.type === lineTypes.CHORD) {
 			line.model.allBars.forEach((bar) => {
 				bar.shouldPrintChordsDuration = shouldPrintChordsDuration(bar);
