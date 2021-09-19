@@ -27,7 +27,7 @@ import replaceRepeatedBars from '../replaceRepeatedBars';
  * @param {Song} parsedSong
  * @param {Boolean} alignBars
  * @param {Boolean} alignChordsWithLyrics
- * @param {('all'|'lyrics'|'chords')} chordsAndLyricsDisplay
+ * @param {('all'|'lyrics'|'chords'|'chordsFirstLyricLine')} chordsAndLyricsDisplay
  * @param {Number} transposeValue
  * @param {('auto'|'flat'|'sharp')} accidentalsType
  * @param {Boolean} harmonizeAccidentals
@@ -56,6 +56,7 @@ export default function renderSong(
 	let { allLines, allChords } = parsedSong;
 
 	let shouldSkipRepeatedSectionLine = false;
+	let isFirstLyricLineOfSection = false;
 
 	allLines = renderChords()
 		.filter(shouldRenderLine)
@@ -105,8 +106,21 @@ export default function renderSong(
 	}
 
 	function isFiltered(line) {
+		if (chordsAndLyricsDisplay === 'chordsFirstLyricLine') {
+			if (line.type === lineTypes.SECTION_LABEL) {
+				isFirstLyricLineOfSection = true;
+				return false;
+			}
+			if (isFirstLyricLineOfSection && line.type === lineTypes.LYRIC) {
+				isFirstLyricLineOfSection = false;
+				return false;
+			}
+		}
+
 		return (
-			(chordsAndLyricsDisplay === 'chords' &&
+			(['chords', 'chordsFirstLyricLine'].includes(
+				chordsAndLyricsDisplay
+			) &&
 				line.type === lineTypes.LYRIC) ||
 			(chordsAndLyricsDisplay === 'lyrics' &&
 				line.type === lineTypes.CHORD)
