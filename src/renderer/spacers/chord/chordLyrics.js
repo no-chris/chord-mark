@@ -37,6 +37,11 @@ export default function space(chordLineInput, lyricsLineInput) {
 
 			if (lyricToken) {
 				chordToken = chord.symbol;
+
+				if (bar.shouldPrintChordsDuration) {
+					chordToken += symbols.chordBeat.repeat(chord.duration);
+				}
+
 				if (isFirstChord(barIndex, chordIndex)) {
 					chordToken = symbols.barSeparator + chordToken;
 				} else if (isNewBar(currentBarIndex, barIndex)) {
