@@ -4,6 +4,7 @@ import lineTypes from './lineTypes';
 
 import isTimeSignature from './matchers/isTimeSignatureString';
 import isSectionLabel from './matchers/isSectionLabel';
+import isSectionCopy from './matchers/isSectionCopy';
 import isChordLine from './matchers/isChordLine';
 import isChordLineRepeater from './matchers/isChordLineRepeater';
 import isEmptyLine from './matchers/isEmptyLine';
@@ -250,6 +251,8 @@ export default function songLinesFactory() {
 			if (isTimeSignature(lineSrc)) {
 				line = getTimeSignatureLine(lineSrc);
 			} else if (isSectionLabel(lineSrc)) {
+				line = getSectionLabelLine(lineSrc);
+			} else if (isSectionCopy(lineSrc)) {
 				line = getSectionLabelLine(lineSrc);
 			} else if (isChordLine(lineSrc)) {
 				line = getChordLine(lineSrc);
