@@ -23,7 +23,7 @@ const defaultTimeSignature = '4/4';
  * @property {String} string - original line in source file
  * @property {String} type - chord|lyric|timeSignature|sectionLabel...
  * @property {Boolean} [isFromSectionRepeat] - line created by a section repeat directive (x3...)
- * @property {Boolean} [isFromSectionCopy] - line created by a section copy (empty # section)
+ * @property {Boolean} [isFromSectionCopy] - line created by a section copy (eg empty # section)
  * @property {Boolean} [isFromAutoRepeatChords] - line created by auto repeats of chords from a section to another
  */
 
@@ -60,7 +60,7 @@ export default function songLinesFactory() {
 	const sectionsStats = {};
 
 	let currentTimeSignature = parseTimeSignature(defaultTimeSignature);
-	let currentSectionLabel; // fixme: rename label => model
+	let currentSection;
 	let currentSectionStats;
 
 	let previousChordLine;
@@ -91,18 +91,18 @@ export default function songLinesFactory() {
 	 * @returns {SongSectionLabelLine}
 	 */
 	function getSectionLabelLine(string, lineIndex, allSrcLines) {
-		currentSectionLabel = parseSectionLabel(string);
+		currentSection = parseSectionLabel(string);
 
-		increaseSectionStats(currentSectionLabel.label);
-		currentSectionStats = getSectionCount(currentSectionLabel.label);
+		increaseSectionStats(currentSection.label);
+		currentSectionStats = getSectionCount(currentSection.label);
 
 		const line = {
 			string,
 			type: lineTypes.SECTION_LABEL,
-			model: currentSectionLabel,
+			model: currentSection,
 			index: currentSectionStats.count,
 			indexWithoutRepeats: currentSectionStats.withoutRepeats,
-			id: currentSectionLabel.label + currentSectionStats.count,
+			id: currentSection.label + currentSectionStats.count,
 		};
 
 		shouldCopySection =
@@ -112,11 +112,11 @@ export default function songLinesFactory() {
 			line.isFromSectionCopy = true;
 		}
 
-		shouldRepeatSection = currentSectionLabel.repeatTimes > 0;
+		shouldRepeatSection = currentSection.repeatTimes > 0;
 		previousSectionLabelLine = _cloneDeep(line);
 
-		if (!isFirstOfLabel(currentSectionLabel, allLines)) {
-			blueprint = getNthOfLabel(allLines, currentSectionLabel.label, 1);
+		if (!isFirstOfLabel(currentSection, allLines)) {
+			blueprint = getNthOfLabel(allLines, currentSection.label, 1);
 			blueprintIndex = 0;
 			isRepeatingChords = true;
 		} else {
@@ -223,7 +223,7 @@ export default function songLinesFactory() {
 		if (shouldCopySection) {
 			const toCopy = getNthOfLabel(
 				allLines,
-				currentSectionLabel.label,
+				currentSection.label,
 				1 //fixme
 			).map((line) => ({
 				..._cloneDeep(line),
@@ -253,11 +253,11 @@ export default function songLinesFactory() {
 			return true;
 		}
 
-		const currentSection = remainingLines
+		const currentSectionContent = remainingLines
 			.slice(0, nextSectionIndex !== -1 ? nextSectionIndex : undefined)
 			.filter((line) => !(isTimeSignature(line) || isEmptyLine(line)));
 
-		return currentSection.length === 0;
+		return currentSectionContent.length === 0;
 	}
 
 	function repeatSection(lineIndex, allSrcLines) {
@@ -267,7 +267,7 @@ export default function songLinesFactory() {
 		) {
 			const toRepeat = getNthOfLabel(
 				allLines,
-				currentSectionLabel.label,
+				currentSection.label,
 				currentSectionStats.count
 			).map((line) => ({
 				..._cloneDeep(line),
@@ -275,17 +275,15 @@ export default function songLinesFactory() {
 			}));
 			let sectionLabelLine;
 
-			for (let i = 1; i < currentSectionLabel.repeatTimes; i++) {
-				increaseSectionStats(currentSectionLabel.label, true);
-				currentSectionStats = getSectionCount(
-					currentSectionLabel.label
-				);
+			for (let i = 1; i < currentSection.repeatTimes; i++) {
+				increaseSectionStats(currentSection.label, true);
+				currentSectionStats = getSectionCount(currentSection.label);
 
 				sectionLabelLine = {
 					..._cloneDeep(previousSectionLabelLine),
 					index: currentSectionStats.count,
 					indexWithoutRepeats: currentSectionStats.withoutRepeats,
-					id: currentSectionLabel.label + currentSectionStats.count,
+					id: currentSection.label + currentSectionStats.count,
 					isFromSectionRepeat: true,
 				};
 				allLines.push(sectionLabelLine);
