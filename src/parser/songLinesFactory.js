@@ -105,7 +105,9 @@ export default function songLinesFactory() {
 			id: currentSectionLabel.label + currentSectionStats.count,
 		};
 
-		shouldCopySection = isCurrentSectionEmpty(lineIndex, allSrcLines);
+		shouldCopySection =
+			isCurrentSectionEmpty(lineIndex, allSrcLines) &&
+			currentSectionStats.count > 1;
 		if (shouldCopySection) {
 			line.isFromSectionCopy = true;
 		}
@@ -230,7 +232,9 @@ export default function songLinesFactory() {
 
 			if (!toCopy.length) return;
 
-			if (endsWithEmptyLine(toCopy)) toCopy.pop();
+			if (endsWithEmptyLine(toCopy)) {
+				toCopy.pop();
+			}
 
 			allLines.push(..._cloneDeep(toCopy));
 
@@ -241,11 +245,16 @@ export default function songLinesFactory() {
 	function isCurrentSectionEmpty(lineIndex, allSrcLines) {
 		const remainingLines = allSrcLines.slice(lineIndex + 1);
 
-		const nextSectionIndex = remainingLines.findIndex((line) =>
+		let nextSectionIndex = remainingLines.findIndex((line) =>
 			isSectionLabel(line)
 		);
+
+		if (nextSectionIndex === 0) {
+			return true;
+		}
+
 		const currentSection = remainingLines
-			.slice(0, Math.max(nextSectionIndex, 1))
+			.slice(0, nextSectionIndex !== -1 ? nextSectionIndex : undefined)
 			.filter((line) => !(isTimeSignature(line) || isEmptyLine(line)));
 
 		return currentSection.length === 0;
