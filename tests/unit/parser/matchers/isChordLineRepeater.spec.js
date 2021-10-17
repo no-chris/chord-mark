@@ -10,6 +10,9 @@ describe.each([
 	['/', true],
 	[' / ', true],
 	['	/	', true],
+	['//', true],
+	[' // ', true],
+	['  //  ', true],
 
 	['/..', false],
 	['/ /', false],

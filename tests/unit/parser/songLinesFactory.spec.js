@@ -693,7 +693,50 @@ line2-1`;
 		expect(songLines.asArray()).toEqual(expected);
 	});
 
-	test('should be parsed as lyric line if there is no chordLine before', () => {
+	test('should allow to repeat before-last chordLine', () => {
+		parseChordLine.mockImplementation((chordLine) => chordLine);
+		parseLyricLine.mockImplementation((lyricLine) => lyricLine);
+
+		const input = `C.. G..
+line1-1
+Am.. F..
+line1-2
+
+//
+line2-1
+/
+line2-2`;
+
+		const expected = [
+			getChordLine('C.. G..'),
+			getLyricLine('line1-1'),
+			getChordLine('Am.. F..'),
+			getLyricLine('line1-2'),
+			getEmptyLine(),
+
+			{
+				type: 'chord',
+				string: 'C.. G..',
+				model: 'C.. G..',
+				isFromChordLineRepeater: true,
+			},
+			getLyricLine('line2-1'),
+			{
+				type: 'chord',
+				string: 'Am.. F..',
+				model: 'Am.. F..',
+				isFromChordLineRepeater: true,
+			},
+			getLyricLine('line2-2'),
+		];
+
+		const songLines = songLinesFactory();
+		input.split('\n').forEach(songLines.addLine);
+
+		expect(songLines.asArray()).toEqual(expected);
+	});
+
+	test('should be parsed as lyric line if there is no chordLine before (repeat last chord line)', () => {
 		parseChordLine.mockImplementation((chordLine) => chordLine);
 		parseLyricLine.mockImplementation((lyricLine) => lyricLine);
 
@@ -719,6 +762,32 @@ line1-3`;
 		expect(songLines.asArray()).toEqual(expected);
 	});
 
+	test('should be parsed as lyric line if there is no chordLine before (repeat before-last chord line)', () => {
+		parseChordLine.mockImplementation((chordLine) => chordLine);
+		parseLyricLine.mockImplementation((lyricLine) => lyricLine);
+
+		const input = `C.. G..
+line1-1
+//
+line1-2
+//
+line1-3`;
+
+		const expected = [
+			getChordLine('C.. G..'),
+			getLyricLine('line1-1'),
+			getLyricLine('//'),
+			getLyricLine('line1-2'),
+			getLyricLine('//'),
+			getLyricLine('line1-3'),
+		];
+
+		const songLines = songLinesFactory();
+		input.split('\n').forEach(songLines.addLine);
+
+		expect(songLines.asArray()).toEqual(expected);
+	});
+
 	test('should be usable in repeated section', () => {
 		parseChordLine.mockImplementation((chordLine) => chordLine);
 		parseLyricLine.mockImplementation((lyricLine) => lyricLine);
@@ -731,8 +800,11 @@ line1-2
 
 #v
 line2-1
+line2-2
+//
+line2-3
 /
-line2-2`;
+line2-4`;
 
 		const expected = [
 			getSectionLine('#v', 'v1', 1),
@@ -751,11 +823,25 @@ line2-2`;
 			getLyricLine('line2-1'),
 			{
 				type: 'chord',
+				string: 'Am.. F..',
+				model: 'Am.. F..',
+				isFromAutoRepeatChords: true,
+			},
+			getLyricLine('line2-2'),
+			{
+				type: 'chord',
 				string: 'C.. G..',
 				model: 'C.. G..',
 				isFromChordLineRepeater: true,
 			},
-			getLyricLine('line2-2'),
+			getLyricLine('line2-3'),
+			{
+				type: 'chord',
+				string: 'Am.. F..',
+				model: 'Am.. F..',
+				isFromChordLineRepeater: true,
+			},
+			getLyricLine('line2-4'),
 		];
 
 		const songLines = songLinesFactory();
