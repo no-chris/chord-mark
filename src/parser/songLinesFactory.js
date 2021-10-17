@@ -4,7 +4,6 @@ import lineTypes from './lineTypes';
 
 import isTimeSignature from './matchers/isTimeSignatureString';
 import isSectionLabel from './matchers/isSectionLabel';
-import isSectionCopy from './matchers/isSectionCopy';
 import isChordLine from './matchers/isChordLine';
 import isChordLineRepeater from './matchers/isChordLineRepeater';
 import isEmptyLine from './matchers/isEmptyLine';
@@ -24,6 +23,7 @@ const defaultTimeSignature = '4/4';
  * @property {String} string - original line in source file
  * @property {String} type - chord|lyric|timeSignature|sectionLabel...
  * @property {Boolean} [isFromSectionRepeat] - line created by a section repeat directive (x3...)
+ * @property {Boolean} [isFromSectionCopy] - line created by a section copy (empty # section)
  * @property {Boolean} [isFromAutoRepeatChords] - line created by auto repeats of chords from a section to another
  */
 
@@ -60,7 +60,7 @@ export default function songLinesFactory() {
 	const sectionsStats = {};
 
 	let currentTimeSignature = parseTimeSignature(defaultTimeSignature);
-	let currentSectionLabel;
+	let currentSectionLabel; // fixme: rename label => model
 	let currentSectionStats;
 
 	let previousChordLine;
@@ -72,6 +72,7 @@ export default function songLinesFactory() {
 
 	let isRepeatingChords = false;
 	let shouldRepeatSection = false;
+	let shouldCopySection = false;
 
 	/**
 	 * @returns {SongTimeSignatureLine}
@@ -89,7 +90,7 @@ export default function songLinesFactory() {
 	/**
 	 * @returns {SongSectionLabelLine}
 	 */
-	function getSectionLabelLine(string) {
+	function getSectionLabelLine(string, lineIndex, allSrcLines) {
 		currentSectionLabel = parseSectionLabel(string);
 
 		increaseSectionStats(currentSectionLabel.label);
@@ -103,6 +104,11 @@ export default function songLinesFactory() {
 			indexWithoutRepeats: currentSectionStats.withoutRepeats,
 			id: currentSectionLabel.label + currentSectionStats.count,
 		};
+
+		shouldCopySection = isCurrentSectionEmpty(lineIndex, allSrcLines);
+		if (shouldCopySection) {
+			line.isFromSectionCopy = true;
+		}
 
 		shouldRepeatSection = currentSectionLabel.repeatTimes > 0;
 		previousSectionLabelLine = _cloneDeep(line);
@@ -211,6 +217,40 @@ export default function songLinesFactory() {
 		}
 	}
 
+	function copySection() {
+		if (shouldCopySection) {
+			const toCopy = getNthOfLabel(
+				allLines,
+				currentSectionLabel.label,
+				1 //fixme
+			).map((line) => ({
+				..._cloneDeep(line),
+				isFromSectionCopy: true,
+			}));
+
+			if (!toCopy.length) return;
+
+			if (endsWithEmptyLine(toCopy)) toCopy.pop();
+
+			allLines.push(..._cloneDeep(toCopy));
+
+			shouldCopySection = false;
+		}
+	}
+
+	function isCurrentSectionEmpty(lineIndex, allSrcLines) {
+		const remainingLines = allSrcLines.slice(lineIndex + 1);
+
+		const nextSectionIndex = remainingLines.findIndex((line) =>
+			isSectionLabel(line)
+		);
+		const currentSection = remainingLines
+			.slice(0, Math.max(nextSectionIndex, 1))
+			.filter((line) => !(isTimeSignature(line) || isEmptyLine(line)));
+
+		return currentSection.length === 0;
+	}
+
 	function repeatSection(lineIndex, allSrcLines) {
 		if (
 			shouldRepeatSection &&
@@ -251,9 +291,7 @@ export default function songLinesFactory() {
 			if (isTimeSignature(lineSrc)) {
 				line = getTimeSignatureLine(lineSrc);
 			} else if (isSectionLabel(lineSrc)) {
-				line = getSectionLabelLine(lineSrc);
-			} else if (isSectionCopy(lineSrc)) {
-				line = getSectionLabelLine(lineSrc);
+				line = getSectionLabelLine(lineSrc, lineIndex, allSrcLines);
 			} else if (isChordLine(lineSrc)) {
 				line = getChordLine(lineSrc);
 			} else if (isChordLineRepeater(lineSrc)) {
@@ -268,6 +306,7 @@ export default function songLinesFactory() {
 
 			allLines.push(line);
 
+			copySection();
 			repeatSection(lineIndex, allSrcLines);
 		},
 
@@ -341,4 +380,9 @@ function shouldPositionChords(line, nextLine) {
 		nextLine.type === lineTypes.LYRIC &&
 		nextLine.model.chordPositions.length > 0
 	);
+}
+
+function endsWithEmptyLine(allLines) {
+	const lastLine = allLines[allLines.length - 1];
+	return lastLine.type === lineTypes.EMPTY_LINE;
 }
