@@ -1,7 +1,7 @@
 export default {
 	barRepeat: '/',
 	chordBeatCount: '\\.',
-	chordLineRepeat: '/',
+	chordLineRepeat: '%',
 	noChord: 'NC',
 	noLyrics: 'NL',
 	sectionLabel: '#',

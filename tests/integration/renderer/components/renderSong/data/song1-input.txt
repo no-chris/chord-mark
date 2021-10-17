@@ -5,11 +5,11 @@ John Lennon
 #v
 C... CM7. F
 _ Imagine there's _no hea_ven _
-/
+%
 _ It's easy if _you _try _
-/
+%
 _ No hell _below _us
-/
+%
 _ Above us, _only _sky
 
 F.. Am.. Dm.. Dm/C..

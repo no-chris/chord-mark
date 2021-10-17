@@ -659,11 +659,11 @@ describe('chordLineRepeater', () => {
 
 		const input = `C.. G..
 line1-1
-/
+%
 line1-2
 
 
-/
+%
 line2-1`;
 
 		const expected = [
@@ -702,9 +702,9 @@ line1-1
 Am.. F..
 line1-2
 
-//
+%%
 line2-1
-/
+%
 line2-2`;
 
 		const expected = [
@@ -740,19 +740,19 @@ line2-2`;
 		parseChordLine.mockImplementation((chordLine) => chordLine);
 		parseLyricLine.mockImplementation((lyricLine) => lyricLine);
 
-		const input = `/
+		const input = `%
 line1-1
-/
+%
 line1-2
-/
+%
 line1-3`;
 
 		const expected = [
-			getLyricLine('/'),
+			getLyricLine('%'),
 			getLyricLine('line1-1'),
-			getLyricLine('/'),
+			getLyricLine('%'),
 			getLyricLine('line1-2'),
-			getLyricLine('/'),
+			getLyricLine('%'),
 			getLyricLine('line1-3'),
 		];
 
@@ -768,17 +768,17 @@ line1-3`;
 
 		const input = `C.. G..
 line1-1
-//
+%%
 line1-2
-//
+%%
 line1-3`;
 
 		const expected = [
 			getChordLine('C.. G..'),
 			getLyricLine('line1-1'),
-			getLyricLine('//'),
+			getLyricLine('%%'),
 			getLyricLine('line1-2'),
-			getLyricLine('//'),
+			getLyricLine('%%'),
 			getLyricLine('line1-3'),
 		];
 
@@ -801,9 +801,9 @@ line1-2
 #v
 line2-1
 line2-2
-//
+%%
 line2-3
-/
+%
 line2-4`;
 
 		const expected = [
@@ -911,7 +911,7 @@ line1-2
 #v x2
 line2-1
 line2-2
-/
+%
 line2-3
 `;
 		const expected = [
