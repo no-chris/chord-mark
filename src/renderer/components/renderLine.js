@@ -5,6 +5,7 @@ import lineTpl from './tpl/line.hbs';
  * @param {Boolean} isFromSectionRepeat
  * @param {Boolean} isFromAutoRepeatChords
  * @param {Boolean} isFromChordLineRepeater
+ * @param {Boolean} isFromSectionCopy
  * @returns {String} rendered html
  */
 export default function render(
@@ -13,6 +14,7 @@ export default function render(
 		isFromSectionRepeat = false,
 		isFromAutoRepeatChords = false,
 		isFromChordLineRepeater = false,
+		isFromSectionCopy = false,
 	} = {}
 ) {
 	const lineClasses = ['cmLine'];
@@ -24,6 +26,9 @@ export default function render(
 	}
 	if (isFromChordLineRepeater) {
 		lineClasses.push('cmLine--isFromChordLineRepeater');
+	}
+	if (isFromSectionCopy) {
+		lineClasses.push('cmLine--isFromSectionCopy');
 	}
 
 	return lineTpl({

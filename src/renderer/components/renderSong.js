@@ -188,6 +188,7 @@ export default function renderSong(
 					isFromSectionRepeat: line.isFromSectionRepeat,
 					isFromAutoRepeatChords: line.isFromAutoRepeatChords,
 					isFromChordLineRepeater: line.isFromChordLineRepeater,
+					isFromSectionCopy: line.isFromSectionCopy,
 				});
 			})
 			.filter(Boolean);
