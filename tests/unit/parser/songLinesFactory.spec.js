@@ -1099,6 +1099,48 @@ verseContent2`;
 
 		expect(songLines.asArray()).toEqual(expected);
 	});
+
+	test('repeat arbitrary section', () => {
+		parseChordLine.mockImplementation((chordLine) => chordLine);
+		parseLyricLine.mockImplementation((lyricLine) => lyricLine);
+
+		const input = `#v
+C.. G..
+verseContent1
+
+#v
+Am.. F..
+verseContent2
+
+#v1
+
+#v2`;
+		const expected = [
+			getSectionLine('#v', 'v1', 1),
+			getChordLine('C.. G..'),
+			getLyricLine('verseContent1'),
+			getEmptyLine(),
+
+			getSectionLine('#v', 'v2', 2),
+			getChordLine('Am.. F..'),
+			getLyricLine('verseContent2'),
+			getEmptyLine(),
+
+			getSectionLine('#v1', 'v3', 3, { fromCopy: true }),
+			getChordLine('C.. G..', { fromCopy: true }),
+			getLyricLine('verseContent1', { fromCopy: true }),
+			getEmptyLine(),
+
+			getSectionLine('#v2', 'v4', 4, { fromCopy: true }),
+			getChordLine('Am.. F..', { fromCopy: true }),
+			getLyricLine('verseContent2', { fromCopy: true }),
+		];
+
+		const songLines = songLinesFactory();
+		input.split('\n').forEach(songLines.addLine);
+
+		expect(songLines.asArray()).toEqual(expected);
+	});
 });
 
 /** ====================== **/

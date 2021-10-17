@@ -1,7 +1,7 @@
 import syntax from '../syntax';
 
-const sectionLabelRegexp = new RegExp(
-	'^' + syntax.sectionLabel + '[a-zA-Z]+( x[2-9])?$'
+export const sectionLabelRegexp = new RegExp(
+	'^' + syntax.sectionLabel + '([a-zA-Z]+)([1-9])?( x[2-9])?$'
 );
 
 export default function isSectionLabel(string) {

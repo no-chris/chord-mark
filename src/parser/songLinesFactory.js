@@ -224,7 +224,7 @@ export default function songLinesFactory() {
 			const toCopy = getNthOfLabel(
 				allLines,
 				currentSection.label,
-				1 //fixme
+				currentSection.copyIndex
 			).map((line) => ({
 				..._cloneDeep(line),
 				isFromSectionCopy: true,
