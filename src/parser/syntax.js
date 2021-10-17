@@ -1,5 +1,5 @@
 export default {
-	barRepeat: '/',
+	barRepeat: '%',
 	chordBeatCount: '\\.',
 	chordLineRepeat: '%',
 	noChord: 'NC',

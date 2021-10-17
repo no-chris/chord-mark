@@ -676,7 +676,7 @@ describe.each([
 
 	[
 		'flag repeated bars, single chord per bar',
-		'C / D /',
+		'C % D %',
 		ts4_4,
 		{
 			allBars: [
@@ -739,7 +739,7 @@ describe.each([
 
 	[
 		'flag repeated bars, multiple chords per bar',
-		'C.. Am. F. /',
+		'C.. Am. F. %',
 		ts4_4,
 		{
 			allBars: [
@@ -879,17 +879,17 @@ describe.each([
 });
 
 describe.each([
-	['A /', 'A A', [0, 1]],
-	['A / / /', 'A A A A', [0, 1, 1, 1]],
-	['A / B /', 'A A B B', [0, 1, 0, 1]],
-	['A B C D / /', 'A B C D D D', [0, 0, 0, 0, 1, 1]],
-	['A B / C D /', 'A B B C D D', [0, 0, 1, 0, 0, 1]],
-	['A.. B.. C... D. / /', 'A B C D C D C D', [0, 0, 1, 1]],
+	['A %', 'A A', [0, 1]],
+	['A % % %', 'A A A A', [0, 1, 1, 1]],
+	['A % B %', 'A A B B', [0, 1, 0, 1]],
+	['A B C D % %', 'A B C D D D', [0, 0, 0, 0, 1, 1]],
+	['A B % C D %', 'A B B C D D', [0, 0, 1, 0, 0, 1]],
+	['A.. B.. C... D. % %', 'A B C D C D C D', [0, 0, 1, 1]],
 
-	['A ///', 'A A A A', [0, 1, 1, 1]],
-	['A // /', 'A A A A', [0, 1, 1, 1]],
-	['A / // /', 'A A A A A', [0, 1, 1, 1, 1]],
-	['A / // B / //', 'A A A A B B B B', [0, 1, 1, 1, 0, 1, 1, 1]],
+	['A %%%', 'A A A A', [0, 1, 1, 1]],
+	['A %% %', 'A A A A', [0, 1, 1, 1]],
+	['A % %% %', 'A A A A A', [0, 1, 1, 1, 1]],
+	['A % %% B % %%', 'A A A A B B B B', [0, 1, 1, 1, 0, 1, 1, 1]],
 ])('barRepeat: %s', (input, expected, repeatFlags) => {
 	test('should correctly repeat previous bar', () => {
 		const parsed = parseChordLine(input);
@@ -912,7 +912,7 @@ describe.each([
 	});
 });
 
-describe.each([['/ A'], ['// A'], [' / A'], ['	/ A']])(
+describe.each([['% A'], ['%% A'], [' % A'], ['	% A']])(
 	'Throw if line starts with repeatBar symbol: %s',
 	(input) => {
 		const throwingFn = () => {
