@@ -6,7 +6,7 @@ import isSectionLabel, { sectionLabelRegexp } from './matchers/isSectionLabel';
  * @property {String} string - original string
  * @property {String} label - label of the section
  * @property {Number} repeatTimes - number of times the section should be repeated
- * @property {Number} copyIndex - index of the section that should be repeated
+ * @property {Number} copyIndex - index of the section that should be copied
  */
 
 /**
