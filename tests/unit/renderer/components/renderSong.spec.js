@@ -82,7 +82,7 @@ describe('alignChordsWithLyrics', () => {
 		const input = `#v
 C... CM7. F
 _Imagine there's _no hea_ven
-/
+%
 Imagine there's not placeholder`;
 		const expected = `Verse
 |C              CM7   |F |
@@ -203,9 +203,9 @@ Outro`;
 
 describe('chordsAndLyricsDisplay', () => {
 	const input = `#v
-A7 / / /
+A7 % % %
 v1-line-1
-D7 / A7 /
+D7 % A7 %
 v1-line-2
 E7 D7 A7 E7
 v1-line-3

@@ -13,6 +13,8 @@ import parseChordLine from './parseChordLine';
 import parseSectionLabel from './parseSectionLabel';
 import parseLyricLine from './parseLyricLine';
 
+import clearSpaces from './helper/clearSpaces';
+
 import { forEachChordInChordLine, getNthOfLabel } from './helper/songs';
 
 const defaultTimeSignature = '4/4';
@@ -63,7 +65,8 @@ export default function songLinesFactory() {
 	let currentSection;
 	let currentSectionStats;
 
-	let previousChordLine;
+	const MAX_PREVIOUS_CHORD_LINES = 2;
+	let previousChordLines = [];
 	let previousSectionLabelLine;
 
 	let blueprint = [];
@@ -149,20 +152,33 @@ export default function songLinesFactory() {
 				type: lineTypes.CHORD,
 				model,
 			};
-			previousChordLine = line;
+			addPreviousChordLine(line);
 		} catch (e) {
 			line = getLyricLine(string);
 		}
 		return line;
 	}
 
+	function addPreviousChordLine(line) {
+		if (previousChordLines.length >= MAX_PREVIOUS_CHORD_LINES) {
+			previousChordLines.shift();
+		}
+		previousChordLines.push(line);
+	}
+
 	/**
 	 * @returns {SongChordLine|SongLyricLine}
 	 */
-	function getPreviousChordLine(string) {
-		if (previousChordLine) {
+	function getRepeatedChordLine(string) {
+		const repeatString = clearSpaces(string);
+		const sliceStart = -repeatString.length;
+		const sliceEnd = sliceStart < -1 ? sliceStart + 1 : undefined;
+
+		if (previousChordLines.length >= repeatString.length) {
 			return {
-				..._cloneDeep(previousChordLine),
+				..._cloneDeep(
+					...previousChordLines.slice(sliceStart, sliceEnd)
+				),
 				isFromChordLineRepeater: true,
 			};
 		}
@@ -205,7 +221,7 @@ export default function songLinesFactory() {
 
 			while (shouldRepeatLineFromBlueprint(blueprintLine, line)) {
 				if (blueprintLine.type === lineTypes.CHORD) {
-					previousChordLine = _cloneDeep(blueprintLine);
+					addPreviousChordLine(_cloneDeep(blueprintLine));
 				}
 				repeatedLine = {
 					..._cloneDeep(blueprintLine),
@@ -302,7 +318,7 @@ export default function songLinesFactory() {
 			} else if (isChordLine(lineSrc)) {
 				line = getChordLine(lineSrc);
 			} else if (isChordLineRepeater(lineSrc)) {
-				line = getPreviousChordLine(lineSrc);
+				line = getRepeatedChordLine(lineSrc);
 			} else if (isEmptyLine(lineSrc)) {
 				line = getEmptyLine(lineSrc);
 			} else {
