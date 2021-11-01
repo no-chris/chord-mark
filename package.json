@@ -22,7 +22,7 @@
     "@babel/core": "^7.15.0",
     "@babel/preset-env": "^7.15.0",
     "@size-limit/preset-small-lib": "^5.0.3",
-    "babel-jest": "^27.1.0",
+    "babel-jest": "^27.3.1",
     "babel-loader": "^8.2.2",
     "clean-webpack-plugin": "^3.0.0",
     "eslint": "^7.32.0",
