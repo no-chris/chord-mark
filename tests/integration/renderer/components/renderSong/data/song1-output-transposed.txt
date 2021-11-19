@@ -3,16 +3,16 @@ John Lennon
 4/4
 &nbsp;
 Verse
-|Ab     AbM7|Db   |
+|Ab  AbM7  |Db  |
 Imagine there's no heaven
-|Ab     AbM7|Db   |
+|Ab  AbM7  |Db  |
 It's easy if you try
-|Ab     AbM7|Db   |
+|Ab  AbM7  |Db  |
 No hell below us
-|Ab     AbM7|Db   |
+|Ab  AbM7  |Db  |
 Above us, only sky
 &nbsp;
-|Db   Fm  |Bbm   Bbm/Ab  |
+|Db  Fm  |Bbm  Bbm/Ab  |
 Imagine all the people
-|Eb/G   |%   |
+|Eb/G  |%  |
 living for today
