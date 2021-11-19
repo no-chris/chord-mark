@@ -37,15 +37,15 @@ line1-2
 line2-1
 line2-2`;
 		const expected = `Verse 1
-|C   |G   |
+|C  |G  |
 line1-1
-|A   |D   |
+|A  |D  |
 line1-2
 \xa0
 Verse 2
-|C   |G   |
+|C  |G  |
 line2-1
-|A   |D   |
+|A  |D  |
 line2-2`;
 		const rendered = renderSongText(input, { autoRepeatChords: true });
 		const element = htmlToElement(rendered);
@@ -63,9 +63,9 @@ line1-2
 line2-1
 line2-2`;
 		const expected = `Verse 1
-|C   |G   |
+|C  |G  |
 line1-1
-|A   |D   |
+|A  |D  |
 line1-2
 \xa0
 Verse 2
@@ -87,7 +87,7 @@ Imagine there's not placeholder`;
 		const expected = `Verse
 |C              CM7   |F |
 Imagine there's no heaven
-|C     CM7|F   |
+|C  CM7  |F  |
 Imagine there's not placeholder`;
 		const rendered = renderSongText(input, { alignChordsWithLyrics: true });
 		const element = htmlToElement(rendered);
@@ -99,7 +99,7 @@ Imagine there's not placeholder`;
 C... CM7. F
 _Imagine there's _no hea_ven`;
 		const expected = `Verse
-|C     CM7|F   |
+|C  CM7  |F  |
 Imagine there's no heaven`;
 		const rendered = renderSongText(input);
 		const element = htmlToElement(rendered);
@@ -115,14 +115,14 @@ verseLine1
 C.. D.. E
 verseLine2`;
 		const expected = `Verse 1
-|A   |B   |
+|A  |B  |
 verseLine1
-|C   D  |E   |
+|C  D  |E  |
 verseLine2
 Verse 2
-|A   |B   |
+|A  |B  |
 verseLine1
-|C   D  |E   |
+|C  D  |E  |
 verseLine2`;
 		const rendered = renderSongText(input, { expandSectionRepeats: true });
 		const element = htmlToElement(rendered);
@@ -136,9 +136,9 @@ verseLine1
 C.. D.. E
 verseLine2`;
 		const expected = `Verse x2
-|A   |B   |
+|A  |B  |
 verseLine1
-|C   D  |E   |
+|C  D  |E  |
 verseLine2`;
 		const rendered = renderSongText(input, { expandSectionRepeats: false });
 		const element = htmlToElement(rendered);
