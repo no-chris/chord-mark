@@ -17,7 +17,6 @@ const defaultTimeSignature = parseTimeSignature('4/4');
 /**
  * @typedef {Object} ChordLine
  * @type {Object}
- * @property {Number} chordCount - number of chords in the line
  * @property {Bar[]} allBars
  */
 
@@ -59,7 +58,6 @@ export default function parseChordLine(
 	let chord = {};
 	let tokenWithoutBeatCount;
 	let currentBeatCount = 0;
-	let chordCount = 0;
 	let previousBar;
 
 	const allTokens = clearSpaces(chordLine).split(' ');
@@ -92,7 +90,6 @@ export default function parseChordLine(
 			checkInvalidChordRepetition(bar, chord);
 
 			bar.allChords.push(chord);
-			chordCount++;
 
 			if (shouldChangeBar(currentBeatCount, beatCount)) {
 				bar.timeSignature = timeSignature;
@@ -119,7 +116,6 @@ export default function parseChordLine(
 	});
 
 	return {
-		chordCount,
 		allBars,
 	};
 }
