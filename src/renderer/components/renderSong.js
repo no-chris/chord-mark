@@ -31,7 +31,7 @@ import replaceRepeatedBars from '../replaceRepeatedBars';
  * @param {Number} transposeValue
  * @param {('auto'|'flat'|'sharp')} accidentalsType
  * @param {Boolean} harmonizeAccidentals
- * @param {Boolean} expandSectionRepeats
+ * @param {Boolean} expandSectionMultiply
  * @param {Boolean} autoRepeatChords
  * @param {Boolean|('none'|'max'|'core')} simplifyChords
  * @param {Boolean} useShortNamings
@@ -48,7 +48,7 @@ export default function renderSong(
 		transposeValue = 0,
 		accidentalsType = 'auto',
 		harmonizeAccidentals = true,
-		expandSectionRepeats = true,
+		expandSectionMultiply = true,
 		autoRepeatChords = true,
 		simplifyChords = 'none',
 		useShortNamings = true,
@@ -118,7 +118,7 @@ export default function renderSong(
 	function shouldRepeatLines(line) {
 		if (line.type === lineTypes.SECTION_LABEL) {
 			shouldSkipRepeatedSectionLine =
-				line.isFromSectionRepeat === true && !expandSectionRepeats;
+				line.isFromSectionMultiply === true && !expandSectionMultiply;
 		}
 		const shouldSkipAutoRepeatChordLine =
 			line.isFromAutoRepeatChords && !autoRepeatChords;
@@ -174,7 +174,7 @@ export default function renderSong(
 				} else if (line.type === lineTypes.SECTION_LABEL) {
 					rendered = renderSectionLabel(line, {
 						sectionsStats,
-						expandSectionRepeats,
+						expandSectionMultiply,
 					});
 				} else if (line.type === lineTypes.TIME_SIGNATURE) {
 					rendered = renderTimeSignature(line);
@@ -185,7 +185,7 @@ export default function renderSong(
 					});
 				}
 				return renderLine(rendered, {
-					isFromSectionRepeat: line.isFromSectionRepeat,
+					isFromSectionMultiply: line.isFromSectionMultiply,
 					isFromAutoRepeatChords: line.isFromAutoRepeatChords,
 					isFromChordLineRepeater: line.isFromChordLineRepeater,
 					isFromSectionCopy: line.isFromSectionCopy,

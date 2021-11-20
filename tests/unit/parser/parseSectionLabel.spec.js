@@ -30,12 +30,12 @@ describe.each([
 	['#c1', 'c', 0, 1],
 	['#c2', 'c', 0, 2],
 	['#c2 x3', 'c', 3, 2],
-])('Section identifier %s => %s', (string, label, repeatTimes, copyIndex) => {
+])('Section identifier %s => %s', (string, label, multiplyTimes, copyIndex) => {
 	test('Correctly gets identifier', () => {
 		expect(parseSectionLabel(string)).toEqual({
 			string,
 			label,
-			repeatTimes,
+			multiplyTimes,
 			copyIndex,
 		});
 	});
