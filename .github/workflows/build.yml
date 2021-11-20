@@ -16,11 +16,11 @@ jobs:
       # Install Node 14
       - uses: actions/setup-node@v1
         with:
-          node-version: 14
+          node-version: 16
 
       # Install & build & test:
       - run: npm install
-      - run: npm run-script test
+      - run: npx lerna run test
       
       # Coverage report
       - name: Coveralls GitHub Action
