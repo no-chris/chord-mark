@@ -1,6 +1,6 @@
 node_modules
 coverage
-lib/report.html
+**/lib/report.html
 
 # IDE files
 .idea/**/workspace.xml

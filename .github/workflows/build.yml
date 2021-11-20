@@ -13,18 +13,19 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      # Install Node 14
+      # Install Node
       - uses: actions/setup-node@v1
         with:
-          node-version: 14
+          node-version: 16
 
       # Install & build & test:
       - run: npm install
-      - run: npm run-script test
+      - run: npx lerna bootstrap
+      - run: npx lerna run test
       
       # Coverage report
-      - name: Coveralls GitHub Action
-        uses: coverallsapp/github-action@v1.1.2
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Coveralls GitHub Action
+      #  uses: coverallsapp/github-action@v1.1.2
+      #  with:
+      #    github-token: ${{ secrets.GITHUB_TOKEN }}
 
