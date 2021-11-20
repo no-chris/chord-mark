@@ -1,6 +1,20 @@
 {
 	"name": "chord-mark",
 	"private": true,
+	"version": "0.6.1",
+	"description": "ChordMark - the most powerful syntax to write chords charts",
+	"license": "MIT",
+	"engines": {
+		"node": ">=16.0"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/no-chris/chord-mark.git"
+	},
+	"bugs": {
+		"url": "https://github.com/no-chris/chord-mark/issues"
+	},
+	"homepage": "https://github.com/no-chris/chord-mark#readme",
 	"devDependencies": {
 		"lerna": "^4.0.0"
 	}
