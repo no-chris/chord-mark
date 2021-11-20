@@ -18,6 +18,7 @@ const defaultTimeSignature = parseTimeSignature('4/4');
  * @typedef {Object} ChordLine
  * @type {Object}
  * @property {Bar[]} allBars
+ * @property {Boolean} hasPositionedChords
  */
 
 /**
@@ -26,7 +27,6 @@ const defaultTimeSignature = parseTimeSignature('4/4');
  * @property {TimeSignature} timeSignature
  * @property {ChordLineChord[]} allChords
  * @property {Boolean} isRepeated
- * @property {Boolean} hasPositionedChords
  * @property {Boolean} hasUnevenChordsDurations
  */
 
