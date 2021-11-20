@@ -10,7 +10,7 @@ export function getSectionLine(
 		type: 'sectionLabel',
 		string: sectionStr,
 		index: index,
-		indexWithoutRepeats: index,
+		indexWithoutMultiply: index,
 		model: parseSectionLabel(sectionStr),
 		id,
 	};
@@ -18,7 +18,7 @@ export function getSectionLine(
 		sectionLine.isFromSectionCopy = true;
 	}
 	if (fromRepeat) {
-		sectionLine.isFromSectionRepeat = true;
+		sectionLine.isFromSectionMultiply = true;
 	}
 	return sectionLine;
 }
@@ -39,7 +39,7 @@ function getLine(
 		line.isFromSectionCopy = true;
 	}
 	if (fromRepeat) {
-		line.isFromSectionRepeat = true;
+		line.isFromSectionMultiply = true;
 	}
 	return line;
 }
@@ -68,7 +68,7 @@ describe('getSectionLine()', () => {
 				type: 'sectionLabel',
 				string: '#v',
 				index: 1,
-				indexWithoutRepeats: 1,
+				indexWithoutMultiply: 1,
 				model: parseSectionLabel('#v'),
 				id: 'v1',
 			},
@@ -83,7 +83,7 @@ describe('getSectionLine()', () => {
 				type: 'sectionLabel',
 				string: '#c',
 				index: 2,
-				indexWithoutRepeats: 2,
+				indexWithoutMultiply: 2,
 				model: parseSectionLabel('#c'),
 				id: 'c2',
 			},
@@ -98,11 +98,11 @@ describe('getSectionLine()', () => {
 				type: 'sectionLabel',
 				string: '#v2 x3',
 				index: 2,
-				indexWithoutRepeats: 2,
+				indexWithoutMultiply: 2,
 				model: parseSectionLabel('#v2 x3'),
 				id: 'v2',
 				isFromSectionCopy: true,
-				isFromSectionRepeat: true,
+				isFromSectionMultiply: true,
 			},
 		],
 	])(
@@ -149,7 +149,7 @@ describe('getLyricLine()', () => {
 				type: 'lyric',
 				model: 'lyricContent',
 				string: 'lyricContent',
-				isFromSectionRepeat: true,
+				isFromSectionMultiply: true,
 			},
 		],
 		[
@@ -161,7 +161,7 @@ describe('getLyricLine()', () => {
 				model: 'lyricContent',
 				string: 'lyricContent',
 				isFromSectionCopy: true,
-				isFromSectionRepeat: true,
+				isFromSectionMultiply: true,
 			},
 		],
 	])('Lyric line: %s', (title, fromCopy, fromRepeat, expected) => {
@@ -208,7 +208,7 @@ describe('getChordLine()', () => {
 				type: 'chord',
 				model: 'chordContent',
 				string: 'chordContent',
-				isFromSectionRepeat: true,
+				isFromSectionMultiply: true,
 			},
 		],
 		[
@@ -220,7 +220,7 @@ describe('getChordLine()', () => {
 				model: 'chordContent',
 				string: 'chordContent',
 				isFromSectionCopy: true,
-				isFromSectionRepeat: true,
+				isFromSectionMultiply: true,
 			},
 		],
 	])('Chord line: %s', (title, fromCopy, fromRepeat, expected) => {
@@ -248,7 +248,7 @@ describe('getEmptyLine()', () => {
 			'no copy, repeat',
 			false,
 			true,
-			{ type: 'emptyLine', string: '', isFromSectionRepeat: true },
+			{ type: 'emptyLine', string: '', isFromSectionMultiply: true },
 		],
 		[
 			'copy, repeat',
@@ -258,7 +258,7 @@ describe('getEmptyLine()', () => {
 				type: 'emptyLine',
 				string: '',
 				isFromSectionCopy: true,
-				isFromSectionRepeat: true,
+				isFromSectionMultiply: true,
 			},
 		],
 	])('Empty line: %s', (title, fromCopy, fromRepeat, expected) => {

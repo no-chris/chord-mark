@@ -5,7 +5,7 @@ import isSectionLabel, { sectionLabelRegexp } from './matchers/isSectionLabel';
  * @type {Object}
  * @property {String} string - original string
  * @property {String} label - label of the section
- * @property {Number} repeatTimes - number of times the section should be repeated
+ * @property {Number} multiplyTimes - number of times the section should be multiplied
  * @property {Number} copyIndex - index of the section that should be copied
  */
 
@@ -26,6 +26,8 @@ export default function parseSectionLabel(string) {
 		string,
 		label: found[1],
 		copyIndex: found[2] ? Number.parseInt(found[2]) : 1,
-		repeatTimes: found[3] ? Number.parseInt(found[3].replace(' x', '')) : 0,
+		multiplyTimes: found[3]
+			? Number.parseInt(found[3].replace(' x', ''))
+			: 0,
 	};
 }

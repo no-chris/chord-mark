@@ -74,7 +74,7 @@ describe('Label indexes', () => {
 		['#c', 3, { c: 5 }, 'Chorus 3'],
 		['#b', 7, { b: 8 }, 'Bridge 7'],
 	])(
-		'Should append index to section label if expandSectionRepeats === true',
+		'Should append index to section label if expandSectionMultiply === true',
 		(string, index, sectionsStats, output) => {
 			test('appends ' + index, () => {
 				const line = {
@@ -83,7 +83,7 @@ describe('Label indexes', () => {
 				};
 				const rendered = renderSectionLabel(line, {
 					sectionsStats,
-					expandSectionRepeats: true,
+					expandSectionMultiply: true,
 				});
 				const element = htmlToElement(rendered);
 
@@ -98,16 +98,16 @@ describe('Label indexes', () => {
 		['#c', 3, { c: 5 }, 'Chorus 3'],
 		['#b', 7, { b: 8 }, 'Bridge 7'],
 	])(
-		'Should append indexWithoutRepeats if expandSectionRepeats === false',
-		(string, indexWithoutRepeats, sectionsStats, output) => {
-			test('appends ' + indexWithoutRepeats, () => {
+		'Should append indexWithoutMultiply if expandSectionMultiply === false',
+		(string, indexWithoutMultiply, sectionsStats, output) => {
+			test('appends ' + indexWithoutMultiply, () => {
 				const line = {
 					model: parseSectionLabel(string),
-					indexWithoutRepeats,
+					indexWithoutMultiply,
 				};
 				const rendered = renderSectionLabel(line, {
 					sectionsStats,
-					expandSectionRepeats: false,
+					expandSectionMultiply: false,
 				});
 				const element = htmlToElement(rendered);
 
@@ -139,13 +139,13 @@ describe('Label indexes', () => {
 });
 
 describe('Repeat indications', () => {
-	test('should NOT append repeat indication if expandSectionRepeats === true', () => {
+	test('should NOT append repeat indication if expandSectionMultiply === true', () => {
 		const line = {
 			model: parseSectionLabel('#v x5'),
 			index: 1,
 		};
 		const rendered = renderSectionLabel(line, {
-			expandSectionRepeats: true,
+			expandSectionMultiply: true,
 		});
 		const element = htmlToElement(rendered);
 
@@ -153,13 +153,13 @@ describe('Repeat indications', () => {
 		expect(element.innerHTML).toBe('Verse');
 	});
 
-	test('should append repeat indication if expandSectionRepeats === false', () => {
+	test('should append repeat indication if expandSectionMultiply === false', () => {
 		const line = {
 			model: parseSectionLabel('#v x5'),
 			index: 1,
 		};
 		const rendered = renderSectionLabel(line, {
-			expandSectionRepeats: false,
+			expandSectionMultiply: false,
 		});
 		const element = htmlToElement(rendered);
 

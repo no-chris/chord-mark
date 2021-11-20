@@ -107,8 +107,8 @@ Imagine there's no heaven`;
 	});
 });
 
-describe('expandSectionRepeat', () => {
-	test('Should repeat section when expandSectionRepeat === true', () => {
+describe('expandSectionMultiply', () => {
+	test('Should repeat section when expandSectionMultiply === true', () => {
 		const input = `#v x2
 A B
 verseLine1
@@ -124,12 +124,12 @@ Verse 2
 verseLine1
 |C  D  |E  |
 verseLine2`;
-		const rendered = renderSongText(input, { expandSectionRepeats: true });
+		const rendered = renderSongText(input, { expandSectionMultiply: true });
 		const element = htmlToElement(rendered);
 		expect(element.textContent).toBe(expected);
 	});
 
-	test('Should not repeat section when expandSectionRepeat === false, and display repeat string ("x2") after label', () => {
+	test('Should not repeat section when expandSectionMultiply === false, and display repeat string ("x2") after label', () => {
 		const input = `#v x2
 A B
 verseLine1
@@ -140,12 +140,14 @@ verseLine2`;
 verseLine1
 |C  D  |E  |
 verseLine2`;
-		const rendered = renderSongText(input, { expandSectionRepeats: false });
+		const rendered = renderSongText(input, {
+			expandSectionMultiply: false,
+		});
 		const element = htmlToElement(rendered);
 		expect(element.textContent).toBe(expected);
 	});
 
-	test('Should number repeats incrementally when expandSectionRepeat === true', () => {
+	test('Should number repeats incrementally when expandSectionMultiply === true', () => {
 		const input = `#v
 #v x2
 #v`;
@@ -153,12 +155,12 @@ verseLine2`;
 Verse 2
 Verse 3
 Verse 4`;
-		const rendered = renderSongText(input, { expandSectionRepeats: true });
+		const rendered = renderSongText(input, { expandSectionMultiply: true });
 		const element = htmlToElement(rendered);
 		expect(element.textContent).toBe(expected);
 	});
 
-	test('Should number repeats incrementally when expandSectionRepeat === false', () => {
+	test('Should number repeats incrementally when expandSectionMultiply === false', () => {
 		const input = `4/4
 #v
 #v x2
@@ -167,7 +169,9 @@ Verse 4`;
 Verse 1
 Verse 2 x2
 Verse 3`;
-		const rendered = renderSongText(input, { expandSectionRepeats: false });
+		const rendered = renderSongText(input, {
+			expandSectionMultiply: false,
+		});
 		const element = htmlToElement(rendered);
 		expect(element.textContent).toBe(expected);
 	});
@@ -195,7 +199,7 @@ Bridge
 Chorus 3
 Chorus 4
 Outro`;
-		const rendered = renderSongText(input, { expandSectionRepeats: true });
+		const rendered = renderSongText(input, { expandSectionMultiply: true });
 		const element = htmlToElement(rendered);
 		expect(element.textContent).toBe(expected);
 	});

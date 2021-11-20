@@ -24,7 +24,7 @@ const defaultTimeSignature = '4/4';
  * @type {Object}
  * @property {String} string - original line in source file
  * @property {String} type - chord|lyric|timeSignature|sectionLabel...
- * @property {Boolean} [isFromSectionRepeat] - line created by a section repeat directive (x3...)
+ * @property {Boolean} [isFromSectionMultiply] - line created by a section multiply directive (#chorus x3, for ex)
  * @property {Boolean} [isFromSectionCopy] - line created by a section copy (eg empty # section)
  * @property {Boolean} [isFromAutoRepeatChords] - line created by auto repeats of chords from a section to another
  */
@@ -53,7 +53,7 @@ const defaultTimeSignature = '4/4';
  * @type {Object}
  * @property {SectionLabel} model
  * @property {Number} index - index of the section for a given label (#v, #v x2, #v => 1, 2, 3, 4)
- * @property {Number} indexWithoutRepeats - idem, but not taking repeats into account (#v, #v x2, #v => 1, 2, 3)
+ * @property {Number} indexWithoutMultiply - idem, but not taking repeats into account (#v, #v x2, #v => 1, 2, 3)
  * @property {String} id
  */
 
@@ -74,7 +74,7 @@ export default function songLinesFactory() {
 	let blueprintLine = '';
 
 	let isRepeatingChords = false;
-	let shouldRepeatSection = false;
+	let shouldMultiplySection = false;
 	let shouldCopySection = false;
 
 	/**
@@ -104,7 +104,7 @@ export default function songLinesFactory() {
 			type: lineTypes.SECTION_LABEL,
 			model: currentSection,
 			index: currentSectionStats.count,
-			indexWithoutRepeats: currentSectionStats.withoutRepeats,
+			indexWithoutMultiply: currentSectionStats.withoutMultiply,
 			id: currentSection.label + currentSectionStats.count,
 		};
 
@@ -115,7 +115,7 @@ export default function songLinesFactory() {
 			line.isFromSectionCopy = true;
 		}
 
-		shouldRepeatSection = currentSection.repeatTimes > 0;
+		shouldMultiplySection = currentSection.multiplyTimes > 0;
 		previousSectionLabelLine = _cloneDeep(line);
 
 		if (!isFirstOfLabel(currentSection, allLines)) {
@@ -196,16 +196,16 @@ export default function songLinesFactory() {
 		};
 	}
 
-	function increaseSectionStats(label, isRepeated = false) {
+	function increaseSectionStats(label, isMultiplied = false) {
 		if (!sectionsStats[label]) {
 			sectionsStats[label] = {
 				count: 1,
-				withoutRepeats: 1,
+				withoutMultiply: 1,
 			};
 		} else {
 			sectionsStats[label].count++;
-			if (!isRepeated) {
-				sectionsStats[label].withoutRepeats++;
+			if (!isMultiplied) {
+				sectionsStats[label].withoutMultiply++;
 			}
 		}
 	}
@@ -276,34 +276,34 @@ export default function songLinesFactory() {
 		return currentSectionContent.length === 0;
 	}
 
-	function repeatSection(lineIndex, allSrcLines) {
+	function multiplySection(lineIndex, allSrcLines) {
 		if (
-			shouldRepeatSection &&
+			shouldMultiplySection &&
 			isLastLineOfSection(lineIndex, allSrcLines)
 		) {
-			const toRepeat = getNthOfLabel(
+			const toMultiply = getNthOfLabel(
 				allLines,
 				currentSection.label,
 				currentSectionStats.count
 			).map((line) => ({
 				..._cloneDeep(line),
-				isFromSectionRepeat: true,
+				isFromSectionMultiply: true,
 			}));
 			let sectionLabelLine;
 
-			for (let i = 1; i < currentSection.repeatTimes; i++) {
+			for (let i = 1; i < currentSection.multiplyTimes; i++) {
 				increaseSectionStats(currentSection.label, true);
 				currentSectionStats = getSectionCount(currentSection.label);
 
 				sectionLabelLine = {
 					..._cloneDeep(previousSectionLabelLine),
 					index: currentSectionStats.count,
-					indexWithoutRepeats: currentSectionStats.withoutRepeats,
+					indexWithoutMultiply: currentSectionStats.withoutMultiply,
 					id: currentSection.label + currentSectionStats.count,
-					isFromSectionRepeat: true,
+					isFromSectionMultiply: true,
 				};
 				allLines.push(sectionLabelLine);
-				allLines.push(..._cloneDeep(toRepeat));
+				allLines.push(..._cloneDeep(toMultiply));
 			}
 		}
 	}
@@ -330,7 +330,7 @@ export default function songLinesFactory() {
 			allLines.push(line);
 
 			copySection();
-			repeatSection(lineIndex, allSrcLines);
+			multiplySection(lineIndex, allSrcLines);
 		},
 
 		/**
