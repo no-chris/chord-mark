@@ -46,7 +46,6 @@ describe.each([
 					hasUnevenChordsDurations: false,
 				},
 			],
-			chordCount: 1,
 		},
 	],
 
@@ -76,7 +75,6 @@ describe.each([
 					hasUnevenChordsDurations: false,
 				},
 			],
-			chordCount: 2,
 		},
 	],
 
@@ -112,7 +110,6 @@ describe.each([
 					hasUnevenChordsDurations: true,
 				},
 			],
-			chordCount: 3,
 		},
 	],
 
@@ -154,7 +151,6 @@ describe.each([
 					hasUnevenChordsDurations: false,
 				},
 			],
-			chordCount: 4,
 		},
 	],
 
@@ -191,7 +187,6 @@ describe.each([
 					hasUnevenChordsDurations: false,
 				},
 			],
-			chordCount: 2,
 		},
 	],
 
@@ -234,7 +229,6 @@ describe.each([
 					hasUnevenChordsDurations: false,
 				},
 			],
-			chordCount: 3,
 		},
 	],
 
@@ -283,7 +277,6 @@ describe.each([
 					hasUnevenChordsDurations: true,
 				},
 			],
-			chordCount: 4,
 		},
 	],
 
@@ -339,7 +332,6 @@ describe.each([
 					hasUnevenChordsDurations: false,
 				},
 			],
-			chordCount: 4,
 		},
 	],
 
@@ -363,7 +355,6 @@ describe.each([
 					hasUnevenChordsDurations: false,
 				},
 			],
-			chordCount: 1,
 		},
 	],
 
@@ -393,7 +384,6 @@ describe.each([
 					hasUnevenChordsDurations: true,
 				},
 			],
-			chordCount: 2,
 		},
 	],
 
@@ -423,7 +413,6 @@ describe.each([
 					hasUnevenChordsDurations: true,
 				},
 			],
-			chordCount: 2,
 		},
 	],
 
@@ -459,7 +448,6 @@ describe.each([
 					hasUnevenChordsDurations: false,
 				},
 			],
-			chordCount: 3,
 		},
 	],
 
@@ -509,7 +497,6 @@ describe.each([
 					hasUnevenChordsDurations: false,
 				},
 			],
-			chordCount: 3,
 		},
 	],
 
@@ -533,7 +520,6 @@ describe.each([
 					hasUnevenChordsDurations: false,
 				},
 			],
-			chordCount: 1,
 		},
 	],
 
@@ -557,7 +543,6 @@ describe.each([
 					hasUnevenChordsDurations: false,
 				},
 			],
-			chordCount: 1,
 		},
 	],
 
@@ -581,7 +566,6 @@ describe.each([
 					hasUnevenChordsDurations: false,
 				},
 			],
-			chordCount: 1,
 		},
 	],
 
@@ -611,7 +595,6 @@ describe.each([
 					hasUnevenChordsDurations: false,
 				},
 			],
-			chordCount: 2,
 		},
 	],
 
@@ -670,7 +653,6 @@ describe.each([
 					hasUnevenChordsDurations: false,
 				},
 			],
-			chordCount: 5,
 		},
 	],
 
@@ -733,7 +715,6 @@ describe.each([
 					hasUnevenChordsDurations: false,
 				},
 			],
-			chordCount: 2,
 		},
 	],
 
@@ -794,7 +775,6 @@ describe.each([
 					hasUnevenChordsDurations: true,
 				},
 			],
-			chordCount: 3,
 		},
 	],
 ])('%s: %s', (title, input, timeSignature, expected) => {

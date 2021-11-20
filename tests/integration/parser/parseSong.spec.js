@@ -64,7 +64,6 @@ Let it be`;
 								hasPositionedChords: false,
 							},
 						],
-						chordCount: 2,
 					},
 				},
 				{
