@@ -68,7 +68,7 @@ export default function renderSong(
 		});
 
 	const sectionsStats = getSectionsStats(allLines);
-	const maxBeatsWidth = getMaxBeatsWidth(allLines, alignChordsWithLyrics);
+	const maxBeatsWidth = getMaxBeatsWidth(allLines, shouldAlignChords);
 
 	const song = renderAllLines().join('\n');
 
@@ -154,9 +154,10 @@ export default function renderSong(
 				let rendered;
 
 				if (line.type === lineTypes.CHORD) {
-					let spaced = alignBars
-						? alignedChordSpacer(line.model, maxBeatsWidth)
-						: simpleChordSpacer(line.model);
+					let spaced =
+						alignBars && !shouldAlignChords(line)
+							? alignedChordSpacer(line.model, maxBeatsWidth)
+							: simpleChordSpacer(line.model);
 
 					const nextLine = allFilteredLines[lineIndex + 1];
 					if (shouldAlignChords(line)) {

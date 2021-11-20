@@ -3,17 +3,15 @@ import symbols from '../../symbols';
 
 /**
  * @param {SongLine[]} allLines
- * @param {Boolean} alignChordsWithLyrics
+ * @param {Function} shouldAlignChords
  * @returns {Array}
  */
-export default function getMaxBeatsWidth(allLines, alignChordsWithLyrics) {
+export default function getMaxBeatsWidth(allLines, shouldAlignChords) {
 	const maxBeatsWidth = [];
 
 	allLines
 		.filter((line) => line.type === lineTypes.CHORD)
-		.filter(
-			(line) => !(alignChordsWithLyrics && line.model.hasPositionedChords)
-		)
+		.filter((line) => !shouldAlignChords(line))
 		.forEach((line) => {
 			line.model.allBars.forEach((bar, barIndex) => {
 				if (!maxBeatsWidth[barIndex]) {
