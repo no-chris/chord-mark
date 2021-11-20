@@ -5,6 +5,12 @@ import _ from 'lodash';
 
 import songLinesFactory from '../../../src/parser/songLinesFactory';
 
+import {
+	getLyricLine,
+	getChordLine,
+	getSectionLine,
+	getEmptyLine,
+} from './songLinesFactory-helpers.spec';
 import parseChordLine from '../../../src/parser/parseChordLine';
 import parseSectionLabel from '../../../src/parser/parseSectionLabel';
 import parseTimeSignature from '../../../src/parser/parseTimeSignature';
@@ -52,47 +58,23 @@ F. Em. Dm. C.
 Let it be`;
 
 		const expected = [
-			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
-			{
-				type: 'lyric',
-				model: 'When I find myself in times of trouble',
-				string: 'When I find myself in times of trouble',
-			},
-			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
-			{
-				type: 'lyric',
-				model: 'Mother mary comes to me',
-				string: 'Mother mary comes to me',
-			},
-			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
-			{
-				type: 'lyric',
-				model: 'Speaking words of wisdom',
-				string: 'Speaking words of wisdom',
-			},
-			{ type: 'chord', string: 'F. Em. Dm. C.', model: 'F. Em. Dm. C.' },
-			{ type: 'lyric', model: 'Let it be', string: 'Let it be' },
-			{ type: 'emptyLine', string: '' },
-			{ type: 'chord', string: 'Am.. G..', model: 'Am.. G..' },
-			{
-				type: 'lyric',
-				model: 'Let it be, let it be',
-				string: 'Let it be, let it be',
-			},
-			{ type: 'chord', string: 'C.. F..', model: 'C.. F..' },
-			{
-				type: 'lyric',
-				model: 'Let it be, let it be',
-				string: 'Let it be, let it be',
-			},
-			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
-			{
-				type: 'lyric',
-				model: 'Whispers words of wisdom',
-				string: 'Whispers words of wisdom',
-			},
-			{ type: 'chord', string: 'F. Em. Dm. C.', model: 'F. Em. Dm. C.' },
-			{ type: 'lyric', model: 'Let it be', string: 'Let it be' },
+			getChordLine('C.. G..'),
+			getLyricLine('When I find myself in times of trouble'),
+			getChordLine('Am.. F..'),
+			getLyricLine('Mother mary comes to me'),
+			getChordLine('C.. G..'),
+			getLyricLine('Speaking words of wisdom'),
+			getChordLine('F. Em. Dm. C.'),
+			getLyricLine('Let it be'),
+			getEmptyLine(),
+			getChordLine('Am.. G..'),
+			getLyricLine('Let it be, let it be'),
+			getChordLine('C.. F..'),
+			getLyricLine('Let it be, let it be'),
+			getChordLine('C.. G..'),
+			getLyricLine('Whispers words of wisdom'),
+			getChordLine('F. Em. Dm. C.'),
+			getLyricLine('Let it be'),
 		];
 
 		const songLines = songLinesFactory();
@@ -196,7 +178,7 @@ describe('sectionLabels and autoRepeatChords', () => {
 				string: '#i',
 				model: sectionsParsed[0],
 				index: 1,
-				indexWithoutRepeats: 1,
+				indexWithoutMultiply: 1,
 				id: 'i1',
 			},
 			{
@@ -204,7 +186,7 @@ describe('sectionLabels and autoRepeatChords', () => {
 				string: '#v',
 				model: sectionsParsed[1],
 				index: 1,
-				indexWithoutRepeats: 1,
+				indexWithoutMultiply: 1,
 				id: 'v1',
 			},
 			{
@@ -212,15 +194,16 @@ describe('sectionLabels and autoRepeatChords', () => {
 				string: '#v',
 				model: sectionsParsed[2],
 				index: 2,
-				indexWithoutRepeats: 2,
+				indexWithoutMultiply: 2,
 				id: 'v2',
+				isFromSectionCopy: true,
 			},
 			{
 				type: 'sectionLabel',
 				string: '#c',
 				model: sectionsParsed[3],
 				index: 1,
-				indexWithoutRepeats: 1,
+				indexWithoutMultiply: 1,
 				id: 'c1',
 			},
 			{
@@ -228,56 +211,62 @@ describe('sectionLabels and autoRepeatChords', () => {
 				string: '#v',
 				model: sectionsParsed[4],
 				index: 3,
-				indexWithoutRepeats: 3,
+				indexWithoutMultiply: 3,
 				id: 'v3',
+				isFromSectionCopy: true,
 			},
 			{
 				type: 'sectionLabel',
 				string: '#c',
 				model: sectionsParsed[5],
 				index: 2,
-				indexWithoutRepeats: 2,
+				indexWithoutMultiply: 2,
 				id: 'c2',
+				isFromSectionCopy: true,
 			},
 			{
 				type: 'sectionLabel',
 				string: '#v',
 				model: sectionsParsed[6],
 				index: 4,
-				indexWithoutRepeats: 4,
+				indexWithoutMultiply: 4,
 				id: 'v4',
+				isFromSectionCopy: true,
 			},
 			{
 				type: 'sectionLabel',
 				string: '#c x2',
 				model: sectionsParsed[7],
 				index: 3,
-				indexWithoutRepeats: 3,
+				indexWithoutMultiply: 3,
 				id: 'c3',
+				isFromSectionCopy: true,
 			},
 			{
 				type: 'sectionLabel',
 				string: '#c x2',
 				model: _.cloneDeep(sectionsParsed[7]),
 				index: 4,
-				indexWithoutRepeats: 3,
+				indexWithoutMultiply: 3,
 				id: 'c4',
-				isFromSectionRepeat: true,
+				isFromSectionMultiply: true,
+				isFromSectionCopy: true,
 			},
 			{
 				type: 'sectionLabel',
 				string: '#c',
 				model: sectionsParsed[8],
 				index: 5,
-				indexWithoutRepeats: 4,
+				indexWithoutMultiply: 4,
 				id: 'c5',
+				isFromSectionCopy: true,
 			},
 			{
 				type: 'sectionLabel',
 				string: '#o',
 				model: sectionsParsed[9],
 				index: 1,
-				indexWithoutRepeats: 1,
+				indexWithoutMultiply: 1,
 				id: 'o1',
 			},
 		];
@@ -292,6 +281,7 @@ describe('sectionLabels and autoRepeatChords', () => {
 		const ts4_4 = parseTimeSignature('4/4');
 
 		parseChordLine.mockImplementation((chordLine) => chordLine);
+		parseLyricLine.mockImplementation((lyricLine) => lyricLine);
 
 		const input = `#v
 4/4
@@ -336,45 +326,19 @@ Whispers words of wisdom
 Let it be`;
 
 		const expected = [
-			{
-				type: 'sectionLabel',
-				string: '#v',
-				index: 1,
-				indexWithoutRepeats: 1,
-				model: parseSectionLabel('#v'),
-				id: 'v1',
-			},
+			getSectionLine('#v', 'v1', 1),
 			{ type: 'timeSignature', string: '4/4', model: _.cloneDeep(ts4_4) },
-			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
-			{
-				type: 'lyric',
-				model: 'When I find myself in times of trouble',
-				string: 'When I find myself in times of trouble',
-			},
-			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
-			{
-				type: 'lyric',
-				model: 'Mother mary comes to me',
-				string: 'Mother mary comes to me',
-			},
-			{ type: 'emptyLine', string: '' },
-			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
-			{
-				type: 'lyric',
-				model: 'Speaking words of wisdom',
-				string: 'Speaking words of wisdom',
-			},
-			{ type: 'chord', string: 'F. Em. Dm. C.', model: 'F. Em. Dm. C.' },
-			{ type: 'lyric', model: 'Let it be', string: 'Let it be' },
-			{ type: 'emptyLine', string: '' },
-			{
-				type: 'sectionLabel',
-				string: '#v',
-				index: 2,
-				indexWithoutRepeats: 2,
-				model: parseSectionLabel('#v'),
-				id: 'v2',
-			},
+			getChordLine('C.. G..'),
+			getLyricLine('When I find myself in times of trouble'),
+			getChordLine('Am.. F..'),
+			getLyricLine('Mother mary comes to me'),
+			getEmptyLine(),
+			getChordLine('C.. G..'),
+			getLyricLine('Speaking words of wisdom'),
+			getChordLine('F. Em. Dm. C.'),
+			getLyricLine('Let it be'),
+			getEmptyLine(),
+			getSectionLine('#v', 'v2', 2),
 			{
 				type: 'timeSignature',
 				string: '4/4',
@@ -387,76 +351,46 @@ Let it be`;
 				model: 'C.. G..',
 				isFromAutoRepeatChords: true,
 			},
-			{
-				type: 'lyric',
-				model: 'And in my hour of darkness',
-				string: 'And in my hour of darkness',
-			},
+			getLyricLine('And in my hour of darkness'),
 			{
 				type: 'chord',
 				string: 'Am.. F..',
 				model: 'Am.. F..',
 				isFromAutoRepeatChords: true,
 			},
-			{
-				type: 'lyric',
-				model: 'she is standing right in front of me',
-				string: 'she is standing right in front of me',
-			},
-			{ type: 'emptyLine', string: '' },
+
+			getLyricLine('she is standing right in front of me'),
+			getEmptyLine(),
 			{
 				type: 'chord',
 				string: 'C.. G..',
 				model: 'C.. G..',
 				isFromAutoRepeatChords: true,
 			},
-			{
-				type: 'lyric',
-				model: 'Speaking words of wisdom',
-				string: 'Speaking words of wisdom',
-			},
+			getLyricLine('Speaking words of wisdom'),
 			{
 				type: 'chord',
 				string: 'F. Em. Dm. C.',
 				model: 'F. Em. Dm. C.',
 				isFromAutoRepeatChords: true,
 			},
-			{ type: 'lyric', model: 'Let it be', string: 'Let it be' },
-			{ type: 'emptyLine', string: '' },
-			{
-				type: 'sectionLabel',
-				string: '#c',
-				index: 1,
-				indexWithoutRepeats: 1,
-				model: parseSectionLabel('#c'),
-				id: 'c1',
-			},
-			{ type: 'chord', string: 'Am.. G..', model: 'Am.. G..' },
-			{
-				type: 'lyric',
-				model: 'Let it be, let it be',
-				string: 'Let it be, let it be',
-			},
-			{ type: 'chord', string: 'C.. F..', model: 'C.. F..' },
-			{
-				type: 'lyric',
-				model: 'Let it be, let it be',
-				string: 'Let it be, let it be',
-			},
-			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
-			{
-				type: 'lyric',
-				model: 'Whispers words of wisdom',
-				string: 'Whispers words of wisdom',
-			},
-			{ type: 'chord', string: 'F. Em. Dm. C.', model: 'F. Em. Dm. C.' },
-			{ type: 'lyric', model: 'Let it be', string: 'Let it be' },
-			{ type: 'emptyLine', string: '' },
+			getLyricLine('Let it be'),
+			getEmptyLine(),
+			getSectionLine('#c', 'c1', 1),
+			getChordLine('Am.. G..'),
+			getLyricLine('Let it be, let it be'),
+			getChordLine('C.. F..'),
+			getLyricLine('Let it be, let it be'),
+			getChordLine('C.. G..'),
+			getLyricLine('Whispers words of wisdom'),
+			getChordLine('F. Em. Dm. C.'),
+			getLyricLine('Let it be'),
+			getEmptyLine(),
 			{
 				type: 'sectionLabel',
 				string: '#v',
 				index: 3,
-				indexWithoutRepeats: 3,
+				indexWithoutMultiply: 3,
 				model: parseSectionLabel('#v'),
 				id: 'v3',
 			},
@@ -472,90 +406,59 @@ Let it be`;
 				model: 'C.. G..',
 				isFromAutoRepeatChords: true,
 			},
-			{
-				type: 'lyric',
-				model: 'And when the broken hearted people',
-				string: 'And when the broken hearted people',
-			},
+			getLyricLine('And when the broken hearted people'),
 			{
 				type: 'chord',
 				string: 'Am.. F..',
 				model: 'Am.. F..',
 				isFromAutoRepeatChords: true,
 			},
-			{
-				type: 'lyric',
-				model: 'Living in the world agree',
-				string: 'Living in the world agree',
-			},
-			{ type: 'emptyLine', string: '' },
+			getLyricLine('Living in the world agree'),
+			getEmptyLine(),
 			{
 				type: 'chord',
 				string: 'C.. G..',
 				model: 'C.. G..',
 				isFromAutoRepeatChords: true,
 			},
-			{
-				type: 'lyric',
-				model: 'There will be an answer',
-				string: 'There will be an answer',
-			},
+			getLyricLine('There will be an answer'),
 			{
 				type: 'chord',
 				string: 'F. Em. Dm. C.',
 				model: 'F. Em. Dm. C.',
 				isFromAutoRepeatChords: true,
 			},
-			{ type: 'lyric', model: 'Let it be', string: 'Let it be' },
-			{ type: 'emptyLine', string: '' },
-			{
-				type: 'sectionLabel',
-				string: '#c',
-				index: 2,
-				indexWithoutRepeats: 2,
-				model: parseSectionLabel('#c'),
-				id: 'c2',
-			},
+			getLyricLine('Let it be'),
+			getEmptyLine(),
+			getSectionLine('#c', 'c2', 2),
 			{
 				type: 'chord',
 				string: 'Am.. G..',
 				model: 'Am.. G..',
 				isFromAutoRepeatChords: true,
 			},
-			{
-				type: 'lyric',
-				model: 'Let it be, let it be',
-				string: 'Let it be, let it be',
-			},
+			getLyricLine('Let it be, let it be'),
 			{
 				type: 'chord',
 				string: 'C.. F..',
 				model: 'C.. F..',
 				isFromAutoRepeatChords: true,
 			},
-			{
-				type: 'lyric',
-				model: 'Let it be, let it be',
-				string: 'Let it be, let it be',
-			},
+			getLyricLine('Let it be, let it be'),
 			{
 				type: 'chord',
 				string: 'C.. G..',
 				model: 'C.. G..',
 				isFromAutoRepeatChords: true,
 			},
-			{
-				type: 'lyric',
-				model: 'Whispers words of wisdom',
-				string: 'Whispers words of wisdom',
-			},
+			getLyricLine('Whispers words of wisdom'),
 			{
 				type: 'chord',
 				string: 'F. Em. Dm. C.',
 				model: 'F. Em. Dm. C.',
 				isFromAutoRepeatChords: true,
 			},
-			{ type: 'lyric', model: 'Let it be', string: 'Let it be' },
+			getLyricLine('Let it be'),
 		];
 
 		const songLines = songLinesFactory();
@@ -566,6 +469,7 @@ Let it be`;
 
 	test('blueprint overflows repeat, last empty line of repeat is not "chorded"', () => {
 		parseChordLine.mockImplementation((chordLine) => chordLine);
+		parseLyricLine.mockImplementation((lyricLine) => lyricLine);
 
 		const input = `#v
 C.. G..
@@ -590,51 +494,37 @@ line3-3
 `;
 
 		const expected = [
-			{
-				type: 'sectionLabel',
-				string: '#v',
-				index: 1,
-				indexWithoutRepeats: 1,
-				model: parseSectionLabel('#v'),
-				id: 'v1',
-			},
-			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
-			{ type: 'lyric', string: 'line1-1', model: 'line1-1' },
-			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
-			{ type: 'lyric', string: 'line1-2', model: 'line1-2' },
-			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
-			{ type: 'lyric', string: 'line1-3', model: 'line1-3' },
-			{ type: 'chord', string: 'F. Em. Dm. C.', model: 'F. Em. Dm. C.' },
-			{ type: 'lyric', string: 'line1-4', model: 'line1-4' },
-			{ type: 'emptyLine', string: '' },
-			{
-				type: 'sectionLabel',
-				string: '#v',
-				index: 2,
-				indexWithoutRepeats: 2,
-				model: parseSectionLabel('#v'),
-				id: 'v2',
-			},
+			getSectionLine('#v', 'v1', 1),
+			getChordLine('C.. G..'),
+			getLyricLine('line1-1'),
+			getChordLine('Am.. F..'),
+			getLyricLine('line1-2'),
+			getChordLine('C.. G..'),
+			getLyricLine('line1-3'),
+			getChordLine('F. Em. Dm. C.'),
+			getLyricLine('line1-4'),
+			getEmptyLine(),
+			getSectionLine('#v', 'v2', 2),
 			{
 				type: 'chord',
 				string: 'C.. G..',
 				model: 'C.. G..',
 				isFromAutoRepeatChords: true,
 			},
-			{ type: 'lyric', string: 'line2-1', model: 'line2-1' },
+			getLyricLine('line2-1'),
 			{
 				type: 'chord',
 				string: 'Am.. F..',
 				model: 'Am.. F..',
 				isFromAutoRepeatChords: true,
 			},
-			{ type: 'lyric', string: 'line2-2', model: 'line2-2' },
-			{ type: 'emptyLine', string: '' },
+			getLyricLine('line2-2'),
+			getEmptyLine(),
 			{
 				type: 'sectionLabel',
 				string: '#v',
 				index: 3,
-				indexWithoutRepeats: 3,
+				indexWithoutMultiply: 3,
 				model: parseSectionLabel('#v'),
 				id: 'v3',
 			},
@@ -644,24 +534,24 @@ line3-3
 				model: 'C.. G..',
 				isFromAutoRepeatChords: true,
 			},
-			{ type: 'lyric', string: 'line3-1', model: 'line3-1' },
+			getLyricLine('line3-1'),
 			{
 				type: 'chord',
 				string: 'Am.. F..',
 				model: 'Am.. F..',
 				isFromAutoRepeatChords: true,
 			},
-			{ type: 'lyric', string: 'line3-2', model: 'line3-2' },
+			getLyricLine('line3-2'),
 			{
 				type: 'chord',
 				string: 'C.. G..',
 				model: 'C.. G..',
 				isFromAutoRepeatChords: true,
 			},
-			{ type: 'lyric', string: 'line3-3', model: 'line3-3' },
-			{ type: 'emptyLine', string: '' },
-			{ type: 'emptyLine', string: '' },
-			{ type: 'emptyLine', string: '' },
+			getLyricLine('line3-3'),
+			getEmptyLine(),
+			getEmptyLine(),
+			getEmptyLine(),
 		];
 
 		const songLines = songLinesFactory();
@@ -672,6 +562,7 @@ line3-3
 
 	test('repeat overflows blueprint', () => {
 		parseChordLine.mockImplementation((chordLine) => chordLine);
+		parseLyricLine.mockImplementation((lyricLine) => lyricLine);
 
 		const input = `#v
 C.. G..
@@ -688,45 +579,31 @@ F. Em. Dm. C.
 line2-4`;
 
 		const expected = [
-			{
-				type: 'sectionLabel',
-				string: '#v',
-				index: 1,
-				indexWithoutRepeats: 1,
-				model: parseSectionLabel('#v'),
-				id: 'v1',
-			},
-			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
-			{ type: 'lyric', string: 'line1-1', model: 'line1-1' },
-			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
-			{ type: 'lyric', string: 'line1-2', model: 'line1-2' },
-			{ type: 'emptyLine', string: '' },
-			{
-				type: 'sectionLabel',
-				string: '#v',
-				index: 2,
-				indexWithoutRepeats: 2,
-				model: parseSectionLabel('#v'),
-				id: 'v2',
-			},
+			getSectionLine('#v', 'v1', 1),
+			getChordLine('C.. G..'),
+			getLyricLine('line1-1'),
+			getChordLine('Am.. F..'),
+			getLyricLine('line1-2'),
+			getEmptyLine(),
+			getSectionLine('#v', 'v2', 2),
 			{
 				type: 'chord',
 				string: 'C.. G..',
 				model: 'C.. G..',
 				isFromAutoRepeatChords: true,
 			},
-			{ type: 'lyric', string: 'line2-1', model: 'line2-1' },
+			getLyricLine('line2-1'),
 			{
 				type: 'chord',
 				string: 'Am.. F..',
 				model: 'Am.. F..',
 				isFromAutoRepeatChords: true,
 			},
-			{ type: 'lyric', string: 'line2-2', model: 'line2-2' },
-			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
-			{ type: 'lyric', string: 'line2-3', model: 'line2-3' },
-			{ type: 'chord', string: 'F. Em. Dm. C.', model: 'F. Em. Dm. C.' },
-			{ type: 'lyric', string: 'line2-4', model: 'line2-4' },
+			getLyricLine('line2-2'),
+			getChordLine('C.. G..'),
+			getLyricLine('line2-3'),
+			getChordLine('F. Em. Dm. C.'),
+			getLyricLine('line2-4'),
 		];
 
 		const songLines = songLinesFactory();
@@ -750,36 +627,22 @@ F. Em. Dm. C.
 line2-2`;
 
 		const expected = [
-			{
-				type: 'sectionLabel',
-				string: '#v',
-				index: 1,
-				indexWithoutRepeats: 1,
-				model: parseSectionLabel('#v'),
-				id: 'v1',
-			},
-			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
-			{ type: 'lyric', string: 'line1-1', model: 'line1-1' },
-			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
-			{ type: 'lyric', string: 'line1-2', model: 'line1-2' },
-			{ type: 'emptyLine', string: '' },
-			{
-				type: 'sectionLabel',
-				string: '#v',
-				index: 2,
-				indexWithoutRepeats: 2,
-				model: parseSectionLabel('#v'),
-				id: 'v2',
-			},
+			getSectionLine('#v', 'v1', 1),
+			getChordLine('C.. G..'),
+			getLyricLine('line1-1'),
+			getChordLine('Am.. F..'),
+			getLyricLine('line1-2'),
+			getEmptyLine(),
+			getSectionLine('#v', 'v2', 2),
 			{
 				type: 'chord',
 				string: 'C.. G..',
 				model: 'C.. G..',
 				isFromAutoRepeatChords: true,
 			},
-			{ type: 'lyric', string: 'line2-1', model: 'line2-1' },
-			{ type: 'chord', string: 'F. Em. Dm. C.', model: 'F. Em. Dm. C.' },
-			{ type: 'lyric', string: 'line2-2', model: 'line2-2' },
+			getLyricLine('line2-1'),
+			getChordLine('F. Em. Dm. C.'),
+			getLyricLine('line2-2'),
 		];
 
 		const songLines = songLinesFactory();
@@ -792,35 +655,36 @@ line2-2`;
 describe('chordLineRepeater', () => {
 	test('should allow to repeat last chordLine', () => {
 		parseChordLine.mockImplementation((chordLine) => chordLine);
+		parseLyricLine.mockImplementation((lyricLine) => lyricLine);
 
 		const input = `C.. G..
 line1-1
-/
+%
 line1-2
 
 
-/
+%
 line2-1`;
 
 		const expected = [
-			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
-			{ type: 'lyric', string: 'line1-1', model: 'line1-1' },
+			getChordLine('C.. G..'),
+			getLyricLine('line1-1'),
 			{
 				type: 'chord',
 				string: 'C.. G..',
 				model: 'C.. G..',
 				isFromChordLineRepeater: true,
 			},
-			{ type: 'lyric', string: 'line1-2', model: 'line1-2' },
-			{ type: 'emptyLine', string: '' },
-			{ type: 'emptyLine', string: '' },
+			getLyricLine('line1-2'),
+			getEmptyLine(),
+			getEmptyLine(),
 			{
 				type: 'chord',
 				string: 'C.. G..',
 				model: 'C.. G..',
 				isFromChordLineRepeater: true,
 			},
-			{ type: 'lyric', string: 'line2-1', model: 'line2-1' },
+			getLyricLine('line2-1'),
 		];
 
 		const songLines = songLinesFactory();
@@ -829,23 +693,93 @@ line2-1`;
 		expect(songLines.asArray()).toEqual(expected);
 	});
 
-	test('should be parsed as lyric line if there is no chordLine before', () => {
+	test('should allow to repeat before-last chordLine', () => {
 		parseChordLine.mockImplementation((chordLine) => chordLine);
+		parseLyricLine.mockImplementation((lyricLine) => lyricLine);
 
-		const input = `/
+		const input = `C.. G..
 line1-1
-/
+Am.. F..
 line1-2
-/
+
+%%
+line2-1
+%
+line2-2`;
+
+		const expected = [
+			getChordLine('C.. G..'),
+			getLyricLine('line1-1'),
+			getChordLine('Am.. F..'),
+			getLyricLine('line1-2'),
+			getEmptyLine(),
+
+			{
+				type: 'chord',
+				string: 'C.. G..',
+				model: 'C.. G..',
+				isFromChordLineRepeater: true,
+			},
+			getLyricLine('line2-1'),
+			{
+				type: 'chord',
+				string: 'Am.. F..',
+				model: 'Am.. F..',
+				isFromChordLineRepeater: true,
+			},
+			getLyricLine('line2-2'),
+		];
+
+		const songLines = songLinesFactory();
+		input.split('\n').forEach(songLines.addLine);
+
+		expect(songLines.asArray()).toEqual(expected);
+	});
+
+	test('should be parsed as lyric line if there is no chordLine before (repeat last chord line)', () => {
+		parseChordLine.mockImplementation((chordLine) => chordLine);
+		parseLyricLine.mockImplementation((lyricLine) => lyricLine);
+
+		const input = `%
+line1-1
+%
+line1-2
+%
 line1-3`;
 
 		const expected = [
-			{ type: 'lyric', string: '/', model: '/' },
-			{ type: 'lyric', string: 'line1-1', model: 'line1-1' },
-			{ type: 'lyric', string: '/', model: '/' },
-			{ type: 'lyric', string: 'line1-2', model: 'line1-2' },
-			{ type: 'lyric', string: '/', model: '/' },
-			{ type: 'lyric', string: 'line1-3', model: 'line1-3' },
+			getLyricLine('%'),
+			getLyricLine('line1-1'),
+			getLyricLine('%'),
+			getLyricLine('line1-2'),
+			getLyricLine('%'),
+			getLyricLine('line1-3'),
+		];
+
+		const songLines = songLinesFactory();
+		input.split('\n').forEach(songLines.addLine);
+
+		expect(songLines.asArray()).toEqual(expected);
+	});
+
+	test('should be parsed as lyric line if there is no chordLine before (repeat before-last chord line)', () => {
+		parseChordLine.mockImplementation((chordLine) => chordLine);
+		parseLyricLine.mockImplementation((lyricLine) => lyricLine);
+
+		const input = `C.. G..
+line1-1
+%%
+line1-2
+%%
+line1-3`;
+
+		const expected = [
+			getChordLine('C.. G..'),
+			getLyricLine('line1-1'),
+			getLyricLine('%%'),
+			getLyricLine('line1-2'),
+			getLyricLine('%%'),
+			getLyricLine('line1-3'),
 		];
 
 		const songLines = songLinesFactory();
@@ -856,6 +790,7 @@ line1-3`;
 
 	test('should be usable in repeated section', () => {
 		parseChordLine.mockImplementation((chordLine) => chordLine);
+		parseLyricLine.mockImplementation((lyricLine) => lyricLine);
 
 		const input = `#v
 C.. G..
@@ -865,45 +800,48 @@ line1-2
 
 #v
 line2-1
-/
-line2-2`;
+line2-2
+%%
+line2-3
+%
+line2-4`;
 
 		const expected = [
-			{
-				type: 'sectionLabel',
-				string: '#v',
-				index: 1,
-				indexWithoutRepeats: 1,
-				model: parseSectionLabel('#v'),
-				id: 'v1',
-			},
-			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
-			{ type: 'lyric', string: 'line1-1', model: 'line1-1' },
-			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
-			{ type: 'lyric', string: 'line1-2', model: 'line1-2' },
-			{ type: 'emptyLine', string: '' },
-			{
-				type: 'sectionLabel',
-				string: '#v',
-				index: 2,
-				indexWithoutRepeats: 2,
-				model: parseSectionLabel('#v'),
-				id: 'v2',
-			},
+			getSectionLine('#v', 'v1', 1),
+			getChordLine('C.. G..'),
+			getLyricLine('line1-1'),
+			getChordLine('Am.. F..'),
+			getLyricLine('line1-2'),
+			getEmptyLine(),
+			getSectionLine('#v', 'v2', 2),
 			{
 				type: 'chord',
 				string: 'C.. G..',
 				model: 'C.. G..',
 				isFromAutoRepeatChords: true,
 			},
-			{ type: 'lyric', string: 'line2-1', model: 'line2-1' },
+			getLyricLine('line2-1'),
+			{
+				type: 'chord',
+				string: 'Am.. F..',
+				model: 'Am.. F..',
+				isFromAutoRepeatChords: true,
+			},
+			getLyricLine('line2-2'),
 			{
 				type: 'chord',
 				string: 'C.. G..',
 				model: 'C.. G..',
 				isFromChordLineRepeater: true,
 			},
-			{ type: 'lyric', string: 'line2-2', model: 'line2-2' },
+			getLyricLine('line2-3'),
+			{
+				type: 'chord',
+				string: 'Am.. F..',
+				model: 'Am.. F..',
+				isFromChordLineRepeater: true,
+			},
+			getLyricLine('line2-4'),
 		];
 
 		const songLines = songLinesFactory();
@@ -916,6 +854,7 @@ line2-2`;
 describe('Repeat directive (x3, x5...)', () => {
 	test('should allow to repeat section', () => {
 		parseChordLine.mockImplementation((chordLine) => chordLine);
+		parseLyricLine.mockImplementation((lyricLine) => lyricLine);
 
 		const input = `#v x2
 C.. G..
@@ -928,49 +867,29 @@ line1-2
 				type: 'sectionLabel',
 				string: '#v x2',
 				index: 1,
-				indexWithoutRepeats: 1,
+				indexWithoutMultiply: 1,
 				model: parseSectionLabel('#v x2'),
 				id: 'v1',
 			},
-			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
-			{ type: 'lyric', string: 'line1-1', model: 'line1-1' },
-			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
-			{ type: 'lyric', string: 'line1-2', model: 'line1-2' },
-			{ type: 'emptyLine', string: '' },
+			getChordLine('C.. G..'),
+			getLyricLine('line1-1'),
+			getChordLine('Am.. F..'),
+			getLyricLine('line1-2'),
+			getEmptyLine(),
 			{
 				type: 'sectionLabel',
 				string: '#v x2',
 				index: 2,
-				indexWithoutRepeats: 1,
+				indexWithoutMultiply: 1,
 				model: parseSectionLabel('#v x2'),
 				id: 'v2',
-				isFromSectionRepeat: true,
+				isFromSectionMultiply: true,
 			},
-			{
-				type: 'chord',
-				string: 'C.. G..',
-				model: 'C.. G..',
-				isFromSectionRepeat: true,
-			},
-			{
-				type: 'lyric',
-				string: 'line1-1',
-				model: 'line1-1',
-				isFromSectionRepeat: true,
-			},
-			{
-				type: 'chord',
-				string: 'Am.. F..',
-				model: 'Am.. F..',
-				isFromSectionRepeat: true,
-			},
-			{
-				type: 'lyric',
-				string: 'line1-2',
-				model: 'line1-2',
-				isFromSectionRepeat: true,
-			},
-			{ type: 'emptyLine', string: '', isFromSectionRepeat: true },
+			getChordLine('C.. G..', { fromRepeat: true }),
+			getLyricLine('line1-1', { fromRepeat: true }),
+			getChordLine('Am.. F..', { fromRepeat: true }),
+			getLyricLine('line1-2', { fromRepeat: true }),
+			getEmptyLine({ fromRepeat: true }),
 		];
 
 		const songLines = songLinesFactory();
@@ -981,6 +900,7 @@ line1-2
 
 	test('should allow to repeat section that contains other kinds of repeats', () => {
 		parseChordLine.mockImplementation((chordLine) => chordLine);
+		parseLyricLine.mockImplementation((lyricLine) => lyricLine);
 
 		const input = `#v
 C.. G..
@@ -991,28 +911,21 @@ line1-2
 #v x2
 line2-1
 line2-2
-/
+%
 line2-3
 `;
 		const expected = [
-			{
-				type: 'sectionLabel',
-				string: '#v',
-				index: 1,
-				indexWithoutRepeats: 1,
-				model: parseSectionLabel('#v'),
-				id: 'v1',
-			},
-			{ type: 'chord', string: 'C.. G..', model: 'C.. G..' },
-			{ type: 'lyric', string: 'line1-1', model: 'line1-1' },
-			{ type: 'chord', string: 'Am.. F..', model: 'Am.. F..' },
-			{ type: 'lyric', string: 'line1-2', model: 'line1-2' },
-			{ type: 'emptyLine', string: '' },
+			getSectionLine('#v', 'v1', 1),
+			getChordLine('C.. G..'),
+			getLyricLine('line1-1'),
+			getChordLine('Am.. F..'),
+			getLyricLine('line1-2'),
+			getEmptyLine(),
 			{
 				type: 'sectionLabel',
 				string: '#v x2',
 				index: 2,
-				indexWithoutRepeats: 2,
+				indexWithoutMultiply: 2,
 				model: parseSectionLabel('#v x2'),
 				id: 'v2',
 			},
@@ -1022,71 +935,297 @@ line2-3
 				model: 'C.. G..',
 				isFromAutoRepeatChords: true,
 			},
-			{ type: 'lyric', string: 'line2-1', model: 'line2-1' },
+			getLyricLine('line2-1'),
 			{
 				type: 'chord',
 				string: 'Am.. F..',
 				model: 'Am.. F..',
 				isFromAutoRepeatChords: true,
 			},
-			{ type: 'lyric', string: 'line2-2', model: 'line2-2' },
+			getLyricLine('line2-2'),
 			{
 				type: 'chord',
 				string: 'Am.. F..',
 				model: 'Am.. F..',
 				isFromChordLineRepeater: true,
 			},
-			{ type: 'lyric', string: 'line2-3', model: 'line2-3' },
-			{ type: 'emptyLine', string: '' },
+			getLyricLine('line2-3'),
+			getEmptyLine(),
 			{
 				type: 'sectionLabel',
 				string: '#v x2',
 				index: 3,
-				indexWithoutRepeats: 2,
+				indexWithoutMultiply: 2,
 				model: parseSectionLabel('#v x2'),
 				id: 'v3',
-				isFromSectionRepeat: true,
+				isFromSectionMultiply: true,
 			},
 			{
 				type: 'chord',
 				string: 'C.. G..',
 				model: 'C.. G..',
-				isFromSectionRepeat: true,
+				isFromSectionMultiply: true,
 				isFromAutoRepeatChords: true,
 			},
-			{
-				type: 'lyric',
-				string: 'line2-1',
-				model: 'line2-1',
-				isFromSectionRepeat: true,
-			},
+			getLyricLine('line2-1', { fromRepeat: true }),
 			{
 				type: 'chord',
 				string: 'Am.. F..',
 				model: 'Am.. F..',
-				isFromSectionRepeat: true,
+				isFromSectionMultiply: true,
 				isFromAutoRepeatChords: true,
 			},
-			{
-				type: 'lyric',
-				string: 'line2-2',
-				model: 'line2-2',
-				isFromSectionRepeat: true,
-			},
+			getLyricLine('line2-2', { fromRepeat: true }),
 			{
 				type: 'chord',
 				string: 'Am.. F..',
 				model: 'Am.. F..',
-				isFromSectionRepeat: true,
+				isFromSectionMultiply: true,
 				isFromChordLineRepeater: true,
 			},
+			getLyricLine('line2-3', { fromRepeat: true }),
+			getEmptyLine({ fromRepeat: true }),
+		];
+
+		const songLines = songLinesFactory();
+		input.split('\n').forEach(songLines.addLine);
+
+		expect(songLines.asArray()).toEqual(expected);
+	});
+});
+
+describe('Section copy', () => {
+	test('should allow to copy the first section of a given label', () => {
+		parseChordLine.mockImplementation((chordLine) => chordLine);
+		parseLyricLine.mockImplementation((lyricLine) => lyricLine);
+
+		const input = `#v
+C.. G..
+line1-1
+Am.. F..
+line1-2
+
+#c
+Am.. F..
+line2-1
+#v
+
+#c
+
+#v`;
+		const expected = [
+			getSectionLine('#v', 'v1', 1),
+			getChordLine('C.. G..'),
+			getLyricLine('line1-1'),
+			getChordLine('Am.. F..'),
+			getLyricLine('line1-2'),
+			getEmptyLine(),
+
+			getSectionLine('#c', 'c1', 1),
+			getChordLine('Am.. F..'),
+			getLyricLine('line2-1'),
+
 			{
-				type: 'lyric',
-				string: 'line2-3',
-				model: 'line2-3',
-				isFromSectionRepeat: true,
+				type: 'sectionLabel',
+				string: '#v',
+				index: 2,
+				indexWithoutMultiply: 2,
+				model: parseSectionLabel('#v'),
+				id: 'v2',
+				isFromSectionCopy: true,
 			},
-			{ type: 'emptyLine', string: '', isFromSectionRepeat: true },
+			getChordLine('C.. G..', { fromCopy: true }),
+			getLyricLine('line1-1', { fromCopy: true }),
+			getChordLine('Am.. F..', { fromCopy: true }),
+			getLyricLine('line1-2', { fromCopy: true }),
+			getEmptyLine(),
+
+			{
+				type: 'sectionLabel',
+				string: '#c',
+				index: 2,
+				indexWithoutMultiply: 2,
+				model: parseSectionLabel('#c'),
+				id: 'c2',
+				isFromSectionCopy: true,
+			},
+			getChordLine('Am.. F..', { fromCopy: true }),
+			getLyricLine('line2-1', { fromCopy: true }),
+			getEmptyLine(),
+
+			{
+				type: 'sectionLabel',
+				string: '#v',
+				index: 3,
+				indexWithoutMultiply: 3,
+				model: parseSectionLabel('#v'),
+				id: 'v3',
+				isFromSectionCopy: true,
+			},
+			getChordLine('C.. G..', { fromCopy: true }),
+			getLyricLine('line1-1', { fromCopy: true }),
+			getChordLine('Am.. F..', { fromCopy: true }),
+			getLyricLine('line1-2', { fromCopy: true }),
+		];
+
+		const songLines = songLinesFactory();
+		input.split('\n').forEach(songLines.addLine);
+
+		expect(songLines.asArray()).toEqual(expected);
+	});
+
+	test('section label without empty lines', () => {
+		parseChordLine.mockImplementation((chordLine) => chordLine);
+		parseLyricLine.mockImplementation((lyricLine) => lyricLine);
+
+		const input = `#v
+C.. G..
+verseContent
+
+#c
+Am.. F..
+chorusContent
+
+#v
+#c`;
+		const expected = [
+			getSectionLine('#v', 'v1', 1),
+			getChordLine('C.. G..'),
+			getLyricLine('verseContent'),
+			getEmptyLine(),
+
+			getSectionLine('#c', 'c1', 1),
+			getChordLine('Am.. F..'),
+			getLyricLine('chorusContent'),
+			getEmptyLine(),
+
+			getSectionLine('#v', 'v2', 2, { fromCopy: true }),
+			getChordLine('C.. G..', { fromCopy: true }),
+			getLyricLine('verseContent', { fromCopy: true }),
+
+			getSectionLine('#c', 'c2', 2, { fromCopy: true }),
+			getChordLine('Am.. F..', { fromCopy: true }),
+			getLyricLine('chorusContent', { fromCopy: true }),
+		];
+
+		const songLines = songLinesFactory();
+		input.split('\n').forEach(songLines.addLine);
+
+		expect(songLines.asArray()).toEqual(expected);
+	});
+
+	test('empty sections', () => {
+		parseChordLine.mockImplementation((chordLine) => chordLine);
+		parseLyricLine.mockImplementation((lyricLine) => lyricLine);
+
+		const input = `#v
+C.. G..
+line1-1
+Am.. F..
+line1-2
+
+#v x2
+`;
+		const expected = [
+			getSectionLine('#v', 'v1', 1),
+			getChordLine('C.. G..'),
+			getLyricLine('line1-1'),
+			getChordLine('Am.. F..'),
+			getLyricLine('line1-2'),
+			getEmptyLine(),
+
+			getSectionLine('#v x2', 'v2', 2, { fromCopy: true }),
+			getChordLine('C.. G..', { fromCopy: true }),
+			getLyricLine('line1-1', { fromCopy: true }),
+			getChordLine('Am.. F..', { fromCopy: true }),
+			getLyricLine('line1-2', { fromCopy: true }),
+			getEmptyLine(),
+
+			{
+				type: 'sectionLabel',
+				string: '#v x2',
+				index: 3,
+				indexWithoutMultiply: 2,
+				model: parseSectionLabel('#v x2'),
+				id: 'v3',
+				isFromSectionCopy: true,
+				isFromSectionMultiply: true,
+			},
+			getChordLine('C.. G..', { fromCopy: true, fromRepeat: true }),
+			getLyricLine('line1-1', { fromCopy: true, fromRepeat: true }),
+			getChordLine('Am.. F..', { fromCopy: true, fromRepeat: true }),
+			getLyricLine('line1-2', { fromCopy: true, fromRepeat: true }),
+			getEmptyLine({ fromRepeat: true }),
+		];
+
+		const songLines = songLinesFactory();
+		input.split('\n').forEach(songLines.addLine);
+
+		expect(songLines.asArray()).toEqual(expected);
+	});
+
+	test('correctly handle last section', () => {
+		parseChordLine.mockImplementation((chordLine) => chordLine);
+		parseLyricLine.mockImplementation((lyricLine) => lyricLine);
+
+		const input = `#v
+C.. G..
+verseContent
+
+#v
+Am.. F..
+verseContent2`;
+		const expected = [
+			getSectionLine('#v', 'v1', 1),
+			getChordLine('C.. G..'),
+			getLyricLine('verseContent'),
+			getEmptyLine(),
+
+			getSectionLine('#v', 'v2', 2),
+			getChordLine('Am.. F..'),
+			getLyricLine('verseContent2'),
+		];
+
+		const songLines = songLinesFactory();
+		input.split('\n').forEach(songLines.addLine);
+
+		expect(songLines.asArray()).toEqual(expected);
+	});
+
+	test('repeat arbitrary section', () => {
+		parseChordLine.mockImplementation((chordLine) => chordLine);
+		parseLyricLine.mockImplementation((lyricLine) => lyricLine);
+
+		const input = `#v
+C.. G..
+verseContent1
+
+#v
+Am.. F..
+verseContent2
+
+#v1
+
+#v2`;
+		const expected = [
+			getSectionLine('#v', 'v1', 1),
+			getChordLine('C.. G..'),
+			getLyricLine('verseContent1'),
+			getEmptyLine(),
+
+			getSectionLine('#v', 'v2', 2),
+			getChordLine('Am.. F..'),
+			getLyricLine('verseContent2'),
+			getEmptyLine(),
+
+			getSectionLine('#v1', 'v3', 3, { fromCopy: true }),
+			getChordLine('C.. G..', { fromCopy: true }),
+			getLyricLine('verseContent1', { fromCopy: true }),
+			getEmptyLine(),
+
+			getSectionLine('#v2', 'v4', 4, { fromCopy: true }),
+			getChordLine('Am.. F..', { fromCopy: true }),
+			getLyricLine('verseContent2', { fromCopy: true }),
 		];
 
 		const songLines = songLinesFactory();

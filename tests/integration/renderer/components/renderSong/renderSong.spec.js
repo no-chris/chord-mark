@@ -22,7 +22,12 @@ function removeLastLine(fileContent) {
 
 describe.each([
 	['base rendering', 'song1-input.txt', 'song1-output-simple.txt'],
-	['base rendering', 'song1-input.txt', 'song1-output-simple.txt', {}],
+	[
+		'base rendering, no params',
+		'song1-input.txt',
+		'song1-output-simple.txt',
+		{},
+	],
 	[
 		'no transposing',
 		'song1-input.txt',
@@ -40,6 +45,12 @@ describe.each([
 		'song1-input.txt',
 		'song1-output-transposed.txt',
 		{ transposeValue: -4, accidentalsType: 'flat' },
+	],
+	[
+		'chords-lyrics aligned',
+		'song1-input.txt',
+		'song1-output-chordslyrics.txt',
+		{ alignChordsWithLyrics: true },
 	],
 ])('Render components: %s', (title, inputFile, outputFile, options) => {
 	test('produces expected rendering', () => {

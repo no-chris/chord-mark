@@ -9,7 +9,7 @@ describe('chordSymbol renderer', () => {
 	});
 
 	test('Should return valid html', () => {
-		const rendered = renderChordSymbol('C');
+		const rendered = renderChordSymbol({ symbol: 'C' }, false);
 		const element = htmlToElement(rendered);
 
 		expect(element).toBeInstanceOf(Node);
@@ -19,11 +19,19 @@ describe('chordSymbol renderer', () => {
 });
 
 describe.each([
-	['A', 'A'],
-	['AM7', 'AM7'],
-])('Render chord %s as %s', (input, output) => {
-	test('expected rendering', () => {
-		const rendered = renderChordSymbol(input);
-		expect(stripTags(rendered)).toEqual(output);
-	});
-});
+	['no duration', { symbol: 'AM7', duration: 2 }, false, 'AM7'],
+	['duration = 1', { symbol: 'AM7', duration: 1 }, true, 'AM7.'],
+	['duration = 2', { symbol: 'AM7', duration: 2 }, true, 'AM7..'],
+	['duration = 3', { symbol: 'AM7', duration: 3 }, true, 'AM7...'],
+])(
+	'Render chord %s as %s',
+	(title, chord, shouldPrintChordsDuration, expected) => {
+		test('expected rendering', () => {
+			const rendered = renderChordSymbol(
+				chord,
+				shouldPrintChordsDuration
+			);
+			expect(stripTags(rendered)).toEqual(expected);
+		});
+	}
+);

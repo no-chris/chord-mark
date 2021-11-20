@@ -12,6 +12,8 @@ describe('parseSong', () => {
 	});
 });
 
+const flagPositionedChords = jest.fn();
+
 describe('parseSong()', () => {
 	getAllChordsInSong.mockReturnValue([]);
 	songLinesFactory.mockImplementation(() => {
@@ -23,6 +25,7 @@ describe('parseSong()', () => {
 			asArray() {
 				return allLines;
 			},
+			flagPositionedChords,
 		};
 	});
 
@@ -63,5 +66,12 @@ line1-2`;
 
 		const parsed = parseSong(input);
 		expect(parsed).toEqual(expected);
+	});
+
+	test('flagPositionedChords() is called', () => {
+		flagPositionedChords.mockClear();
+		const input = ['C.. G..', 'line1-1', 'Am.. F..', 'line1-2'];
+		parseSong(input);
+		expect(flagPositionedChords.mock.calls.length).toBe(1);
 	});
 });

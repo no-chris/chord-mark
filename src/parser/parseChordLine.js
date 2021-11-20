@@ -17,8 +17,8 @@ const defaultTimeSignature = parseTimeSignature('4/4');
 /**
  * @typedef {Object} ChordLine
  * @type {Object}
- * @property {Number} chordCount - number of chords in the line
  * @property {Bar[]} allBars
+ * @property {Boolean} hasPositionedChords
  */
 
 /**
@@ -26,6 +26,8 @@ const defaultTimeSignature = parseTimeSignature('4/4');
  * @type {Object}
  * @property {TimeSignature} timeSignature
  * @property {ChordLineChord[]} allChords
+ * @property {Boolean} isRepeated
+ * @property {Boolean} hasUnevenChordsDurations
  */
 
 /**
@@ -35,6 +37,7 @@ const defaultTimeSignature = parseTimeSignature('4/4');
  * @property {ChordDef|String} model - parsed chord or "NC" if "no chord" symbol
  * @property {Number} duration - number of beats the chord lasts
  * @property {Number} beat - beat on which the chord starts
+ * @property {Boolean} isPositioned - whether this chord has been positioned over a specific lyric or not
  */
 
 /**
@@ -55,15 +58,17 @@ export default function parseChordLine(
 	let chord = {};
 	let tokenWithoutBeatCount;
 	let currentBeatCount = 0;
-	let chordCount = 0;
 	let previousBar;
 
 	const allTokens = clearSpaces(chordLine).split(' ');
 	allTokens.forEach((token, tokenIndex) => {
 		if (token.match(barRepeatSymbols)) {
 			if (previousBar) {
+				const repeatedBar = _cloneDeep(previousBar);
+				repeatedBar.isRepeated = true;
+
 				for (let i = 0; i < token.length; i++) {
-					allBars.push(_cloneDeep(previousBar));
+					allBars.push(_cloneDeep(repeatedBar));
 				}
 			} else {
 				throw new Error(
@@ -85,13 +90,16 @@ export default function parseChordLine(
 			checkInvalidChordRepetition(bar, chord);
 
 			bar.allChords.push(chord);
-			chordCount++;
 
 			if (shouldChangeBar(currentBeatCount, beatCount)) {
 				bar.timeSignature = timeSignature;
+				bar.hasUnevenChordsDurations = hasUnevenChordsDurations(bar);
 				const barClone = _cloneDeep(bar);
 
-				allBars.push(barClone);
+				bar.isRepeated = _isEqual(bar, previousBar);
+
+				allBars.push(_cloneDeep(bar));
+
 				previousBar = barClone;
 
 				bar = _cloneDeep(emptyBar);
@@ -108,7 +116,6 @@ export default function parseChordLine(
 	});
 
 	return {
-		chordCount,
 		allBars,
 	};
 }
@@ -158,4 +165,9 @@ function hasTooManyBeats(currentBeatCount, barBeatCount) {
 }
 function hasTooFewBeats(currentBeatCount, barBeatCount, isLast) {
 	return isLast && currentBeatCount < barBeatCount;
+}
+
+function hasUnevenChordsDurations(bar) {
+	let firstChordDuration = bar.allChords[0].duration;
+	return bar.allChords.some((chord) => chord.duration !== firstChordDuration);
 }

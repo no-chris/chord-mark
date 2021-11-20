@@ -1,5 +1,4 @@
 import stripTags from '../../../../../src/core/dom/stripTags';
-import { forEachChordInChordLine } from '../../../../../src/parser/helper/songs';
 
 import chordLyricsSpacer from '../../../../../src/renderer/spacers/chord/chordLyrics';
 import parseLyricLine from '../../../../../src/parser/parseLyricLine';
@@ -93,11 +92,26 @@ describe.each([
 		'           A         second chord shortly after the first one',
 	],
 	[
+		'Starts with a chord before the lyric',
+		'A B7',
+		'_ A lyric _line',
+		'|A         |B7 |',
+		'   A lyric line',
+	],
+	[
 		'offset the chord rendering if the first position marker is > 0',
 		'Ami7(#11) B7(b9)',
 		'The first chord comes a bit _later, nice _hu?',
 		'                            |Ami7(#11)  |B7(b9) |',
 		'The first chord comes a bit later, nice hu?',
+	],
+	[
+		'take chords duration markers into account',
+		'C13.. Dmi. E.',
+		'_ a chord _li_ne',
+		'|C13..         Dmi. E. |',
+		'       a chord li   ne',
+		true,
 	],
 ])(
 	'%s',
@@ -106,25 +120,35 @@ describe.each([
 		chordLineInput,
 		LyricsLineInput,
 		chordsLineOutput,
-		LyricsLineOutput
+		LyricsLineOutput,
+		shouldPrintChordsDuration = false
 	) => {
 		test('Correctly space chord & lyrics lines', () => {
+			// setup
 			const parsedLyrics = parseLyricLine(LyricsLineInput);
 
 			const parsedChords = parseChordLine(chordLineInput);
-			const parsedChordsWithSymbols = forEachChordInChordLine(
-				parsedChords,
-				(chord) => {
+			parsedChords.allBars.map((bar) => {
+				bar.allChords.map((chord) => {
 					chord.symbol = getChordSymbol(chord.model);
-				}
-			);
+				});
+				bar.shouldPrintChordsDuration = !!shouldPrintChordsDuration;
+			});
+
+			// test
+
 			const { chordLine, lyricsLine } = chordLyricsSpacer(
-				parsedChordsWithSymbols,
+				parsedChords,
 				parsedLyrics
 			);
 
+			// assertions
+
 			const renderedChords = renderChordLine(chordLine);
-			const renderedLyrics = renderLyricLine({ model: lyricsLine });
+			const renderedLyrics = renderLyricLine(
+				{ model: lyricsLine },
+				{ alignChordsWithLyrics: true }
+			);
 
 			expect(stripTags(renderedChords)).toEqual(chordsLineOutput);
 			expect(stripTags(renderedLyrics)).toEqual(LyricsLineOutput);

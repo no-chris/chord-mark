@@ -20,7 +20,7 @@ describe.each([
 	[
 		'none',
 		{
-			isFromSectionRepeat: false,
+			isFromSectionMultiply: false,
 			isFromAutoRepeatChords: false,
 			isFromChordLineRepeater: false,
 		},
@@ -28,18 +28,18 @@ describe.each([
 	],
 
 	[
-		'isFromSectionRepeat',
+		'isFromSectionMultiply',
 		{
-			isFromSectionRepeat: true,
+			isFromSectionMultiply: true,
 			isFromAutoRepeatChords: false,
 			isFromChordLineRepeater: false,
 		},
-		['cmLine--isFromSectionRepeat'],
+		['cmLine--isFromSectionMultiply'],
 	],
 	[
 		'isFromAutoRepeatChords',
 		{
-			isFromSectionRepeat: false,
+			isFromSectionMultiply: false,
 			isFromAutoRepeatChords: true,
 			isFromChordLineRepeater: false,
 		},
@@ -48,7 +48,7 @@ describe.each([
 	[
 		'isFromChordLineRepeater',
 		{
-			isFromSectionRepeat: false,
+			isFromSectionMultiply: false,
 			isFromAutoRepeatChords: false,
 			isFromChordLineRepeater: true,
 		},
@@ -58,12 +58,12 @@ describe.each([
 	[
 		'all',
 		{
-			isFromSectionRepeat: true,
+			isFromSectionMultiply: true,
 			isFromAutoRepeatChords: true,
 			isFromChordLineRepeater: true,
 		},
 		[
-			'cmLine--isFromSectionRepeat',
+			'cmLine--isFromSectionMultiply',
 			'cmLine--isFromAutoRepeatChords',
 			'cmLine--isFromChordLineRepeater',
 		],

@@ -37,7 +37,7 @@ const config = {
 
 	plugins: [
 		new CleanWebpackPlugin(),
-		new webpack.IgnorePlugin(/\.scss|sass|css$/),
+		new webpack.IgnorePlugin({ resourceRegExp: /\.scss|sass|css$/ }),
 		new BundleAnalyzerPlugin({
 			analyzerMode: 'static',
 			openAnalyzer: false,

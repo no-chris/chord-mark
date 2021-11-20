@@ -42,9 +42,10 @@ describe.each([
 						},
 					],
 					timeSignature: ts4_4,
+					isRepeated: false,
+					hasUnevenChordsDurations: false,
 				},
 			],
-			chordCount: 1,
 		},
 	],
 
@@ -70,9 +71,10 @@ describe.each([
 						},
 					],
 					timeSignature: ts4_4,
+					isRepeated: false,
+					hasUnevenChordsDurations: false,
 				},
 			],
-			chordCount: 2,
 		},
 	],
 
@@ -104,9 +106,10 @@ describe.each([
 						},
 					],
 					timeSignature: ts4_4,
+					isRepeated: false,
+					hasUnevenChordsDurations: true,
 				},
 			],
-			chordCount: 3,
 		},
 	],
 
@@ -144,9 +147,10 @@ describe.each([
 						},
 					],
 					timeSignature: ts4_4,
+					isRepeated: false,
+					hasUnevenChordsDurations: false,
 				},
 			],
-			chordCount: 4,
 		},
 	],
 
@@ -166,6 +170,8 @@ describe.each([
 						},
 					],
 					timeSignature: ts4_4,
+					isRepeated: false,
+					hasUnevenChordsDurations: false,
 				},
 				{
 					allChords: [
@@ -177,9 +183,10 @@ describe.each([
 						},
 					],
 					timeSignature: ts4_4,
+					isRepeated: false,
+					hasUnevenChordsDurations: false,
 				},
 			],
-			chordCount: 2,
 		},
 	],
 
@@ -199,6 +206,8 @@ describe.each([
 						},
 					],
 					timeSignature: ts4_4,
+					isRepeated: false,
+					hasUnevenChordsDurations: false,
 				},
 				{
 					allChords: [
@@ -216,9 +225,10 @@ describe.each([
 						},
 					],
 					timeSignature: ts4_4,
+					isRepeated: false,
+					hasUnevenChordsDurations: false,
 				},
 			],
-			chordCount: 3,
 		},
 	],
 
@@ -244,6 +254,8 @@ describe.each([
 						},
 					],
 					timeSignature: ts4_4,
+					isRepeated: false,
+					hasUnevenChordsDurations: true,
 				},
 				{
 					allChords: [
@@ -261,9 +273,10 @@ describe.each([
 						},
 					],
 					timeSignature: ts4_4,
+					isRepeated: false,
+					hasUnevenChordsDurations: true,
 				},
 			],
-			chordCount: 4,
 		},
 	],
 
@@ -283,6 +296,8 @@ describe.each([
 						},
 					],
 					timeSignature: ts4_4,
+					isRepeated: false,
+					hasUnevenChordsDurations: false,
 				},
 				{
 					allChords: [
@@ -300,6 +315,8 @@ describe.each([
 						},
 					],
 					timeSignature: ts4_4,
+					isRepeated: false,
+					hasUnevenChordsDurations: true,
 				},
 				{
 					allChords: [
@@ -311,9 +328,10 @@ describe.each([
 						},
 					],
 					timeSignature: ts4_4,
+					isRepeated: false,
+					hasUnevenChordsDurations: false,
 				},
 			],
-			chordCount: 4,
 		},
 	],
 
@@ -333,9 +351,10 @@ describe.each([
 						},
 					],
 					timeSignature: ts3_4,
+					isRepeated: false,
+					hasUnevenChordsDurations: false,
 				},
 			],
-			chordCount: 1,
 		},
 	],
 
@@ -361,9 +380,10 @@ describe.each([
 						},
 					],
 					timeSignature: ts3_4,
+					isRepeated: false,
+					hasUnevenChordsDurations: true,
 				},
 			],
-			chordCount: 2,
 		},
 	],
 
@@ -389,9 +409,10 @@ describe.each([
 						},
 					],
 					timeSignature: ts3_4,
+					isRepeated: false,
+					hasUnevenChordsDurations: true,
 				},
 			],
-			chordCount: 2,
 		},
 	],
 
@@ -423,9 +444,10 @@ describe.each([
 						},
 					],
 					timeSignature: ts3_4,
+					isRepeated: false,
+					hasUnevenChordsDurations: false,
 				},
 			],
-			chordCount: 3,
 		},
 	],
 
@@ -445,6 +467,8 @@ describe.each([
 						},
 					],
 					timeSignature: ts3_8,
+					isRepeated: false,
+					hasUnevenChordsDurations: false,
 				},
 				{
 					allChords: [
@@ -456,6 +480,8 @@ describe.each([
 						},
 					],
 					timeSignature: ts3_8,
+					isRepeated: false,
+					hasUnevenChordsDurations: false,
 				},
 				{
 					allChords: [
@@ -467,9 +493,10 @@ describe.each([
 						},
 					],
 					timeSignature: ts3_8,
+					isRepeated: false,
+					hasUnevenChordsDurations: false,
 				},
 			],
-			chordCount: 3,
 		},
 	],
 
@@ -489,9 +516,10 @@ describe.each([
 						},
 					],
 					timeSignature: ts4_4,
+					isRepeated: false,
+					hasUnevenChordsDurations: false,
 				},
 			],
-			chordCount: 1,
 		},
 	],
 
@@ -511,9 +539,10 @@ describe.each([
 						},
 					],
 					timeSignature: ts4_4,
+					isRepeated: false,
+					hasUnevenChordsDurations: false,
 				},
 			],
-			chordCount: 1,
 		},
 	],
 
@@ -533,9 +562,10 @@ describe.each([
 						},
 					],
 					timeSignature: ts4_4,
+					isRepeated: false,
+					hasUnevenChordsDurations: false,
 				},
 			],
-			chordCount: 1,
 		},
 	],
 
@@ -561,9 +591,10 @@ describe.each([
 						},
 					],
 					timeSignature: ts4_4,
+					isRepeated: false,
+					hasUnevenChordsDurations: false,
 				},
 			],
-			chordCount: 2,
 		},
 	],
 
@@ -583,12 +614,16 @@ describe.each([
 						},
 					],
 					timeSignature: ts4_4,
+					isRepeated: false,
+					hasUnevenChordsDurations: false,
 				},
 				{
 					allChords: [
 						{ string: 'NC', model: 'NC', duration: 4, beat: 1 },
 					],
 					timeSignature: ts4_4,
+					isRepeated: false,
+					hasUnevenChordsDurations: false,
 				},
 				{
 					allChords: [
@@ -601,6 +636,8 @@ describe.each([
 						{ string: 'NC..', model: 'NC', duration: 2, beat: 3 },
 					],
 					timeSignature: ts4_4,
+					isRepeated: false,
+					hasUnevenChordsDurations: false,
 				},
 				{
 					allChords: [
@@ -612,22 +649,142 @@ describe.each([
 						},
 					],
 					timeSignature: ts4_4,
+					isRepeated: false,
+					hasUnevenChordsDurations: false,
 				},
 			],
-			chordCount: 5,
 		},
 	],
-])(
-	'Should parses correctly %s: %s',
-	(title, input, timeSignature, expected) => {
-		test('is correctly parsed', () => {
-			const options = { timeSignature };
-			const parsed = parseChordLine(input, options);
 
-			expect(parsed).toEqual(expected);
-		});
-	}
-);
+	[
+		'flag repeated bars, single chord per bar',
+		'C % D %',
+		ts4_4,
+		{
+			allBars: [
+				{
+					allChords: [
+						{
+							string: 'C',
+							model: { symbol: 'C' },
+							duration: 4,
+							beat: 1,
+						},
+					],
+					timeSignature: ts4_4,
+					isRepeated: false,
+					hasUnevenChordsDurations: false,
+				},
+				{
+					allChords: [
+						{
+							string: 'C',
+							model: { symbol: 'C' },
+							duration: 4,
+							beat: 1,
+						},
+					],
+					timeSignature: ts4_4,
+					isRepeated: true,
+					hasUnevenChordsDurations: false,
+				},
+				{
+					allChords: [
+						{
+							string: 'D',
+							model: { symbol: 'D' },
+							duration: 4,
+							beat: 1,
+						},
+					],
+					timeSignature: ts4_4,
+					isRepeated: false,
+					hasUnevenChordsDurations: false,
+				},
+				{
+					allChords: [
+						{
+							string: 'D',
+							model: { symbol: 'D' },
+							duration: 4,
+							beat: 1,
+						},
+					],
+					timeSignature: ts4_4,
+					isRepeated: true,
+					hasUnevenChordsDurations: false,
+				},
+			],
+		},
+	],
+
+	[
+		'flag repeated bars, multiple chords per bar',
+		'C.. Am. F. %',
+		ts4_4,
+		{
+			allBars: [
+				{
+					allChords: [
+						{
+							string: 'C..',
+							model: { symbol: 'C' },
+							duration: 2,
+							beat: 1,
+						},
+						{
+							string: 'Am.',
+							model: { symbol: 'Am' },
+							duration: 1,
+							beat: 3,
+						},
+						{
+							string: 'F.',
+							model: { symbol: 'F' },
+							duration: 1,
+							beat: 4,
+						},
+					],
+					timeSignature: ts4_4,
+					isRepeated: false,
+					hasUnevenChordsDurations: true,
+				},
+				{
+					allChords: [
+						{
+							string: 'C..',
+							model: { symbol: 'C' },
+							duration: 2,
+							beat: 1,
+						},
+						{
+							string: 'Am.',
+							model: { symbol: 'Am' },
+							duration: 1,
+							beat: 3,
+						},
+						{
+							string: 'F.',
+							model: { symbol: 'F' },
+							duration: 1,
+							beat: 4,
+						},
+					],
+					timeSignature: ts4_4,
+					isRepeated: true,
+					hasUnevenChordsDurations: true,
+				},
+			],
+		},
+	],
+])('%s: %s', (title, input, timeSignature, expected) => {
+	test('is correctly parsed', () => {
+		const options = { timeSignature };
+		const parsed = parseChordLine(input, options);
+
+		expect(parsed).toEqual(expected);
+	});
+});
 
 describe.each([
 	['1 chord / 1 beat / 4/4', 'Cm.', 'Cm.', 1, 1, ts4_4],
@@ -702,15 +859,18 @@ describe.each([
 });
 
 describe.each([
-	['A /', 'A A'],
-	['A / / /', 'A A A A'],
-	['A / B /', 'A A B B'],
+	['A %', 'A A', [0, 1]],
+	['A % % %', 'A A A A', [0, 1, 1, 1]],
+	['A % B %', 'A A B B', [0, 1, 0, 1]],
+	['A B C D % %', 'A B C D D D', [0, 0, 0, 0, 1, 1]],
+	['A B % C D %', 'A B B C D D', [0, 0, 1, 0, 0, 1]],
+	['A.. B.. C... D. % %', 'A B C D C D C D', [0, 0, 1, 1]],
 
-	['A ///', 'A A A A'],
-	['A // /', 'A A A A'],
-	['A / // /', 'A A A A A'],
-	['A / // B / //', 'A A A A B B B B'],
-])('barRepeat: %s', (input, expected) => {
+	['A %%%', 'A A A A', [0, 1, 1, 1]],
+	['A %% %', 'A A A A', [0, 1, 1, 1]],
+	['A % %% %', 'A A A A A', [0, 1, 1, 1, 1]],
+	['A % %% B % %%', 'A A A A B B B B', [0, 1, 1, 1, 0, 1, 1, 1]],
+])('barRepeat: %s', (input, expected, repeatFlags) => {
 	test('should correctly repeat previous bar', () => {
 		const parsed = parseChordLine(input);
 		const parsedArray = [];
@@ -720,9 +880,19 @@ describe.each([
 
 		expect(parsedArray.join(' ')).toEqual(expected);
 	});
+
+	test('should flag repeated bars', () => {
+		const parsed = parseChordLine(input);
+
+		expect.assertions(parsed.allBars.length);
+
+		parsed.allBars.forEach((bar, i) => {
+			expect(bar.isRepeated).toBe(!!repeatFlags[i]);
+		});
+	});
 });
 
-describe.each([['/ A'], ['// A'], [' / A'], ['	/ A']])(
+describe.each([['% A'], ['%% A'], [' % A'], ['	% A']])(
 	'Throw if line starts with repeatBar symbol: %s',
 	(input) => {
 		const throwingFn = () => {

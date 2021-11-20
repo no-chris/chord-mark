@@ -7,31 +7,36 @@ describe('parseSectionLabel', () => {
 });
 
 describe.each([
-	['#A', 'A', 0],
-	['#B', 'B', 0],
-	['#C', 'C', 0],
-	['#D', 'D', 0],
-	['#d', 'd', 0],
-	['#i', 'i', 0],
-	['#v', 'v', 0],
-	['#p', 'p', 0],
-	['#c', 'c', 0],
-	['#b', 'b', 0],
-	['#s', 's', 0],
-	['#o', 'o', 0],
-	['#a', 'a', 0],
-	['#other', 'other', 0],
-	['#whatever', 'whatever', 0],
+	['#A', 'A', 0, 1],
+	['#B', 'B', 0, 1],
+	['#C', 'C', 0, 1],
+	['#D', 'D', 0, 1],
+	['#d', 'd', 0, 1],
+	['#i', 'i', 0, 1],
+	['#v', 'v', 0, 1],
+	['#p', 'p', 0, 1],
+	['#c', 'c', 0, 1],
+	['#b', 'b', 0, 1],
+	['#s', 's', 0, 1],
+	['#o', 'o', 0, 1],
+	['#a', 'a', 0, 1],
+	['#other', 'other', 0, 1],
+	['#whatever', 'whatever', 0, 1],
 
-	['#v x2', 'v', 2],
-	['#c x3', 'c', 3],
-	['#i x9', 'i', 9],
-])('Section identifier %s => %s', (string, label, repeatTimes) => {
+	['#v x2', 'v', 2, 1],
+	['#c x3', 'c', 3, 1],
+	['#i x9', 'i', 9, 1],
+
+	['#c1', 'c', 0, 1],
+	['#c2', 'c', 0, 2],
+	['#c2 x3', 'c', 3, 2],
+])('Section identifier %s => %s', (string, label, multiplyTimes, copyIndex) => {
 	test('Correctly gets identifier', () => {
 		expect(parseSectionLabel(string)).toEqual({
 			string,
 			label,
-			repeatTimes,
+			multiplyTimes,
+			copyIndex,
 		});
 	});
 });

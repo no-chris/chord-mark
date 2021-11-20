@@ -68,15 +68,35 @@ describe.each([
 		[2, 1],
 		[defaultSpacesAfter + 6 + defaultSpacesAfter, defaultSpacesAfter + 7],
 	],
+
+	[
+		'take chords durations markers into account',
+		'A. Dmi7.. E7.',
+		[{ 1: 3, 2: 6, 3: 2, 4: 5 }],
+		[1, 0, 2],
+		[defaultSpacesAfter, defaultSpacesAfter + 2 + defaultSpacesAfter, 0],
+		true,
+	],
 ])(
 	'Aligned spacer: %s',
-	(title, chordLine, maxBeatWidth, spacesWithin, spacesAfter) => {
+	(
+		title,
+		chordLine,
+		maxBeatWidth,
+		spacesWithin,
+		spacesAfter,
+		shouldPrintChordsDuration = false
+	) => {
 		test('Correctly fills .spacesWithin and .spacesAfter properties', () => {
 			let parsed = parseChordLine(chordLine);
 			parsed = forEachChordInChordLine(
 				parsed,
 				(chord) => (chord.symbol = getChordSymbol(chord.model))
 			);
+
+			parsed.allBars.map((bar) => {
+				bar.shouldPrintChordsDuration = !!shouldPrintChordsDuration;
+			});
 
 			const spaced = alignedSpacer(parsed, maxBeatWidth);
 
