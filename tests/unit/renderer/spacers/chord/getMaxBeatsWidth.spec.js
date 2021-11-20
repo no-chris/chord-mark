@@ -133,7 +133,7 @@ describe.each([
 			(chord) => (chord.symbol = getChordSymbol(chord.model))
 		);
 
-		const maxBeatsWidth = getMaxBeatsWidth(allLines, false);
+		const maxBeatsWidth = getMaxBeatsWidth(allLines, () => false);
 		expect(maxBeatsWidth).toEqual(output);
 	});
 });
@@ -181,7 +181,7 @@ describe.each([
 				(chord) => (chord.symbol = getChordSymbol(chord.model))
 			);
 
-			const maxBeatsWidth = getMaxBeatsWidth(allLines, false);
+			const maxBeatsWidth = getMaxBeatsWidth(allLines, () => false);
 			expect(maxBeatsWidth).toEqual(output);
 		});
 	}
@@ -190,7 +190,7 @@ describe.each([
 describe.each([
 	[
 		'positioned chords NOT TAKEN into account when they are aligned with lyrics',
-		true,
+		[true, false],
 		[
 			'Ami7.. B7(b9,#9).. D7(#11)',
 			'_A lyric _line with _position markers',
@@ -203,7 +203,7 @@ describe.each([
 	],
 	[
 		'positioned chords taken into account when they are NOT aligned with lyrics',
-		false,
+		[false, false],
 		[
 			'Am7.. B7(b9,#9).. D7(#11)',
 			'_A lyric _line with _position markers',
@@ -216,7 +216,7 @@ describe.each([
 	],
 ])(
 	'Only count lines with positioned chords when necessary',
-	(title, alignChordsWithLyrics, input, output) => {
+	(title, shouldAlignChords, input, output) => {
 		test(title, () => {
 			const parsedSong = parseSong(input);
 			let { allLines } = parsedSong;
@@ -229,9 +229,8 @@ describe.each([
 				(chord) => (chord.symbol = getChordSymbol(chord.model))
 			);
 
-			const maxBeatsWidth = getMaxBeatsWidth(
-				allLines,
-				alignChordsWithLyrics
+			const maxBeatsWidth = getMaxBeatsWidth(allLines, () =>
+				shouldAlignChords.shift()
 			);
 			expect(maxBeatsWidth).toEqual(output);
 		});
