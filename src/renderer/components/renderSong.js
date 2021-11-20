@@ -68,7 +68,7 @@ export default function renderSong(
 		});
 
 	const sectionsStats = getSectionsStats(allLines);
-	const maxBeatsWidth = getMaxBeatsWidth(allLines);
+	const maxBeatsWidth = getMaxBeatsWidth(allLines, alignChordsWithLyrics);
 
 	const song = renderAllLines().join('\n');
 
