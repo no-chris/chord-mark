@@ -27291,16 +27291,16 @@ var es_array_join = __webpack_require__(9600);
 
 /**
  * @param {SongLine[]} allLines
- * @param {Boolean} alignChordsWithLyrics
+ * @param {Function} shouldAlignChords
  * @returns {Array}
  */
 
-function getMaxBeatsWidth(allLines, alignChordsWithLyrics) {
+function getMaxBeatsWidth(allLines, shouldAlignChords) {
   var maxBeatsWidth = [];
   allLines.filter(function (line) {
     return line.type === parser_lineTypes.CHORD;
   }).filter(function (line) {
-    return !(alignChordsWithLyrics && line.model.hasPositionedChords);
+    return !shouldAlignChords(line);
   }).forEach(function (line) {
     line.model.allBars.forEach(function (bar, barIndex) {
       if (!maxBeatsWidth[barIndex]) {
@@ -27936,7 +27936,7 @@ function renderSong(parsedSong) {
     });
   });
   var sectionsStats = getSectionsStats(allLines);
-  var maxBeatsWidth = getMaxBeatsWidth(allLines, alignChordsWithLyrics);
+  var maxBeatsWidth = getMaxBeatsWidth(allLines, shouldAlignChords);
   var song = renderAllLines().join('\n');
   return song_default()({
     song: song
@@ -28004,7 +28004,7 @@ function renderSong(parsedSong) {
       var rendered;
 
       if (line.type === parser_lineTypes.CHORD) {
-        var spaced = alignBars ? aligned_space(line.model, maxBeatsWidth) : space(line.model);
+        var spaced = alignBars && !shouldAlignChords(line) ? aligned_space(line.model, maxBeatsWidth) : space(line.model);
         var nextLine = allFilteredLines[lineIndex + 1];
 
         if (shouldAlignChords(line)) {
