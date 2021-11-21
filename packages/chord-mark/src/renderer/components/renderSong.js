@@ -70,6 +70,8 @@ export default function renderSong(
 	const sectionsStats = getSectionsStats(allLines);
 	const maxBeatsWidth = getMaxBeatsWidth(allLines, shouldAlignChords);
 
+	allLines.forEach(spaceChordLine);
+
 	const song = renderAllLines().join('\n');
 
 	return songTpl({ song });
@@ -148,28 +150,33 @@ export default function renderSong(
 		);
 	}
 
+	function spaceChordLine(line, lineIndex) {
+		if (line.type === lineTypes.CHORD) {
+			let spaced =
+				alignBars && !shouldAlignChords(line)
+					? alignedChordSpacer(line.model, maxBeatsWidth)
+					: simpleChordSpacer(line.model);
+
+			const nextLine = allLines[lineIndex + 1];
+			if (shouldAlignChords(line)) {
+				const { chordLine, lyricsLine } = chordLyricsSpacer(
+					spaced,
+					nextLine.model
+				);
+				allLines[lineIndex + 1].model = lyricsLine;
+				spaced = chordLine;
+			}
+			allLines[lineIndex].model = spaced;
+		}
+	}
+
 	function renderAllLines() {
 		return allLines
-			.map((line, lineIndex, allFilteredLines) => {
+			.map((line) => {
 				let rendered;
 
 				if (line.type === lineTypes.CHORD) {
-					let spaced =
-						alignBars && !shouldAlignChords(line)
-							? alignedChordSpacer(line.model, maxBeatsWidth)
-							: simpleChordSpacer(line.model);
-
-					const nextLine = allFilteredLines[lineIndex + 1];
-					if (shouldAlignChords(line)) {
-						const { chordLine, lyricsLine } = chordLyricsSpacer(
-							spaced,
-							nextLine.model
-						);
-						allFilteredLines[lineIndex + 1].model = lyricsLine;
-						spaced = chordLine;
-					}
-
-					rendered = renderChordLineModel(spaced);
+					rendered = renderChordLineModel(line.model);
 				} else if (line.type === lineTypes.EMPTY_LINE) {
 					rendered = renderEmptyLine();
 				} else if (line.type === lineTypes.SECTION_LABEL) {
