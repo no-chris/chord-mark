@@ -36,7 +36,7 @@ import replaceRepeatedBars from '../replaceRepeatedBars';
  * @param {Boolean|('none'|'max'|'core')} simplifyChords
  * @param {Boolean} useShortNamings
  * @param {('never'|'uneven'|'always')} printChordsDuration
- * @param {Function} customRenderer
+ * @param {Function|Boolean} customRenderer
  * @returns {String} rendered HTML
  */
 // eslint-disable-next-line max-lines-per-function
