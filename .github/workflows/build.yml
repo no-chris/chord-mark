@@ -21,11 +21,11 @@ jobs:
       # Install & build & test:
       - run: npm install
       - run: npx lerna bootstrap
-      - run: npx lerna run test
+      - run: npx lerna run build
       
       # Coverage report
-      # - name: Coveralls GitHub Action
-      #  uses: coverallsapp/github-action@v1.1.2
-      #  with:
-      #    github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Coveralls GitHub Action
+        uses: coverallsapp/github-action@v1.1.2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 

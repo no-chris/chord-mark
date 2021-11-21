@@ -1,8 +1,8 @@
 {
 	"name": "chord-mark",
 	"private": true,
-	"version": "0.6.1",
-	"description": "ChordMark - the most powerful syntax to write chords charts",
+	"version": "0.7.0",
+	"description": "The best way to write chord charts",
 	"license": "MIT",
 	"engines": {
 		"node": ">=16.0"
@@ -16,6 +16,34 @@
 	},
 	"homepage": "https://github.com/no-chris/chord-mark#readme",
 	"devDependencies": {
-		"lerna": "^4.0.0"
+		"@babel/cli": "^7.16.0",
+		"@babel/core": "^7.16.0",
+		"@babel/preset-env": "^7.16.4",
+		"@size-limit/preset-small-lib": "^7.0.3",
+		"babel-jest": "^27.3.1",
+		"babel-loader": "^8.2.3",
+		"eslint": "^8.0.1",
+		"eslint-plugin-import": "^2.25.2",
+		"eslint-plugin-no-unsanitized": "^4.0.0",
+		"handlebars-loader": "^1.7.1",
+		"jest": "^27.3.1",
+		"jest-handlebars": "^1.0.1",
+		"lerna": "^4.0.0",
+		"mini-css-extract-plugin": "^2.4.5",
+		"node-sass": "^6.0.1",
+		"prettier": "^2.4.1",
+		"raw-loader": "^4.0.2",
+		"sass": "^1.43.4",
+		"sass-loader": "^12.3.0",
+		"size-limit": "^7.0.3",
+		"sloc": "^0.2.1",
+		"webpack": "^5.64.2",
+		"webpack-cli": "^4.9.1"
+	},
+	"scripts": {
+		"build": "npm run lint && npm run format && npm run test && lerna run build",
+		"lint": "eslint packages",
+		"format": "prettier --write \"**/*.{js,jsx,json,ts,md}\"",
+		"test": "jest"
 	}
 }

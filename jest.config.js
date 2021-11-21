@@ -3,7 +3,7 @@ module.exports = {
 	testEnvironment: 'jsdom',
 
 	collectCoverage: true,
-	collectCoverageFrom: ['src/**/*.js', '!**/node_modules/**'],
+	collectCoverageFrom: ['**/src/**/*.js', '!**/node_modules/**'],
 	coverageDirectory: '<rootDir>/coverage',
 	coveragePathIgnorePatterns: ['node_modules'],
 	coverageReporters: ['json', 'lcov', 'text', 'clover'],
@@ -12,7 +12,7 @@ module.exports = {
 			branches: 99,
 			functions: 100,
 			lines: 100,
-			statements: 0,
+			statements: 100,
 		},
 	},
 
@@ -22,6 +22,6 @@ module.exports = {
 	},
 
 	moduleNameMapper: {
-		'\\.(css|scss)$': '<rootDir>/scss/__mocks__/styleMock.js',
+		'\\.(css|scss)$': '<rootDir>/__mocks__/styleMock.js',
 	},
 };

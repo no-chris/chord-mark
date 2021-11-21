@@ -1,7 +1,7 @@
 {
 	"name": "chord-mark",
 	"version": "0.7.0",
-	"description": "ChordMark - the most powerful syntax to write chords charts",
+	"description": "ChordMark - chord charts parser and renderer",
 	"private": false,
 	"main": "lib/chord-mark.js",
 	"author": "Christophe Noël",
@@ -16,62 +16,30 @@
 	"bugs": {
 		"url": "https://github.com/no-chris/chord-mark/issues"
 	},
-	"homepage": "https://github.com/no-chris/chord-mark#readme",
-	"devDependencies": {
-		"@babel/cli": "^7.15.7",
-		"@babel/core": "^7.15.8",
-		"@babel/preset-env": "^7.15.8",
-		"@size-limit/preset-small-lib": "^7.0.3",
-		"babel-jest": "^27.2.5",
-		"babel-loader": "^8.2.2",
-		"clean-webpack-plugin": "^4.0.0",
-		"eslint": "^8.0.1",
-		"eslint-plugin-import": "^2.25.2",
-		"eslint-plugin-no-unsanitized": "^4.0.0",
-		"handlebars-loader": "^1.7.1",
-		"jest": "^27.2.5",
-		"jest-handlebars": "^1.0.1",
-		"mini-css-extract-plugin": "^2.4.2",
-		"node-sass": "^6.0.1",
-		"prettier": "^2.4.1",
-		"raw-loader": "^4.0.2",
-		"sass": "^1.43.2",
-		"sass-loader": "^12.2.0",
-		"size-limit": "^7.0.3",
-		"sloc": "^0.2.1",
-		"webpack": "^5.58.2",
-		"webpack-bundle-analyzer": "^4.5.0",
-		"webpack-cli": "^4.9.0"
-	},
+	"homepage": "https://github.com/no-chris/chord-mark/tree/main/packages/chord-mark#readme",
 	"dependencies": {
 		"chord-symbol": "^2.1.0",
 		"core-js": "^3.18.3",
 		"dompurify": "^2.3.3",
 		"handlebars": "^4.7.7",
-		"lodash": "^4.17.21",
-		"tiny-emitter": "^2.1.0"
+		"lodash": "^4.17.21"
 	},
 	"scripts": {
-		"audit": "npm audit",
-		"bundle-js": "webpack",
-		"bundle-css": "node-sass scss -o lib --output-style compressed --source-map true",
-		"build": "npm run lint && npm run test && npm run bundle-js && npm run bundle-css && npm run size && npm run sloc",
-		"format": "prettier --write \"**/*.{js,jsx,json,ts,md}\"",
-		"lint": "eslint src tests",
+		"build": "npm run bundle && npm run size && npm run sloc",
+		"bundle": "webpack",
 		"size": "size-limit",
-		"sloc": "echo \"Source code:\" > SLOC && npx sloc src >> SLOC && echo \"Tests:\" >> SLOC && npx sloc tests >> SLOC && echo \"Total:\" >> SLOC && npx sloc src tests >> SLOC",
-		"test": "jest"
+		"sloc": "echo \"Source code:\" > SLOC && npx sloc src >> SLOC && echo \"Tests:\" >> SLOC && npx sloc tests >> SLOC && echo \"Total:\" >> SLOC && npx sloc src tests >> SLOC"
 	},
-	"size-limit": [
-		{
-			"path": "./lib/chord-mark.js",
-			"limit": "80 KB"
-		}
-	],
 	"files": [
 		"lib",
 		"src",
 		"scss",
 		"tests"
+	],
+	"size-limit": [
+		{
+			"path": "./packages/chord-mark/lib/chord-mark.js",
+			"limit": "80 KB"
+		}
 	]
 }
