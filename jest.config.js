@@ -20,11 +20,12 @@ module.exports = {
 
 	transform: {
 		'\\.js$': 'babel-jest',
-		'^.+\\.hbs$': 'handlebars-jest',
+		'\\.hbs$': 'jest-handlebars',
 	},
 	// whitelisting local modules in the node_modules folder
 	transformIgnorePatterns: ['<rootDir>.*(node_modules)(?!.*chord-mark.*).*$'],
 	moduleNameMapper: {
 		'\\.(css|scss)$': '<rootDir>/__mocks__/styleMock.js',
+		'chord-mark': '<rootDir>/packages/chord-mark/src/chordMark.js',
 	},
 };
