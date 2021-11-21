@@ -1,3 +1,4 @@
+/* eslint-env node */
 module.exports = {
 	env: {
 		browser: true,
@@ -54,12 +55,5 @@ module.exports = {
 			{ escape: { methods: ['escapeHTML'] } },
 		],
 		'no-unsanitized/method': ['error'],
-
-		'import/no-restricted-paths': [
-			'error',
-			{
-				zones: [{ target: './src/parser', from: './src/renderer' }],
-			},
-		],
 	},
 };

@@ -1,15 +1,11 @@
 /* eslint-env node */
 const path = require('path');
-
 const webpack = require('webpack');
 
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const BundleAnalyzerPlugin =
-	require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-
-const buildDir = 'lib';
+const buildDir = 'packages/chord-mark/lib';
 
 const config = {
+	context: __dirname,
 	target: 'web',
 	mode: 'production',
 	devtool: 'source-map',
@@ -20,11 +16,12 @@ const config = {
 
 	output: {
 		filename: '[name].js',
-		path: path.resolve(process.cwd(), buildDir),
+		clean: true,
+		path: path.resolve(__dirname, buildDir),
 		library: 'chord-mark',
 		libraryTarget: 'umd',
 		// https://github.com/webpack/webpack/pull/8625
-		globalObject: "typeof self !== 'undefined' ? self : this",
+		//globalObject: "typeof self !== 'undefined' ? self : this",
 	},
 
 	optimization: {
@@ -35,14 +32,7 @@ const config = {
 		hints: false,
 	},
 
-	plugins: [
-		new CleanWebpackPlugin(),
-		new webpack.IgnorePlugin({ resourceRegExp: /\.scss|sass|css$/ }),
-		new BundleAnalyzerPlugin({
-			analyzerMode: 'static',
-			openAnalyzer: false,
-		}),
-	],
+	plugins: [new webpack.IgnorePlugin({ resourceRegExp: /\.scss|sass|css$/ })],
 
 	module: {
 		rules: [
