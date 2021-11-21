@@ -398,3 +398,19 @@ A7. B. C7.
 		expect(element.textContent).toBe(expected);
 	});
 });
+
+describe('customRenderer', () => {
+	test('Should return the result of the custom renderer', () => {
+		const customRenderer = jest.fn();
+		customRenderer.mockImplementation(() => 'custom rendered');
+
+		const input = `#v
+C G
+line1-1
+A D
+line1-2`;
+
+		const rendered = renderSongText(input, { customRenderer });
+		expect(rendered).toContain('custom rendered');
+	});
+});

@@ -36,6 +36,7 @@ import replaceRepeatedBars from '../replaceRepeatedBars';
  * @param {Boolean|('none'|'max'|'core')} simplifyChords
  * @param {Boolean} useShortNamings
  * @param {('never'|'uneven'|'always')} printChordsDuration
+ * @param {Function} customRenderer
  * @returns {String} rendered HTML
  */
 // eslint-disable-next-line max-lines-per-function
@@ -53,6 +54,7 @@ export default function renderSong(
 		simplifyChords = 'none',
 		useShortNamings = true,
 		printChordsDuration = 'never',
+		customRenderer = false,
 	} = {}
 ) {
 	let { allLines, allChords } = parsedSong;
@@ -72,9 +74,12 @@ export default function renderSong(
 
 	allLines.forEach(spaceChordLine);
 
-	const song = renderAllLines().join('\n');
-
-	return songTpl({ song });
+	if (customRenderer) {
+		return customRenderer(allLines, {});
+	} else {
+		const song = renderAllLines().join('\n');
+		return songTpl({ song });
+	}
 
 	function renderChords() {
 		const accidental =
