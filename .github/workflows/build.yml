@@ -21,7 +21,7 @@ jobs:
       # Install & build & test:
       - run: npm install
       - run: npx lerna bootstrap
-      - run: npx lerna run test
+      - run: npx lerna run build
       
       # Coverage report
       - name: Coveralls GitHub Action
