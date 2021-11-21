@@ -1,5 +1,5 @@
 {
-	"name": "chord-mark",
+	"name": "chord-mark-monorepo",
 	"private": true,
 	"version": "0.7.0",
 	"description": "The best way to write chord charts",
@@ -25,9 +25,10 @@
 		"eslint": "^8.0.1",
 		"eslint-plugin-import": "^2.25.2",
 		"eslint-plugin-no-unsanitized": "^4.0.0",
+		"handlebars": "^4.7.7",
+		"handlebars-jest": "^0.6.0",
 		"handlebars-loader": "^1.7.1",
 		"jest": "^27.3.1",
-		"jest-handlebars": "^1.0.1",
 		"lerna": "^4.0.0",
 		"mini-css-extract-plugin": "^2.4.5",
 		"prettier": "^2.4.1",
@@ -44,5 +45,6 @@
 		"lint": "eslint packages",
 		"format": "prettier --write \"**/*.{js,jsx,json,ts,md}\"",
 		"test": "jest"
-	}
+	},
+	"dependencies": {}
 }

@@ -1,6 +1,7 @@
 /* eslint-env node */
 module.exports = {
 	testEnvironment: 'jsdom',
+	rootDir: __dirname,
 
 	collectCoverage: true,
 	collectCoverageFrom: ['**/src/**/*.js', '!**/node_modules/**'],
@@ -15,12 +16,14 @@ module.exports = {
 			statements: 100,
 		},
 	},
+	testMatch: ['<rootDir>/packages/**/tests/**/*.spec.js'],
 
 	transform: {
 		'\\.js$': 'babel-jest',
-		'\\.hbs$': 'jest-handlebars',
+		'^.+\\.hbs$': 'handlebars-jest',
 	},
-
+	// whitelisting local modules in the node_modules folder
+	transformIgnorePatterns: ['<rootDir>.*(node_modules)(?!.*chord-mark.*).*$'],
 	moduleNameMapper: {
 		'\\.(css|scss)$': '<rootDir>/__mocks__/styleMock.js',
 	},
