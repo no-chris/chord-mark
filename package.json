@@ -25,6 +25,7 @@
 		"eslint": "^8.0.1",
 		"eslint-plugin-import": "^2.25.2",
 		"eslint-plugin-no-unsanitized": "^4.0.0",
+		"eslint-plugin-react": "^7.27.1",
 		"handlebars-loader": "^1.7.1",
 		"jest": "^27.3.1",
 		"jest-handlebars": "^1.0.1",

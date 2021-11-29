@@ -1,0 +1,50 @@
+import TabbedChordMark from '../../src/components/TabbedChordMark';
+
+# Sections
+
+Sections are at the heart of some of `ChordMark` most powerful features, like the automatic repetition of chords across sections of the same type.
+You can think of them as subpart of a song such as `Intro`, `Verse`, `Chorus`, `Solo`...
+
+It is highly recommended to systematically use sections.
+
+## Declaring a section
+
+To create a new section, use the `#` character followed by a single word:
+
+<TabbedChordMark src={'#intro\n#verse\n#bridge\n#chorus\n#verse\n#chorus'} />
+
+Note that you can declare multiple times a section of the same family with the exact same section label (eg `#verse`, `#chorus`...); `ChordMark` will automatically number them.
+
+The section label should be a single word composed of only letters, uppercase or lowercase. 
+If another character is present, such a space, then the line will be considered as a lyric line and no section will be declared.
+
+<TabbedChordMark src={'Valid labels:\n#custom\n#mySection\n\nInvalid labels:\n#my section\n#1custom\n#custom 2'} />
+
+To end a section, just declare a new one:
+
+<TabbedChordMark src={'#verse\nThis is the verse \n\n#chorus\nThis is the chorus'} />
+
+## Shorthand notation
+
+In order to speed up the writing process, `ChordMark` has a shorthand notation for the most commonly used sections names. 
+It is highly encouraged to use it:
+
+<TabbedChordMark src={'#a\n#b\n#c\n#i\n#o\n#p\n#s\n#u\n#v'} />
+
+## Repeating chords
+
+Once you define the chords for a section, they are automatically repeated for the next section declared with the exact same label. 
+
+<TabbedChordMark src={'#v\nBm7.. E7.. A7\nThe first verse\n\n#c\nD7 %\nThe first chorus\n\n#v\nThe second verse\n\n#c\nThe second chorus'} />
+
+Override possible
+
+## Repeating a whole section
+
+use #c
+
+target a specific section #c2
+
+## multiplying a section
+
+use #c x2
