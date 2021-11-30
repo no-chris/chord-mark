@@ -1,0 +1,68 @@
+@import './dracula';
+
+.chordMarkBlockContainer {
+  margin-bottom: var(--ifm-leading);
+  border-radius: var(--ifm-global-radius);
+  box-shadow: var(--ifm-global-shadow-lw);
+  overflow: hidden;
+}
+
+.chordMarkBlockContent {
+  position: relative;
+  /*rtl:ignore*/
+  direction: ltr;
+}
+
+.chordMarkBlockTitle {
+  border-bottom: 1px solid var(--ifm-color-emphasis-300);
+  font-size: var(--ifm-code-font-size);
+  font-weight: 500;
+  padding: 0.75rem var(--ifm-pre-padding);
+}
+
+.chordMarkBlock {
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+}
+
+.chordMarkBlockLines {
+  font: inherit;
+  /*rtl:ignore*/
+  float: left;
+  min-width: 100%;
+  padding: var(--ifm-pre-padding);
+}
+
+@media print {
+  .chordMarkBlockLines {
+    white-space: pre-wrap;
+  }
+}
+
+.chordMarkBlockLines {
+  color: $dt-foreground;
+  background-color: $dt-background !important;
+}
+
+.cmTimeSignature {
+  color: $dt-comment;
+  font-weight: bold;
+}
+
+.cmBarSeparator {
+  color: $dt-comment;
+}
+
+.cmChordSymbol {
+  color: $dt-cyan;
+}
+
+.cmSectionLabel {
+  color: $dt-orange;
+  font-weight: bold;
+}
+
+.cmChordDuration {
+  opacity: 0.8;
+}

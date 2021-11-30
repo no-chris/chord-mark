@@ -1,10 +1,9 @@
 import React from 'react';
 
-import CodeBlock from '@theme/CodeBlock';
+import ChordMarkBlock from './ChordMarkBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-import stripTags from '../stripTags';
 import { parseSong, renderSong } from 'chord-mark';
 
 const TabbedChordMark = ({ src, srcLines, renderLines, options }) => {
@@ -22,18 +21,15 @@ const TabbedChordMark = ({ src, srcLines, renderLines, options }) => {
 		)
 	);
 	const srcSnippet = getSnippet(src, srcLines);
-	const renderSnippet = getSnippet(
-		stripTags(rendered.replace(/&nbsp;/g, '')),
-		renderLines
-	);
+	const renderSnippet = getSnippet(rendered, renderLines);
 
 	return (
 		<Tabs>
 			<TabItem value={'chordmark'} label={'ChordMark'}>
-				<CodeBlock>{srcSnippet}</CodeBlock>
+				<ChordMarkBlock content={srcSnippet} />
 			</TabItem>
 			<TabItem value={'text'} label={'Rendered'}>
-				<CodeBlock>{renderSnippet}</CodeBlock>
+				<ChordMarkBlock content={renderSnippet} />
 			</TabItem>
 		</Tabs>
 	);

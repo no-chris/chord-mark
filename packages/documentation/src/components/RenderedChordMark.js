@@ -1,9 +1,8 @@
 import React from 'react';
 
-import CodeBlock from '@theme/CodeBlock';
+import ChordMarkBlock from './ChordMarkBlock';
 
 import { parseSong, renderSong } from 'chord-mark';
-import stripTags from '../stripTags';
 
 const RenderedChordMark = ({ src, title = undefined, options }) => {
 	const parsed = parseSong(src);
@@ -19,11 +18,7 @@ const RenderedChordMark = ({ src, title = undefined, options }) => {
 		)
 	);
 
-	return (
-		<CodeBlock title={title}>
-			{stripTags(rendered.replace(/&nbsp;/g, ''))}
-		</CodeBlock>
-	);
+	return <ChordMarkBlock title={title} content={rendered} />;
 };
 
 export default RenderedChordMark;
