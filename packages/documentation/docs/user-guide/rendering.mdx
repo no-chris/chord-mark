@@ -1,0 +1,40 @@
+import RenderedChordMark from '../../src/components/RenderedChordMark';
+import data from './rendering-data';
+
+# Rendering options
+
+`ChordMark` fully acknowledges the fact that when it comes to rendering a chord chart, there is no one size fits all and people's preferences might vary greatly.
+The same people might also have different opinions depending on any given song!
+
+Let's have a look at some possibilities.
+
+Those options are not written in the file itself, but are rendering options of the `ChordMark` software.
+They should be proposed by any chord chart editor compatible with `ChordMark`, such as `Chord Charts Studio`.
+
+## Choosing what to render
+
+
+
+## (Not) aligning chords and lyrics
+
+Aligning chords with lyrics is the usual way of rendering chord charts.
+But it's not the only one!
+Thanks to `ChordMark` automatic alignment of bars between lines, one might find it clearer to actually NOT align the chords symbols with the lyrics.
+This is especially true for jazz songs with a lot of chords and where the lyric placement is not always a reliable indicator for the chords changes.
+
+Compare:
+
+<RenderedChordMark title={'Chords aligned with lyrics'} src={data.alignChordsWithLyrics} />
+
+With:
+
+<RenderedChordMark title={'Bars aligned'} src={data.alignChordsWithLyrics} options={{ alignChordsWithLyrics: false}}/>
+
+Or even: 
+
+<RenderedChordMark title={'Bars not aligned'} src={data.alignChordsWithLyrics} options={{ alignChordsWithLyrics: false, alignBars: false}}/>
+
+There is no right or wrong, it really depends on how well you know the melody, how complex are the chords changes, and what do you prefer to focus on.
+One way might also print better than the other.
+
+

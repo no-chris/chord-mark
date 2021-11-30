@@ -1,6 +1,4 @@
-// @ts-check
-// Note: type annotations allow type checking and IDEs autocompletion
-
+/* eslint-env node */
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
@@ -15,6 +13,8 @@ const config = {
 	favicon: 'img/favicon.ico',
 	organizationName: 'no-chris', // Usually your GitHub org/user name.
 	projectName: 'chord-mark', // Usually your repo name.
+
+	plugins: ['docusaurus-plugin-sass'],
 
 	presets: [
 		[
@@ -33,7 +33,7 @@ const config = {
 						'https://github.com/facebook/docusaurus/edit/main/website/blog/',
 				},
 				theme: {
-					customCss: require.resolve('./src/css/custom.css'),
+					customCss: require.resolve('./src/css/custom.scss'),
 				},
 			}),
 		],
@@ -46,14 +46,14 @@ const config = {
 				title: 'ChordMark',
 				logo: {
 					alt: 'ChordMark Logo',
-					src: 'img/logo.svg',
+					src: 'img/cmLogo.png',
 				},
 				items: [
 					{
 						type: 'doc',
 						docId: 'tutorial/intro',
 						position: 'left',
-						label: 'Docs',
+						label: 'User guide',
 					},
 					{
 						type: 'doc',

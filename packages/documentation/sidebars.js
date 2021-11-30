@@ -1,3 +1,5 @@
+/* eslint-env node */
+
 /**
  * Creating a sidebar enables you to:
  - create an ordered group of docs
@@ -20,14 +22,15 @@ const sidebars = {
 			label: 'Introduction',
 			items: ['tutorial/intro', 'tutorial/inspiration'],
 		},
+		'user-guide/basics',
 		{
 			type: 'category',
-			label: 'User Guide',
+			label: 'Reference',
 			items: [
-				'user-guide/basics',
 				'user-guide/chords',
 				'user-guide/lyrics',
 				'user-guide/sections',
+				'user-guide/rendering',
 			],
 		},
 	],
