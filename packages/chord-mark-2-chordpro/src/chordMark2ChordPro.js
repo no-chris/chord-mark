@@ -36,11 +36,7 @@ const chordMark2ChordPro = (allLines) => {
 				chordProLines,
 				(i) => i !== ''
 			);
-			if (lastNonEmptyLineIndex !== -1) {
-				chordProLines.splice(lastNonEmptyLineIndex + 1, 0, endLine);
-			} else {
-				chordProLines.push(endLine);
-			}
+			chordProLines.splice(lastNonEmptyLineIndex + 1, 0, endLine);
 		}
 		currentLabel = { ...line };
 		chordProLines.push(getOpenSectionDirective(line));
