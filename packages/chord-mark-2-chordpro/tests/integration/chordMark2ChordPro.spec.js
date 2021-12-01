@@ -6,7 +6,7 @@ import chordMark2ChordPro from '../../src/chordMark2ChordPro';
 
 const dataDir = path.resolve(__dirname + '/data');
 const input1 = fs.readFileSync(dataDir + '/inputChordMark1.txt', 'utf-8');
-const output1 = fs.readFileSync(dataDir + '/outputChordPro1.txt', 'utf-8');
+const output1 = fs.readFileSync(dataDir + '/outputChordPro1.cho', 'utf-8');
 
 describe('Module', () => {
 	test('Should expose a function', () => {

@@ -2,6 +2,7 @@ import { lineTypes } from 'chord-mark';
 
 const chordMark2ChordPro = (allLines) => {
 	const chordProLines = [];
+
 	let currentLabel;
 
 	allLines.forEach((line, index) => {
@@ -87,14 +88,21 @@ const chordMark2ChordPro = (allLines) => {
 	function addChordLine(line) {
 		if (line.model.hasPositionedChords) return;
 
-		const allSymbols = [];
+		let chordLine = '';
+
 		line.model.allBars.map((bar) => {
+			chordLine += '| ';
 			bar.allChords.map((chord) => {
-				allSymbols.push('[' + chord.symbol + ']');
+				chordLine +=
+					chord.symbol +
+					' '.repeat(
+						(chord.spacesWithin || 0) + (chord.spacesAfter || 0)
+					);
 			});
 		});
+		chordLine += '|';
 
-		chordProLines.push(allSymbols.join(' '));
+		chordProLines.push(chordLine.trim());
 	}
 
 	/**
