@@ -30,7 +30,7 @@
 		"jest-handlebars": "^1.0.1",
 		"lerna": "^4.0.0",
 		"mini-css-extract-plugin": "^2.4.5",
-		"prettier": "^2.4.1",
+		"prettier": "^2.5.0",
 		"raw-loader": "^4.0.2",
 		"sass": "^1.43.4",
 		"sass-loader": "^12.3.0",
