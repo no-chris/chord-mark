@@ -26,7 +26,7 @@
 		"eslint-plugin-import": "^2.25.2",
 		"eslint-plugin-no-unsanitized": "^4.0.0",
 		"handlebars-loader": "^1.7.1",
-		"jest": "^27.3.1",
+		"jest": "^27.4.3",
 		"jest-handlebars": "^1.0.1",
 		"lerna": "^4.0.0",
 		"mini-css-extract-plugin": "^2.4.5",
