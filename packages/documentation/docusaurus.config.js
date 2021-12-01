@@ -45,7 +45,7 @@ const config = {
 				items: [
 					{
 						type: 'doc',
-						docId: 'tutorial/intro',
+						docId: 'overview/what-is-chordmark',
 						position: 'left',
 						label: 'User guide',
 					},
@@ -70,7 +70,7 @@ const config = {
 						items: [
 							{
 								label: 'Tutorial',
-								to: '/docs/intro',
+								to: '/overview/what-is-chordmark',
 							},
 						],
 					},

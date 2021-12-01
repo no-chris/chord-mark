@@ -1,5 +1,5 @@
-import TabbedChordMark from '../../src/components/TabbedChordMark';
-import basics from './basics.js';
+import TabbedChordMark from '../src/components/TabbedChordMark';
+import data from './getting-started-data.js';
 
 # Getting started
 
@@ -7,18 +7,18 @@ import basics from './basics.js';
 
 Let's have a look at a song written in ChordMark. You can switch between the source file, written in ChordMark, and the rendered version using the tabs.
 
-<TabbedChordMark src={basics.sampleSong} />
+<TabbedChordMark src={data.sampleSong} />
 
 ## Breaking it down
 
 ### First verse
 
-<TabbedChordMark src={basics.sampleSong} srcLines={'1'} renderLines={'1'} />
+<TabbedChordMark src={data.sampleSong} srcLines={'1'} renderLines={'1'} />
 
 The `#` defines the start of a section (`#intro`, `#verse`, `#chorus`...), and `v` is the shorthand notation for the label `Verse`.
 ChordMark will automatically number the sections of the same label.
 
-<TabbedChordMark src={basics.sampleSong} srcLines={'2-3'} renderLines={'2-3'} />
+<TabbedChordMark src={data.sampleSong} srcLines={'2-3'} renderLines={'2-3'} />
 
 The first line contains two chords symbols followed by 2 dots each. This means that each chord should be played for 2 beats.
 Since the default time signature is `4/4`, this line will be rendered as a single bar with 2 chords. 
@@ -26,13 +26,13 @@ The bar separator `|` are added automatically.
 
 The second line contains the lyrics sung with the chords above. The position marker symbol (`_`) is used to specify exactly where each chord should be played.
 
-<TabbedChordMark src={basics.sampleSong} srcLines={'4-5'} renderLines={'4-5'} />
+<TabbedChordMark src={data.sampleSong} srcLines={'4-5'} renderLines={'4-5'} />
 
 The symbol `%` instructs ChordMark to repeat the last defined chord line, eg line 2.
 
 Although the chords are not defined explicitly but repeated, ChordMark still expects that two chords should be positioned in the lyric line. 
 
-<TabbedChordMark src={basics.sampleSong} srcLines={'6-7'} renderLines={'6-7'} />
+<TabbedChordMark src={data.sampleSong} srcLines={'6-7'} renderLines={'6-7'} />
 
 The first line declares 2 bars with 2 chords each.
 Since the first bar has chords with uneven durations (3 beats for `F`, 1 beat for `G`), the beat count indicator `.` is explicitly rendered. 
@@ -41,19 +41,19 @@ It is omitted when each chord in a bar should be played for the same duration.
 The second line contains only 3 chords position markers for 4 chords, since the last chord change happens after the lyrics ends.
 In that case, ChordMark simply append the extra chords at the end of the line.
 
-<TabbedChordMark src={basics.sampleSong} srcLines={'12'} renderLines={'12'} />
+<TabbedChordMark src={data.sampleSong} srcLines={'12'} renderLines={'12'} />
 
 When no duration is specified for a chord, like for the `Am` in the second bar here, then ChordMark simply considers it lasts the whole bar.
 
 ### First chorus
 
-<TabbedChordMark src={basics.sampleSong} srcLines={'15-23'} renderLines={'15-23'} />
+<TabbedChordMark src={data.sampleSong} srcLines={'15-23'} renderLines={'15-23'} />
 
 `#c` declares a new section using the shorthand label `c` for `chorus`.
     
 ### Second verse
 
-<TabbedChordMark src={basics.sampleSong} srcLines={'25-31'} renderLines={'25-37'} />
+<TabbedChordMark src={data.sampleSong} srcLines={'25-31'} renderLines={'25-37'} />
 
 By using the `#v` section label a second time, we instruct ChordMark to automatically repeat the chords that have been defined for the first verse.
 Which means that only the chords position markers are needed this time, and not the chords themselves. 
@@ -63,7 +63,7 @@ Note that ChordMark automatically number the verse.
 
 ### Second chorus
 
-<TabbedChordMark src={basics.sampleSong} srcLines={'33'} renderLines={'39-47'} />
+<TabbedChordMark src={data.sampleSong} srcLines={'33'} renderLines={'39-47'} />
 
 Since the second chorus is identical to the first one, we can just declare the label and leave the content of the section empty: ChordMark will understand that it should automatically repeat the section.
 
@@ -72,7 +72,7 @@ Since the second chorus is identical to the first one, we can just declare the l
 Now let's say you are a bass player in a band, and that only the chord grid matters to you. 
 Easy peasy! ChordMark can automatically render a nicely formatted chord grid from the exact same source file:
 
-<TabbedChordMark src={basics.sampleSong} options={{chordsAndLyricsDisplay: 'chords'}}/>
+<TabbedChordMark src={data.sampleSong} options={{chordsAndLyricsDisplay: 'chords'}}/>
 
 
 ## Going further

@@ -19,18 +19,22 @@ const sidebars = {
 	docs: [
 		{
 			type: 'category',
-			label: 'Introduction',
-			items: ['tutorial/intro', 'tutorial/inspiration'],
+			label: 'Overview',
+			items: [
+				'overview/what-is-chordmark',
+				'overview/story',
+				'overview/chord-charts-studio',
+			],
 		},
-		'user-guide/basics',
+		'getting-started',
 		{
 			type: 'category',
 			label: 'Reference',
 			items: [
-				'user-guide/chords',
-				'user-guide/lyrics',
-				'user-guide/sections',
-				'user-guide/rendering',
+				'reference/chords',
+				'reference/lyrics',
+				'reference/sections',
+				'reference/rendering',
 			],
 		},
 	],
