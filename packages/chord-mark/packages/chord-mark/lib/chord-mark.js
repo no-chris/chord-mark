@@ -22031,6 +22031,7 @@ const barHasMultiplePositionedChords = (line, bar, alignChordsWithLyrics) => {
  * @param {Boolean|('none'|'max'|'core')} simplifyChords
  * @param {Boolean} useShortNamings
  * @param {('never'|'uneven'|'always')} printChordsDuration
+ * @param {Function} customRenderer
  * @returns {String} rendered HTML
  */
 // eslint-disable-next-line max-lines-per-function
@@ -22046,7 +22047,8 @@ function renderSong(parsedSong, {
   autoRepeatChords = true,
   simplifyChords = 'none',
   useShortNamings = true,
-  printChordsDuration = 'never'
+  printChordsDuration = 'never',
+  customRenderer = false
 } = {}) {
   let {
     allLines,
@@ -22061,10 +22063,16 @@ function renderSong(parsedSong, {
   });
   const sectionsStats = getSectionsStats(allLines);
   const maxBeatsWidth = getMaxBeatsWidth(allLines, shouldAlignChords);
-  const song = renderAllLines().join('\n');
-  return song_default()({
-    song
-  });
+  allLines.forEach(spaceChordLine);
+
+  if (customRenderer) {
+    return customRenderer(allLines, {});
+  } else {
+    const song = renderAllLines().join('\n');
+    return song_default()({
+      song
+    });
+  }
 
   function renderChords() {
     const accidental = accidentalsType === 'auto' ? getMainAccidental(allChords) : accidentalsType;
@@ -22123,24 +22131,30 @@ function renderSong(parsedSong, {
     return ['chords', 'chordsFirstLyricLine'].includes(chordsAndLyricsDisplay) && line.type === parser_lineTypes.LYRIC || chordsAndLyricsDisplay === 'lyrics' && line.type === parser_lineTypes.CHORD;
   }
 
+  function spaceChordLine(line, lineIndex) {
+    if (line.type === parser_lineTypes.CHORD) {
+      let spaced = alignBars && !shouldAlignChords(line) ? aligned_space(line.model, maxBeatsWidth) : space(line.model);
+      const nextLine = allLines[lineIndex + 1];
+
+      if (shouldAlignChords(line)) {
+        const {
+          chordLine,
+          lyricsLine
+        } = chordLyrics_space(spaced, nextLine.model);
+        allLines[lineIndex + 1].model = lyricsLine;
+        spaced = chordLine;
+      }
+
+      allLines[lineIndex].model = spaced;
+    }
+  }
+
   function renderAllLines() {
-    return allLines.map((line, lineIndex, allFilteredLines) => {
+    return allLines.map(line => {
       let rendered;
 
       if (line.type === parser_lineTypes.CHORD) {
-        let spaced = alignBars && !shouldAlignChords(line) ? aligned_space(line.model, maxBeatsWidth) : space(line.model);
-        const nextLine = allFilteredLines[lineIndex + 1];
-
-        if (shouldAlignChords(line)) {
-          const {
-            chordLine,
-            lyricsLine
-          } = chordLyrics_space(spaced, nextLine.model);
-          allFilteredLines[lineIndex + 1].model = lyricsLine;
-          spaced = chordLine;
-        }
-
-        rendered = renderChordLine(spaced);
+        rendered = renderChordLine(line.model);
       } else if (line.type === parser_lineTypes.EMPTY_LINE) {
         rendered = render();
       } else if (line.type === parser_lineTypes.SECTION_LABEL) {
