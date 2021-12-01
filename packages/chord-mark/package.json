@@ -21,7 +21,6 @@
 		"chord-symbol": "^2.1.0",
 		"core-js": "^3.18.3",
 		"dompurify": "^2.3.3",
-		"handlebars": "^4.7.7",
 		"lodash": "^4.17.21"
 	},
 	"scripts": {
@@ -39,7 +38,7 @@
 	"size-limit": [
 		{
 			"path": "./packages/chord-mark/lib/chord-mark.js",
-			"limit": "80 KB"
+			"limit": "60 KB"
 		}
 	]
 }
