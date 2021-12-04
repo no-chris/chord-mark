@@ -37,7 +37,7 @@ const config = {
 		/** @type {import('@docusaurus/preset-classic').ThemeConfig} */
 		({
 			navbar: {
-				title: 'ChordMark',
+				title: '!!!ChordMark ALPHA VERSION!!!',
 				logo: {
 					alt: 'ChordMark Logo',
 					src: 'img/cmLogo.png',
