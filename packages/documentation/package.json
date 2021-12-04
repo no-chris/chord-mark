@@ -1,7 +1,7 @@
 {
 	"name": "documentation",
 	"version": "0.7.0",
-	"private": false,
+	"private": true,
 	"description": "ChordMark documentation",
 	"author": "Christophe Noël <touffi51@gmail.com>",
 	"homepage": "https://github.com/no-chris/chord-mark/tree/main/packages/documentation#readme",
