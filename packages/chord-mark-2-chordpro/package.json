@@ -2,27 +2,32 @@
 	"name": "chord-mark-2-chordpro",
 	"version": "0.7.0",
 	"description": "ChordMark to ChordPro converter",
-	"author": "Christophe Noël <touffi51@gmail.com>",
-	"homepage": "https://github.com/no-chris/chord-mark/tree/main/packages/chord-mark-2-chordpro#readme",
-	"license": "MIT",
+	"private": false,
 	"main": "lib/chord-mark-2-chordpro.js",
+	"author": "Christophe Noël",
+	"license": "MIT",
+	"engines": {
+		"node": ">=16.0"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/no-chris/chord-mark.git"
+	},
+	"bugs": {
+		"url": "https://github.com/no-chris/chord-mark/issues"
+	},
+	"homepage": "https://github.com/no-chris/chord-mark/tree/main/packages/chord-mark-2-chordpro#readme",
+	"dependencies": {
+		"chord-mark": "^0.7.0",
+		"core-js": "^3.19.1"
+	},
 	"files": [
 		"lib",
 		"src",
 		"tests"
 	],
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/no-chris/chord-mark.git"
-	},
 	"scripts": {
-		"test": "echo \"Error: run tests from root\" && exit 1"
-	},
-	"bugs": {
-		"url": "https://github.com/no-chris/chord-mark/issues"
-	},
-	"dependencies": {
-		"chord-mark": "^0.7.0",
-		"core-js": "^3.19.1"
+		"build": "npm run bundle",
+		"bundle": "webpack"
 	}
 }
