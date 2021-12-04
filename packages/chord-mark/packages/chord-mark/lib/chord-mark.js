@@ -20532,6 +20532,7 @@ __webpack_require__.r(__webpack_exports__);
 
 // EXPORTS
 __webpack_require__.d(__webpack_exports__, {
+  "lineTypes": () => (/* reexport */ parser_lineTypes),
   "parseSong": () => (/* reexport */ parseSong),
   "renderSong": () => (/* reexport */ renderSong)
 });
@@ -20581,10 +20582,10 @@ function isTimeSignatureString(string) {
   barRepeat: '%',
   chordBeatCount: '\\.',
   chordLineRepeat: '%',
+  chordPositionMarker: '_',
   noChord: 'NC',
   noLyrics: 'NL',
-  sectionLabel: '#',
-  chordPositionMarker: '_'
+  sectionLabel: '#'
 });
 ;// CONCATENATED MODULE: ./src/parser/matchers/isSectionLabel.js
 
@@ -22031,7 +22032,7 @@ const barHasMultiplePositionedChords = (line, bar, alignChordsWithLyrics) => {
  * @param {Boolean|('none'|'max'|'core')} simplifyChords
  * @param {Boolean} useShortNamings
  * @param {('never'|'uneven'|'always')} printChordsDuration
- * @param {Function} customRenderer
+ * @param {Function|Boolean} customRenderer
  * @returns {String} rendered HTML
  */
 // eslint-disable-next-line max-lines-per-function
@@ -22185,6 +22186,7 @@ function renderSong(parsedSong, {
   }
 }
 ;// CONCATENATED MODULE: ./src/chordMark.js
+
 
 
 
