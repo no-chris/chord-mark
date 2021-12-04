@@ -70,7 +70,7 @@ const config = {
 						items: [
 							{
 								label: 'Tutorial',
-								to: '/overview/what-is-chordmark',
+								to: '/docs/overview/what-is-chordmark',
 							},
 						],
 					},

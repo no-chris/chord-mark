@@ -1,4 +1,5 @@
 import React from 'react';
+import canUseDom from './canUseDom';
 
 import ChordMarkBlock from './ChordMarkBlock';
 import Tabs from '@theme/Tabs';
@@ -7,6 +8,10 @@ import TabItem from '@theme/TabItem';
 import { parseSong, renderSong } from 'chord-mark';
 
 const TabbedChordMark = ({ src, srcLines, renderLines, options }) => {
+	if (!canUseDom()) {
+		return <p>ChordMark code block</p>;
+	}
+
 	const parsed = parseSong(src);
 	const rendered = renderSong(
 		parsed,
