@@ -1,29 +1,38 @@
 import React from 'react';
 
-import ChordMarkBlock from './ChordMarkBlock';
-import canUseDom from './canUseDom';
+import BrowserOnly from '@docusaurus/BrowserOnly';
+import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
 
-import { parseSong, renderSong } from 'chord-mark';
+import ChordMarkBlock from './ChordMarkBlock';
 
 const RenderedChordMark = ({ src, title = undefined, options }) => {
-	if (!canUseDom()) {
-		return <p>ChordMark code block</p>;
-	}
+	let rendered;
 
-	const parsed = parseSong(src);
-	const rendered = renderSong(
-		parsed,
-		Object.assign(
-			{
-				alignBars: true,
-				alignChordsWithLyrics: true,
-				printChordsDuration: 'uneven',
-			},
-			options
-		)
-	);
+	if (ExecutionEnvironment.canUseDOM) {
+		// eslint-disable-next-line no-undef
+		const { parseSong, renderSong } = require('chord-mark');
+
+		const parsed = parseSong(src);
+		rendered = renderSong(
+			parsed,
+			Object.assign(
+				{
+					alignBars: true,
+					alignChordsWithLyrics: true,
+					printChordsDuration: 'uneven',
+				},
+				options
+			)
+		);
+	}
 
 	return <ChordMarkBlock title={title} content={rendered} />;
 };
 
-export default RenderedChordMark;
+const RenderedChordMarkWrapper = (props) => (
+	<BrowserOnly fallback={'loading...'}>
+		{() => <RenderedChordMark {...props} />}
+	</BrowserOnly>
+);
+
+export default RenderedChordMarkWrapper;

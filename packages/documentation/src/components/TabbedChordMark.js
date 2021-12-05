@@ -1,32 +1,34 @@
 import React from 'react';
-import canUseDom from './canUseDom';
+import BrowserOnly from '@docusaurus/BrowserOnly';
+import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
 
 import ChordMarkBlock from './ChordMarkBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-import { parseSong, renderSong } from 'chord-mark';
-
 const TabbedChordMark = ({ src, srcLines, renderLines, options }) => {
-	if (!canUseDom()) {
-		return <p>ChordMark code block</p>;
-	}
+	let srcSnippet;
+	let renderSnippet;
 
-	const parsed = parseSong(src);
-	const rendered = renderSong(
-		parsed,
-		Object.assign(
-			{
-				alignBars: true,
-				alignChordsWithLyrics: true,
-				printChordsDuration: 'uneven',
-				//chordsAndLyricsDisplay: 'chords',
-			},
-			options
-		)
-	);
-	const srcSnippet = getSnippet(src, srcLines);
-	const renderSnippet = getSnippet(rendered, renderLines);
+	if (ExecutionEnvironment.canUseDOM) {
+		// eslint-disable-next-line no-undef
+		const { parseSong, renderSong } = require('chord-mark');
+
+		const parsed = parseSong(src);
+		const rendered = renderSong(
+			parsed,
+			Object.assign(
+				{
+					alignBars: true,
+					alignChordsWithLyrics: true,
+					printChordsDuration: 'uneven',
+				},
+				options
+			)
+		);
+		srcSnippet = getSnippet(src, srcLines);
+		renderSnippet = getSnippet(rendered, renderLines);
+	}
 
 	return (
 		<Tabs>
@@ -57,4 +59,10 @@ function getStartEnd(rangeStr) {
 	return range;
 }
 
-export default TabbedChordMark;
+const TabbedChordMarkWrapper = (props) => (
+	<BrowserOnly fallback={'loading...'}>
+		{() => <TabbedChordMark {...props} />}
+	</BrowserOnly>
+);
+
+export default TabbedChordMarkWrapper;

@@ -1,7 +1,7 @@
 /* eslint-env node */
 const path = require('path');
 
-const buildDir = 'packages/chord-mark-2-chordpro/lib';
+const buildDir = 'lib';
 
 const config = {
 	context: __dirname,
