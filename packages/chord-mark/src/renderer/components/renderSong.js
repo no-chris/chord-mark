@@ -32,6 +32,7 @@ import replaceRepeatedBars from '../replaceRepeatedBars';
  * @param {('auto'|'flat'|'sharp')} accidentalsType
  * @param {Boolean} harmonizeAccidentals
  * @param {Boolean} expandSectionMultiply
+ * @param {Boolean} expandSectionCopy
  * @param {Boolean} autoRepeatChords
  * @param {Boolean|('none'|'max'|'core')} simplifyChords
  * @param {Boolean} useShortNamings
@@ -50,6 +51,7 @@ export default function renderSong(
 		accidentalsType = 'auto',
 		harmonizeAccidentals = true,
 		expandSectionMultiply = false,
+		expandSectionCopy = true,
 		autoRepeatChords = true,
 		simplifyChords = 'none',
 		useShortNamings = true,
@@ -59,7 +61,6 @@ export default function renderSong(
 ) {
 	let { allLines, allChords } = parsedSong;
 
-	let shouldSkipRepeatedSectionLine = false;
 	let isFirstLyricLineOfSection = false;
 
 	allLines = renderChords()
@@ -123,14 +124,22 @@ export default function renderSong(
 	}
 
 	function shouldRepeatLines(line) {
-		if (line.type === lineTypes.SECTION_LABEL) {
-			shouldSkipRepeatedSectionLine =
-				line.isFromSectionMultiply === true && !expandSectionMultiply;
-		}
 		const shouldSkipAutoRepeatChordLine =
 			line.isFromAutoRepeatChords && !autoRepeatChords;
 
-		return !shouldSkipRepeatedSectionLine && !shouldSkipAutoRepeatChordLine;
+		const shouldSkipSectionMultiplyLine =
+			line.isFromSectionMultiply && !expandSectionMultiply;
+
+		const shouldSkipSectionCopyLine =
+			line.type !== lineTypes.SECTION_LABEL &&
+			line.isFromSectionCopy &&
+			!expandSectionCopy;
+
+		return (
+			!shouldSkipSectionMultiplyLine &&
+			!shouldSkipAutoRepeatChordLine &&
+			!shouldSkipSectionCopyLine
+		);
 	}
 
 	function isFiltered(line) {

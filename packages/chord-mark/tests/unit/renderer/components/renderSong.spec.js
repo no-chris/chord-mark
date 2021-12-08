@@ -114,6 +114,43 @@ Imagine there's no heaven`;
 	});
 });
 
+describe('expandSectionCopy', () => {
+	test('should copy section when expandSectionCopy === true', () => {
+		const input = `#v
+A B
+verseLine
+#v
+#v`;
+		const expected = `Verse 1
+|A     |B     |
+verseLine
+Verse 2
+|A     |B     |
+verseLine
+Verse 3
+|A     |B     |
+verseLine`;
+		const rendered = renderSongText(input, { expandSectionCopy: true });
+		const element = htmlToElement(rendered);
+		expect(element.textContent).toBe(expected);
+	});
+	test('should only repeat section label when expandSectionCopy === false', () => {
+		const input = `#v
+A B
+verseLine
+#v
+#v`;
+		const expected = `Verse 1
+|A     |B     |
+verseLine
+Verse 2
+Verse 3`;
+		const rendered = renderSongText(input, { expandSectionCopy: false });
+		const element = htmlToElement(rendered);
+		expect(element.textContent).toBe(expected);
+	});
+});
+
 describe('expandSectionMultiply', () => {
 	test('Should repeat section when expandSectionMultiply === true', () => {
 		const input = `#v x2
