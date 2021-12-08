@@ -21863,21 +21863,21 @@ var lyricLine_default = /*#__PURE__*/__webpack_require__.n(tpl_lyricLine);
 /**
  * @param {SongLyricLine} lyricLine
  * @param {Boolean} alignChordsWithLyrics
- * @param {('all'|'lyrics'|'chords'|'chordsFirstLyricLine')} chordsAndLyricsDisplay
+ * @param {('all'|'lyrics'|'chords'|'chordsFirstLyricLine')} chartType
  * @returns {String} rendered html
  */
 
 function renderLyricLine_render(lyricLine, {
   alignChordsWithLyrics = false,
-  chordsAndLyricsDisplay = 'all'
+  chartType = 'all'
 } = {}) {
-  const trimmedLyricLine = shouldTrimLine(alignChordsWithLyrics, chordsAndLyricsDisplay) ? lyricLine.model.lyrics.trim() : lyricLine.model.lyrics;
+  const trimmedLyricLine = shouldTrimLine(alignChordsWithLyrics, chartType) ? lyricLine.model.lyrics.trim() : lyricLine.model.lyrics;
   return lyricLine_default()({
     lyricLine: trimmedLyricLine
   });
 }
 
-const shouldTrimLine = (alignChordsWithLyrics, chordsAndLyricsDisplay) => !alignChordsWithLyrics || chordsAndLyricsDisplay === 'lyrics';
+const shouldTrimLine = (alignChordsWithLyrics, chartType) => !alignChordsWithLyrics || chartType === 'lyrics';
 // EXTERNAL MODULE: ./src/renderer/components/tpl/timeSignature.hbs
 var timeSignature = __webpack_require__(4604);
 var timeSignature_default = /*#__PURE__*/__webpack_require__.n(timeSignature);
@@ -21984,6 +21984,7 @@ const replaceRepeatedBars = (line, {
           duration: bar.timeSignature.beatCount,
           beat: 1
         }];
+        bar.shouldPrintChordsDuration = false;
       }
     });
   }
@@ -22023,11 +22024,12 @@ const barHasMultiplePositionedChords = (line, bar, alignChordsWithLyrics) => {
  * @param {Song} parsedSong
  * @param {Boolean} alignBars
  * @param {Boolean} alignChordsWithLyrics
- * @param {('all'|'lyrics'|'chords'|'chordsFirstLyricLine')} chordsAndLyricsDisplay
+ * @param {('all'|'lyrics'|'chords'|'chordsFirstLyricLine')} chartType
  * @param {Number} transposeValue
  * @param {('auto'|'flat'|'sharp')} accidentalsType
  * @param {Boolean} harmonizeAccidentals
  * @param {Boolean} expandSectionMultiply
+ * @param {Boolean} expandSectionCopy
  * @param {Boolean} autoRepeatChords
  * @param {Boolean|('none'|'max'|'core')} simplifyChords
  * @param {Boolean} useShortNamings
@@ -22038,24 +22040,24 @@ const barHasMultiplePositionedChords = (line, bar, alignChordsWithLyrics) => {
 // eslint-disable-next-line max-lines-per-function
 
 function renderSong(parsedSong, {
-  alignBars = false,
-  alignChordsWithLyrics = false,
-  chordsAndLyricsDisplay = 'all',
+  alignBars = true,
+  alignChordsWithLyrics = true,
+  chartType = 'all',
   transposeValue = 0,
   accidentalsType = 'auto',
   harmonizeAccidentals = true,
-  expandSectionMultiply = true,
+  expandSectionMultiply = false,
+  expandSectionCopy = true,
   autoRepeatChords = true,
   simplifyChords = 'none',
   useShortNamings = true,
-  printChordsDuration = 'never',
+  printChordsDuration = 'uneven',
   customRenderer = false
 } = {}) {
   let {
     allLines,
     allChords
   } = parsedSong;
-  let shouldSkipRepeatedSectionLine = false;
   let isFirstLyricLineOfSection = false;
   allLines = renderChords().map(addPrintChordsDurationsFlag).filter(shouldRenderLine).map(line => {
     return renderer_replaceRepeatedBars(line, {
@@ -22108,16 +22110,14 @@ function renderSong(parsedSong, {
   }
 
   function shouldRepeatLines(line) {
-    if (line.type === parser_lineTypes.SECTION_LABEL) {
-      shouldSkipRepeatedSectionLine = line.isFromSectionMultiply === true && !expandSectionMultiply;
-    }
-
     const shouldSkipAutoRepeatChordLine = line.isFromAutoRepeatChords && !autoRepeatChords;
-    return !shouldSkipRepeatedSectionLine && !shouldSkipAutoRepeatChordLine;
+    const shouldSkipSectionMultiplyLine = line.isFromSectionMultiply && !expandSectionMultiply;
+    const shouldSkipSectionCopyLine = line.type !== parser_lineTypes.SECTION_LABEL && line.isFromSectionCopy && !expandSectionCopy;
+    return !shouldSkipSectionMultiplyLine && !shouldSkipAutoRepeatChordLine && !shouldSkipSectionCopyLine;
   }
 
   function isFiltered(line) {
-    if (chordsAndLyricsDisplay === 'chordsFirstLyricLine') {
+    if (chartType === 'chordsFirstLyricLine') {
       if (line.type === parser_lineTypes.SECTION_LABEL) {
         isFirstLyricLineOfSection = true;
         return false;
@@ -22129,7 +22129,7 @@ function renderSong(parsedSong, {
       }
     }
 
-    return ['chords', 'chordsFirstLyricLine'].includes(chordsAndLyricsDisplay) && line.type === parser_lineTypes.LYRIC || chordsAndLyricsDisplay === 'lyrics' && line.type === parser_lineTypes.CHORD;
+    return ['chords', 'chordsFirstLyricLine'].includes(chartType) && line.type === parser_lineTypes.LYRIC || chartType === 'lyrics' && line.type === parser_lineTypes.CHORD;
   }
 
   function spaceChordLine(line, lineIndex) {
@@ -22168,7 +22168,7 @@ function renderSong(parsedSong, {
       } else {
         rendered = renderLyricLine_render(line, {
           alignChordsWithLyrics,
-          chordsAndLyricsDisplay
+          chartType
         });
       }
 
@@ -22182,7 +22182,7 @@ function renderSong(parsedSong, {
   }
 
   function shouldAlignChords(line) {
-    return chordsAndLyricsDisplay === 'all' && alignChordsWithLyrics && line.model.hasPositionedChords;
+    return chartType === 'all' && alignChordsWithLyrics && line.model.hasPositionedChords;
   }
 }
 ;// CONCATENATED MODULE: ./src/chordMark.js
