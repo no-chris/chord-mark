@@ -22,35 +22,38 @@ function removeLastLine(fileContent) {
 
 describe.each([
 	['base rendering', 'song1-input.txt', 'song1-output-simple.txt'],
+	['default rendering', 'song1-input.txt', 'song1-output-simple.txt', {}],
 	[
-		'base rendering, no params',
+		'explicit parameters',
 		'song1-input.txt',
 		'song1-output-simple.txt',
-		{},
+		{
+			alignBars: true,
+			alignChordsWithLyrics: true,
+			printChordsDuration: 'uneven',
+		},
 	],
 	[
-		'no transposing',
-		'song1-input.txt',
-		'song1-output-simple.txt',
-		{ alignBars: false, harmonizeAccidentals: false },
-	],
-	[
-		'aligned rendering',
+		'aligned bars, no chordLyrics alignment',
 		'song1-input.txt',
 		'song1-output-aligned.txt',
-		{ alignBars: true },
+		{ alignChordsWithLyrics: false },
+	],
+	[
+		'non-aligned bars, no chordLyrics alignment',
+		'song1-input.txt',
+		'song1-output-non-aligned.txt',
+		{
+			alignBars: false,
+			alignChordsWithLyrics: false,
+			printChordsDuration: 'never',
+		},
 	],
 	[
 		'transposed',
 		'song1-input.txt',
 		'song1-output-transposed.txt',
 		{ transposeValue: -4, accidentalsType: 'flat' },
-	],
-	[
-		'chords-lyrics aligned',
-		'song1-input.txt',
-		'song1-output-chordslyrics.txt',
-		{ alignChordsWithLyrics: true },
 	],
 ])('Render components: %s', (title, inputFile, outputFile, options) => {
 	test('produces expected rendering', () => {

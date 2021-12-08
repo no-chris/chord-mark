@@ -27,7 +27,7 @@ import replaceRepeatedBars from '../replaceRepeatedBars';
  * @param {Song} parsedSong
  * @param {Boolean} alignBars
  * @param {Boolean} alignChordsWithLyrics
- * @param {('all'|'lyrics'|'chords'|'chordsFirstLyricLine')} chordsAndLyricsDisplay
+ * @param {('all'|'lyrics'|'chords'|'chordsFirstLyricLine')} chartType
  * @param {Number} transposeValue
  * @param {('auto'|'flat'|'sharp')} accidentalsType
  * @param {Boolean} harmonizeAccidentals
@@ -43,17 +43,17 @@ import replaceRepeatedBars from '../replaceRepeatedBars';
 export default function renderSong(
 	parsedSong,
 	{
-		alignBars = false,
-		alignChordsWithLyrics = false,
-		chordsAndLyricsDisplay = 'all',
+		alignBars = true,
+		alignChordsWithLyrics = true,
+		chartType = 'all',
 		transposeValue = 0,
 		accidentalsType = 'auto',
 		harmonizeAccidentals = true,
-		expandSectionMultiply = true,
+		expandSectionMultiply = false,
 		autoRepeatChords = true,
 		simplifyChords = 'none',
 		useShortNamings = true,
-		printChordsDuration = 'never',
+		printChordsDuration = 'uneven',
 		customRenderer = false,
 	} = {}
 ) {
@@ -134,7 +134,7 @@ export default function renderSong(
 	}
 
 	function isFiltered(line) {
-		if (chordsAndLyricsDisplay === 'chordsFirstLyricLine') {
+		if (chartType === 'chordsFirstLyricLine') {
 			if (line.type === lineTypes.SECTION_LABEL) {
 				isFirstLyricLineOfSection = true;
 				return false;
@@ -146,12 +146,9 @@ export default function renderSong(
 		}
 
 		return (
-			(['chords', 'chordsFirstLyricLine'].includes(
-				chordsAndLyricsDisplay
-			) &&
+			(['chords', 'chordsFirstLyricLine'].includes(chartType) &&
 				line.type === lineTypes.LYRIC) ||
-			(chordsAndLyricsDisplay === 'lyrics' &&
-				line.type === lineTypes.CHORD)
+			(chartType === 'lyrics' && line.type === lineTypes.CHORD)
 		);
 	}
 
@@ -194,7 +191,7 @@ export default function renderSong(
 				} else {
 					rendered = renderLyricLine(line, {
 						alignChordsWithLyrics,
-						chordsAndLyricsDisplay,
+						chartType,
 					});
 				}
 				return renderLine(rendered, {
@@ -209,7 +206,7 @@ export default function renderSong(
 
 	function shouldAlignChords(line) {
 		return (
-			chordsAndLyricsDisplay === 'all' &&
+			chartType === 'all' &&
 			alignChordsWithLyrics &&
 			line.model.hasPositionedChords
 		);
