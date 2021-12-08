@@ -47,7 +47,10 @@ Verse 2
 line2-1
 |A  |D  |
 line2-2`;
-		const rendered = renderSongText(input, { autoRepeatChords: true });
+		const rendered = renderSongText(input, {
+			autoRepeatChords: true,
+			alignBars: false,
+		});
 		const element = htmlToElement(rendered);
 		expect(element.textContent).toBe(expected);
 	});
@@ -63,9 +66,9 @@ line1-2
 line2-1
 line2-2`;
 		const expected = `Verse 1
-|C  |G  |
+|C     |G     |
 line1-1
-|A  |D  |
+|A     |D     |
 line1-2
 \xa0
 Verse 2
@@ -85,23 +88,27 @@ _Imagine there's _no hea_ven
 %
 Imagine there's not placeholder`;
 		const expected = `Verse
-|C              CM7   |F |
+|C...           CM7.  |F |
 Imagine there's no heaven
-|C  CM7  |F  |
+|C...    CM7.|F     |
 Imagine there's not placeholder`;
-		const rendered = renderSongText(input, { alignChordsWithLyrics: true });
+		const rendered = renderSongText(input, {
+			alignChordsWithLyrics: true,
+		});
 		const element = htmlToElement(rendered);
 		expect(element.textContent).toBe(expected);
 	});
 
-	test('Should ignore placeholders if chords positioning is disabled (default behavior)', () => {
+	test('Should ignore placeholders if chords positioning is disabled', () => {
 		const input = `#v
 C... CM7. F
 _Imagine there's _no hea_ven`;
 		const expected = `Verse
-|C  CM7  |F  |
+|C...    CM7.|F     |
 Imagine there's no heaven`;
-		const rendered = renderSongText(input);
+		const rendered = renderSongText(input, {
+			alignChordsWithLyrics: false,
+		});
 		const element = htmlToElement(rendered);
 		expect(element.textContent).toBe(expected);
 	});
@@ -115,14 +122,14 @@ verseLine1
 C.. D.. E
 verseLine2`;
 		const expected = `Verse 1
-|A  |B  |
+|A       |B     |
 verseLine1
-|C  D  |E  |
+|C   D   |E     |
 verseLine2
 Verse 2
-|A  |B  |
+|A       |B     |
 verseLine1
-|C  D  |E  |
+|C   D   |E     |
 verseLine2`;
 		const rendered = renderSongText(input, { expandSectionMultiply: true });
 		const element = htmlToElement(rendered);
@@ -136,9 +143,9 @@ verseLine1
 C.. D.. E
 verseLine2`;
 		const expected = `Verse x2
-|A  |B  |
+|A       |B     |
 verseLine1
-|C  D  |E  |
+|C   D   |E     |
 verseLine2`;
 		const rendered = renderSongText(input, {
 			expandSectionMultiply: false,

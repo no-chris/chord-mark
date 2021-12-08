@@ -43,17 +43,17 @@ import replaceRepeatedBars from '../replaceRepeatedBars';
 export default function renderSong(
 	parsedSong,
 	{
-		alignBars = false,
-		alignChordsWithLyrics = false,
+		alignBars = true,
+		alignChordsWithLyrics = true,
 		chordsAndLyricsDisplay = 'all',
 		transposeValue = 0,
 		accidentalsType = 'auto',
 		harmonizeAccidentals = true,
-		expandSectionMultiply = true,
+		expandSectionMultiply = false,
 		autoRepeatChords = true,
 		simplifyChords = 'none',
 		useShortNamings = true,
-		printChordsDuration = 'never',
+		printChordsDuration = 'uneven',
 		customRenderer = false,
 	} = {}
 ) {
