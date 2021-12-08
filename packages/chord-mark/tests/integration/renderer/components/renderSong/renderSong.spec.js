@@ -55,6 +55,30 @@ describe.each([
 		'song1-output-transposed.txt',
 		{ transposeValue: -4, accidentalsType: 'flat' },
 	],
+	[
+		'section copy & multiply',
+		'song2-input.txt',
+		'song2-output-copy-and-multiply.txt',
+		{ expandSectionCopy: true, expandSectionMultiply: true },
+	],
+	[
+		'section copy',
+		'song2-input.txt',
+		'song2-output-copy.txt',
+		{ expandSectionCopy: true, expandSectionMultiply: false },
+	],
+	[
+		'section copy',
+		'song2-input.txt',
+		'song2-output-multiply.txt', // <= edge cases here, not sure what should be the expected behavior...
+		{ expandSectionCopy: false, expandSectionMultiply: true },
+	],
+	[
+		'section copy',
+		'song2-input.txt',
+		'song2-output-no-copy-no-multiply.txt',
+		{ expandSectionCopy: false, expandSectionMultiply: false },
+	],
 ])('Render components: %s', (title, inputFile, outputFile, options) => {
 	test('produces expected rendering', () => {
 		const input = removeLastLine(
