@@ -31,7 +31,7 @@ describe('renderLyricLine', () => {
 					chordPositions: [],
 				},
 			},
-			{ alignChordsWithLyrics: false, chordsAndLyricsDisplay: 'lyrics' }
+			{ alignChordsWithLyrics: false, chartType: 'lyrics' }
 		);
 		expect(stripTags(rendered)).toBe('textContent');
 	});
@@ -45,13 +45,13 @@ describe('renderLyricLine', () => {
 			},
 		};
 		let rendered = renderLyricLine(lyricLine, {
-			chordsAndLyricsDisplay: 'all',
+			chartType: 'all',
 			alignChordsWithLyrics: true,
 		});
 		expect(stripTags(rendered)).toBe('  textContent  ');
 
 		rendered = renderLyricLine(lyricLine, {
-			chordsAndLyricsDisplay: 'chords',
+			chartType: 'chords',
 			alignChordsWithLyrics: true,
 		});
 		expect(stripTags(rendered)).toBe('  textContent  ');

@@ -212,7 +212,7 @@ Outro`;
 	});
 });
 
-describe('chordsAndLyricsDisplay', () => {
+describe('chartType', () => {
 	const input = `#v
 A7 % % %
 v1-line-1
@@ -245,7 +245,7 @@ v2-line-2
 v2-line-3
 \xa0`;
 		const rendered = renderSongText(input, {
-			chordsAndLyricsDisplay: 'all',
+			chartType: 'all',
 			alignBars: true,
 		});
 		const element = htmlToElement(rendered);
@@ -264,7 +264,7 @@ Verse 2
 |E7     |D7     |A7     |E7     |
 \xa0`;
 		const rendered = renderSongText(input, {
-			chordsAndLyricsDisplay: 'chords',
+			chartType: 'chords',
 			alignBars: true,
 		});
 		const element = htmlToElement(rendered);
@@ -285,7 +285,7 @@ v2-line-1
 |E7     |D7     |A7     |E7     |
 \xa0`;
 		const rendered = renderSongText(input, {
-			chordsAndLyricsDisplay: 'chordsFirstLyricLine',
+			chartType: 'chordsFirstLyricLine',
 			alignBars: true,
 		});
 		const element = htmlToElement(rendered);
@@ -304,7 +304,7 @@ v2-line-2
 v2-line-3
 \xa0`;
 		const rendered = renderSongText(input, {
-			chordsAndLyricsDisplay: 'lyrics',
+			chartType: 'lyrics',
 			alignBars: true,
 		});
 		const element = htmlToElement(rendered);
