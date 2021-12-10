@@ -20,11 +20,7 @@ const sidebars = {
 		{
 			type: 'category',
 			label: 'Overview',
-			items: [
-				'overview/what-is-chordmark',
-				'overview/story',
-				'overview/chord-charts-studio',
-			],
+			items: ['overview/what-is-chordmark', 'overview/story'],
 		},
 		'getting-started',
 		{
@@ -35,6 +31,15 @@ const sidebars = {
 				'reference/lyrics',
 				'reference/sections',
 				'reference/rendering',
+			],
+		},
+		{
+			type: 'category',
+			label: 'Chord Charts Studio',
+			items: [
+				'chord-charts-studio/overview',
+				'chord-charts-studio/import',
+				'chord-charts-studio/faq',
 			],
 		},
 	],

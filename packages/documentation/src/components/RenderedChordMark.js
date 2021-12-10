@@ -17,8 +17,6 @@ const RenderedChordMark = ({ src, title = undefined, options }) => {
 			parsed,
 			Object.assign(
 				{
-					alignBars: true,
-					alignChordsWithLyrics: true,
 					printChordsDuration: 'uneven',
 				},
 				options
