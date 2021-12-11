@@ -5,7 +5,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 /** @type {import('@docusaurus/types').Config} */
 const config = {
 	title: 'ChordMark',
-	tagline: 'The most powerful chord charts',
+	tagline: 'Chord charts. Reinvented!',
 	url: 'https://chordmark.netlify.app',
 	baseUrl: '/',
 	onBrokenLinks: 'throw',
@@ -53,12 +53,14 @@ const config = {
 						position: 'left',
 						label: 'User guide',
 					},
+					/*
 					{
 						type: 'doc',
 						docId: 'api/intro',
 						position: 'left',
 						label: 'API',
 					},
+					 */
 					{
 						href: 'https://github.com/no-chris/chord-mark/',
 						label: 'GitHub',
