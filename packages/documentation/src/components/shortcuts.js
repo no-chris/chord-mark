@@ -1,7 +1,7 @@
 import React from 'react';
 
-export const CM = () => <code>ChordMark</code>;
+export const CM = () => <span>ChordMark</span>;
 
-export const CCS = () => <code>Chord Charts Studio</code>;
+export const CCS = () => <span>Chord Charts Studio</span>;
 
-export const CS = () => <code>ChordSymbol</code>;
+export const CS = () => <span>ChordSymbol</span>;
