@@ -30,6 +30,12 @@ const config = {
 					customCss: require.resolve('./src/css/custom.scss'),
 				},
 			}),
+			{
+				gtag: {
+					trackingID: 'G-Z2C35ZZBCN',
+					anonymizeIP: true,
+				},
+			},
 		],
 	],
 
@@ -88,7 +94,7 @@ const config = {
 						],
 					},
 					{
-						title: 'Other tools',
+						title: 'Related tools',
 						items: [
 							{
 								label: 'ChordSymbol',
