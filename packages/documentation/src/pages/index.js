@@ -5,6 +5,7 @@ import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import styles from './index.module.css';
 import HomepageFeatures from '../components/HomepageFeatures';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 
 function HomepageHeader() {
 	const { siteConfig } = useDocusaurusContext();
@@ -21,6 +22,11 @@ function HomepageHeader() {
 						Getting started
 					</Link>
 				</div>
+				<br />
+				<img
+					src={useBaseUrl('/img/home.png')}
+					alt={'ChordMark samples'}
+				/>
 			</div>
 		</header>
 	);
@@ -30,8 +36,8 @@ export default function Home() {
 	const { siteConfig } = useDocusaurusContext();
 	return (
 		<Layout
-			title={`Hello from ${siteConfig.title}`}
-			description="Description will go into a meta tag in <head />"
+			title={`${siteConfig.title}`}
+			description={`${siteConfig.tagline}`}
 		>
 			<HomepageHeader />
 			<main>

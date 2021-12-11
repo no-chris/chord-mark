@@ -1,7 +1,9 @@
-# License attributions
+# Licenses attributions
 
-Homepage icons Creative commons:
+## Homepage icons
 
--   Music by Chattapat from NounProject.com
--   Music by Zky Icon from NounProject.com
--   Metronome by Sergey Demushkin from NounProject.com
+[Creative commons Attribution CC BY](https://creativecommons.org/licenses/by/3.0/us/legalcode)
+
+-   Music by Chattapat from [NounProject.com](https://thenounproject.com/)
+-   Music by Zky Icon from [NounProject.com](https://thenounproject.com/)
+-   Metronome by Sergey Demushkin from [NounProject.com](https://thenounproject.com/)

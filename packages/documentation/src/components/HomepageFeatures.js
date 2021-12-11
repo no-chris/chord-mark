@@ -26,7 +26,7 @@ const FeatureList = [
 			<>
 				<CM /> is the only chord chart format that has native support
 				for rhythmic information. Play simple or complex songs, whether
-				you heard them before or not!
+				you have heard them before or not!
 			</>
 		),
 	},
