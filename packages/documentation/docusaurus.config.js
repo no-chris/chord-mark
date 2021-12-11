@@ -24,7 +24,8 @@ const config = {
 				docs: {
 					sidebarPath: require.resolve('./sidebars.js'),
 					// Please change this to your repo.
-					editUrl: 'https://github.com/no-chris/chord-mark/',
+					editUrl:
+						'https://github.com/no-chris/chord-mark/tree/master/packages/documentation',
 				},
 				theme: {
 					customCss: require.resolve('./src/css/custom.scss'),
