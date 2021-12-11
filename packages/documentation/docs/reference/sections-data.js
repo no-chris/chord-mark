@@ -40,13 +40,13 @@ The chorus
 #c`,
 
 	repeat4: `#c
-The first chorus
+The chorus A
 
 #c
-The second chorus
+The chorus B
 
 #c
-The third chorus
+The chorus C
 
 #c2
 

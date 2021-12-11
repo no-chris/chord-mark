@@ -19,35 +19,33 @@ Or sometimes as:
 I [C]heard there was a [Am]secret chord
 ```
 
-Most of the time, they work fine.
+Most of the time, they work fine. But they also fail very often. For example:
 
-But sometimes, they don't. For example:
-
--   They are **mostly useless** if you don't know the song beforehand. And I get often asked to play songs I don't know by other people.
--   They get **very confusing** when the song contain many chord changes. Sometimes it's very hard to know how long a given chord should be played or when the change should happen.
--   **Transposing** them doesn't always work, because most software/website fails to recognize complex chords. You end up with a chord chart mixing tonalities that you need to fix manually.
--   They are **only useful for the singer musician**: if all that you care about is the song structure or the chord grid, as a bass player or drummer, for example, you will have a hard time getting that information in an accurate way from those chord charts.
+-   They are **mostly useless if you don't know the song beforehand**. And I get often asked to play songs I don't know by other people.
+-   They get **very confusing when the song contain many chord changes**. Sometimes it becomes very hard to know how long a given chord should be played or when the change should happen. Not to mention if the time signature changes.
+-   They are really **tailored to the singer musician**: if all you care about is the song structure or the chord grid, as a bass player or drummer for example, you will have a hard time getting that information in an accurate way from those chord charts.
+-   Transposing them doesn't always work, because most software/website **fails to recognize complex chords symbols**. You end up with a chord chart mixing tonalities that you need to fix manually.
 
 Sounds familiar? And that's only from a player point of view. From a transcriber point of view, my frustration with chord charts was even bigger:
 
--   they are **painful to write**. You either need to enter spaces in order to position the chord on top of the lyrics, or put them between brackets (eg, `[A7]`) in the middle of the lyrics line.
+-   they are **painful to write**, at least on a computer. You either need to enter spaces in order to position the chord on top of the lyrics, or put them between square brackets (eg, `[A7]`) in the middle of the lyrics line.
 -   even if the chords are identical for each verse/chorus, you need to **repeat that painful process** of positioning/inserting the chords every time.
 -   whenever you correct/change something, you are at risk of **breaking the chords/lyrics alignment**
 -   they do not easily allow to **encode rhythm information**, unless you manually type the bar separators `|` and manually space the chords. Which makes the writing process even more painful.
 
-For all those reasons, I would always cringe whenever I wanted to write a song transcription. 
-I came up with my own way of writing them - that I used to write in a Word document - manually aligning chords and bar across lines in order to encode the rhythm structure of the songs.
-While solving the issue about rhythm information, it only made the writing process worse, while not allowing for easy key adjustments.
+For all those reasons, I would always cringe whenever I needed to write a song transcription. 
+I came up with my own way of writing them - that I used to compile in a Word document - manually aligning chords and bar across lines in order to encode the rhythm structure of the songs.
+While solving the issue about rhythm, it only made the writing process worse, while not allowing for easy key transposition.
 
 ## Enters ChordMark
 
-I slowly came up with the idea of a new chord charts format that would solve all the issues mentioned above.
+I slowly came up with the idea of a new chord charts format that would solve the issues mentioned above.
 
-The first step was to design a new syntax, with the purpose of encoding the maximum of information in the easiest possible way, so complex song transcriptions could be quickly written with a minimum of efforts.
+The first step was to design a new syntax, with the purpose of encoding the maximum of information in the shortest possible way, so complex song transcriptions could be quickly written with a minimum of efforts.
 The present documentation describes in detail this new syntax.
 
 The next step was to build an interpreter that would transform the input syntax into nicely formatted chord charts to be printed or displayed on screen.
-That is the purpose of the <CM /> Javascript/NodeJs module. 
+That is the purpose of `chord-mark`, a Javascript/NodeJs module. 
 This module is open source and can be freely integrated by any tool or website that would be interested in <CM />.
 
 The last missing piece was to build an editor that would natively support <CM /> and leverage all the format possibilities, so people would be able to try it out and, hopefully, adopt it: <CCS /> was born.
@@ -64,15 +62,16 @@ Chord charts written in <CM /> present the following advantages:
 
 ## Development history
 
-I've been playing with the idea of <CM /> in my mind for years: looking into my archive, I found some design documents dated as far back as February 2015!
+I've been playing with the idea of <CM /> in my mind for years: looking into my archive, I found some design documents from as far back as February 2015!
 
-It took me 4 more years to actually start the development at the beginning of 2019, taking advantage of a professional break. 
+It took me 4 more years to actually start the development at the beginning of 2019. 
 The first stable version of <CM/>, along with <CCS /> and <CS />, was released in June 2019.
 I didn't do anything to promote it though, as I felt it was not ready for public release:
-some basic functionalities - such as aligning the chords over the lyrics - were still lacking, not to mention user documentation which remained non-existent for a very long time.
+some basic functionalities - such as aligning the chords over the lyrics, or import/export features - were still lacking, not to mention user documentation which remained non-existent for a very long time.
 
-Nevertheless, I've been using the 2019 version of <CM/> for more two years for all my transcription work, and I have been so happy with it that I've finally decided to resume the development during the summer of 2021.
-I've started implementing the features I missed during my 2 years of "beta-testing", and they turned out so great - in my opinion, at least! - that I feel the project is now mature enough to go public.
+Nevertheless, I've been using the 2019 version of <CM/> during two years for all my personal transcription work. 
+I have been so happy with it that I've finally decided to resume the development during the summer of 2021:
+I started implementing the features I had missed during my 2 years of "beta-testing", and they turned out so great - at least in my opinion! - that I feel the project is now mature enough to go public.
 I hope more people will find it interesting!
 
 ## Previous work

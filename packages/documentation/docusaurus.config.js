@@ -37,7 +37,7 @@ const config = {
 		/** @type {import('@docusaurus/preset-classic').ThemeConfig} */
 		({
 			navbar: {
-				title: '!!!ChordMark ALPHA VERSION!!!',
+				title: 'ChordMark BETA',
 				logo: {
 					alt: 'ChordMark Logo',
 					src: 'img/cmLogo.png',
@@ -69,8 +69,8 @@ const config = {
 						title: 'Docs',
 						items: [
 							{
-								label: 'Tutorial',
-								to: '/docs/overview/what-is-chordmark',
+								label: '5 minutes tutorial',
+								to: '/docs/getting-started',
 							},
 						],
 					},
@@ -78,25 +78,25 @@ const config = {
 						title: 'Community',
 						items: [
 							{
-								label: 'Stack Overflow',
-								href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+								label: 'Report issues',
+								href: 'https://github.com/no-chris/chord-mark/issues',
 							},
 							{
-								label: 'Discord',
-								href: 'https://discordapp.com/invite/docusaurus',
-							},
-							{
-								label: 'Twitter',
-								href: 'https://twitter.com/docusaurus',
+								label: 'User forum',
+								href: 'https://github.com/no-chris/chord-mark/discussions',
 							},
 						],
 					},
 					{
-						title: 'More',
+						title: 'Other tools',
 						items: [
 							{
-								label: 'GitHub',
-								href: 'https://github.com/facebook/docusaurus',
+								label: 'ChordSymbol',
+								href: 'https://chord-symbol.netlify.app',
+							},
+							{
+								label: 'Chord Charts Studio',
+								href: 'https://chords-charts-studio.netlify.app/',
 							},
 						],
 					},

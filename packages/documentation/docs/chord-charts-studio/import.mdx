@@ -21,17 +21,15 @@ If the conversion doesn't look right, you can adjust the input format:
 - **ChordPro**: use this settings if the input source is in the [ChordPro](https://www.chordpro.org/) format, eg with chords encoded between square brackets directly in the lyrics
 - **Ultimate Guitar**: very similar to **Basic**, but also recognize some of the specific syntax used by chord charts on the [Ultimate Guitar](https://www.ultimate-guitar.com/) website.
 
-This import functionality heavily relies on the excellent [ChordSheetJS](https://github.com/martijnversluis/ChordSheetJS/) library. 
-
 Of course, recognizing if the conversion "looks right" or not requires a bit of practice with the <CM/> format.
 
-Once you are happy with the settings, hit the `IMPORT` button in the top right corner. 
+This import functionality heavily relies on the excellent [ChordSheetJS](https://github.com/martijnversluis/ChordSheetJS/) library. 
+
+Once you are happy with the settings, hit the **IMPORT** button in the top right corner. 
 
 ## Encoding rhythm information
 
-If <CCS/> will do the heavy conversion work for you, you will still need to finalize the chord chart by hand.
-Especially, since <CM/> is the only format to encode rhythm information, this information needs to be added to each chord symbol.
-
+Since <CM/> is the only chord chart format that encodes rhythm information, you will need to add this information manually to each chord symbol after importing a song.
 There are 3 possibilities, depending on the duration of a chord:
 
 ### Exactly one bar
@@ -50,7 +48,7 @@ You might also need to specify the song time signature if different than 4/4.
 ### More than one bar
 
 A bit of extra work is needed here. 
-You need to repeat the chord for as many times as it should be played for a full bar.
+You need to repeat the chord for as many times as it should be played for the duration of a full bar.
 Use the bar repeat symbol `%` to make that process quicker. 
 For a better result, chord position markers should also be repeated in the lyric line.
 

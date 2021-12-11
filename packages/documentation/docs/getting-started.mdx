@@ -1,22 +1,30 @@
-import TabbedChordMark from '../src/components/TabbedChordMark';
 import data from './getting-started-data.js';
+import { CM, CCS, CS } from '../src/components/shorcuts';
+import TabbedChordMark from '../src/components/TabbedChordMark';
 
 # Getting started
 
+Welcome to <CM/> 5 minutes tutorial, where you will learn the basics of the format and its possibilities! 
+To practice what you learn, head over to [Chord Charts Studio](/docs/chord-charts-studio/overview).
+
 ## Sample song
 
-Let's have a look at a song written in ChordMark. You can switch between the source file, written in ChordMark, and the rendered version using the tabs.
+Let's have a look at a sample song, Hallelujah by Leonard Cohen. 
+You can switch between the source file, written in <CM/>, and the rendered version using the tabs.
 
 <TabbedChordMark src={data.sampleSong} />
 
 ## Breaking it down
 
+Let's detail the chord chart above line by line.
+
 ### First verse
 
 <TabbedChordMark src={data.sampleSong} srcLines={'1'} renderLines={'1'} />
 
-The `#` defines the start of a section (`#intro`, `#verse`, `#chorus`...), and `v` is the shorthand notation for the label `Verse`.
-ChordMark will automatically number the sections of the same label.
+This is a section label that defines the start of a section: intro, verse, chorus...
+The `#` is the section symbol; and `v` the shorthand notation for the label `Verse`.
+ChordMark will automatically number the sections using the same label.
 
 <TabbedChordMark src={data.sampleSong} srcLines={'2-3'} renderLines={'2-3'} />
 
@@ -24,13 +32,13 @@ The first line contains two chords symbols followed by 2 dots each. This means t
 Since the default time signature is `4/4`, this line will be rendered as a single bar with 2 chords. 
 The bar separator `|` are added automatically.
 
-The second line contains the lyrics sung with the chords above. The position marker symbol (`_`) is used to specify exactly where each chord should be played.
+The second line contains the lyrics sung along with the chords above. The position marker symbol `_` is used to specify exactly where each chord should be played.
 
 <TabbedChordMark src={data.sampleSong} srcLines={'4-5'} renderLines={'4-5'} />
 
-The symbol `%` instructs ChordMark to repeat the last defined chord line, eg line 2.
+The symbol `%` instructs <CM/>> to repeat the last defined chord line, eg line 2.
 
-Although the chords are not defined explicitly but repeated, ChordMark still expects that two chords should be positioned in the lyric line. 
+Although the chords are not defined explicitly but repeated, ChordMark still expects that two chords should be present in the lyric line. 
 
 <TabbedChordMark src={data.sampleSong} srcLines={'6-7'} renderLines={'6-7'} />
 
@@ -39,11 +47,11 @@ Since the first bar has chords with uneven durations (3 beats for `F`, 1 beat fo
 It is omitted when each chord in a bar should be played for the same duration.
 
 The second line contains only 3 chords position markers for 4 chords, since the last chord change happens after the lyrics ends.
-In that case, ChordMark simply append the extra chords at the end of the line.
+In that case, the position marker is optional and <CM/> simply appends the extra chord(s) at the end of the line.
 
-<TabbedChordMark src={data.sampleSong} srcLines={'12'} renderLines={'12'} />
+<TabbedChordMark src={data.sampleSong} srcLines={'12-13'} renderLines={'12-13'} />
 
-When no duration is specified for a chord, like for the `Am` in the second bar here, then ChordMark simply considers it lasts the whole bar.
+When no duration is specified for a chord, like for the `Am` in the second bar here, then <CM/> understand that it should last the whole bar, eg. 4 beats in that case.
 
 ### First chorus
 
@@ -55,30 +63,28 @@ When no duration is specified for a chord, like for the `Am` in the second bar h
 
 <TabbedChordMark src={data.sampleSong} srcLines={'25-31'} renderLines={'25-37'} />
 
-By using the `#v` section label a second time, we instruct ChordMark to automatically repeat the chords that have been defined for the first verse.
-Which means that only the chords position markers are needed this time, and not the chords themselves. 
+Now this is interesting: by using the `#v` section label a second time, we instruct <CM/> to automatically repeat the chords that have been defined for the first verse, and to apply them to the current section.
+Which means that only the chords position markers are needed this time, and not the chord symbol themselves. 
 This is a huge time saver when writing a chord chart!
 
-Note that ChordMark automatically number the verse.
+Note that <CM/> automatically numbers the second verse.
 
 ### Second chorus
 
 <TabbedChordMark src={data.sampleSong} srcLines={'33'} renderLines={'39-47'} />
 
-Since the second chorus is identical to the first one, we can just declare the label and leave the content of the section empty: ChordMark will understand that it should automatically repeat the section.
+Since the second chorus is identical to the first one, we can just declare the label and leave the content of the section empty: <CM/> will understand that it should automatically repeat the whole section.
 
 ## Displaying a chord grid
 
 Now let's say you are a bass player in a band, and that only the chord grid matters to you. 
-Easy peasy! ChordMark can automatically render a nicely formatted chord grid from the exact same source file:
+Easy peasy! <CM/> can automatically render a nicely formatted chord grid from the exact same source file:
 
-<TabbedChordMark src={data.sampleSong} options={{chordsAndLyricsDisplay: 'chords'}}/>
-
+<TabbedChordMark src={data.sampleSong} options={{chartType: 'chords'}}/>
 
 ## Going further
 
-Let's hope this example was enough to convince you that ChordMark 
-We've barely scratched the surface of the possibilities. 
-As next steps, we will encourage you to start experimenting by yourself writing songs in ChordMark. 
-You can do that using ChordChartStudio, an online editor fully dedicated to the ChordMark format.
-You can only go deeper in the documentation. 
+That's it! I hope you enjoyed this taster of <CM/> possibilities.
+There is much more to discover, though.
+As next steps, we encourage you to start experimenting by yourself using the <CCS/> editor. 
+You can also dive into the reference documentation to learn all about <CM/>. 
