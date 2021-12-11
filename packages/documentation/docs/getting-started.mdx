@@ -1,5 +1,5 @@
 import data from './getting-started-data.js';
-import { CM, CCS, CS } from '../src/components/shorcuts';
+import { CM, CCS, CS } from '../src/components/shortcuts';
 import TabbedChordMark from '../src/components/TabbedChordMark';
 
 # Getting started
@@ -24,7 +24,7 @@ Let's detail the chord chart above line by line.
 
 This is a section label that defines the start of a section: intro, verse, chorus...
 The `#` is the section symbol; and `v` the shorthand notation for the label `Verse`.
-ChordMark will automatically number the sections using the same label.
+<CM/> will automatically number the sections using the same label.
 
 <TabbedChordMark src={data.sampleSong} srcLines={'2-3'} renderLines={'2-3'} />
 
@@ -36,9 +36,9 @@ The second line contains the lyrics sung along with the chords above. The positi
 
 <TabbedChordMark src={data.sampleSong} srcLines={'4-5'} renderLines={'4-5'} />
 
-The symbol `%` instructs <CM/>> to repeat the last defined chord line, eg line 2.
+The symbol `%` instructs <CM/> to repeat the last defined chord line, eg line 2.
 
-Although the chords are not defined explicitly but repeated, ChordMark still expects that two chords should be present in the lyric line. 
+Although the chords are not defined explicitly but repeated, <CM/> still expects that two chords should be present in the lyric line. 
 
 <TabbedChordMark src={data.sampleSong} srcLines={'6-7'} renderLines={'6-7'} />
 

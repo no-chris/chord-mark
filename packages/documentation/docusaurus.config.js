@@ -29,13 +29,11 @@ const config = {
 				theme: {
 					customCss: require.resolve('./src/css/custom.scss'),
 				},
-			}),
-			{
 				gtag: {
 					trackingID: 'G-Z2C35ZZBCN',
 					anonymizeIP: true,
 				},
-			},
+			}),
 		],
 	],
 
@@ -43,7 +41,7 @@ const config = {
 		/** @type {import('@docusaurus/preset-classic').ThemeConfig} */
 		({
 			navbar: {
-				title: 'ChordMark BETA',
+				title: 'ChordMark',
 				logo: {
 					alt: 'ChordMark Logo',
 					src: 'img/cmLogo.png',
@@ -102,7 +100,7 @@ const config = {
 							},
 							{
 								label: 'Chord Charts Studio',
-								href: 'https://chords-charts-studio.netlify.app/',
+								href: 'https://chord-charts-studio.netlify.app/',
 							},
 						],
 					},

@@ -3,7 +3,7 @@ import data from './sections-data';
 
 # Sections
 
-Sections are at the heart of some of `ChordMark` most powerful features, like the automatic repetition of chords across sections of the same type.
+Sections are at the heart of some of <CM/> most powerful features, like the automatic repetition of chords across sections of the same type.
 You can think of them as independent parts of a song such as Intro, Verse, Chorus, Solo...
 
 Given the benefits they bring, it is highly recommended to systematically use section labels.
@@ -14,8 +14,7 @@ To create a new section, use the `#` character followed by a single word:
 
 <TabbedChordMark src={'#intro\n#verse\n#bridge\n#chorus\n#verse\n#chorus'} />
 
-Note that you should declare multiple sections of the same family with the exact same section label (eg `#verse`, `#chorus`...).
-`ChordMark` will automatically number them.
+Note that you should declare multiple sections of the same family with the exact same section label (eg `#verse`, `#chorus`...). <CM/> will automatically number them.
 
 The section label should be a single word composed of only letters, uppercase or lowercase. 
 If another character is present, such a space, then the line will be considered as a lyric line and no section will be declared.
@@ -28,7 +27,7 @@ To end a section, just declare a new one, or end the file:
 
 ## Shorthand notation
 
-In order to speed up the writing process, `ChordMark` has a shorthand notation for the most commonly used sections names. 
+In order to speed up the writing process, <CM/> has a shorthand notation for the most commonly used sections names. 
 Here is the list of all available shortcuts. It is highly encouraged to use them:
 
 <TabbedChordMark src={'#a\n#b\n#c\n#i\n#o\n#p\n#s\n#u\n#v'} />
@@ -62,7 +61,7 @@ If a section should be played multiple times in a row, just multiply it:
 
 <TabbedChordMark src={'#c x2\nE7 D7\nA chorus played twice in a row'} options={{ expandSectionMultiply: false }} />
 
-If `ChordMark` renderer is called with the `expandSectionMultiply: true` parameter, the multiplied sections will be explicitly repeated.
+If <CM/> renderer is called with the `expandSectionMultiply: true` parameter, the multiplied sections will be explicitly repeated.
 
 <TabbedChordMark src={'#c x2\nE7 D7\nA chorus played twice in a row\n'} options={{ expandSectionMultiply: true }} />
 
