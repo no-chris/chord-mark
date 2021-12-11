@@ -78,6 +78,10 @@ const config = {
 								label: '5 minutes tutorial',
 								to: '/docs/getting-started',
 							},
+							{
+								label: 'Licenses',
+								to: '/docs/licenses',
+							},
 						],
 					},
 					{
