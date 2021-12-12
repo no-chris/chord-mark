@@ -1,0 +1,35 @@
+import { CM, CCS, CS } from '../../src/components/shortcuts';
+import TabbedChordMark from '../../src/components/TabbedChordMark';
+
+# Writing lyrics
+
+## Lyrics lines
+
+Any line that is not a chord line is considered a lyric line, with a few exceptions such as time signature or section labels declarations.
+
+<TabbedChordMark src={'A line with arbitrary content'} />
+
+Lyrics lines do not exhibit any specific behavior except when they contain chord position markers. 
+
+## Chord position markers
+
+The `_` character can be used to specify where the chords of the immediately preceding chord line should be played.
+
+<TabbedChordMark src={'Bm7.. E7.. A7\n_A lyric line _with positioned _chords\n\n%\n\n_Another one _without an immediatly preceding _chord line'} />
+
+If the lyric line does not contain any position marker, then the chords are aligned with other chord lines:
+
+<TabbedChordMark src={'A7 E7.. E7+..\nBm7.. E7.. A7\nA lyric line without positioned chords'} />
+
+If the lyric line has more position markers than chords to position, then the extra ones are ignored. 
+If it has less, then the remaining chords are displayed at the end of the line:
+
+<TabbedChordMark src={'Bm7.. E7.. A7 Bm7.. E7.. A7\n_A _lyric _line _with _too _many _position _markers\n%\n_Another one _with too few _of them'} />
+
+## Chords spawning multiple bars
+
+This is one of the few cases where writing songs in <CM/> actually requires a bit of extra work compared to other formats.
+If the _same_ chord is played over multiple bars, you will need to add a position marker for each one of those bars.
+This (minimal) extra effort result in much better clarity on lyric placement, though.
+
+<TabbedChordMark src={'A7 %%\nYou don\'t have to be _beautiful _ to turn me _on '} />

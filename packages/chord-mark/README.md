@@ -1,12 +1,40 @@
-[![build](https://github.com/no-chris/chord-mark/actions/workflows/build.yml/badge.svg)](https://github.com/no-chris/chord-mark/actions/workflows/build.yml)
-[![Coverage Status](https://coveralls.io/repos/github/no-chris/chord-mark/badge.svg?branch=master)](https://coveralls.io/github/no-chris/chord-mark?branch=master)
-[![codebeat badge](https://codebeat.co/badges/00adfedf-2b24-4be2-aabc-8d34354c4ec3)](https://codebeat.co/projects/github-com-no-chris-chord-symbol-master)
-
 # ChordMark
 
-The best way to write chords charts
+## Installation
 
-Finally chords charts that are:
+```shell
+npm install chord-mark
+```
 
--   easy to write
--   complete and accurate, with bar information
+## Usage
+
+```javascript
+import { parseSong, renderSong } from 'chord-mark';
+
+const parsed = parseSong('A\n_mySong');
+const rendered = renderSong(parsed);
+```
+
+ChordMark's default renderer produces an HTML output.
+
+```html
+<p class="cmLine">
+	<span class="cmChordLine">
+		<span class="cmBarSeparator">|</span>
+		<span class="cmBarContent"><span class="cmChordSymbol">A</span> </span>
+		<span class="cmBarSeparator">|</span>
+	</span>
+</p>
+<p class="cmLine">
+	<span class="cmLyricLine">mySong</span>
+</p>
+```
+
+## Configuration
+
+The renderer function can be configured.
+The list of available options is available here: https://github.com/no-chris/chord-mark/blob/master/packages/chord-mark/src/renderer/components/renderSong.js#L27
+
+## Documentation
+
+Check the [User Guide](https://chordmark.netlify.app).

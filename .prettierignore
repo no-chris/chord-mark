@@ -1,3 +1,6 @@
 coverage
 lib
 node_modules
+.docusaurus
+.cache-loader
+build

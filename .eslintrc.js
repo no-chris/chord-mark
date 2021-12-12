@@ -21,7 +21,6 @@ module.exports = {
 
 	rules: {
 		complexity: ['error', { max: 10 }],
-		indent: ['error', 'tab', { SwitchCase: 1 }],
 		'linebreak-style': ['error', 'unix'],
 		'max-depth': ['error', 4],
 		'max-len': ['error', { code: 150 }],

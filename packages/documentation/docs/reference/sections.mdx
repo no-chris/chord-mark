@@ -1,0 +1,69 @@
+import { CM, CCS, CS } from '../../src/components/shortcuts';
+import TabbedChordMark from '../../src/components/TabbedChordMark';
+import data from './sections-data';
+
+# Sections
+
+Sections are at the heart of some of <CM/> most powerful features, like the automatic repetition of chords across sections of the same type.
+You can think of them as independent parts of a song such as Intro, Verse, Chorus, Solo...
+
+Given the benefits they bring, it is highly recommended to systematically use section labels.
+
+## Declaring a section
+
+To create a new section, use the `#` character followed by a single word:
+
+<TabbedChordMark src={'#intro\n#verse\n#bridge\n#chorus\n#verse\n#chorus'} />
+
+Note that you should declare multiple sections of the same family with the exact same section label (eg `#verse`, `#chorus`...). <CM/> will automatically number them.
+
+The section label should be a single word composed of only letters, uppercase or lowercase. 
+If another character is present, such a space, then the line will be considered as a lyric line and no section will be declared.
+
+<TabbedChordMark src={'Valid labels:\n#custom\n#mySection\n\nInvalid labels:\n#my section\n#1custom\n#custom 2'} />
+
+To end a section, just declare a new one, or end the file:
+
+<TabbedChordMark src={'#verse\nThis is the verse \n\n#chorus\nThis is the chorus'} />
+
+## Shorthand notation
+
+In order to speed up the writing process, <CM/> has a shorthand notation for the most commonly used sections names. 
+Here is the list of all available shortcuts. It is highly encouraged to use them:
+
+<TabbedChordMark src={'#a\n#b\n#c\n#i\n#o\n#p\n#s\n#u\n#v'} />
+
+## Repeating chords
+
+Now comes the juicy bits.
+Once you specify the chords for a section, they are automatically repeated for the following sections declared with the exact same label.
+Even if the chord lines are not there anymore, the chord position markers can be defined exactly as if the chords were explicitly written above.
+
+<TabbedChordMark src={data.repeat1} />
+
+If the chords differ a bit in a repeated section, just override them with a new chord line!
+Overrides are only applied to the currently repeated section:
+
+<TabbedChordMark src={data.repeat2} />
+
+## Repeating a whole section
+
+If a section is repeated with identical chords and lyrics, just write the label and leave the section body empty. 
+
+<TabbedChordMark src={data.repeat3} />
+
+By default, the first declared section with this label will be repeated. You can also target a specific one by appending its index to the label:
+
+<TabbedChordMark src={data.repeat4} />
+
+## Multiplying a section
+
+If a section should be played multiple times in a row, just multiply it:
+
+<TabbedChordMark src={'#c x2\nE7 D7\nA chorus played twice in a row'} options={{ expandSectionMultiply: false }} />
+
+If <CM/> renderer is called with the `expandSectionMultiply: true` parameter, the multiplied sections will be explicitly repeated.
+
+<TabbedChordMark src={'#c x2\nE7 D7\nA chorus played twice in a row\n'} options={{ expandSectionMultiply: true }} />
+
+This works for repeated sections too.

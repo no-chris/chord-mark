@@ -8,3 +8,5 @@ coverage
 
 # Macos
 .DS_Store
+
+lerna-debug.log

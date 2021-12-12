@@ -1,0 +1,90 @@
+import { CM, CCS, CS } from '../../src/components/shortcuts';
+
+# The ChordMark story
+
+## Why a new format?
+
+Like many things in this world, <CM/> was born out of frustration, and my frustration was oriented towards existing chord charts formats.
+
+Chord charts are all around the web, and you might find them written as:
+
+```
+  C                 Am
+I heard there was a secret chord
+```
+
+Or sometimes as:
+
+```
+I [C]heard there was a [Am]secret chord
+```
+
+Most of the time, they work fine. I've been using them extensively and could learn a lot of songs with those.
+Their sheer simplicity makes them a universally and immediately understood language.
+However, they also have some limits:
+
+-   They are **mostly useless if you don't know the song beforehand**. And I often get asked to play songs I don't know by other people.
+-   They get **very confusing when the song contains many chord changes**. Sometimes it becomes tough to know how long a given chord should be played or when the change should happen. Not to mention if the time signature changes.
+-   They are really **tailored to the singer-musician**: if all you care about is the song structure or the chord grid, as a bass player or drummer, for example, you will have a hard time accurately getting that information from those chord charts.
+-   Transposing them doesn't always work because most software/website **fail to recognize complex chords symbols**. You end up with a chord chart mixing tonalities that you need to fix manually.
+
+Sounds familiar? And that's only from a player's point of view. From a transcriber point of view, my frustration with chord charts was even bigger:
+
+-   they are **painful to write**, at least on a computer. You either need to enter spaces to position the chord on top of the lyrics or put them between square brackets (e.g., `[A7]`) in the middle of the lyrics line.
+-   even if the chords are identical for each verse/chorus, you need to **repeat that painful process** of positioning/inserting the chords every time.
+-   whenever you correct/change something, you are at risk of **breaking the chords/lyrics alignment**
+-   they do not easily allow to **encode rhythm information** unless you manually type the bar separators `|` and manually space the chords. Which makes the writing process even more painful.
+
+I would always cringe whenever I needed to write a song transcription for all those reasons. 
+I came up with my own way of writing them - that I used to compile in a Word document - manually aligning chords and bar across lines to encode the songs' rhythm structure.
+While solving the issue about rhythm, it only made the writing process worse while not allowing for easy key transposition.
+
+## Enters ChordMark
+
+I slowly came up with the idea of a new chord charts format that would solve the issues mentioned above. 
+After all, the foundations of the current format have been defined [almost 30 years ago](https://www.chordpro.org/chordpro/chordpro-history/) and haven't changed much since. 
+Maybe it's time for a new approach!
+
+The first step was to design a new syntax to encode the maximum of information in the shortest possible way, so one could quickly write complex song transcriptions with a minimum of effort.
+The present documentation describes in detail this new syntax.
+
+The next step was to build an interpreter that would transform the input syntax into nicely formatted chord charts printed or displayed on the screen.
+That is the purpose of `chord-mark`, a Javascript/NodeJs module. 
+This module is open source and can be freely integrated by any tool or website interested in <CM />.
+
+The last missing piece was to build an editor that would natively support <CM /> and leverage all the format possibilities, so people would be able to try it out and, hopefully, adopt it: <CCS /> was born.
+
+## ChordMark advantages
+
+Chord charts written in <CM /> present the following advantages:
+
+-   They are quick and easy to write: no need to space anything manually, to enclose chord symbols in brackets, or to mix them with lyrics.
+-   Whenever possible, they also avoid you repeating what you've already written once, making the transcription process quicker and more enjoyable.
+-   They have native support for rhythm information, e.g., how long a given chord should be played. That way, you can play a song even if you don't know it, and there is no ambiguity in the duration of each chord.
+-   Having the rhythm information encoded also allows you to display only the chord grid or the song structure, which is great for other band members.
+-   They recognize all possible chords symbols (or almost), even the most complex ones. So transposing always work.
+
+## Development history
+
+I've been playing with the idea of <CM /> in my mind for years: looking into my archive, I found some design documents from as far back as February 2015!
+
+It took me four more years to start the development at the beginning of 2019. 
+The first stable version of <CM/>, along with <CCS /> and <CS />, was released in June 2019.
+I didn't do anything to promote it, though, as I felt it was not ready for public release:
+some basic functionalities - such as aligning the chords over the lyrics or import/export features - were still lacking, not to mention user documentation which remained non-existent for a very long time.
+
+Nevertheless, I've been using the 2019 version of <CM/> for two years for all my transcription work. 
+I have been so happy with it that I've finally decided to resume the development during the summer of 2021:
+I started implementing the features I had missed during my two years of "beta-testing", and they turned out so great - at least in my opinion! - that I feel the project is now mature enough to go public.
+I hope more people will find it interesting!
+
+## Previous work
+
+Nothing is ever totally new, and <CM/> takes inspiration from some previous work (non-exhaustive list):
+
+-   [ChordPro](https://www.chordpro.org/): the de-facto standard for chord charts interoperability. It has a great [community](https://groups.io/g/ChordPro/topics) and an extensive documentation. 
+-   [TabDown](https://github.com/ultimate-guitar/Tabdown): the format used by the Ultimate Guitar website.
+-   [Markato](https://markato.studio/): share the "chord position marker" concept with <CM />!
+-   [LCR](https://lcr4songs.readthedocs.io/en/latest/): although 2 years younger than <CM />, LCR also encodes rhythm information in chord charts and has excellent documentation on [music notation formats](https://lcr4songs.readthedocs.io/en/latest/lcr/time-in-music-notation/).
+-   [Playtab](https://www.vromans.org/johan/software/sw_playtab.html): by the author of the current ChordPro reference implementation.
+-   [Rise up and sing](https://www.riseupandsing.org/songbooks/rise-up-singing/content/song-layout): an innovative way of writing chord charts.

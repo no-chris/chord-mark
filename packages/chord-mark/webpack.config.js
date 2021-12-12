@@ -2,7 +2,7 @@
 const path = require('path');
 const webpack = require('webpack');
 
-const buildDir = 'packages/chord-mark/lib';
+const buildDir = 'lib';
 
 const config = {
 	context: __dirname,

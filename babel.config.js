@@ -2,6 +2,7 @@
 const presets = [
 	[
 		'@babel/preset-env',
+
 		{
 			targets: {
 				browsers: 'defaults',
@@ -10,6 +11,7 @@ const presets = [
 			corejs: '3',
 		},
 	],
+	['@babel/preset-react'],
 ];
 
 module.exports = { presets };

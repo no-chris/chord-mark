@@ -14,6 +14,7 @@ const replaceRepeatedBars = (line, { alignChordsWithLyrics }) => {
 						beat: 1,
 					},
 				];
+				bar.shouldPrintChordsDuration = false;
 			}
 		});
 	}

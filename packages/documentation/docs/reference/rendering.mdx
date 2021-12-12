@@ -1,0 +1,54 @@
+import RenderedChordMark from '../../src/components/RenderedChordMark';
+import data from './rendering-data';
+import { CM, CCS, CS } from '../../src/components/shortcuts';
+
+# Rendering options
+
+ChordMark fully acknowledges the fact that when it comes to rendering a chord chart, there is no one size fits all and people's preferences might vary greatly,
+depending on how well they know a song, which instrument they play, or if they want to print the chord chart or not.
+People's preferences might also vary from song to song!
+
+ChordMark has native support for many of the possible customizations. 
+Those options are not written in the file itself, but are rendering options of the <CM/> software.
+To enjoy them, you need to use a <CM/> compatible editor such as <CCS/>.
+
+## Choosing what to render
+
+One of the greatest strength of <CM/> lies in its ability to render neatly aligned chord grids from a chord chart with lyrics. 
+This is very useful for band members that do not need the lyrics. 
+For example, Cole Porter's beautiful Everytime we say goodbye: 
+
+<RenderedChordMark src={data.chordsOnly} options={{ chartType: 'all'}}/>
+
+Can automatically be rendered:
+
+<RenderedChordMark src={data.chordsOnly} options={{ chartType: 'chords'}}/>
+
+You might even find it useful to have a quick reminder of the lyrics at the beginning of each section:
+
+<RenderedChordMark src={data.chordsOnly} options={{ chartType: 'chordsFirstLyricLine'}}/>
+
+
+## (Not) aligning chords and lyrics
+
+Aligning chords symbols on top of the lyrics where they should be played is the usual way of rendering chord charts.
+But it's not the only one!
+Thanks to <CM/> automatic alignment of bars between lines, one might actually find it clearer NOT to align the chords symbols with the lyrics.
+This is especially true for jazz songs with a lot of chords and where the lyric placement is not always a reliable/practical indicator for the chords changes.
+
+Compare:
+
+<RenderedChordMark title={'Chords aligned with lyrics'} src={data.chordsOnly} />
+
+With:
+
+<RenderedChordMark title={'Bars aligned'} src={data.chordsOnly} options={{ alignChordsWithLyrics: false}}/>
+
+Or even: 
+
+<RenderedChordMark title={'Bars not aligned'} src={data.chordsOnly} options={{ alignChordsWithLyrics: false, alignBars: false}}/>
+
+There is no right or wrong, it really depends on how well you know the melody, how complex are the chords changes, and what do you prefer to focus on.
+One way might also print better than the other, especially if you use a multi columns layout and want to keep the lines as short as possible.
+
+

@@ -1,0 +1,98 @@
+import TabbedChordMark from '../../src/components/TabbedChordMark';
+import { CM, CCS, CS } from '../../src/components/shortcuts';
+
+# Writing chords
+
+## Chord lines
+
+To create a chord line, simply write chords symbols one after the other on a empty line, excluding any other character that are not part of the <CM/> syntax.
+
+Chord lines are special lines that have the following characteristics:
+
+- they will be rendered with bar separators `|`
+- if followed by a lyric line with chord position markers, the chords will be placed over the relevant lyrics
+- if not, they will be neatly aligned between them across the whole song
+
+Leave as many spaces as you want between symbols, but know that <CM/> will ignore them and use its own algorithms to position the chords.
+
+<TabbedChordMark src={'Am7 Am7/G F#m7b5 FM7\nE7   E7+ Am7   Am7+'} />
+
+If you write anything else than chord symbols on a line, then it won't be considered as a chord line and won't benefit from any of the special features mentioned above.
+That is also true if a chord symbol is not recognized as such.
+
+<TabbedChordMark src={'Extra "|" character:\nA7 | D7\nInvalid chord symbol:\nA7 D7(b9'} />
+
+## Chord duration
+
+The default chord duration is the whole bar, eg. 4 beats.
+If you want a chord to be shorter, you need to specify for how many beats it should by played by writing dots `.` right after the symbol.
+Use one dot per beat.
+
+<TabbedChordMark src={'A7.. D7.. E7... A7.'} />
+
+The example above creates two bars:
+- the first bar has 2 chords (`A7` and `D7`) lasting 2 beats each
+- the second bar has one chord lasting 3 beats (`E7`) and another one on fourth beat (`A7`).
+
+By default, <CM/> renders the duration markers only when a bar contains chords with uneven duration. 
+If all chords in a bar share the same duration, then the dots are not rendered.
+
+Be careful that the math needs to be correct **on a per-bar basis**. 
+If the chords durations don't add up, the line won't be considered as a chord line.
+
+<TabbedChordMark src={'Invalid beat count:\nA7... D7..\nIf a chord spans multiple bar, specify it for each bar:\nA7.. D7.... E7..\nA7.. D7.. D7.. E7..'} />
+
+## Time signature
+
+If your song is not in 4/4, you can just specify the time signature on a separate line.
+
+<TabbedChordMark src={'3/4\nDm Gm.. C.'} />
+
+You can mix multiple time signatures per song.
+
+<TabbedChordMark src={'3/4\nDm Gm.. C.\n\n4/4\nA7.. D7.. E7... A7.\n\n5/4\nGm... C. Dm7.'} />
+
+The most commonly used time signatures are recognized by <CM/>.
+
+## Repeating bars
+
+You can use the `%` symbol to repeat the last declared bar on the current line.
+
+<TabbedChordMark src={'A7 %%%\nD7 % A7 %\nE7 D7 A7 %'} />
+
+Whenever possible, <CM/> will render repeated bars with the `%` symbols, even if they were not explicitly specified as such. 
+
+<TabbedChordMark src={'A7.. D7.. %\nD7.. E7. A7. D7.. E7. A7.'} />
+
+## Repeating chord lines
+
+When used alone on a given line, the `%` character instructs <CM/> to repeat the last declared chord line.
+
+<TabbedChordMark src={'A7 D7\n%'} />
+
+You can go two level ups and repeat the before-last declared chord line by using `%%`
+
+<TabbedChordMark src={'A7 D7\nE7 A7\n%%\n%'} />
+
+## Repeating whole sections
+
+Please check the section labels documentation to learn how you can repeat all the chords defined in a given section.
+
+## No chords
+
+If no chord should be played at a given moment, just use the special `NC` symbol
+
+<TabbedChordMark src={'NC Am Dm7'} />
+
+## Chords symbol normalization
+
+For more consistency, <CM/> normalizes the chords symbols at rendering time.
+
+<TabbedChordMark src={'CMAJ7\nC^\nCM7\nCΔ\nCmajor7'} />
+
+Under the hood, <CM/> uses the powerful <CS/> library, which is capable of parsing virtually any chord symbol
+and performs the normalization based on [widely recognized conventions](https://github.com/no-chris/chord-symbol#background-information). 
+
+This normalization can also, sometimes, speed up the writing process:
+
+<TabbedChordMark src={'Dm7(b5)\nDh'} />
