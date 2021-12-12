@@ -1,6 +1,6 @@
 {
 	"name": "chord-mark-2-chordpro",
-	"version": "0.8.0-beta.2",
+	"version": "0.8.0",
 	"description": "ChordMark to ChordPro converter",
 	"private": false,
 	"main": "lib/chord-mark-2-chordpro.js",
@@ -18,7 +18,7 @@
 	},
 	"homepage": "https://github.com/no-chris/chord-mark/tree/main/packages/chord-mark-2-chordpro#readme",
 	"dependencies": {
-		"chord-mark": "^0.8.0-beta.2",
+		"chord-mark": "^0.8.0",
 		"core-js": "^3.19.1"
 	},
 	"files": [
