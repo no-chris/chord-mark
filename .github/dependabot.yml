@@ -8,3 +8,19 @@ updates:
   assignees:
   - no-chris
   versioning-strategy: increase
+- package-ecosystem: npm
+  directory: "/packages/chord-mark"
+  schedule:
+    interval: monthly
+  open-pull-requests-limit: 10
+  assignees:
+  - no-chris
+  versioning-strategy: increase
+- package-ecosystem: npm
+  directory: "/packages/chord-mark-2-chordpro"
+  schedule:
+    interval: monthly
+  open-pull-requests-limit: 10
+  assignees:
+  - no-chris
+  versioning-strategy: increase
