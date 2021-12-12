@@ -1,4 +1,6 @@
-# ChordMark
+# ChordMark2ChordPro
+
+This custom renderer allows `chord-mark` to generate a chord chart using the [ChordPro](https://www.chordpro.org) syntax.
 
 ## Installation
 
