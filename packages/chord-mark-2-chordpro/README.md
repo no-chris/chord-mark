@@ -1,25 +1,25 @@
-# `chord-mark-2-chordpro`
+# ChordMark
 
-> TODO: description
+## Installation
+
+```shell
+npm install chord-mark chord-mark-2-chordpro
+```
 
 ## Usage
 
+```javascript
+import { parseSong, renderSong } from 'chord-mark';
+import chordMark2ChordPro from 'chord-mark-2-chordpro';
+
+const parsed = parseSong('A\n_mySong');
+const rendered = renderSong(parsed, {
+	customRenderer: chordMark2ChordPro,
+});
 ```
-const chordMark2Chordpro = require('chord-mark-2-chordpro');
 
-// TODO: DEMONSTRATE API
+ChordMark2ChordPro renderer produces a Text output.
+
+```text
+[A]mySong
 ```
-
-Widely supported directives
-
--   https://songbook-pro.com/fr/docs/manual/editor/chordpro/
--   https://www.zubersoft.com/mobilesheets/MobileSheetsPro.pdf
--   http://www.linkesoft.com/songbook/chordproformat.html (grid)
--   https://onsongapp.com/docs/features/formats/chordpro/
-
-.chopro
-.cho
-.chordpro
-.crd
-.pro
-.cpm
