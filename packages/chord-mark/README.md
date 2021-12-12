@@ -33,7 +33,7 @@ ChordMark's default renderer produces an HTML output.
 ## Configuration
 
 The renderer function can be configured.
-The list of available options is available here: https://github.com/no-chris/chord-mark/blob/master/packages/chord-mark/src/renderer/components/renderSong.js#L27
+Until proper documentation is available, the list of available options can be checked here: https://github.com/no-chris/chord-mark/blob/master/packages/chord-mark/src/renderer/components/renderSong.js#L27
 
 ## Documentation
 
