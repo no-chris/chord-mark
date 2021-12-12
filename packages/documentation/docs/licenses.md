@@ -1,4 +1,4 @@
-# Licenses attributions
+# Licenses
 
 ## Homepage icons
 
