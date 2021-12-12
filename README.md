@@ -29,3 +29,7 @@ Want to give it a try? Head over to the [5 minutes tutorial](https://chordmark.n
 | [ChordMark](https://github.com/no-chris/chord-mark/tree/master/packages/chord-mark)                     | The core library for parsing and rendering songs |
 | [ChordMark2ChordPro](https://github.com/no-chris/chord-mark/tree/master/packages/chord-mark-2-chordpro) | The ChordPro converter                           |
 | [Documentation](https://github.com/no-chris/chord-mark/tree/master/packages/documentation)              | The documentation website                        |
+
+## Documentation
+
+Check the [User Guide](https://chordmark.netlify.app).
