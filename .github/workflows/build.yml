@@ -19,9 +19,9 @@ jobs:
           node-version: 16
 
       # Install & build & test:
-      - run: npm install
-      - run: npx lerna bootstrap
-      - run: npm run build
+      - run: yarn install
+      - run: yarn exec lerna bootstrap
+      - run: yarn run build
       
       # Coverage report
       - name: Coveralls GitHub Action
