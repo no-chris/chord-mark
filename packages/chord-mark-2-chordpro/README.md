@@ -14,7 +14,7 @@ npm install chord-mark chord-mark-2-chordpro
 import { parseSong, renderSong } from 'chord-mark';
 import chordMark2ChordPro from 'chord-mark-2-chordpro';
 
-const parsed = parseSong('A\n_mySong');
+const parsed = parseSong('#v\nA\n_mySong');
 const rendered = renderSong(parsed, {
 	customRenderer: chordMark2ChordPro,
 });
@@ -23,5 +23,7 @@ const rendered = renderSong(parsed, {
 ChordMark2ChordPro renderer produces a Text output.
 
 ```text
+{start_of_verse: Verse 1}
 [A]mySong
+{end_of_verse}
 ```
