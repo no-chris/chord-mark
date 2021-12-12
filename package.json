@@ -1,7 +1,7 @@
 {
 	"name": "chord-mark-monorepo",
 	"private": true,
-	"version": "0.7.0",
+	"version": "0.8.0",
 	"description": "The best way to write chord charts",
 	"license": "MIT",
 	"engines": {
@@ -37,7 +37,7 @@
 		"raw-loader": "^4.0.2",
 		"sass": "^1.43.4",
 		"sass-loader": "^12.3.0",
-		"size-limit": "^7.0.3",
+		"size-limit": "^7.0.4",
 		"sloc": "^0.2.1",
 		"webpack": "^5.64.2",
 		"webpack-cli": "^4.9.1"

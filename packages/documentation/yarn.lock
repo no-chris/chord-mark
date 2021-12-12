@@ -2659,10 +2659,10 @@ cheerio@^0.22.0:
   optionalDependencies:
     fsevents "~2.3.2"
 
-chord-mark@^0.8.0-beta.1:
-  version "0.8.0-beta.1"
-  resolved "https://registry.yarnpkg.com/chord-mark/-/chord-mark-0.8.0-beta.1.tgz#5437340670242bc84b9cc9905d8119eba3ee6b88"
-  integrity sha512-WIBqCrNIUfknN2tpbKIjcBcuIJg+j4aAJZaoGtTzHJ0HbwjU/F3I4EmkaWggmVDudxTDaZ3n8v0Phdy2hSgzJA==
+chord-mark@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/chord-mark/-/chord-mark-0.8.0.tgz#7f95732463ba73b789333aa833855d5467b5e6f4"
+  integrity sha512-hN+yxLkZa4/LteOmYJV0Cfh2uCRjLJEt80jrLGI4V+4RPtouAa4yq23l2+t88h0XRIzY73drtZgcZooNF56mRQ==
   dependencies:
     chord-symbol "^2.1.0"
     core-js "^3.18.3"

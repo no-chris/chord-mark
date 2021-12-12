@@ -1,1 +1,3 @@
-packages/documentation
+packages/documentation/**
+packages/chord-mark/lib/**
+package/chord-mark-2-chordpro/lib/**
