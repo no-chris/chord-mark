@@ -21,7 +21,7 @@
 		"@babel/preset-env": "^7.16.4",
 		"@babel/preset-react": "^7.16.0",
 		"@size-limit/preset-small-lib": "^7.0.3",
-		"babel-jest": "^27.3.1",
+		"babel-jest": "^27.4.4",
 		"babel-loader": "^8.2.3",
 		"eslint": "^8.0.1",
 		"eslint-plugin-import": "^2.25.2",
@@ -29,17 +29,17 @@
 		"eslint-plugin-react": "^7.27.1",
 		"handlebars": "^4.7.7",
 		"handlebars-loader": "^1.7.1",
-		"jest": "^27.3.1",
+		"jest": "^27.4.4",
 		"jest-handlebars": "^1.0.1",
 		"lerna": "^4.0.0",
 		"mini-css-extract-plugin": "^2.4.5",
-		"prettier": "^2.4.1",
+		"prettier": "^2.5.1",
 		"raw-loader": "^4.0.2",
-		"sass": "^1.43.4",
+		"sass": "^1.45.0",
 		"sass-loader": "^12.3.0",
 		"size-limit": "^7.0.4",
 		"sloc": "^0.2.1",
-		"webpack": "^5.64.2",
+		"webpack": "^5.65.0",
 		"webpack-cli": "^4.9.1"
 	},
 	"scripts": {
@@ -47,5 +47,8 @@
 		"lint": "eslint packages",
 		"format": "prettier --write \"**/*.{js,jsx,json,ts,md}\"",
 		"test": "jest"
+	},
+	"dependencies": {
+		"core-js": "^3.19.3"
 	}
 }
