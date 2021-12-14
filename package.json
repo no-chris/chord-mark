@@ -2,7 +2,7 @@
 	"name": "chord-mark-monorepo",
 	"private": true,
 	"version": "0.8.0",
-	"description": "The best way to write chord charts",
+	"description": "Chord Charts. Reinvented!",
 	"license": "MIT",
 	"engines": {
 		"node": ">=16.0"
@@ -23,12 +23,14 @@
 		"@size-limit/preset-small-lib": "^7.0.3",
 		"babel-jest": "^27.4.4",
 		"babel-loader": "^8.2.3",
+		"css-loader": "^6.5.1",
 		"eslint": "^8.0.1",
 		"eslint-plugin-import": "^2.25.2",
 		"eslint-plugin-no-unsanitized": "^4.0.0",
 		"eslint-plugin-react": "^7.27.1",
 		"handlebars": "^4.7.7",
 		"handlebars-loader": "^1.7.1",
+		"html-webpack-plugin": "^5.5.0",
 		"jest": "^27.4.4",
 		"jest-handlebars": "^1.0.1",
 		"lerna": "^4.0.0",
@@ -39,8 +41,10 @@
 		"sass-loader": "^12.3.0",
 		"size-limit": "^7.0.4",
 		"sloc": "^0.2.1",
+		"style-loader": "^3.3.1",
 		"webpack": "^5.65.0",
-		"webpack-cli": "^4.9.1"
+		"webpack-cli": "^4.9.1",
+		"webpack-dev-server": "^4.6.0"
 	},
 	"scripts": {
 		"build": "npm run lint && npm run format && npm run test && lerna run build",

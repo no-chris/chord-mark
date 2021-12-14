@@ -1,0 +1,12 @@
+body {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: scroll;
+}
+
+.cmTheme {
+  flex: 0 0 500px;
+  background-color: red;
+  margin-right: 10px;
+  padding: 10px;
+}
