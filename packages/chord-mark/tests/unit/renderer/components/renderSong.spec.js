@@ -21,7 +21,7 @@ verseLine2`;
 
 		expect(element).toBeInstanceOf(Node);
 		expect(element.nodeName).toBe('DIV');
-		expect(element.childElementCount).toBe(4);
+		expect(element.childElementCount).toBe(1);
 	});
 });
 
