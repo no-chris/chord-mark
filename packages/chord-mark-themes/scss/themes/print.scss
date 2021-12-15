@@ -1,0 +1,36 @@
+@import '../abstract';
+
+.cmTheme-print {
+  .cmSong {
+    @include base;
+    background-color: white;
+    color: #333;
+  }
+
+  // Sections
+  .cmSectionLabel {
+    font-weight: bold;
+    text-decoration: underline;
+  }
+  .cmSectionMultiplier {
+    font-weight: normal;
+    text-decoration: unset;
+  }
+
+  // Time signature
+  .cmTimeSignature {
+    font-weight: bold;
+  }
+
+  // Chordline
+  .cmChordLine {
+  }
+
+  .cmBarSeparator {
+    opacity: 0.5;
+  }
+
+  .cmChordDuration {
+    opacity: 0.7;
+  }
+}

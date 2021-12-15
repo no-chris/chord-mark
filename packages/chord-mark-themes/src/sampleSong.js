@@ -1,4 +1,9 @@
-export default `#v
+export default `4/4
+#i
+C.. Am.. %
+%
+
+#v
 C.. Am..
 I _heard there was a _secret chord
 %
@@ -30,4 +35,4 @@ She _tied you to her _kitchen _chair
 She _broke your throne and she _cut your hair
 And _from your lips she _drew the halle_lujah
 
-#c`;
+#c x2`;

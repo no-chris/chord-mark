@@ -4,9 +4,11 @@ body {
   overflow-x: scroll;
 }
 
-.cmTheme {
+.themePreview {
   flex: 0 0 500px;
-  background-color: red;
-  margin-right: 10px;
-  padding: 10px;
+  margin-right: 20px;
+}
+
+.cmContainer {
+  border: 1px solid black;
 }
