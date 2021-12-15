@@ -28,6 +28,7 @@ export default function renderSectionLabel(
 		: model.label;
 
 	let rendered = labelRaw[0].toUpperCase() + labelRaw.substring(1);
+	let multiplier;
 
 	if (sectionsStats[model.label] > 1) {
 		rendered += ' ';
@@ -35,8 +36,8 @@ export default function renderSectionLabel(
 	}
 
 	if (!expandSectionMultiply && model.multiplyTimes) {
-		rendered += ' x' + model.multiplyTimes;
+		multiplier = 'x' + model.multiplyTimes;
 	}
 
-	return sectionLabelTpl({ sectionLabel: rendered });
+	return sectionLabelTpl({ sectionLabel: rendered, multiplier });
 }

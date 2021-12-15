@@ -164,6 +164,8 @@ describe('Repeat indications', () => {
 		const element = htmlToElement(rendered);
 
 		expect(element).toBeInstanceOf(Node);
-		expect(element.innerHTML).toBe('Verse x5');
+		expect(element.innerHTML).toBe(
+			'Verse<span class="cmSectionMultiplier"> x5</span>'
+		);
 	});
 });
