@@ -18,16 +18,20 @@ const rendered = renderSong(parsed);
 ChordMark's default renderer produces an HTML output.
 
 ```html
-<p class="cmLine">
-	<span class="cmChordLine">
-		<span class="cmBarSeparator">|</span>
-		<span class="cmBarContent"><span class="cmChordSymbol">A</span> </span>
-		<span class="cmBarSeparator">|</span>
-	</span>
-</p>
-<p class="cmLine">
-	<span class="cmLyricLine">mySong</span>
-</p>
+<div class="cmSong">
+	<p class="cmLine">
+		<span class="cmChordLine">
+			<span class="cmBarSeparator">|</span>
+			<span class="cmBarContent"
+				><span class="cmChordSymbol">A</span>
+			</span>
+			<span class="cmBarSeparator">|</span>
+		</span>
+	</p>
+	<p class="cmLine">
+		<span class="cmLyricLine">mySong</span>
+	</p>
+</div>
 ```
 
 ## Configuration
