@@ -6,7 +6,11 @@ module.exports = {
 	collectCoverage: true,
 	collectCoverageFrom: ['**/src/**/*.js', '!**/node_modules/**'],
 	coverageDirectory: '<rootDir>/coverage',
-	coveragePathIgnorePatterns: ['node_modules', 'packages/documentation'],
+	coveragePathIgnorePatterns: [
+		'node_modules',
+		'packages/documentation',
+		'packages/chord-mark-themes',
+	],
 	coverageReporters: ['json', 'lcov', 'text', 'clover'],
 	coverageThreshold: {
 		global: {

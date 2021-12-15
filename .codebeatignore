@@ -1,3 +1,4 @@
 packages/documentation/**
 packages/chord-mark/lib/**
 packages/chord-mark-2-chordpro/lib/**
+packages/chord-mark-themes/**
