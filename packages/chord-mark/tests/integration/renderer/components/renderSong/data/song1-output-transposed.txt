@@ -1,7 +1,7 @@
 Imagine
 John Lennon
 4/4
-&nbsp;
+
 Verse
 |Ab...                 AbM7. |Db |
        Imagine there's no heaven
@@ -11,7 +11,7 @@ Verse
        No hell below us
 |Ab...           AbM7. |Db |
        Above us, only  sky
-&nbsp;
+
 |Db         Fm         |Bbm Bbm/Ab |
     Imagine all the people
 |Eb/G                 |% |
