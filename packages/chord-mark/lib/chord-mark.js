@@ -173,7 +173,18 @@ module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[8,"
 
 var Handlebars = __webpack_require__(1524);
 function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
-module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
+module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data) {
+    var lookupProperty = container.lookupProperty || function(parent, propertyName) {
+        if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
+          return parent[propertyName];
+        }
+        return undefined
+    };
+
+  return "<span class=\"cmSectionMultiplier\"> "
+    + container.escapeExpression(container.lambda((depth0 != null ? lookupProperty(depth0,"multiplier") : depth0), depth0))
+    + "</span>";
+},"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, lookupProperty = container.lookupProperty || function(parent, propertyName) {
         if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
           return parent[propertyName];
@@ -183,6 +194,7 @@ module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[8,"
 
   return "<span class=\"cmSectionLabel\">"
     + ((stack1 = container.lambda((depth0 != null ? lookupProperty(depth0,"sectionLabel") : depth0), depth0)) != null ? stack1 : "")
+    + ((stack1 = lookupProperty(helpers,"if").call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? lookupProperty(depth0,"multiplier") : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data,"loc":{"start":{"line":1,"column":54},"end":{"line":1,"column":147}}})) != null ? stack1 : "")
     + "</span>";
 },"useData":true});
 
@@ -201,7 +213,9 @@ module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[8,"
         return undefined
     };
 
-  return ((stack1 = container.lambda((depth0 != null ? lookupProperty(depth0,"song") : depth0), depth0)) != null ? stack1 : "");
+  return "<div class=\"cmSong\">"
+    + ((stack1 = container.lambda((depth0 != null ? lookupProperty(depth0,"song") : depth0), depth0)) != null ? stack1 : "")
+    + "</div>";
 },"useData":true});
 
 /***/ }),
@@ -21841,6 +21855,7 @@ function renderSectionLabel(sectionLabelLine, {
   } = sectionLabelLine;
   const labelRaw = labelsMapping[model.label] ? labelsMapping[model.label] : model.label;
   let rendered = labelRaw[0].toUpperCase() + labelRaw.substring(1);
+  let multiplier;
 
   if (sectionsStats[model.label] > 1) {
     rendered += ' ';
@@ -21848,11 +21863,12 @@ function renderSectionLabel(sectionLabelLine, {
   }
 
   if (!expandSectionMultiply && model.multiplyTimes) {
-    rendered += ' x' + model.multiplyTimes;
+    multiplier = 'x' + model.multiplyTimes;
   }
 
   return sectionLabel_default()({
-    sectionLabel: rendered
+    sectionLabel: rendered,
+    multiplier
   });
 }
 // EXTERNAL MODULE: ./src/renderer/components/tpl/lyricLine.hbs

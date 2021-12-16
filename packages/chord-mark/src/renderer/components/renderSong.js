@@ -78,7 +78,7 @@ export default function renderSong(
 	if (customRenderer) {
 		return customRenderer(allLines, {});
 	} else {
-		const song = renderAllLines().join('\n');
+		const song = renderAllLines().join('');
 		return songTpl({ song });
 	}
 
