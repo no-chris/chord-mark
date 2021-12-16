@@ -1,10 +1,12 @@
 @import '../abstract';
+@import './common';
 
 .cmTheme-print {
   .cmSong {
     @include base;
     background-color: white;
     color: #333;
+    font-size: 12px;
   }
 
   // Sections

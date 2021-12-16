@@ -1,0 +1,51 @@
+.cmTheme-fadeRepeats {
+	.cmLine--isFromAutoRepeatChords,
+	.cmLine--isFromChordLineRepeater,
+	.cmLine--isFromSectionCopy,
+	.cmLine--isFromSectionMultiply {
+		opacity: 0.5;
+	}
+}
+
+.cmLine {
+	.cmSong--fontSize-5 & {
+		font-size: 0.5em;
+		line-height: 1.15em;
+	}
+	.cmSong--fontSize-4 & {
+		font-size: 0.6em;
+		line-height: 1.25em;
+	}
+	.cmSong--fontSize-3 & {
+		font-size: 0.7em;
+		line-height: 1.35em;
+	}
+	.cmSong--fontSize-2 & {
+		font-size: 0.8em;
+		line-height: 1.45em;
+	}
+	.cmSong--fontSize-1 & {
+		font-size: 0.9em;
+		line-height: 1.55em;
+	}
+	.cmSong--fontSize1 & {
+		font-size: 1.1em;
+		line-height: 1.75em;
+	}
+	.cmSong--fontSize2 & {
+		font-size: 1.2em;
+		line-height: 1.85em;
+	}
+	.cmSong--fontSize3 & {
+		font-size: 1.3em;
+		line-height: 1.95em;
+	}
+	.cmSong--fontSize4 & {
+		font-size: 1.4em;
+		line-height: 2.05em;
+	}
+	.cmSong--fontSize5 & {
+		font-size: 1.5em;
+		line-height: 2.15em;
+	}
+}

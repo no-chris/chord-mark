@@ -1,9 +1,9 @@
 @mixin base {
   font-family: $font-stack;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1.65em;
   padding: 10px;
-  white-space: pre;
+  white-space: pre-wrap;
 
   p {
     margin: 0;

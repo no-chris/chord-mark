@@ -1,0 +1,9 @@
+@import '../abstract';
+@import './common';
+
+.cmTheme-text {
+	.cmSong {
+		@include base;
+		color: #333;
+	}
+}

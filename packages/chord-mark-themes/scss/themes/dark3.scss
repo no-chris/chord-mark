@@ -1,6 +1,7 @@
 @import '../abstract';
+@import './common';
 
-.cmTheme-default {
+.cmTheme-dark3 {
   .cmSong {
     @include base;
     background-color: $dracula-background;
@@ -9,7 +10,7 @@
 
   // Sections
   .cmSectionLabel {
-    color: $dracula-orange;
+    color: $dracula-red;
     font-weight: bold;
   }
   .cmSectionMultiplier {
@@ -18,13 +19,13 @@
 
   // Time signature
   .cmTimeSignature {
-    color: $dracula-yellow;
+    color: $dracula-cyan;
     font-weight: bold;
   }
 
   // Chordline
   .cmChordLine {
-    color: $dracula-cyan;
+    color: $dracula-green;
   }
 
   .cmBarSeparator {

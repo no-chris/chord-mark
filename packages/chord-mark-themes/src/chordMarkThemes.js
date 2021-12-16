@@ -9,16 +9,24 @@ const rendered = renderSong(parsed).replace(/\n/g, '');
 
 const themes = [
 	{
-		name: 'Default',
-		key: 'default',
-	},
-	{
 		name: 'Dark 1',
 		key: 'dark1',
 	},
 	{
+		name: 'Dark 2',
+		key: 'dark2',
+	},
+	{
+		name: 'Dark 3',
+		key: 'dark3',
+	},
+	{
 		name: 'Print',
 		key: 'print',
+	},
+	{
+		name: 'Text',
+		key: 'text',
 	},
 ];
 
