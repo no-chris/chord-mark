@@ -6,11 +6,8 @@
 	"homepage": "https://github.com/no-chris/chord-mark/tree/main/packages/chord-mark-themes#readme",
 	"license": "MIT",
 	"main": "lib/chord-mark-themes.js",
-	"directories": {
-		"test": "scss"
-	},
 	"files": [
-		"lib"
+		"scss"
 	],
 	"repository": {
 		"type": "git",
