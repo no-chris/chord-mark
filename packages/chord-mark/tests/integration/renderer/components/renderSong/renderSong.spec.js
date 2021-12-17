@@ -4,8 +4,8 @@ import fs from 'fs';
 import _ from 'lodash';
 
 import renderSong from '../../../../../src/renderer/components/renderSong';
-import stripTags from '../../../../../src/core/dom/stripTags';
 import parseSong from '../../../../../src/parser/parseSong';
+import toText from '../../../../unit/helpers/toText';
 
 const dataFolder = path.resolve(__dirname, 'data');
 
@@ -91,6 +91,6 @@ describe.each([
 		const parsedSong = parseSong(input);
 		const rendered = renderSong(parsedSong, options);
 
-		expect(stripTags(rendered)).toEqual(output);
+		expect(toText(rendered)).toEqual(output);
 	});
 });

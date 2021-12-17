@@ -1,0 +1,39 @@
+@import '../abstract';
+@import './common';
+
+.cmTheme-dark2 {
+	background-color: $dracula-background;
+
+	.cmSong {
+		@include base;
+		color: $dracula-foreground;
+	}
+
+	// Sections
+	.cmSectionLabel {
+		color: $dracula-orange;
+		font-weight: bold;
+	}
+	.cmSectionMultiplier {
+		color: $dracula-yellow;
+	}
+
+	// Time signature
+	.cmTimeSignature {
+		color: $dracula-yellow;
+		font-weight: bold;
+	}
+
+	// Chordline
+	.cmChordLine {
+		color: $dracula-cyan;
+	}
+
+	.cmBarSeparator {
+		opacity: 0.5;
+	}
+
+	.cmChordDuration {
+		opacity: 0.7;
+	}
+}

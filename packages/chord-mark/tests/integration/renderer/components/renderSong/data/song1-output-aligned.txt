@@ -1,7 +1,7 @@
 Imagine
 John Lennon
 4/4
-&nbsp;
+
 Verse
 |C...       CM7.|F           |
 Imagine there's no heaven
@@ -11,7 +11,7 @@ It's easy if you try
 No hell below us
 |C...       CM7.|F           |
 Above us, only sky
-&nbsp;
+
 |F      Am      |Dm   Dm/C   |
 Imagine all the people
 |G/B            |%           |

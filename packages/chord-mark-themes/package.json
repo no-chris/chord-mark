@@ -1,0 +1,28 @@
+{
+	"name": "chord-mark-themes",
+	"version": "0.8.0",
+	"description": "Themes for ChordMark",
+	"author": "Christophe Noël <touffi51@gmail.com>",
+	"homepage": "https://github.com/no-chris/chord-mark/tree/main/packages/chord-mark-themes#readme",
+	"license": "MIT",
+	"main": "lib/chord-mark-themes.js",
+	"directories": {
+		"test": "scss"
+	},
+	"files": [
+		"lib"
+	],
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/no-chris/chord-mark.git"
+	},
+	"scripts": {
+		"start": "webpack serve"
+	},
+	"bugs": {
+		"url": "https://github.com/no-chris/chord-mark/issues"
+	},
+	"dependencies": {
+		"chord-mark": "^0.8.0"
+	}
+}

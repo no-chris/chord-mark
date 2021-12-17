@@ -1,6 +1,7 @@
 import renderSong from '../../../../src/renderer/components/renderSong';
 import htmlToElement from '../../../../src/core/dom/htmlToElement';
 import parseSong from '../../../../src/parser/parseSong';
+import toText from '../../helpers/toText';
 
 function renderSongText(songTxt, options = {}) {
 	return '<div>' + renderSong(parseSong(songTxt), options) + '</div>';
@@ -21,7 +22,7 @@ verseLine2`;
 
 		expect(element).toBeInstanceOf(Node);
 		expect(element.nodeName).toBe('DIV');
-		expect(element.childElementCount).toBe(4);
+		expect(element.childElementCount).toBe(1);
 	});
 });
 
@@ -41,7 +42,7 @@ line2-2`;
 line1-1
 |A  |D  |
 line1-2
-\xa0
+
 Verse 2
 |C  |G  |
 line2-1
@@ -51,8 +52,7 @@ line2-2`;
 			autoRepeatChords: true,
 			alignBars: false,
 		});
-		const element = htmlToElement(rendered);
-		expect(element.textContent).toBe(expected);
+		expect(toText(rendered)).toBe(expected);
 	});
 
 	test('Should NOT render auto repeated chords & other lines if autoRepeatChords === false', () => {
@@ -70,13 +70,12 @@ line2-2`;
 line1-1
 |A     |D     |
 line1-2
-\xa0
+
 Verse 2
 line2-1
 line2-2`;
 		const rendered = renderSongText(input, { autoRepeatChords: false });
-		const element = htmlToElement(rendered);
-		expect(element.textContent).toBe(expected);
+		expect(toText(rendered)).toBe(expected);
 	});
 });
 
@@ -95,8 +94,7 @@ Imagine there's not placeholder`;
 		const rendered = renderSongText(input, {
 			alignChordsWithLyrics: true,
 		});
-		const element = htmlToElement(rendered);
-		expect(element.textContent).toBe(expected);
+		expect(toText(rendered)).toBe(expected);
 	});
 
 	test('Should ignore placeholders if chords positioning is disabled', () => {
@@ -109,8 +107,7 @@ Imagine there's no heaven`;
 		const rendered = renderSongText(input, {
 			alignChordsWithLyrics: false,
 		});
-		const element = htmlToElement(rendered);
-		expect(element.textContent).toBe(expected);
+		expect(toText(rendered)).toBe(expected);
 	});
 });
 
@@ -131,9 +128,9 @@ Verse 3
 |A     |B     |
 verseLine`;
 		const rendered = renderSongText(input, { expandSectionCopy: true });
-		const element = htmlToElement(rendered);
-		expect(element.textContent).toBe(expected);
+		expect(toText(rendered)).toBe(expected);
 	});
+
 	test('should only repeat section label when expandSectionCopy === false', () => {
 		const input = `#v
 A B
@@ -146,8 +143,7 @@ verseLine
 Verse 2
 Verse 3`;
 		const rendered = renderSongText(input, { expandSectionCopy: false });
-		const element = htmlToElement(rendered);
-		expect(element.textContent).toBe(expected);
+		expect(toText(rendered)).toBe(expected);
 	});
 });
 
@@ -169,8 +165,7 @@ verseLine1
 |C   D   |E     |
 verseLine2`;
 		const rendered = renderSongText(input, { expandSectionMultiply: true });
-		const element = htmlToElement(rendered);
-		expect(element.textContent).toBe(expected);
+		expect(toText(rendered)).toBe(expected);
 	});
 
 	test('Should not repeat section when expandSectionMultiply === false, and display repeat string ("x2") after label', () => {
@@ -187,8 +182,7 @@ verseLine2`;
 		const rendered = renderSongText(input, {
 			expandSectionMultiply: false,
 		});
-		const element = htmlToElement(rendered);
-		expect(element.textContent).toBe(expected);
+		expect(toText(rendered)).toBe(expected);
 	});
 
 	test('Should number repeats incrementally when expandSectionMultiply === true', () => {
@@ -200,8 +194,7 @@ Verse 2
 Verse 3
 Verse 4`;
 		const rendered = renderSongText(input, { expandSectionMultiply: true });
-		const element = htmlToElement(rendered);
-		expect(element.textContent).toBe(expected);
+		expect(toText(rendered)).toBe(expected);
 	});
 
 	test('Should number repeats incrementally when expandSectionMultiply === false', () => {
@@ -216,8 +209,7 @@ Verse 3`;
 		const rendered = renderSongText(input, {
 			expandSectionMultiply: false,
 		});
-		const element = htmlToElement(rendered);
-		expect(element.textContent).toBe(expected);
+		expect(toText(rendered)).toBe(expected);
 	});
 });
 
@@ -244,8 +236,7 @@ Chorus 3
 Chorus 4
 Outro`;
 		const rendered = renderSongText(input, { expandSectionMultiply: true });
-		const element = htmlToElement(rendered);
-		expect(element.textContent).toBe(expected);
+		expect(toText(rendered)).toBe(expected);
 	});
 });
 
@@ -272,7 +263,7 @@ v1-line-1
 v1-line-2
 |E7     |D7     |A7     |E7     |
 v1-line-3
-\xa0
+
 Verse 2
 |A7     |%      |%      |%      |
 v2-line-1
@@ -280,13 +271,12 @@ v2-line-1
 v2-line-2
 |E7     |D7     |A7     |E7     |
 v2-line-3
-\xa0`;
+`;
 		const rendered = renderSongText(input, {
 			chartType: 'all',
 			alignBars: true,
 		});
-		const element = htmlToElement(rendered);
-		expect(element.textContent).toBe(expected);
+		expect(toText(rendered)).toBe(expected);
 	});
 
 	test('= "chords"', () => {
@@ -294,18 +284,17 @@ v2-line-3
 |A7     |%      |%      |%      |
 |D7     |%      |A7     |%      |
 |E7     |D7     |A7     |E7     |
-\xa0
+
 Verse 2
 |A7     |%      |%      |%      |
 |D7     |%      |A7     |%      |
 |E7     |D7     |A7     |E7     |
-\xa0`;
+`;
 		const rendered = renderSongText(input, {
 			chartType: 'chords',
 			alignBars: true,
 		});
-		const element = htmlToElement(rendered);
-		expect(element.textContent).toBe(expected);
+		expect(toText(rendered)).toBe(expected);
 	});
 
 	test('= "chordsFirstLyricLine"', () => {
@@ -314,19 +303,18 @@ Verse 2
 v1-line-1
 |D7     |%      |A7     |%      |
 |E7     |D7     |A7     |E7     |
-\xa0
+
 Verse 2
 |A7     |%      |%      |%      |
 v2-line-1
 |D7     |%      |A7     |%      |
 |E7     |D7     |A7     |E7     |
-\xa0`;
+`;
 		const rendered = renderSongText(input, {
 			chartType: 'chordsFirstLyricLine',
 			alignBars: true,
 		});
-		const element = htmlToElement(rendered);
-		expect(element.textContent).toBe(expected);
+		expect(toText(rendered)).toBe(expected);
 	});
 
 	test('= "lyrics"', () => {
@@ -334,18 +322,17 @@ v2-line-1
 v1-line-1
 v1-line-2
 v1-line-3
-\xa0
+
 Verse 2
 v2-line-1
 v2-line-2
 v2-line-3
-\xa0`;
+`;
 		const rendered = renderSongText(input, {
 			chartType: 'lyrics',
 			alignBars: true,
 		});
-		const element = htmlToElement(rendered);
-		expect(element.textContent).toBe(expected);
+		expect(toText(rendered)).toBe(expected);
 	});
 });
 
@@ -379,19 +366,18 @@ A7. B. C7.
 |A7  B  C7    |
 |A7  B  C7  D |
 |A          F |%     |
-\xa0
+
 3/4
 |A7       |
 |A7  B    |
 |A7     B |
 |A7  B  C7|
-\xa0`;
+`;
 		const rendered = renderSongText(input, {
 			printChordsDuration: 'never',
 			alignBars: true,
 		});
-		const element = htmlToElement(rendered);
-		expect(element.textContent).toBe(expected);
+		expect(toText(rendered)).toBe(expected);
 	});
 
 	test('="uneven"', () => {
@@ -405,19 +391,18 @@ A7. B. C7.
 |A7.    B.    C7..     |
 |A7     B     C7    D  |
 |A...               F. |%     |
-\xa0
+
 3/4
 |A7               |
 |A7.    B..       |
 |A7..         B.  |
 |A7     B     C7  |
-\xa0`;
+`;
 		const rendered = renderSongText(input, {
 			printChordsDuration: 'uneven',
 			alignBars: true,
 		});
-		const element = htmlToElement(rendered);
-		expect(element.textContent).toBe(expected);
+		expect(toText(rendered)).toBe(expected);
 	});
 
 	test('="always"', () => {
@@ -431,19 +416,18 @@ A7. B. C7.
 |A7.    B.    C7..     |
 |A7.    B.    C7.   D. |
 |A...               F. |%     |
-\xa0
+
 3/4
 |A7               |
 |A7.    B..       |
 |A7..         B.  |
 |A7.    B.    C7. |
-\xa0`;
+`;
 		const rendered = renderSongText(input, {
 			printChordsDuration: 'always',
 			alignBars: true,
 		});
-		const element = htmlToElement(rendered);
-		expect(element.textContent).toBe(expected);
+		expect(toText(rendered)).toBe(expected);
 	});
 });
 

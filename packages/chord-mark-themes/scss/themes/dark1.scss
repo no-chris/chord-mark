@@ -1,0 +1,43 @@
+@import '../abstract';
+@import './common';
+
+$green: rgb(167, 255, 123);
+$blue: rgb(103, 211, 255);
+$pink: rgb(237, 123, 255);
+
+.cmTheme-dark1 {
+	background-color: $ccs-secondary;
+
+	.cmSong {
+		@include base;
+		color: $ccs-foreground;
+	}
+
+	// Sections
+	.cmSectionLabel {
+		color: $blue;
+		font-weight: bold;
+	}
+	.cmSectionMultiplier {
+		color: $pink;
+	}
+
+	// Time signature
+	.cmTimeSignature {
+		color: $green;
+		font-weight: bold;
+	}
+
+	// Chordline
+	.cmChordLine {
+		color: $ccs-accent;
+	}
+
+	.cmBarSeparator {
+		opacity: 0.5;
+	}
+
+	.cmChordDuration {
+		opacity: 0.7;
+	}
+}

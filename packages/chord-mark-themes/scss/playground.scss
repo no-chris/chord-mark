@@ -1,0 +1,15 @@
+body {
+	display: flex;
+	flex-wrap: nowrap;
+	overflow-x: scroll;
+	background-color: #ddd;
+}
+
+.themePreview {
+	flex: 0 0 500px;
+	margin-right: 20px;
+}
+
+.cmContainer {
+	border: 1px solid black;
+}

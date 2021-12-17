@@ -45,7 +45,7 @@ const config = {
 				title: 'ChordMark',
 				logo: {
 					alt: 'ChordMark Logo',
-					src: 'img/cmLogo.png',
+					src: 'img/icon_whitebg.png',
 				},
 				items: [
 					{

@@ -24,11 +24,12 @@ Want to give it a try? Head over to the [5 minutes tutorial](https://chordmark.n
 
 ## Available packages
 
-| Package name                                                                                            | Desription                                       |
-| ------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
-| [ChordMark](https://github.com/no-chris/chord-mark/tree/master/packages/chord-mark)                     | The core library for parsing and rendering songs |
-| [ChordMark2ChordPro](https://github.com/no-chris/chord-mark/tree/master/packages/chord-mark-2-chordpro) | The ChordPro converter                           |
-| [Documentation](https://github.com/no-chris/chord-mark/tree/master/packages/documentation)              | The documentation website                        |
+| Package name                                                                                               | Desription                                       |
+| ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
+| [chord-mark](https://github.com/no-chris/chord-mark/tree/master/packages/chord-mark)                       | The core library for parsing and rendering songs |
+| [chord-mark-2-chordpro](https://github.com/no-chris/chord-mark/tree/master/packages/chord-mark-2-chordpro) | The ChordPro converter                           |
+| [chord-mark-themes](https://github.com/no-chris/chord-mark/tree/master/packages/chord-mark-themes)         | A set of themes to style `chord-mark` output     |
+| [documentation](https://github.com/no-chris/chord-mark/tree/master/packages/documentation)                 | The documentation website                        |
 
 ## Documentation
 
