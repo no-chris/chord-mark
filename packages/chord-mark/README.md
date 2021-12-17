@@ -37,7 +37,7 @@ ChordMark's default renderer produces an HTML output.
 ## Configuration
 
 The renderer function can be configured.
-Until proper documentation is available, the list of available options can be checked here: https://github.com/no-chris/chord-mark/blob/master/packages/chord-mark/src/renderer/components/renderSong.js#L27
+Until proper documentation is available, the list of parameter can be checked here: https://github.com/no-chris/chord-mark/blob/master/packages/chord-mark/src/renderer/components/renderSong.js#L27
 
 ## Documentation
 
@@ -66,3 +66,8 @@ The following list of CSS classes are available:
 -   `cmSectionLabel`
 -   `cmSectionMultiplier`
 -   `cmTimeSignature`
+
+## Breaking changes
+
+While I don't foresee the public API to change drastically in the future, it is to be considered unstable until `v1.0.0` is published.
+Breaking changes might happen until then and will be documented in the release notes.
