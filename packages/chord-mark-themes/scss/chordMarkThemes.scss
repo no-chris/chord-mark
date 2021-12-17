@@ -6,10 +6,15 @@
 
 /*
 cmSong
-cmBarContent
-cmBarSeparator
+cmLine
+cmLine--isFromAutoRepeatChords
+cmLine--isFromChordLineRepeater
+cmLine--isFromSectionCopy
+cmLine--isFromSectionMultiply
 cmChordLine
 cmChordLineOffset
+cmBarContent
+cmBarSeparator
 cmChordSymbol
 cmChordDuration
 cmEmptyLine
@@ -17,8 +22,5 @@ cmLyricLine
 cmSectionLabel
 cmSectionMultiplier
 cmTimeSignature
-cmLine--isFromAutoRepeatChords
-cmLine--isFromChordLineRepeater
-cmLine--isFromSectionCopy
-cmLine--isFromSectionMultiply
+
  */

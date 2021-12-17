@@ -6,37 +6,38 @@ $blue: rgb(103, 211, 255);
 $pink: rgb(237, 123, 255);
 
 .cmTheme-dark1 {
-  .cmSong {
-    @include base;
-    background-color: $ccs-secondary;
-    color: $ccs-foreground;
-  }
+	background-color: $ccs-secondary;
 
-  // Sections
-  .cmSectionLabel {
-    color: $blue;
-    font-weight: bold;
-  }
-  .cmSectionMultiplier {
-    color: $pink;
-  }
+	.cmSong {
+		@include base;
+		color: $ccs-foreground;
+	}
 
-  // Time signature
-  .cmTimeSignature {
-    color: $green;
-    font-weight: bold;
-  }
+	// Sections
+	.cmSectionLabel {
+		color: $blue;
+		font-weight: bold;
+	}
+	.cmSectionMultiplier {
+		color: $pink;
+	}
 
-  // Chordline
-  .cmChordLine {
-    color: $ccs-accent;
-  }
+	// Time signature
+	.cmTimeSignature {
+		color: $green;
+		font-weight: bold;
+	}
 
-  .cmBarSeparator {
-    opacity: 0.5;
-  }
+	// Chordline
+	.cmChordLine {
+		color: $ccs-accent;
+	}
 
-  .cmChordDuration {
-    opacity: 0.7;
-  }
+	.cmBarSeparator {
+		opacity: 0.5;
+	}
+
+	.cmChordDuration {
+		opacity: 0.7;
+	}
 }

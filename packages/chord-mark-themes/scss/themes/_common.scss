@@ -1,12 +1,3 @@
-.cmTheme-fadeRepeats {
-	.cmLine--isFromAutoRepeatChords,
-	.cmLine--isFromChordLineRepeater,
-	.cmLine--isFromSectionCopy,
-	.cmLine--isFromSectionMultiply {
-		opacity: 0.5;
-	}
-}
-
 .cmLine {
 	.cmSong--fontSize-5 & {
 		font-size: 0.5em;

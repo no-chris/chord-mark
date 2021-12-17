@@ -2,37 +2,38 @@
 @import './common';
 
 .cmTheme-dark3 {
-  .cmSong {
-    @include base;
-    background-color: $dracula-background;
-    color: $dracula-foreground;
-  }
+	background-color: $dracula-background;
 
-  // Sections
-  .cmSectionLabel {
-    color: $dracula-red;
-    font-weight: bold;
-  }
-  .cmSectionMultiplier {
-    color: $dracula-yellow;
-  }
+	.cmSong {
+		@include base;
+		color: $dracula-foreground;
+	}
 
-  // Time signature
-  .cmTimeSignature {
-    color: $dracula-cyan;
-    font-weight: bold;
-  }
+	// Sections
+	.cmSectionLabel {
+		color: $dracula-red;
+		font-weight: bold;
+	}
+	.cmSectionMultiplier {
+		color: $dracula-yellow;
+	}
 
-  // Chordline
-  .cmChordLine {
-    color: $dracula-green;
-  }
+	// Time signature
+	.cmTimeSignature {
+		color: $dracula-cyan;
+		font-weight: bold;
+	}
 
-  .cmBarSeparator {
-    opacity: 0.5;
-  }
+	// Chordline
+	.cmChordLine {
+		color: $dracula-green;
+	}
 
-  .cmChordDuration {
-    opacity: 0.7;
-  }
+	.cmBarSeparator {
+		opacity: 0.5;
+	}
+
+	.cmChordDuration {
+		opacity: 0.7;
+	}
 }
