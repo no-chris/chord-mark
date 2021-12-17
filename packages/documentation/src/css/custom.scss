@@ -36,3 +36,12 @@ html[data-theme='dark'] .featureSvg_src-components-HomepageFeatures-module {
 }
 
 @import './ChordMarkBlock';
+
+.logo_homepage {
+	width: 300px !important;
+	margin: 0 auto 10px;
+}
+
+.logo_homepage img {
+	max-width: 100%;
+}
