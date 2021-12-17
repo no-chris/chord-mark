@@ -1,6 +1,5 @@
 /* eslint-env node */
 const path = require('path');
-const webpack = require('webpack');
 
 const buildDir = 'lib';
 
@@ -31,8 +30,6 @@ const config = {
 	performance: {
 		hints: false,
 	},
-
-	plugins: [new webpack.IgnorePlugin({ resourceRegExp: /\.scss|sass|css$/ })],
 
 	module: {
 		rules: [
