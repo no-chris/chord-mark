@@ -1,17 +1,15 @@
 import React from 'react';
 
 const ChordMarkBlock = ({ content }) => {
-	const contentOk = content
-		.replace(/<p/g, '<span')
-		.replace(/<\/p>/g, '</span>');
-
 	return (
 		<div className={'chordMarkBlockContainer'}>
 			<div className={'chordMarkBlockContent'}>
-				<pre className={'chordMarkBlock'}>
+				<pre className={'chordMarkBlock cmTheme-dark1'}>
 					<code
 						className={'chordMarkBlockLines'}
-						dangerouslySetInnerHTML={{ __html: contentOk }}
+						dangerouslySetInnerHTML={{
+							__html: content,
+						}}
 					/>
 				</pre>
 			</div>

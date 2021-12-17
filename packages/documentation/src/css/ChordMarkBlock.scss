@@ -1,4 +1,5 @@
 @import './dracula';
+@import '../chord-mark-themes/scss/chordMarkThemes';
 
 .chordMarkBlockContainer {
 	margin-bottom: var(--ifm-leading);
@@ -43,26 +44,8 @@
 .chordMarkBlockLines {
 	color: $dt-foreground;
 	background-color: $dt-background !important;
-}
 
-.cmTimeSignature {
-	color: $dt-comment;
-	font-weight: bold;
-}
-
-.cmBarSeparator {
-	color: $dt-comment;
-}
-
-.cmChordSymbol {
-	color: $dt-cyan;
-}
-
-.cmSectionLabel {
-	color: $dt-orange;
-	font-weight: bold;
-}
-
-.cmChordDuration {
-	opacity: 0.8;
+	p {
+		margin: 0 !important;
+	}
 }

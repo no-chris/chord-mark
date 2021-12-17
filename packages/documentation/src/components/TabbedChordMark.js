@@ -26,7 +26,7 @@ const TabbedChordMark = ({ src, srcLines, renderLines, options }) => {
 				options
 			)
 		);
-		srcSnippet = getSnippet(src, srcLines);
+		srcSnippet = getSnippet(toHtml(src), srcLines);
 		renderSnippet = getSnippet(rendered, renderLines);
 	}
 
@@ -42,11 +42,18 @@ const TabbedChordMark = ({ src, srcLines, renderLines, options }) => {
 	);
 };
 
-function getSnippet(string, linesRange = '') {
-	const allLines = string.split('\n');
+function toHtml(text) {
+	return text
+		.split('\n')
+		.map((line) => (line === '' ? '&nbsp;' : line))
+		.map((line) => `<p>${line}</p>`)
+		.join('');
+}
+
+function getSnippet(html, linesRange = '') {
 	const range = getStartEnd(linesRange);
-	const snippetTab = allLines.slice(range.start, range.end);
-	return snippetTab.join('\n');
+	const allLines = html.match(/(<p.*?>.*?<\/p>)/gm);
+	return allLines.slice(range.start, range.end).join('');
 }
 
 function getStartEnd(rangeStr) {
