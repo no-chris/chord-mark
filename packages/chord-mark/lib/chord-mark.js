@@ -22087,7 +22087,7 @@ function renderSong(parsedSong, {
   if (customRenderer) {
     return customRenderer(allLines, {});
   } else {
-    const song = renderAllLines().join('\n');
+    const song = renderAllLines().join('');
     return song_default()({
       song
     });
