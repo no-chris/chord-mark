@@ -22,11 +22,11 @@ import '../node_modules/chord-mark-themes/scss/chordMarkThemes';
 import '../node_modules/chord-mark-themes/scss/themes/dark1';
 ```
 
-Wrap ChordMark's rendering:
+Wrap ChordMark's output:
 
 ```html
 <div class="cmTheme-dark1">
-	<!-- ChordMark's rendering goes here -->
+	<!-- ChordMark's output goes here -->
 </div>
 ```
 
