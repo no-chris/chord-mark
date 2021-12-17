@@ -42,3 +42,27 @@ Until proper documentation is available, the list of available options can be ch
 ## Documentation
 
 Check the [User Guide](https://chordmark.netlify.app).
+
+## CSS Classes
+
+By default, ChordMark does not come with any CSS styling.
+You can either use the `chord-mark-themes` module or design your own themes.
+The following list of CSS classes are available:
+
+-   `cmSong`
+-   `cmLine`
+-   `cmLine--isFromAutoRepeatChords`
+-   `cmLine--isFromChordLineRepeater`
+-   `cmLine--isFromSectionCopy`
+-   `cmLine--isFromSectionMultiply`
+-   `cmChordLine`
+-   `cmChordLineOffset`
+-   `cmBarContent`
+-   `cmBarSeparator`
+-   `cmChordSymbol`
+-   `cmChordDuration`
+-   `cmEmptyLine`
+-   `cmLyricLine`
+-   `cmSectionLabel`
+-   `cmSectionMultiplier`
+-   `cmTimeSignature`
