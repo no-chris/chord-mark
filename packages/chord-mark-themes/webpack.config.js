@@ -31,7 +31,12 @@ const config = {
 		hints: false,
 	},
 
-	plugins: [new HtmlWebpackPlugin(), new MiniCssExtractPlugin()],
+	plugins: [
+		new HtmlWebpackPlugin({
+			title: 'ChordMarkThemes',
+		}),
+		new MiniCssExtractPlugin(),
+	],
 
 	module: {
 		rules: [
