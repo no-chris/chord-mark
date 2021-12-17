@@ -49,7 +49,7 @@
 	"scripts": {
 		"build": "npm run lint && npm run format && npm run test && lerna run build",
 		"lint": "eslint packages",
-		"format": "prettier --write \"**/*.{js,jsx,json,ts,md}\"",
+		"format": "prettier --write \"**/*.{js,jsx,json,ts,md,scss,css}\"",
 		"test": "jest"
 	},
 	"dependencies": {
