@@ -33,15 +33,6 @@ const sidebars = {
 				'reference/rendering',
 			],
 		},
-		{
-			type: 'category',
-			label: 'Chord Charts Studio',
-			items: [
-				'chord-charts-studio/overview',
-				'chord-charts-studio/import',
-				'chord-charts-studio/faq',
-			],
-		},
 	],
 
 	api: ['api/intro', 'api/parser', 'api/renderer'],
