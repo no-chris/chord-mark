@@ -187,6 +187,35 @@ Chorus
 			`#c
 Chorus`,
 		],
+
+		// ===== Chord Lyrics lines =====
+		['no chords in line', `A lyric line`, `#v\nA lyric line`],
+		[
+			'one chord in line, start',
+			`[D7]A lyric line`,
+			`#v\nD7\n_A lyric line`,
+		],
+		[
+			'one chord in line, middle',
+			`A ly[D7]ric line`,
+			`#v\nD7\nA ly_ric line`,
+		],
+		['one chord in line, end', `A lyric line[D7]`, `#v\nD7\nA lyric line_`],
+		[
+			'one chord in line, end with space',
+			`A lyric line [D7]`,
+			`#v\nD7\nA lyric line _`,
+		],
+		[
+			'multiple chords, before lyrics',
+			`[D7] [G7] [Em7/G] A lyric line`,
+			`#v\nD7 G7 Em7/G\n_ _ _ A lyric line`,
+		],
+		[
+			'multiple chords, after lyrics',
+			`A lyric line [D7] [G7] [Em7/G]`,
+			`#v\nD7 G7 Em7/G\nA lyric line _ _ _`,
+		],
 	])('%s', (title, input, output) => {
 		test('should produce expected ChordMark markup', () => {
 			const converted = chordPro2ChordMark(input);

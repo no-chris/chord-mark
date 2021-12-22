@@ -79,7 +79,7 @@ const chordPro2ChordMark = (chordProInput) => {
 	allSections.forEach((section, i) => {
 		cmOutput.push('#' + section.label);
 		section.allLines.forEach((line) => {
-			cmOutput.push(line.content);
+			cmOutput.push(line);
 		});
 		if (i < allSections.length - 1) {
 			cmOutput.push('');
@@ -110,8 +110,13 @@ const getLineModel = (line) => {
 		} else {
 			lineModel.type = lineTypes.DIRECTIVE;
 		}
-	} else {
+	} else if (isChordsLyrics(line)) {
 		lineModel.type = lineTypes.CHORDS_LYRICS;
+		const [chords, lyrics] = getChordsLyrics(line);
+		lineModel.chords = chords;
+		lineModel.lyrics = lyrics;
+	} else {
+		lineModel.type = lineTypes.LYRICS;
 	}
 
 	return lineModel;
@@ -139,6 +144,24 @@ const getDirectiveKV = (directive) => {
 	const key = found[1].trim();
 	const value = found[2] ? found[2].trim() : undefined;
 	return [key, value];
+};
+
+const chordsLyricsRe = /\[([^\]]*)]/g;
+
+const isChordsLyrics = (line) => {
+	const found = line.trim().match(chordsLyricsRe);
+	return found !== null;
+};
+
+const getChordsLyrics = (directive) => {
+	const found = directive.trim().match(chordsLyricsRe);
+	const chords = found
+		.map((chord) => {
+			return chord.replace('[', '').replace(']', '');
+		})
+		.join(' ');
+	const lyrics = directive.replace(chordsLyricsRe, '_');
+	return [chords, lyrics];
 };
 
 const isSupportedLine = (lineModel) => {
@@ -176,19 +199,22 @@ const getAllSections = (allLines) => {
 			commitCurrentSection();
 		} else if (line.type === lineTypes.EMPTY) {
 			if (currentSection) {
-				currentSection.allLines.push(line);
+				currentSection.allLines.push(line.content);
 			}
 		} else {
 			if (!currentSection) {
 				initCurrentSection();
 			}
-			currentSection.allLines.push(line);
+			if (line.type === lineTypes.CHORDS_LYRICS) {
+				currentSection.allLines.push(line.chords);
+				currentSection.allLines.push(line.lyrics);
+			} else {
+				currentSection.allLines.push(line.content);
+			}
 		}
 	});
 
-	if (currentSection) {
-		allSections.push(currentSection);
-	}
+	commitCurrentSection();
 
 	return allSections.map(trimSection);
 };
@@ -213,12 +239,12 @@ const getSectionLabel = (lineModel) => {
 };
 
 const trimSection = (section) => {
-	while (section.allLines.length && section.allLines[0].content === '') {
+	while (section.allLines.length && section.allLines[0] === '') {
 		section.allLines.shift();
 	}
 	while (
 		section.allLines.length &&
-		section.allLines[section.allLines.length - 1].content === ''
+		section.allLines[section.allLines.length - 1] === ''
 	) {
 		section.allLines.pop();
 	}
