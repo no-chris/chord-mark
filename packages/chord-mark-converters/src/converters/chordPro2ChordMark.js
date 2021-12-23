@@ -240,7 +240,8 @@ const getSectionLabel = (lineModel) => {
 
 const trimSection = (section) => {
 	while (section.allLines.length && section.allLines[0] === '') {
-		section.allLines.shift();
+		/* istanbul ignore next */
+		section.allLines.shift(); // keeping just in case, but no sure how to reproduce
 	}
 	while (
 		section.allLines.length &&
