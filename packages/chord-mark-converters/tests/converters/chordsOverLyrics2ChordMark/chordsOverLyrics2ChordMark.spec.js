@@ -4,11 +4,8 @@ import path from 'path';
 import chordsOverLyrics2ChordMark from '../../../src/converters/chordsOverLyrics2ChordMark';
 
 const dataDir = path.resolve(__dirname + '/data');
-const input1 = fs.readFileSync(dataDir + '/inputUltimateGuitar1.txt', 'utf-8');
-const output1 = fs.readFileSync(
-	dataDir + '/outputUltimateGuitar1.txt',
-	'utf-8'
-);
+const input1 = fs.readFileSync(dataDir + '/inputGuitarTabs1.txt', 'utf-8');
+const output1 = fs.readFileSync(dataDir + '/outputGuitarTabs1.txt', 'utf-8');
 
 describe('Module', () => {
 	test('Should expose a function', () => {

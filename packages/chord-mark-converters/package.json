@@ -24,5 +24,8 @@
 	},
 	"bugs": {
 		"url": "https://github.com/no-chris/chord-mark/issues"
+	},
+	"dependencies": {
+		"chord-symbol": "^2.1.0"
 	}
 }
