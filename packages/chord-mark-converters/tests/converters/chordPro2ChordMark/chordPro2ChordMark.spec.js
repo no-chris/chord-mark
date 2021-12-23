@@ -136,6 +136,8 @@ Another lonely verse`,
 {whatever}`,
 			``,
 		],
+		['no key', `{:mySection}`, `#v\n{:mySection}`],
+		['no value', `{myKey:}`, ``],
 
 		// ===== Comment lines =====
 		['should remove comment', `# to-be-removed comment`, ``],

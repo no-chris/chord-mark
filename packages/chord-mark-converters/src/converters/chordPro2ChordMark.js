@@ -153,14 +153,14 @@ const isChordsLyrics = (line) => {
 	return found !== null;
 };
 
-const getChordsLyrics = (directive) => {
-	const found = directive.trim().match(chordsLyricsRe);
+const getChordsLyrics = (chordsLyrics) => {
+	const found = chordsLyrics.trim().match(chordsLyricsRe);
 	const chords = found
 		.map((chord) => {
 			return chord.replace('[', '').replace(']', '');
 		})
 		.join(' ');
-	const lyrics = directive.replace(chordsLyricsRe, '_');
+	const lyrics = chordsLyrics.replace(chordsLyricsRe, '_');
 	return [chords, lyrics];
 };
 
