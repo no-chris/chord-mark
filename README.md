@@ -27,7 +27,7 @@ Want to give it a try? Head over to the [5 minutes tutorial](https://chordmark.n
 | Package name                                                                                               | Desription                                       |
 | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
 | [chord-mark](https://github.com/no-chris/chord-mark/tree/master/packages/chord-mark)                       | The core library for parsing and rendering songs |
-| [chord-mark-converters](https://github.com/no-chris/chord-mark/tree/master/packages/chord-mark-converters) | Convert from an to ChordMark format              |
+| [chord-mark-converters](https://github.com/no-chris/chord-mark/tree/master/packages/chord-mark-converters) | Convert to and from ChordMark format             |
 | [chord-mark-themes](https://github.com/no-chris/chord-mark/tree/master/packages/chord-mark-themes)         | A set of themes to style `chord-mark` output     |
 | [documentation](https://github.com/no-chris/chord-mark/tree/master/packages/documentation)                 | The documentation website                        |
 
