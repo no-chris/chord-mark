@@ -1,5 +1,5 @@
-import chordPro2ChordMark from './converters/chordPro2ChordMark';
+import convert2ChordMark from './convert2ChordMark';
 
 export default {
-	chordPro2ChordMark,
+	convert2ChordMark,
 };
