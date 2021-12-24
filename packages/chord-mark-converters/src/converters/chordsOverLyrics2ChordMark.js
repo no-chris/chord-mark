@@ -12,10 +12,10 @@ const chordsOverLyrics2ChordMark = (input) => {
 		} else {
 			if (chordPositions.length && line.trim() !== '') {
 				cmOutput.push(getLineWithPositionMarkers(line, chordPositions));
-				chordPositions = [];
 			} else {
 				cmOutput.push(line);
 			}
+			chordPositions = [];
 		}
 	});
 
@@ -29,12 +29,11 @@ const isChordLine = (line) => {
 };
 
 function clearSpaces(string) {
-	return string.replace(/\t+/g, ' ').replace(/  +/g, ' ').trim();
+	return (string.match(/([^\s]+)/g) || []).join(' ');
 }
 
 function isChord(potentialChord) {
-	const parseChord = chordParserFactory();
-	const parsed = parseChord(potentialChord);
+	const parsed = chordParserFactory()(potentialChord);
 	return !parsed.error;
 }
 
@@ -92,7 +91,9 @@ const getLineWithPositionMarkers = (line, chordPositions) => {
 };
 
 const insertAt = (insertInto, toInsert, at) => {
-	return insertInto.slice(0, at) + toInsert + insertInto.slice(at);
+	return at > insertInto.length
+		? insertInto + ' ' + toInsert
+		: insertInto.slice(0, at) + toInsert + insertInto.slice(at);
 };
 
 export default chordsOverLyrics2ChordMark;
