@@ -5,21 +5,61 @@ const chordsOverLyrics2ChordMark = (input) => {
 	const cmOutput = [];
 	let chordPositions = [];
 
-	input.split('\n').forEach((line) => {
-		if (isChordLine(line)) {
-			cmOutput.push(getAllChordsInLine(line));
-			chordPositions = getChordsPositions(line);
-		} else {
-			if (chordPositions.length && line.trim() !== '') {
-				cmOutput.push(getLineWithPositionMarkers(line, chordPositions));
+	input
+		.split('\n')
+		.map(cleanUp)
+		.forEach((line) => {
+			if (isChordLine(line)) {
+				cmOutput.push(getAllChordsInLine(line));
+				chordPositions = getChordsPositions(line);
 			} else {
-				cmOutput.push(line);
+				if (isSectionLabel(line)) {
+					cmOutput.push(getSectionLabel(line));
+				} else if (chordPositions.length && line.trim() !== '') {
+					cmOutput.push(
+						getLineWithPositionMarkers(line, chordPositions)
+					);
+				} else {
+					cmOutput.push(line);
+				}
+				chordPositions = [];
 			}
-			chordPositions = [];
-		}
-	});
+		});
 
 	return cmOutput.join('\n');
+};
+
+const cleanUp = (line) => line.replace(/\[\/?ch]/g, '');
+
+const sectionLabelRe = /^\[([^\]]+)]$/;
+
+const isSectionLabel = (line) => {
+	const found = line.trim().match(sectionLabelRe);
+	return found !== null && found[1].trim() !== '';
+};
+
+const getSectionLabel = (line) => {
+	const mapping = {
+		adlib: 'a',
+		['ad.lib.']: 'a',
+		bridge: 'b',
+		chorus: 'c',
+		intro: 'i',
+		introduction: 'i',
+		outro: 'o',
+		prechorus: 'p',
+		['pre-chorus']: 'p',
+		['pre chorus']: 'p',
+		solo: 's',
+		interlude: 'u',
+		verse: 'v',
+	};
+	const originalLabel = line.trim().match(sectionLabelRe)[1].trim();
+	const shortcutKey = originalLabel.toLowerCase();
+	const finalLabel = mapping[shortcutKey]
+		? mapping[shortcutKey]
+		: originalLabel;
+	return '#' + finalLabel;
 };
 
 const isChordLine = (line) => {

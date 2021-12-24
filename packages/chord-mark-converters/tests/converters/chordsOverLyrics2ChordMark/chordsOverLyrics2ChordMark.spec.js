@@ -4,8 +4,16 @@ import path from 'path';
 import chordsOverLyrics2ChordMark from '../../../src/converters/chordsOverLyrics2ChordMark';
 
 const dataDir = path.resolve(__dirname + '/data');
-const input1 = fs.readFileSync(dataDir + '/inputGuitarTabs1.txt', 'utf-8');
-const output1 = fs.readFileSync(dataDir + '/outputGuitarTabs1.txt', 'utf-8');
+const inputGT1 = fs.readFileSync(dataDir + '/inputGuitarTabs1.txt', 'utf-8');
+const inputUG1 = fs.readFileSync(
+	dataDir + '/inputUltimateGuitar1.txt',
+	'utf-8'
+);
+const outputGT1 = fs.readFileSync(dataDir + '/outputGuitarTabs1.txt', 'utf-8');
+const outputUG1 = fs.readFileSync(
+	dataDir + '/outputUltimateGuitar1.txt',
+	'utf-8'
+);
 
 describe('Module', () => {
 	test('Should expose a function', () => {
@@ -14,15 +22,15 @@ describe('Module', () => {
 });
 
 describe('chordsOverLyrics2ChordMark', () => {
-	describe.each([['Sample song 1', input1, output1]])(
-		'%s',
-		(title, input, output) => {
-			test('should produce expected ChordMark markup', () => {
-				const converted = chordsOverLyrics2ChordMark(input);
-				expect(converted).toBe(output);
-			});
-		}
-	);
+	describe.each([
+		['Sample song from guitartabs.cc', inputGT1, outputGT1],
+		['Sample song from ultimate-guitar.com', inputUG1, outputUG1],
+	])('%s', (title, input, output) => {
+		test('should produce expected ChordMark markup', () => {
+			const converted = chordsOverLyrics2ChordMark(input);
+			expect(converted).toBe(output);
+		});
+	});
 
 	describe.each([
 		// ===== Chords & lyrics lines
@@ -129,6 +137,80 @@ A7 A7 A7 A7
 D7 D7 A7 A7
 E7 D7 A7 A7
 _Som_e l_yri_cs`,
+		],
+
+		// ===== sections label =====
+		[
+			'Recognize all section labels shortcuts',
+			`
+[AdLib]
+[Ad.Lib.]
+[Bridge]
+[Chorus]
+[Intro]
+[Introduction]
+[Outro]
+[PreChorus]
+[Pre-Chorus]
+[Pre Chorus]
+[Solo]
+[Interlude]
+[Verse]`,
+			`
+#a
+#a
+#b
+#c
+#i
+#i
+#o
+#p
+#p
+#p
+#s
+#u
+#v`,
+		],
+		[
+			'Section labels without shortcuts',
+			`
+[Something]
+[SomethingElse]
+[Something Else]
+[Thing x2]`,
+			`
+#Something
+#SomethingElse
+#Something Else
+#Thing x2`,
+		],
+		[
+			'Padded section label',
+			`
+[ Something ]
+[ Verse ]`,
+			`
+#Something
+#v`,
+		],
+		[
+			'Invalid section labels',
+			`
+[]
+[ ]
+[\t]
+[Ver
+se]
+[Chorus
+Bridge]`,
+			`
+[]
+[ ]
+[\t]
+[Ver
+se]
+[Chorus
+Bridge]`,
 		],
 	])('%s', (title, input, output) => {
 		test('should produce expected ChordMark markup', () => {
