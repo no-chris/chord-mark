@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 import { parseSong, renderSong } from 'chord-mark';
-import chordMark2ChordPro from '../../src/chordMark2ChordPro';
+import chordMark2ChordPro from '../../../src/converters/chordMark2ChordPro';
 
 const dataDir = path.resolve(__dirname + '/data');
 const input1 = fs.readFileSync(dataDir + '/inputChordMark1.txt', 'utf-8');

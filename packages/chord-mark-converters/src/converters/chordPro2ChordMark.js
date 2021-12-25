@@ -1,3 +1,5 @@
+import trimArray from '../helpers/trimArray';
+
 const lineTypes = {
 	EMPTY: 'empty',
 	DIRECTIVE: 'directive',
@@ -216,7 +218,10 @@ const getAllSections = (allLines) => {
 
 	commitCurrentSection();
 
-	return allSections.map(trimSection);
+	return allSections.map((section) => {
+		section.allLines = trimArray(section.allLines, (el) => el === '');
+		return section;
+	});
 };
 
 const getSectionLabel = (lineModel) => {
@@ -236,20 +241,6 @@ const getSectionLabel = (lineModel) => {
 		label = directivesToSectionLabel[lineModel.key];
 	}
 	return labelToShortLabel[label] || label;
-};
-
-const trimSection = (section) => {
-	while (section.allLines.length && section.allLines[0] === '') {
-		/* istanbul ignore next */
-		section.allLines.shift(); // keeping just in case, but no sure how to reproduce
-	}
-	while (
-		section.allLines.length &&
-		section.allLines[section.allLines.length - 1] === ''
-	) {
-		section.allLines.pop();
-	}
-	return section;
 };
 
 export default chordPro2ChordMark;
