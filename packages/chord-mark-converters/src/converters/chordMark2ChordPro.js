@@ -152,32 +152,36 @@ function getLyricLine(line, chordLine) {
 		chordLine &&
 		chordLine.type === lineTypes.CHORD
 	) {
-		const allSymbols = [];
+		let chordPosition = chordLine.model.offset || 0;
+
 		chordLine.model.allBars.map((bar) => {
-			bar.allChords.map((chord) => {
-				allSymbols.push('[' + chord.symbol + ']');
+			bar.allChords.map((chord, i) => {
+				//let originalChordToken = chord.symbol;
+				let toInsert = '';
+				if (i === 0) {
+					toInsert += '[|]';
+					//originalChordToken += '|';
+				}
+				toInsert += `[${chord.symbol}]`;
+
+				if (lyrics.indexOf('_') > -1) {
+					lyrics = lyrics.replace('_', toInsert);
+				} else {
+					lyrics += ' ' + toInsert;
+				}
 			});
 		});
-
-		let previousSymbol = '';
-		while (allSymbols.length) {
-			let inlineSymbol = allSymbols.shift();
-			if (lyrics.indexOf('_') !== -1) {
-				const replaceString = ![previousSymbol, '[%]'].includes(
-					inlineSymbol
-				)
-					? inlineSymbol
-					: '';
-				lyrics = lyrics.replace('_', replaceString);
-			} else {
-				lyrics += ' ' + inlineSymbol;
-			}
-			previousSymbol = inlineSymbol;
-		}
-		// remove extra position markers
-		lyrics = lyrics.replace(/_/g, '');
+		lyrics = lyrics.replace(/_/g, '').trim();
+		lyrics += ' [|]';
+		//lyrics = insertAt(lyrics, '[|]', chordPosition);
 	}
 	return lyrics.trim();
 }
+
+const insertAt = (insertInto, toInsert, at) => {
+	return at > insertInto.length
+		? insertInto + ' ' + toInsert
+		: insertInto.slice(0, at) + toInsert + insertInto.slice(at);
+};
 
 export default chordMark2ChordPro;
