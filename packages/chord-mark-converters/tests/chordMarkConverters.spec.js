@@ -1,7 +1,11 @@
-import chordMarkConverters from '../src/chordMarkConverters';
+import {
+	convert2ChordMark,
+	chordPro2ChordMark,
+} from '../src/chordMarkConverters';
 
 describe('chordMarkConverters', () => {
 	test('Module', () => {
-		expect(typeof chordMarkConverters.convert2ChordMark).toBe('function');
+		expect(typeof convert2ChordMark).toBe('function');
+		expect(typeof chordPro2ChordMark).toBe('function');
 	});
 });
