@@ -10,10 +10,10 @@ const chordMark2ChordPro = (allLines) => {
 			if (i > 0) chordProLines.push('');
 			chordProLines.push(getOpenSectionDirective(section.sectionLine));
 		}
-		section.allLines.forEach((line) => {
+		section.allLines.forEach((line, j, allSectionLines) => {
 			switch (line.type) {
 				case lineTypes.CHORD:
-					if (!line.model.hasPositionedChords) {
+					if (!isFollowedByLyricLine(allSectionLines, j)) {
 						chordProLines.push(getChordLine(line));
 					}
 					chordLine = line;
@@ -119,6 +119,11 @@ function getSectionTitle(line, startEnd, title) {
 		: '';
 }
 
+function isFollowedByLyricLine(allSectionLines, i) {
+	const nextLine = allSectionLines[i + 1];
+	return nextLine && nextLine.type === lineTypes.LYRIC;
+}
+
 /**
  * @param {SongChordLine} line
  */
@@ -126,7 +131,7 @@ function getChordLine(line) {
 	let chordLine = '';
 
 	line.model.allBars.map((bar) => {
-		chordLine += '| ';
+		chordLine += '|';
 		bar.allChords.map((chord) => {
 			chordLine +=
 				chord.symbol +
@@ -147,33 +152,46 @@ function getChordLine(line) {
 function getLyricLine(line, chordLine) {
 	let lyrics = line.string;
 
-	if (
-		line.model.chordPositions.length &&
-		chordLine &&
-		chordLine.type === lineTypes.CHORD
-	) {
-		let chordPosition = chordLine.model.offset || 0;
+	if (chordLine && chordLine.type === lineTypes.CHORD) {
+		let chordPosition = 0;
 
 		chordLine.model.allBars.map((bar) => {
 			bar.allChords.map((chord, i) => {
-				//let originalChordToken = chord.symbol;
+				const symbol = bar.shouldPrintChordsDuration
+					? chord.symbol + '.'.repeat(chord.duration)
+					: chord.symbol;
+				let originalChordToken = symbol;
 				let toInsert = '';
 				if (i === 0) {
 					toInsert += '[|]';
-					//originalChordToken += '|';
+					originalChordToken += '|';
 				}
-				toInsert += `[${chord.symbol}]`;
 
-				if (lyrics.indexOf('_') > -1) {
-					lyrics = lyrics.replace('_', toInsert);
+				toInsert += `[${symbol}]`;
+
+				if (chordLine.model.hasPositionedChords) {
+					if (lyrics.indexOf('_') > -1) {
+						lyrics = lyrics.replace('_', toInsert);
+					} else {
+						lyrics += ' ' + toInsert;
+					}
 				} else {
-					lyrics += ' ' + toInsert;
+					lyrics = insertAt(lyrics, toInsert, chordPosition);
+
+					chordPosition +=
+						toInsert.length +
+						originalChordToken.length +
+						(chord.spacesAfter || 0) +
+						(chord.spacesWithin || 0);
 				}
 			});
 		});
 		lyrics = lyrics.replace(/_/g, '').trim();
-		lyrics += ' [|]';
-		//lyrics = insertAt(lyrics, '[|]', chordPosition);
+		if (chordPosition) {
+			lyrics = insertAt(lyrics, '[|]', chordPosition);
+		} else {
+			lyrics += ' [|]';
+		}
 	}
 	return lyrics.trim();
 }

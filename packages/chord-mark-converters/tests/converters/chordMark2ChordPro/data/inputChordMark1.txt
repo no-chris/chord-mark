@@ -10,6 +10,8 @@ D.. Bm.. F#m
 A lyric line _with missing position markers
 Em7.. Gm..
 A lyric line with no position markers
+Am7(#9)... B6/Gb.
+And another one: chords are aligned
 
 #b
 D Dm7 A7sus

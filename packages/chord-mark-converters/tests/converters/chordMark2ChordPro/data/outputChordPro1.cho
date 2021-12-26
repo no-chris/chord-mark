@@ -5,8 +5,8 @@ Blablabla...
 [|][D]A lyric line [Bm]with the exact [|][F#m]number of position markers [|]
 [|][Em7]A lyric line [|][A]with extra [A7]position markers [|]
 A lyric line [|][D]with missing position markers [Bm] [|][F#m] [|]
-| Em7   Gm   |
-A lyric line with no position markers
+[|][Em7]A lyric line with [Gm]no positio[|]n markers
+[|][Am7(add #9)...]And another one: chord[B6/F#.]s are [|]aligned
 {end_of_verse}
 
 {start_of_bridge: Bridge 1}
