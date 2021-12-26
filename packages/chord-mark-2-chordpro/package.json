@@ -1,6 +1,6 @@
 {
 	"name": "chord-mark-2-chordpro",
-	"version": "0.9.0",
+	"version": "0.10.0-beta.0",
 	"description": "ChordMark to ChordPro converter",
 	"private": false,
 	"main": "lib/chord-mark-2-chordpro.js",
