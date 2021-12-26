@@ -1,6 +1,6 @@
 {
 	"name": "chord-mark-converters",
-	"version": "0.10.0-beta.2",
+	"version": "0.10.0-beta.4",
 	"description": "Convert from and to ChordMark charts",
 	"author": "Christophe Noël <touffi51@gmail.com>",
 	"homepage": "https://github.com/no-chris/chord-mark/tree/main/packages/chord-mark-converters#readme",
