@@ -1,6 +1,6 @@
 import convert2ChordMark from './convert2ChordMark';
-import chordPro2ChordMark from './converters/chordPro2ChordMark';
+import chordMark2ChordPro from './converters/chordMark2ChordPro';
 
 export { convert2ChordMark };
 
-export { chordPro2ChordMark };
+export { chordMark2ChordPro };
