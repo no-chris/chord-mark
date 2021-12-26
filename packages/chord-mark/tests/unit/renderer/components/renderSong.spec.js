@@ -445,4 +445,33 @@ line1-2`;
 		const rendered = renderSongText(input, { customRenderer });
 		expect(rendered).toContain('custom rendered');
 	});
+
+	test('Should forward parameters to custom renderer', () => {
+		const customRenderer = jest.fn();
+		customRenderer.mockImplementation(() => 'custom rendered');
+
+		const input = `#v
+C G
+line1-1
+A D
+line1-2`;
+
+		// call 1
+		renderSongText(input, {
+			alignChordsWithLyrics: true,
+			customRenderer,
+		});
+		expect(customRenderer.mock.calls[0][1]).toStrictEqual({
+			alignChordsWithLyrics: true,
+		});
+
+		// call 2
+		renderSongText(input, {
+			alignChordsWithLyrics: false,
+			customRenderer,
+		});
+		expect(customRenderer.mock.calls[1][1]).toStrictEqual({
+			alignChordsWithLyrics: false,
+		});
+	});
 });
