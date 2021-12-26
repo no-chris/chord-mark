@@ -1,7 +1,7 @@
 import { lineTypes } from 'chord-mark';
 import trimArray from '../helpers/trimArray';
 
-const chordMark2ChordPro = (allLines) => {
+const chordMark2ChordPro = (allLines, { alignChordsWithLyrics = true }) => {
 	const chordProLines = [];
 	let chordLine;
 
@@ -13,10 +13,14 @@ const chordMark2ChordPro = (allLines) => {
 		section.allLines.forEach((line, j, allSectionLines) => {
 			switch (line.type) {
 				case lineTypes.CHORD:
-					if (!isFollowedByLyricLine(allSectionLines, j)) {
+					if (
+						!isFollowedByLyricLine(allSectionLines, j) ||
+						!alignChordsWithLyrics
+					) {
 						chordProLines.push(getChordLine(line));
+					} else {
+						chordLine = line;
 					}
-					chordLine = line;
 					break;
 				case lineTypes.LYRIC:
 					chordProLines.push(getLyricLine(line, chordLine));
