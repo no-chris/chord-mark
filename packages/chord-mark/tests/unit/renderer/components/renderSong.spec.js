@@ -459,19 +459,23 @@ line1-2`;
 		// call 1
 		renderSongText(input, {
 			alignChordsWithLyrics: true,
+			alignBars: true,
 			customRenderer,
 		});
 		expect(customRenderer.mock.calls[0][1]).toStrictEqual({
 			alignChordsWithLyrics: true,
+			alignBars: true,
 		});
 
 		// call 2
 		renderSongText(input, {
 			alignChordsWithLyrics: false,
+			alignBars: false,
 			customRenderer,
 		});
 		expect(customRenderer.mock.calls[1][1]).toStrictEqual({
 			alignChordsWithLyrics: false,
+			alignBars: false,
 		});
 	});
 });

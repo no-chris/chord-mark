@@ -32,28 +32,29 @@ describe('chordMark2Chordpro', () => {
 	});
 
 	describe.each([
-		// ===== xxxx =====
+		// ===== Chord/Lyrics (NON)alignment =====
 		[
 			'Should NOT align chords with lyrics if alignChordsWithLyrics === false',
 			`D7.. G7..
 _A very simple _lyric line`,
-			`[|][D7]A very[G7] simp[|]le lyric line`,
+			`[|]A [D7]very [G7]simple[|] lyric line`,
 			{ alignChordsWithLyrics: false },
+			// | D7   G7    |
+			// A very simple lyric line
 		],
+		/* */
 		[
 			'Should align bars across lines with non-positioned chords',
 			`Bb6... Cm7/Eb. Db6.. F9..
 A lyric line a bit more complex
 Bb6/D.. Bb7.. Eb6... Ebm6.
 With weird chords names and durations`,
-			`[|][Bb6...]A lyric line a [Cm7/Eb.]bit mor[|][Db6]e complex [F9]         [|]
-[|][Bb6/D]With weird[Bb7] chords name[|][Eb6...]s and duration[Ebm6.]s    [|]`,
-			/*
-			|Bb6...        Cm7/Eb.|Db6      F9       |
-			A lyric line a bit more complex
-			|Bb6/D    Bb7         |Eb6...       Ebm6.|
-			With weird chords names and durations
-			 */
+			`[|]A [Bb6...]lyric line a b[Cm7/Eb.]it more [|]co[Db6]mplex    [F9]          [|]
+[|]Wi[Bb6/D]th weird [Bb7]chords names [|]an[Eb6...]d durations  [Ebm6.]      [|]`,
+			// | Bb6...        Cm7/Eb. | Db6      F9        |
+			// A lyric line a bit more complex
+			// | Bb6/D    Bb7          | Eb6...       Ebm6. |
+			// With weird chords names and durations
 		],
 		[
 			'Should not align bars across lines with non-positioned chords if alignBars === false',
@@ -61,16 +62,15 @@ With weird chords names and durations`,
 A lyric line a bit more complex
 Bb6/D.. Bb7.. Eb6... Ebm6.
 With weird chords names and durations`,
-			`[|][Bb6...]A lyric l[Cm7/Eb.]ine a bit[|][Db6] more [F9]comp[|]lex
-[|][Bb6/D]With wei[Bb7]rd ch[|][Eb6...]ords name[Ebm6.]s and d[|]urations`,
-			/*
-			|Bb6...  Cm7/Eb.  |Db6  F9  |
-			A lyric line a bit more complex
-			|Bb6/D  Bb7  |Eb6...  Ebm6.  |
-			With weird chords names and durations
-			 */
+			`[|]A [Bb6...]lyric li[Cm7/Eb.]ne a bit [|]mo[Db6]re co[F9]mple[|]x
+[|]Wi[Bb6/D]th weir[Bb7]d cho[|]rd[Eb6...]s names [Ebm6.]and dur[|]ations`,
+			// | Bb6...  Cm7/Eb.  | Db6  F9  |
+			// A lyric line a bit more complex
+			// | Bb6/D  Bb7  | Eb6...  Ebm6.  |
+			// With weird chords names and durations
 			{ alignBars: false },
 		],
+		/* */
 	])('%s', (title, input, output, options = {}) => {
 		test('should produce expected ChordMark markup', () => {
 			const parsed = parseSong(input);

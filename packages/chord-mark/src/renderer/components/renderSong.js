@@ -76,7 +76,7 @@ export default function renderSong(
 	allLines.forEach(spaceChordLine);
 
 	if (customRenderer) {
-		return customRenderer(allLines, { alignChordsWithLyrics });
+		return customRenderer(allLines, { alignChordsWithLyrics, alignBars });
 	} else {
 		const song = renderAllLines().join('');
 		return songTpl({ song });
