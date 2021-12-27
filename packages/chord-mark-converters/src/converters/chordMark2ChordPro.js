@@ -1,5 +1,7 @@
 import { lineTypes } from 'chord-mark';
+
 import trimArray from '../helpers/trimArray';
+import insertAt from '../helpers/insertAt';
 
 const chordMark2ChordPro = (allLines, { alignChordsWithLyrics = true }) => {
 	const chordProLines = [];
@@ -13,17 +15,16 @@ const chordMark2ChordPro = (allLines, { alignChordsWithLyrics = true }) => {
 		section.allLines.forEach((line, j, allSectionLines) => {
 			switch (line.type) {
 				case lineTypes.CHORD:
-					if (
-						!isFollowedByLyricLine(allSectionLines, j) ||
-						!alignChordsWithLyrics
-					) {
+					if (!isFollowedByLyricLine(allSectionLines, j)) {
 						chordProLines.push(getChordLine(line));
 					} else {
 						chordLine = line;
 					}
 					break;
 				case lineTypes.LYRIC:
-					chordProLines.push(getLyricLine(line, chordLine));
+					chordProLines.push(
+						getLyricLine(line, chordLine, alignChordsWithLyrics)
+					);
 					chordLine = undefined;
 					break;
 				case lineTypes.EMPTY_LINE:
@@ -152,58 +153,78 @@ function getChordLine(line) {
 /**
  * @param {SongLyricLine} line
  * @param {SongChordLine} chordLine
+ * @param {Boolean} alignChordsWithLyrics
  */
-function getLyricLine(line, chordLine) {
-	let lyrics = line.string;
+function getLyricLine(line, chordLine, alignChordsWithLyrics) {
+	let lyrics = line.string.trim(); // fixme: keep trim()?
 
 	if (chordLine && chordLine.type === lineTypes.CHORD) {
-		let chordPosition = 0;
-
-		chordLine.model.allBars.map((bar) => {
-			bar.allChords.map((chord, i) => {
-				const symbol = bar.shouldPrintChordsDuration
-					? chord.symbol + '.'.repeat(chord.duration)
-					: chord.symbol;
-				let originalChordToken = symbol;
-				let toInsert = '';
-				if (i === 0) {
-					toInsert += '[|]';
-					originalChordToken += '|';
-				}
-
-				toInsert += `[${symbol}]`;
-
-				if (chordLine.model.hasPositionedChords) {
-					if (lyrics.indexOf('_') > -1) {
-						lyrics = lyrics.replace('_', toInsert);
-					} else {
-						lyrics += ' ' + toInsert;
-					}
-				} else {
-					lyrics = insertAt(lyrics, toInsert, chordPosition);
-
-					chordPosition +=
-						toInsert.length +
-						originalChordToken.length +
-						(chord.spacesAfter || 0) +
-						(chord.spacesWithin || 0);
-				}
-			});
-		});
-		lyrics = lyrics.replace(/_/g, '').trim();
-		if (chordPosition) {
-			lyrics = insertAt(lyrics, '[|]', chordPosition);
+		if (chordLine.model.hasPositionedChords && alignChordsWithLyrics) {
+			lyrics = getLyricLineWithPositionedChords(lyrics, chordLine);
 		} else {
-			lyrics += ' [|]';
+			lyrics = getLyricLineWithNonPositionedChords(lyrics, chordLine);
 		}
 	}
-	return lyrics.trim();
+	return lyrics;
 }
 
-const insertAt = (insertInto, toInsert, at) => {
-	return at > insertInto.length
-		? insertInto + ' ' + toInsert
-		: insertInto.slice(0, at) + toInsert + insertInto.slice(at);
+const getLyricLineWithPositionedChords = (srcLyrics, chordLine) => {
+	let lyrics = srcLyrics;
+
+	chordLine.model.allBars.map((bar) => {
+		bar.allChords.map((chord, i) => {
+			const [chordProString] = getChordString(bar, i);
+
+			if (lyrics.indexOf('_') > -1) {
+				lyrics = lyrics.replace('_', chordProString);
+			} else {
+				lyrics += ' ' + chordProString;
+			}
+		});
+	});
+	lyrics = lyrics.replace(/_/g, '').trim();
+	lyrics += ' [|]';
+	return lyrics;
+};
+
+const getLyricLineWithNonPositionedChords = (srcLyrics, chordLine) => {
+	let lyrics = srcLyrics.replace(/_/g, '');
+	let chordOffset = 0;
+
+	chordLine.model.allBars.map((bar) => {
+		bar.allChords.map((chord, i) => {
+			const [chordProString, rawChordString] = getChordString(bar, i);
+
+			lyrics = insertAt(lyrics, chordProString, chordOffset);
+
+			chordOffset +=
+				chordProString.length +
+				rawChordString.length +
+				(chord.spacesAfter || 0) +
+				(chord.spacesWithin || 0);
+		});
+	});
+	lyrics = insertAt(lyrics, '[|]', chordOffset);
+	return lyrics;
+};
+
+const getChordString = (bar, chordIndex) => {
+	const chord = bar.allChords[chordIndex];
+	const symbol = bar.shouldPrintChordsDuration
+		? chord.symbol + '.'.repeat(chord.duration)
+		: chord.symbol;
+
+	let chordProString = '';
+	let rawChordString = '';
+
+	if (chordIndex === 0) {
+		chordProString += '[|]';
+		rawChordString += '|';
+	}
+	chordProString += `[${symbol}]`;
+	rawChordString += symbol;
+
+	return [chordProString, rawChordString];
 };
 
 export default chordMark2ChordPro;
