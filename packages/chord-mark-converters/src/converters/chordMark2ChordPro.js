@@ -3,7 +3,27 @@ import { lineTypes } from '../../../chord-mark/src/chordMark';
 import trimArray from '../helpers/trimArray';
 import insertAt from '../helpers/insertAt';
 
-const chordMark2ChordPro = (
+/**
+ * TODO:
+ * - remove pandoc on parsing
+ * - use insertAt (with Min(length, at) as argument?) in convert2ChordPro
+ * - space bar separators in alignedChordWithLyrics rendering
+ * - support grids and comments for sections with chords only
+ * - fix auto detection
+ */
+
+/**
+ *
+ * @param {Object} options
+ * @param {Boolean} options.keepWhatever
+ * @returns {any}
+ */
+const chordMark2ChordPro = (options = {}) => {
+	return convert2ChordPro.bind(null, options);
+};
+
+const convert2ChordPro = (
+	{ showBarSeparators = true, useGrid = false } = {},
 	allLines,
 	{ alignBars = true, alignChordsWithLyrics = true }
 ) => {
@@ -183,13 +203,22 @@ const getLyricLineWithPositionedChords = (srcLyrics, chordLine) => {
 	let lyrics = srcLyrics;
 
 	chordLine.model.allBars.map((bar) => {
-		bar.allChords.map((chord) => {
-			const [chordProSymbol] = getChordSymbol(bar, chord);
+		bar.allChords.map((chord, i) => {
+			let [chordProSymbol] = getChordSymbol(bar, chord);
+
+			if (i === 0) {
+				const nextPositionMarker = lyrics.indexOf('_');
+				if (nextPositionMarker > -1) {
+					lyrics = insertAt(lyrics, '[|] ', nextPositionMarker);
+				} else {
+					lyrics = insertAt(lyrics, '[|]', lyrics.length + 1);
+				}
+			}
 
 			if (lyrics.indexOf('_') > -1) {
 				lyrics = lyrics.replace('_', chordProSymbol);
 			} else {
-				lyrics += ' ' + chordProSymbol;
+				lyrics = insertAt(lyrics, chordProSymbol, lyrics.length + 1);
 			}
 		});
 	});
@@ -218,7 +247,7 @@ const getLyricLineWithNonPositionedChords = (
 			lyrics = insertAt(lyrics, chordProSymbol, chordOffset);
 
 			const extraSpaceOnLastChord =
-				alignBars && !bar.allChords[i + 1] ? 1 : 0;
+				alignBars && !bar.allChords[i + 1] ? 1 : 0; //todo only if no spaces after?
 
 			chordOffset +=
 				chordProSymbol.length +
