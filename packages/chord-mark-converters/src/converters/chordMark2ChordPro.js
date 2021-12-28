@@ -10,6 +10,7 @@ import insertAt from '../helpers/insertAt';
  * - space bar separators in alignedChordWithLyrics rendering
  * - support grids and comments for sections with chords only
  * - fix auto detection
+ * - when parsing, {start_of_verse: Verse 1} => #Verse 1
  */
 
 /**
