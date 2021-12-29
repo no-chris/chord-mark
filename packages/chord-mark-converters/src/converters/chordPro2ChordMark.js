@@ -227,9 +227,10 @@ const getSectionLabel = (lineModel) => {
 	let label;
 
 	if (lineModel.value) {
+		const labelWithoutIndex = lineModel.value.replace(/[1-9]$/, '').trim();
 		label =
-			directivesToSectionLabel[lineModel.value.toLowerCase()] ||
-			lineModel.value;
+			directivesToSectionLabel[labelWithoutIndex.toLowerCase()] ||
+			labelWithoutIndex;
 	} else {
 		label = directivesToSectionLabel[lineModel.key];
 	}

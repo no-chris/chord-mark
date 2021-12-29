@@ -106,6 +106,13 @@ Another lonely verse`,
 			`{sov: My invalid sectionLabel}\nVerse\n{eov}`,
 			`#My invalid sectionLabel\nVerse`,
 		],
+		['Remove index', `{sov: Verse 1}\nVerse\n{eov}`, `#v\nVerse`],
+		['Remove index, no space', `{sov: Verse1}\nVerse\n{eov}`, `#v\nVerse`],
+		[
+			'Remove only the last digit if index >10',
+			`{sov: Verse 12}\nVerse\n{eov}`,
+			`#Verse 1\nVerse`,
+		],
 
 		// ===== Section repeat directives =====
 		['chorus repeats', `{chorus}`, `#c`],

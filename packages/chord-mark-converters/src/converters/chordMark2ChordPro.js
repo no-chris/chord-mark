@@ -9,9 +9,9 @@ import insertAt from '../helpers/insertAt';
  * + space bar separators in alignedChordWithLyrics rendering
  * + change API to support tab input instead of string
  * + use insertAt (with Min(length, at) as argument?) in convert2ChordPro
+ * + when parsing, {start_of_verse: Verse 1} => #Verse 1
  * - remove pandoc on parsing
  * - support grids and comments for sections with chords only
- * - when parsing, {start_of_verse: Verse 1} => #Verse 1
  * - remove converters unit tests from CCS
  * - remove chordsheetjs from CCS
  */
