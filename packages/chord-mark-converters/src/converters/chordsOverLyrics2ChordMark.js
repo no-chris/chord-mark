@@ -1,5 +1,6 @@
 import { isChordLine, chordLineRe } from '../helpers/chordMatchers';
 import getSpaceLength from '../helpers/getSpaceLength';
+import insertAt from '../helpers/insertAt';
 
 const chordsOverLyrics2ChordMark = (allLines) => {
 	const cmOutput = [];
@@ -101,17 +102,12 @@ const getLineWithPositionMarkers = (line, chordPositions) => {
 	let markersLength = 0;
 
 	chordPositions.forEach((position) => {
-		withMarkers = insertAt(withMarkers, marker, position + markersLength);
+		const at = Math.min(position + markersLength, withMarkers.length + 1);
+		withMarkers = insertAt(withMarkers, marker, at);
 		markersLength += marker.length;
 	});
 
 	return withMarkers;
-};
-
-const insertAt = (insertInto, toInsert, at) => {
-	return at > insertInto.length
-		? insertInto + ' ' + toInsert
-		: insertInto.slice(0, at) + toInsert + insertInto.slice(at);
 };
 
 export default chordsOverLyrics2ChordMark;
