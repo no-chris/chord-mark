@@ -11,6 +11,8 @@ import insertAt from '../helpers/insertAt';
  * - support grids and comments for sections with chords only
  * - fix auto detection
  * - when parsing, {start_of_verse: Verse 1} => #Verse 1
+ * - remove converters unit tests from CCS
+ * - remove chordsheetjs from CCS
  */
 
 /**
