@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
+import convert2ChordMark from '../../../src/convert2ChordMark';
 import chordsOverLyrics2ChordMark from '../../../src/converters/chordsOverLyrics2ChordMark';
 
 const dataDir = path.resolve(__dirname + '/data');
@@ -27,7 +28,9 @@ describe('chordsOverLyrics2ChordMark', () => {
 		['Sample song from ultimate-guitar.com', inputUG1, outputUG1],
 	])('%s', (title, input, output) => {
 		test('should produce expected ChordMark markup', () => {
-			const converted = chordsOverLyrics2ChordMark(input);
+			const converted = convert2ChordMark(input, {
+				inputFormat: 'chordsOverLyrics',
+			});
 			expect(converted).toBe(output);
 		});
 	});
@@ -214,7 +217,9 @@ Bridge]`,
 		],
 	])('%s', (title, input, output) => {
 		test('should produce expected ChordMark markup', () => {
-			const converted = chordsOverLyrics2ChordMark(input);
+			const converted = convert2ChordMark(input, {
+				inputFormat: 'chordsOverLyrics',
+			});
 			expect(converted).toBe(output);
 		});
 	});

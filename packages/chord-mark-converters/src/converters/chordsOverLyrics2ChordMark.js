@@ -1,35 +1,28 @@
 import { isChordLine, chordLineRe } from '../helpers/chordMatchers';
 import getSpaceLength from '../helpers/getSpaceLength';
 
-const chordsOverLyrics2ChordMark = (input) => {
+const chordsOverLyrics2ChordMark = (allLines) => {
 	const cmOutput = [];
 	let chordPositions = [];
 
-	input
-		.split('\n')
-		.map(cleanUp)
-		.forEach((line) => {
-			if (isChordLine(line)) {
-				cmOutput.push(getAllChordsInLine(line));
-				chordPositions = getChordsPositions(line);
+	allLines.forEach((line) => {
+		if (isChordLine(line)) {
+			cmOutput.push(getAllChordsInLine(line));
+			chordPositions = getChordsPositions(line);
+		} else {
+			if (isSectionLabel(line)) {
+				cmOutput.push(getSectionLabel(line));
+			} else if (chordPositions.length && line.trim() !== '') {
+				cmOutput.push(getLineWithPositionMarkers(line, chordPositions));
 			} else {
-				if (isSectionLabel(line)) {
-					cmOutput.push(getSectionLabel(line));
-				} else if (chordPositions.length && line.trim() !== '') {
-					cmOutput.push(
-						getLineWithPositionMarkers(line, chordPositions)
-					);
-				} else {
-					cmOutput.push(line);
-				}
-				chordPositions = [];
+				cmOutput.push(line);
 			}
-		});
+			chordPositions = [];
+		}
+	});
 
 	return cmOutput.join('\n');
 };
-
-const cleanUp = (line) => line.replace(/\[\/?ch]/g, '');
 
 const sectionLabelRe = /^\[([^\]]+)]$/;
 

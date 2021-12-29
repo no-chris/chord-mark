@@ -8,6 +8,12 @@ const allInputFormats = {
 	COL: 'chordsOverLyrics',
 };
 
+/**
+ *
+ * @param {String} input
+ * @param {('chordPro'|'chordsOverLyrics')} inputFormat
+ * @returns {String}
+ */
 const convert2ChordMark = (
 	input,
 	{ inputFormat = allInputFormats.AUTO } = {}
@@ -32,7 +38,7 @@ const convert2ChordMark = (
 			converter = chordsOverLyrics2ChordMark;
 			break;
 	}
-	return converter(allLines.join('\n'));
+	return converter(allLines);
 };
 
 const checkInputFormat = (inputFormat) => {

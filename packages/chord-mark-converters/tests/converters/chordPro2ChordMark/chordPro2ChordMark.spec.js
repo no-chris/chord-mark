@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
+import convert2ChordMark from '../../../src/convert2ChordMark';
 import chordPro2ChordMark from '../../../src/converters/chordPro2ChordMark';
 
 const dataDir = path.resolve(__dirname + '/data');
@@ -18,7 +19,9 @@ describe('chordPro2ChordMark', () => {
 		'%s',
 		(title, input, output) => {
 			test('should produce expected ChordMark markup', () => {
-				const converted = chordPro2ChordMark(input);
+				const converted = convert2ChordMark(input, {
+					inputFormat: 'chordPro',
+				});
 				expect(converted).toBe(output);
 			});
 		}
@@ -220,7 +223,9 @@ Chorus`,
 		],
 	])('%s', (title, input, output) => {
 		test('should produce expected ChordMark markup', () => {
-			const converted = chordPro2ChordMark(input);
+			const converted = convert2ChordMark(input, {
+				inputFormat: 'chordPro',
+			});
 			expect(converted).toBe(output);
 		});
 	});

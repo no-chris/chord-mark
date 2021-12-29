@@ -69,15 +69,14 @@ const directivesToSectionLabel = {
 	comment_bold: 'c',
 };
 
-const chordPro2ChordMark = (chordProInput) => {
+const chordPro2ChordMark = (allLines) => {
 	const cmOutput = [];
 
-	const srcLines = chordProInput
-		.split('\n')
+	const allLinesModel = allLines
 		.map((line) => getLineModel(line))
 		.filter((lineModel) => isSupportedLine(lineModel));
 
-	const allSections = getAllSections(srcLines);
+	const allSections = getAllSections(allLinesModel);
 
 	allSections.forEach((section, i) => {
 		cmOutput.push('#' + section.label);
