@@ -1,7 +1,7 @@
 import { chordParserFactory } from 'chord-symbol';
 
 const chordLineRe = /([^\s]+)/g;
-const chordLyricsRe = /\[([^\]]*)]/g;
+const chordsLyricsRe = /\[([^\]]*)]/g;
 
 const isChordLine = (line) => {
 	const allChords = line.trim().match(chordLineRe);
@@ -11,8 +11,8 @@ const isChordLine = (line) => {
 	return false;
 };
 
-const isChordLyricsLine = (line) => {
-	const allChords = line.trim().match(chordLyricsRe);
+const isChordsLyricsLine = (line) => {
+	const allChords = line.trim().match(chordsLyricsRe);
 	if (allChords) {
 		return allChords
 			.map((potentialChord) => potentialChord.replace(/[[\]]/g, ''))
@@ -26,4 +26,4 @@ function isChord(potentialChord) {
 	return !parsed.error;
 }
 
-export { chordLineRe, chordLyricsRe, isChordLine, isChordLyricsLine };
+export { chordLineRe, chordsLyricsRe, isChordLine, isChordsLyricsLine };

@@ -1,4 +1,4 @@
-import { chordParserFactory } from 'chord-symbol';
+import { isChordLine, chordLineRe } from '../helpers/chordMatchers';
 import getSpaceLength from '../helpers/getSpaceLength';
 
 const chordsOverLyrics2ChordMark = (input) => {
@@ -62,23 +62,8 @@ const getSectionLabel = (line) => {
 	return '#' + finalLabel;
 };
 
-const isChordLine = (line) => {
-	return clearSpaces(line)
-		.split(' ')
-		.every((potentialChordToken) => isChord(potentialChordToken));
-};
-
-function clearSpaces(string) {
-	return (string.match(/([^\s]+)/g) || []).join(' ');
-}
-
-function isChord(potentialChord) {
-	const parsed = chordParserFactory()(potentialChord);
-	return !parsed.error;
-}
-
 function getAllChordsInLine(line) {
-	return clearSpaces(line);
+	return line.match(chordLineRe).join(' ');
 }
 
 function getChordsPositions(line) {

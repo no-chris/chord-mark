@@ -1,20 +1,20 @@
 import {
 	isChordLine,
-	isChordLyricsLine,
+	isChordsLyricsLine,
 	chordLineRe,
-	chordLyricsRe,
+	chordsLyricsRe,
 } from '../../src/helpers/chordMatchers';
 
 describe('chordMatchers', () => {
 	test('Module', () => {
 		expect(isChordLine).toBeInstanceOf(Function);
-		expect(isChordLyricsLine).toBeInstanceOf(Function);
+		expect(isChordsLyricsLine).toBeInstanceOf(Function);
 		expect(chordLineRe).toBeInstanceOf(RegExp);
-		expect(chordLyricsRe).toBeInstanceOf(RegExp);
+		expect(chordsLyricsRe).toBeInstanceOf(RegExp);
 	});
 });
 
-describe('isChordLyricsLine', () => {
+describe('isChordsLyricsLine', () => {
 	describe.each([
 		// valid chordLyrics lines
 		['Chords mixed with lyrics', 'Lyrics [A]with [D7]chords', true],
@@ -33,8 +33,8 @@ describe('isChordLyricsLine', () => {
 		['Empty line, spaces', '   ', false],
 		['Empty line, tabs', '\t\t', false],
 	])('%s', (title, input, expected) => {
-		test('should correctly detect ChordLyric line', () => {
-			expect(isChordLyricsLine(input)).toBe(expected);
+		test('should correctly detect ChordsLyrics line', () => {
+			expect(isChordsLyricsLine(input)).toBe(expected);
 		});
 	});
 });

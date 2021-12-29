@@ -1,3 +1,4 @@
+import { isChordsLyricsLine, chordsLyricsRe } from '../helpers/chordMatchers';
 import trimArray from '../helpers/trimArray';
 
 const lineTypes = {
@@ -112,7 +113,7 @@ const getLineModel = (line) => {
 		} else {
 			lineModel.type = lineTypes.DIRECTIVE;
 		}
-	} else if (isChordsLyrics(line)) {
+	} else if (isChordsLyricsLine(line)) {
 		lineModel.type = lineTypes.CHORDS_LYRICS;
 		const [chords, lyrics] = getChordsLyrics(line);
 		lineModel.chords = chords;
@@ -146,13 +147,6 @@ const getDirectiveKV = (directive) => {
 	const key = found[1].trim();
 	const value = found[2] ? found[2].trim() : undefined;
 	return [key, value];
-};
-
-const chordsLyricsRe = /\[([^\]]*)]/g;
-
-const isChordsLyrics = (line) => {
-	const found = line.trim().match(chordsLyricsRe);
-	return found !== null;
 };
 
 const getChordsLyrics = (chordsLyrics) => {
