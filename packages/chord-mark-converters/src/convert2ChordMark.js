@@ -1,3 +1,4 @@
+import { isChordLine, isChordsLyricsLine } from './helpers/chordMatchers';
 import chordPro2ChordMark from './converters/chordPro2ChordMark';
 import chordsOverLyrics2ChordMark from './converters/chordsOverLyrics2ChordMark';
 
@@ -13,11 +14,11 @@ const convert2ChordMark = (
 ) => {
 	checkInputFormat(inputFormat);
 
-	const inputTab = getInputTab(input);
+	const allLines = getAllLines(input);
 
 	let finalInputFormat = inputFormat;
 	if (inputFormat === allInputFormats.AUTO) {
-		finalInputFormat = hasBracketedChords(inputTab)
+		finalInputFormat = looksLikeChordPro(allLines)
 			? allInputFormats.CP
 			: allInputFormats.COL;
 	}
@@ -31,7 +32,7 @@ const convert2ChordMark = (
 			converter = chordsOverLyrics2ChordMark;
 			break;
 	}
-	return converter(inputTab.join('\n'));
+	return converter(allLines.join('\n'));
 };
 
 const checkInputFormat = (inputFormat) => {
@@ -40,18 +41,18 @@ const checkInputFormat = (inputFormat) => {
 	}
 };
 
-const getInputTab = (inputRaw) => {
+const getAllLines = (inputRaw) => {
 	return inputRaw
 		.replace(/\r\n/g, '\n')
-		.replace(/\[\/?ch]/g, '') //
-		.replace(/\[\/?tab]/g, '')
+		.replace(/\[\/?ch]/g, '') // ultimate guitar markup
+		.replace(/\[\/?tab]/g, '') // ultimate guitar markup
 		.split('\n');
 };
 
-const hasBracketedChords = (input) => {
-	const bracketedChordsRe = /\[([^\]]*)]/g;
-
-	return input.some((line) => !!line.match(bracketedChordsRe));
+const looksLikeChordPro = (allLines) => {
+	const chordsLyricsLines = allLines.filter(isChordsLyricsLine);
+	const chordLines = allLines.filter(isChordLine);
+	return chordsLyricsLines.length > chordLines.length;
 };
 
 export default convert2ChordMark;

@@ -9,10 +9,12 @@ A B
 _Some _lyrics`;
 
 const chordsOverLyricsInput = `MySong
+[Verse]
 A    B
 Some lyrics`;
 
 const chordsOverLyricsOutput = `MySong
+#v
 A B
 _Some _lyrics`;
 
