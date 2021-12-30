@@ -17,7 +17,7 @@ describe('Module', () => {
 });
 
 describe('chordMark2Chordpro', () => {
-	describe.skip.each([
+	describe.each([
 		['base test', input1, output1],
 		['no position markers', input2, output2],
 	])('%s', (title, input, output, options) => {

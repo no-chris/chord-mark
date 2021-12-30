@@ -5,7 +5,6 @@ const lineTypes = {
 	EMPTY: 'empty',
 	DIRECTIVE: 'directive',
 	COMMENT: 'comment',
-	CHORDS: 'chords',
 	LYRICS: 'lyrics',
 	CHORDS_LYRICS: 'chordsLyrics',
 	SECTION_START: 'sectionStart',
