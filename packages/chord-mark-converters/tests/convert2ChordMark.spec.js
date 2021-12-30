@@ -23,7 +23,7 @@ describe('convert2ChordMark', () => {
 		expect(typeof convert2ChordMark).toBe('function');
 	});
 
-	test('Should throw in given invalid inputFormat', () => {
+	test('Should throw when given invalid inputFormat', () => {
 		const shouldThrow = () => {
 			convert2ChordMark('', { inputFormat: 'something' });
 		};
@@ -84,5 +84,34 @@ describe('ChordsOverLyrics input', () => {
 				inputFormat: 'chordPro',
 			})
 		).toBe('#v\n' + chordsOverLyricsInput);
+	});
+});
+
+describe.each([
+	[
+		'removes html',
+		'<p><b>Some text <span>with html markup</span></b> to remove</p>',
+		'Some text with html markup to remove',
+	],
+	['replace \\r\\n', 'a line\r\nand another one', 'a line\nand another one'],
+	['replace \\n\\r', 'a line\n\rand another one', 'a line\nand another one'],
+	[
+		'replace \\r',
+		'line 1\n\rline 2\r\nline 3\rline 4',
+		'line 1\nline 2\nline 3\nline 4',
+	],
+	[
+		'removes specific ultimate guitar [ch] tag',
+		'[ch]A[/ch]    [ch]D7[/ch]\nSome lyrics',
+		'A D7\n_Some _lyrics',
+	],
+	[
+		'removes specific ultimate guitar [tab] tag',
+		'[tab]Not sure what it is used for[/tab]',
+		'Not sure what it is used for',
+	],
+])('Input cleanup: %s', (title, input, expected) => {
+	test('should produces expected output', () => {
+		expect(convert2ChordMark(input)).toBe(expected);
 	});
 });

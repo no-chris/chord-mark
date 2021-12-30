@@ -26,6 +26,7 @@
 		"url": "https://github.com/no-chris/chord-mark/issues"
 	},
 	"dependencies": {
-		"chord-symbol": "^2.1.0"
+		"chord-symbol": "^2.1.0",
+		"dompurify": "^2.3.4"
 	}
 }

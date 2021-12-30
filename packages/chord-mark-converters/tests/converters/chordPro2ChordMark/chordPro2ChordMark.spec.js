@@ -149,6 +149,38 @@ Another lonely verse`,
 		['no key', `{:mySection}`, `#v\n{:mySection}`],
 		['no value', `{myKey:}`, ``],
 
+		// ===== Pango markup =====
+		[
+			'Removes Pango markup',
+			`[C]Roses are <span color="red">red</span>, [G]<b>don't forget!</b>`,
+			`#v\nC G\n_Roses are red, _don't forget!`,
+		],
+		[
+			'Removes all Pango tags, including html-obsolete ones',
+			`<big>big</big>
+<b>bold</b>
+<i>italic</i>
+<s>strikethrough</s>
+<sub>sub</sub>
+<sup>sup</sup>
+<small>small</small>
+<span>span</span>
+<tt>mono</tt>
+<u>underlined</u>
+`,
+			`#v
+big
+bold
+italic
+strikethrough
+sub
+sup
+small
+span
+mono
+underlined`,
+		],
+
 		// ===== Comment lines =====
 		['should remove comment', `# to-be-removed comment`, ``],
 		[

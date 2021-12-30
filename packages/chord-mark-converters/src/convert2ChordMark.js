@@ -1,3 +1,4 @@
+import stripTags from './core/stripTags';
 import { isChordLine, isChordsLyricsLine } from './helpers/chordMatchers';
 import chordPro2ChordMark from './converters/chordPro2ChordMark';
 import chordsOverLyrics2ChordMark from './converters/chordsOverLyrics2ChordMark';
@@ -48,8 +49,10 @@ const checkInputFormat = (inputFormat) => {
 };
 
 const getAllLines = (inputRaw) => {
-	return inputRaw
+	return stripTags(inputRaw)
 		.replace(/\r\n/g, '\n')
+		.replace(/\n\r/g, '\n')
+		.replace(/\r/g, '\n')
 		.replace(/\[\/?ch]/g, '') // ultimate guitar markup
 		.replace(/\[\/?tab]/g, '') // ultimate guitar markup
 		.split('\n');
