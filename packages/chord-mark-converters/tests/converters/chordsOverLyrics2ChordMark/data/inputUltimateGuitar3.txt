@@ -1,0 +1,34 @@
+Sections title test
+
+[Intro]
+
+[Verse1]
+verse line
+
+[Chorus 1]
+
+[Adlib]
+
+[Ad-lib]
+
+[Bridge]
+
+[Interlude]
+
+[Intro]
+
+[Introduction]
+
+[Outro]
+
+[pre-chorus]
+
+[prechorus]
+
+[Solo]
+
+[Solo 2]
+
+[Instrumental]
+
+[Three words title]

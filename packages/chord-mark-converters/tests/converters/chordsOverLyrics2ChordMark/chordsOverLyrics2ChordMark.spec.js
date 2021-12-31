@@ -10,9 +10,25 @@ const inputUG1 = fs.readFileSync(
 	dataDir + '/inputUltimateGuitar1.txt',
 	'utf-8'
 );
+const inputUG2 = fs.readFileSync(
+	dataDir + '/inputUltimateGuitar2.txt',
+	'utf-8'
+);
+const inputUG3 = fs.readFileSync(
+	dataDir + '/inputUltimateGuitar3.txt',
+	'utf-8'
+);
 const outputGT1 = fs.readFileSync(dataDir + '/outputGuitarTabs1.txt', 'utf-8');
 const outputUG1 = fs.readFileSync(
 	dataDir + '/outputUltimateGuitar1.txt',
+	'utf-8'
+);
+const outputUG2 = fs.readFileSync(
+	dataDir + '/outputUltimateGuitar2.txt',
+	'utf-8'
+);
+const outputUG3 = fs.readFileSync(
+	dataDir + '/outputUltimateGuitar3.txt',
 	'utf-8'
 );
 
@@ -25,7 +41,9 @@ describe('Module', () => {
 describe('chordsOverLyrics2ChordMark', () => {
 	describe.each([
 		['Sample song from guitartabs.cc', inputGT1, outputGT1],
-		['Sample song from ultimate-guitar.com', inputUG1, outputUG1],
+		['Sample song 1 from ultimate-guitar.com', inputUG1, outputUG1],
+		['Sample song 2 from ultimate-guitar.com', inputUG2, outputUG2],
+		['Sample song 3 from ultimate-guitar.com', inputUG3, outputUG3],
 	])('%s', (title, input, output) => {
 		test('should produce expected ChordMark markup', () => {
 			const converted = convert2ChordMark(input, {
@@ -83,7 +101,7 @@ A B C D E F G A B
 _He_y _ _ _ _ _ _ _`,
 		],
 
-		// ===== Chords lines spaces
+		// ===== Chords and lyrics lines spaces
 		[
 			'chord line starting and ending with spaces',
 			`
@@ -110,6 +128,15 @@ Some lyrics`,
 			`
 A
 _Some lyrics`,
+		],
+		[
+			'lyric line with spaces',
+			`
+A     Bm         D7       Gm
+Some      lyrics \t well   \t  spaced`,
+			`
+A Bm D7 Gm
+_Some _ lyrics _ well _ spaced`,
 		],
 
 		// ===== Multiple chords lines
@@ -147,6 +174,7 @@ _Som_e l_yri_cs`,
 			'Recognize all section labels shortcuts',
 			`
 [AdLib]
+[Ad-Lib]
 [Ad.Lib.]
 [Bridge]
 [Chorus]
@@ -160,6 +188,7 @@ _Som_e l_yri_cs`,
 [Interlude]
 [Verse]`,
 			`
+#a
 #a
 #a
 #b
@@ -186,6 +215,19 @@ _Som_e l_yri_cs`,
 #SomethingElse
 #Something Else
 #Thing x2`,
+		],
+		[
+			'Section labels with index',
+			`
+[Verse 1]
+[Chorus 3]
+[Bridge 2]
+[Verse 15]`,
+			`
+#v
+#c
+#b
+#v`,
 		],
 		[
 			'Padded section label',

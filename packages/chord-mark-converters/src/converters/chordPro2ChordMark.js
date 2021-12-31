@@ -1,5 +1,6 @@
 import { isChordsLyricsLine, chordsLyricsRe } from '../helpers/chordMatchers';
 import trimArray from '../helpers/trimArray';
+import getSectionLabel from '../helpers/getSectionLabel';
 
 const lineTypes = {
 	EMPTY: 'empty',
@@ -78,7 +79,7 @@ const chordPro2ChordMark = (allLines) => {
 	const allSections = getAllSections(allLinesModel);
 
 	allSections.forEach((section, i) => {
-		cmOutput.push('#' + section.label);
+		cmOutput.push(section.label);
 		section.allLines.forEach((line) => {
 			cmOutput.push(line);
 		});
@@ -176,7 +177,7 @@ const getAllSections = (allLines) => {
 
 	const initCurrentSection = (line) => {
 		currentSection = {
-			label: line ? getSectionLabel(line) : 'v',
+			label: line ? extractSectionLabel(line) : '#v',
 			allLines: [],
 		};
 	};
@@ -216,24 +217,15 @@ const getAllSections = (allLines) => {
 	});
 };
 
-const getSectionLabel = (lineModel) => {
-	const labelToShortLabel = {
-		chorus: 'c',
-		verse: 'v',
-		bridge: 'b',
-	};
-
+const extractSectionLabel = (lineModel) => {
 	let label;
 
 	if (lineModel.value) {
-		const labelWithoutIndex = lineModel.value.replace(/[1-9]$/, '').trim();
-		label =
-			directivesToSectionLabel[labelWithoutIndex.toLowerCase()] ||
-			labelWithoutIndex;
+		label = getSectionLabel(lineModel.value);
 	} else {
-		label = directivesToSectionLabel[lineModel.key];
+		label = '#' + directivesToSectionLabel[lineModel.key];
 	}
-	return labelToShortLabel[label] || label;
+	return label;
 };
 
 export default chordPro2ChordMark;

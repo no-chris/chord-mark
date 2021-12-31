@@ -1,6 +1,7 @@
 import { isChordLine, chordLineRe } from '../helpers/chordMatchers';
 import getSpaceLength from '../helpers/getSpaceLength';
 import insertAt from '../helpers/insertAt';
+import getSectionLabel from '../helpers/getSectionLabel';
 
 const chordsOverLyrics2ChordMark = (allLines) => {
 	const cmOutput = [];
@@ -12,7 +13,7 @@ const chordsOverLyrics2ChordMark = (allLines) => {
 			chordPositions = getChordsPositions(line);
 		} else {
 			if (isSectionLabel(line)) {
-				cmOutput.push(getSectionLabel(line));
+				cmOutput.push(extractSectionLabel(line));
 			} else if (chordPositions.length && line.trim() !== '') {
 				cmOutput.push(getLineWithPositionMarkers(line, chordPositions));
 			} else {
@@ -32,28 +33,9 @@ const isSectionLabel = (line) => {
 	return found !== null && found[1].trim() !== '';
 };
 
-const getSectionLabel = (line) => {
-	const mapping = {
-		adlib: 'a',
-		['ad.lib.']: 'a',
-		bridge: 'b',
-		chorus: 'c',
-		intro: 'i',
-		introduction: 'i',
-		outro: 'o',
-		prechorus: 'p',
-		['pre-chorus']: 'p',
-		['pre chorus']: 'p',
-		solo: 's',
-		interlude: 'u',
-		verse: 'v',
-	};
-	const originalLabel = line.trim().match(sectionLabelRe)[1].trim();
-	const shortcutKey = originalLabel.toLowerCase();
-	const finalLabel = mapping[shortcutKey]
-		? mapping[shortcutKey]
-		: originalLabel;
-	return '#' + finalLabel;
+const extractSectionLabel = (line) => {
+	const rawLabel = line.trim().match(sectionLabelRe)[1];
+	return getSectionLabel(rawLabel);
 };
 
 function getAllChordsInLine(line) {
@@ -107,7 +89,7 @@ const getLineWithPositionMarkers = (line, chordPositions) => {
 		markersLength += marker.length;
 	});
 
-	return withMarkers;
+	return withMarkers.replace(/[\s]+/g, ' ').trim();
 };
 
 export default chordsOverLyrics2ChordMark;
