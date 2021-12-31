@@ -105,13 +105,43 @@ _With weird _chords na_mes and du_rations`,
 			// With weird chords names and durations
 			{ alignChordsWithLyrics: false, alignBars: false },
 		],
+
+		// ===== barSeparators =====
+		[
+			'showBarSeparators = false: with aligned chord lines',
+			`A7 D7
+_A lyric _line`,
+			`[A7]A lyric [D7]line`,
+			{ showBarSeparators: false },
+		],
+		[
+			'showBarSeparators = false: with non-aligned chord lines',
+			`A7 D7
+_A not so long lyric _line`,
+			`[A7]A not so[D7] long lyric line`,
+			{ showBarSeparators: false, alignChordsWithLyrics: false },
+		],
+		[
+			'showBarSeparators = false: with non-aligned bars & chord lines',
+			`A7 D7
+_A not so long lyric _line`,
+			`[A7]A no[D7]t so long lyric line`,
+			{
+				showBarSeparators: false,
+				alignChordsWithLyrics: false,
+				alignBars: false,
+			},
+		],
 		/* */
 	])('%s', (title, input, output, options = {}) => {
 		test('should produce expected ChordMark markup', () => {
 			const parsed = parseSong(input);
 			const rendered = renderSong(parsed, {
-				customRenderer: chordMark2ChordPro(),
-				...options,
+				customRenderer: chordMark2ChordPro({
+					showBarSeparators: options.showBarSeparators,
+				}),
+				alignChordsWithLyrics: options.alignChordsWithLyrics,
+				alignBars: options.alignBars,
 			});
 			expect(rendered).toBe(output);
 		});

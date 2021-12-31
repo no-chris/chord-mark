@@ -12,9 +12,10 @@ import insertAt from '../helpers/insertAt';
  * + when parsing, {start_of_verse: Verse 1} => #Verse 1
  * + remove pango on parsing
  * + add unit tests for convert2 chordmark clean up
+ * + remove converters unit tests from CCS
+ * + remove chordsheetjs module + webpack config from CCS
+ * - add useBarSeparator parameter
  * - support grids and comments for sections with chords only
- * - remove converters unit tests from CCS
- * - remove chordsheetjs module + webpack config from CCS
  */
 
 /**
@@ -44,7 +45,9 @@ const convert2ChordPro = (
 			switch (line.type) {
 				case lineTypes.CHORD:
 					if (!isFollowedByLyricLine(allSectionLines, j)) {
-						chordProLines.push(getChordLine(line));
+						chordProLines.push(
+							getChordLine(line, { showBarSeparators })
+						);
 					} else {
 						chordLine = line;
 					}
@@ -52,6 +55,7 @@ const convert2ChordPro = (
 				case lineTypes.LYRIC:
 					chordProLines.push(
 						getLyricLine(line, chordLine, {
+							showBarSeparators,
 							alignChordsWithLyrics,
 							alignBars,
 						})
@@ -186,32 +190,42 @@ function getChordLine(line) {
  * @param {SongChordLine} chordLine
  * @param {Boolean} alignChordsWithLyrics
  * @param {Boolean} alignBars
+ * @param {Boolean} showBarSeparators
  */
-function getLyricLine(line, chordLine, { alignChordsWithLyrics, alignBars }) {
+function getLyricLine(
+	line,
+	chordLine,
+	{ alignChordsWithLyrics, alignBars, showBarSeparators }
+) {
 	let lyrics = line.string.trim(); // fixme: keep trim()?
 
 	if (chordLine && chordLine.type === lineTypes.CHORD) {
 		if (chordLine.model.hasPositionedChords && alignChordsWithLyrics) {
-			lyrics = getLyricLineWithPositionedChords(lyrics, chordLine);
+			lyrics = getLyricLineWithPositionedChords(lyrics, chordLine, {
+				showBarSeparators,
+			});
 		} else {
-			lyrics = getLyricLineWithNonPositionedChords(
-				lyrics,
-				chordLine,
-				alignBars
-			);
+			lyrics = getLyricLineWithNonPositionedChords(lyrics, chordLine, {
+				showBarSeparators,
+				alignBars,
+			});
 		}
 	}
 	return lyrics;
 }
 
-const getLyricLineWithPositionedChords = (srcLyrics, chordLine) => {
+const getLyricLineWithPositionedChords = (
+	srcLyrics,
+	chordLine,
+	{ showBarSeparators }
+) => {
 	let lyrics = srcLyrics;
 
 	chordLine.model.allBars.map((bar) => {
 		bar.allChords.map((chord, i) => {
 			let [chordProSymbol] = getChordSymbol(bar, chord);
 
-			if (i === 0) {
+			if (i === 0 && showBarSeparators) {
 				const nextPositionMarker = lyrics.indexOf('_');
 				if (nextPositionMarker > -1) {
 					lyrics = insertAt(lyrics, '[|] ', nextPositionMarker);
@@ -228,14 +242,16 @@ const getLyricLineWithPositionedChords = (srcLyrics, chordLine) => {
 		});
 	});
 	lyrics = lyrics.replace(/_/g, '').trim();
-	lyrics += ' [|]';
+	if (showBarSeparators) {
+		lyrics += ' [|]';
+	}
 	return lyrics;
 };
 
 const getLyricLineWithNonPositionedChords = (
 	srcLyrics,
 	chordLine,
-	alignBars
+	{ showBarSeparators, alignBars }
 ) => {
 	let lyrics = srcLyrics.replace(/_/g, '');
 	let chordOffset = 0;
@@ -244,7 +260,7 @@ const getLyricLineWithNonPositionedChords = (
 		bar.allChords.map((chord, i) => {
 			let [chordProSymbol, rawSymbol] = getChordSymbol(bar, chord);
 
-			if (i === 0) {
+			if (i === 0 && showBarSeparators) {
 				lyrics = insertAt(lyrics, '[|]', chordOffset);
 				chordOffset += '[|]'.length + '| '.length;
 			}
@@ -262,7 +278,9 @@ const getLyricLineWithNonPositionedChords = (
 				extraSpaceOnLastChord; // compensate for the fact that most chordpro programs add a space between
 		});
 	});
-	lyrics = insertAt(lyrics, '[|]', chordOffset);
+	if (showBarSeparators) {
+		lyrics = insertAt(lyrics, '[|]', chordOffset);
+	}
 	return lyrics;
 };
 
