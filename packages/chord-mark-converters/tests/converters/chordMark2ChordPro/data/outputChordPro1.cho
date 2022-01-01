@@ -1,7 +1,7 @@
 Some introduction
 Blablabla...
 
-{start_of_verse: Verse 1}
+{start_of_verse: Verse}
 [|] [D]A lyric line [Bm]with the exact [|] [F#m]number of position markers [|]
 [|] [Em7]A lyric line [|] [A]with extra [A7]position markers [|]
 A lyric line [|] [D]with missing position markers [Bm] [|] [F#m] [|]
@@ -9,12 +9,12 @@ A lyric line [|] [D]with missing position markers [Bm] [|] [F#m] [|]
 [|]An[Am7(add #9)...]d another one: chords[B6/F#.] are al[|]igned
 {end_of_verse}
 
-{start_of_bridge: Bridge 1}
+{start_of_bridge: Bridge}
 [|] [D] [|] [Dm7] This line starts with [|] [A7sus]some chords [|]
 This one [|] [D]ends with some [|] [Dm7] [|] [A7sus] [|]
 {end_of_bridge}
 
-{start_of_chorus: Chorus 1}
+{start_of_chorus: Chorus}
 [|] [A]Consecutive [|] [%]bars with the [|] [D]same chords [|] [%] [|]
 [|] [A7] Are not [|] [%]repeated in [|] [E7]Chord[|] [%]Pro [|]
 {end_of_chorus}

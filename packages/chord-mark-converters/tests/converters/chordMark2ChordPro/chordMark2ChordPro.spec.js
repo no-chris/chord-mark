@@ -20,12 +20,11 @@ describe('chordMark2Chordpro', () => {
 	describe.each([
 		['base test', input1, output1],
 		['no position markers', input2, output2],
-	])('%s', (title, input, output, options) => {
+	])('%s', (title, input, output) => {
 		test('should produce expected rendering', () => {
 			const parsed = parseSong(input);
 			const rendered = renderSong(parsed, {
 				customRenderer: chordMark2ChordPro(),
-				...options,
 			});
 			expect(rendered).toBe(output);
 		});
@@ -132,6 +131,79 @@ _A not so long lyric _line`,
 				alignBars: false,
 			},
 		],
+
+		// ===== Sections labels =====
+		[
+			'Verse',
+			`#v\na verse\n#verse\nanother`,
+			`{start_of_verse: Verse}
+a verse
+{end_of_verse}
+
+{start_of_verse: Verse}
+another
+{end_of_verse}`,
+		],
+		[
+			'Bridge',
+			`#b\na bridge\n#bridge\nanother`,
+			`{start_of_bridge: Bridge}
+a bridge
+{end_of_bridge}
+
+{start_of_bridge: Bridge}
+another
+{end_of_bridge}`,
+		],
+		[
+			'Chorus',
+			`#c\na chorus\n#chorus\nanother`,
+			`{start_of_chorus: Chorus}
+a chorus
+{end_of_chorus}
+
+{start_of_chorus: Chorus}
+another
+{end_of_chorus}`,
+		],
+		[
+			'Empty sections are rendered as comments',
+			`#v\n#b\n#c\n#v\n#c`,
+			`{c:Verse 1}\n{c:Bridge}\n{c:Chorus 1}\n{c:Verse 2}\n{c:Chorus 2}`,
+		],
+		[
+			'Even if not part of chordPro standard',
+			`#i\n#u\n#o`,
+			`{c:Intro}\n{c:Interlude}\n{c:Outro}`,
+		],
+		[
+			'multipliers are rendered',
+			`#v x2\n#b\n#c x2\n#v\n#c`,
+			`{c:Verse 1 x2}\n{c:Bridge}\n{c:Chorus 1 x2}\n{c:Verse 2}\n{c:Chorus 2}`,
+		],
+		[
+			'sections that are not part of chordPro standard are rendered as verse',
+			`#i\nthe introduction\n#u\nthe interlude\n#o\nthe outro`,
+			`{start_of_verse: Intro}
+the introduction
+{end_of_verse}
+
+{start_of_verse: Interlude}
+the interlude
+{end_of_verse}
+
+{start_of_verse: Outro}
+the outro
+{end_of_verse}`,
+		],
+
+		// ===== misc =====
+		[
+			'Do not add empty line before first section',
+			`#v\nthe first line`,
+			`{start_of_verse: Verse}\nthe first line\n{end_of_verse}`,
+		],
+
 		/* */
 	])('%s', (title, input, output, options = {}) => {
 		test('should produce expected ChordMark markup', () => {

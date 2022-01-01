@@ -14,32 +14,37 @@ import insertAt from '../helpers/insertAt';
  * + add unit tests for convert2 chordmark clean up
  * + remove converters unit tests from CCS
  * + remove chordsheetjs module + webpack config from CCS
- * - add useBarSeparator parameter
+ * + add useBarSeparator parameter
  * - support grids and comments for sections with chords only
+ * - CCS migrate import option in store
  */
 
-/**
- *
- * @param {Object} options
- * @param {Boolean} options.keepWhatever
- * @returns {any}
- */
 const chordMark2ChordPro = (options = {}) => {
 	return convert2ChordPro.bind(null, options);
 };
 
 const convert2ChordPro = (
-	{ showBarSeparators = true, useGrid = false } = {},
+	{ showBarSeparators = true /*, useGrid = false */ },
 	allLines,
-	{ alignBars = true, alignChordsWithLyrics = true }
+	{ alignBars, alignChordsWithLyrics }
 ) => {
 	const chordProLines = [];
 	let chordLine;
 
 	getAllSections(allLines).forEach((section, i) => {
 		if (section.sectionLine) {
-			if (i > 0) chordProLines.push('');
-			chordProLines.push(getOpenSectionDirective(section.sectionLine));
+			if (section.allLines.length > 0) {
+				if (i > 0) chordProLines.push('');
+				chordProLines.push(
+					getOpenSectionDirective(section.sectionLine)
+				);
+			} else {
+				chordProLines.push(
+					getCommentLine(
+						getSectionTitle(section.sectionLine.model.rendered)
+					)
+				);
+			}
 		}
 		section.allLines.forEach((line, j, allSectionLines) => {
 			switch (line.type) {
@@ -68,7 +73,7 @@ const convert2ChordPro = (
 					break;
 			}
 		});
-		if (section.sectionLine) {
+		if (section.sectionLine && section.allLines.length > 0) {
 			chordProLines.push(getEndSectionDirective(section.sectionLine));
 		}
 	});
@@ -120,43 +125,39 @@ const getAllSections = (allLines) => {
  * @param {SongSectionLabelLine} line
  */
 function getOpenSectionDirective(line) {
-	return getEnvironmentDirective(line, 'start');
+	return `{start_of_${getEnvironmentType(
+		line.model.label
+	)}: ${getSectionTitle(line.model.rendered)}}`;
 }
 
 /**
  * @param {SongSectionLabelLine} line
  */
 function getEndSectionDirective(line) {
-	return getEnvironmentDirective(line, 'end');
+	return `{end_of_${getEnvironmentType(line.model.label)}}`;
 }
 
-/**
- * @param {SongSectionLabelLine} line
- * @param {('start'|'end')} startEnd
- */
-function getEnvironmentDirective(line, startEnd) {
-	let sectionName;
-	switch (line.model.label) {
+function getEnvironmentType(label) {
+	switch (label) {
 		case 'b':
-			sectionName = 'bridge' + getSectionTitle(line, startEnd, 'Bridge');
-
-			break;
+		case 'bridge':
+			return 'bridge';
 		case 'c':
-			sectionName = 'chorus' + getSectionTitle(line, startEnd, 'Chorus');
-
-			break;
+		case 'chorus':
+			return 'chorus';
 		default:
 		case 'v':
-			sectionName = 'verse' + getSectionTitle(line, startEnd, 'Verse');
-			break;
+		case 'verse':
+			return 'verse';
 	}
-	return `{${startEnd}_of_${sectionName}}`;
 }
 
-function getSectionTitle(line, startEnd, title) {
-	return startEnd === 'start'
-		? `: ${title} ${line.indexWithoutMultiply}`
-		: '';
+function getSectionTitle({ label, multiplier }) {
+	return multiplier ? `${label} ${multiplier}` : label;
+}
+
+function getCommentLine(comment) {
+	return `{c:${comment}}`;
 }
 
 function isFollowedByLyricLine(allSectionLines, i) {
@@ -175,9 +176,7 @@ function getChordLine(line) {
 		bar.allChords.map((chord) => {
 			chordLine +=
 				chord.symbol +
-				' '.repeat(
-					(chord.spacesWithin || 0) + (chord.spacesAfter || 0)
-				);
+				' '.repeat(chord.spacesWithin + chord.spacesAfter);
 		});
 	});
 	chordLine += '|';
@@ -273,8 +272,8 @@ const getLyricLineWithNonPositionedChords = (
 			chordOffset +=
 				chordProSymbol.length +
 				rawSymbol.length +
-				(chord.spacesAfter || 0) +
-				(chord.spacesWithin || 0) +
+				chord.spacesAfter +
+				chord.spacesWithin +
 				extraSpaceOnLastChord; // compensate for the fact that most chordpro programs add a space between
 		});
 	});
