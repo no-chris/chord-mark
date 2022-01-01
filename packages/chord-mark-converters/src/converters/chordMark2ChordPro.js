@@ -3,28 +3,12 @@ import { lineTypes } from '../../../chord-mark/src/chordMark';
 import trimArray from '../helpers/trimArray';
 import insertAt from '../helpers/insertAt';
 
-/**
- * TODO:
- * + fix auto detection
- * + space bar separators in alignedChordWithLyrics rendering
- * + change API to support tab input instead of string
- * + use insertAt (with Min(length, at) as argument?) in convert2ChordPro
- * + when parsing, {start_of_verse: Verse 1} => #Verse 1
- * + remove pango on parsing
- * + add unit tests for convert2 chordmark clean up
- * + remove converters unit tests from CCS
- * + remove chordsheetjs module + webpack config from CCS
- * + add useBarSeparator parameter
- * - support grids and comments for sections with chords only
- * - CCS migrate import option in store
- */
-
 const chordMark2ChordPro = (options = {}) => {
 	return convert2ChordPro.bind(null, options);
 };
 
 const convert2ChordPro = (
-	{ showBarSeparators = true /*, useGrid = false */ },
+	{ showBarSeparators = true },
 	allLines,
 	{ alignBars, alignChordsWithLyrics }
 ) => {
@@ -50,9 +34,7 @@ const convert2ChordPro = (
 			switch (line.type) {
 				case lineTypes.CHORD:
 					if (!isFollowedByLyricLine(allSectionLines, j)) {
-						chordProLines.push(
-							getChordLine(line, { showBarSeparators })
-						);
+						chordProLines.push(getChordLine(line));
 					} else {
 						chordLine = line;
 					}
@@ -181,7 +163,7 @@ function getChordLine(line) {
 	});
 	chordLine += '|';
 
-	return chordLine.trim();
+	return getCommentLine(chordLine.trim());
 }
 
 /**
@@ -267,7 +249,7 @@ const getLyricLineWithNonPositionedChords = (
 			lyrics = insertAt(lyrics, chordProSymbol, chordOffset);
 
 			const extraSpaceOnLastChord =
-				alignBars && !bar.allChords[i + 1] ? 1 : 0; //todo only if no spaces after?
+				alignBars && !bar.allChords[i + 1] ? 1 : 0;
 
 			chordOffset +=
 				chordProSymbol.length +
