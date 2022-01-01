@@ -9,14 +9,14 @@ import { forEachChordInSong } from '../../parser/helper/songs';
 import renderChordLineModel from './renderChordLine';
 import renderEmptyLine from './renderEmptyLine';
 import renderLine from './renderLine';
-import renderSectionLabel from './renderSectionLabel';
+import renderSectionLabelLine from './renderSectionLabel';
 import renderLyricLine from './renderLyricLine';
 import renderTimeSignature from './renderTimeSignature';
 
 import songTpl from './tpl/song.hbs';
 import getChordSymbol from '../helpers/getChordSymbol';
-import getSectionsStats from '../helpers/getSectionsStats';
 import getMainAccidental from '../helpers/getMainAccidental';
+import renderAllSectionsLabels from '../helpers/renderAllSectionLabels';
 
 import { chordRendererFactory } from 'chord-symbol';
 
@@ -70,9 +70,11 @@ export default function renderSong(
 			return replaceRepeatedBars(line, { alignChordsWithLyrics });
 		});
 
-	const sectionsStats = getSectionsStats(allLines);
 	const maxBeatsWidth = getMaxBeatsWidth(allLines, shouldAlignChords);
 
+	allLines = renderAllSectionsLabels(allLines, {
+		expandSectionMultiply,
+	});
 	allLines.forEach(spaceChordLine);
 
 	if (customRenderer) {
@@ -191,10 +193,7 @@ export default function renderSong(
 				} else if (line.type === lineTypes.EMPTY_LINE) {
 					rendered = renderEmptyLine();
 				} else if (line.type === lineTypes.SECTION_LABEL) {
-					rendered = renderSectionLabel(line, {
-						sectionsStats,
-						expandSectionMultiply,
-					});
+					rendered = renderSectionLabelLine(line);
 				} else if (line.type === lineTypes.TIME_SIGNATURE) {
 					rendered = renderTimeSignature(line);
 				} else {

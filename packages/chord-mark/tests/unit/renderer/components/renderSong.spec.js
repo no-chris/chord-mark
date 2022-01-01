@@ -4,7 +4,7 @@ import parseSong from '../../../../src/parser/parseSong';
 import toText from '../../helpers/toText';
 
 function renderSongText(songTxt, options = {}) {
-	return '<div>' + renderSong(parseSong(songTxt), options) + '</div>';
+	return renderSong(parseSong(songTxt), options);
 }
 
 describe('renderSong', () => {
@@ -22,7 +22,7 @@ verseLine2`;
 
 		expect(element).toBeInstanceOf(Node);
 		expect(element.nodeName).toBe('DIV');
-		expect(element.childElementCount).toBe(1);
+		expect(element.childElementCount).toBe(4);
 	});
 });
 
@@ -477,5 +477,77 @@ line1-2`;
 			alignChordsWithLyrics: false,
 			alignBars: false,
 		});
+	});
+});
+
+describe('Section Labels', () => {
+	describe('Shortcuts and case', () => {
+		describe.each([
+			['#a', 'Adlib'],
+			['#b', 'Bridge'],
+			['#c', 'Chorus'],
+			['#i', 'Intro'],
+			['#o', 'Outro'],
+			['#p', 'Pre-chorus'],
+			['#s', 'Solo'],
+			['#u', 'Interlude'],
+			['#v', 'Verse'],
+		])('Should replace shortcuts', (input, expected) => {
+			test('replace ' + input + ' with ' + expected, () => {
+				const rendered = renderSongText(input, {
+					expandSectionMultiply: true,
+				});
+				expect(toText(rendered)).toBe(expected);
+			});
+		});
+
+		describe.each([
+			['#inter', 'Inter'],
+			['#special', 'Special'],
+			['#other', 'Other'],
+		])(
+			'Should render custom sections with a capital first letter',
+			(input, expected) => {
+				test('renders ' + input + ' to ' + expected, () => {
+					const rendered = renderSongText(input, {
+						expandSectionMultiply: true,
+					});
+					expect(toText(rendered)).toBe(expected);
+				});
+			}
+		);
+	});
+
+	describe('Label indexes', () => {
+		describe.each([
+			['unique section', '#v', 'Verse'],
+			['2 unique sections', '#v\n#c', 'Verse\nChorus'],
+			['2 sections, append index', '#v\n#v', 'Verse 1\nVerse 2'],
+			[
+				'3 sections, append index',
+				'#v\n#v\n#v',
+				'Verse 1\nVerse 2\nVerse 3',
+			],
+			[
+				'multiplier does not influence index if expandSectionMultiply === false',
+				'#v x4\n#v',
+				'Verse 1 x4\nVerse 2',
+				{ expandSectionMultiply: false },
+			],
+			[
+				'multiplier influences index if expandSectionMultiply === true',
+				'#v x4\n#v',
+				'Verse 1\nVerse 2\nVerse 3\nVerse 4\nVerse 5',
+				{ expandSectionMultiply: true },
+			],
+		])(
+			'Should append index to section label',
+			(title, input, expected, options = {}) => {
+				test(title, () => {
+					const rendered = renderSongText(input, options);
+					expect(toText(rendered)).toBe(expected);
+				});
+			}
+		);
 	});
 });
