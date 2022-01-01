@@ -2,7 +2,35 @@
 # yarn lockfile v1
 
 
-core-js@^3.19.1:
-  version "3.19.2"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.19.2.tgz#ae216d7f4f7e924d9a2e3ff1e4b1940220f9157b"
-  integrity sha512-ciYCResnLIATSsXuXnIOH4CbdfgV+H1Ltg16hJFN7/v6OxqnFr/IFGeLacaZ+fHLAm0TBbXwNK9/DNBzBUrO/g==
+chord-mark@^0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/chord-mark/-/chord-mark-0.9.0.tgz#c310943b4b9c7e309e34e32fbc0cd890f40e0d46"
+  integrity sha512-q10HQ0sYqx0xFG40N6FxjQFXRSYWuOBPdLz+b9e8mfWGq+RChUBt5E3RvrH5ZzXEjWo62v8gajAy/e4qUyiS/g==
+  dependencies:
+    chord-symbol "^2.1.0"
+    core-js "^3.18.3"
+    dompurify "^2.3.3"
+    lodash "^4.17.21"
+
+chord-symbol@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/chord-symbol/-/chord-symbol-2.1.0.tgz#076e6bd3e9bb1076a9d42f3152e50ad7fc2c7f9b"
+  integrity sha512-0vUz0LNVNlXTlt4pht9Aw2H28+LIVZ7U7X3tXzFBf9xIbfExI0Y1D+Z7m1X63+Bp9Ne0bDzVBMrVD5cYpYq27g==
+  dependencies:
+    core-js "^3.8.2"
+    lodash "^4.17.20"
+
+core-js@^3.18.3, core-js@^3.20.2, core-js@^3.8.2:
+  version "3.20.2"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.20.2.tgz#46468d8601eafc8b266bd2dd6bf9dee622779581"
+  integrity sha512-nuqhq11DcOAbFBV4zCbKeGbKQsUDRqTX0oqx7AttUBuqe3h20ixsE039QHelbL6P4h+9kytVqyEtyZ6gsiwEYw==
+
+dompurify@^2.3.3:
+  version "2.3.4"
+  resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-2.3.4.tgz#1cf5cf0105ccb4debdf6db162525bd41e6ddacc6"
+  integrity sha512-6BVcgOAVFXjI0JTjEvZy901Rghm+7fDQOrNIcxB4+gdhj6Kwp6T9VBhBY/AbagKHJocRkDYGd6wvI+p4/10xtQ==
+
+lodash@^4.17.20, lodash@^4.17.21:
+  version "4.17.21"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
+  integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==

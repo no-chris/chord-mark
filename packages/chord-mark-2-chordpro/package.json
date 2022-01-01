@@ -19,7 +19,7 @@
 	"homepage": "https://github.com/no-chris/chord-mark/tree/main/packages/chord-mark-2-chordpro#readme",
 	"dependencies": {
 		"chord-mark": "^0.9.0",
-		"core-js": "^3.19.1"
+		"core-js": "^3.20.2"
 	},
 	"files": [
 		"lib",
