@@ -1,4 +1,4 @@
-import stripTags from './core/stripTags';
+import stripTags from './helpers/stripTags';
 import { isChordLine, isChordsLyricsLine } from './helpers/chordMatchers';
 import chordPro2ChordMark from './converters/chordPro2ChordMark';
 import chordsOverLyrics2ChordMark from './converters/chordsOverLyrics2ChordMark';
