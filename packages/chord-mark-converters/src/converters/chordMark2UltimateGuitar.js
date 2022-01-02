@@ -16,7 +16,7 @@ const convert2UltimateGuitar = (allLines, allRenderedLines) => {
 			} else if (srcLine.type === lineTypes.CHORD) {
 				return renderedLine.replace(/([^\s.|]+)/g, '[ch]$1[/ch]');
 			}
-			return renderedLine;
+			return renderedLine.replace('&nbsp;', '');
 		})
 		.join('\n');
 };

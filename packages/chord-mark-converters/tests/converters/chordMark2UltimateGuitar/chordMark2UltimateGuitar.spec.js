@@ -14,11 +14,13 @@ describe.each([
 		`#v
 A D7
 _Some _lyrics
+
 Em7/G... G7.
 _Another _line`,
 		`[Verse]
 |[ch]A[/ch]   |[ch]D7[/ch]   |
 Some lyrics
+
 |[ch]Em7/G[/ch]... [ch]G7[/ch]. |
 Another   line`,
 	],
