@@ -77,11 +77,15 @@ export default function renderSong(
 	});
 	allLines.forEach(spaceChordLine);
 
+	const allRenderedLines = renderAllLines();
+
 	if (customRenderer) {
-		return customRenderer(allLines, { alignChordsWithLyrics, alignBars });
+		return customRenderer(allLines, allRenderedLines, {
+			alignChordsWithLyrics,
+			alignBars,
+		});
 	} else {
-		const song = renderAllLines().join('');
-		return songTpl({ song });
+		return songTpl({ song: allRenderedLines.join('') });
 	}
 
 	function renderChords() {

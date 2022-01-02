@@ -2,6 +2,7 @@ import renderSong from '../../../../src/renderer/components/renderSong';
 import htmlToElement from '../../../../src/core/dom/htmlToElement';
 import parseSong from '../../../../src/parser/parseSong';
 import toText from '../../helpers/toText';
+import lineTypes from '../../../../src/parser/lineTypes';
 
 function renderSongText(songTxt, options = {}) {
 	return renderSong(parseSong(songTxt), options);
@@ -446,6 +447,28 @@ line1-2`;
 		expect(rendered).toContain('custom rendered');
 	});
 
+	test('Should forward allLines and allRenderedLines to custom renderer', () => {
+		const customRenderer = jest.fn();
+		customRenderer.mockImplementation(() => 'custom rendered');
+
+		const input = `#v
+C G
+line1-1`;
+
+		renderSongText(input, { customRenderer });
+		const allLines = customRenderer.mock.calls[0][0];
+		const allRenderedLines = customRenderer.mock.calls[0][1];
+
+		expect(allLines.length).toBe(3);
+		expect(allLines[0].type).toBe(lineTypes.SECTION_LABEL);
+		expect(allLines[1].type).toBe(lineTypes.CHORD);
+		expect(allLines[2].type).toBe(lineTypes.LYRIC);
+
+		expect(toText(allRenderedLines[0])).toBe('Verse');
+		expect(toText(allRenderedLines[1])).toBe('|C     |G     |');
+		expect(toText(allRenderedLines[2])).toBe('line1-1');
+	});
+
 	test('Should forward parameters to custom renderer', () => {
 		const customRenderer = jest.fn();
 		customRenderer.mockImplementation(() => 'custom rendered');
@@ -462,7 +485,7 @@ line1-2`;
 			alignBars: true,
 			customRenderer,
 		});
-		expect(customRenderer.mock.calls[0][1]).toStrictEqual({
+		expect(customRenderer.mock.calls[0][2]).toStrictEqual({
 			alignChordsWithLyrics: true,
 			alignBars: true,
 		});
@@ -473,7 +496,7 @@ line1-2`;
 			alignBars: false,
 			customRenderer,
 		});
-		expect(customRenderer.mock.calls[1][1]).toStrictEqual({
+		expect(customRenderer.mock.calls[1][2]).toStrictEqual({
 			alignChordsWithLyrics: false,
 			alignBars: false,
 		});
