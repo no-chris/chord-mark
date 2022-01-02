@@ -1,4 +1,4 @@
-import { lineTypes } from '../../../chord-mark/src/chordMark';
+import { lineTypes } from 'chord-mark';
 
 import trimArray from '../helpers/trimArray';
 import insertAt from '../helpers/insertAt';
@@ -10,6 +10,7 @@ const chordMark2ChordPro = (options = {}) => {
 const convert2ChordPro = (
 	{ showBarSeparators = true },
 	allLines,
+	allRenderedLines,
 	{ alignBars, alignChordsWithLyrics }
 ) => {
 	const chordProLines = [];
