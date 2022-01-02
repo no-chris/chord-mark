@@ -206,7 +206,7 @@ the outro
 
 		/* */
 	])('%s', (title, input, output, options = {}) => {
-		test('should produce expected ChordMark markup', () => {
+		test('should produce expected ChordPro markup', () => {
 			const parsed = parseSong(input);
 			const rendered = renderSong(parsed, {
 				customRenderer: chordMark2ChordPro({
