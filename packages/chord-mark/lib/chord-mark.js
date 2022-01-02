@@ -193,8 +193,8 @@ module.exports = (Handlebars["default"] || Handlebars).template({"1":function(co
     };
 
   return "<span class=\"cmSectionLabel\">"
-    + ((stack1 = container.lambda((depth0 != null ? lookupProperty(depth0,"sectionLabel") : depth0), depth0)) != null ? stack1 : "")
-    + ((stack1 = lookupProperty(helpers,"if").call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? lookupProperty(depth0,"multiplier") : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data,"loc":{"start":{"line":1,"column":54},"end":{"line":1,"column":147}}})) != null ? stack1 : "")
+    + ((stack1 = container.lambda((depth0 != null ? lookupProperty(depth0,"label") : depth0), depth0)) != null ? stack1 : "")
+    + ((stack1 = lookupProperty(helpers,"if").call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? lookupProperty(depth0,"multiplier") : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data,"loc":{"start":{"line":1,"column":47},"end":{"line":1,"column":140}}})) != null ? stack1 : "")
     + "</span>";
 },"useData":true});
 
@@ -20924,6 +20924,10 @@ function hasUnevenChordsDurations(bar) {
  * @property {String} label - label of the section
  * @property {Number} multiplyTimes - number of times the section should be multiplied
  * @property {Number} copyIndex - index of the section that should be copied
+ * Render-time properties
+ * @property {Object} [rendered]
+ * @property {String} [rendered.label]
+ * @property {String} [rendered.multiplier]
  */
 
 /**
@@ -21553,6 +21557,7 @@ function space(chordLineInput) {
   chordLine.allBars.forEach(bar => {
     bar.allChords.forEach(chord => {
       chord.spacesAfter = symbols.spacesAfterDefault;
+      chord.spacesWithin = 0;
     });
   });
   return chordLine;
@@ -21826,50 +21831,13 @@ var sectionLabel = __webpack_require__(4273);
 var sectionLabel_default = /*#__PURE__*/__webpack_require__.n(sectionLabel);
 ;// CONCATENATED MODULE: ./src/renderer/components/renderSectionLabel.js
 
-const labelsMapping = {
-  a: 'adlib',
-  b: 'bridge',
-  c: 'chorus',
-  i: 'intro',
-  o: 'outro',
-  p: 'pre-chorus',
-  s: 'solo',
-  u: 'interlude',
-  v: 'verse'
-};
 /**
  * @param {SongSectionLabelLine} sectionLabelLine
- * @param {Boolean} expandSectionMultiply
- * @param {Object} sectionsStats - key = section label, value = section count in song
  * @returns {String} rendered html
  */
 
-function renderSectionLabel(sectionLabelLine, {
-  expandSectionMultiply = true,
-  sectionsStats = {}
-} = {}) {
-  const {
-    model,
-    index,
-    indexWithoutMultiply
-  } = sectionLabelLine;
-  const labelRaw = labelsMapping[model.label] ? labelsMapping[model.label] : model.label;
-  let rendered = labelRaw[0].toUpperCase() + labelRaw.substring(1);
-  let multiplier;
-
-  if (sectionsStats[model.label] > 1) {
-    rendered += ' ';
-    rendered += expandSectionMultiply ? index : indexWithoutMultiply;
-  }
-
-  if (!expandSectionMultiply && model.multiplyTimes) {
-    multiplier = 'x' + model.multiplyTimes;
-  }
-
-  return sectionLabel_default()({
-    sectionLabel: rendered,
-    multiplier
-  });
+function renderSectionLabel(sectionLabelLine) {
+  return sectionLabel_default()(sectionLabelLine.model.rendered);
 }
 // EXTERNAL MODULE: ./src/renderer/components/tpl/lyricLine.hbs
 var tpl_lyricLine = __webpack_require__(36);
@@ -21910,8 +21878,8 @@ function renderTimeSignature_render(timeSignatureLine) {
   });
 }
 // EXTERNAL MODULE: ./src/renderer/components/tpl/song.hbs
-var tpl_song = __webpack_require__(1196);
-var song_default = /*#__PURE__*/__webpack_require__.n(tpl_song);
+var song = __webpack_require__(1196);
+var song_default = /*#__PURE__*/__webpack_require__.n(song);
 ;// CONCATENATED MODULE: ./src/renderer/helpers/getChordSymbol.js
 
 
@@ -21934,26 +21902,6 @@ const defaultRenderChord = (0,chord_symbol.chordRendererFactory)();
     default:
       return renderChord(model);
   }
-}
-;// CONCATENATED MODULE: ./src/renderer/helpers/getSectionsStats.js
-
-/**
- * Returns the number of usage of each section label
- *
- * @param {SongSectionLabelLine[]} allLines
- * @returns {Object} key = label, value = number of usage
- */
-
-function getSectionsStats(allLines) {
-  const stats = {};
-  allLines.filter(line => line.type === parser_lineTypes.SECTION_LABEL).forEach(line => {
-    if (!stats[line.model.label]) {
-      stats[line.model.label] = 1;
-    } else {
-      stats[line.model.label]++;
-    }
-  });
-  return stats;
 }
 ;// CONCATENATED MODULE: ./src/renderer/helpers/getMainAccidental.js
 
@@ -21982,6 +21930,72 @@ function getMainAccidental(allChords) {
     }
   });
   return flatCount > sharpCount ? 'flat' : 'sharp';
+}
+;// CONCATENATED MODULE: ./src/renderer/helpers/renderAllSectionLabels.js
+ // reminder: update converters whenever a new shortcut is added here!
+
+const labelsMapping = {
+  a: 'adlib',
+  b: 'bridge',
+  c: 'chorus',
+  i: 'intro',
+  o: 'outro',
+  p: 'pre-chorus',
+  s: 'solo',
+  u: 'interlude',
+  v: 'verse'
+};
+function renderAllSectionsLabels(allLines, {
+  expandSectionMultiply
+}) {
+  const sectionsStats = getSectionsStats(allLines);
+  allLines.forEach((
+  /** SongSectionLabelLine */
+  line) => {
+    if (line.type === parser_lineTypes.SECTION_LABEL) {
+      const {
+        model,
+        index,
+        indexWithoutMultiply
+      } = line;
+      const labelRaw = labelsMapping[model.label] ? labelsMapping[model.label] : model.label;
+      let rendered = labelRaw[0].toUpperCase() + labelRaw.substring(1);
+      let multiplier;
+
+      if (sectionsStats[model.label] > 1) {
+        rendered += ' ';
+        rendered += expandSectionMultiply ? index : indexWithoutMultiply;
+      }
+
+      if (!expandSectionMultiply && model.multiplyTimes) {
+        multiplier = 'x' + model.multiplyTimes;
+      }
+
+      line.model.rendered = {
+        label: rendered,
+        multiplier
+      };
+    }
+  });
+  return allLines;
+}
+/**
+ * Returns the number of usage of each section label
+ *
+ * @param {SongSectionLabelLine[]} allLines
+ * @returns {Object} key = label, value = number of usage
+ */
+
+function getSectionsStats(allLines) {
+  const stats = {};
+  allLines.filter(line => line.type === parser_lineTypes.SECTION_LABEL).forEach(line => {
+    if (!stats[line.model.label]) {
+      stats[line.model.label] = 1;
+    } else {
+      stats[line.model.label]++;
+    }
+  });
+  return stats;
 }
 ;// CONCATENATED MODULE: ./src/renderer/replaceRepeatedBars.js
 
@@ -22080,16 +22094,21 @@ function renderSong(parsedSong, {
       alignChordsWithLyrics
     });
   });
-  const sectionsStats = getSectionsStats(allLines);
   const maxBeatsWidth = getMaxBeatsWidth(allLines, shouldAlignChords);
+  allLines = renderAllSectionsLabels(allLines, {
+    expandSectionMultiply
+  });
   allLines.forEach(spaceChordLine);
+  const allRenderedLines = renderAllLines();
 
   if (customRenderer) {
-    return customRenderer(allLines, {});
+    return customRenderer(allLines, allRenderedLines, {
+      alignChordsWithLyrics,
+      alignBars
+    });
   } else {
-    const song = renderAllLines().join('');
     return song_default()({
-      song
+      song: allRenderedLines.join('')
     });
   }
 
@@ -22175,10 +22194,7 @@ function renderSong(parsedSong, {
       } else if (line.type === parser_lineTypes.EMPTY_LINE) {
         rendered = render();
       } else if (line.type === parser_lineTypes.SECTION_LABEL) {
-        rendered = renderSectionLabel(line, {
-          sectionsStats,
-          expandSectionMultiply
-        });
+        rendered = renderSectionLabel(line);
       } else if (line.type === parser_lineTypes.TIME_SIGNATURE) {
         rendered = renderTimeSignature_render(line);
       } else {
