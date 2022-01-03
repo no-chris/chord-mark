@@ -7,6 +7,10 @@ import isSectionLabel, { sectionLabelRegexp } from './matchers/isSectionLabel';
  * @property {String} label - label of the section
  * @property {Number} multiplyTimes - number of times the section should be multiplied
  * @property {Number} copyIndex - index of the section that should be copied
+ * Render-time properties
+ * @property {Object} [rendered]
+ * @property {String} [rendered.label]
+ * @property {String} [rendered.multiplier]
  */
 
 /**

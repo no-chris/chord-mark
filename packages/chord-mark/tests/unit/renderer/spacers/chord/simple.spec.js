@@ -47,6 +47,7 @@ describe.each([
 			bar.allChords.forEach((chord) => {
 				expect(chord).toHaveProperty('spacesAfter');
 				expect(chord.spacesAfter).toEqual(spacesAfter[chordIndex]);
+				expect(chord.spacesWithin).toEqual(0);
 				chordIndex++;
 			});
 		});

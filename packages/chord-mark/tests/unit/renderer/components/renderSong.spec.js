@@ -2,9 +2,10 @@ import renderSong from '../../../../src/renderer/components/renderSong';
 import htmlToElement from '../../../../src/core/dom/htmlToElement';
 import parseSong from '../../../../src/parser/parseSong';
 import toText from '../../helpers/toText';
+import lineTypes from '../../../../src/parser/lineTypes';
 
 function renderSongText(songTxt, options = {}) {
-	return '<div>' + renderSong(parseSong(songTxt), options) + '</div>';
+	return renderSong(parseSong(songTxt), options);
 }
 
 describe('renderSong', () => {
@@ -22,7 +23,7 @@ verseLine2`;
 
 		expect(element).toBeInstanceOf(Node);
 		expect(element.nodeName).toBe('DIV');
-		expect(element.childElementCount).toBe(1);
+		expect(element.childElementCount).toBe(4);
 	});
 });
 
@@ -444,5 +445,132 @@ line1-2`;
 
 		const rendered = renderSongText(input, { customRenderer });
 		expect(rendered).toContain('custom rendered');
+	});
+
+	test('Should forward allLines and allRenderedLines to custom renderer', () => {
+		const customRenderer = jest.fn();
+		customRenderer.mockImplementation(() => 'custom rendered');
+
+		const input = `#v
+C G
+line1-1`;
+
+		renderSongText(input, { customRenderer });
+		const allLines = customRenderer.mock.calls[0][0];
+		const allRenderedLines = customRenderer.mock.calls[0][1];
+
+		expect(allLines.length).toBe(3);
+		expect(allLines[0].type).toBe(lineTypes.SECTION_LABEL);
+		expect(allLines[1].type).toBe(lineTypes.CHORD);
+		expect(allLines[2].type).toBe(lineTypes.LYRIC);
+
+		expect(toText(allRenderedLines[0])).toBe('Verse');
+		expect(toText(allRenderedLines[1])).toBe('|C     |G     |');
+		expect(toText(allRenderedLines[2])).toBe('line1-1');
+	});
+
+	test('Should forward parameters to custom renderer', () => {
+		const customRenderer = jest.fn();
+		customRenderer.mockImplementation(() => 'custom rendered');
+
+		const input = `#v
+C G
+line1-1
+A D
+line1-2`;
+
+		// call 1
+		renderSongText(input, {
+			alignChordsWithLyrics: true,
+			alignBars: true,
+			customRenderer,
+		});
+		expect(customRenderer.mock.calls[0][2]).toStrictEqual({
+			alignChordsWithLyrics: true,
+			alignBars: true,
+		});
+
+		// call 2
+		renderSongText(input, {
+			alignChordsWithLyrics: false,
+			alignBars: false,
+			customRenderer,
+		});
+		expect(customRenderer.mock.calls[1][2]).toStrictEqual({
+			alignChordsWithLyrics: false,
+			alignBars: false,
+		});
+	});
+});
+
+describe('Section Labels', () => {
+	describe('Shortcuts and case', () => {
+		describe.each([
+			['#a', 'Adlib'],
+			['#b', 'Bridge'],
+			['#c', 'Chorus'],
+			['#i', 'Intro'],
+			['#o', 'Outro'],
+			['#p', 'Pre-chorus'],
+			['#s', 'Solo'],
+			['#u', 'Interlude'],
+			['#v', 'Verse'],
+		])('Should replace shortcuts', (input, expected) => {
+			test('replace ' + input + ' with ' + expected, () => {
+				const rendered = renderSongText(input, {
+					expandSectionMultiply: true,
+				});
+				expect(toText(rendered)).toBe(expected);
+			});
+		});
+
+		describe.each([
+			['#inter', 'Inter'],
+			['#special', 'Special'],
+			['#other', 'Other'],
+		])(
+			'Should render custom sections with a capital first letter',
+			(input, expected) => {
+				test('renders ' + input + ' to ' + expected, () => {
+					const rendered = renderSongText(input, {
+						expandSectionMultiply: true,
+					});
+					expect(toText(rendered)).toBe(expected);
+				});
+			}
+		);
+	});
+
+	describe('Label indexes', () => {
+		describe.each([
+			['unique section', '#v', 'Verse'],
+			['2 unique sections', '#v\n#c', 'Verse\nChorus'],
+			['2 sections, append index', '#v\n#v', 'Verse 1\nVerse 2'],
+			[
+				'3 sections, append index',
+				'#v\n#v\n#v',
+				'Verse 1\nVerse 2\nVerse 3',
+			],
+			[
+				'multiplier does not influence index if expandSectionMultiply === false',
+				'#v x4\n#v',
+				'Verse 1 x4\nVerse 2',
+				{ expandSectionMultiply: false },
+			],
+			[
+				'multiplier influences index if expandSectionMultiply === true',
+				'#v x4\n#v',
+				'Verse 1\nVerse 2\nVerse 3\nVerse 4\nVerse 5',
+				{ expandSectionMultiply: true },
+			],
+		])(
+			'Should append index to section label',
+			(title, input, expected, options = {}) => {
+				test(title, () => {
+					const rendered = renderSongText(input, options);
+					expect(toText(rendered)).toBe(expected);
+				});
+			}
+		);
 	});
 });

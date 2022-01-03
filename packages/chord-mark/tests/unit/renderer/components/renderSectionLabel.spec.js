@@ -1,6 +1,5 @@
 import renderSectionLabel from '../../../../src/renderer/components/renderSectionLabel';
 import htmlToElement from '../../../../src/core/dom/htmlToElement';
-import parseSectionLabel from '../../../../src/parser/parseSectionLabel';
 
 describe('renderSectionLabel', () => {
 	test('Module', () => {
@@ -9,8 +8,11 @@ describe('renderSectionLabel', () => {
 
 	test('Should return valid html', () => {
 		const line = {
-			model: parseSectionLabel('#v'),
-			index: 1,
+			model: {
+				rendered: {
+					label: 'Verse',
+				},
+			},
 		};
 		const rendered = renderSectionLabel(line);
 		const element = htmlToElement(rendered);
@@ -19,148 +21,17 @@ describe('renderSectionLabel', () => {
 		expect(element.nodeName).toBe('SPAN');
 		expect(element.classList.contains('cmSectionLabel')).toBe(true);
 	});
-});
 
-describe('Shortcuts and case', () => {
-	describe.each([
-		['#a', 'Adlib'],
-		['#b', 'Bridge'],
-		['#c', 'Chorus'],
-		['#i', 'Intro'],
-		['#o', 'Outro'],
-		['#p', 'Pre-chorus'],
-		['#s', 'Solo'],
-		['#u', 'Interlude'],
-		['#v', 'Verse'],
-	])('Should replace shortcuts', (string, output) => {
-		test('expands ' + string + ' to ' + output, () => {
-			const line = {
-				model: parseSectionLabel(string),
-				index: 1,
-			};
-			const rendered = renderSectionLabel(line);
-			const element = htmlToElement(rendered);
-
-			expect(element).toBeInstanceOf(Node);
-			expect(element.innerHTML).toBe(output);
-		});
-	});
-
-	describe.each([
-		['#inter', 'Inter'],
-		['#special', 'Special'],
-		['#other', 'Other'],
-	])(
-		'Should render custom sections with a capital first letter',
-		(string, output) => {
-			test('renders ' + string + ' to ' + output, () => {
-				const line = {
-					model: parseSectionLabel(string),
-					index: 1,
-				};
-				const rendered = renderSectionLabel(line);
-				const element = htmlToElement(rendered);
-
-				expect(element).toBeInstanceOf(Node);
-				expect(element.innerHTML).toBe(output);
-			});
-		}
-	);
-});
-
-describe('Label indexes', () => {
-	describe.each([
-		['#v', 5, { v: 10 }, 'Verse 5'],
-		['#c', 3, { c: 5 }, 'Chorus 3'],
-		['#b', 7, { b: 8 }, 'Bridge 7'],
-	])(
-		'Should append index to section label if expandSectionMultiply === true',
-		(string, index, sectionsStats, output) => {
-			test('appends ' + index, () => {
-				const line = {
-					model: parseSectionLabel(string),
-					index,
-				};
-				const rendered = renderSectionLabel(line, {
-					sectionsStats,
-					expandSectionMultiply: true,
-				});
-				const element = htmlToElement(rendered);
-
-				expect(element).toBeInstanceOf(Node);
-				expect(element.innerHTML).toBe(output);
-			});
-		}
-	);
-
-	describe.each([
-		['#v', 5, { v: 10 }, 'Verse 5'],
-		['#c', 3, { c: 5 }, 'Chorus 3'],
-		['#b', 7, { b: 8 }, 'Bridge 7'],
-	])(
-		'Should append indexWithoutMultiply if expandSectionMultiply === false',
-		(string, indexWithoutMultiply, sectionsStats, output) => {
-			test('appends ' + indexWithoutMultiply, () => {
-				const line = {
-					model: parseSectionLabel(string),
-					indexWithoutMultiply,
-				};
-				const rendered = renderSectionLabel(line, {
-					sectionsStats,
-					expandSectionMultiply: false,
-				});
-				const element = htmlToElement(rendered);
-
-				expect(element).toBeInstanceOf(Node);
-				expect(element.innerHTML).toBe(output);
-			});
-		}
-	);
-
-	describe.each([
-		['#v', 1, { v: 1 }, 'Verse'],
-		['#c', 1, { c: 2 }, 'Chorus 1'],
-	])(
-		'Should not append index to section label if section is unique',
-		(string, index, sectionsStats, output) => {
-			test('appends ' + index, () => {
-				const line = {
-					model: parseSectionLabel(string),
-					index,
-				};
-				const rendered = renderSectionLabel(line, { sectionsStats });
-				const element = htmlToElement(rendered);
-
-				expect(element).toBeInstanceOf(Node);
-				expect(element.innerHTML).toBe(output);
-			});
-		}
-	);
-});
-
-describe('Repeat indications', () => {
-	test('should NOT append repeat indication if expandSectionMultiply === true', () => {
+	test('Should wrap multiplier in a dedicated span', () => {
 		const line = {
-			model: parseSectionLabel('#v x5'),
-			index: 1,
+			model: {
+				rendered: {
+					label: 'Verse',
+					multiplier: 'x5',
+				},
+			},
 		};
-		const rendered = renderSectionLabel(line, {
-			expandSectionMultiply: true,
-		});
-		const element = htmlToElement(rendered);
-
-		expect(element).toBeInstanceOf(Node);
-		expect(element.innerHTML).toBe('Verse');
-	});
-
-	test('should append repeat indication if expandSectionMultiply === false', () => {
-		const line = {
-			model: parseSectionLabel('#v x5'),
-			index: 1,
-		};
-		const rendered = renderSectionLabel(line, {
-			expandSectionMultiply: false,
-		});
+		const rendered = renderSectionLabel(line);
 		const element = htmlToElement(rendered);
 
 		expect(element).toBeInstanceOf(Node);

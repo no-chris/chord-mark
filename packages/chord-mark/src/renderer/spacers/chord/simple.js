@@ -11,6 +11,7 @@ export default function space(chordLineInput) {
 	chordLine.allBars.forEach((bar) => {
 		bar.allChords.forEach((chord) => {
 			chord.spacesAfter = symbols.spacesAfterDefault;
+			chord.spacesWithin = 0;
 		});
 	});
 

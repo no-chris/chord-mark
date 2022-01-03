@@ -1,0 +1,26 @@
+Some introduction
+Blablabla...
+
+#v
+D.. Bm.. F#m
+_A lyric line _with the exact _number of position markers
+Em7 A.. A7..
+_A lyric line _with extra _position _markers _
+D.. Bm.. F#m
+A lyric line _with missing position markers
+Em7.. Gm..
+A lyric line with no position markers
+Am7(#9)... B6/Gb.
+And another one: chords are aligned
+
+#b
+D Dm7 A7sus
+_ _ This line starts with _some chords
+%
+This one _ends with some _ _
+
+#c
+A A D D
+_Consecutive _bars with the _same chords _
+A7 A7 E7 E7
+_ Are not _repeated in _Chord_Pro
