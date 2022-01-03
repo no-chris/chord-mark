@@ -20,7 +20,7 @@
 	"dependencies": {
 		"chord-symbol": "^2.1.0",
 		"core-js": "^3.18.3",
-		"dompurify": "^2.3.3",
+		"dompurify": "^2.3.4",
 		"lodash": "^4.17.21"
 	},
 	"scripts": {
