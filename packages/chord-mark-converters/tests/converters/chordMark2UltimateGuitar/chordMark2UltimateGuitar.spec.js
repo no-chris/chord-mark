@@ -16,13 +16,19 @@ A D7
 _Some _lyrics
 
 Em7/G... G7.
-_Another _line`,
+_Another _line
+
+C7(#9)... Gm(add9).
+_Chords with _parenthesis`,
 		`[Verse]
 |[ch]A[/ch]   |[ch]D7[/ch]   |
 Some lyrics
 
 |[ch]Em7/G[/ch]... [ch]G7[/ch]. |
-Another   line`,
+Another   line
+
+|[ch]C7#9[/ch]...    [ch]Gmadd9[/ch].    |
+Chords with parenthesis`,
 	],
 ])('%s', (title, input, output) => {
 	test('should produce expected Ultimate Guitar markup', () => {
