@@ -70,7 +70,10 @@ const input = `#v
 C Am
 I _heard there was a _secret chord`;
 
-const chordPro = chordMarkToChordPro(input, { showBarSeparators: true });
+const parsed = parseSong(input);
+const chordPro = renderSong(parsed, {
+	customRenderer: chordMarkToChordPro({ showBarSeparators: true }),
+});
 ```
 
 This will produce the following string:
@@ -79,4 +82,30 @@ This will produce the following string:
 {start_of_verse: Verse}
 I [|] [C]heard there was a [|] [Am]secret chord [|]
 {end_of_verse}
+```
+
+### To Ultimate Guitar format
+
+Use this converter if you want to publish ChordMark chord charts to the Ultimate Guitar website.
+
+```javascript
+import { parseSong, renderSong } from 'chord-mark';
+import { chordMarkToUltimateGuitar } from 'chord-mark-converters';
+
+const input = `#v
+C Am
+I _heard there was a _secret chord`;
+
+const parsed = parseSong(input);
+const ultimateGuitar = renderSong(parsed, {
+	customRenderer: chordMarkToUltimateGuitar(),
+});
+```
+
+This will produce the following string:
+
+```
+[Verse]
+  |[ch]C[/ch]                |[ch]Am[/ch]         |
+I heard there was a secret chord
 ```
