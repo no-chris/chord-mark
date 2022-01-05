@@ -50,7 +50,8 @@
 		"build": "npm run lint && npm run format && npm run test && lerna run build",
 		"lint": "eslint packages",
 		"format": "prettier --write \"**/*.{js,jsx,json,ts,md,scss,css}\"",
-		"test": "jest"
+		"test": "jest",
+		"up": "yarn upgrade && lerna exec yarn upgrade"
 	},
 	"dependencies": {
 		"core-js": "^3.20.2"
