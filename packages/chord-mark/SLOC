@@ -2,14 +2,14 @@ Source code:
 
 ---------- Result ------------
 
-            Physical :  1839
-              Source :  1315
-             Comment :  264
+            Physical :  1848
+              Source :  1322
+             Comment :  265
  Single-line comment :  4
-       Block comment :  260
+       Block comment :  261
                Mixed :  1
  Empty block comment :  0
-               Empty :  261
+               Empty :  262
                To Do :  0
 
 Number of files read :  52
@@ -20,14 +20,14 @@ Tests:
 
 ---------- Result ------------
 
-            Physical :  5512
-              Source :  4986
+            Physical :  5522
+              Source :  4995
              Comment :  14
  Single-line comment :  14
        Block comment :  0
                Mixed :  7
  Empty block comment :  0
-               Empty :  519
+               Empty :  520
                To Do :  0
 
 Number of files read :  41
@@ -38,14 +38,14 @@ Total:
 
 ---------- Result ------------
 
-            Physical :  7351
-              Source :  6301
-             Comment :  278
+            Physical :  7370
+              Source :  6317
+             Comment :  279
  Single-line comment :  18
-       Block comment :  260
+       Block comment :  261
                Mixed :  8
  Empty block comment :  0
-               Empty :  780
+               Empty :  782
                To Do :  0
 
 Number of files read :  93

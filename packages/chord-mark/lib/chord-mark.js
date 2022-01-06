@@ -28077,6 +28077,7 @@ var barHasMultiplePositionedChords = function barHasMultiplePositionedChords(lin
  * @param {Boolean|('none'|'max'|'core')} simplifyChords
  * @param {Boolean} useShortNamings
  * @param {('never'|'uneven'|'always')} printChordsDuration
+ * @param {Function|Boolean} chordSymbolRenderer - must be an instance of a ChordSymbol renderer, returned by chordRendererFactory()
  * @param {Function|Boolean} customRenderer
  * @returns {String} rendered HTML
  */
@@ -28108,6 +28109,8 @@ function renderSong(parsedSong) {
       useShortNamings = _ref$useShortNamings === void 0 ? true : _ref$useShortNamings,
       _ref$printChordsDurat = _ref.printChordsDuration,
       printChordsDuration = _ref$printChordsDurat === void 0 ? 'uneven' : _ref$printChordsDurat,
+      _ref$chordSymbolRende = _ref.chordSymbolRenderer,
+      chordSymbolRenderer = _ref$chordSymbolRende === void 0 ? false : _ref$chordSymbolRende,
       _ref$customRenderer = _ref.customRenderer,
       customRenderer = _ref$customRenderer === void 0 ? false : _ref$customRenderer;
 
@@ -28138,16 +28141,24 @@ function renderSong(parsedSong) {
   }
 
   function renderChords() {
+    var renderChord = getChordSymbolRenderer();
+    return forEachChordInSong(allLines, function (chord) {
+      chord.symbol = getChordSymbol(chord.model, renderChord);
+    });
+  }
+
+  function getChordSymbolRenderer() {
+    if (typeof chordSymbolRenderer === 'function') {
+      return chordSymbolRenderer;
+    }
+
     var accidental = accidentalsType === 'auto' ? getMainAccidental(allChords) : accidentalsType;
-    var renderChord = (0,chord_symbol.chordRendererFactory)({
+    return (0,chord_symbol.chordRendererFactory)({
       simplify: simplifyChords,
       useShortNamings: useShortNamings,
       transposeValue: transposeValue,
       harmonizeAccidentals: harmonizeAccidentals,
       useFlats: accidental === 'flat'
-    });
-    return forEachChordInSong(allLines, function (chord) {
-      chord.symbol = getChordSymbol(chord.model, renderChord);
     });
   }
 
