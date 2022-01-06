@@ -1,4 +1,6 @@
 /* eslint-env node */
+//const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 const path = require('path');
 
 const buildDir = 'lib';
@@ -44,6 +46,9 @@ const config = {
 			},
 		],
 	},
+	plugins: [
+		/* * /new BundleAnalyzerPlugin() /**/
+	],
 };
 
 module.exports = config;

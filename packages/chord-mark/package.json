@@ -38,7 +38,7 @@
 	"size-limit": [
 		{
 			"path": "lib/chord-mark.js",
-			"limit": "60 KB"
+			"limit": "80 KB"
 		}
 	]
 }
