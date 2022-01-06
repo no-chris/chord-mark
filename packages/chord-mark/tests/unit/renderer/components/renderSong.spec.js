@@ -574,3 +574,13 @@ describe('Section Labels', () => {
 		);
 	});
 });
+
+describe('Custom ChordSymbol renderer', () => {
+	test('should use custom chordSymbol renderer', () => {
+		const chordSymbolRenderer = () => 'Custom';
+		const input = 'A B C';
+		const parsed = parseSong(input);
+		const rendered = renderSong(parsed, { chordSymbolRenderer });
+		expect(toText(rendered)).toBe('|Custom     |Custom     |Custom     |');
+	});
+});
