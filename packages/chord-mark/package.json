@@ -18,8 +18,7 @@
 	},
 	"homepage": "https://github.com/no-chris/chord-mark/tree/main/packages/chord-mark#readme",
 	"dependencies": {
-		"chord-symbol": "^2.1.0",
-		"core-js": "^3.20.2",
+		"chord-symbol": "3.0.0-beta.0",
 		"dompurify": "^2.3.4",
 		"lodash": "^4.17.21"
 	},
@@ -38,7 +37,7 @@
 	"size-limit": [
 		{
 			"path": "lib/chord-mark.js",
-			"limit": "80 KB"
+			"limit": "65 KB"
 		}
 	]
 }

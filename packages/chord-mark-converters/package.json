@@ -5,9 +5,10 @@
 	"author": "Christophe Noël <touffi51@gmail.com>",
 	"homepage": "https://github.com/no-chris/chord-mark/tree/main/packages/chord-mark-converters#readme",
 	"license": "MIT",
-	"main": "src/chordMarkConverters.js",
+	"main": "lib/chord-mark-converters.js",
 	"directories": {
 		"lib": "lib",
+		"src": "src",
 		"test": "tests"
 	},
 	"files": [
@@ -24,7 +25,10 @@
 	},
 	"dependencies": {
 		"chord-mark": "^0.10.0",
-		"chord-symbol": "^2.1.0",
+		"chord-symbol": "3.0.0-beta.0",
 		"dompurify": "^2.3.4"
+	},
+	"scripts": {
+		"build": "webpack"
 	}
 }
