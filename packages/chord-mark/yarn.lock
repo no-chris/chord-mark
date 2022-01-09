@@ -2,25 +2,19 @@
 # yarn lockfile v1
 
 
-chord-symbol@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/chord-symbol/-/chord-symbol-2.1.0.tgz#076e6bd3e9bb1076a9d42f3152e50ad7fc2c7f9b"
-  integrity sha512-0vUz0LNVNlXTlt4pht9Aw2H28+LIVZ7U7X3tXzFBf9xIbfExI0Y1D+Z7m1X63+Bp9Ne0bDzVBMrVD5cYpYq27g==
+chord-symbol@3.0.0-beta.0:
+  version "3.0.0-beta.0"
+  resolved "https://registry.yarnpkg.com/chord-symbol/-/chord-symbol-3.0.0-beta.0.tgz#5d52d895414478dd109bda0b191c98b4b3e15093"
+  integrity sha512-Af+Ux1A1vX+CEKumA1TtG12l14gpBqC7eRHIYixnYcpIrj6bwLoDL3/Oekl3yvvMlqohey27Ed2Dv8qHfG+Ysw==
   dependencies:
-    core-js "^3.8.2"
-    lodash "^4.17.20"
-
-core-js@^3.8.2:
-  version "3.20.2"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.20.2.tgz#46468d8601eafc8b266bd2dd6bf9dee622779581"
-  integrity sha512-nuqhq11DcOAbFBV4zCbKeGbKQsUDRqTX0oqx7AttUBuqe3h20ixsE039QHelbL6P4h+9kytVqyEtyZ6gsiwEYw==
+    lodash "^4.17.21"
 
 dompurify@^2.3.4:
   version "2.3.4"
   resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-2.3.4.tgz#1cf5cf0105ccb4debdf6db162525bd41e6ddacc6"
   integrity sha512-6BVcgOAVFXjI0JTjEvZy901Rghm+7fDQOrNIcxB4+gdhj6Kwp6T9VBhBY/AbagKHJocRkDYGd6wvI+p4/10xtQ==
 
-lodash@^4.17.20, lodash@^4.17.21:
+lodash@^4.17.21:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
