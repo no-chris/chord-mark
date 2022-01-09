@@ -37,6 +37,7 @@ import replaceRepeatedBars from '../replaceRepeatedBars';
  * @param {Boolean|('none'|'max'|'core')} simplifyChords
  * @param {Boolean} useShortNamings
  * @param {('never'|'uneven'|'always')} printChordsDuration
+ * @param {Function|Boolean} chordSymbolRenderer - must be an instance of a ChordSymbol renderer, returned by chordRendererFactory()
  * @param {Function|Boolean} customRenderer
  * @returns {String} rendered HTML
  */
@@ -56,6 +57,7 @@ export default function renderSong(
 		simplifyChords = 'none',
 		useShortNamings = true,
 		printChordsDuration = 'uneven',
+		chordSymbolRenderer = false,
 		customRenderer = false,
 	} = {}
 ) {
@@ -89,21 +91,28 @@ export default function renderSong(
 	}
 
 	function renderChords() {
+		const renderChord = getChordSymbolRenderer();
+
+		return forEachChordInSong(allLines, (chord) => {
+			chord.symbol = getChordSymbol(chord.model, renderChord);
+		});
+	}
+
+	function getChordSymbolRenderer() {
+		if (typeof chordSymbolRenderer === 'function') {
+			return chordSymbolRenderer;
+		}
 		const accidental =
 			accidentalsType === 'auto'
 				? getMainAccidental(allChords)
 				: accidentalsType;
 
-		const renderChord = chordRendererFactory({
+		return chordRendererFactory({
 			simplify: simplifyChords,
 			useShortNamings,
 			transposeValue,
 			harmonizeAccidentals,
 			useFlats: accidental === 'flat',
-		});
-
-		return forEachChordInSong(allLines, (chord) => {
-			chord.symbol = getChordSymbol(chord.model, renderChord);
 		});
 	}
 
