@@ -86,7 +86,9 @@ I [|] [C]heard there was a [|] [Am]secret chord [|]
 
 ### To Ultimate Guitar format
 
-Use this converter if you want to publish ChordMark chord charts to the Ultimate Guitar website.
+Use this converter if you want to publish chord charts created with ChordMark to the Ultimate Guitar website.
+Due to the website rules, however, you will lose all the goodies such s
+You also need to configure ChordSymbol
 
 ```javascript
 import { parseSong, renderSong } from 'chord-mark';

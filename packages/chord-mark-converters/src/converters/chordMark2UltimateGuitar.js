@@ -22,14 +22,17 @@ const convert2UltimateGuitar = (allLines, allRenderedLines) => {
 };
 
 const getChordLine = (line) => {
+	const firstBarSymbolRe = /\|([^\s|]+)/g;
+	const lastBarSeparatorRe = /\|$/;
+	const chordSymbolRe = /([^\s.|]+)/g;
+
 	return line
-		.replace(/([^\s|]+)/g, (_, chordSymbol) => {
-			const withoutParenthesis = chordSymbol.replace(/[()]/g, '');
-			return withoutParenthesis.length < chordSymbol.length
-				? withoutParenthesis + '  '
-				: chordSymbol;
+		.replace(firstBarSymbolRe, (_, firstBarSymbol) => {
+			return firstBarSymbol + ' ';
 		})
-		.replace(/([^\s.|]+)/g, '[ch]$1[/ch]');
+		.replace(lastBarSeparatorRe, '')
+		.replace(chordSymbolRe, '[ch]$1[/ch]')
+		.trim();
 };
 
 export default chordMark2UltimateGuitar;
