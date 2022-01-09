@@ -19,7 +19,6 @@
 		"@babel/cli": "^7.16.7",
 		"@babel/core": "^7.16.7",
 		"@babel/preset-env": "^7.16.7",
-		"@babel/preset-react": "^7.16.7",
 		"@size-limit/preset-small-lib": "^7.0.5",
 		"babel-jest": "^27.4.5",
 		"babel-loader": "^8.2.3",
@@ -54,7 +53,5 @@
 		"test": "jest",
 		"up": "yarn upgrade && lerna exec yarn upgrade"
 	},
-	"dependencies": {
-		"core-js": "^3.20.2"
-	}
+	"dependencies": {}
 }
