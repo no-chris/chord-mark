@@ -777,6 +777,42 @@ describe.each([
 			],
 		},
 	],
+
+	[
+		'spaces in chord symbol',
+		'C(add b9) F(add #9)',
+		ts4_4,
+		{
+			allBars: [
+				{
+					allChords: [
+						{
+							string: 'C(addb9)',
+							model: { symbol: 'C(addb9)' },
+							duration: 4,
+							beat: 1,
+						},
+					],
+					timeSignature: ts4_4,
+					isRepeated: false,
+					hasUnevenChordsDurations: false,
+				},
+				{
+					allChords: [
+						{
+							string: 'F(add#9)',
+							model: { symbol: 'F(add#9)' },
+							duration: 4,
+							beat: 1,
+						},
+					],
+					timeSignature: ts4_4,
+					isRepeated: false,
+					hasUnevenChordsDurations: false,
+				},
+			],
+		},
+	],
 ])('%s: %s', (title, input, timeSignature, expected) => {
 	test('is correctly parsed', () => {
 		const options = { timeSignature };

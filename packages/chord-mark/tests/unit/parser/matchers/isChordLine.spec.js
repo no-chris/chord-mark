@@ -20,6 +20,9 @@ describe.each([
 	['A %%%', true],
 	['A.. B.. %', true],
 	['A.. B.. %%%', true],
+	['C(add #9)', true], // remove space in symbol
+	['C(add #9) A(add b9)', true], // remove space in symbol
+	['C(add #9)... A(add b9).', true], // remove space in symbol
 
 	[undefined, false],
 	['', false],
