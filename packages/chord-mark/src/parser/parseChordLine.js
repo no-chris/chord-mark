@@ -9,6 +9,7 @@ import parseTimeSignature from './parseTimeSignature';
 
 import IncorrectBeatCountException from './exceptions/IncorrectBeatCountException';
 import InvalidChordRepetitionException from './exceptions/InvalidChordRepetitionException';
+import { getParseableChordLine } from './matchers/isChordLine';
 
 const chordBeatCountSymbols = new RegExp(syntax.chordBeatCount, 'g');
 const barRepeatSymbols = new RegExp('^' + syntax.barRepeat + '+$');
@@ -60,7 +61,7 @@ export default function parseChordLine(
 	let currentBeatCount = 0;
 	let previousBar;
 
-	const allTokens = clearSpaces(chordLine).split(' ');
+	const allTokens = clearSpaces(getParseableChordLine(chordLine)).split(' ');
 	allTokens.forEach((token, tokenIndex) => {
 		if (token.match(barRepeatSymbols)) {
 			if (previousBar) {
