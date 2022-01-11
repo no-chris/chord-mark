@@ -87,12 +87,16 @@ I [|] [C]heard there was a [|] [Am]secret chord [|]
 ### To Ultimate Guitar format
 
 Use this converter if you want to publish chord charts created with ChordMark to the Ultimate Guitar website.
-Due to the website rules, however, you will lose all the goodies such s
-You also need to configure ChordSymbol
+Due to the website publication rules, however, you will lose most of the ChordMark goodies such as the bar separators and the beat count indicators
+(at least for the bars with lyrics).
+You also need to use the appropriate chord symbol renderer (e.g. `chord-symbol-ultimateguitar`) and configure the rendering as follow:
 
 ```javascript
 import { parseSong, renderSong } from 'chord-mark';
 import { chordMarkToUltimateGuitar } from 'chord-mark-converters';
+
+import { chordRendererFactory } from 'chord-symbol';
+import chordSymbolUltimateGuitar from 'chord-symbol-ultimateguitar';
 
 const input = `#v
 C Am
@@ -100,7 +104,12 @@ I _heard there was a _secret chord`;
 
 const parsed = parseSong(input);
 const ultimateGuitar = renderSong(parsed, {
-	customRenderer: chordMarkToUltimateGuitar(),
+	printChordsDuration: 'never',
+	customRenderer: chordMark2UltimateGuitar(),
+	chordSymbolRenderer: chordRendererFactory({
+		customFilters: [chordSymbolUltimateGuitar()],
+		useShortNamings: true,
+	}),
 });
 ```
 
@@ -108,6 +117,6 @@ This will produce the following string:
 
 ```
 [Verse]
-  |[ch]C[/ch]                |[ch]Am[/ch]         |
+  [ch]C[/ch]                 [ch]Am[/ch]
 I heard there was a secret chord
 ```
