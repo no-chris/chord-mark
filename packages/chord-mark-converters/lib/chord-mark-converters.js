@@ -3998,7 +3998,7 @@ var sectionLabelRegexp=new RegExp('^'+syntax.sectionLabel+'([a-zA-Z]+)([1-9])?( 
 function clearSpaces(string){return string.replace(/\t+/g,' ').replace(/  +/g,' ').trim();}// EXTERNAL MODULE: ./node_modules/chord-symbol/lib/chord-symbol.js
 var chord_symbol=__nested_webpack_require_429648__(6013);;// CONCATENATED MODULE: ./src/parser/matchers/isChord.js
 function isChord(potentialChord){var parseChord=(0,chord_symbol.chordParserFactory)();var parsed=parseChord(potentialChord);return!parsed.error;};// CONCATENATED MODULE: ./src/parser/matchers/isChordLine.js
-var chordBeatCountSymbols=new RegExp(syntax.chordBeatCount+'*$','g');var barRepeatSymbols=new RegExp('^'+syntax.barRepeat+'+$');function isChordLine(){var line=arguments.length>0&&arguments[0]!==undefined?arguments[0]:'';return clearSpaces(line).split(' ').every(function(potentialChordToken,index){var withoutBeatCount=potentialChordToken.replace(chordBeatCountSymbols,'');return isChord(withoutBeatCount)||potentialChordToken.match(barRepeatSymbols)&&index>0||withoutBeatCount===syntax.noChord;});};// CONCATENATED MODULE: ./src/parser/matchers/isChordLineRepeater.js
+var chordBeatCountSymbols=new RegExp(syntax.chordBeatCount+'*$','g');var barRepeatSymbols=new RegExp('^'+syntax.barRepeat+'+$');var getParseableChordLine=function getParseableChordLine(chordLine){return chordLine.replace('add #','add#').replace('add b','addb');};function isChordLine(){var line=arguments.length>0&&arguments[0]!==undefined?arguments[0]:'';return clearSpaces(getParseableChordLine(line)).split(' ').every(function(potentialChordToken,index){var withoutBeatCount=potentialChordToken.replace(chordBeatCountSymbols,'');return isChord(withoutBeatCount)||potentialChordToken.match(barRepeatSymbols)&&index>0||withoutBeatCount===syntax.noChord;});};// CONCATENATED MODULE: ./src/parser/matchers/isChordLineRepeater.js
 function isChordLineRepeater(string){var candidate=clearSpaces(string);return candidate===syntax.chordLineRepeat||candidate===syntax.chordLineRepeat.repeat(2);};// CONCATENATED MODULE: ./src/parser/matchers/isEmptyLine.js
 function isEmptyLine(string){return clearSpaces(string)==='';};// CONCATENATED MODULE: ./src/parser/parseTimeSignature.js
 /**
@@ -4045,7 +4045,7 @@ var parseChordLine_chordBeatCountSymbols=new RegExp(syntax.chordBeatCount,'g');v
  * @param {String} chordLine
  * @param {TimeSignature} timeSignature
  * @returns {ChordLine}
- */function parseChordLine(chordLine){var _ref=arguments.length>1&&arguments[1]!==undefined?arguments[1]:{},_ref$timeSignature=_ref.timeSignature,timeSignature=_ref$timeSignature===void 0?defaultTimeSignature:_ref$timeSignature;var beatCount=timeSignature.beatCount;var allBars=[];var emptyBar={allChords:[]};var bar=cloneDeep_default()(emptyBar);var chord={};var tokenWithoutBeatCount;var currentBeatCount=0;var previousBar;var allTokens=clearSpaces(chordLine).split(' ');allTokens.forEach(function(token,tokenIndex){if(token.match(parseChordLine_barRepeatSymbols)){if(previousBar){var repeatedBar=cloneDeep_default()(previousBar);repeatedBar.isRepeated=true;for(var i=0;i<token.length;i++){allBars.push(cloneDeep_default()(repeatedBar));}}else{throw new Error('A chord line cannot start with the barRepeat symbol');}}else{tokenWithoutBeatCount=token.replace(parseChordLine_chordBeatCountSymbols,'');chord={string:token,duration:getChordDuration(token,beatCount),model:isNoChordSymbol(tokenWithoutBeatCount)?syntax.noChord:parseChordWrapper(tokenWithoutBeatCount),beat:currentBeatCount+1};currentBeatCount+=chord.duration;checkInvalidChordRepetition(bar,chord);bar.allChords.push(chord);if(shouldChangeBar(currentBeatCount,beatCount)){bar.timeSignature=timeSignature;bar.hasUnevenChordsDurations=hasUnevenChordsDurations(bar);var barClone=cloneDeep_default()(bar);bar.isRepeated=isEqual_default()(bar,previousBar);allBars.push(cloneDeep_default()(bar));previousBar=barClone;bar=cloneDeep_default()(emptyBar);currentBeatCount=0;}else{checkInvalidBeatCount(chord,currentBeatCount,beatCount,allTokens.length===tokenIndex+1);}}});return{allBars:allBars};}function isNoChordSymbol(token){return token===syntax.noChord;}function getChordDuration(token,beatCount){return(token.match(parseChordLine_chordBeatCountSymbols)||[]).length||beatCount;}function checkInvalidChordRepetition(bar,currentChord){if(bar.allChords.length>0){var previousChord=bar.allChords[bar.allChords.length-1];if(isEqual_default()(previousChord.model,currentChord.model)){throw new InvalidChordRepetitionException({string:currentChord.string});}}}function shouldChangeBar(currentBeatCount,beatCount){return currentBeatCount===beatCount;}function checkInvalidBeatCount(chord,currentBeatCount,beatCount,isLast){if(hasInvalidBeatCount(currentBeatCount,beatCount,isLast)){throw new IncorrectBeatCountException({message:'',string:chord.string,duration:chord.duration,currentBeatCount:currentBeatCount,beatCount:beatCount});}}function hasInvalidBeatCount(currentBeatCount,barBeatCount,isLast){return hasTooManyBeats(currentBeatCount,barBeatCount)||hasTooFewBeats(currentBeatCount,barBeatCount,isLast);}function hasTooManyBeats(currentBeatCount,barBeatCount){return currentBeatCount>barBeatCount;}function hasTooFewBeats(currentBeatCount,barBeatCount,isLast){return isLast&&currentBeatCount<barBeatCount;}function hasUnevenChordsDurations(bar){var firstChordDuration=bar.allChords[0].duration;return bar.allChords.some(function(chord){return chord.duration!==firstChordDuration;});};// CONCATENATED MODULE: ./src/parser/parseSectionLabel.js
+ */function parseChordLine(chordLine){var _ref=arguments.length>1&&arguments[1]!==undefined?arguments[1]:{},_ref$timeSignature=_ref.timeSignature,timeSignature=_ref$timeSignature===void 0?defaultTimeSignature:_ref$timeSignature;var beatCount=timeSignature.beatCount;var allBars=[];var emptyBar={allChords:[]};var bar=cloneDeep_default()(emptyBar);var chord={};var tokenWithoutBeatCount;var currentBeatCount=0;var previousBar;var allTokens=clearSpaces(getParseableChordLine(chordLine)).split(' ');allTokens.forEach(function(token,tokenIndex){if(token.match(parseChordLine_barRepeatSymbols)){if(previousBar){var repeatedBar=cloneDeep_default()(previousBar);repeatedBar.isRepeated=true;for(var i=0;i<token.length;i++){allBars.push(cloneDeep_default()(repeatedBar));}}else{throw new Error('A chord line cannot start with the barRepeat symbol');}}else{tokenWithoutBeatCount=token.replace(parseChordLine_chordBeatCountSymbols,'');chord={string:token,duration:getChordDuration(token,beatCount),model:isNoChordSymbol(tokenWithoutBeatCount)?syntax.noChord:parseChordWrapper(tokenWithoutBeatCount),beat:currentBeatCount+1};currentBeatCount+=chord.duration;checkInvalidChordRepetition(bar,chord);bar.allChords.push(chord);if(shouldChangeBar(currentBeatCount,beatCount)){bar.timeSignature=timeSignature;bar.hasUnevenChordsDurations=hasUnevenChordsDurations(bar);var barClone=cloneDeep_default()(bar);bar.isRepeated=isEqual_default()(bar,previousBar);allBars.push(cloneDeep_default()(bar));previousBar=barClone;bar=cloneDeep_default()(emptyBar);currentBeatCount=0;}else{checkInvalidBeatCount(chord,currentBeatCount,beatCount,allTokens.length===tokenIndex+1);}}});return{allBars:allBars};}function isNoChordSymbol(token){return token===syntax.noChord;}function getChordDuration(token,beatCount){return(token.match(parseChordLine_chordBeatCountSymbols)||[]).length||beatCount;}function checkInvalidChordRepetition(bar,currentChord){if(bar.allChords.length>0){var previousChord=bar.allChords[bar.allChords.length-1];if(isEqual_default()(previousChord.model,currentChord.model)){throw new InvalidChordRepetitionException({string:currentChord.string});}}}function shouldChangeBar(currentBeatCount,beatCount){return currentBeatCount===beatCount;}function checkInvalidBeatCount(chord,currentBeatCount,beatCount,isLast){if(hasInvalidBeatCount(currentBeatCount,beatCount,isLast)){throw new IncorrectBeatCountException({message:'',string:chord.string,duration:chord.duration,currentBeatCount:currentBeatCount,beatCount:beatCount});}}function hasInvalidBeatCount(currentBeatCount,barBeatCount,isLast){return hasTooManyBeats(currentBeatCount,barBeatCount)||hasTooFewBeats(currentBeatCount,barBeatCount,isLast);}function hasTooManyBeats(currentBeatCount,barBeatCount){return currentBeatCount>barBeatCount;}function hasTooFewBeats(currentBeatCount,barBeatCount,isLast){return isLast&&currentBeatCount<barBeatCount;}function hasUnevenChordsDurations(bar){var firstChordDuration=bar.allChords[0].duration;return bar.allChords.some(function(chord){return chord.duration!==firstChordDuration;});};// CONCATENATED MODULE: ./src/parser/parseSectionLabel.js
 /**
  * @typedef {Object} SectionLabel
  * @type {Object}
@@ -15159,18 +15159,32 @@ var convert2UltimateGuitar = function convert2UltimateGuitar(allLines, allRender
     if (srcLine.type === chord_mark.lineTypes.SECTION_LABEL) {
       return "[".concat(renderedLine, "]");
     } else if (srcLine.type === chord_mark.lineTypes.CHORD) {
-      return chordMark2UltimateGuitar_getChordLine(renderedLine);
+      return chordMark2UltimateGuitar_getChordLine(srcLine, renderedLine);
     }
 
     return renderedLine.replace('&nbsp;', '');
   }).join('\n');
 };
+/**
+ * @param {SongChordLine} srcLine
+ * @param {String} renderedLine
+ * @returns {String}
+ */
 
-var chordMark2UltimateGuitar_getChordLine = function getChordLine(line) {
-  return line.replace(/([^\s|]+)/g, function (_, chordSymbol) {
-    var withoutParenthesis = chordSymbol.replace(/[()]/g, '');
-    return withoutParenthesis.length < chordSymbol.length ? withoutParenthesis + '  ' : chordSymbol;
-  }).replace(/([^\s.|]+)/g, '[ch]$1[/ch]');
+
+var chordMark2UltimateGuitar_getChordLine = function getChordLine(srcLine, renderedLine) {
+  var chordSymbolRe = /([^\s.|]+)/g;
+  var chordSymbolReplaceWith = '[ch]$1[/ch]';
+  var firstBarSymbolRe = /\|([^\s|]+)/g;
+  var lastBarSeparatorRe = /[\s]+\|$/;
+
+  if (!srcLine.model.hasPositionedChords) {
+    return renderedLine.replace(chordSymbolRe, chordSymbolReplaceWith);
+  }
+
+  return renderedLine.replace(firstBarSymbolRe, function (_, firstBarSymbol) {
+    return firstBarSymbol + ' ';
+  }).replace(lastBarSeparatorRe, '').replace(chordSymbolRe, chordSymbolReplaceWith);
 };
 
 /* harmony default export */ const converters_chordMark2UltimateGuitar = (chordMark2UltimateGuitar);

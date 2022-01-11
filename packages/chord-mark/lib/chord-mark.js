@@ -17300,13 +17300,19 @@ function isChord(potentialChord) {
 
 var chordBeatCountSymbols = new RegExp(syntax.chordBeatCount + '*$', 'g');
 var barRepeatSymbols = new RegExp('^' + syntax.barRepeat + '+$');
+
+var getParseableChordLine = function getParseableChordLine(chordLine) {
+  return chordLine.replace('add #', 'add#').replace('add b', 'addb');
+};
+
 function isChordLine() {
   var line = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-  return clearSpaces(line).split(' ').every(function (potentialChordToken, index) {
+  return clearSpaces(getParseableChordLine(line)).split(' ').every(function (potentialChordToken, index) {
     var withoutBeatCount = potentialChordToken.replace(chordBeatCountSymbols, '');
     return isChord(withoutBeatCount) || potentialChordToken.match(barRepeatSymbols) && index > 0 || withoutBeatCount === syntax.noChord;
   });
 }
+
 ;// CONCATENATED MODULE: ./src/parser/matchers/isChordLineRepeater.js
 
 
@@ -17522,6 +17528,7 @@ var InvalidChordRepetitionException = /*#__PURE__*/function (_Error) {
 
 
 
+
 var parseChordLine_chordBeatCountSymbols = new RegExp(syntax.chordBeatCount, 'g');
 var parseChordLine_barRepeatSymbols = new RegExp('^' + syntax.barRepeat + '+$');
 var defaultTimeSignature = parseTimeSignature('4/4');
@@ -17574,7 +17581,7 @@ function parseChordLine(chordLine) {
   var tokenWithoutBeatCount;
   var currentBeatCount = 0;
   var previousBar;
-  var allTokens = clearSpaces(chordLine).split(' ');
+  var allTokens = clearSpaces(getParseableChordLine(chordLine)).split(' ');
   allTokens.forEach(function (token, tokenIndex) {
     if (token.match(parseChordLine_barRepeatSymbols)) {
       if (previousBar) {
