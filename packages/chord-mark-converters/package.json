@@ -26,7 +26,7 @@
 	"dependencies": {
 		"chord-mark": "^0.11.0-beta.0",
 		"chord-symbol": "3.0.0-beta.0",
-		"chord-symbol-ultimateguitar": "3.0.0-beta.1",
+		"chord-symbol-ultimateguitar": "3.0.0-beta.2",
 		"dompurify": "^2.3.4"
 	},
 	"scripts": {

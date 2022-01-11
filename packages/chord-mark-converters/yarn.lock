@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-chord-symbol-ultimateguitar@3.0.0-beta.1:
-  version "3.0.0-beta.1"
-  resolved "https://registry.yarnpkg.com/chord-symbol-ultimateguitar/-/chord-symbol-ultimateguitar-3.0.0-beta.1.tgz#079fb15dd30054347421f94d6c3d3632bddc4537"
-  integrity sha512-q/fnBuCT4ila2qo46dOU+/G42fEgj2i9+5Eme4EL3bNKcTQ1rM+7OOX9Dx+4RFW2mgvqbUTQxq4BIifOvEwP3A==
+chord-symbol-ultimateguitar@3.0.0-beta.2:
+  version "3.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/chord-symbol-ultimateguitar/-/chord-symbol-ultimateguitar-3.0.0-beta.2.tgz#218f102c438e71030f4d0284b05754405bd074e7"
+  integrity sha512-4qq2CKSzCDG9QHWjl/8cljmRNOeUanLzO895c1lqsqRyKMwfqoqVFyZ3FNwRisZ66DgufFGUnyPEIhUPnO7kXQ==
   dependencies:
     chord-symbol "^3.0.0-beta.0"
 
