@@ -14,25 +14,34 @@ const convert2UltimateGuitar = (allLines, allRenderedLines) => {
 			if (srcLine.type === lineTypes.SECTION_LABEL) {
 				return `[${renderedLine}]`;
 			} else if (srcLine.type === lineTypes.CHORD) {
-				return getChordLine(renderedLine);
+				return getChordLine(srcLine, renderedLine);
 			}
 			return renderedLine.replace('&nbsp;', '');
 		})
 		.join('\n');
 };
 
-const getChordLine = (line) => {
-	const firstBarSymbolRe = /\|([^\s|]+)/g;
-	const lastBarSeparatorRe = /\|$/;
+/**
+ * @param {SongChordLine} srcLine
+ * @param {String} renderedLine
+ * @returns {String}
+ */
+const getChordLine = (srcLine, renderedLine) => {
 	const chordSymbolRe = /([^\s.|]+)/g;
+	const chordSymbolReplaceWith = '[ch]$1[/ch]';
+	const firstBarSymbolRe = /\|([^\s|]+)/g;
+	const lastBarSeparatorRe = /[\s]+\|$/;
 
-	return line
+	if (!srcLine.model.hasPositionedChords) {
+		return renderedLine.replace(chordSymbolRe, chordSymbolReplaceWith);
+	}
+
+	return renderedLine
 		.replace(firstBarSymbolRe, (_, firstBarSymbol) => {
 			return firstBarSymbol + ' ';
 		})
 		.replace(lastBarSeparatorRe, '')
-		.replace(chordSymbolRe, '[ch]$1[/ch]')
-		.trim();
+		.replace(chordSymbolRe, chordSymbolReplaceWith);
 };
 
 export default chordMark2UltimateGuitar;
