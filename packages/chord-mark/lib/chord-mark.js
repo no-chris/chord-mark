@@ -9840,7 +9840,7 @@ function chordParserFactory() {
   /**
    * Convert an input string into an abstract chord structure
    * @param {String} symbol - the chord symbol candidate
-   * @returns {Chord|Null} A chord object if the given string is successfully parsed. Null otherwise.
+   * @returns {Chord|Object} A chord object if the given string is successfully parsed. An object with an `error` property otherwise.
    */
 
   function parseChord(symbol) {
@@ -18366,7 +18366,14 @@ function space(chordLineInput) {
 ;// CONCATENATED MODULE: ./src/renderer/spacers/chord/aligned.js
 
 
-function aligned_space(chordLineInput, maxBeatsWidth) {
+/**
+ * @param {ChordLine} chordLineInput
+ * @param {Array} maxBeatsWidth
+ * @param {Boolean} shouldPrintBarSeparators
+ * @returns {ChordLine}
+ */
+
+function aligned_space(chordLineInput, maxBeatsWidth, shouldPrintBarSeparators) {
   var chordLine = cloneDeep_default()(chordLineInput);
 
   var beatMaxWidth;
@@ -18392,6 +18399,8 @@ function aligned_space(chordLineInput, maxBeatsWidth) {
             chord.spacesAfter += symbols.spacesAfterDefault;
           }
         }
+      } else if (!shouldPrintBarSeparators) {
+        chord.spacesAfter = symbols.spacesAfterDefault;
       }
     });
   });
@@ -18404,13 +18413,16 @@ var chordSpaceAfterDefault = 1;
 /**
  * @param {ChordLine} chordLineInput
  * @param {LyricLine} lyricsLineInput
+ * @param {Boolean} shouldPrintBarSeparators
  * @returns {Object}
  */
 
-function chordLyrics_space(chordLineInput, lyricsLineInput) {
+function chordLyrics_space(chordLineInput, lyricsLineInput, shouldPrintBarSeparators) {
   var chordLine = cloneDeep_default()(chordLineInput);
 
   var lyricsLine = cloneDeep_default()(lyricsLineInput);
+
+  var barSeparatorToken = shouldPrintBarSeparators ? symbols.barSeparator : '';
 
   if (hasNoPositionMarkers(lyricsLine)) {
     return {
@@ -18438,9 +18450,9 @@ function chordLyrics_space(chordLineInput, lyricsLineInput) {
         }
 
         if (isFirstChord(barIndex, chordIndex)) {
-          chordToken = symbols.barSeparator + chordToken;
+          chordToken = barSeparatorToken + chordToken;
         } else if (isNewBar(currentBarIndex, barIndex)) {
-          chordToken = symbols.barSeparator + chordToken;
+          chordToken = barSeparatorToken + chordToken;
           currentBarIndex = barIndex;
         }
 
@@ -18542,16 +18554,29 @@ var defaultSpacesWithin = 0;
 var defaultSpacesAfter = 2;
 /**
  * @param {Bar} bar
+ * @param {Boolean} isLastBar
+ * @param {Boolean} shouldPrintBarSeparators
  * @returns {String} rendered html
  */
 
-function renderBarContent(bar) {
+function renderBarContent(bar, isLastBar, shouldPrintBarSeparators) {
   var spacesWithin = 0;
   var spacesAfter = 0;
-  var barContent = bar.allChords.reduce(function (rendering, chord) {
+  var barContent = bar.allChords.reduce(function (rendering, chord, i) {
+    var isLastChordOfBar = !bar.allChords[i + 1];
     spacesWithin = isFinite_default()(chord.spacesWithin) ? chord.spacesWithin : defaultSpacesWithin;
     spacesAfter = isFinite_default()(chord.spacesAfter) ? chord.spacesAfter : defaultSpacesAfter;
-    rendering += renderChordSymbol(chord, bar.shouldPrintChordsDuration) + renderBarContent_space.repeat(spacesWithin) + renderBarContent_space.repeat(spacesAfter);
+    rendering += renderChordSymbol(chord, bar.shouldPrintChordsDuration);
+
+    if (shouldPrintChordSpaces()) {
+      rendering += renderBarContent_space.repeat(spacesWithin) + renderBarContent_space.repeat(spacesAfter);
+    }
+
+    function shouldPrintChordSpaces() {
+      var isLastChordOfLine = isLastChordOfBar && isLastBar;
+      return !isLastChordOfLine || isLastChordOfLine && shouldPrintBarSeparators;
+    }
+
     return rendering;
   }, '');
   return barContent_default()({
@@ -18568,16 +18593,18 @@ var barSeparator_default = /*#__PURE__*/__webpack_require__.n(tpl_barSeparator);
 
 /**
  * @param {ChordLine} chordLineModel
+ * @param {Boolean} shouldPrintBarSeparators
  * @returns {String} rendered html
  */
 
-function renderChordLine(chordLineModel) {
-  var allBarsRendered = chordLineModel.allBars.map(function (bar) {
-    return renderBarContent(bar);
+function renderChordLine(chordLineModel, shouldPrintBarSeparators) {
+  var allBarsRendered = chordLineModel.allBars.map(function (bar, i) {
+    var isLastBar = !chordLineModel.allBars[i + 1];
+    return renderBarContent(bar, isLastBar, shouldPrintBarSeparators);
   });
-  var barSeparator = barSeparator_default()({
+  var barSeparator = shouldPrintBarSeparators ? barSeparator_default()({
     barSeparator: symbols.barSeparator
-  });
+  }) : '';
   var chordLine = barSeparator + allBarsRendered.join(barSeparator) + barSeparator;
   var chordLineOffset = symbols.chordLineOffsetSpacer.repeat(chordLineModel.offset || 0);
   return chordLine_default()({
@@ -18881,54 +18908,58 @@ var barHasMultiplePositionedChords = function barHasMultiplePositionedChords(lin
 
 /**
  * @param {Song} parsedSong
+ * @param {('auto'|'flat'|'sharp')} accidentalsType
  * @param {Boolean} alignBars
  * @param {Boolean} alignChordsWithLyrics
- * @param {('all'|'lyrics'|'chords'|'chordsFirstLyricLine')} chartType
- * @param {Number} transposeValue
- * @param {('auto'|'flat'|'sharp')} accidentalsType
- * @param {Boolean} harmonizeAccidentals
- * @param {Boolean} expandSectionMultiply
- * @param {Boolean} expandSectionCopy
  * @param {Boolean} autoRepeatChords
- * @param {Boolean|('none'|'max'|'core')} simplifyChords
- * @param {Boolean} useShortNamings
- * @param {('never'|'uneven'|'always')} printChordsDuration
+ * @param {('all'|'lyrics'|'chords'|'chordsFirstLyricLine')} chartType
  * @param {Function|Boolean} chordSymbolRenderer - must be an instance of a ChordSymbol renderer, returned by chordRendererFactory()
  * @param {Function|Boolean} customRenderer
+ * @param {Boolean} expandSectionCopy
+ * @param {Boolean} expandSectionMultiply
+ * @param {Boolean} harmonizeAccidentals
+ * @param {Boolean|('none'|'max'|'core')} simplifyChords
+ * @param {('never'|'uneven'|'always')} printChordsDuration
+ * @param {('never'|'grids'|'always')} printBarSeparators - mainly useful when converting a ChordMark file to a format that
+ * do not allow bar separators to be printed (e.g. Ultimate Guitar)
+ * @param {Number} transposeValue
+ * @param {Boolean} useShortNamings
  * @returns {String} rendered HTML
  */
 // eslint-disable-next-line max-lines-per-function
 
 function renderSong(parsedSong) {
   var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+      _ref$accidentalsType = _ref.accidentalsType,
+      accidentalsType = _ref$accidentalsType === void 0 ? 'auto' : _ref$accidentalsType,
       _ref$alignBars = _ref.alignBars,
       alignBars = _ref$alignBars === void 0 ? true : _ref$alignBars,
       _ref$alignChordsWithL = _ref.alignChordsWithLyrics,
       alignChordsWithLyrics = _ref$alignChordsWithL === void 0 ? true : _ref$alignChordsWithL,
-      _ref$chartType = _ref.chartType,
-      chartType = _ref$chartType === void 0 ? 'all' : _ref$chartType,
-      _ref$transposeValue = _ref.transposeValue,
-      transposeValue = _ref$transposeValue === void 0 ? 0 : _ref$transposeValue,
-      _ref$accidentalsType = _ref.accidentalsType,
-      accidentalsType = _ref$accidentalsType === void 0 ? 'auto' : _ref$accidentalsType,
-      _ref$harmonizeAcciden = _ref.harmonizeAccidentals,
-      harmonizeAccidentals = _ref$harmonizeAcciden === void 0 ? true : _ref$harmonizeAcciden,
-      _ref$expandSectionMul = _ref.expandSectionMultiply,
-      expandSectionMultiply = _ref$expandSectionMul === void 0 ? false : _ref$expandSectionMul,
-      _ref$expandSectionCop = _ref.expandSectionCopy,
-      expandSectionCopy = _ref$expandSectionCop === void 0 ? true : _ref$expandSectionCop,
       _ref$autoRepeatChords = _ref.autoRepeatChords,
       autoRepeatChords = _ref$autoRepeatChords === void 0 ? true : _ref$autoRepeatChords,
-      _ref$simplifyChords = _ref.simplifyChords,
-      simplifyChords = _ref$simplifyChords === void 0 ? 'none' : _ref$simplifyChords,
-      _ref$useShortNamings = _ref.useShortNamings,
-      useShortNamings = _ref$useShortNamings === void 0 ? true : _ref$useShortNamings,
-      _ref$printChordsDurat = _ref.printChordsDuration,
-      printChordsDuration = _ref$printChordsDurat === void 0 ? 'uneven' : _ref$printChordsDurat,
+      _ref$chartType = _ref.chartType,
+      chartType = _ref$chartType === void 0 ? 'all' : _ref$chartType,
       _ref$chordSymbolRende = _ref.chordSymbolRenderer,
       chordSymbolRenderer = _ref$chordSymbolRende === void 0 ? false : _ref$chordSymbolRende,
       _ref$customRenderer = _ref.customRenderer,
-      customRenderer = _ref$customRenderer === void 0 ? false : _ref$customRenderer;
+      customRenderer = _ref$customRenderer === void 0 ? false : _ref$customRenderer,
+      _ref$expandSectionCop = _ref.expandSectionCopy,
+      expandSectionCopy = _ref$expandSectionCop === void 0 ? true : _ref$expandSectionCop,
+      _ref$expandSectionMul = _ref.expandSectionMultiply,
+      expandSectionMultiply = _ref$expandSectionMul === void 0 ? false : _ref$expandSectionMul,
+      _ref$harmonizeAcciden = _ref.harmonizeAccidentals,
+      harmonizeAccidentals = _ref$harmonizeAcciden === void 0 ? true : _ref$harmonizeAcciden,
+      _ref$printChordsDurat = _ref.printChordsDuration,
+      printChordsDuration = _ref$printChordsDurat === void 0 ? 'uneven' : _ref$printChordsDurat,
+      _ref$printBarSeparato = _ref.printBarSeparators,
+      printBarSeparators = _ref$printBarSeparato === void 0 ? 'always' : _ref$printBarSeparato,
+      _ref$simplifyChords = _ref.simplifyChords,
+      simplifyChords = _ref$simplifyChords === void 0 ? 'none' : _ref$simplifyChords,
+      _ref$transposeValue = _ref.transposeValue,
+      transposeValue = _ref$transposeValue === void 0 ? 0 : _ref$transposeValue,
+      _ref$useShortNamings = _ref.useShortNamings,
+      useShortNamings = _ref$useShortNamings === void 0 ? true : _ref$useShortNamings;
 
   var allLines = parsedSong.allLines,
       allChords = parsedSong.allChords;
@@ -19021,11 +19052,11 @@ function renderSong(parsedSong) {
 
   function spaceChordLine(line, lineIndex) {
     if (line.type === parser_lineTypes.CHORD) {
-      var spaced = alignBars && !shouldAlignChords(line) ? aligned_space(line.model, maxBeatsWidth) : space(line.model);
+      var spaced = alignBars && !shouldAlignChords(line) ? aligned_space(line.model, maxBeatsWidth, shouldPrintBarSeparators(line.model)) : space(line.model);
       var nextLine = allLines[lineIndex + 1];
 
       if (shouldAlignChords(line)) {
-        var _chordLyricsSpacer = chordLyrics_space(spaced, nextLine.model),
+        var _chordLyricsSpacer = chordLyrics_space(spaced, nextLine.model, shouldPrintBarSeparators(line.model)),
             chordLine = _chordLyricsSpacer.chordLine,
             lyricsLine = _chordLyricsSpacer.lyricsLine;
 
@@ -19042,7 +19073,7 @@ function renderSong(parsedSong) {
       var rendered;
 
       if (line.type === parser_lineTypes.CHORD) {
-        rendered = renderChordLine(line.model);
+        rendered = renderChordLine(line.model, shouldPrintBarSeparators(line.model));
       } else if (line.type === parser_lineTypes.EMPTY_LINE) {
         rendered = render();
       } else if (line.type === parser_lineTypes.SECTION_LABEL) {
@@ -19067,6 +19098,15 @@ function renderSong(parsedSong) {
 
   function shouldAlignChords(line) {
     return chartType === 'all' && alignChordsWithLyrics && line.model.hasPositionedChords;
+  }
+  /**
+   * @param {ChordLine} line
+   * @returns {boolean}
+   */
+
+
+  function shouldPrintBarSeparators(line) {
+    return printBarSeparators === 'always' || printBarSeparators === 'grids' && !line.hasPositionedChords;
   }
 }
 ;// CONCATENATED MODULE: ./src/chordMark.js
