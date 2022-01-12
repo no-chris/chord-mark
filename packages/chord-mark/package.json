@@ -31,7 +31,6 @@
 	"files": [
 		"lib",
 		"src",
-		"scss",
 		"tests"
 	],
 	"size-limit": [
