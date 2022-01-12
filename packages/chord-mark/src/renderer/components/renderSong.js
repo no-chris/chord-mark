@@ -25,40 +25,42 @@ import replaceRepeatedBars from '../replaceRepeatedBars';
 
 /**
  * @param {Song} parsedSong
+ * @param {('auto'|'flat'|'sharp')} accidentalsType
  * @param {Boolean} alignBars
  * @param {Boolean} alignChordsWithLyrics
- * @param {('all'|'lyrics'|'chords'|'chordsFirstLyricLine')} chartType
- * @param {Number} transposeValue
- * @param {('auto'|'flat'|'sharp')} accidentalsType
- * @param {Boolean} harmonizeAccidentals
- * @param {Boolean} expandSectionMultiply
- * @param {Boolean} expandSectionCopy
  * @param {Boolean} autoRepeatChords
- * @param {Boolean|('none'|'max'|'core')} simplifyChords
- * @param {Boolean} useShortNamings
- * @param {('never'|'uneven'|'always')} printChordsDuration
+ * @param {('all'|'lyrics'|'chords'|'chordsFirstLyricLine')} chartType
  * @param {Function|Boolean} chordSymbolRenderer - must be an instance of a ChordSymbol renderer, returned by chordRendererFactory()
  * @param {Function|Boolean} customRenderer
+ * @param {Boolean} expandSectionCopy
+ * @param {Boolean} expandSectionMultiply
+ * @param {Boolean} harmonizeAccidentals
+ * @param {Boolean|('none'|'max'|'core')} simplifyChords
+ * @param {('never'|'uneven'|'always')} printChordsDuration
+ * @param {Boolean} printBarSeparators
+ * @param {Number} transposeValue
+ * @param {Boolean} useShortNamings
  * @returns {String} rendered HTML
  */
 // eslint-disable-next-line max-lines-per-function
 export default function renderSong(
 	parsedSong,
 	{
+		accidentalsType = 'auto',
 		alignBars = true,
 		alignChordsWithLyrics = true,
-		chartType = 'all',
-		transposeValue = 0,
-		accidentalsType = 'auto',
-		harmonizeAccidentals = true,
-		expandSectionMultiply = false,
-		expandSectionCopy = true,
 		autoRepeatChords = true,
-		simplifyChords = 'none',
-		useShortNamings = true,
-		printChordsDuration = 'uneven',
+		chartType = 'all',
 		chordSymbolRenderer = false,
 		customRenderer = false,
+		expandSectionCopy = true,
+		expandSectionMultiply = false,
+		harmonizeAccidentals = true,
+		printChordsDuration = 'uneven',
+		printBarSeparators = true,
+		simplifyChords = 'none',
+		transposeValue = 0,
+		useShortNamings = true,
 	} = {}
 ) {
 	let { allLines, allChords } = parsedSong;
@@ -187,7 +189,8 @@ export default function renderSong(
 			if (shouldAlignChords(line)) {
 				const { chordLine, lyricsLine } = chordLyricsSpacer(
 					spaced,
-					nextLine.model
+					nextLine.model,
+					printBarSeparators
 				);
 				allLines[lineIndex + 1].model = lyricsLine;
 				spaced = chordLine;
@@ -202,7 +205,10 @@ export default function renderSong(
 				let rendered;
 
 				if (line.type === lineTypes.CHORD) {
-					rendered = renderChordLineModel(line.model);
+					rendered = renderChordLineModel(
+						line.model,
+						printBarSeparators
+					);
 				} else if (line.type === lineTypes.EMPTY_LINE) {
 					rendered = renderEmptyLine();
 				} else if (line.type === lineTypes.SECTION_LABEL) {

@@ -7,11 +7,17 @@ const chordSpaceAfterDefault = 1;
 /**
  * @param {ChordLine} chordLineInput
  * @param {LyricLine} lyricsLineInput
+ * @param {Boolean} printBarSeparators
  * @returns {Object}
  */
-export default function space(chordLineInput, lyricsLineInput) {
+export default function space(
+	chordLineInput,
+	lyricsLineInput,
+	printBarSeparators
+) {
 	const chordLine = _cloneDeep(chordLineInput);
 	const lyricsLine = _cloneDeep(lyricsLineInput);
+	const barSeparatorToken = printBarSeparators ? symbols.barSeparator : '';
 
 	if (hasNoPositionMarkers(lyricsLine)) {
 		return {
@@ -43,9 +49,9 @@ export default function space(chordLineInput, lyricsLineInput) {
 				}
 
 				if (isFirstChord(barIndex, chordIndex)) {
-					chordToken = symbols.barSeparator + chordToken;
+					chordToken = barSeparatorToken + chordToken;
 				} else if (isNewBar(currentBarIndex, barIndex)) {
-					chordToken = symbols.barSeparator + chordToken;
+					chordToken = barSeparatorToken + chordToken;
 					currentBarIndex = barIndex;
 				}
 

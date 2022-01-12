@@ -133,3 +133,43 @@ describe.each([
 		});
 	}
 );
+
+describe.each([
+	['1 chord / not last bar / bar sep', 'C', false, true, 'C   '],
+	['1 chord / not last bar / no bar sep', 'C', false, false, 'C   '],
+	['1 chord / last bar / bar sep', 'C', true, true, 'C   '],
+	['1 chord / last bar / no bar sep', 'C', true, false, 'C'],
+	['2 chords / not last bar / bar sep', 'C.. F..', false, true, 'C   F   '],
+	[
+		'2 chords / not last bar / no bar sep',
+		'C.. F..',
+		false,
+		false,
+		'C   F   ',
+	],
+	['2 chords / last bar / bar sep', 'C.. F..', true, true, 'C   F   '],
+	['2 chords / last bar / no bar sep', 'C.. F..', true, false, 'C   F'],
+])(
+	'no bar separator: %s',
+	(title, input, isLastBar, printBarSeparators, output) => {
+		test('When printBarSeparators = false, do not space last chord of line', () => {
+			const spacesWithin = 1;
+			const spacesAfter = 2;
+
+			let parsed = parseChordLine(input);
+			parsed = forEachChordInChordLine(parsed, (chord) => {
+				chord.symbol = getChordSymbol(chord.model);
+				chord.spacesWithin = spacesWithin;
+				chord.spacesAfter = spacesAfter;
+			});
+
+			const rendered = renderBarContent(
+				parsed.allBars[0],
+				isLastBar,
+				printBarSeparators
+			);
+
+			expect(stripTags(rendered)).toEqual(output);
+		});
+	}
+);
