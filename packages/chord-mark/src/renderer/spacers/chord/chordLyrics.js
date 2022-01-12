@@ -7,17 +7,19 @@ const chordSpaceAfterDefault = 1;
 /**
  * @param {ChordLine} chordLineInput
  * @param {LyricLine} lyricsLineInput
- * @param {Boolean} printBarSeparators
+ * @param {Boolean} shouldPrintBarSeparators
  * @returns {Object}
  */
 export default function space(
 	chordLineInput,
 	lyricsLineInput,
-	printBarSeparators
+	shouldPrintBarSeparators
 ) {
 	const chordLine = _cloneDeep(chordLineInput);
 	const lyricsLine = _cloneDeep(lyricsLineInput);
-	const barSeparatorToken = printBarSeparators ? symbols.barSeparator : '';
+	const barSeparatorToken = shouldPrintBarSeparators
+		? symbols.barSeparator
+		: '';
 
 	if (hasNoPositionMarkers(lyricsLine)) {
 		return {

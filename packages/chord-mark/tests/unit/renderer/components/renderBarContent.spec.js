@@ -151,8 +151,8 @@ describe.each([
 	['2 chords / last bar / no bar sep', 'C.. F..', true, false, 'C   F'],
 ])(
 	'no bar separator: %s',
-	(title, input, isLastBar, printBarSeparators, output) => {
-		test('When printBarSeparators = false, do not space last chord of line', () => {
+	(title, input, isLastBar, shouldPrintBarSeparators, output) => {
+		test('When shouldPrintBarSeparators = false, do not space last chord of line', () => {
 			const spacesWithin = 1;
 			const spacesAfter = 2;
 
@@ -166,7 +166,7 @@ describe.each([
 			const rendered = renderBarContent(
 				parsed.allBars[0],
 				isLastBar,
-				printBarSeparators
+				shouldPrintBarSeparators
 			);
 
 			expect(stripTags(rendered)).toEqual(output);

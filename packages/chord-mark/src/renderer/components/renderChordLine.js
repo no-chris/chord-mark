@@ -6,16 +6,19 @@ import symbols from '../symbols';
 
 /**
  * @param {ChordLine} chordLineModel
- * @param {Boolean} printBarSeparators
+ * @param {Boolean} shouldPrintBarSeparators
  * @returns {String} rendered html
  */
-export default function renderChordLine(chordLineModel, printBarSeparators) {
+export default function renderChordLine(
+	chordLineModel,
+	shouldPrintBarSeparators
+) {
 	const allBarsRendered = chordLineModel.allBars.map((bar, i) => {
 		const isLastBar = !chordLineModel.allBars[i + 1];
-		return renderBarContent(bar, isLastBar, printBarSeparators);
+		return renderBarContent(bar, isLastBar, shouldPrintBarSeparators);
 	});
 
-	const barSeparator = printBarSeparators
+	const barSeparator = shouldPrintBarSeparators
 		? barSeparatorTpl({
 				barSeparator: symbols.barSeparator,
 		  })

@@ -11,10 +11,14 @@ const defaultSpacesAfter = 2;
 /**
  * @param {Bar} bar
  * @param {Boolean} isLastBar
- * @param {Boolean} printBarSeparators
+ * @param {Boolean} shouldPrintBarSeparators
  * @returns {String} rendered html
  */
-export default function renderBarContent(bar, isLastBar, printBarSeparators) {
+export default function renderBarContent(
+	bar,
+	isLastBar,
+	shouldPrintBarSeparators
+) {
 	let spacesWithin = 0;
 	let spacesAfter = 0;
 
@@ -37,7 +41,8 @@ export default function renderBarContent(bar, isLastBar, printBarSeparators) {
 		function shouldPrintChordSpaces() {
 			const isLastChordOfLine = isLastChordOfBar && isLastBar;
 			return (
-				!isLastChordOfLine || (isLastChordOfLine && printBarSeparators)
+				!isLastChordOfLine ||
+				(isLastChordOfLine && shouldPrintBarSeparators)
 			);
 		}
 

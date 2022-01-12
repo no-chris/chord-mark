@@ -68,8 +68,8 @@ describe.each([
 describe.each([
 	['A B C', '|A |B |C |', true],
 	['A B C', 'A B C ', false],
-])('%s => %s', (input, output, printBarSeparators) => {
-	test('respect printBarSeparator', () => {
+])('%s => %s', (input, output, shouldPrintBarSeparators) => {
+	test('respect shouldPrintBarSeparators', () => {
 		renderBarContent.mockImplementation(
 			(bar) =>
 				bar.allChords
@@ -79,7 +79,7 @@ describe.each([
 
 		const chordLine = parseChordLine(input);
 
-		const rendered = renderChordLine(chordLine, printBarSeparators);
+		const rendered = renderChordLine(chordLine, shouldPrintBarSeparators);
 
 		expect(stripTags(rendered)).toEqual(output);
 	});

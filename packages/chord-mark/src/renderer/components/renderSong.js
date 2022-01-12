@@ -37,7 +37,8 @@ import replaceRepeatedBars from '../replaceRepeatedBars';
  * @param {Boolean} harmonizeAccidentals
  * @param {Boolean|('none'|'max'|'core')} simplifyChords
  * @param {('never'|'uneven'|'always')} printChordsDuration
- * @param {Boolean} printBarSeparators
+ * @param {('never'|'grids'|'always')} printBarSeparators - mainly useful when converting a ChordMark file to a format that
+ * do not allow bar separators to be printed (e.g. Ultimate Guitar)
  * @param {Number} transposeValue
  * @param {Boolean} useShortNamings
  * @returns {String} rendered HTML
@@ -57,7 +58,7 @@ export default function renderSong(
 		expandSectionMultiply = false,
 		harmonizeAccidentals = true,
 		printChordsDuration = 'uneven',
-		printBarSeparators = true,
+		printBarSeparators = 'always',
 		simplifyChords = 'none',
 		transposeValue = 0,
 		useShortNamings = true,
@@ -190,7 +191,7 @@ export default function renderSong(
 				const { chordLine, lyricsLine } = chordLyricsSpacer(
 					spaced,
 					nextLine.model,
-					printBarSeparators
+					shouldPrintBarSeparators(line.model)
 				);
 				allLines[lineIndex + 1].model = lyricsLine;
 				spaced = chordLine;
@@ -207,7 +208,7 @@ export default function renderSong(
 				if (line.type === lineTypes.CHORD) {
 					rendered = renderChordLineModel(
 						line.model,
-						printBarSeparators
+						shouldPrintBarSeparators(line.model)
 					);
 				} else if (line.type === lineTypes.EMPTY_LINE) {
 					rendered = renderEmptyLine();
@@ -236,6 +237,17 @@ export default function renderSong(
 			chartType === 'all' &&
 			alignChordsWithLyrics &&
 			line.model.hasPositionedChords
+		);
+	}
+
+	/**
+	 * @param {ChordLine} line
+	 * @returns {boolean}
+	 */
+	function shouldPrintBarSeparators(line) {
+		return (
+			printBarSeparators === 'always' ||
+			(printBarSeparators === 'grids' && !line.hasPositionedChords)
 		);
 	}
 }
