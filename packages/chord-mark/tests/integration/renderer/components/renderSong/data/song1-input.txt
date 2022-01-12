@@ -2,6 +2,10 @@ Imagine
 John Lennon
 4/4
 
+#i
+C... CM7. F
+%
+
 #v
 C... CM7. F
 _ Imagine there's _no hea_ven _

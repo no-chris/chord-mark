@@ -1,7 +1,17 @@
 import _cloneDeep from 'lodash/cloneDeep';
 import symbols from '../../symbols';
 
-export default function space(chordLineInput, maxBeatsWidth) {
+/**
+ * @param {ChordLine} chordLineInput
+ * @param {Array} maxBeatsWidth
+ * @param {Boolean} shouldPrintBarSeparators
+ * @returns {ChordLine}
+ */
+export default function space(
+	chordLineInput,
+	maxBeatsWidth,
+	shouldPrintBarSeparators
+) {
 	const chordLine = _cloneDeep(chordLineInput);
 
 	let beatMaxWidth;
@@ -35,6 +45,8 @@ export default function space(chordLineInput, maxBeatsWidth) {
 						chord.spacesAfter += symbols.spacesAfterDefault;
 					}
 				}
+			} else if (!shouldPrintBarSeparators) {
+				chord.spacesAfter = symbols.spacesAfterDefault;
 			}
 		});
 	});

@@ -113,6 +113,15 @@ describe.each([
 		'       a chord li   ne',
 		true,
 	],
+	[
+		'take printBarSeparators into account',
+		'A.. B.. Dm7 A.. Gmi. F7. E7',
+		'_Put _me _on top _of _the _correct _lyrics',
+		'A   B  Dmi7   A  Gmi F7      E7',
+		'Put me on top of the correct lyrics',
+		undefined,
+		false,
+	],
 ])(
 	'%s',
 	(
@@ -121,7 +130,8 @@ describe.each([
 		LyricsLineInput,
 		chordsLineOutput,
 		LyricsLineOutput,
-		shouldPrintChordsDuration = false
+		shouldPrintChordsDuration = false,
+		shouldPrintBarSeparators = true
 	) => {
 		test('Correctly space chord & lyrics lines', () => {
 			// setup
@@ -139,12 +149,16 @@ describe.each([
 
 			const { chordLine, lyricsLine } = chordLyricsSpacer(
 				parsedChords,
-				parsedLyrics
+				parsedLyrics,
+				shouldPrintBarSeparators
 			);
 
 			// assertions
 
-			const renderedChords = renderChordLine(chordLine);
+			const renderedChords = renderChordLine(
+				chordLine,
+				shouldPrintBarSeparators
+			);
 			const renderedLyrics = renderLyricLine(
 				{ model: lyricsLine },
 				{ alignChordsWithLyrics: true }
