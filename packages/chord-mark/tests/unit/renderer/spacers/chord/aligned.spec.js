@@ -77,6 +77,31 @@ describe.each([
 		[defaultSpacesAfter, defaultSpacesAfter + 2 + defaultSpacesAfter, 0],
 		true,
 	],
+
+	[
+		'DO NOT space last chord if bar separators are displayed',
+		'A. B. C. D.',
+		[{ 1: 1, 2: 1, 3: 1, 4: 1 }],
+		[0, 0, 0, 0],
+		[defaultSpacesAfter, defaultSpacesAfter, defaultSpacesAfter, 0],
+		undefined,
+		true,
+	],
+
+	[
+		'space last chord if bar separators are NOT displayed',
+		'A. B. C. D.',
+		[{ 1: 1, 2: 1, 3: 1, 4: 1 }],
+		[0, 0, 0, 0],
+		[
+			defaultSpacesAfter,
+			defaultSpacesAfter,
+			defaultSpacesAfter,
+			defaultSpacesAfter,
+		],
+		undefined,
+		false,
+	],
 ])(
 	'Aligned spacer: %s',
 	(
@@ -85,7 +110,8 @@ describe.each([
 		maxBeatWidth,
 		spacesWithin,
 		spacesAfter,
-		shouldPrintChordsDuration = false
+		shouldPrintChordsDuration = false,
+		shouldPrintBarSeparators = true
 	) => {
 		test('Correctly fills .spacesWithin and .spacesAfter properties', () => {
 			let parsed = parseChordLine(chordLine);
@@ -98,7 +124,11 @@ describe.each([
 				bar.shouldPrintChordsDuration = !!shouldPrintChordsDuration;
 			});
 
-			const spaced = alignedSpacer(parsed, maxBeatWidth);
+			const spaced = alignedSpacer(
+				parsed,
+				maxBeatWidth,
+				shouldPrintBarSeparators
+			);
 
 			let chordIndex = 0;
 

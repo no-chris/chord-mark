@@ -17,7 +17,7 @@ describe('chordLine renderer', () => {
 	test('Should return valid html', () => {
 		renderBarContent.mockReturnValue('C');
 
-		const rendered = renderChordLine(parseChordLine('C'));
+		const rendered = renderChordLine(parseChordLine('C'), true);
 		const element = htmlToElement(rendered);
 
 		expect(element).toBeInstanceOf(Node);
@@ -37,7 +37,7 @@ describe.each([
 
 		const chordLine = parseChordLine(input);
 
-		const rendered = renderChordLine(chordLine);
+		const rendered = renderChordLine(chordLine, true);
 
 		expect(stripTags(rendered)).toEqual(output);
 	});
@@ -59,7 +59,27 @@ describe.each([
 		const chordLine = parseChordLine(input);
 		chordLine.offset = offset;
 
-		const rendered = renderChordLine(chordLine);
+		const rendered = renderChordLine(chordLine, true);
+
+		expect(stripTags(rendered)).toEqual(output);
+	});
+});
+
+describe.each([
+	['A B C', '|A |B |C |', true],
+	['A B C', 'A B C ', false],
+])('%s => %s', (input, output, shouldPrintBarSeparators) => {
+	test('respect shouldPrintBarSeparators', () => {
+		renderBarContent.mockImplementation(
+			(bar) =>
+				bar.allChords
+					.map((chord) => getChordSymbol(chord.model))
+					.join(' ') + ' '
+		);
+
+		const chordLine = parseChordLine(input);
+
+		const rendered = renderChordLine(chordLine, shouldPrintBarSeparators);
 
 		expect(stripTags(rendered)).toEqual(output);
 	});

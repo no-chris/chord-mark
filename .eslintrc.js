@@ -33,6 +33,7 @@ module.exports = {
 			{ max: 50, skipBlankLines: true, skipComments: true },
 		],
 		'max-params': ['warn', { max: 4 }],
+		'no-mixed-spaces-and-tabs': ['off'],
 		'no-shadow': ['error', { builtinGlobals: true }],
 		semi: ['error', 'always'],
 

@@ -337,6 +337,112 @@ v2-line-3
 	});
 });
 
+describe('printBarSeparators', () => {
+	const input = `#v
+A7 %%%
+_A first _line _with _positioned chords
+D7 % A7 %
+A second line without
+E7 D7 A7 %
+_And a _last _line _with
+
+#s
+A7 %%%
+D7 % A7 %
+E7 D7 A7 %
+`;
+	test('never', () => {
+		const expected = `Verse
+A7      %    %    %
+A first line with positioned chords
+D7     %      A7     %
+A second line without
+E7    D7   A7   %
+And a last line with
+
+Solo
+A7     %      %      %
+D7     %      A7     %
+E7     D7     A7     %
+`;
+		const rendered = renderSongText(input, {
+			printBarSeparators: 'never',
+		});
+		expect(toText(rendered)).toBe(expected);
+	});
+
+	test('grids', () => {
+		const expected = `Verse
+A7      %    %    %
+A first line with positioned chords
+|D7     |%      |A7     |%     |
+A second line without
+E7    D7   A7   %
+And a last line with
+
+Solo
+|A7     |%      |%      |%     |
+|D7     |%      |A7     |%     |
+|E7     |D7     |A7     |%     |
+`;
+		const rendered = renderSongText(input, {
+			printBarSeparators: 'grids',
+		});
+		expect(toText(rendered)).toBe(expected);
+	});
+
+	test('always', () => {
+		const expected = `Verse
+|A7     |%   |%   |%               |
+A first line with positioned chords
+|D7     |%      |A7     |%     |
+A second line without
+|E7   |D7  |A7  |%  |
+And a last line with
+
+Solo
+|A7     |%      |%      |%     |
+|D7     |%      |A7     |%     |
+|E7     |D7     |A7     |%     |
+`;
+		const rendered = renderSongText(input, {
+			printBarSeparators: 'always',
+		});
+		expect(toText(rendered)).toBe(expected);
+	});
+
+	describe.each([
+		[
+			'1 char chords, separated with 1 space',
+			'A B\n_a_lyric',
+			'A B\na lyric',
+		],
+		[
+			'2 char chords, separated with 1 space',
+			'A7 B7\n_a_lyric',
+			'A7 B7\na  lyric',
+		],
+		[
+			'2 char chords, 2 bars, separated with 1 space',
+			'A7.. B7.. C7\n_a_l_yric',
+			'A7 B7 C7\na  l  yric',
+		],
+		[
+			'Aligned bars with a chord on the last beat',
+			'A7. B7. C7. D7. C7',
+			'A7  B7  C7  D7  C7',
+		],
+	])('%s', (title, source, expected, options = {}) => {
+		test(source + ' => ' + expected, () => {
+			const rendered = renderSongText(source, {
+				printBarSeparators: 'never',
+				...options,
+			});
+			expect(toText(rendered)).toBe(expected);
+		});
+	});
+});
+
 describe('printChordsDuration', () => {
 	const input = `4/4
 A7
