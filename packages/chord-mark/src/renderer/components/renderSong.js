@@ -183,7 +183,11 @@ export default function renderSong(
 		if (line.type === lineTypes.CHORD) {
 			let spaced =
 				alignBars && !shouldAlignChords(line)
-					? alignedChordSpacer(line.model, maxBeatsWidth)
+					? alignedChordSpacer(
+							line.model,
+							maxBeatsWidth,
+							shouldPrintBarSeparators(line.model)
+					  )
 					: simpleChordSpacer(line.model);
 
 			const nextLine = allLines[lineIndex + 1];

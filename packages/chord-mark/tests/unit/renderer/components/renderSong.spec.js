@@ -410,6 +410,37 @@ Solo
 		});
 		expect(toText(rendered)).toBe(expected);
 	});
+
+	describe.each([
+		[
+			'1 char chords, separated with 1 space',
+			'A B\n_a_lyric',
+			'A B\na lyric',
+		],
+		[
+			'2 char chords, separated with 1 space',
+			'A7 B7\n_a_lyric',
+			'A7 B7\na  lyric',
+		],
+		[
+			'2 char chords, 2 bars, separated with 1 space',
+			'A7.. B7.. C7\n_a_l_yric',
+			'A7 B7 C7\na  l  yric',
+		],
+		[
+			'Aligned bars with a chord on the last beat',
+			'A7. B7. C7. D7. C7',
+			'A7  B7  C7  D7  C7',
+		],
+	])('%s', (title, source, expected, options = {}) => {
+		test(source + ' => ' + expected, () => {
+			const rendered = renderSongText(source, {
+				printBarSeparators: 'never',
+				...options,
+			});
+			expect(toText(rendered)).toBe(expected);
+		});
+	});
 });
 
 describe('printChordsDuration', () => {
