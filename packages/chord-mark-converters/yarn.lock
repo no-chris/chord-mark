@@ -2,14 +2,30 @@
 # yarn lockfile v1
 
 
-chord-symbol-ultimateguitar@3.0.0-beta.2:
-  version "3.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/chord-symbol-ultimateguitar/-/chord-symbol-ultimateguitar-3.0.0-beta.2.tgz#218f102c438e71030f4d0284b05754405bd074e7"
-  integrity sha512-4qq2CKSzCDG9QHWjl/8cljmRNOeUanLzO895c1lqsqRyKMwfqoqVFyZ3FNwRisZ66DgufFGUnyPEIhUPnO7kXQ==
+chord-mark@^0.11.0-beta.1:
+  version "0.11.0-beta.1"
+  resolved "https://registry.yarnpkg.com/chord-mark/-/chord-mark-0.11.0-beta.1.tgz#4699956ca2fcef6a989205f08fb571a98dfffcd4"
+  integrity sha512-IBucbeACBdGkiPF/BoNS3j0LS+wC4i49cUoBVwttq00EePE4UCC085AgjR9aBiMNTwuVnORFgkWidMfxZTcjXA==
   dependencies:
-    chord-symbol "^3.0.0-beta.0"
+    chord-symbol "3.0.0-beta.0"
+    dompurify "^2.3.4"
+    lodash "^4.17.21"
 
-chord-symbol@3.0.0-beta.0, chord-symbol@^3.0.0-beta.0:
+chord-symbol-ultimateguitar@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/chord-symbol-ultimateguitar/-/chord-symbol-ultimateguitar-3.0.0.tgz#fba93b5baf8d503f72dda2760956759c903bd6d3"
+  integrity sha512-Sbi3StI+obO5j/t6piv/+vzmABf+4TiwWiCrD+iMfFBtO88sBx8vmzOhuFkgBeChyCvhAJgt0s8DwuutRP84rw==
+  dependencies:
+    chord-symbol "^3.0.0"
+
+chord-symbol@3.0.0, chord-symbol@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/chord-symbol/-/chord-symbol-3.0.0.tgz#d16c4871f70fdaa5c1c13d837c865e0474e959db"
+  integrity sha512-mONjRMrU1RFm/LWSN8Np4lq52mM6sqbB3JI7WMEDb15ZOqcUAMB2ttdzEfJDa6QQJPol+gZrMA4P0mJK8uiq7w==
+  dependencies:
+    lodash "^4.17.21"
+
+chord-symbol@3.0.0-beta.0:
   version "3.0.0-beta.0"
   resolved "https://registry.yarnpkg.com/chord-symbol/-/chord-symbol-3.0.0-beta.0.tgz#5d52d895414478dd109bda0b191c98b4b3e15093"
   integrity sha512-Af+Ux1A1vX+CEKumA1TtG12l14gpBqC7eRHIYixnYcpIrj6bwLoDL3/Oekl3yvvMlqohey27Ed2Dv8qHfG+Ysw==
