@@ -104,6 +104,7 @@ I _heard there was a _secret chord`;
 
 const parsed = parseSong(input);
 const ultimateGuitar = renderSong(parsed, {
+	printBarSeparators: 'grids',
 	printChordsDuration: 'never',
 	customRenderer: chordMark2UltimateGuitar(),
 	chordSymbolRenderer: chordRendererFactory({
