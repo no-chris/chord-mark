@@ -21,27 +21,11 @@ const convert2UltimateGuitar = (allLines, allRenderedLines) => {
 		.join('\n');
 };
 
-/**
- * @param {SongChordLine} srcLine
- * @param {String} renderedLine
- * @returns {String}
- */
 const getChordLine = (srcLine, renderedLine) => {
 	const chordSymbolRe = /([^\s.|]+)/g;
 	const chordSymbolReplaceWith = '[ch]$1[/ch]';
-	const firstBarSymbolRe = /\|([^\s|]+)/g;
-	const lastBarSeparatorRe = /[\s]+\|$/;
 
-	if (!srcLine.model.hasPositionedChords) {
-		return renderedLine.replace(chordSymbolRe, chordSymbolReplaceWith);
-	}
-
-	return renderedLine
-		.replace(firstBarSymbolRe, (_, firstBarSymbol) => {
-			return firstBarSymbol + ' ';
-		})
-		.replace(lastBarSeparatorRe, '')
-		.replace(chordSymbolRe, chordSymbolReplaceWith);
+	return renderedLine.replace(chordSymbolRe, chordSymbolReplaceWith);
 };
 
 export default chordMark2UltimateGuitar;

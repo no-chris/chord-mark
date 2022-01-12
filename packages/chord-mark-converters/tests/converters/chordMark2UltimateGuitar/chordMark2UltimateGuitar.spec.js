@@ -46,6 +46,13 @@ A chord line _starting with _blank space`,
 A chord line starting with blank space`,
 	],
 	[
+		'should correctly space lyrics starting after the first chord',
+		`Cm7(#9) A
+_ A chord before the _first lyrics`,
+		`[ch]Cm7add#9[/ch]                    [ch]A[/ch]
+         A chord before the first lyrics`,
+	],
+	[
 		'Keep bar separators for non-positioned chord lines',
 		`C A
 A chord line without position markers`,
@@ -68,6 +75,7 @@ E7 D7 A7 A7.. E7..`,
 		const parsed = parseSong(input);
 		const rendered = renderSong(parsed, {
 			printChordsDuration: 'never',
+			printBarSeparators: 'grids',
 			customRenderer: chordMark2UltimateGuitar(),
 			chordSymbolRenderer: chordRendererFactory({
 				customFilters: [chordSymbolUltimateGuitar()],
