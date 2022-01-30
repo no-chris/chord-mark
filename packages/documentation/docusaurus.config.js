@@ -106,8 +106,8 @@ const config = {
 								href: 'https://chord-symbol.netlify.app',
 							},
 							{
-								label: 'Chord Charts Studio',
-								href: 'https://chord-charts-studio.netlify.app/',
+								label: 'Chord Chart Studio',
+								href: 'https://chord-chart-studio.netlify.app/',
 							},
 						],
 					},

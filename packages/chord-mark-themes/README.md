@@ -32,13 +32,13 @@ Wrap ChordMark's output:
 
 ## Available themes
 
-| Theme  | CSS class       | Description                                                                          |
-| ------ | --------------- | ------------------------------------------------------------------------------------ |
-| Dark 1 | `cmTheme-dark1` | Based on [Chord Charts Studio](https://chord-charts-studio.netlify.app) color scheme |
-| Dark 2 | `cmTheme-dark2` | Based on [Dracula](https://spec.draculatheme.com) color scheme                       |
-| Dark 3 | `cmTheme-dark3` | Also based on [Dracula](https://spec.draculatheme.com) color scheme                  |
-| Print  | `cmTheme-print` | Can be used to display a print preview                                               |
-| Text   | `cmTheme-text`  | Can be used to display a text file preview                                           |
+| Theme  | CSS class       | Description                                                                        |
+| ------ | --------------- | ---------------------------------------------------------------------------------- |
+| Dark 1 | `cmTheme-dark1` | Based on [Chord Chart Studio](https://chord-chart-studio.netlify.app) color scheme |
+| Dark 2 | `cmTheme-dark2` | Based on [Dracula](https://spec.draculatheme.com) color scheme                     |
+| Dark 3 | `cmTheme-dark3` | Also based on [Dracula](https://spec.draculatheme.com) color scheme                |
+| Print  | `cmTheme-print` | Can be used to display a print preview                                             |
+| Text   | `cmTheme-text`  | Can be used to display a text file preview                                         |
 
 ## Utility classes
 
