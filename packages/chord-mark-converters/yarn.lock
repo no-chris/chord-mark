@@ -2,6 +2,15 @@
 # yarn lockfile v1
 
 
+chord-mark@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/chord-mark/-/chord-mark-0.11.0.tgz#f21cb9824a638ec2712ced076d99e971329994a4"
+  integrity sha512-eoewZZdG5yJpiNK+JAQiBbVLAmg9VuqLUye1FmhD9DU//Pbpj+Hel4wLgOE2aF7/fhYT0YhfPQ+Jhc0cZ1M8mA==
+  dependencies:
+    chord-symbol "3.0.0"
+    dompurify "^2.3.4"
+    lodash "^4.17.21"
+
 chord-symbol-ultimateguitar@3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/chord-symbol-ultimateguitar/-/chord-symbol-ultimateguitar-3.0.0.tgz#fba93b5baf8d503f72dda2760956759c903bd6d3"
@@ -17,9 +26,9 @@ chord-symbol@3.0.0, chord-symbol@^3.0.0:
     lodash "^4.17.21"
 
 dompurify@^2.3.4:
-  version "2.3.4"
-  resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-2.3.4.tgz#1cf5cf0105ccb4debdf6db162525bd41e6ddacc6"
-  integrity sha512-6BVcgOAVFXjI0JTjEvZy901Rghm+7fDQOrNIcxB4+gdhj6Kwp6T9VBhBY/AbagKHJocRkDYGd6wvI+p4/10xtQ==
+  version "2.3.5"
+  resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-2.3.5.tgz#c83ed5a3ae5ce23e52efe654ea052ffb358dd7e3"
+  integrity sha512-kD+f8qEaa42+mjdOpKeztu9Mfx5bv9gVLO6K9jRx4uGvh6Wv06Srn4jr1wPNY2OOUGGSKHNFN+A8MA3v0E0QAQ==
 
 lodash@^4.17.21:
   version "4.17.21"
