@@ -22,7 +22,7 @@
 		"@size-limit/preset-small-lib": "^7.0.5",
 		"babel-jest": "^27.4.5",
 		"babel-loader": "^8.2.3",
-		"css-loader": "^6.5.1",
+		"css-loader": "^6.6.0",
 		"eslint": "^8.6.0",
 		"eslint-plugin-import": "^2.25.4",
 		"eslint-plugin-no-unsanitized": "^4.0.0",
