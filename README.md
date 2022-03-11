@@ -12,7 +12,7 @@ ChordMark is both:
 -   a grammar to write chords charts in a fast, efficient and accurate way, encoding lyrics, chords and rhythm information.
 -   an Open Source Javascript module, `chord-mark`, allowing to process ChordMark files and to format them with a high degree of customization.
 
-ChordMark is supported by [Chord Chart Studio](https://chordmark.netlify.app/docs/chord-chart-studio/overview), a free, web-based, ChordMark native editor, that showcases all the possibilities of the format.
+ChordMark is supported by [Chord Chart Studio](https://chord-chart-studio.netlify.app/), a free, web-based, ChordMark native editor, that showcases all the possibilities of the format.
 
 ChordMark has some unique features that make it stand out from other chord charts formats:
 
