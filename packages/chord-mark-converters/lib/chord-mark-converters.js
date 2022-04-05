@@ -7,7 +7,7 @@
 		exports["chord-mark-converters"] = factory();
 	else
 		root["chord-mark-converters"] = factory();
-})(self, function() {
+})(self, () => {
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -27691,7 +27691,7 @@ var isValidChord = function isValidChord(chord) {
 /***/ 856:
 /***/ (function(module) {
 
-/*! @license DOMPurify 2.3.5 | (c) Cure53 and other contributors | Released under the Apache license 2.0 and Mozilla Public License 2.0 | github.com/cure53/DOMPurify/blob/2.3.5/LICENSE */
+/*! @license DOMPurify 2.3.6 | (c) Cure53 and other contributors | Released under the Apache license 2.0 and Mozilla Public License 2.0 | github.com/cure53/DOMPurify/blob/2.3.6/LICENSE */
 
 (function (global, factory) {
    true ? module.exports = factory() :
@@ -27882,6 +27882,7 @@ var isValidChord = function isValidChord(chord) {
   var IS_SCRIPT_OR_DATA = seal(/^(?:\w+script|data):/i);
   var ATTR_WHITESPACE = seal(/[\u0000-\u0020\u00A0\u1680\u180E\u2000-\u2029\u205F\u3000]/g // eslint-disable-line no-control-regex
   );
+  var DOCTYPE_NAME = seal(/^html$/i);
 
   var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
@@ -27941,7 +27942,7 @@ var isValidChord = function isValidChord(chord) {
      * Version label, exposed for easier checks
      * if DOMPurify is up to date or not
      */
-    DOMPurify.version = '2.3.5';
+    DOMPurify.version = '2.3.6';
 
     /**
      * Array of elements that DOMPurify removed during sanitation.
@@ -28536,7 +28537,9 @@ var isValidChord = function isValidChord(chord) {
      * @return {Iterator} iterator instance
      */
     var _createIterator = function _createIterator(root) {
-      return createNodeIterator.call(root.ownerDocument || root, root, NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_COMMENT | NodeFilter.SHOW_TEXT, null, false);
+      return createNodeIterator.call(root.ownerDocument || root, root,
+      // eslint-disable-next-line no-bitwise
+      NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_COMMENT | NodeFilter.SHOW_TEXT, null, false);
     };
 
     /**
@@ -28628,6 +28631,12 @@ var isValidChord = function isValidChord(chord) {
 
       /* Remove element if anything forbids its presence */
       if (!ALLOWED_TAGS[tagName] || FORBID_TAGS[tagName]) {
+        /* Check if we have a custom element to handle */
+        if (!FORBID_TAGS[tagName] && _basicCustomElementTest(tagName)) {
+          if (CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof RegExp && regExpTest(CUSTOM_ELEMENT_HANDLING.tagNameCheck, tagName)) return false;
+          if (CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof Function && CUSTOM_ELEMENT_HANDLING.tagNameCheck(tagName)) return false;
+        }
+
         /* Keep content except for bad-listed elements */
         if (KEEP_CONTENT && !FORBID_CONTENTS[tagName]) {
           var parentNode = getParentNode(currentNode) || currentNode.parentNode;
@@ -28640,11 +28649,6 @@ var isValidChord = function isValidChord(chord) {
               parentNode.insertBefore(cloneNode(childNodes[i], true), getNextSibling(currentNode));
             }
           }
-        }
-
-        if (!FORBID_TAGS[tagName] && _basicCustomElementTest(tagName)) {
-          if (CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof RegExp && regExpTest(CUSTOM_ELEMENT_HANDLING.tagNameCheck, tagName)) return false;
-          if (CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof Function && CUSTOM_ELEMENT_HANDLING.tagNameCheck(tagName)) return false;
         }
 
         _forceRemove(currentNode);
@@ -29029,6 +29033,11 @@ var isValidChord = function isValidChord(chord) {
       }
 
       var serializedHTML = WHOLE_DOCUMENT ? body.outerHTML : body.innerHTML;
+
+      /* Serialize doctype if allowed */
+      if (WHOLE_DOCUMENT && ALLOWED_TAGS['!doctype'] && body.ownerDocument && body.ownerDocument.doctype && body.ownerDocument.doctype.name && regExpTest(DOCTYPE_NAME, body.ownerDocument.doctype.name)) {
+        serializedHTML = '<!DOCTYPE ' + body.ownerDocument.doctype.name + '>\n' + serializedHTML;
+      }
 
       /* Sanitize final string template-safe */
       if (SAFE_FOR_TEMPLATES) {
