@@ -17,7 +17,7 @@
 	"homepage": "https://github.com/no-chris/chord-mark#readme",
 	"devDependencies": {
 		"@babel/cli": "^7.16.7",
-		"@babel/core": "^7.16.7",
+		"@babel/core": "^7.17.10",
 		"@babel/preset-env": "^7.16.7",
 		"@size-limit/preset-small-lib": "^7.0.5",
 		"babel-jest": "^27.4.5",
