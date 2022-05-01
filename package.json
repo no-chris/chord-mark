@@ -24,7 +24,7 @@
 		"babel-loader": "^8.2.3",
 		"css-loader": "^6.5.1",
 		"eslint": "^8.6.0",
-		"eslint-plugin-import": "^2.25.4",
+		"eslint-plugin-import": "^2.26.0",
 		"eslint-plugin-no-unsanitized": "^4.0.0",
 		"eslint-plugin-react": "^7.28.0",
 		"handlebars": "^4.7.7",
