@@ -24,7 +24,7 @@ module.exports = {
 
 	transform: {
 		'\\.js$': 'babel-jest',
-		'\\.hbs$': 'jest-handlebars',
+		'\\.hbs$': 'handlebars-jest',
 	},
 	// whitelisting local modules in the node_modules folder
 	transformIgnorePatterns: ['<rootDir>.*(node_modules)(?!.*chord-mark.*).*$'],
