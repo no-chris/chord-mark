@@ -2,8 +2,8 @@ Source code:
 
 ---------- Result ------------
 
-            Physical :  1921
-              Source :  1373
+            Physical :  1963
+              Source :  1415
              Comment :  281
  Single-line comment :  4
        Block comment :  277
@@ -38,8 +38,8 @@ Total:
 
 ---------- Result ------------
 
-            Physical :  7704
-              Source :  6610
+            Physical :  7746
+              Source :  6652
              Comment :  298
  Single-line comment :  21
        Block comment :  277
