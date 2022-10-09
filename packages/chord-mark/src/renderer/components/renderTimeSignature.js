@@ -1,4 +1,4 @@
-import timeSignatureTpl from './tpl/timeSignature.hbs';
+import timeSignatureTpl from './tpl/timeSignature.js';
 
 /**
  * @param {SongTimeSignatureLine} timeSignatureLine

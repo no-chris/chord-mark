@@ -1,4 +1,4 @@
-import sectionLabelTpl from './tpl/sectionLabel.hbs';
+import sectionLabelTpl from './tpl/sectionLabel.js';
 
 /**
  * @param {SongSectionLabelLine} sectionLabelLine

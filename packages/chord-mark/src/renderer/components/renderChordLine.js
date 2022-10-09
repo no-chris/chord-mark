@@ -1,7 +1,7 @@
-import chordLineTpl from './tpl/chordLine.hbs';
+import chordLineTpl from './tpl/chordLine.js';
 
 import renderBarContent from './renderBarContent';
-import barSeparatorTpl from './tpl/barSeparator.hbs';
+import barSeparatorTpl from './tpl/barSeparator.js';
 import symbols from '../symbols';
 
 /**

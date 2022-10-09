@@ -1,4 +1,4 @@
-import lyricLineTpl from './tpl/lyricLine.hbs';
+import lyricLineTpl from './tpl/lyricLine.js';
 
 /**
  * @param {SongLyricLine} lyricLine

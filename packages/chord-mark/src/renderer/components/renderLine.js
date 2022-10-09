@@ -1,4 +1,4 @@
-import lineTpl from './tpl/line.hbs';
+import lineTpl from './tpl/line.js';
 
 /**
  * @param {string} line

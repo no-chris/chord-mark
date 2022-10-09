@@ -1,7 +1,7 @@
 import _isFinite from 'lodash/isFinite';
 
 import renderChordSymbol from './renderChordSymbol';
-import barContentTpl from './tpl/barContent.hbs';
+import barContentTpl from './tpl/barContent.js';
 
 const space = ' ';
 

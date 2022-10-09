@@ -1,4 +1,4 @@
-import emptyLineTpl from './tpl/emptyLine.hbs';
+import emptyLineTpl from './tpl/emptyLine.js';
 
 /**
  * @returns {String} rendered html

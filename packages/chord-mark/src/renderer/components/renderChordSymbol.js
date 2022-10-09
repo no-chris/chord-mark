@@ -1,4 +1,4 @@
-import chordSymbolTpl from './tpl/chordSymbol.hbs';
+import chordSymbolTpl from './tpl/chordSymbol.js';
 import symbols from '../symbols';
 
 /**

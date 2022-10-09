@@ -13,7 +13,7 @@ import renderSectionLabelLine from './renderSectionLabel';
 import renderLyricLine from './renderLyricLine';
 import renderTimeSignature from './renderTimeSignature';
 
-import songTpl from './tpl/song.hbs';
+import songTpl from './tpl/song.js';
 import getChordSymbol from '../helpers/getChordSymbol';
 import getMainAccidental from '../helpers/getMainAccidental';
 import renderAllSectionsLabels from '../helpers/renderAllSectionLabels';
