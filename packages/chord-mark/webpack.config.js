@@ -40,10 +40,6 @@ const config = {
 				exclude: /node_modules/,
 				loader: 'babel-loader',
 			},
-			{
-				test: /\.hbs$/,
-				loader: 'handlebars-loader',
-			},
 		],
 	},
 	plugins: [
