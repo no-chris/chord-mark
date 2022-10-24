@@ -29472,106 +29472,75 @@ var chord_symbol = __webpack_require__(13);
 
 var chordLineRe = /([^\s]+)/g;
 var chordsLyricsRe = /\[([^\]]*)]/g;
-
 var isChordLine = function isChordLine(line) {
   var allChords = line.trim().match(chordLineRe);
-
   if (allChords) {
     return allChords.every(isChord);
   }
-
   return false;
 };
-
 var isChordsLyricsLine = function isChordsLyricsLine(line) {
   var allChords = line.trim().match(chordsLyricsRe);
-
   if (allChords) {
     return allChords.map(function (potentialChord) {
       return potentialChord.replace(/[[\]]/g, '');
     }).every(isChord);
   }
-
   return false;
 };
-
 function isChord(potentialChord) {
   var parsed = (0,chord_symbol.chordParserFactory)()(potentialChord);
   return !parsed.error;
 }
-
 
 ;// CONCATENATED MODULE: ./src/helpers/trimArray.js
 var trimArray = function trimArray(array, fn) {
   while (array.length && fn(array[0])) {
     array.shift();
   }
-
   while (array.length && fn(array[array.length - 1])) {
     array.pop();
   }
-
   return array;
 };
-
 /* harmony default export */ const helpers_trimArray = (trimArray);
 ;// CONCATENATED MODULE: ./src/helpers/getSectionLabel.js
 var _longLabelToShort;
-
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
 function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 var longLabelToShort = (_longLabelToShort = {
   adlib: 'a'
 }, _defineProperty(_longLabelToShort, 'ad-lib', 'a'), _defineProperty(_longLabelToShort, 'ad.lib.', 'a'), _defineProperty(_longLabelToShort, "bridge", 'b'), _defineProperty(_longLabelToShort, "chorus", 'c'), _defineProperty(_longLabelToShort, "intro", 'i'), _defineProperty(_longLabelToShort, "introduction", 'i'), _defineProperty(_longLabelToShort, "outro", 'o'), _defineProperty(_longLabelToShort, "prechorus", 'p'), _defineProperty(_longLabelToShort, 'pre-chorus', 'p'), _defineProperty(_longLabelToShort, 'pre chorus', 'p'), _defineProperty(_longLabelToShort, "solo", 's'), _defineProperty(_longLabelToShort, "interlude", 'u'), _defineProperty(_longLabelToShort, "verse", 'v'), _longLabelToShort);
-
 var getSectionLabel = function getSectionLabel(input) {
   var chordMarkLabel = '#';
   var rawLabelRe = '(.*?)';
   var sectionIndexRe = '([\\s]+[0-9]{1,2})?';
   var multiplierRe = '([\\s]+[x][0-9]{1,2})?';
   var sectionLabelRe = new RegExp("^".concat(rawLabelRe).concat(sectionIndexRe).concat(multiplierRe, "$"));
-
   var _input$trim$match = input.trim().match(sectionLabelRe),
-      _input$trim$match2 = _slicedToArray(_input$trim$match, 4),
-      rawLabel = _input$trim$match2[1],
-      multiplier = _input$trim$match2[3];
-
+    _input$trim$match2 = _slicedToArray(_input$trim$match, 4),
+    rawLabel = _input$trim$match2[1],
+    multiplier = _input$trim$match2[3];
   var labelKey = rawLabel.trim().toLowerCase();
   chordMarkLabel += longLabelToShort[labelKey] || rawLabel.trim();
-
   if (multiplier) {
     chordMarkLabel += ' ' + multiplier.trim();
   }
-
   return chordMarkLabel;
 };
-
 /* harmony default export */ const helpers_getSectionLabel = (getSectionLabel);
 ;// CONCATENATED MODULE: ./src/converters/chordPro2ChordMark.js
 function chordPro2ChordMark_slicedToArray(arr, i) { return chordPro2ChordMark_arrayWithHoles(arr) || chordPro2ChordMark_iterableToArrayLimit(arr, i) || chordPro2ChordMark_unsupportedIterableToArray(arr, i) || chordPro2ChordMark_nonIterableRest(); }
-
 function chordPro2ChordMark_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
 function chordPro2ChordMark_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return chordPro2ChordMark_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return chordPro2ChordMark_arrayLikeToArray(o, minLen); }
-
 function chordPro2ChordMark_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
 function chordPro2ChordMark_iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
 function chordPro2ChordMark_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
 
 
 
@@ -29585,7 +29554,8 @@ var lineTypes = {
   SECTION_CLOSE: 'sectionClose',
   SECTION_REPEAT: 'sectionRepeat'
 };
-var repeatSectionDirectives = ['chorus', 'verse', 'bridge', // {Comment} seems to be mostly used to declare repeated sections
+var repeatSectionDirectives = ['chorus', 'verse', 'bridge',
+// {Comment} seems to be mostly used to declare repeated sections
 'comment', 'comment_italic', 'comment_bold', 'c', 'ci', 'cb'];
 var startSectionDirectives = ['start_of_chorus', 'start_of_verse', 'start_of_bridge', 'start_of_part', 'soc', 'sov', 'sob', 'sop'];
 var endSectionDirectives = ['end_of_chorus', 'end_of_verse', 'end_of_bridge', 'end_of_part', 'eoc', 'eov', 'eob', 'sop'];
@@ -29609,7 +29579,6 @@ var directivesToSectionLabel = {
   comment_italic: 'c',
   comment_bold: 'c'
 };
-
 var chordPro2ChordMark = function chordPro2ChordMark(allLines) {
   var cmOutput = [];
   var allLinesModel = allLines.map(function (line) {
@@ -29623,32 +29592,27 @@ var chordPro2ChordMark = function chordPro2ChordMark(allLines) {
     section.allLines.forEach(function (line) {
       cmOutput.push(line);
     });
-
     if (i < allSections.length - 1) {
       cmOutput.push('');
     }
   });
   return cmOutput.join('\n');
 };
-
 var getLineModel = function getLineModel(line) {
   var lineModel = {
     content: line
   };
-
   if (isCommentLine(line)) {
     lineModel.type = lineTypes.COMMENT;
   } else if (isEmtpyLine(line)) {
     lineModel.type = lineTypes.EMPTY;
   } else if (isDirective(line)) {
     var _getDirectiveKV = getDirectiveKV(line),
-        _getDirectiveKV2 = chordPro2ChordMark_slicedToArray(_getDirectiveKV, 2),
-        key = _getDirectiveKV2[0],
-        value = _getDirectiveKV2[1];
-
+      _getDirectiveKV2 = chordPro2ChordMark_slicedToArray(_getDirectiveKV, 2),
+      key = _getDirectiveKV2[0],
+      value = _getDirectiveKV2[1];
     lineModel.key = key;
     lineModel.value = value;
-
     if (startSectionDirectives.includes(key)) {
       lineModel.type = lineTypes.SECTION_START;
     } else if (endSectionDirectives.includes(key)) {
@@ -29660,45 +29624,36 @@ var getLineModel = function getLineModel(line) {
     }
   } else if (isChordsLyricsLine(line)) {
     lineModel.type = lineTypes.CHORDS_LYRICS;
-
     var _getChordsLyrics = getChordsLyrics(line),
-        _getChordsLyrics2 = chordPro2ChordMark_slicedToArray(_getChordsLyrics, 2),
-        chords = _getChordsLyrics2[0],
-        lyrics = _getChordsLyrics2[1];
-
+      _getChordsLyrics2 = chordPro2ChordMark_slicedToArray(_getChordsLyrics, 2),
+      chords = _getChordsLyrics2[0],
+      lyrics = _getChordsLyrics2[1];
     lineModel.chords = chords;
     lineModel.lyrics = lyrics;
   } else {
     lineModel.type = lineTypes.LYRICS;
   }
-
   return lineModel;
 };
-
 var isCommentLine = function isCommentLine(line) {
   var commentLineRe = /^#.*$/;
   var found = line.trim().match(commentLineRe);
   return found !== null;
 };
-
 var isEmtpyLine = function isEmtpyLine(line) {
   return line.trim() === '';
 };
-
 var directiveRe = /^{([^:]+):?(.*)?}$/;
-
 var isDirective = function isDirective(line) {
   var found = line.trim().match(directiveRe);
   return found !== null;
 };
-
 var getDirectiveKV = function getDirectiveKV(directive) {
   var found = directive.trim().match(directiveRe);
   var key = found[1].trim();
   var value = found[2] ? found[2].trim() : undefined;
   return [key, value];
 };
-
 var getChordsLyrics = function getChordsLyrics(chordsLyrics) {
   var found = chordsLyrics.trim().match(chordsLyricsRe);
   var chords = found.map(function (chord) {
@@ -29707,30 +29662,25 @@ var getChordsLyrics = function getChordsLyrics(chordsLyrics) {
   var lyrics = chordsLyrics.replace(chordsLyricsRe, '_');
   return [chords, lyrics];
 };
-
 var isSupportedLine = function isSupportedLine(lineModel) {
   var unSupportedLineTypes = [lineTypes.COMMENT, lineTypes.DIRECTIVE];
   return !unSupportedLineTypes.includes(lineModel.type);
 };
-
 var getAllSections = function getAllSections(allLines) {
   var allSections = [];
   var currentSection;
-
   var commitCurrentSection = function commitCurrentSection() {
     if (currentSection) {
       allSections.push(currentSection);
       currentSection = undefined;
     }
   };
-
   var initCurrentSection = function initCurrentSection(line) {
     currentSection = {
       label: line ? extractSectionLabel(line) : '#v',
       allLines: []
     };
   };
-
   allLines.forEach(function (line) {
     if (line.type === lineTypes.SECTION_START) {
       commitCurrentSection();
@@ -29749,7 +29699,6 @@ var getAllSections = function getAllSections(allLines) {
       if (!currentSection) {
         initCurrentSection();
       }
-
       if (line.type === lineTypes.CHORDS_LYRICS) {
         currentSection.allLines.push(line.chords);
         currentSection.allLines.push(line.lyrics);
@@ -29766,19 +29715,15 @@ var getAllSections = function getAllSections(allLines) {
     return section;
   });
 };
-
 var extractSectionLabel = function extractSectionLabel(lineModel) {
   var label;
-
   if (lineModel.value) {
     label = helpers_getSectionLabel(lineModel.value);
   } else {
     label = '#' + directivesToSectionLabel[lineModel.key];
   }
-
   return label;
 };
-
 /* harmony default export */ const converters_chordPro2ChordMark = (chordPro2ChordMark);
 ;// CONCATENATED MODULE: ./src/helpers/getSpaceLength.js
 /**
@@ -29787,8 +29732,9 @@ var extractSectionLabel = function extractSectionLabel(lineModel) {
  * @returns {number}
  */
 var getSpaceLength = function getSpaceLength(input) {
-  var TAB_WIDTH = 4; // inspired by https://github.com/gromnitsky/untabify/blob/master/index.js
+  var TAB_WIDTH = 4;
 
+  // inspired by https://github.com/gromnitsky/untabify/blob/master/index.js
   var offset = 0;
   var withoutTabs = input.replace(/\t/g, function (_, idx) {
     var max = TAB_WIDTH - (idx + offset) % TAB_WIDTH;
@@ -29797,20 +29743,16 @@ var getSpaceLength = function getSpaceLength(input) {
   });
   return withoutTabs.length;
 };
-
 /* harmony default export */ const helpers_getSpaceLength = (getSpaceLength);
 ;// CONCATENATED MODULE: ./src/helpers/insertAt.js
 var insertAt = function insertAt(insertInto, toInsert, at) {
   if (at > insertInto.length) {
     insertInto += ' '.repeat(at - insertInto.length);
   }
-
   return insertInto.slice(0, at) + toInsert + insertInto.slice(at);
 };
-
 /* harmony default export */ const helpers_insertAt = (insertAt);
 ;// CONCATENATED MODULE: ./src/converters/chordsOverLyrics2ChordMark.js
-
 
 
 
@@ -29830,43 +29772,34 @@ var chordsOverLyrics2ChordMark = function chordsOverLyrics2ChordMark(allLines) {
       } else {
         cmOutput.push(line);
       }
-
       chordPositions = [];
     }
   });
   return cmOutput.join('\n');
 };
-
 var sectionLabelRe = /^\[([^\]]+)]$/;
-
 var isSectionLabel = function isSectionLabel(line) {
   var found = line.trim().match(sectionLabelRe);
   return found !== null && found[1].trim() !== '';
 };
-
 var chordsOverLyrics2ChordMark_extractSectionLabel = function extractSectionLabel(line) {
   var rawLabel = line.trim().match(sectionLabelRe)[1];
   return helpers_getSectionLabel(rawLabel);
 };
-
 function getAllChordsInLine(line) {
   return line.match(chordLineRe).join(' ');
 }
-
 function getChordsPositions(line) {
   var chordPositions = [];
   var lastPosition = 0;
   var allSpaces = line.match(/([\s])+/g) || [];
   var allChords = line.match(/([^\s])+/g);
-
   if (!startWithSpace(line)) {
     allSpaces.unshift('');
   }
-
   if (endWithSpace(line)) {
     allSpaces.pop();
   }
-
   allSpaces.forEach(function (spaces, i) {
     var chordPosition = helpers_getSpaceLength(' '.repeat(lastPosition) + spaces);
     chordPositions.push(chordPosition);
@@ -29874,19 +29807,15 @@ function getChordsPositions(line) {
   });
   return chordPositions;
 }
-
 var startWithSpace = function startWithSpace(line) {
   return isSpace(line.charAt(0));
 };
-
 var endWithSpace = function endWithSpace(line) {
   return isSpace(line.charAt(line.length - 1));
 };
-
 var isSpace = function isSpace(char) {
   return char.match(/[\s]/);
 };
-
 var getLineWithPositionMarkers = function getLineWithPositionMarkers(line, chordPositions) {
   var marker = '_';
   var withMarkers = line;
@@ -29898,7 +29827,6 @@ var getLineWithPositionMarkers = function getLineWithPositionMarkers(line, chord
   });
   return withMarkers.replace(/[\s]+/g, ' ').trim();
 };
-
 /* harmony default export */ const converters_chordsOverLyrics2ChordMark = (chordsOverLyrics2ChordMark);
 ;// CONCATENATED MODULE: ./src/convert2ChordMark.js
 
@@ -29910,76 +29838,59 @@ var allInputFormats = {
   CP: 'chordPro',
   COL: 'chordsOverLyrics'
 };
+
 /**
  *
  * @param {String} input
  * @param {('chordPro'|'chordsOverLyrics')} inputFormat
  * @returns {String}
  */
-
 var convert2ChordMark = function convert2ChordMark(input) {
   var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
-      _ref$inputFormat = _ref.inputFormat,
-      inputFormat = _ref$inputFormat === void 0 ? allInputFormats.AUTO : _ref$inputFormat;
-
+    _ref$inputFormat = _ref.inputFormat,
+    inputFormat = _ref$inputFormat === void 0 ? allInputFormats.AUTO : _ref$inputFormat;
   checkInputFormat(inputFormat);
   var allLines = getAllLines(input);
   var finalInputFormat = inputFormat;
-
   if (inputFormat === allInputFormats.AUTO) {
     finalInputFormat = looksLikeChordPro(allLines) ? allInputFormats.CP : allInputFormats.COL;
   }
-
   var converter;
-
   switch (finalInputFormat) {
     case allInputFormats.CP:
       converter = converters_chordPro2ChordMark;
       break;
-
     case allInputFormats.COL:
       converter = converters_chordsOverLyrics2ChordMark;
       break;
   }
-
   return converter(allLines);
 };
-
 var checkInputFormat = function checkInputFormat(inputFormat) {
   if (!Object.values(allInputFormats).includes(inputFormat)) {
     throw new Error('unknown input format: ' + inputFormat);
   }
 };
-
 var getAllLines = function getAllLines(inputRaw) {
   return stripTags(inputRaw).replace(/\r\n/g, '\n').replace(/\n\r/g, '\n').replace(/\r/g, '\n').replace(/\[\/?ch]/g, '') // ultimate guitar markup
   .replace(/\[\/?tab]/g, '') // ultimate guitar markup
   .split('\n');
 };
-
 var looksLikeChordPro = function looksLikeChordPro(allLines) {
   var chordsLyricsLines = allLines.filter(isChordsLyricsLine);
   var chordLines = allLines.filter(isChordLine);
   return chordsLyricsLines.length > chordLines.length;
 };
-
 /* harmony default export */ const src_convert2ChordMark = (convert2ChordMark);
 // EXTERNAL MODULE: ./node_modules/chord-mark/lib/chord-mark.js
 var chord_mark = __webpack_require__(401);
 ;// CONCATENATED MODULE: ./src/converters/chordMark2ChordPro.js
 function chordMark2ChordPro_slicedToArray(arr, i) { return chordMark2ChordPro_arrayWithHoles(arr) || chordMark2ChordPro_iterableToArrayLimit(arr, i) || chordMark2ChordPro_unsupportedIterableToArray(arr, i) || chordMark2ChordPro_nonIterableRest(); }
-
 function chordMark2ChordPro_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
 function chordMark2ChordPro_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return chordMark2ChordPro_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return chordMark2ChordPro_arrayLikeToArray(o, minLen); }
-
 function chordMark2ChordPro_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
 function chordMark2ChordPro_iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
 function chordMark2ChordPro_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-
 
 
 
@@ -29987,12 +29898,11 @@ var chordMark2ChordPro = function chordMark2ChordPro() {
   var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   return convert2ChordPro.bind(null, options);
 };
-
 var convert2ChordPro = function convert2ChordPro(_ref, allLines, allRenderedLines, _ref2) {
   var _ref$showBarSeparator = _ref.showBarSeparators,
-      showBarSeparators = _ref$showBarSeparator === void 0 ? true : _ref$showBarSeparator;
+    showBarSeparators = _ref$showBarSeparator === void 0 ? true : _ref$showBarSeparator;
   var alignBars = _ref2.alignBars,
-      alignChordsWithLyrics = _ref2.alignChordsWithLyrics;
+    alignChordsWithLyrics = _ref2.alignChordsWithLyrics;
   var chordProLines = [];
   var chordLine;
   chordMark2ChordPro_getAllSections(allLines).forEach(function (section, i) {
@@ -30004,7 +29914,6 @@ var convert2ChordPro = function convert2ChordPro(_ref, allLines, allRenderedLine
         chordProLines.push(getCommentLine(getSectionTitle(section.sectionLine.model.rendered)));
       }
     }
-
     section.allLines.forEach(function (line, j, allSectionLines) {
       switch (line.type) {
         case chord_mark.lineTypes.CHORD:
@@ -30013,9 +29922,7 @@ var convert2ChordPro = function convert2ChordPro(_ref, allLines, allRenderedLine
           } else {
             chordLine = line;
           }
-
           break;
-
         case chord_mark.lineTypes.LYRIC:
           chordProLines.push(getLyricLine(line, chordLine, {
             showBarSeparators: showBarSeparators,
@@ -30024,39 +29931,33 @@ var convert2ChordPro = function convert2ChordPro(_ref, allLines, allRenderedLine
           }));
           chordLine = undefined;
           break;
-
         case chord_mark.lineTypes.EMPTY_LINE:
           chordProLines.push('');
           chordLine = undefined;
           break;
       }
     });
-
     if (section.sectionLine && section.allLines.length > 0) {
       chordProLines.push(getEndSectionDirective(section.sectionLine));
     }
   });
   return chordProLines.join('\n');
 };
-
 var chordMark2ChordPro_getAllSections = function getAllSections(allLines) {
   var allSections = [];
   var currentSection;
-
   var commitCurrentSection = function commitCurrentSection() {
     if (currentSection) {
       allSections.push(currentSection);
       currentSection = undefined;
     }
   };
-
   var initCurrentSection = function initCurrentSection(line) {
     currentSection = {
       sectionLine: line,
       allLines: []
     };
   };
-
   allLines.forEach(function (line) {
     if (line.type === chord_mark.lineTypes.SECTION_LABEL) {
       commitCurrentSection();
@@ -30065,7 +29966,6 @@ var chordMark2ChordPro_getAllSections = function getAllSections(allLines) {
       if (!currentSection) {
         initCurrentSection();
       }
-
       currentSection.allLines.push(line);
     }
   });
@@ -30077,59 +29977,50 @@ var chordMark2ChordPro_getAllSections = function getAllSections(allLines) {
     return section;
   });
 };
+
 /**
  * @param {SongSectionLabelLine} line
  */
-
-
 function getOpenSectionDirective(line) {
   return "{start_of_".concat(getEnvironmentType(line.model.label), ": ").concat(getSectionTitle(line.model.rendered), "}");
 }
+
 /**
  * @param {SongSectionLabelLine} line
  */
-
-
 function getEndSectionDirective(line) {
   return "{end_of_".concat(getEnvironmentType(line.model.label), "}");
 }
-
 function getEnvironmentType(label) {
   switch (label) {
     case 'b':
     case 'bridge':
       return 'bridge';
-
     case 'c':
     case 'chorus':
       return 'chorus';
-
     default:
     case 'v':
     case 'verse':
       return 'verse';
   }
 }
-
 function getSectionTitle(_ref3) {
   var label = _ref3.label,
-      multiplier = _ref3.multiplier;
+    multiplier = _ref3.multiplier;
   return multiplier ? "".concat(label, " ").concat(multiplier) : label;
 }
-
 function getCommentLine(comment) {
   return "{c:".concat(comment, "}");
 }
-
 function isFollowedByLyricLine(allSectionLines, i) {
   var nextLine = allSectionLines[i + 1];
   return nextLine && nextLine.type === chord_mark.lineTypes.LYRIC;
 }
+
 /**
  * @param {SongChordLine} line
  */
-
-
 function getChordLine(line) {
   var chordLine = '';
   line.model.allBars.map(function (bar) {
@@ -30141,6 +30032,7 @@ function getChordLine(line) {
   chordLine += '|';
   return getCommentLine(chordLine.trim());
 }
+
 /**
  * @param {SongLyricLine} line
  * @param {SongChordLine} chordLine
@@ -30148,12 +30040,10 @@ function getChordLine(line) {
  * @param {Boolean} alignBars
  * @param {Boolean} showBarSeparators
  */
-
-
 function getLyricLine(line, chordLine, _ref4) {
   var alignChordsWithLyrics = _ref4.alignChordsWithLyrics,
-      alignBars = _ref4.alignBars,
-      showBarSeparators = _ref4.showBarSeparators;
+    alignBars = _ref4.alignBars,
+    showBarSeparators = _ref4.showBarSeparators;
   var lyrics = line.string.trim(); // fixme: keep trim()?
 
   if (chordLine && chordLine.type === chord_mark.lineTypes.CHORD) {
@@ -30168,29 +30058,24 @@ function getLyricLine(line, chordLine, _ref4) {
       });
     }
   }
-
   return lyrics;
 }
-
 var getLyricLineWithPositionedChords = function getLyricLineWithPositionedChords(srcLyrics, chordLine, _ref5) {
   var showBarSeparators = _ref5.showBarSeparators;
   var lyrics = srcLyrics;
   chordLine.model.allBars.map(function (bar) {
     bar.allChords.map(function (chord, i) {
       var _getChordSymbol = getChordSymbol(bar, chord),
-          _getChordSymbol2 = chordMark2ChordPro_slicedToArray(_getChordSymbol, 1),
-          chordProSymbol = _getChordSymbol2[0];
-
+        _getChordSymbol2 = chordMark2ChordPro_slicedToArray(_getChordSymbol, 1),
+        chordProSymbol = _getChordSymbol2[0];
       if (i === 0 && showBarSeparators) {
         var nextPositionMarker = lyrics.indexOf('_');
-
         if (nextPositionMarker > -1) {
           lyrics = helpers_insertAt(lyrics, '[|] ', nextPositionMarker);
         } else {
           lyrics = helpers_insertAt(lyrics, '[|]', lyrics.length + 1);
         }
       }
-
       if (lyrics.indexOf('_') > -1) {
         lyrics = lyrics.replace('_', chordProSymbol);
       } else {
@@ -30199,31 +30084,26 @@ var getLyricLineWithPositionedChords = function getLyricLineWithPositionedChords
     });
   });
   lyrics = lyrics.replace(/_/g, '').trim();
-
   if (showBarSeparators) {
     lyrics += ' [|]';
   }
-
   return lyrics;
 };
-
 var getLyricLineWithNonPositionedChords = function getLyricLineWithNonPositionedChords(srcLyrics, chordLine, _ref6) {
   var showBarSeparators = _ref6.showBarSeparators,
-      alignBars = _ref6.alignBars;
+    alignBars = _ref6.alignBars;
   var lyrics = srcLyrics.replace(/_/g, '');
   var chordOffset = 0;
   chordLine.model.allBars.map(function (bar) {
     bar.allChords.map(function (chord, i) {
       var _getChordSymbol3 = getChordSymbol(bar, chord),
-          _getChordSymbol4 = chordMark2ChordPro_slicedToArray(_getChordSymbol3, 2),
-          chordProSymbol = _getChordSymbol4[0],
-          rawSymbol = _getChordSymbol4[1];
-
+        _getChordSymbol4 = chordMark2ChordPro_slicedToArray(_getChordSymbol3, 2),
+        chordProSymbol = _getChordSymbol4[0],
+        rawSymbol = _getChordSymbol4[1];
       if (i === 0 && showBarSeparators) {
         lyrics = helpers_insertAt(lyrics, '[|]', chordOffset);
         chordOffset += '[|]'.length + '| '.length;
       }
-
       lyrics = helpers_insertAt(lyrics, chordProSymbol, chordOffset);
       var extraSpaceOnLastChord = alignBars && !bar.allChords[i + 1] ? 1 : 0;
       chordOffset += chordProSymbol.length + rawSymbol.length + chord.spacesAfter + chord.spacesWithin + extraSpaceOnLastChord; // compensate for the fact that most chordpro programs add a space between
@@ -30233,45 +30113,36 @@ var getLyricLineWithNonPositionedChords = function getLyricLineWithNonPositioned
   if (showBarSeparators) {
     lyrics = helpers_insertAt(lyrics, '[|]', chordOffset);
   }
-
   return lyrics;
 };
-
 var getChordSymbol = function getChordSymbol(bar, chord) {
   var symbol = bar.shouldPrintChordsDuration ? chord.symbol + '.'.repeat(chord.duration) : chord.symbol;
   return ["[".concat(symbol, "]"), symbol];
 };
-
 /* harmony default export */ const converters_chordMark2ChordPro = (chordMark2ChordPro);
 ;// CONCATENATED MODULE: ./src/converters/chordMark2UltimateGuitar.js
-
 
 
 var chordMark2UltimateGuitar = function chordMark2UltimateGuitar() {
   return convert2UltimateGuitar.bind(null);
 };
-
 var convert2UltimateGuitar = function convert2UltimateGuitar(allLines, allRenderedLines) {
   return allRenderedLines.map(function (line, i) {
     var srcLine = allLines[i];
     var renderedLine = stripTags(line);
-
     if (srcLine.type === chord_mark.lineTypes.SECTION_LABEL) {
       return "[".concat(renderedLine, "]");
     } else if (srcLine.type === chord_mark.lineTypes.CHORD) {
       return chordMark2UltimateGuitar_getChordLine(srcLine, renderedLine);
     }
-
     return renderedLine.replace('&nbsp;', '');
   }).join('\n');
 };
-
 var chordMark2UltimateGuitar_getChordLine = function getChordLine(srcLine, renderedLine) {
   var chordSymbolRe = /([^\s.|]+)/g;
   var chordSymbolReplaceWith = '[ch]$1[/ch]';
   return renderedLine.replace(chordSymbolRe, chordSymbolReplaceWith);
 };
-
 /* harmony default export */ const converters_chordMark2UltimateGuitar = (chordMark2UltimateGuitar);
 ;// CONCATENATED MODULE: ./src/chordMarkConverters.js
 
