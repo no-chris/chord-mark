@@ -20,7 +20,7 @@
 		"@babel/core": "^7.16.7",
 		"@babel/preset-env": "^7.16.7",
 		"@size-limit/preset-small-lib": "^8.0.1",
-		"babel-jest": "^29.0.1",
+		"babel-jest": "^29.2.2",
 		"babel-loader": "^8.2.3",
 		"css-loader": "^6.5.1",
 		"eslint": "^8.6.0",
