@@ -15,7 +15,7 @@ const parsed = parseSong('A\n_mySong');
 const rendered = renderSong(parsed);
 ```
 
-ChordMark's default renderer produces an HTML output.
+ChordMark's default renderer produces a string containing an HTML markup.
 
 ```html
 <div class="cmSong">
