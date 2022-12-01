@@ -19,7 +19,7 @@
 	"homepage": "https://github.com/no-chris/chord-mark/tree/main/packages/chord-mark#readme",
 	"dependencies": {
 		"chord-symbol": "3.0.0",
-		"dompurify": "^2.3.4",
+		"dompurify": "^2.4.1",
 		"lodash": "^4.17.21"
 	},
 	"scripts": {
