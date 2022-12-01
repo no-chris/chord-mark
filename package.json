@@ -21,7 +21,7 @@
 		"@babel/preset-env": "^7.16.7",
 		"@size-limit/preset-small-lib": "^8.0.1",
 		"babel-jest": "^29.0.1",
-		"babel-loader": "^8.2.3",
+		"babel-loader": "^9.1.0",
 		"css-loader": "^6.5.1",
 		"eslint": "^8.6.0",
 		"eslint-plugin-import": "^2.25.4",
