@@ -90,7 +90,9 @@ export default function parseChordLine(
 			}
 			if (isInSubBeatGroup) {
 				if (hasBeatCount(token)) {
-					throw new Error('Sub-beat chords cannot have a duration');
+					throw new Error(
+						'Chords in a sub-beat group cannot have a duration'
+					);
 				}
 				if (subBeatGroupsChordCount[subBeatGroupIndex]) {
 					subBeatGroupsChordCount[subBeatGroupIndex]++;
@@ -155,7 +157,8 @@ export default function parseChordLine(
 }
 
 function hasBeatCount(token) {
-	return token.indexOf(syntax.chordBeatCount) > -1;
+	const regex = new RegExp(syntax.chordBeatCount, 'g');
+	return (token.match(regex) || []).length > 0;
 }
 
 function isNoChordSymbol(token) {

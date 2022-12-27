@@ -25,7 +25,7 @@ const ts3_8 = parseTimeSignature('3/8');
 parseChord.mockImplementation((chordString) => ({ symbol: chordString }));
 getChordSymbol.mockImplementation((chordDef) => chordDef.symbol);
 
-describe.only.each([
+describe.each([
 	[
 		'1 bar / 1 chord / 4/4',
 		'Cm',
@@ -881,7 +881,7 @@ describe.only.each([
 	],
 	[
 		'sub-beat group / 2 chords',
-		'F... (C/E Dm7)',
+		'F... {C/E Dm7}',
 		ts4_4,
 		{
 			allBars: [
@@ -895,14 +895,14 @@ describe.only.each([
 							isInSubBeatGroup: false,
 						},
 						{
-							string: '(C/E',
+							string: '{C/E',
 							model: { symbol: 'C/E' },
 							duration: 0.5,
 							beat: 4,
 							isInSubBeatGroup: true,
 						},
 						{
-							string: 'Dm7)',
+							string: 'Dm7}',
 							model: { symbol: 'Dm7' },
 							duration: 0.5,
 							beat: 4,
@@ -918,7 +918,7 @@ describe.only.each([
 	],
 	[
 		'sub-beat group / 3 chords',
-		'F... (C/E Dm7 C)',
+		'F... {C/E Dm7 C}',
 		ts4_4,
 		{
 			allBars: [
@@ -932,7 +932,7 @@ describe.only.each([
 							isInSubBeatGroup: false,
 						},
 						{
-							string: '(C/E',
+							string: '{C/E',
 							model: { symbol: 'C/E' },
 							duration: 0.33,
 							beat: 4,
@@ -946,7 +946,7 @@ describe.only.each([
 							isInSubBeatGroup: true,
 						},
 						{
-							string: 'C)',
+							string: 'C}',
 							model: { symbol: 'C' },
 							duration: 0.33,
 							beat: 4,
@@ -962,14 +962,14 @@ describe.only.each([
 	],
 	[
 		'sub-beat group / 4 chords',
-		'(C/E Dm7 C Am) F...',
+		'{C/E Dm7 C Am} F...',
 		ts4_4,
 		{
 			allBars: [
 				{
 					allChords: [
 						{
-							string: '(C/E',
+							string: '{C/E',
 							model: { symbol: 'C/E' },
 							duration: 0.25,
 							beat: 1,
@@ -990,7 +990,7 @@ describe.only.each([
 							isInSubBeatGroup: true,
 						},
 						{
-							string: 'Am)',
+							string: 'Am}',
 							model: { symbol: 'Am' },
 							duration: 0.25,
 							beat: 1,
@@ -1013,7 +1013,7 @@ describe.only.each([
 	],
 	[
 		'2 sub-beat groups / 2 and 3 chords',
-		'F.. (C/E Dm7) (C B7 Am)',
+		'F.. {C/E Dm7} {C B7 Am}',
 		ts4_4,
 		{
 			allBars: [
@@ -1027,21 +1027,21 @@ describe.only.each([
 							isInSubBeatGroup: false,
 						},
 						{
-							string: '(C/E',
+							string: '{C/E',
 							model: { symbol: 'C/E' },
 							duration: 0.5,
 							beat: 3,
 							isInSubBeatGroup: true,
 						},
 						{
-							string: 'Dm7)',
+							string: 'Dm7}',
 							model: { symbol: 'Dm7' },
 							duration: 0.5,
 							beat: 3,
 							isInSubBeatGroup: true,
 						},
 						{
-							string: '(C',
+							string: '{C',
 							model: { symbol: 'C' },
 							duration: 0.33,
 							beat: 4,
@@ -1055,7 +1055,7 @@ describe.only.each([
 							isInSubBeatGroup: true,
 						},
 						{
-							string: 'Am)',
+							string: 'Am}',
 							model: { symbol: 'Am' },
 							duration: 0.33,
 							beat: 4,
@@ -1199,3 +1199,26 @@ describe.each([['% A'], ['%% A'], [' % A'], ['	% A']])(
 		});
 	}
 );
+
+describe.each([
+	['A... {B7. D7.}'],
+	['A... {B7. D7}'],
+	['A... {B7 D7.}'],
+	['A... {B7. E7 D7}'],
+	['A... {B7 E7. D7}'],
+	['A... {B7 E7 D7.}'],
+	['A... {B7.. E7 D7}'],
+	['A... {B7 E7.. D7}'],
+	['A... {B7 E7 D7..}'],
+])('Throw if a sub-beat group contains duration markers: %s', (input) => {
+	const throwingFn = () => {
+		parseChordLine(input);
+	};
+
+	test('Throw Error', () => {
+		expect(throwingFn).toThrow(Error);
+		expect(throwingFn).toThrow(
+			'Chords in a sub-beat group cannot have a duration'
+		);
+	});
+});

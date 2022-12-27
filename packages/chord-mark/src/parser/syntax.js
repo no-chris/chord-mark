@@ -6,6 +6,6 @@ export default {
 	noChord: 'NC',
 	noLyrics: 'NL',
 	sectionLabel: '#',
-	subBeatOpener: '(',
-	subBeatCloser: ')',
+	subBeatOpener: '{',
+	subBeatCloser: '}',
 };
