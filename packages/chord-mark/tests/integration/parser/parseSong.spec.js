@@ -37,6 +37,7 @@ _Let it _be`;
 										model: parseChord('C'),
 										duration: 2,
 										beat: 1,
+										isInSubBeatGroup: false,
 										isPositioned: false,
 									},
 									{
@@ -44,6 +45,7 @@ _Let it _be`;
 										model: parseChord('G'),
 										duration: 2,
 										beat: 3,
+										isInSubBeatGroup: false,
 										isPositioned: false,
 									},
 								],
@@ -75,6 +77,7 @@ _Let it _be`;
 										model: parseChord('Am'),
 										duration: 2,
 										beat: 1,
+										isInSubBeatGroup: false,
 										isPositioned: true,
 									},
 									{
@@ -82,6 +85,7 @@ _Let it _be`;
 										model: parseChord('F'),
 										duration: 2,
 										beat: 3,
+										isInSubBeatGroup: false,
 										isPositioned: true,
 									},
 								],
@@ -113,6 +117,7 @@ _Let it _be`;
 										model: parseChord('C'),
 										duration: 3,
 										beat: 1,
+										isInSubBeatGroup: false,
 										isPositioned: false,
 									},
 									{
@@ -120,6 +125,7 @@ _Let it _be`;
 										model: parseChord('G'),
 										duration: 1,
 										beat: 4,
+										isInSubBeatGroup: false,
 										isPositioned: false,
 									},
 								],
@@ -151,6 +157,7 @@ _Let it _be`;
 										model: parseChord('F'),
 										duration: 1,
 										beat: 1,
+										isInSubBeatGroup: false,
 										isPositioned: true,
 									},
 									{
@@ -158,6 +165,7 @@ _Let it _be`;
 										model: parseChord('Em'),
 										duration: 1,
 										beat: 2,
+										isInSubBeatGroup: false,
 										isPositioned: true,
 									},
 									{
@@ -165,6 +173,7 @@ _Let it _be`;
 										model: parseChord('Dm'),
 										duration: 1,
 										beat: 3,
+										isInSubBeatGroup: false,
 										isPositioned: false,
 									},
 									{
@@ -172,6 +181,7 @@ _Let it _be`;
 										model: parseChord('C'),
 										duration: 1,
 										beat: 4,
+										isInSubBeatGroup: false,
 										isPositioned: false,
 									},
 								],

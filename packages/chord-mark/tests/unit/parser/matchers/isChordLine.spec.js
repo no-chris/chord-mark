@@ -50,6 +50,7 @@ describe.each([
 	['F C A B)', false],
 	['F (C A) (B', false],
 	['F (C A(add b9)) B)', false],
+	//todo: add cross bar tests examples
 ])('Test Chord line %s', (line, output) => {
 	test('Correctly detect chord line', () => {
 		expect(isChordLine(line)).toEqual(output);

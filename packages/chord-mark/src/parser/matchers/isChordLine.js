@@ -37,13 +37,21 @@ const removeBeatCount = (token) => {
 
 const removeSubBeatEnclosure = (token) => {
 	let clean = token;
-	if (token.startsWith(syntax.subBeatOpener)) {
+	if (opensSubBeatGroup(token)) {
 		clean = clean.replace(syntax.subBeatOpener, '');
 	}
-	if (token.endsWith(syntax.subBeatCloser) && hasExtraCloseSymbol(token)) {
+	if (closesSubBeatGroup(token)) {
 		clean = clean.substring(0, clean.length - syntax.subBeatCloser.length);
 	}
 	return clean;
+};
+
+const opensSubBeatGroup = (token) => {
+	return token.startsWith(syntax.subBeatOpener);
+};
+
+const closesSubBeatGroup = (token) => {
+	return token.endsWith(syntax.subBeatCloser) && hasExtraCloseSymbol(token);
 };
 
 const hasExtraCloseSymbol = (token) => {
@@ -65,4 +73,9 @@ const countOccurrences = (token, target) => {
 	return (token.match(regex) || []).length;
 };
 
-export { getParseableChordLine };
+export {
+	getParseableChordLine,
+	opensSubBeatGroup,
+	closesSubBeatGroup,
+	cleanToken,
+};

@@ -9,7 +9,12 @@ import parseTimeSignature from './parseTimeSignature';
 
 import IncorrectBeatCountException from './exceptions/IncorrectBeatCountException';
 import InvalidChordRepetitionException from './exceptions/InvalidChordRepetitionException';
-import { getParseableChordLine } from './matchers/isChordLine';
+import {
+	getParseableChordLine,
+	opensSubBeatGroup,
+	closesSubBeatGroup,
+	cleanToken,
+} from './matchers/isChordLine';
 
 const chordBeatCountSymbols = new RegExp(syntax.chordBeatCount, 'g');
 const barRepeatSymbols = new RegExp('^' + syntax.barRepeat + '+$');
@@ -54,12 +59,15 @@ export default function parseChordLine(
 
 	const allBars = [];
 	const emptyBar = { allChords: [] };
+	const subBeatGroupsChordCount = {};
 
 	let bar = _cloneDeep(emptyBar);
 	let chord = {};
-	let tokenWithoutBeatCount;
+	let cleanedToken;
 	let currentBeatCount = 0;
 	let previousBar;
+	let isInSubBeatGroup = false;
+	let subBeatGroupIndex = 0; //todo => index?
 
 	const allTokens = clearSpaces(getParseableChordLine(chordLine)).split(' ');
 	allTokens.forEach((token, tokenIndex) => {
@@ -77,20 +85,44 @@ export default function parseChordLine(
 				);
 			}
 		} else {
-			tokenWithoutBeatCount = token.replace(chordBeatCountSymbols, '');
+			if (opensSubBeatGroup(token)) {
+				isInSubBeatGroup = true;
+			}
+			if (isInSubBeatGroup) {
+				if (hasBeatCount(token)) {
+					throw new Error('Sub-beat chords cannot have a duration');
+				}
+				if (subBeatGroupsChordCount[subBeatGroupIndex]) {
+					subBeatGroupsChordCount[subBeatGroupIndex]++;
+				} else {
+					subBeatGroupsChordCount[subBeatGroupIndex] = 1;
+				}
+				//todo: throw if > 5
+				//todo: throw if hasBeatCount
+			}
+
+			cleanedToken = cleanToken(token);
 			chord = {
 				string: token,
-				duration: getChordDuration(token, beatCount),
-				model: isNoChordSymbol(tokenWithoutBeatCount)
+				duration: getChordDuration(token, beatCount, isInSubBeatGroup),
+				model: isNoChordSymbol(cleanedToken)
 					? syntax.noChord
-					: parseChord(tokenWithoutBeatCount),
+					: parseChord(cleanedToken),
 				beat: currentBeatCount + 1,
+				isInSubBeatGroup,
 			};
 			currentBeatCount += chord.duration;
 
 			checkInvalidChordRepetition(bar, chord);
 
 			bar.allChords.push(chord);
+
+			if (closesSubBeatGroup(token)) {
+				isInSubBeatGroup = false;
+				subBeatGroupIndex++;
+				currentBeatCount += 1;
+				//todo: throw if === 1? Will not work with current code
+			}
 
 			if (shouldChangeBar(currentBeatCount, beatCount)) {
 				bar.timeSignature = timeSignature;
@@ -115,17 +147,23 @@ export default function parseChordLine(
 			}
 		}
 	});
+	setSubBeatDurations(allBars, subBeatGroupsChordCount);
 
 	return {
 		allBars,
 	};
 }
 
+function hasBeatCount(token) {
+	return token.indexOf(syntax.chordBeatCount) > -1;
+}
+
 function isNoChordSymbol(token) {
 	return token === syntax.noChord;
 }
 
-function getChordDuration(token, beatCount) {
+function getChordDuration(token, beatCount, isInSubBeatGroup) {
+	if (isInSubBeatGroup) return 0; // duration is computed during post-processing for sub-beats duration
 	return (token.match(chordBeatCountSymbols) || []).length || beatCount;
 }
 
@@ -171,4 +209,25 @@ function hasTooFewBeats(currentBeatCount, barBeatCount, isLast) {
 function hasUnevenChordsDurations(bar) {
 	let firstChordDuration = bar.allChords[0].duration;
 	return bar.allChords.some((chord) => chord.duration !== firstChordDuration);
+}
+
+function setSubBeatDurations(allBars, subBeatGroupsChordCount) {
+	let subBeatGroupIndex = -1;
+	let previousChordBeatId = '';
+
+	allBars.forEach((bar, barIndex) => {
+		bar.allChords.forEach((chord) => {
+			if (chord.isInSubBeatGroup) {
+				const chordBeatId = barIndex + chord.beat;
+				if (chordBeatId !== previousChordBeatId) {
+					subBeatGroupIndex++;
+				}
+				const durationString = (
+					1 / subBeatGroupsChordCount[subBeatGroupIndex]
+				).toPrecision(2);
+				chord.duration = Number.parseFloat(durationString);
+				previousChordBeatId = chordBeatId;
+			}
+		});
+	});
 }
