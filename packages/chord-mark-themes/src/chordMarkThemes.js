@@ -21,8 +21,8 @@ const themes = [
 		key: 'dark3',
 	},
 	{
-		name: 'Print 1',
-		key: 'print1',
+		name: 'Print',
+		key: 'print',
 	},
 	{
 		name: 'Print 2',
