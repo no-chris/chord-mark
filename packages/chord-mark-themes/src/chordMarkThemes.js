@@ -25,6 +25,10 @@ const themes = [
 		key: 'print',
 	},
 	{
+		name: 'Boxes',
+		key: 'boxes',
+	},
+	{
 		name: 'Text',
 		key: 'text',
 	},
