@@ -21,12 +21,12 @@ const themes = [
 		key: 'dark3',
 	},
 	{
-		name: 'Print',
-		key: 'print',
+		name: 'Print 1',
+		key: 'print1',
 	},
 	{
-		name: 'Boxes',
-		key: 'boxes',
+		name: 'Print 2',
+		key: 'print2',
 	},
 	{
 		name: 'Text',
