@@ -10,6 +10,3 @@ coverage
 .DS_Store
 
 lerna-debug.log
-package-lock.json
-packages/chord-mark-themes/yarn.lock
-yarn.lock
