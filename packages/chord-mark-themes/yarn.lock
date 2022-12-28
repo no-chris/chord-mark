@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-chord-mark@^0.12.0:
-  version "0.12.0"
-  resolved "https://registry.npmjs.org/chord-mark/-/chord-mark-0.12.0.tgz"
-  integrity sha512-LsZ/elw1yLsiPaF32rIayFvKXuMbsfzRXBCMNfwKLsXK8mM3mupdCUFxFUTzYho23U35VKDXFp7sNvhzI/IuCw==
+chord-mark@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/chord-mark/-/chord-mark-0.11.0.tgz#f21cb9824a638ec2712ced076d99e971329994a4"
+  integrity sha512-eoewZZdG5yJpiNK+JAQiBbVLAmg9VuqLUye1FmhD9DU//Pbpj+Hel4wLgOE2aF7/fhYT0YhfPQ+Jhc0cZ1M8mA==
   dependencies:
     chord-symbol "3.0.0"
     dompurify "^2.3.4"
