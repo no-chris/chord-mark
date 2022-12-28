@@ -13,17 +13,18 @@ chord-mark@^0.11.0:
 
 chord-symbol@3.0.0:
   version "3.0.0"
-  resolved "https://registry.npmjs.org/chord-symbol/-/chord-symbol-3.0.0.tgz"
+  resolved "https://registry.yarnpkg.com/chord-symbol/-/chord-symbol-3.0.0.tgz#d16c4871f70fdaa5c1c13d837c865e0474e959db"
   integrity sha512-mONjRMrU1RFm/LWSN8Np4lq52mM6sqbB3JI7WMEDb15ZOqcUAMB2ttdzEfJDa6QQJPol+gZrMA4P0mJK8uiq7w==
   dependencies:
     lodash "^4.17.21"
 
 dompurify@^2.3.4:
   version "2.4.0"
-  resolved "https://registry.npmjs.org/dompurify/-/dompurify-2.4.0.tgz"
+  resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-2.4.0.tgz#c9c88390f024c2823332615c9e20a453cf3825dd"
   integrity sha512-Be9tbQMZds4a3C6xTmz68NlMfeONA//4dOavl/1rNw50E+/QO0KVpbcU0PcaW0nsQxurXls9ZocqFxk8R2mWEA==
 
 lodash@^4.17.21:
   version "4.17.21"
-  resolved "https://registry.npmjs.org/lodash/-/lodash-4.17.21.tgz"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
+  
