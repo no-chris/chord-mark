@@ -44,6 +44,9 @@ const defaultTimeSignature = parseTimeSignature('4/4');
  * @property {Number} duration - number of beats the chord lasts
  * @property {Number} beat - beat on which the chord starts
  * @property {Boolean} isPositioned - whether this chord has been positioned over a specific lyric or not
+ * @property {Boolean} isInSubBeatGroup - whether this chord has a sub-beat duration
+ * @property {Number} [subBeatChordIndex] - number of beats the chord lasts. Only present if `isInSubBeatGroup` is true.
+ * @property {Number} [subBeatChordCount] - number of chords in the sub-beat group. Only present if `isInSubBeatGroup` is true.
  */
 
 /**
@@ -149,7 +152,7 @@ export default function parseChordLine(
 			}
 		}
 	});
-	setSubBeatDurations(allBars, subBeatGroupsChordCount);
+	setSubBeatInfo(allBars, subBeatGroupsChordCount);
 
 	return {
 		allBars,
@@ -214,8 +217,9 @@ function hasUnevenChordsDurations(bar) {
 	return bar.allChords.some((chord) => chord.duration !== firstChordDuration);
 }
 
-function setSubBeatDurations(allBars, subBeatGroupsChordCount) {
+function setSubBeatInfo(allBars, subBeatGroupsChordCount) {
 	let subBeatGroupIndex = -1;
+	let subBeatChordIndex = 0;
 	let previousChordBeatId = '';
 
 	allBars.forEach((bar, barIndex) => {
@@ -224,12 +228,20 @@ function setSubBeatDurations(allBars, subBeatGroupsChordCount) {
 				const chordBeatId = barIndex + chord.beat;
 				if (chordBeatId !== previousChordBeatId) {
 					subBeatGroupIndex++;
+					subBeatChordIndex = 0;
 				}
+
 				const durationString = (
 					1 / subBeatGroupsChordCount[subBeatGroupIndex]
 				).toPrecision(2);
+
 				chord.duration = Number.parseFloat(durationString);
+				chord.subBeatChordIndex = subBeatChordIndex;
+				chord.subBeatChordCount =
+					subBeatGroupsChordCount[subBeatGroupIndex];
+
 				previousChordBeatId = chordBeatId;
+				subBeatChordIndex++;
 			}
 		});
 	});

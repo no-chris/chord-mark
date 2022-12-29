@@ -900,6 +900,8 @@ describe.each([
 							duration: 0.5,
 							beat: 4,
 							isInSubBeatGroup: true,
+							subBeatChordIndex: 0,
+							subBeatChordCount: 2,
 						},
 						{
 							string: 'Dm7}',
@@ -907,6 +909,8 @@ describe.each([
 							duration: 0.5,
 							beat: 4,
 							isInSubBeatGroup: true,
+							subBeatChordIndex: 1,
+							subBeatChordCount: 2,
 						},
 					],
 					timeSignature: ts4_4,
@@ -937,6 +941,8 @@ describe.each([
 							duration: 0.33,
 							beat: 4,
 							isInSubBeatGroup: true,
+							subBeatChordIndex: 0,
+							subBeatChordCount: 3,
 						},
 						{
 							string: 'Dm7',
@@ -944,6 +950,8 @@ describe.each([
 							duration: 0.33,
 							beat: 4,
 							isInSubBeatGroup: true,
+							subBeatChordIndex: 1,
+							subBeatChordCount: 3,
 						},
 						{
 							string: 'C}',
@@ -951,6 +959,8 @@ describe.each([
 							duration: 0.33,
 							beat: 4,
 							isInSubBeatGroup: true,
+							subBeatChordIndex: 2,
+							subBeatChordCount: 3,
 						},
 					],
 					timeSignature: ts4_4,
@@ -974,6 +984,8 @@ describe.each([
 							duration: 0.25,
 							beat: 1,
 							isInSubBeatGroup: true,
+							subBeatChordIndex: 0,
+							subBeatChordCount: 4,
 						},
 						{
 							string: 'Dm7',
@@ -981,6 +993,8 @@ describe.each([
 							duration: 0.25,
 							beat: 1,
 							isInSubBeatGroup: true,
+							subBeatChordIndex: 1,
+							subBeatChordCount: 4,
 						},
 						{
 							string: 'C',
@@ -988,6 +1002,8 @@ describe.each([
 							duration: 0.25,
 							beat: 1,
 							isInSubBeatGroup: true,
+							subBeatChordIndex: 2,
+							subBeatChordCount: 4,
 						},
 						{
 							string: 'Am}',
@@ -995,6 +1011,8 @@ describe.each([
 							duration: 0.25,
 							beat: 1,
 							isInSubBeatGroup: true,
+							subBeatChordIndex: 3,
+							subBeatChordCount: 4,
 						},
 						{
 							string: 'F...',
@@ -1032,6 +1050,8 @@ describe.each([
 							duration: 0.5,
 							beat: 3,
 							isInSubBeatGroup: true,
+							subBeatChordIndex: 0,
+							subBeatChordCount: 2,
 						},
 						{
 							string: 'Dm7}',
@@ -1039,6 +1059,8 @@ describe.each([
 							duration: 0.5,
 							beat: 3,
 							isInSubBeatGroup: true,
+							subBeatChordIndex: 1,
+							subBeatChordCount: 2,
 						},
 						{
 							string: '{C',
@@ -1046,6 +1068,8 @@ describe.each([
 							duration: 0.33,
 							beat: 4,
 							isInSubBeatGroup: true,
+							subBeatChordIndex: 0,
+							subBeatChordCount: 3,
 						},
 						{
 							string: 'B7',
@@ -1053,6 +1077,8 @@ describe.each([
 							duration: 0.33,
 							beat: 4,
 							isInSubBeatGroup: true,
+							subBeatChordIndex: 1,
+							subBeatChordCount: 3,
 						},
 						{
 							string: 'Am}',
@@ -1060,6 +1086,8 @@ describe.each([
 							duration: 0.33,
 							beat: 4,
 							isInSubBeatGroup: true,
+							subBeatChordIndex: 2,
+							subBeatChordCount: 3,
 						},
 					],
 					timeSignature: ts4_4,
