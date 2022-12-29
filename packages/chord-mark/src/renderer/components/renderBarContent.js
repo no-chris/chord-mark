@@ -23,8 +23,6 @@ export default function renderBarContent(
 	let spacesAfter = 0;
 
 	const barContent = bar.allChords.reduce((rendering, chord, i) => {
-		const isLastChordOfBar = !bar.allChords[i + 1];
-
 		spacesWithin = _isFinite(chord.spacesWithin)
 			? chord.spacesWithin
 			: defaultSpacesWithin;
@@ -32,17 +30,37 @@ export default function renderBarContent(
 			? chord.spacesAfter
 			: defaultSpacesAfter;
 
-		rendering += renderChordSymbol(chord, bar.shouldPrintChordsDuration);
+		rendering += renderChordSymbol(
+			chord,
+			chord.isInSubBeatGroup ? false : bar.shouldPrintChordsDuration,
+			isFirstChordOfSubBeat(),
+			isLastChordOfSubBeat()
+		);
 
 		if (shouldPrintChordSpaces()) {
 			rendering += space.repeat(spacesWithin) + space.repeat(spacesAfter);
 		}
 
 		function shouldPrintChordSpaces() {
-			const isLastChordOfLine = isLastChordOfBar && isLastBar;
+			const isLastChordOfLine = isLastChordOfBar() && isLastBar;
 			return (
 				!isLastChordOfLine ||
 				(isLastChordOfLine && shouldPrintBarSeparators)
+			);
+		}
+
+		function isLastChordOfBar() {
+			return !bar.allChords[i + 1];
+		}
+
+		function isFirstChordOfSubBeat() {
+			return chord.isInSubBeatGroup && chord.subBeatChordIndex === 0;
+		}
+
+		function isLastChordOfSubBeat() {
+			return (
+				chord.isInSubBeatGroup &&
+				chord.subBeatChordIndex === chord.subBeatChordCount - 1
 			);
 		}
 
