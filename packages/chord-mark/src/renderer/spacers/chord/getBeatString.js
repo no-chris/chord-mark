@@ -7,30 +7,38 @@ import symbols from '../../symbols';
  * @param {Number} beat
  * @returns {String}
  */
-export default function getBeatString(bar, beat) {
+export function getBeatString(bar, beat) {
 	const beatChords = bar.allChords.filter((chord) => chord.beat === beat);
 
 	switch (beatChords.length) {
 		case 0:
 			return '';
 		case 1: {
-			const chordDuration = bar.shouldPrintChordsDuration
-				? symbols.chordBeat.repeat(beatChords[0].duration)
-				: '';
-			return beatChords[0].symbol + chordDuration;
+			return getChordString(bar, beatChords[0]);
 		}
 		default: {
-			return (
-				symbols.subBeatGroupOpener +
-				beatChords.reduce((allChords, chord, i) => {
-					const spacesBefore =
-						i > 0
-							? ' '.repeat(symbols.spacesAfterSubBeatDefault)
-							: '';
-					return allChords + spacesBefore + chord.symbol;
-				}, '') +
-				symbols.subBeatGroupCloser
-			);
+			return beatChords.reduce((allChords, chord, i) => {
+				const spacesBefore =
+					i > 0 ? ' '.repeat(symbols.spacesAfterSubBeatDefault) : '';
+				return allChords + spacesBefore + getChordString(bar, chord);
+			}, '');
+		}
+	}
+}
+
+export function getChordString(bar, chord) {
+	if (!chord.isInSubBeatGroup) {
+		const chordDuration = bar.shouldPrintChordsDuration
+			? symbols.chordBeat.repeat(chord.duration)
+			: '';
+		return chord.symbol + chordDuration;
+	} else {
+		if (chord.subBeatChordIndex === 0) {
+			return symbols.subBeatGroupOpener + chord.symbol;
+		} else if (chord.subBeatChordIndex === chord.subBeatChordCount - 1) {
+			return chord.symbol + symbols.subBeatGroupCloser;
+		} else {
+			return chord.symbol;
 		}
 	}
 }

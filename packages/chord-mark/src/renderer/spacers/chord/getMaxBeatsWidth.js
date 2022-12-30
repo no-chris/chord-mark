@@ -1,4 +1,4 @@
-import getBeatString from './getBeatString';
+import { getBeatString } from './getBeatString';
 
 import lineTypes from '../../../parser/lineTypes';
 

@@ -1,13 +1,19 @@
-import getBeatString from '../../../../../src/renderer/spacers/chord/getBeatString';
+import {
+	getBeatString,
+	getChordString,
+} from '../../../../../src/renderer/spacers/chord/getBeatString';
 
 import parseSong from '../../../../../src/parser/parseSong';
 
 import getChordSymbol from '../../../../../src/renderer/helpers/getChordSymbol';
 import { forEachChordInSong } from '../../../../../src/parser/helper/songs';
 
-describe('getBeatString', () => {
-	test('Module', () => {
+describe('Module', () => {
+	test('getBeatString', () => {
 		expect(getBeatString).toBeInstanceOf(Function);
+	});
+	test('getChordString', () => {
+		expect(getChordString).toBeInstanceOf(Function);
 	});
 });
 

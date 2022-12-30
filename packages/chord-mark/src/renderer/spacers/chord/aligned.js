@@ -1,6 +1,6 @@
 import _cloneDeep from 'lodash/cloneDeep';
 import symbols from '../../symbols';
-import getBeatString from './getBeatString';
+import { getBeatString } from './getBeatString';
 
 /**
  * @param {ChordLine} chordLineInput
