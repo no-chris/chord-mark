@@ -178,7 +178,7 @@ function checkInvalidChordRepetition(bar, currentChord) {
 		const previousChord = bar.allChords[bar.allChords.length - 1];
 		if (
 			_isEqual(previousChord.model, currentChord.model) &&
-			!isChordRepetitionAllowed(currentChord)
+			!isChordRepetitionAllowed(previousChord, currentChord)
 		) {
 			throw new InvalidChordRepetitionException({
 				string: currentChord.string,
@@ -187,8 +187,12 @@ function checkInvalidChordRepetition(bar, currentChord) {
 	}
 }
 
-function isChordRepetitionAllowed(currentChord) {
-	return opensSubBeatGroup(currentChord.string);
+function isChordRepetitionAllowed(previousChord, currentChord) {
+	return (
+		opensSubBeatGroup(currentChord.string) ||
+		(closesSubBeatGroup(previousChord.string) &&
+			!currentChord.model.isInSubBeatGroup)
+	);
 }
 
 function shouldChangeBar(currentBeatCount, beatCount) {

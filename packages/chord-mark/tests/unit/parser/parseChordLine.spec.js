@@ -1159,6 +1159,8 @@ describe.each([
 	['A... B. C.. C. F.', 'C.'],
 	['A... B. F... F.', 'F.'],
 	['C... {G G C}', 'G'],
+	['C... {G G}', 'G}'],
+	['C... {C G G C}', 'G'],
 ])('Throw if repeated chord in a bar: %s', (input, string) => {
 	const throwingFn = () => {
 		parseChordLine(input);
@@ -1183,6 +1185,7 @@ describe.each([
 	['A... {A A7/G}'],
 	['A.. {A B7} {B7 A7/G}'],
 	['{A B} {B C} {C D} {D E}'],
+	['{A B} B...'],
 ])('Allowed chord repetitions: %s', (input) => {
 	const notThrowingFn = () => {
 		parseChordLine(input);
