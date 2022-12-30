@@ -123,6 +123,25 @@ describe.each([
 			{ 1: 'G'.length, 2: 0, 3: 'E7'.length, 4: 0 },
 		],
 	],
+
+	[
+		'2 lines / 1 sub-beat group',
+		['{C G} Fmi7.. G7(#9).', 'G.  B.. A.'],
+		[{ 1: '{C G}'.length, 2: 'Fmi7'.length, 3: 0, 4: 'G7(#9)'.length }],
+	],
+
+	[
+		'2 lines / 2 sub-beat groups',
+		['{C G} Fmi7.. G7(#9).', 'G.  B.. {C B7 Emi G}'],
+		[
+			{
+				1: '{C G}'.length,
+				2: 'Fmi7'.length,
+				3: 0,
+				4: '{C B7 Emi G}'.length,
+			},
+		],
+	],
 ])('getMaxBeatsWidth(): %s', (title, input, output) => {
 	test('Correctly computes the maximum width for each beat', () => {
 		const parsedSong = parseSong(input);
@@ -158,6 +177,22 @@ describe.each([
 			{ 1: 'A'.length, 2: 0, 3: 0, 4: 0 },
 			{ 1: 'A7..'.length, 2: 0, 3: 'B7..'.length, 4: 0 },
 			{ 1: 'Ami7.'.length, 2: 'Bmi9.'.length, 3: 'Cmi13..'.length, 4: 0 },
+			{ 1: 'A13...'.length, 2: 0, 3: 0, 4: 'B9.'.length },
+		],
+	],
+	[
+		'do not print chord durations in sub-beat group',
+		true,
+		'A A7. {C G} B7.. Ami7. {Bmi9 G(b13)} Cmi13.. A13... B9.',
+		[
+			{ 1: 'A'.length, 2: 0, 3: 0, 4: 0 },
+			{ 1: 'A7.'.length, 2: '{C G}'.length, 3: 'B7..'.length, 4: 0 },
+			{
+				1: 'Ami7.'.length,
+				2: '{Bmi9 G(b13)}'.length,
+				3: 'Cmi13..'.length,
+				4: 0,
+			},
 			{ 1: 'A13...'.length, 2: 0, 3: 0, 4: 'B9.'.length },
 		],
 	],

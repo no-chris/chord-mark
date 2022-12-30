@@ -1,5 +1,6 @@
 import _cloneDeep from 'lodash/cloneDeep';
 import symbols from '../../symbols';
+import getBeatString from './getBeatString';
 
 /**
  * @param {ChordLine} chordLineInput
@@ -14,38 +15,26 @@ export default function space(
 ) {
 	const chordLine = _cloneDeep(chordLineInput);
 
-	let beatMaxWidth;
-
 	chordLine.allBars.forEach((bar, barIndex) => {
 		bar.allChords.forEach((chord) => {
-			let symbolLength = chord.symbol.length;
-			if (bar.shouldPrintChordsDuration) {
-				symbolLength += symbols.chordBeat.repeat(chord.duration).length;
+			const beatString = getBeatString(bar, chord.beat);
+
+			if (chord.isInSubBeatGroup && !isLastChordOfSubBeat(chord)) {
+				chord.spacesWithin = 0;
+				chord.spacesAfter = symbols.spacesAfterSubBeatDefault;
+			} else if (!chord.isInSubBeatGroup || isLastChordOfSubBeat(chord)) {
+				chord.spacesWithin =
+					maxBeatsWidth[barIndex][chord.beat] - beatString.length;
+				chord.spacesAfter = 0;
 			}
 
-			chord.spacesWithin =
-				maxBeatsWidth[barIndex][chord.beat] - symbolLength;
-			chord.spacesAfter = 0;
+			if (shouldFillEmptyBeats(bar, chord)) {
+				chord.spacesAfter =
+					symbols.spacesAfterDefault +
+					getEmptyBeatsWidth(bar, chord, maxBeatsWidth[barIndex]);
+			}
 
-			if (chord.beat !== bar.timeSignature.beatCount) {
-				chord.spacesAfter = symbols.spacesAfterDefault;
-
-				for (
-					let i = chord.beat + 1;
-					i < chord.beat + chord.duration;
-					i++
-				) {
-					beatMaxWidth = maxBeatsWidth[barIndex][i];
-
-					chord.spacesAfter += beatMaxWidth
-						? beatMaxWidth
-						: symbols.emptyBeatSpaces;
-
-					if (i !== bar.timeSignature.beatCount && beatMaxWidth) {
-						chord.spacesAfter += symbols.spacesAfterDefault;
-					}
-				}
-			} else if (!shouldPrintBarSeparators) {
+			if (shouldSpaceLastBeat(bar, chord, shouldPrintBarSeparators)) {
 				chord.spacesAfter = symbols.spacesAfterDefault;
 			}
 		});
@@ -53,3 +42,44 @@ export default function space(
 
 	return chordLine;
 }
+
+const shouldFillEmptyBeats = (bar, chord) => {
+	return (
+		(!chord.isInSubBeatGroup || isLastChordOfSubBeat(chord)) &&
+		!isLastBeatOfBar(bar, chord)
+	);
+};
+
+const getEmptyBeatsWidth = (bar, chord, maxBeatsWidthForBar) => {
+	let spacesAfter = 0;
+
+	for (let i = chord.beat + 1; i < chord.beat + chord.duration; i++) {
+		const beatMaxWidth = maxBeatsWidthForBar[i];
+
+		spacesAfter += beatMaxWidth ? beatMaxWidth : symbols.emptyBeatSpaces;
+
+		if (i !== bar.timeSignature.beatCount && beatMaxWidth) {
+			spacesAfter += symbols.spacesAfterDefault;
+		}
+	}
+	return spacesAfter;
+};
+
+const isLastBeatOfBar = (bar, chord) => {
+	return chord.beat === bar.timeSignature.beatCount;
+};
+
+const isLastChordOfSubBeat = (chord) => {
+	return (
+		chord.isInSubBeatGroup &&
+		chord.subBeatChordIndex === chord.subBeatChordCount - 1
+	);
+};
+
+const shouldSpaceLastBeat = (bar, chord, shouldPrintBarSeparators) => {
+	return (
+		!shouldPrintBarSeparators &&
+		isLastBeatOfBar(bar, chord) &&
+		(!chord.isInSubBeatGroup || isLastChordOfSubBeat(chord))
+	);
+};
