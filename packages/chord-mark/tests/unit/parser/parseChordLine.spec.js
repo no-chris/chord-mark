@@ -1133,7 +1133,7 @@ describe.each([
 			parseChordLine(input, { timeSignature });
 		};
 
-		test('Throw InvalidChordRepetitionException', () => {
+		test('Throw IncorrectBeatCountException', () => {
 			expect(throwingFn).toThrow(IncorrectBeatCountException);
 		});
 
@@ -1158,6 +1158,7 @@ describe.each([
 	['A... A.', 'A.'],
 	['A... B. C.. C. F.', 'C.'],
 	['A... B. F... F.', 'F.'],
+	['C... {G G C}', 'G'],
 ])('Throw if repeated chord in a bar: %s', (input, string) => {
 	const throwingFn = () => {
 		parseChordLine(input);
@@ -1175,6 +1176,21 @@ describe.each([
 			expect(e.name).toBe('InvalidChordRepetitionException');
 			expect(e.string).toBe(string);
 		}
+	});
+});
+
+describe.each([
+	['A... {A A7/G}'],
+	['A.. {A B7} {B7 A7/G}'],
+	['{A B} {B C} {C D} {D E}'],
+])('Allowed chord repetitions: %s', (input) => {
+	const notThrowingFn = () => {
+		parseChordLine(input);
+	};
+
+	test('Do not throw if the repeated chord is the first of a sub-beat group', () => {
+		expect(notThrowingFn).not.toThrow();
+		expect(notThrowingFn).not.toThrow(InvalidChordRepetitionException);
 	});
 });
 

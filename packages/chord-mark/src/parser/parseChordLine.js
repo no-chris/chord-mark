@@ -84,7 +84,7 @@ export default function parseChordLine(
 				}
 			} else {
 				throw new Error(
-					'A chord line cannot start with the barRepeat symbol'
+					'A chord line cannot start with the barRepeat symbol' //todo convert to own exception
 				);
 			}
 		} else {
@@ -94,7 +94,7 @@ export default function parseChordLine(
 			if (isInSubBeatGroup) {
 				if (hasBeatCount(token)) {
 					throw new Error(
-						'Chords in a sub-beat group cannot have a duration'
+						'Chords in a sub-beat group cannot have a duration' //todo convert to own exception
 					);
 				}
 				if (subBeatGroupsChordCount[subBeatGroupIndex]) {
@@ -176,12 +176,19 @@ function getChordDuration(token, beatCount, isInSubBeatGroup) {
 function checkInvalidChordRepetition(bar, currentChord) {
 	if (bar.allChords.length > 0) {
 		const previousChord = bar.allChords[bar.allChords.length - 1];
-		if (_isEqual(previousChord.model, currentChord.model)) {
+		if (
+			_isEqual(previousChord.model, currentChord.model) &&
+			!isChordRepetitionAllowed(currentChord)
+		) {
 			throw new InvalidChordRepetitionException({
 				string: currentChord.string,
 			});
 		}
 	}
+}
+
+function isChordRepetitionAllowed(currentChord) {
+	return opensSubBeatGroup(currentChord.string);
 }
 
 function shouldChangeBar(currentBeatCount, beatCount) {
