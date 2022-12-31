@@ -7,15 +7,22 @@ import symbols from '../symbols';
 /**
  * @param {ChordLine} chordLineModel
  * @param {Boolean} shouldPrintBarSeparators
+ * @param {Boolean} shouldPrintSubBeatDelimiters
  * @returns {String} rendered html
  */
 export default function renderChordLine(
 	chordLineModel,
-	shouldPrintBarSeparators
+	shouldPrintBarSeparators,
+	shouldPrintSubBeatDelimiters = true
 ) {
 	const allBarsRendered = chordLineModel.allBars.map((bar, i) => {
 		const isLastBar = !chordLineModel.allBars[i + 1];
-		return renderBarContent(bar, isLastBar, shouldPrintBarSeparators);
+		return renderBarContent(
+			bar,
+			isLastBar,
+			shouldPrintBarSeparators,
+			shouldPrintSubBeatDelimiters
+		);
 	});
 
 	const barSeparator = shouldPrintBarSeparators

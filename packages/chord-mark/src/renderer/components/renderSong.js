@@ -39,6 +39,8 @@ import replaceRepeatedBars from '../replaceRepeatedBars';
  * @param {('never'|'uneven'|'always')} printChordsDuration
  * @param {('never'|'grids'|'always')} printBarSeparators - mainly useful when converting a ChordMark file to a format that
  * do not allow bar separators to be printed (e.g. Ultimate Guitar)
+ * @param {Boolean} printSubBeatDelimiters - mainly useful when converting a ChordMark file to a format that
+ * do not allow sub-beat groups to be printed (e.g. Ultimate Guitar)
  * @param {Number} transposeValue
  * @param {Boolean} useShortNamings
  * @returns {String} rendered HTML
@@ -59,7 +61,7 @@ export default function renderSong(
 		harmonizeAccidentals = true,
 		printChordsDuration = 'uneven',
 		printBarSeparators = 'always',
-		//todo: add printSubBeatGroups
+		printSubBeatDelimiters = true,
 		simplifyChords = 'none',
 		transposeValue = 0,
 		useShortNamings = true,
@@ -76,7 +78,11 @@ export default function renderSong(
 			return replaceRepeatedBars(line, { alignChordsWithLyrics });
 		});
 
-	const maxBeatsWidth = getMaxBeatsWidth(allLines, shouldAlignChords);
+	const maxBeatsWidth = getMaxBeatsWidth(
+		allLines,
+		shouldAlignChords,
+		printSubBeatDelimiters
+	);
 
 	allLines = renderAllSectionsLabels(allLines, {
 		expandSectionMultiply,
@@ -187,16 +193,18 @@ export default function renderSong(
 					? alignedChordSpacer(
 							line.model,
 							maxBeatsWidth,
-							shouldPrintBarSeparators(line.model)
+							shouldPrintBarSeparators(line.model),
+							printSubBeatDelimiters
 					  )
-					: simpleChordSpacer(line.model);
+					: simpleChordSpacer(line.model); //fixme: shouldn't we add `shouldPrintBarSeparators` here?
 
 			const nextLine = allLines[lineIndex + 1];
 			if (shouldAlignChords(line)) {
 				const { chordLine, lyricsLine } = chordLyricsSpacer(
 					spaced,
 					nextLine.model,
-					shouldPrintBarSeparators(line.model)
+					shouldPrintBarSeparators(line.model),
+					printSubBeatDelimiters
 				);
 				allLines[lineIndex + 1].model = lyricsLine;
 				spaced = chordLine;
@@ -213,7 +221,8 @@ export default function renderSong(
 				if (line.type === lineTypes.CHORD) {
 					rendered = renderChordLineModel(
 						line.model,
-						shouldPrintBarSeparators(line.model)
+						shouldPrintBarSeparators(line.model),
+						printSubBeatDelimiters
 					);
 				} else if (line.type === lineTypes.EMPTY_LINE) {
 					rendered = renderEmptyLine();

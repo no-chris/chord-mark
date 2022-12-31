@@ -12,12 +12,14 @@ const defaultSpacesAfter = 2;
  * @param {Bar} bar
  * @param {Boolean} isLastBar
  * @param {Boolean} shouldPrintBarSeparators
+ * @param {Boolean} shouldPrintSubBeatDelimiters
  * @returns {String} rendered html
  */
 export default function renderBarContent(
 	bar,
-	isLastBar,
-	shouldPrintBarSeparators
+	isLastBar = false,
+	shouldPrintBarSeparators = true,
+	shouldPrintSubBeatDelimiters = true
 ) {
 	let spacesWithin = 0;
 	let spacesAfter = 0;
@@ -33,8 +35,8 @@ export default function renderBarContent(
 		rendering += renderChordSymbol(
 			chord,
 			chord.isInSubBeatGroup ? false : bar.shouldPrintChordsDuration,
-			chord.isFirstOfSubBeat,
-			chord.isLastOfSubBeat
+			shouldPrintSubBeatDelimiters && chord.isFirstOfSubBeat,
+			shouldPrintSubBeatDelimiters && chord.isLastOfSubBeat
 		);
 
 		if (shouldPrintChordSpaces()) {

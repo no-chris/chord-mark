@@ -32,14 +32,14 @@ const getParseableChordLine = (chordLine) => {
 };
 
 const cleanToken = (token) => {
-	return removeSubBeatEnclosure(removeBeatCount(token));
+	return removeSubBeatDelimiters(removeBeatCount(token));
 };
 
 const removeBeatCount = (token) => {
 	return token.replace(chordBeatCountSymbols, '');
 };
 
-const removeSubBeatEnclosure = (token) => {
+const removeSubBeatDelimiters = (token) => {
 	let clean = token;
 	if (token.startsWith(syntax.subBeatOpener)) {
 		clean = clean.substring(syntax.subBeatOpener.length);

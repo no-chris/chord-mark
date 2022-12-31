@@ -46,19 +46,19 @@ describe.each([
 	[
 		'sub-beat group open',
 		{ symbol: 'AM7', duration: 3 },
-		{ isFirstChordOfSubBeatGroup: true },
+		{ shouldPrintSubBeatOpener: true },
 		'{AM7',
 	],
 	[
 		'sub-beat group close',
 		{ symbol: 'AM7', duration: 3 },
-		{ isLastChordOfSubBeatGroup: true },
+		{ shouldPrintSubBeatCloser: true },
 		'AM7}',
 	],
 	[
 		'sub-beat group open and close: should never happen, the parser should prevent that',
 		{ symbol: 'AM7', duration: 3 },
-		{ isFirstChordOfSubBeatGroup: true, isLastChordOfSubBeatGroup: true },
+		{ shouldPrintSubBeatOpener: true, shouldPrintSubBeatCloser: true },
 		'{AM7}',
 	],
 ])('Render chord %s as %s', (title, chord, options, expected) => {
@@ -66,8 +66,8 @@ describe.each([
 		const rendered = renderChordSymbol(
 			chord,
 			options.shouldPrintChordsDuration,
-			options.isFirstChordOfSubBeatGroup,
-			options.isLastChordOfSubBeatGroup
+			options.shouldPrintSubBeatOpener,
+			options.shouldPrintSubBeatCloser
 		);
 		expect(stripTags(rendered)).toEqual(expected);
 	});

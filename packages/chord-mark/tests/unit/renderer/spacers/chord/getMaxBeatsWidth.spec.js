@@ -271,3 +271,54 @@ describe.each([
 		});
 	}
 );
+
+describe.each([
+	[
+		'no sub-beat delimiters',
+		false,
+		'{C G} Fmi7.. G7(#9). Ami7.. {Bmi9 G(b13)} Cmi13.',
+		[
+			{ 1: 'C G'.length, 2: 'Fmi7'.length, 3: 0, 4: 'G7(#9)'.length },
+			{
+				1: 'Ami7'.length,
+				2: 0,
+				3: 'Bmi9 G(b13)'.length,
+				4: 'Cmi13'.length,
+			},
+		],
+	],
+	[
+		'with sub-beat delimiters',
+		true,
+		'{C G} Fmi7.. G7(#9). Ami7.. {Bmi9 G(b13)} Cmi13.',
+		[
+			{ 1: '{C G}'.length, 2: 'Fmi7'.length, 3: 0, 4: 'G7(#9)'.length },
+			{
+				1: 'Ami7'.length,
+				2: 0,
+				3: '{Bmi9 G(b13)}'.length,
+				4: 'Cmi13'.length,
+			},
+		],
+	],
+])(
+	'take sub-beat delimiters into account when needed',
+	(title, shouldPrintSubBeatDelimiters, input, output) => {
+		test(title, () => {
+			const parsedSong = parseSong(input);
+			let { allLines } = parsedSong;
+
+			allLines = forEachChordInSong(
+				allLines,
+				(chord) => (chord.symbol = getChordSymbol(chord.model))
+			);
+
+			const maxBeatsWidth = getMaxBeatsWidth(
+				allLines,
+				() => false,
+				shouldPrintSubBeatDelimiters
+			);
+			expect(maxBeatsWidth).toEqual(output);
+		});
+	}
+);

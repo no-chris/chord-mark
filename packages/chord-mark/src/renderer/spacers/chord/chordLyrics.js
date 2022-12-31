@@ -9,12 +9,14 @@ const chordSpaceAfterDefault = 1;
  * @param {ChordLine} chordLineInput
  * @param {LyricLine} lyricsLineInput
  * @param {Boolean} shouldPrintBarSeparators
+ * @param {Boolean} shouldPrintSubBeatDelimiters
  * @returns {Object}
  */
 export default function space(
 	chordLineInput,
 	lyricsLineInput,
-	shouldPrintBarSeparators
+	shouldPrintBarSeparators,
+	shouldPrintSubBeatDelimiters
 ) {
 	const chordLine = _cloneDeep(chordLineInput);
 	const lyricsLine = _cloneDeep(lyricsLineInput);
@@ -45,7 +47,11 @@ export default function space(
 			lyricToken = tokenizedLyrics.shift();
 
 			if (lyricToken) {
-				chordToken = getChordString(bar, chord);
+				chordToken = getChordString(
+					bar,
+					chord,
+					shouldPrintSubBeatDelimiters
+				);
 
 				if (isFirstChord(barIndex, chordIndex)) {
 					chordToken = barSeparatorToken + chordToken;

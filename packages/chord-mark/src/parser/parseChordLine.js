@@ -71,7 +71,7 @@ export default function parseChordLine(
 	checkSubBeatConsistency(chordLine);
 
 	const allTokens = clearSpaces(getParseableChordLine(chordLine)).split(' ');
-	//todo: check subBeat enclosures
+
 	allTokens.forEach((token, tokenIndex) => {
 		if (token.match(barRepeatSymbols)) {
 			if (previousBar) {

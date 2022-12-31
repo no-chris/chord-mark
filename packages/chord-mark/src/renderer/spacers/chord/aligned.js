@@ -6,18 +6,24 @@ import { getBeatString } from './getBeatString';
  * @param {ChordLine} chordLineInput
  * @param {Array} maxBeatsWidth
  * @param {Boolean} shouldPrintBarSeparators
+ * @param {Boolean} shouldPrintSubBeatDelimiters
  * @returns {ChordLine}
  */
 export default function space(
 	chordLineInput,
 	maxBeatsWidth,
-	shouldPrintBarSeparators
+	shouldPrintBarSeparators,
+	shouldPrintSubBeatDelimiters
 ) {
 	const chordLine = _cloneDeep(chordLineInput);
 
 	chordLine.allBars.forEach((bar, barIndex) => {
 		bar.allChords.forEach((chord) => {
-			const beatString = getBeatString(bar, chord.beat);
+			const beatString = getBeatString(
+				bar,
+				chord.beat,
+				shouldPrintSubBeatDelimiters
+			);
 
 			if (chord.isInSubBeatGroup && !chord.isLastOfSubBeat) {
 				chord.spacesWithin = 0;

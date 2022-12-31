@@ -195,7 +195,8 @@ describe.each([
 	['2 groups, beats 2 & 3', 'F. {C G} {A7 B7} F.', 'F  {C G}  {A7 B7}  F  '],
 	['2 groups, beats 2 & 4', 'F. {C G} F. {A7 B7}', 'F  {C G}  F  {A7 B7}  '],
 	['2 groups, beats 3 & 4', 'F.. {C G} {A7 B7}', 'F  {C G}  {A7 B7}  '],
-])('%s: %s', (title, input, output) => {
+	['no sub-beat delimiters', 'F.. {C G} {A7 B7}', 'F  C G  A7 B7  ', false],
+])('%s: %s', (title, input, output, shouldPrintSubBeatDelimiters = true) => {
 	test('Renders sub-beat groups: ' + output, () => {
 		const parsed = forEachChordInChordLine(
 			parseChordLine(input),
@@ -203,7 +204,12 @@ describe.each([
 		);
 		const spaced = simpleSpacer(parsed);
 
-		const rendered = renderBarContent(spaced.allBars[0]);
+		const rendered = renderBarContent(
+			spaced.allBars[0],
+			undefined,
+			true,
+			shouldPrintSubBeatDelimiters
+		);
 
 		expect(stripTags(rendered)).toEqual(output);
 	});
