@@ -31,24 +31,6 @@ describe('Behavior', () => {
 });
 
 describe.each([
-	['missing opener', '}', 'No sub-beat group to close'],
-	['missing closer', '{', 'Unclosed sub-beat group'],
-])('Give correct message depending on the symbol', (title, symbol, message) => {
-	test('extra symbol is ' + symbol, () => {
-		const errorParameters = {
-			chordLine: 'A... {B7 D7',
-			symbol,
-			position: 5,
-		};
-		const throwingFn = () => {
-			throw new InvalidSubBeatGroupException(errorParameters);
-		};
-		expect(throwingFn).toThrow(InvalidSubBeatGroupException);
-		expect(throwingFn).toThrow(message);
-	});
-});
-
-describe.each([
 	[
 		'no chordLine',
 		'chordLine',

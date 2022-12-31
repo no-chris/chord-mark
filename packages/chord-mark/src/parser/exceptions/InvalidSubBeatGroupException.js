@@ -1,8 +1,6 @@
 import _isString from 'lodash/isString';
 import _isFinite from 'lodash/isFinite';
 
-import syntax from '../syntax';
-
 export default class InvalidSubBeatGroupException extends Error {
 	constructor({ chordLine, symbol, position } = {}) {
 		if (!chordLine || !_isString(chordLine)) {
@@ -23,11 +21,7 @@ export default class InvalidSubBeatGroupException extends Error {
 					position
 			);
 		}
-		const message =
-			symbol === syntax.subBeatOpener
-				? 'Unclosed sub-beat group'
-				: 'No sub-beat group to close';
-		super(message);
+		super();
 
 		this.name = 'IncorrectBeatCountException';
 		this.chordLine = chordLine;

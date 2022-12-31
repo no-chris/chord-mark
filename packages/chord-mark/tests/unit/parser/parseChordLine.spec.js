@@ -1272,23 +1272,22 @@ describe.each([
 });
 
 describe.each([
-	['A.. B7. D7.{', '{', 11, 'Unclosed sub-beat group'],
-	['A... {B7 D7', '{', 5, 'Unclosed sub-beat group'],
-	['A.. {C G} {B7 D7', '{', 10, 'Unclosed sub-beat group'],
+	['A.. B7. D7.{', '{', 11],
+	['A... {B7 D7', '{', 5],
+	['A.. {C G} {B7 D7', '{', 10],
 
-	['}A.. B7. D7.', '}', 0, 'No sub-beat group to close'],
-	['A... B7 D7}', '}', 10, 'No sub-beat group to close'],
-	['A.. {C G} B7 D7}', '}', 15, 'No sub-beat group to close'],
+	['}A.. B7. D7.', '}', 0],
+	['A... B7 D7}', '}', 10],
+	['A.. {C G} B7 D7}', '}', 15],
 ])(
 	'Throw if sub-beat groups are not properly defined: %s',
-	(input, symbol, position, message) => {
+	(input, symbol, position) => {
 		const throwingFn = () => {
 			parseChordLine(input);
 		};
 
 		test('Throw InvalidSubBeatGroupException', () => {
 			expect(throwingFn).toThrow(InvalidSubBeatGroupException);
-			expect(throwingFn).toThrow(message);
 		});
 
 		test('Properly fills exception parameters', () => {
