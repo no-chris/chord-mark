@@ -19,10 +19,10 @@ export default function space(
 		bar.allChords.forEach((chord) => {
 			const beatString = getBeatString(bar, chord.beat);
 
-			if (chord.isInSubBeatGroup && !isLastChordOfSubBeat(chord)) {
+			if (chord.isInSubBeatGroup && !chord.isLastOfSubBeat) {
 				chord.spacesWithin = 0;
 				chord.spacesAfter = symbols.spacesAfterSubBeatDefault;
-			} else if (!chord.isInSubBeatGroup || isLastChordOfSubBeat(chord)) {
+			} else if (!chord.isInSubBeatGroup || chord.isLastOfSubBeat) {
 				chord.spacesWithin =
 					maxBeatsWidth[barIndex][chord.beat] - beatString.length;
 				chord.spacesAfter = 0;
@@ -45,7 +45,7 @@ export default function space(
 
 const shouldFillEmptyBeats = (bar, chord) => {
 	return (
-		(!chord.isInSubBeatGroup || isLastChordOfSubBeat(chord)) &&
+		(!chord.isInSubBeatGroup || chord.isLastOfSubBeat) &&
 		!isLastBeatOfBar(bar, chord)
 	);
 };
@@ -69,17 +69,10 @@ const isLastBeatOfBar = (bar, chord) => {
 	return chord.beat === bar.timeSignature.beatCount;
 };
 
-const isLastChordOfSubBeat = (chord) => {
-	return (
-		chord.isInSubBeatGroup &&
-		chord.subBeatChordIndex === chord.subBeatChordCount - 1
-	);
-};
-
 const shouldSpaceLastBeat = (bar, chord, shouldPrintBarSeparators) => {
 	return (
 		!shouldPrintBarSeparators &&
 		isLastBeatOfBar(bar, chord) &&
-		(!chord.isInSubBeatGroup || isLastChordOfSubBeat(chord))
+		(!chord.isInSubBeatGroup || chord.isLastOfSubBeat)
 	);
 };

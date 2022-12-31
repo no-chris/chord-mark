@@ -11,7 +11,7 @@ export default function space(chordLineInput) {
 	chordLine.allBars.forEach((bar) => {
 		bar.allChords.forEach((chord) => {
 			chord.spacesAfter =
-				chord.isInSubBeatGroup && !isLastSubBeatChord(chord)
+				chord.isInSubBeatGroup && !chord.isLastOfSubBeat
 					? symbols.spacesAfterSubBeatDefault
 					: symbols.spacesAfterDefault;
 			chord.spacesWithin = 0;
@@ -19,8 +19,4 @@ export default function space(chordLineInput) {
 	});
 
 	return chordLine;
-}
-
-function isLastSubBeatChord(chord) {
-	return chord.subBeatChordIndex === chord.subBeatChordCount - 1;
 }

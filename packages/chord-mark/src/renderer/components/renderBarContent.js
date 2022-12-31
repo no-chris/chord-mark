@@ -33,8 +33,8 @@ export default function renderBarContent(
 		rendering += renderChordSymbol(
 			chord,
 			chord.isInSubBeatGroup ? false : bar.shouldPrintChordsDuration,
-			isFirstChordOfSubBeat(),
-			isLastChordOfSubBeat()
+			chord.isFirstOfSubBeat,
+			chord.isLastOfSubBeat
 		);
 
 		if (shouldPrintChordSpaces()) {
@@ -51,17 +51,6 @@ export default function renderBarContent(
 
 		function isLastChordOfBar() {
 			return !bar.allChords[i + 1];
-		}
-
-		function isFirstChordOfSubBeat() {
-			return chord.isInSubBeatGroup && chord.subBeatChordIndex === 0;
-		}
-
-		function isLastChordOfSubBeat() {
-			return (
-				chord.isInSubBeatGroup &&
-				chord.subBeatChordIndex === chord.subBeatChordCount - 1
-			);
 		}
 
 		return rendering;

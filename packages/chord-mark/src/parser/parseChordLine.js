@@ -9,12 +9,7 @@ import parseTimeSignature from './parseTimeSignature';
 
 import IncorrectBeatCountException from './exceptions/IncorrectBeatCountException';
 import InvalidChordRepetitionException from './exceptions/InvalidChordRepetitionException';
-import {
-	getParseableChordLine,
-	opensSubBeatGroup,
-	closesSubBeatGroup,
-	cleanToken,
-} from './matchers/isChordLine';
+import { getParseableChordLine, cleanToken } from './matchers/isChordLine';
 
 const chordBeatCountSymbols = new RegExp(syntax.chordBeatCount, 'g');
 const barRepeatSymbols = new RegExp('^' + syntax.barRepeat + '+$');
@@ -45,8 +40,8 @@ const defaultTimeSignature = parseTimeSignature('4/4');
  * @property {Number} beat - beat on which the chord starts
  * @property {Boolean} isPositioned - whether this chord has been positioned over a specific lyric or not
  * @property {Boolean} isInSubBeatGroup - whether this chord has a sub-beat duration
- * @property {Number} [subBeatChordIndex] - number of beats the chord lasts. Only present if `isInSubBeatGroup` is true.
- * @property {Number} [subBeatChordCount] - number of chords in the sub-beat group. Only present if `isInSubBeatGroup` is true.
+ * @property {Boolean} [isFirstOfSubBeat] - Only present if `isInSubBeatGroup` is true.
+ * @property {Boolean} [isLastOfSubBeat] - Only present if `isInSubBeatGroup` is true.
  */
 
 /**
@@ -70,9 +65,10 @@ export default function parseChordLine(
 	let currentBeatCount = 0;
 	let previousBar;
 	let isInSubBeatGroup = false;
-	let subBeatGroupIndex = 0; //todo => index?
+	let subBeatGroupIndex = 0;
 
 	const allTokens = clearSpaces(getParseableChordLine(chordLine)).split(' ');
+	//todo: check subBeat enclosures
 	allTokens.forEach((token, tokenIndex) => {
 		if (token.match(barRepeatSymbols)) {
 			if (previousBar) {
@@ -88,7 +84,7 @@ export default function parseChordLine(
 				);
 			}
 		} else {
-			if (opensSubBeatGroup(token)) {
+			if (token.startsWith(syntax.subBeatOpener)) {
 				isInSubBeatGroup = true;
 			}
 			if (isInSubBeatGroup) {
@@ -122,7 +118,7 @@ export default function parseChordLine(
 
 			bar.allChords.push(chord);
 
-			if (closesSubBeatGroup(token)) {
+			if (token.endsWith(syntax.subBeatCloser)) {
 				isInSubBeatGroup = false;
 				subBeatGroupIndex++;
 				currentBeatCount += 1;
@@ -189,8 +185,8 @@ function checkInvalidChordRepetition(bar, currentChord) {
 
 function isChordRepetitionAllowed(previousChord, currentChord) {
 	return (
-		opensSubBeatGroup(currentChord.string) ||
-		(closesSubBeatGroup(previousChord.string) &&
+		currentChord.string.startsWith(syntax.subBeatOpener) ||
+		(previousChord.string.endsWith(syntax.subBeatCloser) &&
 			!currentChord.model.isInSubBeatGroup)
 	);
 }
@@ -247,9 +243,10 @@ function setSubBeatInfo(allBars, subBeatGroupsChordCount) {
 				).toPrecision(2);
 
 				chord.duration = Number.parseFloat(durationString);
-				chord.subBeatChordIndex = subBeatChordIndex;
-				chord.subBeatChordCount =
-					subBeatGroupsChordCount[subBeatGroupIndex];
+				chord.isFirstOfSubBeat = subBeatChordIndex === 0;
+				chord.isLastOfSubBeat =
+					subBeatChordIndex ===
+					subBeatGroupsChordCount[subBeatGroupIndex] - 1;
 
 				previousChordBeatId = chordBeatId;
 				subBeatChordIndex++;

@@ -26,8 +26,7 @@ export default function getMaxBeatsWidth(allLines, shouldAlignChords) {
 				bar.allChords
 					.filter(
 						(chord) =>
-							!chord.isInSubBeatGroup ||
-							isLastChordOfSubBeat(chord)
+							!chord.isInSubBeatGroup || chord.isLastOfSubBeat
 					)
 					.forEach((chord) => {
 						const beatString = getBeatString(bar, chord.beat);
@@ -41,10 +40,3 @@ export default function getMaxBeatsWidth(allLines, shouldAlignChords) {
 
 	return maxBeatsWidth;
 }
-
-const isLastChordOfSubBeat = (chord) => {
-	return (
-		chord.isInSubBeatGroup &&
-		chord.subBeatChordIndex === chord.subBeatChordCount - 1
-	);
-};

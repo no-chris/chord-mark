@@ -1,4 +1,3 @@
-import _escapeRegExp from 'lodash/escapeRegExp';
 import clearSpaces from '../helper/clearSpaces';
 
 import syntax from '../syntax';
@@ -7,13 +6,14 @@ import isChord from './isChord';
 const chordBeatCountSymbols = new RegExp(syntax.chordBeatCount + '*$', 'g');
 const barRepeatSymbols = new RegExp('^' + syntax.barRepeat + '+$');
 
-const getParseableChordLine = (chordLine) => {
-	return chordLine.replaceAll('add ', 'add');
-};
-
+/**
+ * Check if the given line only contains chords and allowed characters.
+ * The parsing might still fail at a later stage if some rules are not properly enforced,
+ * like having proper chord durations or matching sub-beat openers/closers
+ * @param {String} line
+ * @returns {Boolean}
+ */
 export default function isChordLine(line = '') {
-	if (hasUnmatchedEnclosureSymbols(line)) return false;
-
 	return clearSpaces(getParseableChordLine(line))
 		.split(' ')
 		.every((potentialChordToken, index) => {
@@ -21,11 +21,15 @@ export default function isChordLine(line = '') {
 
 			return (
 				isChord(clean) ||
-				(potentialChordToken.match(barRepeatSymbols) && index > 0) ||
+				(potentialChordToken.match(barRepeatSymbols) && index > 0) || //todo: isn't this checked later?
 				clean === syntax.noChord
 			);
 		});
 }
+
+const getParseableChordLine = (chordLine) => {
+	return chordLine.replaceAll('add ', 'add');
+};
 
 const cleanToken = (token) => {
 	return removeSubBeatEnclosure(removeBeatCount(token));
@@ -37,45 +41,13 @@ const removeBeatCount = (token) => {
 
 const removeSubBeatEnclosure = (token) => {
 	let clean = token;
-	if (opensSubBeatGroup(token)) {
-		clean = clean.replace(syntax.subBeatOpener, '');
+	if (token.startsWith(syntax.subBeatOpener)) {
+		clean = clean.substring(syntax.subBeatOpener.length);
 	}
-	if (closesSubBeatGroup(token)) {
+	if (token.endsWith(syntax.subBeatCloser)) {
 		clean = clean.substring(0, clean.length - syntax.subBeatCloser.length);
 	}
 	return clean;
 };
 
-const opensSubBeatGroup = (token) => {
-	return token.startsWith(syntax.subBeatOpener);
-};
-
-const closesSubBeatGroup = (token) => {
-	return token.endsWith(syntax.subBeatCloser) && hasExtraCloseSymbol(token);
-};
-
-const hasExtraCloseSymbol = (token) => {
-	return (
-		countOccurrences(token, syntax.subBeatCloser) >
-		countOccurrences(token, syntax.subBeatOpener)
-	);
-};
-
-const hasUnmatchedEnclosureSymbols = (token) => {
-	return (
-		countOccurrences(token, syntax.subBeatCloser) !==
-		countOccurrences(token, syntax.subBeatOpener)
-	);
-};
-
-const countOccurrences = (token, target) => {
-	const regex = new RegExp(_escapeRegExp(target), 'g');
-	return (token.match(regex) || []).length;
-};
-
-export {
-	getParseableChordLine,
-	opensSubBeatGroup,
-	closesSubBeatGroup,
-	cleanToken,
-};
+export { getParseableChordLine, cleanToken };

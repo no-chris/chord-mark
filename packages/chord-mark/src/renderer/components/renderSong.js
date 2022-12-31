@@ -59,6 +59,7 @@ export default function renderSong(
 		harmonizeAccidentals = true,
 		printChordsDuration = 'uneven',
 		printBarSeparators = 'always',
+		//todo: add printSubBeatGroups
 		simplifyChords = 'none',
 		transposeValue = 0,
 		useShortNamings = true,

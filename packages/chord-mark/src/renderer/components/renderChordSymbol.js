@@ -11,19 +11,15 @@ import symbols from '../symbols';
 export default function renderChordSymbol(
 	chord,
 	shouldPrintChordsDuration = false,
-	isFirstChordOfSubBeatGroup = false,
-	isLastChordOfSubBeatGroup = false
+	isFirstOfSubBeat = false,
+	isLastOfSubBeat = false
 ) {
 	return chordSymbolTpl({
 		chordSymbol: chord.symbol,
 		chordDuration: shouldPrintChordsDuration
 			? symbols.chordBeat.repeat(chord.duration)
 			: false,
-		subBeatGroupOpener: isFirstChordOfSubBeatGroup
-			? symbols.subBeatGroupOpener
-			: '',
-		subBeatGroupCloser: isLastChordOfSubBeatGroup
-			? symbols.subBeatGroupCloser
-			: '',
+		subBeatGroupOpener: isFirstOfSubBeat ? symbols.subBeatGroupOpener : '',
+		subBeatGroupCloser: isLastOfSubBeat ? symbols.subBeatGroupCloser : '',
 	});
 }

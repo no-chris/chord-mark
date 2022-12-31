@@ -33,9 +33,9 @@ export function getChordString(bar, chord) {
 			: '';
 		return chord.symbol + chordDuration;
 	} else {
-		if (chord.subBeatChordIndex === 0) {
+		if (chord.isFirstOfSubBeat) {
 			return symbols.subBeatGroupOpener + chord.symbol;
-		} else if (chord.subBeatChordIndex === chord.subBeatChordCount - 1) {
+		} else if (chord.isLastOfSubBeat) {
 			return chord.symbol + symbols.subBeatGroupCloser;
 		} else {
 			return chord.symbol;
