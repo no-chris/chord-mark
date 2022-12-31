@@ -8,6 +8,7 @@ import parseTimeSignature from '../../../src/parser/parseTimeSignature';
 
 import IncorrectBeatCountException from '../../../src/parser/exceptions/IncorrectBeatCountException';
 import InvalidChordRepetitionException from '../../../src/parser/exceptions/InvalidChordRepetitionException';
+import InvalidSubBeatGroupException from '../../../src/parser/exceptions/InvalidSubBeatGroupException';
 
 import { forEachChordInChordLine } from '../../../src/parser/helper/songs';
 
@@ -1269,3 +1270,35 @@ describe.each([
 		);
 	});
 });
+
+describe.each([
+	['A.. B7. D7.{', '{', 11, 'Unclosed sub-beat group'],
+	['A... {B7 D7', '{', 5, 'Unclosed sub-beat group'],
+	['A.. {C G} {B7 D7', '{', 10, 'Unclosed sub-beat group'],
+
+	['}A.. B7. D7.', '}', 0, 'No sub-beat group to close'],
+	['A... B7 D7}', '}', 10, 'No sub-beat group to close'],
+	['A.. {C G} B7 D7}', '}', 15, 'No sub-beat group to close'],
+])(
+	'Throw if sub-beat groups are not properly defined: %s',
+	(input, symbol, position, message) => {
+		const throwingFn = () => {
+			parseChordLine(input);
+		};
+
+		test('Throw InvalidSubBeatGroupException', () => {
+			expect(throwingFn).toThrow(InvalidSubBeatGroupException);
+			expect(throwingFn).toThrow(message);
+		});
+
+		test('Properly fills exception parameters', () => {
+			try {
+				throwingFn();
+			} catch (error) {
+				expect(error.chordLine).toBe(input);
+				expect(error.symbol).toBe(symbol);
+				expect(error.position).toBe(position);
+			}
+		});
+	}
+);

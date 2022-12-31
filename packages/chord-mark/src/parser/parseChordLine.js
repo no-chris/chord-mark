@@ -9,6 +9,7 @@ import parseTimeSignature from './parseTimeSignature';
 
 import IncorrectBeatCountException from './exceptions/IncorrectBeatCountException';
 import InvalidChordRepetitionException from './exceptions/InvalidChordRepetitionException';
+import InvalidSubBeatGroupException from './exceptions/InvalidSubBeatGroupException';
 import { getParseableChordLine, cleanToken } from './matchers/isChordLine';
 
 const chordBeatCountSymbols = new RegExp(syntax.chordBeatCount, 'g');
@@ -66,6 +67,8 @@ export default function parseChordLine(
 	let previousBar;
 	let isInSubBeatGroup = false;
 	let subBeatGroupIndex = 0;
+
+	checkSubBeatConsistency(chordLine);
 
 	const allTokens = clearSpaces(getParseableChordLine(chordLine)).split(' ');
 	//todo: check subBeat enclosures
@@ -198,7 +201,6 @@ function shouldChangeBar(currentBeatCount, beatCount) {
 function checkInvalidBeatCount(chord, currentBeatCount, beatCount, isLast) {
 	if (hasInvalidBeatCount(currentBeatCount, beatCount, isLast)) {
 		throw new IncorrectBeatCountException({
-			message: '',
 			string: chord.string,
 			duration: chord.duration,
 			currentBeatCount,
@@ -253,4 +255,32 @@ function setSubBeatInfo(allBars, subBeatGroupsChordCount) {
 			}
 		});
 	});
+}
+
+function checkSubBeatConsistency(line) {
+	const errorParameters = {};
+	let inSubBeat = false;
+	let match;
+
+	const regexp = new RegExp(
+		syntax.subBeatOpener + '|' + syntax.subBeatCloser,
+		'g'
+	);
+	while ((match = regexp.exec(line))) {
+		const symbol = match[0];
+		errorParameters.chordLine = line;
+		errorParameters.symbol = symbol;
+		errorParameters.position = regexp.lastIndex - 1;
+
+		if (match[0] === syntax.subBeatOpener) {
+			if (inSubBeat)
+				throw new InvalidSubBeatGroupException(errorParameters);
+			inSubBeat = true;
+		} else if (match[0] === syntax.subBeatCloser) {
+			if (!inSubBeat)
+				throw new InvalidSubBeatGroupException(errorParameters);
+			inSubBeat = false;
+		}
+	}
+	if (inSubBeat) throw new InvalidSubBeatGroupException(errorParameters);
 }
