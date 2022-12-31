@@ -7,7 +7,7 @@ import clearSpaces from './helper/clearSpaces';
 import parseChord from './parseChord';
 import parseTimeSignature from './parseTimeSignature';
 
-import IncorrectBeatCountException from './exceptions/IncorrectBeatCountException';
+import InvalidBeatCountException from './exceptions/InvalidBeatCountException';
 import InvalidChordRepetitionException from './exceptions/InvalidChordRepetitionException';
 import InvalidSubBeatGroupException from './exceptions/InvalidSubBeatGroupException';
 import { getParseableChordLine, cleanToken } from './matchers/isChordLine';
@@ -200,7 +200,7 @@ function shouldChangeBar(currentBeatCount, beatCount) {
 
 function checkInvalidBeatCount(chord, currentBeatCount, beatCount, isLast) {
 	if (hasInvalidBeatCount(currentBeatCount, beatCount, isLast)) {
-		throw new IncorrectBeatCountException({
+		throw new InvalidBeatCountException({
 			string: chord.string,
 			duration: chord.duration,
 			currentBeatCount,

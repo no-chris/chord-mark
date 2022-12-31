@@ -6,7 +6,7 @@ import parseChordLine from '../../../src/parser/parseChordLine';
 import getChordSymbol from '../../../src/renderer/helpers/getChordSymbol';
 import parseTimeSignature from '../../../src/parser/parseTimeSignature';
 
-import IncorrectBeatCountException from '../../../src/parser/exceptions/IncorrectBeatCountException';
+import InvalidBeatCountException from '../../../src/parser/exceptions/InvalidBeatCountException';
 import InvalidChordRepetitionException from '../../../src/parser/exceptions/InvalidChordRepetitionException';
 import InvalidSubBeatGroupException from '../../../src/parser/exceptions/InvalidSubBeatGroupException';
 
@@ -1134,8 +1134,8 @@ describe.each([
 			parseChordLine(input, { timeSignature });
 		};
 
-		test('Throw IncorrectBeatCountException', () => {
-			expect(throwingFn).toThrow(IncorrectBeatCountException);
+		test('Throw InvalidBeatCountException', () => {
+			expect(throwingFn).toThrow(InvalidBeatCountException);
 		});
 
 		test('Add correct properties to exception', () => {
@@ -1143,7 +1143,7 @@ describe.each([
 				throwingFn();
 				expect(false).toBeTruthy();
 			} catch (e) {
-				expect(e.name).toBe('IncorrectBeatCountException');
+				expect(e.name).toBe('InvalidBeatCountException');
 				expect(e.string).toBe(string);
 				expect(e.duration).toBe(duration);
 				expect(e.currentBeatCount).toBe(currentBeatCount);
