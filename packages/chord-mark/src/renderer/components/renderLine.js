@@ -6,6 +6,8 @@ import lineTpl from './tpl/line.js';
  * @param {Boolean} isFromChordLineRepeater
  * @param {Boolean} isFromSectionCopy
  * @param {Boolean} isFromSectionMultiply
+ * @param {Boolean} isNewSection
+ * @param {Array} sectionClasses
  * @returns {String} rendered html
  */
 export default function render(
@@ -15,6 +17,8 @@ export default function render(
 		isFromChordLineRepeater = false,
 		isFromSectionCopy = false,
 		isFromSectionMultiply = false,
+		isNewSection = false,
+		sectionClasses = [],
 	} = {}
 ) {
 	const lineClasses = ['cmLine'];
@@ -30,9 +34,11 @@ export default function render(
 	if (isFromSectionMultiply) {
 		lineClasses.push('cmLine--isFromSectionMultiply');
 	}
-
+	
 	return lineTpl({
 		line,
 		lineClasses: lineClasses.join(' '),
+		isNewSection: isNewSection,
+		wrapperClasses: sectionClasses.join(' '),
 	});
 }

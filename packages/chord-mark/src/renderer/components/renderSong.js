@@ -208,6 +208,8 @@ export default function renderSong(
 		return allLines
 			.map((line) => {
 				let rendered;
+				let opensSection = false;
+				let sectionWrapperClasses = [];
 
 				if (line.type === lineTypes.CHORD) {
 					rendered = renderChordLineModel(
@@ -217,6 +219,8 @@ export default function renderSong(
 				} else if (line.type === lineTypes.EMPTY_LINE) {
 					rendered = renderEmptyLine();
 				} else if (line.type === lineTypes.SECTION_LABEL) {
+					opensSection = true;
+					sectionWrapperClasses = [ "cmSection" , "cmSection-" + line.model.rendered.label.replace(/[\d\s]/gi,"") ];
 					rendered = renderSectionLabelLine(line);
 				} else if (line.type === lineTypes.TIME_SIGNATURE) {
 					rendered = renderTimeSignature(line);
@@ -226,11 +230,14 @@ export default function renderSong(
 						chartType,
 					});
 				}
+				
 				return renderLine(rendered, {
 					isFromSectionMultiply: line.isFromSectionMultiply,
 					isFromAutoRepeatChords: line.isFromAutoRepeatChords,
 					isFromChordLineRepeater: line.isFromChordLineRepeater,
 					isFromSectionCopy: line.isFromSectionCopy,
+					isNewSection: opensSection,
+					sectionClasses: sectionWrapperClasses,
 				});
 			})
 			.filter(Boolean);

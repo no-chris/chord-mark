@@ -16973,8 +16973,14 @@ function renderEmptyLine_render() {
 ;// CONCATENATED MODULE: ./src/renderer/components/tpl/line.js
 var line_render = function render(_ref) {
   var line = _ref.line,
-    lineClasses = _ref.lineClasses;
-  return "<p class=\"".concat(lineClasses, "\">").concat(line, "</p>");
+    lineClasses = _ref.lineClasses,
+    isNewSection = _ref.isNewSection,
+    wrapperClasses = _ref.wrapperClasses;
+  if (isNewSection) {
+    return "</div><div class=\"".concat(wrapperClasses, "\"><p class=\"").concat(lineClasses, "\">").concat(line, "</p>");
+  } else {
+    return "<p class=\"".concat(lineClasses, "\">").concat(line, "</p>");
+  }
 };
 /* harmony default export */ const tpl_line = (line_render);
 ;// CONCATENATED MODULE: ./src/renderer/components/renderLine.js
@@ -16986,6 +16992,8 @@ var line_render = function render(_ref) {
  * @param {Boolean} isFromChordLineRepeater
  * @param {Boolean} isFromSectionCopy
  * @param {Boolean} isFromSectionMultiply
+ * @param {Boolean} isNewSection
+ * @param {Array} sectionClasses
  * @returns {String} rendered html
  */
 function renderLine_render(line) {
@@ -16997,7 +17005,11 @@ function renderLine_render(line) {
     _ref$isFromSectionCop = _ref.isFromSectionCopy,
     isFromSectionCopy = _ref$isFromSectionCop === void 0 ? false : _ref$isFromSectionCop,
     _ref$isFromSectionMul = _ref.isFromSectionMultiply,
-    isFromSectionMultiply = _ref$isFromSectionMul === void 0 ? false : _ref$isFromSectionMul;
+    isFromSectionMultiply = _ref$isFromSectionMul === void 0 ? false : _ref$isFromSectionMul,
+    _ref$isNewSection = _ref.isNewSection,
+    isNewSection = _ref$isNewSection === void 0 ? false : _ref$isNewSection,
+    _ref$sectionClasses = _ref.sectionClasses,
+    sectionClasses = _ref$sectionClasses === void 0 ? [] : _ref$sectionClasses;
   var lineClasses = ['cmLine'];
   if (isFromAutoRepeatChords) {
     lineClasses.push('cmLine--isFromAutoRepeatChords');
@@ -17013,7 +17025,9 @@ function renderLine_render(line) {
   }
   return tpl_line({
     line: line,
-    lineClasses: lineClasses.join(' ')
+    lineClasses: lineClasses.join(' '),
+    isNewSection: isNewSection,
+    wrapperClasses: sectionClasses.join(' ')
   });
 }
 ;// CONCATENATED MODULE: ./src/renderer/components/tpl/sectionLabel.js
@@ -17083,7 +17097,13 @@ function renderTimeSignature_render(timeSignatureLine) {
 ;// CONCATENATED MODULE: ./src/renderer/components/tpl/song.js
 var song_render = function render(_ref) {
   var song = _ref.song;
-  return "<div class=\"cmSong\">".concat(song, "</div>");
+  /**
+   * The extra opening and closing div accounts for the simple section 
+   * wrapping logic, which wraps sections in <div class="cmSection ..."> for
+   * the purpose of styling with themes. Yes, this does spawn one needless div 
+   * at the start of the song.
+   */
+  return "<div class=\"cmSong\"><div>".concat(song, "</div></div>");
 };
 /* harmony default export */ const song = (song_render);
 ;// CONCATENATED MODULE: ./src/renderer/helpers/getChordSymbol.js
@@ -17393,11 +17413,15 @@ function renderSong(parsedSong) {
   function renderAllLines() {
     return allLines.map(function (line) {
       var rendered;
+      var opensSection = false;
+      var sectionWrapperClasses = [];
       if (line.type === parser_lineTypes.CHORD) {
         rendered = renderChordLine(line.model, shouldPrintBarSeparators(line.model));
       } else if (line.type === parser_lineTypes.EMPTY_LINE) {
         rendered = renderEmptyLine_render();
       } else if (line.type === parser_lineTypes.SECTION_LABEL) {
+        opensSection = true;
+        sectionWrapperClasses = ["cmSection", "cmSection-" + line.model.rendered.label.replace(/[\d\s]/gi, "")];
         rendered = renderSectionLabel(line);
       } else if (line.type === parser_lineTypes.TIME_SIGNATURE) {
         rendered = renderTimeSignature_render(line);
@@ -17411,7 +17435,9 @@ function renderSong(parsedSong) {
         isFromSectionMultiply: line.isFromSectionMultiply,
         isFromAutoRepeatChords: line.isFromAutoRepeatChords,
         isFromChordLineRepeater: line.isFromChordLineRepeater,
-        isFromSectionCopy: line.isFromSectionCopy
+        isFromSectionCopy: line.isFromSectionCopy,
+        isNewSection: opensSection,
+        sectionClasses: sectionWrapperClasses
       });
     }).filter(Boolean);
   }

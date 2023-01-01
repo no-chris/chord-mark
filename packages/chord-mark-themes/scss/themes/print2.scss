@@ -22,7 +22,7 @@
 		break-inside: avoid;
 	}
 
-	.cmChorusSection {
+	.cmSection-Chorus {
 		background-color: #ededed;
 	}
 
@@ -32,7 +32,6 @@
 		text-transform:uppercase; 
 	}
 	.cmSectionMultiplier {
-		font-weight: normal;
 		text-decoration: unset;
 		font-size: .95em;
 	}
@@ -40,6 +39,11 @@
 	// Time signature
 	.cmTimeSignature {
 		font-weight: bold;
+	}
+
+	// Empty Lines - Hide to save print space
+	.cmEmptyLine {
+		display:none;
 	}
 
 	// Chordline
