@@ -44,15 +44,15 @@ If the chords durations don't add up, the line won't be considered as a chord li
 
 ## Sub-beat chord duration
 
-If some chords should be played for less than one beat, you can use the sub-beat delimiters to create a group of chords that should be played during the same beat.
+If some chords last less than one beat, you can use the sub-beat delimiters to create a group of chords to play during the same beat.
 
 <TabbedChordMark src={'C.. G..\nWhen I _find myself in _times of trouble\nAm. {Am Am/G} FM7. F6.\n_ Mother _Ma_ry _comes to _me'} />
 
-Within the sub-beat delimiters, the chord duration is defined by the number of chords in the group:
+Within the sub-beat delimiters, it is the number of chords in the groups that define the chord duration, meaning it is not necessary to use chord duration markers:
 
 <TabbedChordMark src={'8th notes:\nC.. G. {Am Am/G}\n8th notes triplet:\nC.. G. {Am Am/G F}\n16th notes:\nC.. G. {Am Am/G F C}'} />
 
-A sub-beat group definition is invalid if it contains chord duration markers, a single chords, or more than 4 chords:
+A sub-beat group definition is invalid if it contains chord duration markers, a single chord, or more than four chords:
 
 <TabbedChordMark src={'Invalid:\nC.. G. {B. A7.}\nC.. G. {B}\nC.. G. {B C/E Am G F}'} />
 
