@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 import _isEqual from 'lodash/isEqual';
 import _cloneDeep from 'lodash/cloneDeep';
 
