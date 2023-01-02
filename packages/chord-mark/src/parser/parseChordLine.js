@@ -83,7 +83,7 @@ export default function parseChordLine(
 				}
 			} else {
 				throw new Error(
-					'A chord line cannot start with the barRepeat symbol' //todo convert to own exception
+					'A chord line cannot start with the barRepeat symbol' //todo: convert to own exception
 				);
 			}
 		} else {
@@ -91,18 +91,8 @@ export default function parseChordLine(
 				isInSubBeatGroup = true;
 			}
 			if (isInSubBeatGroup) {
-				if (hasBeatCount(token)) {
-					throw new Error(
-						'Chords in a sub-beat group cannot have a duration' //todo convert to own exception
-					);
-				}
-				if (subBeatGroupsChordCount[subBeatGroupIndex]) {
-					subBeatGroupsChordCount[subBeatGroupIndex]++;
-				} else {
-					subBeatGroupsChordCount[subBeatGroupIndex] = 1;
-				}
-				//todo: throw if > 5
-				//todo: throw if hasBeatCount
+				checkSubBeatGroupToken(chordLine, token);
+				updateSubBeatGroupsChordCount(token);
 			}
 
 			cleanedToken = cleanToken(token);
@@ -122,10 +112,10 @@ export default function parseChordLine(
 			bar.allChords.push(chord);
 
 			if (token.endsWith(syntax.subBeatCloser)) {
+				checkSubBeatGroupChordCount(token);
 				isInSubBeatGroup = false;
 				subBeatGroupIndex++;
 				currentBeatCount += 1;
-				//todo: throw if === 1? Will not work with current code
 			}
 
 			if (shouldChangeBar(currentBeatCount, beatCount)) {
@@ -156,6 +146,36 @@ export default function parseChordLine(
 	return {
 		allBars,
 	};
+
+	function updateSubBeatGroupsChordCount() {
+		if (subBeatGroupsChordCount[subBeatGroupIndex]) {
+			subBeatGroupsChordCount[subBeatGroupIndex]++;
+		} else {
+			subBeatGroupsChordCount[subBeatGroupIndex] = 1;
+		}
+	}
+
+	function checkSubBeatGroupChordCount(token) {
+		if (
+			subBeatGroupsChordCount[subBeatGroupIndex] === 1 ||
+			subBeatGroupsChordCount[subBeatGroupIndex] > 4
+		)
+			throw new InvalidSubBeatGroupException({
+				chordLine,
+				symbol: token,
+				position: 0, // duh
+			});
+	}
+}
+
+function checkSubBeatGroupToken(chordLine, token) {
+	if (hasBeatCount(token)) {
+		throw new InvalidSubBeatGroupException({
+			chordLine,
+			symbol: token,
+			position: 0, // duh
+		});
+	}
 }
 
 function hasBeatCount(token) {

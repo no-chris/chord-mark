@@ -1264,21 +1264,33 @@ describe.each([
 	};
 
 	test('Throw Error', () => {
-		expect(throwingFn).toThrow(Error);
-		expect(throwingFn).toThrow(
-			'Chords in a sub-beat group cannot have a duration'
-		);
+		expect(throwingFn).toThrow(InvalidSubBeatGroupException);
+	});
+
+	test('Properly fills exception parameters', () => {
+		expect.assertions(2);
+		try {
+			throwingFn();
+		} catch (error) {
+			expect(error.chordLine).toBe(input);
+			//expect(error.symbol).toBe(symbol); //duh
+			expect(error.position).toBe(0);
+		}
 	});
 });
 
 describe.each([
 	['A.. B7. D7.{', '{', 11],
+	['A... {B7 {D7', '{', 9],
 	['A... {B7 D7', '{', 5],
 	['A.. {C G} {B7 D7', '{', 10],
 
 	['}A.. B7. D7.', '}', 0],
 	['A... B7 D7}', '}', 10],
 	['A.. {C G} B7 D7}', '}', 15],
+
+	['A... {C G E B7 D7}', 'D7}', 0],
+	['A... {C}', '{C}', 0],
 ])(
 	'Throw if sub-beat groups are not properly defined: %s',
 	(input, symbol, position) => {
@@ -1291,6 +1303,7 @@ describe.each([
 		});
 
 		test('Properly fills exception parameters', () => {
+			expect.assertions(3);
 			try {
 				throwingFn();
 			} catch (error) {
