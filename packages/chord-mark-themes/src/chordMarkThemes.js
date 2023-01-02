@@ -3,7 +3,7 @@ import '../scss/playground.scss';
 
 import sampleSong1 from './sampleSong';
 import sampleSong2 from './sampleSong2';
-import { parseSong, renderSong } from '../../chord-mark/src/chordMark';
+import { parseSong, renderSong } from 'chord-mark';
 
 const rendered1 = renderSong(parseSong(sampleSong1)).replace(/\n/g, '');
 const rendered2 = renderSong(parseSong(sampleSong2)).replace(/\n/g, '');
