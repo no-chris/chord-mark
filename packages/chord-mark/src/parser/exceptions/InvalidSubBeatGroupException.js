@@ -23,7 +23,7 @@ export default class InvalidSubBeatGroupException extends Error {
 		}
 		super();
 
-		this.name = 'IncorrectBeatCountException';
+		this.name = 'InvalidSubBeatGroupException';
 		this.chordLine = chordLine;
 		this.symbol = symbol;
 		this.position = position;
