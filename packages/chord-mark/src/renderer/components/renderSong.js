@@ -196,7 +196,7 @@ export default function renderSong(
 							shouldPrintBarSeparators(line.model),
 							printSubBeatDelimiters
 					  )
-					: simpleChordSpacer(line.model); //fixme: shouldn't we add `shouldPrintBarSeparators` here?
+					: simpleChordSpacer(line.model);
 
 			const nextLine = allLines[lineIndex + 1];
 			if (shouldAlignChords(line)) {

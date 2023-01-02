@@ -66,6 +66,8 @@ The following list of CSS classes are available:
 -   `cmSectionLabel`
 -   `cmSectionMultiplier`
 -   `cmTimeSignature`
+-   `cmSubBeatGroupOpener`
+-   `cmSubBeatGroupCloser`
 
 ## Breaking changes
 
