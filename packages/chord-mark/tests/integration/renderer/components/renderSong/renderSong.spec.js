@@ -91,6 +91,18 @@ describe.each([
 		'song2-output-no-copy-no-multiply.txt',
 		{ expandSectionCopy: false, expandSectionMultiply: false },
 	],
+	[
+		'sub-beat delimiters',
+		'song3-input.txt',
+		'song3-output-sub-beats.txt',
+		{ printSubBeatDelimiters: true },
+	],
+	[
+		'sub-beat delimiters',
+		'song3-input.txt',
+		'song3-output-no-sub-beats.txt',
+		{ printSubBeatDelimiters: false },
+	],
 ])('Render components: %s', (title, inputFile, outputFile, options) => {
 	test('produces expected rendering', () => {
 		const input = removeLastLine(

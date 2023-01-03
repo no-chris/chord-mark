@@ -12,12 +12,12 @@ describe('parseSong', () => {
 		const input = `4/4
 C.. G..
 When I find myself in times of trouble
-Am.. F..
-_Mother mary _comes to me
-C... G.
+Am. {Am Am/G} FM7. F6.
+_ Mother _Ma_ry _comes to _me
+%%
 Speaking words of wisdom
-F. Em. Dm. C.
-_Let it _be`;
+F. {C/E Dm7} C..
+Let it _be _ _ _`;
 		const expected = {
 			allLines: [
 				{
@@ -67,31 +67,59 @@ _Let it _be`;
 				},
 				{
 					type: 'chord',
-					string: 'Am.. F..',
+					string: 'Am. {Am Am/G} FM7. F6.',
 					model: {
 						allBars: [
 							{
 								allChords: [
 									{
-										string: 'Am..',
+										string: 'Am.',
 										model: parseChord('Am'),
-										duration: 2,
+										duration: 1,
 										beat: 1,
 										isInSubBeatGroup: false,
 										isPositioned: true,
 									},
 									{
-										string: 'F..',
-										model: parseChord('F'),
-										duration: 2,
+										string: '{Am',
+										model: parseChord('Am'),
+										duration: 0.5,
+										beat: 2,
+										isInSubBeatGroup: true,
+										isFirstOfSubBeat: true,
+										isLastOfSubBeat: false,
+										isPositioned: true,
+									},
+									{
+										string: 'Am/G}',
+										model: parseChord('Am/G'),
+										duration: 0.5,
+										beat: 2,
+										isInSubBeatGroup: true,
+										isFirstOfSubBeat: false,
+										isLastOfSubBeat: true,
+										isPositioned: true,
+									},
+									{
+										string: 'FM7.',
+										model: parseChord('FM7'),
+										duration: 1,
 										beat: 3,
+										isInSubBeatGroup: false,
+										isPositioned: true,
+									},
+									{
+										string: 'F6.',
+										model: parseChord('F6'),
+										duration: 1,
+										beat: 4,
 										isInSubBeatGroup: false,
 										isPositioned: true,
 									},
 								],
 								timeSignature: _cloneDeep(ts4_4),
 								isRepeated: false,
-								hasUnevenChordsDurations: false,
+								hasUnevenChordsDurations: true,
 							},
 						],
 						hasPositionedChords: true,
@@ -99,39 +127,40 @@ _Let it _be`;
 				},
 				{
 					type: 'lyric',
-					string: '_Mother mary _comes to me',
+					string: '_ Mother _Ma_ry _comes to _me',
 					model: {
-						chordPositions: [0, 12],
-						lyrics: 'Mother mary comes to me',
+						chordPositions: [0, 8, 10, 13, 22],
+						lyrics: ' Mother Mary comes to me',
 					},
 				},
 				{
 					type: 'chord',
-					string: 'C... G.',
+					string: 'C.. G..',
+					isFromChordLineRepeater: true,
 					model: {
 						allBars: [
 							{
 								allChords: [
 									{
-										string: 'C...',
+										string: 'C..',
 										model: parseChord('C'),
-										duration: 3,
+										duration: 2,
 										beat: 1,
 										isInSubBeatGroup: false,
 										isPositioned: false,
 									},
 									{
-										string: 'G.',
+										string: 'G..',
 										model: parseChord('G'),
-										duration: 1,
-										beat: 4,
+										duration: 2,
+										beat: 3,
 										isInSubBeatGroup: false,
 										isPositioned: false,
 									},
 								],
 								timeSignature: _cloneDeep(ts4_4),
 								isRepeated: false,
-								hasUnevenChordsDurations: true,
+								hasUnevenChordsDurations: false,
 							},
 						],
 						hasPositionedChords: false,
@@ -147,7 +176,7 @@ _Let it _be`;
 				},
 				{
 					type: 'chord',
-					string: 'F. Em. Dm. C.',
+					string: 'F. {C/E Dm7} C..',
 					model: {
 						allBars: [
 							{
@@ -161,33 +190,37 @@ _Let it _be`;
 										isPositioned: true,
 									},
 									{
-										string: 'Em.',
-										model: parseChord('Em'),
-										duration: 1,
+										string: '{C/E',
+										model: parseChord('C/E'),
+										duration: 0.5,
 										beat: 2,
-										isInSubBeatGroup: false,
+										isInSubBeatGroup: true,
+										isFirstOfSubBeat: true,
+										isLastOfSubBeat: false,
 										isPositioned: true,
 									},
 									{
-										string: 'Dm.',
-										model: parseChord('Dm'),
-										duration: 1,
-										beat: 3,
-										isInSubBeatGroup: false,
-										isPositioned: false,
+										string: 'Dm7}',
+										model: parseChord('Dm7'),
+										duration: 0.5,
+										beat: 2,
+										isInSubBeatGroup: true,
+										isFirstOfSubBeat: false,
+										isLastOfSubBeat: true,
+										isPositioned: true,
 									},
 									{
-										string: 'C.',
+										string: 'C..',
 										model: parseChord('C'),
-										duration: 1,
-										beat: 4,
+										duration: 2,
+										beat: 3,
 										isInSubBeatGroup: false,
-										isPositioned: false,
+										isPositioned: true,
 									},
 								],
 								timeSignature: _cloneDeep(ts4_4),
 								isRepeated: false,
-								hasUnevenChordsDurations: false,
+								hasUnevenChordsDurations: true,
 							},
 						],
 						hasPositionedChords: true,
@@ -195,20 +228,23 @@ _Let it _be`;
 				},
 				{
 					type: 'lyric',
-					string: '_Let it _be',
+					string: 'Let it _be _ _ _',
 					model: {
-						chordPositions: [0, 7],
-						lyrics: 'Let it be',
+						chordPositions: [7, 10, 11, 12],
+						lyrics: 'Let it be   ',
 					},
 				},
 			],
 			allChords: [
 				{ model: parseChord('C'), occurrences: 3 },
 				{ model: parseChord('G'), occurrences: 2 },
-				{ model: parseChord('Am'), occurrences: 1 },
-				{ model: parseChord('F'), occurrences: 2 },
-				{ model: parseChord('Em'), occurrences: 1 },
-				{ model: parseChord('Dm'), occurrences: 1 },
+				{ model: parseChord('Am'), occurrences: 2 },
+				{ model: parseChord('Am/G'), occurrences: 1 },
+				{ model: parseChord('FM7'), occurrences: 1 },
+				{ model: parseChord('F6'), occurrences: 1 },
+				{ model: parseChord('F'), occurrences: 1 },
+				{ model: parseChord('C/E'), occurrences: 1 },
+				{ model: parseChord('Dm7'), occurrences: 1 },
 			],
 		};
 
