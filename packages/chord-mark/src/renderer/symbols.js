@@ -7,4 +7,7 @@ export default {
 	lyricsSpacer: ' ',
 	noChordSymbol: 'NC',
 	spacesAfterDefault: 2,
+	spacesAfterSubBeatDefault: 1,
+	subBeatGroupOpener: '{',
+	subBeatGroupCloser: '}',
 };

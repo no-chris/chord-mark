@@ -12,19 +12,19 @@ const defaultSpacesAfter = 2;
  * @param {Bar} bar
  * @param {Boolean} isLastBar
  * @param {Boolean} shouldPrintBarSeparators
+ * @param {Boolean} shouldPrintSubBeatDelimiters
  * @returns {String} rendered html
  */
 export default function renderBarContent(
 	bar,
-	isLastBar,
-	shouldPrintBarSeparators
+	isLastBar = false,
+	shouldPrintBarSeparators = true,
+	shouldPrintSubBeatDelimiters = true
 ) {
 	let spacesWithin = 0;
 	let spacesAfter = 0;
 
 	const barContent = bar.allChords.reduce((rendering, chord, i) => {
-		const isLastChordOfBar = !bar.allChords[i + 1];
-
 		spacesWithin = _isFinite(chord.spacesWithin)
 			? chord.spacesWithin
 			: defaultSpacesWithin;
@@ -32,18 +32,27 @@ export default function renderBarContent(
 			? chord.spacesAfter
 			: defaultSpacesAfter;
 
-		rendering += renderChordSymbol(chord, bar.shouldPrintChordsDuration);
+		rendering += renderChordSymbol(
+			chord,
+			chord.isInSubBeatGroup ? false : bar.shouldPrintChordsDuration,
+			shouldPrintSubBeatDelimiters && chord.isFirstOfSubBeat,
+			shouldPrintSubBeatDelimiters && chord.isLastOfSubBeat
+		);
 
 		if (shouldPrintChordSpaces()) {
 			rendering += space.repeat(spacesWithin) + space.repeat(spacesAfter);
 		}
 
 		function shouldPrintChordSpaces() {
-			const isLastChordOfLine = isLastChordOfBar && isLastBar;
+			const isLastChordOfLine = isLastChordOfBar() && isLastBar;
 			return (
 				!isLastChordOfLine ||
 				(isLastChordOfLine && shouldPrintBarSeparators)
 			);
+		}
+
+		function isLastChordOfBar() {
+			return !bar.allChords[i + 1];
 		}
 
 		return rendering;

@@ -10,7 +10,10 @@ export default function space(chordLineInput) {
 
 	chordLine.allBars.forEach((bar) => {
 		bar.allChords.forEach((chord) => {
-			chord.spacesAfter = symbols.spacesAfterDefault;
+			chord.spacesAfter =
+				chord.isInSubBeatGroup && !chord.isLastOfSubBeat
+					? symbols.spacesAfterSubBeatDefault
+					: symbols.spacesAfterDefault;
 			chord.spacesWithin = 0;
 		});
 	});

@@ -42,6 +42,20 @@ If the chords durations don't add up, the line won't be considered as a chord li
 
 <TabbedChordMark src={'Invalid beat count:\nA7... D7..\nIf a chord spans multiple bar, specify it for each bar:\nA7.. D7.... E7..\nA7.. D7.. D7.. E7..'} />
 
+## Sub-beat chord duration
+
+If some chords last less than one beat, you can use the sub-beat delimiters to create a group of chords to play during the same beat.
+
+<TabbedChordMark src={'C.. G..\nWhen I _find myself in _times of trouble\nAm. {Am Am/G} FM7. F6.\n_ Mother _Ma_ry _comes to _me'} />
+
+Within the sub-beat delimiters, it is the number of chords in the groups that define the chord duration, meaning it is not necessary to use chord duration markers:
+
+<TabbedChordMark src={'8th notes:\nC.. G. {Am Am/G}\n8th notes triplet:\nC.. G. {Am Am/G F}\n16th notes:\nC.. G. {Am Am/G F C}'} />
+
+A sub-beat group definition is invalid if it contains chord duration markers, a single chord, or more than four chords:
+
+<TabbedChordMark src={'Invalid:\nC.. G. {B. A7.}\nC.. G. {B}\nC.. G. {B C/E Am G F}'} />
+
 ## Time signature
 
 If your song is not in 4/4, you can just specify the time signature on a separate line.

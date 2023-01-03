@@ -122,6 +122,13 @@ describe.each([
 		undefined,
 		false,
 	],
+	[
+		'correctly position chord in a sub-beat group',
+		'{A B Dm7} A.. {Gmi F7 E7}',
+		'_Put _me _on top _of _the _correct _lyrics',
+		'|{A B  Dmi7}  A  {Gmi F7      E7}   |',
+		'Put me on top of the  correct lyrics',
+	],
 ])(
 	'%s',
 	(

@@ -1,4 +1,5 @@
 import _cloneDeep from 'lodash/cloneDeep';
+import { getChordString } from './getBeatString';
 
 import symbols from '../../symbols';
 
@@ -8,12 +9,14 @@ const chordSpaceAfterDefault = 1;
  * @param {ChordLine} chordLineInput
  * @param {LyricLine} lyricsLineInput
  * @param {Boolean} shouldPrintBarSeparators
+ * @param {Boolean} shouldPrintSubBeatDelimiters
  * @returns {Object}
  */
 export default function space(
 	chordLineInput,
 	lyricsLineInput,
-	shouldPrintBarSeparators
+	shouldPrintBarSeparators,
+	shouldPrintSubBeatDelimiters
 ) {
 	const chordLine = _cloneDeep(chordLineInput);
 	const lyricsLine = _cloneDeep(lyricsLineInput);
@@ -44,11 +47,11 @@ export default function space(
 			lyricToken = tokenizedLyrics.shift();
 
 			if (lyricToken) {
-				chordToken = chord.symbol;
-
-				if (bar.shouldPrintChordsDuration) {
-					chordToken += symbols.chordBeat.repeat(chord.duration);
-				}
+				chordToken = getChordString(
+					bar,
+					chord,
+					shouldPrintSubBeatDelimiters
+				);
 
 				if (isFirstChord(barIndex, chordIndex)) {
 					chordToken = barSeparatorToken + chordToken;

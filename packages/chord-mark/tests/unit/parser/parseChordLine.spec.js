@@ -6,8 +6,9 @@ import parseChordLine from '../../../src/parser/parseChordLine';
 import getChordSymbol from '../../../src/renderer/helpers/getChordSymbol';
 import parseTimeSignature from '../../../src/parser/parseTimeSignature';
 
-import IncorrectBeatCountException from '../../../src/parser/exceptions/IncorrectBeatCountException';
+import InvalidBeatCountException from '../../../src/parser/exceptions/InvalidBeatCountException';
 import InvalidChordRepetitionException from '../../../src/parser/exceptions/InvalidChordRepetitionException';
+import InvalidSubBeatGroupException from '../../../src/parser/exceptions/InvalidSubBeatGroupException';
 
 import { forEachChordInChordLine } from '../../../src/parser/helper/songs';
 
@@ -39,6 +40,7 @@ describe.each([
 							model: { symbol: 'Cm' },
 							duration: 4,
 							beat: 1,
+							isInSubBeatGroup: false,
 						},
 					],
 					timeSignature: ts4_4,
@@ -62,12 +64,14 @@ describe.each([
 							model: { symbol: 'Cm' },
 							duration: 2,
 							beat: 1,
+							isInSubBeatGroup: false,
 						},
 						{
 							string: 'F..',
 							model: { symbol: 'F' },
 							duration: 2,
 							beat: 3,
+							isInSubBeatGroup: false,
 						},
 					],
 					timeSignature: ts4_4,
@@ -91,18 +95,21 @@ describe.each([
 							model: { symbol: 'Cm' },
 							duration: 2,
 							beat: 1,
+							isInSubBeatGroup: false,
 						},
 						{
 							string: 'F.',
 							model: { symbol: 'F' },
 							duration: 1,
 							beat: 3,
+							isInSubBeatGroup: false,
 						},
 						{
 							string: 'G.',
 							model: { symbol: 'G' },
 							duration: 1,
 							beat: 4,
+							isInSubBeatGroup: false,
 						},
 					],
 					timeSignature: ts4_4,
@@ -126,24 +133,28 @@ describe.each([
 							model: { symbol: 'Cm' },
 							duration: 1,
 							beat: 1,
+							isInSubBeatGroup: false,
 						},
 						{
 							string: 'Em7.',
 							model: { symbol: 'Em7' },
 							duration: 1,
 							beat: 2,
+							isInSubBeatGroup: false,
 						},
 						{
 							string: 'F.',
 							model: { symbol: 'F' },
 							duration: 1,
 							beat: 3,
+							isInSubBeatGroup: false,
 						},
 						{
 							string: 'G.',
 							model: { symbol: 'G' },
 							duration: 1,
 							beat: 4,
+							isInSubBeatGroup: false,
 						},
 					],
 					timeSignature: ts4_4,
@@ -167,6 +178,7 @@ describe.each([
 							model: { symbol: 'C' },
 							duration: 4,
 							beat: 1,
+							isInSubBeatGroup: false,
 						},
 					],
 					timeSignature: ts4_4,
@@ -180,6 +192,7 @@ describe.each([
 							model: { symbol: 'F' },
 							duration: 4,
 							beat: 1,
+							isInSubBeatGroup: false,
 						},
 					],
 					timeSignature: ts4_4,
@@ -203,6 +216,7 @@ describe.each([
 							model: { symbol: 'C' },
 							duration: 4,
 							beat: 1,
+							isInSubBeatGroup: false,
 						},
 					],
 					timeSignature: ts4_4,
@@ -216,12 +230,14 @@ describe.each([
 							model: { symbol: 'F' },
 							duration: 2,
 							beat: 1,
+							isInSubBeatGroup: false,
 						},
 						{
 							string: 'G..',
 							model: { symbol: 'G' },
 							duration: 2,
 							beat: 3,
+							isInSubBeatGroup: false,
 						},
 					],
 					timeSignature: ts4_4,
@@ -245,12 +261,14 @@ describe.each([
 							model: { symbol: 'C' },
 							duration: 3,
 							beat: 1,
+							isInSubBeatGroup: false,
 						},
 						{
 							string: 'Em7.',
 							model: { symbol: 'Em7' },
 							duration: 1,
 							beat: 4,
+							isInSubBeatGroup: false,
 						},
 					],
 					timeSignature: ts4_4,
@@ -264,12 +282,14 @@ describe.each([
 							model: { symbol: 'F' },
 							duration: 1,
 							beat: 1,
+							isInSubBeatGroup: false,
 						},
 						{
 							string: 'G...',
 							model: { symbol: 'G' },
 							duration: 3,
 							beat: 2,
+							isInSubBeatGroup: false,
 						},
 					],
 					timeSignature: ts4_4,
@@ -293,6 +313,7 @@ describe.each([
 							model: { symbol: 'C' },
 							duration: 4,
 							beat: 1,
+							isInSubBeatGroup: false,
 						},
 					],
 					timeSignature: ts4_4,
@@ -306,12 +327,14 @@ describe.each([
 							model: { symbol: 'Em7' },
 							duration: 1,
 							beat: 1,
+							isInSubBeatGroup: false,
 						},
 						{
 							string: 'F...',
 							model: { symbol: 'F' },
 							duration: 3,
 							beat: 2,
+							isInSubBeatGroup: false,
 						},
 					],
 					timeSignature: ts4_4,
@@ -325,6 +348,7 @@ describe.each([
 							model: { symbol: 'G' },
 							duration: 4,
 							beat: 1,
+							isInSubBeatGroup: false,
 						},
 					],
 					timeSignature: ts4_4,
@@ -348,6 +372,7 @@ describe.each([
 							model: { symbol: 'C' },
 							duration: 3,
 							beat: 1,
+							isInSubBeatGroup: false,
 						},
 					],
 					timeSignature: ts3_4,
@@ -371,12 +396,14 @@ describe.each([
 							model: { symbol: 'Cm' },
 							duration: 1,
 							beat: 1,
+							isInSubBeatGroup: false,
 						},
 						{
 							string: 'F..',
 							model: { symbol: 'F' },
 							duration: 2,
 							beat: 2,
+							isInSubBeatGroup: false,
 						},
 					],
 					timeSignature: ts3_4,
@@ -400,12 +427,14 @@ describe.each([
 							model: { symbol: 'Cm' },
 							duration: 2,
 							beat: 1,
+							isInSubBeatGroup: false,
 						},
 						{
 							string: 'F.',
 							model: { symbol: 'F' },
 							duration: 1,
 							beat: 3,
+							isInSubBeatGroup: false,
 						},
 					],
 					timeSignature: ts3_4,
@@ -429,18 +458,21 @@ describe.each([
 							model: { symbol: 'Cm' },
 							duration: 1,
 							beat: 1,
+							isInSubBeatGroup: false,
 						},
 						{
 							string: 'F.',
 							model: { symbol: 'F' },
 							duration: 1,
 							beat: 2,
+							isInSubBeatGroup: false,
 						},
 						{
 							string: 'G.',
 							model: { symbol: 'G' },
 							duration: 1,
 							beat: 3,
+							isInSubBeatGroup: false,
 						},
 					],
 					timeSignature: ts3_4,
@@ -464,6 +496,7 @@ describe.each([
 							model: { symbol: 'Cm' },
 							duration: 1,
 							beat: 1,
+							isInSubBeatGroup: false,
 						},
 					],
 					timeSignature: ts3_8,
@@ -477,6 +510,7 @@ describe.each([
 							model: { symbol: 'F' },
 							duration: 1,
 							beat: 1,
+							isInSubBeatGroup: false,
 						},
 					],
 					timeSignature: ts3_8,
@@ -490,6 +524,7 @@ describe.each([
 							model: { symbol: 'G' },
 							duration: 1,
 							beat: 1,
+							isInSubBeatGroup: false,
 						},
 					],
 					timeSignature: ts3_8,
@@ -513,6 +548,7 @@ describe.each([
 							model: { symbol: 'Cm' },
 							duration: 4,
 							beat: 1,
+							isInSubBeatGroup: false,
 						},
 					],
 					timeSignature: ts4_4,
@@ -536,6 +572,7 @@ describe.each([
 							model: { symbol: 'Cm' },
 							duration: 4,
 							beat: 1,
+							isInSubBeatGroup: false,
 						},
 					],
 					timeSignature: ts4_4,
@@ -559,6 +596,7 @@ describe.each([
 							model: { symbol: 'Cm' },
 							duration: 4,
 							beat: 1,
+							isInSubBeatGroup: false,
 						},
 					],
 					timeSignature: ts4_4,
@@ -582,12 +620,14 @@ describe.each([
 							model: { symbol: 'C' },
 							duration: 2,
 							beat: 1,
+							isInSubBeatGroup: false,
 						},
 						{
 							string: 'B..',
 							model: { symbol: 'B' },
 							duration: 2,
 							beat: 3,
+							isInSubBeatGroup: false,
 						},
 					],
 					timeSignature: ts4_4,
@@ -611,6 +651,7 @@ describe.each([
 							model: { symbol: 'C' },
 							duration: 4,
 							beat: 1,
+							isInSubBeatGroup: false,
 						},
 					],
 					timeSignature: ts4_4,
@@ -619,7 +660,13 @@ describe.each([
 				},
 				{
 					allChords: [
-						{ string: 'NC', model: 'NC', duration: 4, beat: 1 },
+						{
+							string: 'NC',
+							model: 'NC',
+							duration: 4,
+							beat: 1,
+							isInSubBeatGroup: false,
+						},
 					],
 					timeSignature: ts4_4,
 					isRepeated: false,
@@ -632,8 +679,15 @@ describe.each([
 							model: { symbol: 'B' },
 							duration: 2,
 							beat: 1,
+							isInSubBeatGroup: false,
 						},
-						{ string: 'NC..', model: 'NC', duration: 2, beat: 3 },
+						{
+							string: 'NC..',
+							model: 'NC',
+							duration: 2,
+							beat: 3,
+							isInSubBeatGroup: false,
+						},
 					],
 					timeSignature: ts4_4,
 					isRepeated: false,
@@ -646,6 +700,7 @@ describe.each([
 							model: { symbol: 'D' },
 							duration: 4,
 							beat: 1,
+							isInSubBeatGroup: false,
 						},
 					],
 					timeSignature: ts4_4,
@@ -669,6 +724,7 @@ describe.each([
 							model: { symbol: 'C' },
 							duration: 4,
 							beat: 1,
+							isInSubBeatGroup: false,
 						},
 					],
 					timeSignature: ts4_4,
@@ -682,6 +738,7 @@ describe.each([
 							model: { symbol: 'C' },
 							duration: 4,
 							beat: 1,
+							isInSubBeatGroup: false,
 						},
 					],
 					timeSignature: ts4_4,
@@ -695,6 +752,7 @@ describe.each([
 							model: { symbol: 'D' },
 							duration: 4,
 							beat: 1,
+							isInSubBeatGroup: false,
 						},
 					],
 					timeSignature: ts4_4,
@@ -708,6 +766,7 @@ describe.each([
 							model: { symbol: 'D' },
 							duration: 4,
 							beat: 1,
+							isInSubBeatGroup: false,
 						},
 					],
 					timeSignature: ts4_4,
@@ -731,18 +790,21 @@ describe.each([
 							model: { symbol: 'C' },
 							duration: 2,
 							beat: 1,
+							isInSubBeatGroup: false,
 						},
 						{
 							string: 'Am.',
 							model: { symbol: 'Am' },
 							duration: 1,
 							beat: 3,
+							isInSubBeatGroup: false,
 						},
 						{
 							string: 'F.',
 							model: { symbol: 'F' },
 							duration: 1,
 							beat: 4,
+							isInSubBeatGroup: false,
 						},
 					],
 					timeSignature: ts4_4,
@@ -756,18 +818,21 @@ describe.each([
 							model: { symbol: 'C' },
 							duration: 2,
 							beat: 1,
+							isInSubBeatGroup: false,
 						},
 						{
 							string: 'Am.',
 							model: { symbol: 'Am' },
 							duration: 1,
 							beat: 3,
+							isInSubBeatGroup: false,
 						},
 						{
 							string: 'F.',
 							model: { symbol: 'F' },
 							duration: 1,
 							beat: 4,
+							isInSubBeatGroup: false,
 						},
 					],
 					timeSignature: ts4_4,
@@ -791,6 +856,7 @@ describe.each([
 							model: { symbol: 'C(addb9)' },
 							duration: 4,
 							beat: 1,
+							isInSubBeatGroup: false,
 						},
 					],
 					timeSignature: ts4_4,
@@ -804,11 +870,230 @@ describe.each([
 							model: { symbol: 'F(add#9)' },
 							duration: 4,
 							beat: 1,
+							isInSubBeatGroup: false,
 						},
 					],
 					timeSignature: ts4_4,
 					isRepeated: false,
 					hasUnevenChordsDurations: false,
+				},
+			],
+		},
+	],
+	[
+		'sub-beat group / 2 chords',
+		'F... {C/E Dm7}',
+		ts4_4,
+		{
+			allBars: [
+				{
+					allChords: [
+						{
+							string: 'F...',
+							model: { symbol: 'F' },
+							duration: 3,
+							beat: 1,
+							isInSubBeatGroup: false,
+						},
+						{
+							string: '{C/E',
+							model: { symbol: 'C/E' },
+							duration: 0.5,
+							beat: 4,
+							isInSubBeatGroup: true,
+							isFirstOfSubBeat: true,
+							isLastOfSubBeat: false,
+						},
+						{
+							string: 'Dm7}',
+							model: { symbol: 'Dm7' },
+							duration: 0.5,
+							beat: 4,
+							isInSubBeatGroup: true,
+							isFirstOfSubBeat: false,
+							isLastOfSubBeat: true,
+						},
+					],
+					timeSignature: ts4_4,
+					isRepeated: false,
+					hasUnevenChordsDurations: true,
+				},
+			],
+		},
+	],
+	[
+		'sub-beat group / 3 chords',
+		'F... {C/E Dm7 C}',
+		ts4_4,
+		{
+			allBars: [
+				{
+					allChords: [
+						{
+							string: 'F...',
+							model: { symbol: 'F' },
+							duration: 3,
+							beat: 1,
+							isInSubBeatGroup: false,
+						},
+						{
+							string: '{C/E',
+							model: { symbol: 'C/E' },
+							duration: 0.33,
+							beat: 4,
+							isInSubBeatGroup: true,
+							isFirstOfSubBeat: true,
+							isLastOfSubBeat: false,
+						},
+						{
+							string: 'Dm7',
+							model: { symbol: 'Dm7' },
+							duration: 0.33,
+							beat: 4,
+							isInSubBeatGroup: true,
+							isFirstOfSubBeat: false,
+							isLastOfSubBeat: false,
+						},
+						{
+							string: 'C}',
+							model: { symbol: 'C' },
+							duration: 0.33,
+							beat: 4,
+							isInSubBeatGroup: true,
+							isFirstOfSubBeat: false,
+							isLastOfSubBeat: true,
+						},
+					],
+					timeSignature: ts4_4,
+					isRepeated: false,
+					hasUnevenChordsDurations: true,
+				},
+			],
+		},
+	],
+	[
+		'sub-beat group / 4 chords',
+		'{C/E Dm7 C Am} F...',
+		ts4_4,
+		{
+			allBars: [
+				{
+					allChords: [
+						{
+							string: '{C/E',
+							model: { symbol: 'C/E' },
+							duration: 0.25,
+							beat: 1,
+							isInSubBeatGroup: true,
+							isFirstOfSubBeat: true,
+							isLastOfSubBeat: false,
+						},
+						{
+							string: 'Dm7',
+							model: { symbol: 'Dm7' },
+							duration: 0.25,
+							beat: 1,
+							isInSubBeatGroup: true,
+							isFirstOfSubBeat: false,
+							isLastOfSubBeat: false,
+						},
+						{
+							string: 'C',
+							model: { symbol: 'C' },
+							duration: 0.25,
+							beat: 1,
+							isInSubBeatGroup: true,
+							isFirstOfSubBeat: false,
+							isLastOfSubBeat: false,
+						},
+						{
+							string: 'Am}',
+							model: { symbol: 'Am' },
+							duration: 0.25,
+							beat: 1,
+							isInSubBeatGroup: true,
+							isFirstOfSubBeat: false,
+							isLastOfSubBeat: true,
+						},
+						{
+							string: 'F...',
+							model: { symbol: 'F' },
+							duration: 3,
+							beat: 2,
+							isInSubBeatGroup: false,
+						},
+					],
+					timeSignature: ts4_4,
+					isRepeated: false,
+					hasUnevenChordsDurations: true,
+				},
+			],
+		},
+	],
+	[
+		'2 sub-beat groups / 2 and 3 chords',
+		'F.. {C/E Dm7} {C B7 Am}',
+		ts4_4,
+		{
+			allBars: [
+				{
+					allChords: [
+						{
+							string: 'F..',
+							model: { symbol: 'F' },
+							duration: 2,
+							beat: 1,
+							isInSubBeatGroup: false,
+						},
+						{
+							string: '{C/E',
+							model: { symbol: 'C/E' },
+							duration: 0.5,
+							beat: 3,
+							isInSubBeatGroup: true,
+							isFirstOfSubBeat: true,
+							isLastOfSubBeat: false,
+						},
+						{
+							string: 'Dm7}',
+							model: { symbol: 'Dm7' },
+							duration: 0.5,
+							beat: 3,
+							isInSubBeatGroup: true,
+							isFirstOfSubBeat: false,
+							isLastOfSubBeat: true,
+						},
+						{
+							string: '{C',
+							model: { symbol: 'C' },
+							duration: 0.33,
+							beat: 4,
+							isInSubBeatGroup: true,
+							isFirstOfSubBeat: true,
+							isLastOfSubBeat: false,
+						},
+						{
+							string: 'B7',
+							model: { symbol: 'B7' },
+							duration: 0.33,
+							beat: 4,
+							isInSubBeatGroup: true,
+							isFirstOfSubBeat: false,
+							isLastOfSubBeat: false,
+						},
+						{
+							string: 'Am}',
+							model: { symbol: 'Am' },
+							duration: 0.33,
+							beat: 4,
+							isInSubBeatGroup: true,
+							isFirstOfSubBeat: false,
+							isLastOfSubBeat: true,
+						},
+					],
+					timeSignature: ts4_4,
+					isRepeated: false,
+					hasUnevenChordsDurations: true,
 				},
 			],
 		},
@@ -849,8 +1134,8 @@ describe.each([
 			parseChordLine(input, { timeSignature });
 		};
 
-		test('Throw InvalidChordRepetitionException', () => {
-			expect(throwingFn).toThrow(IncorrectBeatCountException);
+		test('Throw InvalidBeatCountException', () => {
+			expect(throwingFn).toThrow(InvalidBeatCountException);
 		});
 
 		test('Add correct properties to exception', () => {
@@ -858,7 +1143,7 @@ describe.each([
 				throwingFn();
 				expect(false).toBeTruthy();
 			} catch (e) {
-				expect(e.name).toBe('IncorrectBeatCountException');
+				expect(e.name).toBe('InvalidBeatCountException');
 				expect(e.string).toBe(string);
 				expect(e.duration).toBe(duration);
 				expect(e.currentBeatCount).toBe(currentBeatCount);
@@ -874,6 +1159,9 @@ describe.each([
 	['A... A.', 'A.'],
 	['A... B. C.. C. F.', 'C.'],
 	['A... B. F... F.', 'F.'],
+	['C... {G G C}', 'G'],
+	['C... {G G}', 'G}'],
+	['C... {C G G C}', 'G'],
 ])('Throw if repeated chord in a bar: %s', (input, string) => {
 	const throwingFn = () => {
 		parseChordLine(input);
@@ -891,6 +1179,22 @@ describe.each([
 			expect(e.name).toBe('InvalidChordRepetitionException');
 			expect(e.string).toBe(string);
 		}
+	});
+});
+
+describe.each([
+	['A... {A A7/G}'],
+	['A.. {A B7} {B7 A7/G}'],
+	['{A B} {B C} {C D} {D E}'],
+	['{A B} B...'],
+])('Allowed chord repetitions: %s', (input) => {
+	const notThrowingFn = () => {
+		parseChordLine(input);
+	};
+
+	test('Do not throw if the repeated chord is the first of a sub-beat group', () => {
+		expect(notThrowingFn).not.toThrow();
+		expect(notThrowingFn).not.toThrow(InvalidChordRepetitionException);
 	});
 });
 
@@ -940,6 +1244,73 @@ describe.each([['% A'], ['%% A'], [' % A'], ['	% A']])(
 			expect(throwingFn).toThrow(
 				'A chord line cannot start with the barRepeat symbol'
 			);
+		});
+	}
+);
+
+describe.each([
+	['A... {B7. D7.}'],
+	['A... {B7. D7}'],
+	['A... {B7 D7.}'],
+	['A... {B7. E7 D7}'],
+	['A... {B7 E7. D7}'],
+	['A... {B7 E7 D7.}'],
+	['A... {B7.. E7 D7}'],
+	['A... {B7 E7.. D7}'],
+	['A... {B7 E7 D7..}'],
+])('Throw if a sub-beat group contains duration markers: %s', (input) => {
+	const throwingFn = () => {
+		parseChordLine(input);
+	};
+
+	test('Throw Error', () => {
+		expect(throwingFn).toThrow(InvalidSubBeatGroupException);
+	});
+
+	test('Properly fills exception parameters', () => {
+		expect.assertions(2);
+		try {
+			throwingFn();
+		} catch (error) {
+			expect(error.chordLine).toBe(input);
+			//expect(error.symbol).toBe(symbol); //duh
+			expect(error.position).toBe(0);
+		}
+	});
+});
+
+describe.each([
+	['A.. B7. D7.{', '{', 11],
+	['A... {B7 {D7', '{', 9],
+	['A... {B7 D7', '{', 5],
+	['A.. {C G} {B7 D7', '{', 10],
+
+	['}A.. B7. D7.', '}', 0],
+	['A... B7 D7}', '}', 10],
+	['A.. {C G} B7 D7}', '}', 15],
+
+	['A... {C G E B7 D7}', 'D7}', 0],
+	['A... {C}', '{C}', 0],
+])(
+	'Throw if sub-beat groups are not properly defined: %s',
+	(input, symbol, position) => {
+		const throwingFn = () => {
+			parseChordLine(input);
+		};
+
+		test('Throw InvalidSubBeatGroupException', () => {
+			expect(throwingFn).toThrow(InvalidSubBeatGroupException);
+		});
+
+		test('Properly fills exception parameters', () => {
+			expect.assertions(3);
+			try {
+				throwingFn();
+			} catch (error) {
+				expect(error.chordLine).toBe(input);
+				expect(error.symbol).toBe(symbol);
+				expect(error.position).toBe(position);
+			}
 		});
 	}
 );

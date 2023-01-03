@@ -14,7 +14,6 @@ const ts6_8 = parseTimeSignature('6/8');
 const ts5_4 = parseTimeSignature('5/4');
 
 describe.each([
-	// Keeping the old test structure although everything equals 2 spaces!
 	['1 bar / 1 chord / 6/8', ts6_8, 'C', [2]],
 	['1 bar / 2 chords / 6/8', ts6_8, 'C. F.', [2, 2]],
 
@@ -36,20 +35,28 @@ describe.each([
 	['1 bar / 2 chords (1/4) / 5/4', ts5_4, 'C. F....', [2, 2]],
 	['1 bar / 2 chords (2/3) / 5/4', ts5_4, 'C.. F...', [2, 2]],
 	['1 bar / 3 chords (1/2/2) / 5/4', ts5_4, 'C. F.. G..', [2, 2, 2]],
+
+	[
+		'1 bar / 1 sub-beat group of 16th notes / 4/4',
+		ts4_4,
+		'{C G Am F} G...',
+		[1, 1, 1, 2, 2],
+	],
 ])('%s', (title, timeSignature, input, spacesAfter) => {
 	test('Correctly compute .spacesAfter', () => {
 		const parsed = parseChordLine(input, { timeSignature });
 		const spaced = simpleSpacer(parsed);
 
-		let chordIndex = 0;
+		const actualSpacesAfter = [];
 
 		spaced.allBars.forEach((bar) => {
 			bar.allChords.forEach((chord) => {
 				expect(chord).toHaveProperty('spacesAfter');
-				expect(chord.spacesAfter).toEqual(spacesAfter[chordIndex]);
+				actualSpacesAfter.push(chord.spacesAfter);
 				expect(chord.spacesWithin).toEqual(0);
-				chordIndex++;
 			});
 		});
+
+		expect(actualSpacesAfter).toEqual(spacesAfter);
 	});
 });

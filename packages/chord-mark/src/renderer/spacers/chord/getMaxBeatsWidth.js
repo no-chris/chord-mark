@@ -1,12 +1,18 @@
+import { getBeatString } from './getBeatString';
+
 import lineTypes from '../../../parser/lineTypes';
-import symbols from '../../symbols';
 
 /**
  * @param {SongLine[]} allLines
  * @param {Function} shouldAlignChords
+ * @param {Boolean} shouldPrintSubBeatDelimiters
  * @returns {Array}
  */
-export default function getMaxBeatsWidth(allLines, shouldAlignChords) {
+export default function getMaxBeatsWidth(
+	allLines,
+	shouldAlignChords,
+	shouldPrintSubBeatDelimiters = true
+) {
 	const maxBeatsWidth = [];
 
 	allLines
@@ -22,18 +28,22 @@ export default function getMaxBeatsWidth(allLines, shouldAlignChords) {
 					}
 				}
 
-				bar.allChords.forEach((chord) => {
-					let symbolLength = chord.symbol.length;
-					if (bar.shouldPrintChordsDuration) {
-						symbolLength += symbols.chordBeat.repeat(
-							chord.duration
-						).length;
-					}
-					maxBeatsWidth[barIndex][chord.beat] = Math.max(
-						maxBeatsWidth[barIndex][chord.beat],
-						symbolLength
-					);
-				});
+				bar.allChords
+					.filter(
+						(chord) =>
+							!chord.isInSubBeatGroup || chord.isLastOfSubBeat
+					)
+					.forEach((chord) => {
+						const beatString = getBeatString(
+							bar,
+							chord.beat,
+							shouldPrintSubBeatDelimiters
+						);
+						maxBeatsWidth[barIndex][chord.beat] = Math.max(
+							maxBeatsWidth[barIndex][chord.beat],
+							beatString.length
+						);
+					});
 			});
 		});
 

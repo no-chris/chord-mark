@@ -6,24 +6,48 @@ import isChord from './isChord';
 const chordBeatCountSymbols = new RegExp(syntax.chordBeatCount + '*$', 'g');
 const barRepeatSymbols = new RegExp('^' + syntax.barRepeat + '+$');
 
-const getParseableChordLine = (chordLine) => {
-	return chordLine.replace('add #', 'add#').replace('add b', 'addb');
-};
-
+/**
+ * Check if the given line only contains chords and allowed characters.
+ * The parsing might still fail at a later stage if some rules are not properly enforced,
+ * like having proper chord durations or matching sub-beat openers/closers
+ * @param {String} line
+ * @returns {Boolean}
+ */
 export default function isChordLine(line = '') {
 	return clearSpaces(getParseableChordLine(line))
 		.split(' ')
 		.every((potentialChordToken, index) => {
-			const withoutBeatCount = potentialChordToken.replace(
-				chordBeatCountSymbols,
-				''
-			);
+			const clean = cleanToken(potentialChordToken);
+
 			return (
-				isChord(withoutBeatCount) ||
+				isChord(clean) ||
 				(potentialChordToken.match(barRepeatSymbols) && index > 0) ||
-				withoutBeatCount === syntax.noChord
+				clean === syntax.noChord
 			);
 		});
 }
 
-export { getParseableChordLine };
+const getParseableChordLine = (chordLine) => {
+	return chordLine.replaceAll('add ', 'add');
+};
+
+const cleanToken = (token) => {
+	return removeSubBeatDelimiters(removeBeatCount(token));
+};
+
+const removeBeatCount = (token) => {
+	return token.replace(chordBeatCountSymbols, '');
+};
+
+const removeSubBeatDelimiters = (token) => {
+	let clean = token;
+	if (token.startsWith(syntax.subBeatOpener)) {
+		clean = clean.substring(syntax.subBeatOpener.length);
+	}
+	if (token.endsWith(syntax.subBeatCloser)) {
+		clean = clean.substring(0, clean.length - syntax.subBeatCloser.length);
+	}
+	return clean;
+};
+
+export { getParseableChordLine, cleanToken };

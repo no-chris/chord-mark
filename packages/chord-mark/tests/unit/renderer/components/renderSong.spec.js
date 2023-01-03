@@ -443,6 +443,57 @@ Solo
 	});
 });
 
+describe('printSubBeatDelimiters', () => {
+	const input = `C.. G.. Am.. F..
+No woman no cry
+C.. {F C/E} {Dm7 C} C.. G..
+No woman no cry
+
+C.. G.. Am.. F..
+_ No _woman no _cry
+C.. {F C/E} {Dm7 C} C.. G..
+_ No _wo_man _no _cry`;
+
+	const outputWithDelimiters = `|C     G               |Am   F   |
+No woman no cry
+|C..   {F C/E}  {Dm7 C}|C    G   |
+No woman no cry
+
+|C    G        |Am F |
+   No woman no cry
+|C..    {F C/E} {Dm7 C} |C G |
+     No wo man  no   cry`;
+
+	test('true by default', () => {
+		const rendered = renderSongText(input);
+		expect(toText(rendered)).toBe(outputWithDelimiters);
+	});
+
+	test('explicit true', () => {
+		const rendered = renderSongText(input, {
+			printSubBeatDelimiters: true,
+		});
+		expect(toText(rendered)).toBe(outputWithDelimiters);
+	});
+
+	test('explicit false', () => {
+		const expected = `|C     G           |Am   F   |
+No woman no cry
+|C..   F C/E  Dm7 C|C    G   |
+No woman no cry
+
+|C    G        |Am F |
+   No woman no cry
+|C..    F C/E Dm7 C  |C G |
+     No woman no  cry`;
+
+		const rendered = renderSongText(input, {
+			printSubBeatDelimiters: false,
+		});
+		expect(toText(rendered)).toBe(expected);
+	});
+});
+
 describe('printChordsDuration', () => {
 	const input = `4/4
 A7
