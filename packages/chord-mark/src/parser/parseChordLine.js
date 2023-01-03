@@ -297,7 +297,7 @@ function checkSubBeatConsistency(line) {
 			if (inSubBeat)
 				throw new InvalidSubBeatGroupException(errorParameters);
 			inSubBeat = true;
-		} else if (match[0] === syntax.subBeatCloser) {
+		} else {
 			if (!inSubBeat)
 				throw new InvalidSubBeatGroupException(errorParameters);
 			inSubBeat = false;

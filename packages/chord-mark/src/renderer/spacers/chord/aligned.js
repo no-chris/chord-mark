@@ -28,7 +28,7 @@ export default function space(
 			if (chord.isInSubBeatGroup && !chord.isLastOfSubBeat) {
 				chord.spacesWithin = 0;
 				chord.spacesAfter = symbols.spacesAfterSubBeatDefault;
-			} else if (!chord.isInSubBeatGroup || chord.isLastOfSubBeat) {
+			} else {
 				chord.spacesWithin =
 					maxBeatsWidth[barIndex][chord.beat] - beatString.length;
 				chord.spacesAfter = 0;
