@@ -37,6 +37,16 @@ describe.each([
 	['F {C A} {B', true],
 	['F {C A(add b9)} B}', true],
 
+	// time signature in chord line
+	['A 2/4', true],
+	['A B 2/4 C', true],
+	['A B C 2/4', true],
+	['A B C 2/4 3/4', true],
+	['A B C 2/4 3/4 B', true],
+	['A B C 2/4 C 3/4 B', true],
+	['A % 2/4', true],
+	['A 2/4 %', true], // duh!
+
 	[undefined, false],
 	['', false],
 	['AB ', false],
@@ -52,6 +62,8 @@ describe.each([
 	['%..', false],
 	['A B %.', false],
 	['5/4\n', false],
+	['4/4', false],
+	['3/4', false],
 	['A B{', false],
 	['A }B', false],
 	['A { B', false],

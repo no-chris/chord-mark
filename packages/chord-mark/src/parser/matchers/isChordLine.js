@@ -2,6 +2,7 @@ import clearSpaces from '../helper/clearSpaces';
 
 import syntax from '../syntax';
 import isChord from './isChord';
+import isTimeSignatureString from './isTimeSignatureString';
 
 const chordBeatCountSymbols = new RegExp(syntax.chordBeatCount + '*$', 'g');
 const barRepeatSymbols = new RegExp('^' + syntax.barRepeat + '+$');
@@ -22,7 +23,8 @@ export default function isChordLine(line = '') {
 			return (
 				isChord(clean) ||
 				(potentialChordToken.match(barRepeatSymbols) && index > 0) ||
-				clean === syntax.noChord
+				clean === syntax.noChord ||
+				(isTimeSignatureString(potentialChordToken) && index > 0)
 			);
 		});
 }
