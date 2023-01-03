@@ -2825,10 +2825,10 @@ cheerio@^1.0.0-rc.12:
   optionalDependencies:
     fsevents "~2.3.2"
 
-chord-mark@^0.11.0:
-  version "0.11.0"
-  resolved "https://registry.yarnpkg.com/chord-mark/-/chord-mark-0.11.0.tgz#f21cb9824a638ec2712ced076d99e971329994a4"
-  integrity sha512-eoewZZdG5yJpiNK+JAQiBbVLAmg9VuqLUye1FmhD9DU//Pbpj+Hel4wLgOE2aF7/fhYT0YhfPQ+Jhc0cZ1M8mA==
+chord-mark@^0.12.0:
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/chord-mark/-/chord-mark-0.12.0.tgz#499ac3965aee93b4128a97b7b31c5a86b0924457"
+  integrity sha512-LsZ/elw1yLsiPaF32rIayFvKXuMbsfzRXBCMNfwKLsXK8mM3mupdCUFxFUTzYho23U35VKDXFp7sNvhzI/IuCw==
   dependencies:
     chord-symbol "3.0.0"
     dompurify "^2.3.4"
@@ -4805,9 +4805,9 @@ json-schema-traverse@^1.0.0:
   integrity sha512-NM8/P9n3XjXhIZn1lLhkFaACTOURQXjWhV4BA/RnOv8xvgqtqpAX9IO4mRQxSx1Rlo4tqzeqb0sOlruaOy3dug==
 
 json5@^2.1.2, json5@^2.2.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/json5/-/json5-2.2.1.tgz#655d50ed1e6f95ad1a3caababd2b0efda10b395c"
-  integrity sha512-1hqLFMSrGHRHxav9q9gNjJ5EXznIxGVO09xQRrwplcS8qs28pZ8s8hupZAmqDwZUmVZ2Qb2jnyPOWcDH8m8dlA==
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/json5/-/json5-2.2.3.tgz#78cd6f1a19bdc12b73db5ad0c61efd66c1e29283"
+  integrity sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg==
 
 jsonfile@^6.0.1:
   version "6.1.0"
