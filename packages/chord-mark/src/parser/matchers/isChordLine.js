@@ -21,7 +21,7 @@ export default function isChordLine(line = '') {
 
 			return (
 				isChord(clean) ||
-				(potentialChordToken.match(barRepeatSymbols) && index > 0) || //todo: isn't this checked later?
+				(potentialChordToken.match(barRepeatSymbols) && index > 0) ||
 				clean === syntax.noChord
 			);
 		});
