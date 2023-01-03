@@ -1,5 +1,6 @@
 /* eslint-disable max-lines-per-function */
 import _isEqual from 'lodash/isEqual';
+import _escapeRegExp from 'lodash/escapeRegExp';
 import _cloneDeep from 'lodash/cloneDeep';
 
 import syntax from './syntax';
@@ -13,8 +14,13 @@ import InvalidChordRepetitionException from './exceptions/InvalidChordRepetition
 import InvalidSubBeatGroupException from './exceptions/InvalidSubBeatGroupException';
 import { getParseableChordLine, cleanToken } from './matchers/isChordLine';
 
-const chordBeatCountSymbols = new RegExp(syntax.chordBeatCount, 'g');
-const barRepeatSymbols = new RegExp('^' + syntax.barRepeat + '+$');
+const chordBeatCountSymbols = new RegExp(
+	_escapeRegExp(syntax.chordBeatCount),
+	'g'
+);
+const barRepeatSymbols = new RegExp(
+	'^' + _escapeRegExp(syntax.barRepeat) + '+$'
+);
 const defaultTimeSignature = parseTimeSignature('4/4');
 
 /**
@@ -180,8 +186,7 @@ function checkSubBeatGroupToken(chordLine, token) {
 }
 
 function hasBeatCount(token) {
-	const regex = new RegExp(syntax.chordBeatCount, 'g');
-	return (token.match(regex) || []).length > 0;
+	return token.indexOf(syntax.chordBeatCount) > -1;
 }
 
 function isNoChordSymbol(token) {

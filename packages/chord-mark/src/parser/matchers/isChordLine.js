@@ -1,11 +1,17 @@
+import _escapeRegExp from 'lodash/escapeRegExp';
 import clearSpaces from '../helper/clearSpaces';
 
 import syntax from '../syntax';
 import isChord from './isChord';
 import isTimeSignatureString from './isTimeSignatureString';
 
-const chordBeatCountSymbols = new RegExp(syntax.chordBeatCount + '*$', 'g');
-const barRepeatSymbols = new RegExp('^' + syntax.barRepeat + '+$');
+const chordBeatCountSymbols = new RegExp(
+	_escapeRegExp(syntax.chordBeatCount) + '*$',
+	'g'
+);
+const barRepeatSymbols = new RegExp(
+	'^' + _escapeRegExp(syntax.barRepeat) + '+$'
+);
 
 /**
  * Check if the given line only contains chords and allowed characters.
