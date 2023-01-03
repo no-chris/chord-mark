@@ -118,6 +118,10 @@ export default function renderSong(
 			useFlats: accidental === 'flat',
 		});
 	}
+	
+	function getSectionWrapperClasses(line) {
+		return [ "cmSection" , "cmSection-" + line.model.rendered.label.replace(/[\d\s]/gi,"") ];
+	}
 
 	function addPrintChordsDurationsFlag(line) {
 		if (line.type === lineTypes.CHORD) {
@@ -205,11 +209,15 @@ export default function renderSong(
 	}
 
 	function renderAllLines() {
+		let lineIsInASection = false;
+		let shouldCloseFinalSection = false;
+
 		return allLines
-			.map((line) => {
+			.map((line, i) => {
 				let rendered;
 				let opensSection = false;
 				let sectionWrapperClasses = [];
+				let closePriorSection;
 
 				if (line.type === lineTypes.CHORD) {
 					rendered = renderChordLineModel(
@@ -220,7 +228,13 @@ export default function renderSong(
 					rendered = renderEmptyLine();
 				} else if (line.type === lineTypes.SECTION_LABEL) {
 					opensSection = true;
-					sectionWrapperClasses = [ "cmSection" , "cmSection-" + line.model.rendered.label.replace(/[\d\s]/gi,"") ];
+
+					closePriorSection = lineIsInASection;
+
+					lineIsInASection = true;
+
+					sectionWrapperClasses = getSectionWrapperClasses(line);
+					
 					rendered = renderSectionLabelLine(line);
 				} else if (line.type === lineTypes.TIME_SIGNATURE) {
 					rendered = renderTimeSignature(line);
@@ -230,14 +244,20 @@ export default function renderSong(
 						chartType,
 					});
 				}
+
+				if (allLines.length - 1 === i && lineIsInASection) {
+					shouldCloseFinalSection = true;
+				}
 				
 				return renderLine(rendered, {
 					isFromSectionMultiply: line.isFromSectionMultiply,
 					isFromAutoRepeatChords: line.isFromAutoRepeatChords,
 					isFromChordLineRepeater: line.isFromChordLineRepeater,
 					isFromSectionCopy: line.isFromSectionCopy,
-					isNewSection: opensSection,
+					shouldOpenSection: opensSection,
 					sectionClasses: sectionWrapperClasses,
+					shouldCloseSection: closePriorSection,
+					closesFinalSection: shouldCloseFinalSection,
 				});
 			})
 			.filter(Boolean);

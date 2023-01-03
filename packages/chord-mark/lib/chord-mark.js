@@ -16974,13 +16974,22 @@ function renderEmptyLine_render() {
 var line_render = function render(_ref) {
   var line = _ref.line,
     lineClasses = _ref.lineClasses,
-    isNewSection = _ref.isNewSection,
-    wrapperClasses = _ref.wrapperClasses;
-  if (isNewSection) {
-    return "</div><div class=\"".concat(wrapperClasses, "\"><p class=\"").concat(lineClasses, "\">").concat(line, "</p>");
-  } else {
-    return "<p class=\"".concat(lineClasses, "\">").concat(line, "</p>");
+    shouldOpenSection = _ref.shouldOpenSection,
+    wrapperClasses = _ref.wrapperClasses,
+    shouldCloseSection = _ref.shouldCloseSection,
+    closesFinalSection = _ref.closesFinalSection;
+  var wrapper = '';
+  if (shouldCloseSection) {
+    wrapper = '</div>';
   }
+  if (shouldOpenSection) {
+    wrapper = "".concat(wrapper, "<div class=\"").concat(wrapperClasses, "\">");
+  }
+  wrapper = "".concat(wrapper, "<p class=\"").concat(lineClasses, "\">").concat(line, "</p>");
+  if (closesFinalSection) {
+    wrapper = "".concat(wrapper, "</div>");
+  }
+  return wrapper;
 };
 /* harmony default export */ const tpl_line = (line_render);
 ;// CONCATENATED MODULE: ./src/renderer/components/renderLine.js
@@ -16992,8 +17001,10 @@ var line_render = function render(_ref) {
  * @param {Boolean} isFromChordLineRepeater
  * @param {Boolean} isFromSectionCopy
  * @param {Boolean} isFromSectionMultiply
- * @param {Boolean} isNewSection
+ * @param {Boolean} shouldOpenSection
  * @param {Array} sectionClasses
+ * @param {Boolean} shouldCloseSection
+ * @param {Boolean} closesFinalSection
  * @returns {String} rendered html
  */
 function renderLine_render(line) {
@@ -17006,10 +17017,14 @@ function renderLine_render(line) {
     isFromSectionCopy = _ref$isFromSectionCop === void 0 ? false : _ref$isFromSectionCop,
     _ref$isFromSectionMul = _ref.isFromSectionMultiply,
     isFromSectionMultiply = _ref$isFromSectionMul === void 0 ? false : _ref$isFromSectionMul,
-    _ref$isNewSection = _ref.isNewSection,
-    isNewSection = _ref$isNewSection === void 0 ? false : _ref$isNewSection,
+    _ref$shouldOpenSectio = _ref.shouldOpenSection,
+    shouldOpenSection = _ref$shouldOpenSectio === void 0 ? false : _ref$shouldOpenSectio,
     _ref$sectionClasses = _ref.sectionClasses,
-    sectionClasses = _ref$sectionClasses === void 0 ? [] : _ref$sectionClasses;
+    sectionClasses = _ref$sectionClasses === void 0 ? [] : _ref$sectionClasses,
+    _ref$shouldCloseSecti = _ref.shouldCloseSection,
+    shouldCloseSection = _ref$shouldCloseSecti === void 0 ? false : _ref$shouldCloseSecti,
+    _ref$closesFinalSecti = _ref.closesFinalSection,
+    closesFinalSection = _ref$closesFinalSecti === void 0 ? false : _ref$closesFinalSecti;
   var lineClasses = ['cmLine'];
   if (isFromAutoRepeatChords) {
     lineClasses.push('cmLine--isFromAutoRepeatChords');
@@ -17026,8 +17041,10 @@ function renderLine_render(line) {
   return tpl_line({
     line: line,
     lineClasses: lineClasses.join(' '),
-    isNewSection: isNewSection,
-    wrapperClasses: sectionClasses.join(' ')
+    shouldOpenSection: shouldOpenSection,
+    wrapperClasses: sectionClasses.join(' '),
+    shouldCloseSection: shouldCloseSection,
+    closesFinalSection: closesFinalSection
   });
 }
 ;// CONCATENATED MODULE: ./src/renderer/components/tpl/sectionLabel.js
@@ -17097,13 +17114,7 @@ function renderTimeSignature_render(timeSignatureLine) {
 ;// CONCATENATED MODULE: ./src/renderer/components/tpl/song.js
 var song_render = function render(_ref) {
   var song = _ref.song;
-  /**
-   * The extra opening and closing div accounts for the simple section 
-   * wrapping logic, which wraps sections in <div class="cmSection ..."> for
-   * the purpose of styling with themes. Yes, this does spawn one needless div 
-   * at the start of the song.
-   */
-  return "<div class=\"cmSong\"><div>".concat(song, "</div></div>");
+  return "<div class=\"cmSong\">".concat(song, "</div>");
 };
 /* harmony default export */ const song = (song_render);
 ;// CONCATENATED MODULE: ./src/renderer/helpers/getChordSymbol.js
@@ -17363,6 +17374,9 @@ function renderSong(parsedSong) {
       useFlats: accidental === 'flat'
     });
   }
+  function getSectionWrapperClasses(line) {
+    return ["cmSection", "cmSection-" + line.model.rendered.label.replace(/[\d\s]/gi, "")];
+  }
   function addPrintChordsDurationsFlag(line) {
     if (line.type === parser_lineTypes.CHORD) {
       line.model.allBars.forEach(function (bar) {
@@ -17411,17 +17425,22 @@ function renderSong(parsedSong) {
     }
   }
   function renderAllLines() {
-    return allLines.map(function (line) {
+    var lineIsInASection = false;
+    var shouldCloseFinalSection = false;
+    return allLines.map(function (line, i) {
       var rendered;
       var opensSection = false;
       var sectionWrapperClasses = [];
+      var closePriorSection;
       if (line.type === parser_lineTypes.CHORD) {
         rendered = renderChordLine(line.model, shouldPrintBarSeparators(line.model));
       } else if (line.type === parser_lineTypes.EMPTY_LINE) {
         rendered = renderEmptyLine_render();
       } else if (line.type === parser_lineTypes.SECTION_LABEL) {
         opensSection = true;
-        sectionWrapperClasses = ["cmSection", "cmSection-" + line.model.rendered.label.replace(/[\d\s]/gi, "")];
+        closePriorSection = lineIsInASection;
+        lineIsInASection = true;
+        sectionWrapperClasses = getSectionWrapperClasses(line);
         rendered = renderSectionLabel(line);
       } else if (line.type === parser_lineTypes.TIME_SIGNATURE) {
         rendered = renderTimeSignature_render(line);
@@ -17431,13 +17450,18 @@ function renderSong(parsedSong) {
           chartType: chartType
         });
       }
+      if (allLines.length - 1 === i && lineIsInASection) {
+        shouldCloseFinalSection = true;
+      }
       return renderLine_render(rendered, {
         isFromSectionMultiply: line.isFromSectionMultiply,
         isFromAutoRepeatChords: line.isFromAutoRepeatChords,
         isFromChordLineRepeater: line.isFromChordLineRepeater,
         isFromSectionCopy: line.isFromSectionCopy,
-        isNewSection: opensSection,
-        sectionClasses: sectionWrapperClasses
+        shouldOpenSection: opensSection,
+        sectionClasses: sectionWrapperClasses,
+        shouldCloseSection: closePriorSection,
+        closesFinalSection: shouldCloseFinalSection
       });
     }).filter(Boolean);
   }

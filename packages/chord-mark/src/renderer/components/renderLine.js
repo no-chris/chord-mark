@@ -6,8 +6,10 @@ import lineTpl from './tpl/line.js';
  * @param {Boolean} isFromChordLineRepeater
  * @param {Boolean} isFromSectionCopy
  * @param {Boolean} isFromSectionMultiply
- * @param {Boolean} isNewSection
+ * @param {Boolean} shouldOpenSection
  * @param {Array} sectionClasses
+ * @param {Boolean} shouldCloseSection
+ * @param {Boolean} closesFinalSection
  * @returns {String} rendered html
  */
 export default function render(
@@ -17,8 +19,10 @@ export default function render(
 		isFromChordLineRepeater = false,
 		isFromSectionCopy = false,
 		isFromSectionMultiply = false,
-		isNewSection = false,
+		shouldOpenSection = false,
 		sectionClasses = [],
+		shouldCloseSection = false,
+		closesFinalSection = false,
 	} = {}
 ) {
 	const lineClasses = ['cmLine'];
@@ -38,7 +42,9 @@ export default function render(
 	return lineTpl({
 		line,
 		lineClasses: lineClasses.join(' '),
-		isNewSection: isNewSection,
+		shouldOpenSection: shouldOpenSection,
 		wrapperClasses: sectionClasses.join(' '),
+		shouldCloseSection: shouldCloseSection,
+		closesFinalSection: closesFinalSection,
 	});
 }
