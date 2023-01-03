@@ -164,6 +164,10 @@ export default function renderSong(
 		);
 	}
 
+	function isLastLine(allLines, i) {
+		return (allLines.length - 1 === i);
+	}
+
 	function isFiltered(line) {
 		if (chartType === 'chordsFirstLyricLine') {
 			if (line.type === lineTypes.SECTION_LABEL) {
@@ -210,14 +214,13 @@ export default function renderSong(
 
 	function renderAllLines() {
 		let lineIsInASection = false;
-		let shouldCloseFinalSection = false;
 
 		return allLines
 			.map((line, i) => {
 				let rendered;
-				let opensSection = false;
+				let shouldOpenSection = false;
 				let sectionWrapperClasses = [];
-				let closePriorSection;
+				let shouldClosePriorSection;
 
 				if (line.type === lineTypes.CHORD) {
 					rendered = renderChordLineModel(
@@ -227,9 +230,9 @@ export default function renderSong(
 				} else if (line.type === lineTypes.EMPTY_LINE) {
 					rendered = renderEmptyLine();
 				} else if (line.type === lineTypes.SECTION_LABEL) {
-					opensSection = true;
+					shouldOpenSection = true;
 
-					closePriorSection = lineIsInASection;
+					shouldClosePriorSection = lineIsInASection;
 
 					lineIsInASection = true;
 
@@ -244,20 +247,16 @@ export default function renderSong(
 						chartType,
 					});
 				}
-
-				if (allLines.length - 1 === i && lineIsInASection) {
-					shouldCloseFinalSection = true;
-				}
 				
 				return renderLine(rendered, {
 					isFromSectionMultiply: line.isFromSectionMultiply,
 					isFromAutoRepeatChords: line.isFromAutoRepeatChords,
 					isFromChordLineRepeater: line.isFromChordLineRepeater,
 					isFromSectionCopy: line.isFromSectionCopy,
-					shouldOpenSection: opensSection,
-					sectionClasses: sectionWrapperClasses,
-					shouldCloseSection: closePriorSection,
-					closesFinalSection: shouldCloseFinalSection,
+					shouldOpenSection,
+					shouldClosePriorSection,
+					shouldCloseFinalSection: isLastLine(allLines, i) && lineIsInASection,
+					sectionWrapperClasses,
 				});
 			})
 			.filter(Boolean);

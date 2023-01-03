@@ -7,9 +7,9 @@ import lineTpl from './tpl/line.js';
  * @param {Boolean} isFromSectionCopy
  * @param {Boolean} isFromSectionMultiply
  * @param {Boolean} shouldOpenSection
- * @param {Array} sectionClasses
- * @param {Boolean} shouldCloseSection
- * @param {Boolean} closesFinalSection
+ * @param {Boolean} shouldClosePriorSection
+ * @param {Boolean} shouldCloseFinalSection
+ * @param {Array} sectionWrapperClasses
  * @returns {String} rendered html
  */
 export default function render(
@@ -20,9 +20,9 @@ export default function render(
 		isFromSectionCopy = false,
 		isFromSectionMultiply = false,
 		shouldOpenSection = false,
-		sectionClasses = [],
-		shouldCloseSection = false,
-		closesFinalSection = false,
+		shouldClosePriorSection = false,
+		shouldCloseFinalSection = false,
+		sectionWrapperClasses = [],
 	} = {}
 ) {
 	const lineClasses = ['cmLine'];
@@ -43,8 +43,8 @@ export default function render(
 		line,
 		lineClasses: lineClasses.join(' '),
 		shouldOpenSection: shouldOpenSection,
-		wrapperClasses: sectionClasses.join(' '),
-		shouldCloseSection: shouldCloseSection,
-		closesFinalSection: closesFinalSection,
+		sectionWrapperClasses: sectionWrapperClasses.join(' '),
+		shouldClosePriorSection: shouldClosePriorSection,
+		shouldCloseFinalSection: shouldCloseFinalSection,
 	});
 }

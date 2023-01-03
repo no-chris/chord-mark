@@ -16975,19 +16975,19 @@ var line_render = function render(_ref) {
   var line = _ref.line,
     lineClasses = _ref.lineClasses,
     shouldOpenSection = _ref.shouldOpenSection,
-    wrapperClasses = _ref.wrapperClasses,
-    shouldCloseSection = _ref.shouldCloseSection,
-    closesFinalSection = _ref.closesFinalSection;
+    sectionWrapperClasses = _ref.sectionWrapperClasses,
+    shouldClosePriorSection = _ref.shouldClosePriorSection,
+    shouldCloseFinalSection = _ref.shouldCloseFinalSection;
   var wrapper = '';
-  if (shouldCloseSection) {
-    wrapper = '</div>';
+  if (shouldClosePriorSection) {
+    wrapper += '</div>';
   }
   if (shouldOpenSection) {
-    wrapper = "".concat(wrapper, "<div class=\"").concat(wrapperClasses, "\">");
+    wrapper += "<div class=\"".concat(sectionWrapperClasses, "\">");
   }
-  wrapper = "".concat(wrapper, "<p class=\"").concat(lineClasses, "\">").concat(line, "</p>");
-  if (closesFinalSection) {
-    wrapper = "".concat(wrapper, "</div>");
+  wrapper += "<p class=\"".concat(lineClasses, "\">").concat(line, "</p>");
+  if (shouldCloseFinalSection) {
+    wrapper += "</div>";
   }
   return wrapper;
 };
@@ -17002,9 +17002,9 @@ var line_render = function render(_ref) {
  * @param {Boolean} isFromSectionCopy
  * @param {Boolean} isFromSectionMultiply
  * @param {Boolean} shouldOpenSection
- * @param {Array} sectionClasses
- * @param {Boolean} shouldCloseSection
- * @param {Boolean} closesFinalSection
+ * @param {Boolean} shouldClosePriorSection
+ * @param {Boolean} shouldCloseFinalSection
+ * @param {Array} sectionWrapperClasses
  * @returns {String} rendered html
  */
 function renderLine_render(line) {
@@ -17019,12 +17019,12 @@ function renderLine_render(line) {
     isFromSectionMultiply = _ref$isFromSectionMul === void 0 ? false : _ref$isFromSectionMul,
     _ref$shouldOpenSectio = _ref.shouldOpenSection,
     shouldOpenSection = _ref$shouldOpenSectio === void 0 ? false : _ref$shouldOpenSectio,
-    _ref$sectionClasses = _ref.sectionClasses,
-    sectionClasses = _ref$sectionClasses === void 0 ? [] : _ref$sectionClasses,
-    _ref$shouldCloseSecti = _ref.shouldCloseSection,
-    shouldCloseSection = _ref$shouldCloseSecti === void 0 ? false : _ref$shouldCloseSecti,
-    _ref$closesFinalSecti = _ref.closesFinalSection,
-    closesFinalSection = _ref$closesFinalSecti === void 0 ? false : _ref$closesFinalSecti;
+    _ref$shouldClosePrior = _ref.shouldClosePriorSection,
+    shouldClosePriorSection = _ref$shouldClosePrior === void 0 ? false : _ref$shouldClosePrior,
+    _ref$shouldCloseFinal = _ref.shouldCloseFinalSection,
+    shouldCloseFinalSection = _ref$shouldCloseFinal === void 0 ? false : _ref$shouldCloseFinal,
+    _ref$sectionWrapperCl = _ref.sectionWrapperClasses,
+    sectionWrapperClasses = _ref$sectionWrapperCl === void 0 ? [] : _ref$sectionWrapperCl;
   var lineClasses = ['cmLine'];
   if (isFromAutoRepeatChords) {
     lineClasses.push('cmLine--isFromAutoRepeatChords');
@@ -17042,9 +17042,9 @@ function renderLine_render(line) {
     line: line,
     lineClasses: lineClasses.join(' '),
     shouldOpenSection: shouldOpenSection,
-    wrapperClasses: sectionClasses.join(' '),
-    shouldCloseSection: shouldCloseSection,
-    closesFinalSection: closesFinalSection
+    sectionWrapperClasses: sectionWrapperClasses.join(' '),
+    shouldClosePriorSection: shouldClosePriorSection,
+    shouldCloseFinalSection: shouldCloseFinalSection
   });
 }
 ;// CONCATENATED MODULE: ./src/renderer/components/tpl/sectionLabel.js
@@ -17397,6 +17397,9 @@ function renderSong(parsedSong) {
     var shouldSkipSectionCopyLine = line.type !== parser_lineTypes.SECTION_LABEL && line.isFromSectionCopy && !expandSectionCopy;
     return !shouldSkipSectionMultiplyLine && !shouldSkipAutoRepeatChordLine && !shouldSkipSectionCopyLine;
   }
+  function isLastLine(allLines, i) {
+    return allLines.length - 1 === i;
+  }
   function isFiltered(line) {
     if (chartType === 'chordsFirstLyricLine') {
       if (line.type === parser_lineTypes.SECTION_LABEL) {
@@ -17426,19 +17429,18 @@ function renderSong(parsedSong) {
   }
   function renderAllLines() {
     var lineIsInASection = false;
-    var shouldCloseFinalSection = false;
     return allLines.map(function (line, i) {
       var rendered;
-      var opensSection = false;
+      var shouldOpenSection = false;
       var sectionWrapperClasses = [];
-      var closePriorSection;
+      var shouldClosePriorSection;
       if (line.type === parser_lineTypes.CHORD) {
         rendered = renderChordLine(line.model, shouldPrintBarSeparators(line.model));
       } else if (line.type === parser_lineTypes.EMPTY_LINE) {
         rendered = renderEmptyLine_render();
       } else if (line.type === parser_lineTypes.SECTION_LABEL) {
-        opensSection = true;
-        closePriorSection = lineIsInASection;
+        shouldOpenSection = true;
+        shouldClosePriorSection = lineIsInASection;
         lineIsInASection = true;
         sectionWrapperClasses = getSectionWrapperClasses(line);
         rendered = renderSectionLabel(line);
@@ -17450,18 +17452,15 @@ function renderSong(parsedSong) {
           chartType: chartType
         });
       }
-      if (allLines.length - 1 === i && lineIsInASection) {
-        shouldCloseFinalSection = true;
-      }
       return renderLine_render(rendered, {
         isFromSectionMultiply: line.isFromSectionMultiply,
         isFromAutoRepeatChords: line.isFromAutoRepeatChords,
         isFromChordLineRepeater: line.isFromChordLineRepeater,
         isFromSectionCopy: line.isFromSectionCopy,
-        shouldOpenSection: opensSection,
-        sectionClasses: sectionWrapperClasses,
-        shouldCloseSection: closePriorSection,
-        closesFinalSection: shouldCloseFinalSection
+        shouldOpenSection: shouldOpenSection,
+        shouldClosePriorSection: shouldClosePriorSection,
+        shouldCloseFinalSection: isLastLine(allLines, i) && lineIsInASection,
+        sectionWrapperClasses: sectionWrapperClasses
       });
     }).filter(Boolean);
   }

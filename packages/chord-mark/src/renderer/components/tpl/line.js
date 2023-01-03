@@ -2,24 +2,24 @@ const render = ({
 	line, 
 	lineClasses, 
 	shouldOpenSection, 
-	wrapperClasses, 
-	shouldCloseSection, 
-	closesFinalSection 
+	sectionWrapperClasses, 
+	shouldClosePriorSection, 
+	shouldCloseFinalSection 
 }) => {
 	let wrapper = '';
 	
-	if (shouldCloseSection) {
-		wrapper = '</div>';
+	if (shouldClosePriorSection) {
+		wrapper += '</div>';
 	}
 	
 	if (shouldOpenSection) {
-		wrapper = `${wrapper}<div class="${wrapperClasses}">`;
+		wrapper += `<div class="${sectionWrapperClasses}">`;
 	}
 
-	wrapper = `${wrapper}<p class="${lineClasses}">${line}</p>`;
+	wrapper += `<p class="${lineClasses}">${line}</p>`;
 	
-	if (closesFinalSection) {
-		wrapper = `${wrapper}</div>`
+	if (shouldCloseFinalSection) {
+		wrapper += `</div>`
 	}
 	
 	return wrapper;
