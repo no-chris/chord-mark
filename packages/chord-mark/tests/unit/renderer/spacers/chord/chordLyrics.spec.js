@@ -162,10 +162,9 @@ describe.each([
 
 			// assertions
 
-			const renderedChords = renderChordLine(
-				chordLine,
-				shouldPrintBarSeparators
-			);
+			const renderedChords = renderChordLine(chordLine, undefined, {
+				shouldPrintBarSeparators,
+			});
 			const renderedLyrics = renderLyricLine(
 				{ model: lyricsLine },
 				{ alignChordsWithLyrics: true }
