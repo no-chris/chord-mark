@@ -1,3 +1,5 @@
+import parseTimeSignature from './parseTimeSignature';
+
 export default {
 	barRepeat: '%',
 	chordBeatCount: '.',
@@ -9,3 +11,5 @@ export default {
 	subBeatOpener: '{',
 	subBeatCloser: '}',
 };
+
+export const defaultTimeSignature = parseTimeSignature('4/4');
