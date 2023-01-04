@@ -19,6 +19,7 @@ describe('parseChordLine', () => {
 	});
 });
 
+const ts2_4 = parseTimeSignature('2/4');
 const ts3_4 = parseTimeSignature('3/4');
 const ts4_4 = parseTimeSignature('4/4');
 const ts5_4 = parseTimeSignature('5/4');
@@ -47,6 +48,7 @@ describe.each([
 					timeSignature: ts4_4,
 					isRepeated: false,
 					hasUnevenChordsDurations: false,
+					lineHadTimeSignatureChange: false,
 				},
 			],
 		},
@@ -78,6 +80,7 @@ describe.each([
 					timeSignature: ts4_4,
 					isRepeated: false,
 					hasUnevenChordsDurations: false,
+					lineHadTimeSignatureChange: false,
 				},
 			],
 		},
@@ -116,6 +119,7 @@ describe.each([
 					timeSignature: ts4_4,
 					isRepeated: false,
 					hasUnevenChordsDurations: true,
+					lineHadTimeSignatureChange: false,
 				},
 			],
 		},
@@ -161,6 +165,7 @@ describe.each([
 					timeSignature: ts4_4,
 					isRepeated: false,
 					hasUnevenChordsDurations: false,
+					lineHadTimeSignatureChange: false,
 				},
 			],
 		},
@@ -185,6 +190,7 @@ describe.each([
 					timeSignature: ts4_4,
 					isRepeated: false,
 					hasUnevenChordsDurations: false,
+					lineHadTimeSignatureChange: false,
 				},
 				{
 					allChords: [
@@ -199,6 +205,7 @@ describe.each([
 					timeSignature: ts4_4,
 					isRepeated: false,
 					hasUnevenChordsDurations: false,
+					lineHadTimeSignatureChange: false,
 				},
 			],
 		},
@@ -223,6 +230,7 @@ describe.each([
 					timeSignature: ts4_4,
 					isRepeated: false,
 					hasUnevenChordsDurations: false,
+					lineHadTimeSignatureChange: false,
 				},
 				{
 					allChords: [
@@ -244,6 +252,7 @@ describe.each([
 					timeSignature: ts4_4,
 					isRepeated: false,
 					hasUnevenChordsDurations: false,
+					lineHadTimeSignatureChange: false,
 				},
 			],
 		},
@@ -275,6 +284,7 @@ describe.each([
 					timeSignature: ts4_4,
 					isRepeated: false,
 					hasUnevenChordsDurations: true,
+					lineHadTimeSignatureChange: false,
 				},
 				{
 					allChords: [
@@ -296,6 +306,7 @@ describe.each([
 					timeSignature: ts4_4,
 					isRepeated: false,
 					hasUnevenChordsDurations: true,
+					lineHadTimeSignatureChange: false,
 				},
 			],
 		},
@@ -320,6 +331,7 @@ describe.each([
 					timeSignature: ts4_4,
 					isRepeated: false,
 					hasUnevenChordsDurations: false,
+					lineHadTimeSignatureChange: false,
 				},
 				{
 					allChords: [
@@ -341,6 +353,7 @@ describe.each([
 					timeSignature: ts4_4,
 					isRepeated: false,
 					hasUnevenChordsDurations: true,
+					lineHadTimeSignatureChange: false,
 				},
 				{
 					allChords: [
@@ -355,6 +368,7 @@ describe.each([
 					timeSignature: ts4_4,
 					isRepeated: false,
 					hasUnevenChordsDurations: false,
+					lineHadTimeSignatureChange: false,
 				},
 			],
 		},
@@ -379,6 +393,7 @@ describe.each([
 					timeSignature: ts3_4,
 					isRepeated: false,
 					hasUnevenChordsDurations: false,
+					lineHadTimeSignatureChange: false,
 				},
 			],
 		},
@@ -410,6 +425,7 @@ describe.each([
 					timeSignature: ts3_4,
 					isRepeated: false,
 					hasUnevenChordsDurations: true,
+					lineHadTimeSignatureChange: false,
 				},
 			],
 		},
@@ -441,6 +457,7 @@ describe.each([
 					timeSignature: ts3_4,
 					isRepeated: false,
 					hasUnevenChordsDurations: true,
+					lineHadTimeSignatureChange: false,
 				},
 			],
 		},
@@ -479,6 +496,7 @@ describe.each([
 					timeSignature: ts3_4,
 					isRepeated: false,
 					hasUnevenChordsDurations: false,
+					lineHadTimeSignatureChange: false,
 				},
 			],
 		},
@@ -503,6 +521,7 @@ describe.each([
 					timeSignature: ts3_8,
 					isRepeated: false,
 					hasUnevenChordsDurations: false,
+					lineHadTimeSignatureChange: false,
 				},
 				{
 					allChords: [
@@ -517,6 +536,7 @@ describe.each([
 					timeSignature: ts3_8,
 					isRepeated: false,
 					hasUnevenChordsDurations: false,
+					lineHadTimeSignatureChange: false,
 				},
 				{
 					allChords: [
@@ -531,6 +551,7 @@ describe.each([
 					timeSignature: ts3_8,
 					isRepeated: false,
 					hasUnevenChordsDurations: false,
+					lineHadTimeSignatureChange: false,
 				},
 			],
 		},
@@ -555,6 +576,7 @@ describe.each([
 					timeSignature: ts4_4,
 					isRepeated: false,
 					hasUnevenChordsDurations: false,
+					lineHadTimeSignatureChange: false,
 				},
 			],
 		},
@@ -579,6 +601,7 @@ describe.each([
 					timeSignature: ts4_4,
 					isRepeated: false,
 					hasUnevenChordsDurations: false,
+					lineHadTimeSignatureChange: false,
 				},
 			],
 		},
@@ -603,6 +626,7 @@ describe.each([
 					timeSignature: ts4_4,
 					isRepeated: false,
 					hasUnevenChordsDurations: false,
+					lineHadTimeSignatureChange: false,
 				},
 			],
 		},
@@ -634,6 +658,7 @@ describe.each([
 					timeSignature: ts4_4,
 					isRepeated: false,
 					hasUnevenChordsDurations: false,
+					lineHadTimeSignatureChange: false,
 				},
 			],
 		},
@@ -658,6 +683,7 @@ describe.each([
 					timeSignature: ts4_4,
 					isRepeated: false,
 					hasUnevenChordsDurations: false,
+					lineHadTimeSignatureChange: false,
 				},
 				{
 					allChords: [
@@ -672,6 +698,7 @@ describe.each([
 					timeSignature: ts4_4,
 					isRepeated: false,
 					hasUnevenChordsDurations: false,
+					lineHadTimeSignatureChange: false,
 				},
 				{
 					allChords: [
@@ -693,6 +720,7 @@ describe.each([
 					timeSignature: ts4_4,
 					isRepeated: false,
 					hasUnevenChordsDurations: false,
+					lineHadTimeSignatureChange: false,
 				},
 				{
 					allChords: [
@@ -707,6 +735,7 @@ describe.each([
 					timeSignature: ts4_4,
 					isRepeated: false,
 					hasUnevenChordsDurations: false,
+					lineHadTimeSignatureChange: false,
 				},
 			],
 		},
@@ -731,6 +760,7 @@ describe.each([
 					timeSignature: ts4_4,
 					isRepeated: false,
 					hasUnevenChordsDurations: false,
+					lineHadTimeSignatureChange: false,
 				},
 				{
 					allChords: [
@@ -745,6 +775,7 @@ describe.each([
 					timeSignature: ts4_4,
 					isRepeated: true,
 					hasUnevenChordsDurations: false,
+					lineHadTimeSignatureChange: false,
 				},
 				{
 					allChords: [
@@ -759,6 +790,7 @@ describe.each([
 					timeSignature: ts4_4,
 					isRepeated: false,
 					hasUnevenChordsDurations: false,
+					lineHadTimeSignatureChange: false,
 				},
 				{
 					allChords: [
@@ -773,6 +805,7 @@ describe.each([
 					timeSignature: ts4_4,
 					isRepeated: true,
 					hasUnevenChordsDurations: false,
+					lineHadTimeSignatureChange: false,
 				},
 			],
 		},
@@ -811,6 +844,7 @@ describe.each([
 					timeSignature: ts4_4,
 					isRepeated: false,
 					hasUnevenChordsDurations: true,
+					lineHadTimeSignatureChange: false,
 				},
 				{
 					allChords: [
@@ -839,6 +873,7 @@ describe.each([
 					timeSignature: ts4_4,
 					isRepeated: true,
 					hasUnevenChordsDurations: true,
+					lineHadTimeSignatureChange: false,
 				},
 			],
 		},
@@ -863,6 +898,7 @@ describe.each([
 					timeSignature: ts4_4,
 					isRepeated: false,
 					hasUnevenChordsDurations: false,
+					lineHadTimeSignatureChange: false,
 				},
 				{
 					allChords: [
@@ -877,6 +913,7 @@ describe.each([
 					timeSignature: ts4_4,
 					isRepeated: false,
 					hasUnevenChordsDurations: false,
+					lineHadTimeSignatureChange: false,
 				},
 			],
 		},
@@ -918,6 +955,7 @@ describe.each([
 					timeSignature: ts4_4,
 					isRepeated: false,
 					hasUnevenChordsDurations: true,
+					lineHadTimeSignatureChange: false,
 				},
 			],
 		},
@@ -968,6 +1006,7 @@ describe.each([
 					timeSignature: ts4_4,
 					isRepeated: false,
 					hasUnevenChordsDurations: true,
+					lineHadTimeSignatureChange: false,
 				},
 			],
 		},
@@ -1027,6 +1066,7 @@ describe.each([
 					timeSignature: ts4_4,
 					isRepeated: false,
 					hasUnevenChordsDurations: true,
+					lineHadTimeSignatureChange: false,
 				},
 			],
 		},
@@ -1095,6 +1135,7 @@ describe.each([
 					timeSignature: ts4_4,
 					isRepeated: false,
 					hasUnevenChordsDurations: true,
+					lineHadTimeSignatureChange: false,
 				},
 			],
 		},
@@ -1118,6 +1159,7 @@ describe.each([
 					timeSignature: ts4_4,
 					isRepeated: false,
 					hasUnevenChordsDurations: false,
+					lineHadTimeSignatureChange: false,
 				},
 				{
 					allChords: [
@@ -1139,6 +1181,7 @@ describe.each([
 					timeSignature: ts3_4,
 					isRepeated: false,
 					hasUnevenChordsDurations: true,
+					lineHadTimeSignatureChange: true,
 				},
 			],
 		},
@@ -1162,6 +1205,7 @@ describe.each([
 					timeSignature: ts4_4,
 					isRepeated: false,
 					hasUnevenChordsDurations: false,
+					lineHadTimeSignatureChange: false,
 				},
 				{
 					allChords: [
@@ -1183,6 +1227,7 @@ describe.each([
 					timeSignature: ts3_4,
 					isRepeated: false,
 					hasUnevenChordsDurations: true,
+					lineHadTimeSignatureChange: true,
 				},
 				{
 					allChords: [
@@ -1204,16 +1249,32 @@ describe.each([
 					timeSignature: ts5_4,
 					isRepeated: false,
 					hasUnevenChordsDurations: true,
+					lineHadTimeSignatureChange: true,
 				},
 			],
 		},
 	],
 	[
-		'Inline time signature / 1 change at the start',
-		'3/4 D.. E.',
+		'Inline time signature / 3 consecutive changes', // useless, but can be parsed
+		'C 3/4 D.. E. 2/4 4/4 5/4 F... C..',
 		ts4_4,
 		{
 			allBars: [
+				{
+					allChords: [
+						{
+							string: 'C',
+							model: { symbol: 'C' },
+							duration: 4,
+							beat: 1,
+							isInSubBeatGroup: false,
+						},
+					],
+					timeSignature: ts4_4,
+					isRepeated: false,
+					hasUnevenChordsDurations: false,
+					lineHadTimeSignatureChange: false,
+				},
 				{
 					allChords: [
 						{
@@ -1234,6 +1295,68 @@ describe.each([
 					timeSignature: ts3_4,
 					isRepeated: false,
 					hasUnevenChordsDurations: true,
+					lineHadTimeSignatureChange: true,
+				},
+				{
+					allChords: [
+						{
+							string: 'F...',
+							model: { symbol: 'F' },
+							duration: 3,
+							beat: 1,
+							isInSubBeatGroup: false,
+						},
+						{
+							string: 'C..',
+							model: { symbol: 'C' },
+							duration: 2,
+							beat: 4,
+							isInSubBeatGroup: false,
+						},
+					],
+					timeSignature: ts5_4,
+					isRepeated: false,
+					hasUnevenChordsDurations: true,
+					lineHadTimeSignatureChange: true,
+				},
+			],
+		},
+	],
+	[
+		'Inline time signature / 2 changes, 1 at the start',
+		'2/4 G 4/4 G°',
+		ts4_4,
+		{
+			allBars: [
+				{
+					allChords: [
+						{
+							string: 'G',
+							model: { symbol: 'G' },
+							duration: 2,
+							beat: 1,
+							isInSubBeatGroup: false,
+						},
+					],
+					timeSignature: ts2_4,
+					isRepeated: false,
+					hasUnevenChordsDurations: false,
+					lineHadTimeSignatureChange: true,
+				},
+				{
+					allChords: [
+						{
+							string: 'G°',
+							model: { symbol: 'G°' },
+							duration: 4,
+							beat: 1,
+							isInSubBeatGroup: false,
+						},
+					],
+					timeSignature: ts4_4,
+					isRepeated: false,
+					hasUnevenChordsDurations: false,
+					lineHadTimeSignatureChange: true,
 				},
 			],
 		},

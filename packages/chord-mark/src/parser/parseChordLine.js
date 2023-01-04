@@ -3,7 +3,7 @@ import _isEqual from 'lodash/isEqual';
 import _escapeRegExp from 'lodash/escapeRegExp';
 import _cloneDeep from 'lodash/cloneDeep';
 
-import syntax from './syntax';
+import syntax, { defaultTimeSignature } from './syntax';
 import clearSpaces from './helper/clearSpaces';
 
 import isTimeSignatureString from './matchers/isTimeSignatureString';
@@ -23,7 +23,6 @@ const chordBeatCountSymbols = new RegExp(
 const barRepeatSymbols = new RegExp(
 	'^' + _escapeRegExp(syntax.barRepeat) + '+$'
 );
-const defaultTimeSignature = parseTimeSignature('4/4');
 
 /**
  * @typedef {Object} ChordLine
@@ -37,8 +36,11 @@ const defaultTimeSignature = parseTimeSignature('4/4');
  * @type {Object}
  * @property {TimeSignature} timeSignature
  * @property {ChordLineChord[]} allChords
- * @property {Boolean} isRepeated
- * @property {Boolean} hasUnevenChordsDurations
+ * @property {Boolean} isRepeated - the bar has been created with the bar repeat symbol
+ * @property {Boolean} hasUnevenChordsDurations - the chords in the bar do not have the same duration
+ * @property {Boolean} lineHadTimeSignatureChange - there has been an inline time signature change.
+ * This value will be `true` for all the bars after the time signature change occurred,
+ * even if the TS is changed back again to the context one.
  */
 
 /**
@@ -76,6 +78,7 @@ export default function parseChordLine(
 	let previousBar;
 	let isInSubBeatGroup = false;
 	let subBeatGroupIndex = 0;
+	let lineHadTimeSignatureChange = false;
 
 	checkSubBeatConsistency(chordLine);
 
@@ -100,6 +103,7 @@ export default function parseChordLine(
 		} else if (isTimeSignatureString(token)) {
 			timeSignature = parseTimeSignature(token);
 			beatCount = timeSignature.beatCount;
+			lineHadTimeSignatureChange = true;
 		} else {
 			if (token.startsWith(syntax.subBeatOpener)) {
 				isInSubBeatGroup = true;
@@ -134,6 +138,7 @@ export default function parseChordLine(
 
 			if (shouldChangeBar(currentBeatCount, beatCount)) {
 				bar.timeSignature = timeSignature;
+				bar.lineHadTimeSignatureChange = lineHadTimeSignatureChange;
 				bar.hasUnevenChordsDurations = hasUnevenChordsDurations(bar);
 				const barClone = _cloneDeep(bar);
 
