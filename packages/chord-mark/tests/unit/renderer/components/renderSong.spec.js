@@ -494,6 +494,42 @@ No woman no cry
 	});
 });
 
+describe('printInlineTimeSignatures', () => {
+	const input = `2/4 G 4/4 G°
+_ It was an ear_ly morning yesterday.
+C/G G
+_ I was up before the da_wn.`;
+
+	const outputWithTimeSignatures = `|2/4 G              |4/4 G°                  |
+   It was an early morning yesterday.
+|C/G                       |G |
+     I was up before the dawn.`;
+
+	test('true by default', () => {
+		const rendered = renderSongText(input);
+		expect(toText(rendered)).toBe(outputWithTimeSignatures);
+	});
+
+	test('explicit true', () => {
+		const rendered = renderSongText(input, {
+			printInlineTimeSignatures: true,
+		});
+		expect(toText(rendered)).toBe(outputWithTimeSignatures);
+	});
+
+	test('explicit false', () => {
+		const expected = `|G              |G°                  |
+   It was an early morning yesterday.
+|C/G                       |G |
+     I was up before the dawn.`;
+
+		const rendered = renderSongText(input, {
+			printInlineTimeSignatures: false,
+		});
+		expect(toText(rendered)).toBe(expected);
+	});
+});
+
 describe('printChordsDuration', () => {
 	const input = `4/4
 A7

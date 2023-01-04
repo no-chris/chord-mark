@@ -94,14 +94,20 @@ describe.each([
 });
 
 describe.each([
-	['C 3/4 D', '|C  |3/4 D  |'],
-	['C 3/4 D 2/4 E', '|C  |3/4 D  |2/4 E  |'],
-	['C 3/4 D E', '|C  |3/4 D  |E  |'],
-])('%s => %s', (input, output) => {
+	['C 3/4 D', '|C  |3/4 D  |', true],
+	['C 3/4 D E', '|C  |3/4 D  |E  |', true],
+	['C 3/4 D 2/4 E', '|C  |3/4 D  |2/4 E  |', true],
+	['C 3/4 D 2/4 E', '|C  |3/4 D  |2/4 E  |', undefined],
+	['C 3/4 D 2/4 E', '|C  |D  |E  |', false],
+])('%s => %s', (input, output, shouldPrintInlineTimeSignatures) => {
 	test('Print time signature after an inline change', () => {
 		const chordLine = parseChordLine(input);
 
-		const rendered = renderChordLine(renderChordSymbols(chordLine));
+		const rendered = renderChordLine(
+			renderChordSymbols(chordLine),
+			undefined,
+			{ shouldPrintInlineTimeSignatures }
+		);
 
 		expect(stripTags(rendered)).toEqual(output);
 	});

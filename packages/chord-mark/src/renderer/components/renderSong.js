@@ -1,3 +1,5 @@
+import _cloneDeep from 'lodash/cloneDeep';
+
 import getMaxBeatsWidth from '../spacers/chord/getMaxBeatsWidth';
 
 import simpleChordSpacer from '../spacers/chord/simple';
@@ -23,6 +25,8 @@ import { chordRendererFactory } from 'chord-symbol';
 import lineTypes from '../../parser/lineTypes';
 import replaceRepeatedBars from '../replaceRepeatedBars';
 
+import { defaultTimeSignature } from '../../parser/syntax';
+
 /**
  * @param {Song} parsedSong
  * @param {('auto'|'flat'|'sharp')} accidentalsType
@@ -41,6 +45,8 @@ import replaceRepeatedBars from '../replaceRepeatedBars';
  * do not allow bar separators to be printed (e.g. Ultimate Guitar)
  * @param {Boolean} printSubBeatDelimiters - mainly useful when converting a ChordMark file to a format that
  * do not allow sub-beat groups to be printed (e.g. Ultimate Guitar)
+ * @param {Boolean} printInlineTimeSignatures - mainly useful when converting a ChordMark file to a format that
+ * do not allow inline time signatures to be printed (e.g. Ultimate Guitar)
  * @param {Number} transposeValue
  * @param {Boolean} useShortNamings
  * @returns {String} rendered HTML
@@ -61,7 +67,8 @@ export default function renderSong(
 		harmonizeAccidentals = true,
 		printChordsDuration = 'uneven',
 		printBarSeparators = 'always',
-		printSubBeatDelimiters = true,
+		printSubBeatDelimiters: shouldPrintSubBeatDelimiters = true,
+		printInlineTimeSignatures: shouldPrintInlineTimeSignatures = true,
 		simplifyChords = 'none',
 		transposeValue = 0,
 		useShortNamings = true,
@@ -80,8 +87,8 @@ export default function renderSong(
 
 	const maxBeatsWidth = getMaxBeatsWidth(
 		allLines,
-		shouldAlignChords,
-		printSubBeatDelimiters
+		shouldAlignChordsWithLyrics,
+		shouldPrintSubBeatDelimiters
 	);
 
 	allLines = renderAllSectionsLabels(allLines, {
@@ -189,22 +196,22 @@ export default function renderSong(
 	function spaceChordLine(line, lineIndex) {
 		if (line.type === lineTypes.CHORD) {
 			let spaced =
-				alignBars && !shouldAlignChords(line)
+				alignBars && !shouldAlignChordsWithLyrics(line)
 					? alignedChordSpacer(
 							line.model,
 							maxBeatsWidth,
 							shouldPrintBarSeparators(line.model),
-							printSubBeatDelimiters
+							shouldPrintSubBeatDelimiters
 					  )
 					: simpleChordSpacer(line.model);
 
 			const nextLine = allLines[lineIndex + 1];
-			if (shouldAlignChords(line)) {
+			if (shouldAlignChordsWithLyrics(line)) {
 				const { chordLine, lyricsLine } = chordLyricsSpacer(
 					spaced,
 					nextLine.model,
 					shouldPrintBarSeparators(line.model),
-					printSubBeatDelimiters
+					shouldPrintSubBeatDelimiters
 				);
 				allLines[lineIndex + 1].model = lyricsLine;
 				spaced = chordLine;
@@ -214,21 +221,26 @@ export default function renderSong(
 	}
 
 	function renderAllLines() {
+		let timeSignature = defaultTimeSignature;
+
 		return allLines
 			.map((line) => {
 				let rendered;
 
 				if (line.type === lineTypes.CHORD) {
-					rendered = renderChordLineModel(
-						line.model,
-						shouldPrintBarSeparators(line.model),
-						printSubBeatDelimiters
-					);
+					rendered = renderChordLineModel(line.model, timeSignature, {
+						shouldPrintBarSeparators: shouldPrintBarSeparators(
+							line.model
+						),
+						shouldPrintSubBeatDelimiters,
+						shouldPrintInlineTimeSignatures,
+					});
 				} else if (line.type === lineTypes.EMPTY_LINE) {
 					rendered = renderEmptyLine();
 				} else if (line.type === lineTypes.SECTION_LABEL) {
 					rendered = renderSectionLabelLine(line);
 				} else if (line.type === lineTypes.TIME_SIGNATURE) {
+					timeSignature = _cloneDeep(line.model);
 					rendered = renderTimeSignature(line);
 				} else {
 					rendered = renderLyricLine(line, {
@@ -246,7 +258,7 @@ export default function renderSong(
 			.filter(Boolean);
 	}
 
-	function shouldAlignChords(line) {
+	function shouldAlignChordsWithLyrics(line) {
 		return (
 			chartType === 'all' &&
 			alignChordsWithLyrics &&

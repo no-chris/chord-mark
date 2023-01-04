@@ -14,6 +14,7 @@ import symbols from '../symbols';
  * @param {TimeSignature} contextTimeSignature
  * @param {Boolean} shouldPrintBarSeparators
  * @param {Boolean} shouldPrintSubBeatDelimiters
+ * @param {Boolean} shouldPrintInlineTimeSignatures
  * @returns {String} rendered html
  */
 export default function renderChordLine(
@@ -22,15 +23,15 @@ export default function renderChordLine(
 	{
 		shouldPrintBarSeparators = true,
 		shouldPrintSubBeatDelimiters = true,
+		shouldPrintInlineTimeSignatures = true,
 	} = {}
 ) {
 	let previousTimeSignature = _cloneDeep(contextTimeSignature);
 	const allBarsRendered = chordLineModel.allBars.map((bar, i) => {
 		const isLastBar = !chordLineModel.allBars[i + 1];
-		const shouldPrintTimeSignature = !_isEqual(
-			bar.timeSignature,
-			previousTimeSignature
-		);
+		const shouldPrintTimeSignature =
+			shouldPrintInlineTimeSignatures &&
+			!_isEqual(bar.timeSignature, previousTimeSignature);
 		const barContent = renderBarContent(bar, isLastBar, {
 			shouldPrintBarSeparators,
 			shouldPrintSubBeatDelimiters,
