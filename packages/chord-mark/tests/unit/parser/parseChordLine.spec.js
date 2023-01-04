@@ -1099,6 +1099,145 @@ describe.each([
 			],
 		},
 	],
+	[
+		'Inline time signature / 1 change',
+		'C 3/4 D.. E.',
+		ts4_4,
+		{
+			allBars: [
+				{
+					allChords: [
+						{
+							string: 'C',
+							model: { symbol: 'C' },
+							duration: 4,
+							beat: 1,
+							isInSubBeatGroup: false,
+						},
+					],
+					timeSignature: ts4_4,
+					isRepeated: false,
+					hasUnevenChordsDurations: false,
+				},
+				{
+					allChords: [
+						{
+							string: 'D..',
+							model: { symbol: 'D' },
+							duration: 2,
+							beat: 1,
+							isInSubBeatGroup: false,
+						},
+						{
+							string: 'E.',
+							model: { symbol: 'E' },
+							duration: 1,
+							beat: 3,
+							isInSubBeatGroup: false,
+						},
+					],
+					timeSignature: ts3_4,
+					isRepeated: false,
+					hasUnevenChordsDurations: true,
+				},
+			],
+		},
+	],
+	[
+		'Inline time signature / 2 changes',
+		'C 3/4 D.. E. 5/4 F... C..',
+		ts4_4,
+		{
+			allBars: [
+				{
+					allChords: [
+						{
+							string: 'C',
+							model: { symbol: 'C' },
+							duration: 4,
+							beat: 1,
+							isInSubBeatGroup: false,
+						},
+					],
+					timeSignature: ts4_4,
+					isRepeated: false,
+					hasUnevenChordsDurations: false,
+				},
+				{
+					allChords: [
+						{
+							string: 'D..',
+							model: { symbol: 'D' },
+							duration: 2,
+							beat: 1,
+							isInSubBeatGroup: false,
+						},
+						{
+							string: 'E.',
+							model: { symbol: 'E' },
+							duration: 1,
+							beat: 3,
+							isInSubBeatGroup: false,
+						},
+					],
+					timeSignature: ts3_4,
+					isRepeated: false,
+					hasUnevenChordsDurations: true,
+				},
+				{
+					allChords: [
+						{
+							string: 'F...',
+							model: { symbol: 'F' },
+							duration: 3,
+							beat: 1,
+							isInSubBeatGroup: false,
+						},
+						{
+							string: 'C..',
+							model: { symbol: 'C' },
+							duration: 2,
+							beat: 4,
+							isInSubBeatGroup: false,
+						},
+					],
+					timeSignature: ts5_4,
+					isRepeated: false,
+					hasUnevenChordsDurations: true,
+				},
+			],
+		},
+	],
+	[
+		'Inline time signature / 1 change at the start',
+		'3/4 D.. E.',
+		ts4_4,
+		{
+			allBars: [
+				{
+					allChords: [
+						{
+							string: 'D..',
+							model: { symbol: 'D' },
+							duration: 2,
+							beat: 1,
+							isInSubBeatGroup: false,
+						},
+						{
+							string: 'E.',
+							model: { symbol: 'E' },
+							duration: 1,
+							beat: 3,
+							isInSubBeatGroup: false,
+						},
+					],
+					timeSignature: ts3_4,
+					isRepeated: false,
+					hasUnevenChordsDurations: true,
+				},
+			],
+		},
+	],
 ])('%s: %s', (title, input, timeSignature, expected) => {
 	test('is correctly parsed', () => {
 		const options = { timeSignature };
@@ -1234,21 +1373,22 @@ describe.each([
 });
 
 describe.each([
-	['% A'],
-	['%% A'],
-	[' % A'],
-	['	% A'],
-	['A... % A'],
-	['A.. B. % A'],
-	['A B.. C. %'],
-	['A B. %'],
-	['3/4 % C'],
-])('Throw if repeatBar symbol does not follow a full bar: %s', (input) => {
+	['no bar to repeat (1)', '% A'],
+	['no bar to repeat (2)', '%% A'],
+	['no bar to repeat (3)', ' % A'],
+	['no bar to repeat (4)', '	% A'],
+	['no bar to repeat (5)', '3/4 % C'],
+	['previous bar incomplete (1)', 'A... % A'],
+	['previous bar incomplete (2)', 'A.. B. % A'],
+	['previous bar incomplete (3)', 'A B.. C. %'],
+	['previous bar incomplete (4)', 'A B. %'],
+	['repeat bar with a different time signature', 'C 3/4 %'],
+])('Invalid bar repeat usage: %s => %s', (title, input) => {
 	const throwingFn = () => {
 		parseChordLine(input);
 	};
 
-	test('Throw Error', () => {
+	test('Throw InvalidBarRepeatException', () => {
 		expect(throwingFn).toThrow(InvalidBarRepeatException);
 	});
 });

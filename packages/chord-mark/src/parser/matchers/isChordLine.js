@@ -23,14 +23,15 @@ const barRepeatSymbols = new RegExp(
 export default function isChordLine(line = '') {
 	return clearSpaces(getParseableChordLine(line))
 		.split(' ')
-		.every((potentialChordToken, index) => {
+		.every((potentialChordToken, index, allTokens) => {
 			const clean = cleanToken(potentialChordToken);
 
 			return (
 				isChord(clean) ||
 				(potentialChordToken.match(barRepeatSymbols) && index > 0) ||
 				clean === syntax.noChord ||
-				(isTimeSignatureString(potentialChordToken) && index > 0)
+				(isTimeSignatureString(potentialChordToken) &&
+					allTokens.length > 1)
 			);
 		});
 }

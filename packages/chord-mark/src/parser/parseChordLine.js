@@ -76,7 +76,6 @@ export default function parseChordLine(
 	let previousBar;
 	let isInSubBeatGroup = false;
 	let subBeatGroupIndex = 0;
-	let hasTimeSignatureChange = false;
 
 	checkSubBeatConsistency(chordLine);
 
@@ -84,7 +83,11 @@ export default function parseChordLine(
 
 	allTokens.forEach((token, tokenIndex) => {
 		if (token.match(barRepeatSymbols)) {
-			if (currentBeatCount === 0 && previousBar) {
+			if (
+				currentBeatCount === 0 &&
+				previousBar &&
+				_isEqual(timeSignature, previousBar.timeSignature)
+			) {
 				const repeatedBar = _cloneDeep(previousBar);
 				repeatedBar.isRepeated = true;
 
@@ -97,7 +100,6 @@ export default function parseChordLine(
 		} else if (isTimeSignatureString(token)) {
 			timeSignature = parseTimeSignature(token);
 			beatCount = timeSignature.beatCount;
-			hasTimeSignatureChange = true;
 		} else {
 			if (token.startsWith(syntax.subBeatOpener)) {
 				isInSubBeatGroup = true;
