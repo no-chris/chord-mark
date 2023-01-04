@@ -9,6 +9,7 @@ import parseTimeSignature from '../../../src/parser/parseTimeSignature';
 import InvalidBeatCountException from '../../../src/parser/exceptions/InvalidBeatCountException';
 import InvalidChordRepetitionException from '../../../src/parser/exceptions/InvalidChordRepetitionException';
 import InvalidSubBeatGroupException from '../../../src/parser/exceptions/InvalidSubBeatGroupException';
+import InvalidBarRepeatException from '../../../src/parser/exceptions/InvalidBarRepeatException';
 
 import { forEachChordInChordLine } from '../../../src/parser/helper/songs';
 
@@ -1232,21 +1233,25 @@ describe.each([
 	});
 });
 
-describe.each([['% A'], ['%% A'], [' % A'], ['	% A']])(
-	'Throw if line starts with repeatBar symbol: %s',
-	(input) => {
-		const throwingFn = () => {
-			parseChordLine(input);
-		};
+describe.each([
+	['% A'],
+	['%% A'],
+	[' % A'],
+	['	% A'],
+	['A... % A'],
+	['A.. B. % A'],
+	['A B.. C. %'],
+	['A B. %'],
+	['3/4 % C'],
+])('Throw if repeatBar symbol does not follow a full bar: %s', (input) => {
+	const throwingFn = () => {
+		parseChordLine(input);
+	};
 
-		test('Throw Error', () => {
-			expect(throwingFn).toThrow(Error);
-			expect(throwingFn).toThrow(
-				'A chord line cannot start with the barRepeat symbol'
-			);
-		});
-	}
-);
+	test('Throw Error', () => {
+		expect(throwingFn).toThrow(InvalidBarRepeatException);
+	});
+});
 
 describe.each([
 	['A... {B7. D7.}'],

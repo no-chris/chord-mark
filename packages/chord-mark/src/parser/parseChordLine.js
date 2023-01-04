@@ -6,12 +6,14 @@ import _cloneDeep from 'lodash/cloneDeep';
 import syntax from './syntax';
 import clearSpaces from './helper/clearSpaces';
 
+import isTimeSignatureString from './matchers/isTimeSignatureString';
 import parseChord from './parseChord';
 import parseTimeSignature from './parseTimeSignature';
 
 import InvalidBeatCountException from './exceptions/InvalidBeatCountException';
 import InvalidChordRepetitionException from './exceptions/InvalidChordRepetitionException';
 import InvalidSubBeatGroupException from './exceptions/InvalidSubBeatGroupException';
+import InvalidBarRepeatException from './exceptions/InvalidBarRepeatException';
 import { getParseableChordLine, cleanToken } from './matchers/isChordLine';
 
 const chordBeatCountSymbols = new RegExp(
@@ -61,7 +63,7 @@ export default function parseChordLine(
 	chordLine,
 	{ timeSignature = defaultTimeSignature } = {}
 ) {
-	const { beatCount } = timeSignature;
+	let { beatCount } = timeSignature;
 
 	const allBars = [];
 	const emptyBar = { allChords: [] };
@@ -74,6 +76,7 @@ export default function parseChordLine(
 	let previousBar;
 	let isInSubBeatGroup = false;
 	let subBeatGroupIndex = 0;
+	let hasTimeSignatureChange = false;
 
 	checkSubBeatConsistency(chordLine);
 
@@ -81,7 +84,7 @@ export default function parseChordLine(
 
 	allTokens.forEach((token, tokenIndex) => {
 		if (token.match(barRepeatSymbols)) {
-			if (previousBar) {
+			if (currentBeatCount === 0 && previousBar) {
 				const repeatedBar = _cloneDeep(previousBar);
 				repeatedBar.isRepeated = true;
 
@@ -89,10 +92,12 @@ export default function parseChordLine(
 					allBars.push(_cloneDeep(repeatedBar));
 				}
 			} else {
-				throw new Error(
-					'A chord line cannot start with the barRepeat symbol' //todo: convert to own exception
-				);
+				throw new InvalidBarRepeatException({ string: chordLine });
 			}
+		} else if (isTimeSignatureString(token)) {
+			timeSignature = parseTimeSignature(token);
+			beatCount = timeSignature.beatCount;
+			hasTimeSignatureChange = true;
 		} else {
 			if (token.startsWith(syntax.subBeatOpener)) {
 				isInSubBeatGroup = true;
