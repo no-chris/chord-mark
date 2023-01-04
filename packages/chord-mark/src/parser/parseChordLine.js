@@ -86,70 +86,14 @@ export default function parseChordLine(
 
 	allTokens.forEach((token, tokenIndex) => {
 		if (token.match(barRepeatSymbols)) {
-			if (
-				currentBeatCount === 0 &&
-				previousBar &&
-				_isEqual(timeSignature, previousBar.timeSignature)
-			) {
-				const repeatedBar = _cloneDeep(previousBar);
-				repeatedBar.isRepeated = true;
-
-				for (let i = 0; i < token.length; i++) {
-					allBars.push(_cloneDeep(repeatedBar));
-				}
-			} else {
-				throw new InvalidBarRepeatException({ string: chordLine });
-			}
+			repeatPreviousBars(token);
 		} else if (isTimeSignatureString(token)) {
-			timeSignature = parseTimeSignature(token);
-			beatCount = timeSignature.beatCount;
-			lineHadTimeSignatureChange = true;
+			changeTimeSignature(token);
 		} else {
-			if (token.startsWith(syntax.subBeatOpener)) {
-				isInSubBeatGroup = true;
-			}
-			if (isInSubBeatGroup) {
-				checkSubBeatGroupToken(chordLine, token);
-				updateSubBeatGroupsChordCount(token);
-			}
-
-			cleanedToken = cleanToken(token);
-			chord = {
-				string: token,
-				duration: getChordDuration(token, beatCount, isInSubBeatGroup),
-				model: isNoChordSymbol(cleanedToken)
-					? syntax.noChord
-					: parseChord(cleanedToken),
-				beat: currentBeatCount + 1,
-				isInSubBeatGroup,
-			};
-			currentBeatCount += chord.duration;
-
-			checkInvalidChordRepetition(bar, chord);
-
-			bar.allChords.push(chord);
-
-			if (token.endsWith(syntax.subBeatCloser)) {
-				checkSubBeatGroupChordCount(token);
-				isInSubBeatGroup = false;
-				subBeatGroupIndex++;
-				currentBeatCount += 1;
-			}
+			parseChordToken(token);
 
 			if (shouldChangeBar(currentBeatCount, beatCount)) {
-				bar.timeSignature = timeSignature;
-				bar.lineHadTimeSignatureChange = lineHadTimeSignatureChange;
-				bar.hasUnevenChordsDurations = hasUnevenChordsDurations(bar);
-				const barClone = _cloneDeep(bar);
-
-				bar.isRepeated = _isEqual(bar, previousBar);
-
-				allBars.push(_cloneDeep(bar));
-
-				previousBar = barClone;
-
-				bar = _cloneDeep(emptyBar);
-				currentBeatCount = 0;
+				changeBar();
 			} else {
 				checkInvalidBeatCount(
 					chord,
@@ -160,11 +104,68 @@ export default function parseChordLine(
 			}
 		}
 	});
+
 	setSubBeatInfo(allBars, subBeatGroupsChordCount);
 
 	return {
 		allBars,
 	};
+
+	function repeatPreviousBars(token) {
+		if (
+			currentBeatCount === 0 &&
+			previousBar &&
+			_isEqual(timeSignature, previousBar.timeSignature)
+		) {
+			const repeatedBar = _cloneDeep(previousBar);
+			repeatedBar.isRepeated = true;
+
+			for (let i = 0; i < token.length; i++) {
+				allBars.push(_cloneDeep(repeatedBar));
+			}
+		} else {
+			throw new InvalidBarRepeatException({ string: chordLine });
+		}
+	}
+
+	function changeTimeSignature(token) {
+		timeSignature = parseTimeSignature(token);
+		beatCount = timeSignature.beatCount;
+		lineHadTimeSignatureChange = true;
+	}
+
+	function parseChordToken(token) {
+		if (token.startsWith(syntax.subBeatOpener)) {
+			isInSubBeatGroup = true;
+		}
+		if (isInSubBeatGroup) {
+			checkSubBeatGroupToken(chordLine, token);
+			updateSubBeatGroupsChordCount(token);
+		}
+
+		cleanedToken = cleanToken(token);
+		chord = {
+			string: token,
+			duration: getChordDuration(token, beatCount, isInSubBeatGroup),
+			model: isNoChordSymbol(cleanedToken)
+				? syntax.noChord
+				: parseChord(cleanedToken),
+			beat: currentBeatCount + 1,
+			isInSubBeatGroup,
+		};
+		currentBeatCount += chord.duration;
+
+		checkInvalidChordRepetition(bar, chord);
+
+		bar.allChords.push(chord);
+
+		if (token.endsWith(syntax.subBeatCloser)) {
+			checkSubBeatGroupChordCount(token);
+			isInSubBeatGroup = false;
+			subBeatGroupIndex++;
+			currentBeatCount += 1;
+		}
+	}
 
 	function updateSubBeatGroupsChordCount() {
 		if (subBeatGroupsChordCount[subBeatGroupIndex]) {
@@ -184,6 +185,22 @@ export default function parseChordLine(
 				symbol: token,
 				position: 0, // duh
 			});
+	}
+
+	function changeBar() {
+		bar.timeSignature = timeSignature;
+		bar.lineHadTimeSignatureChange = lineHadTimeSignatureChange;
+		bar.hasUnevenChordsDurations = hasUnevenChordsDurations(bar);
+		const barClone = _cloneDeep(bar);
+
+		bar.isRepeated = _isEqual(bar, previousBar);
+
+		allBars.push(_cloneDeep(bar));
+
+		previousBar = barClone;
+
+		bar = _cloneDeep(emptyBar);
+		currentBeatCount = 0;
 	}
 }
 
