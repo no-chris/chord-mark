@@ -142,6 +142,38 @@ describe.each([
 			},
 		],
 	],
+
+	[
+		'do not consider bars after an inline time signature change - simple',
+		['C 3/4 E'],
+		[
+			{
+				1: 'C'.length,
+				2: 0,
+				3: 0,
+				4: 0,
+			},
+		],
+	],
+
+	[
+		'do not consider bars after an inline time signature change - complex',
+		['C B7 3/4 E 5/4 F 4/4 B'],
+		[
+			{
+				1: 'C'.length,
+				2: 0,
+				3: 0,
+				4: 0,
+			},
+			{
+				1: 'B7'.length,
+				2: 0,
+				3: 0,
+				4: 0,
+			},
+		],
+	],
 ])('getMaxBeatsWidth(): %s', (title, input, output) => {
 	test('Correctly computes the maximum width for each beat', () => {
 		const parsedSong = parseSong(input);
