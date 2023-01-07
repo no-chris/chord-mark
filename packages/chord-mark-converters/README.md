@@ -106,6 +106,7 @@ const parsed = parseSong(input);
 const ultimateGuitar = renderSong(parsed, {
 	printBarSeparators: 'grids',
 	printChordsDuration: 'never',
+	printInlineTimeSignatures: false,
 	printSubBeatDelimiters: false,
 	customRenderer: chordMark2UltimateGuitar(),
 	chordSymbolRenderer: chordRendererFactory({
