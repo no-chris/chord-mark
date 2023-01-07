@@ -94,6 +94,8 @@ describe.each([
 });
 
 describe.each([
+	['4/4 D', '|D  |', true],
+	['3/4 D', '|3/4 D  |', true],
 	['C 3/4 D', '|C  |3/4 D  |', true],
 	['C 3/4 D E', '|C  |3/4 D  |E  |', true],
 	['C 3/4 D 2/4 E', '|C  |3/4 D  |2/4 E  |', true],
