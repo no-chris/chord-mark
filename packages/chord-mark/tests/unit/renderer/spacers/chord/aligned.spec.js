@@ -167,6 +167,27 @@ describe.each([
 		false,
 		false,
 	],
+
+	[
+		'uses simple spacer after an inline time signature change',
+		'A.. E7.. 3/4 C.. D. 2/4 D. E.',
+		[
+			{ 1: 20, 2: 20, 3: 20, 4: 20 },
+			{ 1: 20, 2: 20, 3: 20, 4: 20 },
+			{ 1: 20, 2: 20, 3: 20, 4: 20 },
+		],
+		[17, 16, 0, 0, 0, 0],
+		[
+			defaultSpacesAfter + 20 + defaultSpacesAfter,
+			defaultSpacesAfter + 20,
+			defaultSpacesAfter,
+			defaultSpacesAfter,
+			defaultSpacesAfter,
+			defaultSpacesAfter,
+		],
+		true,
+		true,
+	],
 ])(
 	'Aligned spacer: %s',
 	(

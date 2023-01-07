@@ -103,6 +103,18 @@ describe.each([
 		'song3-output-no-sub-beats.txt',
 		{ printSubBeatDelimiters: false },
 	],
+	[
+		'sub-beat delimiters',
+		'song4-input.txt',
+		'song4-output-inline-time-signatures.txt',
+		{ printInlineTimeSignatures: true },
+	],
+	[
+		'sub-beat delimiters',
+		'song4-input.txt',
+		'song4-output-no-inline-time-signatures.txt',
+		{ printInlineTimeSignatures: false },
+	],
 ])('Render components: %s', (title, inputFile, outputFile, options) => {
 	test('produces expected rendering', () => {
 		const input = removeLastLine(

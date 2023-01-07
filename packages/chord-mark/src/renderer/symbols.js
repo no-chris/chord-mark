@@ -8,6 +8,7 @@ export default {
 	noChordSymbol: 'NC',
 	spacesAfterDefault: 2,
 	spacesAfterSubBeatDefault: 1,
+	spacesAfterTimeSignature: 1,
 	subBeatGroupOpener: '{',
 	subBeatGroupCloser: '}',
 };

@@ -1,21 +1,28 @@
 /* eslint-disable max-lines-per-function */
 import _isEqual from 'lodash/isEqual';
+import _escapeRegExp from 'lodash/escapeRegExp';
 import _cloneDeep from 'lodash/cloneDeep';
 
-import syntax from './syntax';
+import syntax, { defaultTimeSignature } from './syntax';
 import clearSpaces from './helper/clearSpaces';
 
+import isTimeSignatureString from './matchers/isTimeSignatureString';
 import parseChord from './parseChord';
 import parseTimeSignature from './parseTimeSignature';
 
 import InvalidBeatCountException from './exceptions/InvalidBeatCountException';
 import InvalidChordRepetitionException from './exceptions/InvalidChordRepetitionException';
 import InvalidSubBeatGroupException from './exceptions/InvalidSubBeatGroupException';
+import InvalidBarRepeatException from './exceptions/InvalidBarRepeatException';
 import { getParseableChordLine, cleanToken } from './matchers/isChordLine';
 
-const chordBeatCountSymbols = new RegExp(syntax.chordBeatCount, 'g');
-const barRepeatSymbols = new RegExp('^' + syntax.barRepeat + '+$');
-const defaultTimeSignature = parseTimeSignature('4/4');
+const chordBeatCountSymbols = new RegExp(
+	_escapeRegExp(syntax.chordBeatCount),
+	'g'
+);
+const barRepeatSymbols = new RegExp(
+	'^' + _escapeRegExp(syntax.barRepeat) + '+$'
+);
 
 /**
  * @typedef {Object} ChordLine
@@ -29,8 +36,11 @@ const defaultTimeSignature = parseTimeSignature('4/4');
  * @type {Object}
  * @property {TimeSignature} timeSignature
  * @property {ChordLineChord[]} allChords
- * @property {Boolean} isRepeated
- * @property {Boolean} hasUnevenChordsDurations
+ * @property {Boolean} isRepeated - the bar has been created with the bar repeat symbol
+ * @property {Boolean} hasUnevenChordsDurations - the chords in the bar do not have the same duration
+ * @property {Boolean} lineHadTimeSignatureChange - there has been an inline time signature change.
+ * This value will be `true` for all the bars after the time signature change occurred,
+ * even if the TS is changed back again to the context one.
  */
 
 /**
@@ -55,7 +65,7 @@ export default function parseChordLine(
 	chordLine,
 	{ timeSignature = defaultTimeSignature } = {}
 ) {
-	const { beatCount } = timeSignature;
+	let { beatCount } = timeSignature;
 
 	const allBars = [];
 	const emptyBar = { allChords: [] };
@@ -68,6 +78,7 @@ export default function parseChordLine(
 	let previousBar;
 	let isInSubBeatGroup = false;
 	let subBeatGroupIndex = 0;
+	let lineHadTimeSignatureChange = false;
 
 	checkSubBeatConsistency(chordLine);
 
@@ -75,63 +86,14 @@ export default function parseChordLine(
 
 	allTokens.forEach((token, tokenIndex) => {
 		if (token.match(barRepeatSymbols)) {
-			if (previousBar) {
-				const repeatedBar = _cloneDeep(previousBar);
-				repeatedBar.isRepeated = true;
-
-				for (let i = 0; i < token.length; i++) {
-					allBars.push(_cloneDeep(repeatedBar));
-				}
-			} else {
-				throw new Error(
-					'A chord line cannot start with the barRepeat symbol' //todo: convert to own exception
-				);
-			}
+			repeatPreviousBars(token);
+		} else if (isTimeSignatureString(token)) {
+			changeTimeSignature(token);
 		} else {
-			if (token.startsWith(syntax.subBeatOpener)) {
-				isInSubBeatGroup = true;
-			}
-			if (isInSubBeatGroup) {
-				checkSubBeatGroupToken(chordLine, token);
-				updateSubBeatGroupsChordCount(token);
-			}
-
-			cleanedToken = cleanToken(token);
-			chord = {
-				string: token,
-				duration: getChordDuration(token, beatCount, isInSubBeatGroup),
-				model: isNoChordSymbol(cleanedToken)
-					? syntax.noChord
-					: parseChord(cleanedToken),
-				beat: currentBeatCount + 1,
-				isInSubBeatGroup,
-			};
-			currentBeatCount += chord.duration;
-
-			checkInvalidChordRepetition(bar, chord);
-
-			bar.allChords.push(chord);
-
-			if (token.endsWith(syntax.subBeatCloser)) {
-				checkSubBeatGroupChordCount(token);
-				isInSubBeatGroup = false;
-				subBeatGroupIndex++;
-				currentBeatCount += 1;
-			}
+			parseChordToken(token);
 
 			if (shouldChangeBar(currentBeatCount, beatCount)) {
-				bar.timeSignature = timeSignature;
-				bar.hasUnevenChordsDurations = hasUnevenChordsDurations(bar);
-				const barClone = _cloneDeep(bar);
-
-				bar.isRepeated = _isEqual(bar, previousBar);
-
-				allBars.push(_cloneDeep(bar));
-
-				previousBar = barClone;
-
-				bar = _cloneDeep(emptyBar);
-				currentBeatCount = 0;
+				changeBar();
 			} else {
 				checkInvalidBeatCount(
 					chord,
@@ -142,11 +104,68 @@ export default function parseChordLine(
 			}
 		}
 	});
+
 	setSubBeatInfo(allBars, subBeatGroupsChordCount);
 
 	return {
 		allBars,
 	};
+
+	function repeatPreviousBars(token) {
+		if (
+			currentBeatCount === 0 &&
+			previousBar &&
+			_isEqual(timeSignature, previousBar.timeSignature)
+		) {
+			const repeatedBar = _cloneDeep(previousBar);
+			repeatedBar.isRepeated = true;
+
+			for (let i = 0; i < token.length; i++) {
+				allBars.push(_cloneDeep(repeatedBar));
+			}
+		} else {
+			throw new InvalidBarRepeatException({ string: chordLine });
+		}
+	}
+
+	function changeTimeSignature(token) {
+		timeSignature = parseTimeSignature(token);
+		beatCount = timeSignature.beatCount;
+		lineHadTimeSignatureChange = true;
+	}
+
+	function parseChordToken(token) {
+		if (token.startsWith(syntax.subBeatOpener)) {
+			isInSubBeatGroup = true;
+		}
+		if (isInSubBeatGroup) {
+			checkSubBeatGroupToken(chordLine, token);
+			updateSubBeatGroupsChordCount(token);
+		}
+
+		cleanedToken = cleanToken(token);
+		chord = {
+			string: token,
+			duration: getChordDuration(token, beatCount, isInSubBeatGroup),
+			model: isNoChordSymbol(cleanedToken)
+				? syntax.noChord
+				: parseChord(cleanedToken),
+			beat: currentBeatCount + 1,
+			isInSubBeatGroup,
+		};
+		currentBeatCount += chord.duration;
+
+		checkInvalidChordRepetition(bar, chord);
+
+		bar.allChords.push(chord);
+
+		if (token.endsWith(syntax.subBeatCloser)) {
+			checkSubBeatGroupChordCount(token);
+			isInSubBeatGroup = false;
+			subBeatGroupIndex++;
+			currentBeatCount += 1;
+		}
+	}
 
 	function updateSubBeatGroupsChordCount() {
 		if (subBeatGroupsChordCount[subBeatGroupIndex]) {
@@ -167,6 +186,22 @@ export default function parseChordLine(
 				position: 0, // duh
 			});
 	}
+
+	function changeBar() {
+		bar.timeSignature = timeSignature;
+		bar.lineHadTimeSignatureChange = lineHadTimeSignatureChange;
+		bar.hasUnevenChordsDurations = hasUnevenChordsDurations(bar);
+		const barClone = _cloneDeep(bar);
+
+		bar.isRepeated = _isEqual(bar, previousBar);
+
+		allBars.push(_cloneDeep(bar));
+
+		previousBar = barClone;
+
+		bar = _cloneDeep(emptyBar);
+		currentBeatCount = 0;
+	}
 }
 
 function checkSubBeatGroupToken(chordLine, token) {
@@ -180,8 +215,7 @@ function checkSubBeatGroupToken(chordLine, token) {
 }
 
 function hasBeatCount(token) {
-	const regex = new RegExp(syntax.chordBeatCount, 'g');
-	return (token.match(regex) || []).length > 0;
+	return token.indexOf(syntax.chordBeatCount) > -1;
 }
 
 function isNoChordSymbol(token) {

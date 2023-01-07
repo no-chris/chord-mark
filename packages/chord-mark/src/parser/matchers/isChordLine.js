@@ -1,10 +1,17 @@
+import _escapeRegExp from 'lodash/escapeRegExp';
 import clearSpaces from '../helper/clearSpaces';
 
 import syntax from '../syntax';
 import isChord from './isChord';
+import isTimeSignatureString from './isTimeSignatureString';
 
-const chordBeatCountSymbols = new RegExp(syntax.chordBeatCount + '*$', 'g');
-const barRepeatSymbols = new RegExp('^' + syntax.barRepeat + '+$');
+const chordBeatCountSymbols = new RegExp(
+	_escapeRegExp(syntax.chordBeatCount) + '*$',
+	'g'
+);
+const barRepeatSymbols = new RegExp(
+	'^' + _escapeRegExp(syntax.barRepeat) + '+$'
+);
 
 /**
  * Check if the given line only contains chords and allowed characters.
@@ -16,13 +23,15 @@ const barRepeatSymbols = new RegExp('^' + syntax.barRepeat + '+$');
 export default function isChordLine(line = '') {
 	return clearSpaces(getParseableChordLine(line))
 		.split(' ')
-		.every((potentialChordToken, index) => {
+		.every((potentialChordToken, index, allTokens) => {
 			const clean = cleanToken(potentialChordToken);
 
 			return (
 				isChord(clean) ||
 				(potentialChordToken.match(barRepeatSymbols) && index > 0) ||
-				clean === syntax.noChord
+				clean === syntax.noChord ||
+				(isTimeSignatureString(potentialChordToken) &&
+					allTokens.length > 1)
 			);
 		});
 }

@@ -169,11 +169,9 @@ describe.each([
 				chord.spacesAfter = spacesAfter;
 			});
 
-			const rendered = renderBarContent(
-				parsed.allBars[0],
-				isLastBar,
-				shouldPrintBarSeparators
-			);
+			const rendered = renderBarContent(parsed.allBars[0], isLastBar, {
+				shouldPrintBarSeparators,
+			});
 
 			expect(stripTags(rendered)).toEqual(output);
 		});
@@ -204,12 +202,29 @@ describe.each([
 		);
 		const spaced = simpleSpacer(parsed);
 
-		const rendered = renderBarContent(
-			spaced.allBars[0],
-			undefined,
-			true,
-			shouldPrintSubBeatDelimiters
+		const rendered = renderBarContent(spaced.allBars[0], undefined, {
+			shouldPrintSubBeatDelimiters,
+		});
+
+		expect(stripTags(rendered)).toEqual(output);
+	});
+});
+
+describe.each([
+	['by default, do not print time signature', 'A', 'A  ', undefined],
+	['shouldPrintTimeSignature = false', 'A', 'A  ', false],
+	['shouldPrintTimeSignature = true', 'A', '4/4 A  ', true],
+])('%s: %s', (title, input, output, shouldPrintTimeSignature) => {
+	test('Print time signature: ' + output, () => {
+		const parsed = forEachChordInChordLine(
+			parseChordLine(input),
+			(chord) => (chord.symbol = getChordSymbol(chord.model))
 		);
+		const spaced = simpleSpacer(parsed);
+
+		const rendered = renderBarContent(spaced.allBars[0], undefined, {
+			shouldPrintTimeSignature,
+		});
 
 		expect(stripTags(rendered)).toEqual(output);
 	});
