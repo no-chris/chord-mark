@@ -40,10 +40,10 @@ export default function space(
 
 	let chordToken;
 	let lyricToken;
-	let currentBarIndex = 0;
+	let currentBarIndex = -1;
 
 	chordLine.allBars.forEach((bar, barIndex) => {
-		bar.allChords.forEach((chord, chordIndex) => {
+		bar.allChords.forEach((chord) => {
 			lyricToken = tokenizedLyrics.shift();
 
 			if (lyricToken) {
@@ -53,9 +53,7 @@ export default function space(
 					shouldPrintSubBeatDelimiters
 				);
 
-				if (isFirstChord(barIndex, chordIndex)) {
-					chordToken = barSeparatorToken + chordToken;
-				} else if (isNewBar(currentBarIndex, barIndex)) {
+				if (isNewBar(currentBarIndex, barIndex)) {
 					chordToken = barSeparatorToken + chordToken;
 					currentBarIndex = barIndex;
 				}
@@ -106,9 +104,6 @@ const hasNoPositionMarkers = (lyricsLine) =>
 	lyricsLine.chordPositions.length === 0;
 
 const shouldOffsetChordLine = (lyricsLine) => lyricsLine.chordPositions[0] > 0;
-
-const isFirstChord = (barIndex, chordIndex) =>
-	barIndex === 0 && chordIndex === 0;
 
 const isNewBar = (currentBarIndex, barIndex) => currentBarIndex !== barIndex;
 
