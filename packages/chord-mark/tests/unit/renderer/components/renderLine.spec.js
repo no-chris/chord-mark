@@ -135,7 +135,7 @@ describe.each([
 	],
 
 	[
-		'all',
+		'close prior, open, and closes final section',
 		{
 			shouldOpenSection: true,
 			shouldClosePriorSection: true,
