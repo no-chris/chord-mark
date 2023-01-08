@@ -690,3 +690,48 @@ describe('Custom ChordSymbol renderer', () => {
 		expect(toText(rendered)).toBe('|Custom     |Custom     |Custom     |');
 	});
 });
+
+describe('Wrap Sections in Divs', () => {
+	test('Correctly create and class sections', () => {
+		const song = `4/4
+#v
+A B
+verseLine1
+C.. D.. E
+verseLine2
+
+#v
+A B
+verseLine1
+
+#c
+A B
+chorusLine1
+
+#b
+A B
+brigeLine1
+
+#c`;
+		const expectedSectionClasses = [
+			'cmSection-Verse',
+			'cmSection-Verse',
+			'cmSection-Chorus',
+			'cmSection-Bridge',
+			'cmSection-Chorus'
+		];
+		const rendered = renderSongText(song);
+		const element = htmlToElement(rendered);
+
+		expect(element.childElementCount).toBe(6);
+		
+		element.childNodes.forEach((child, i) => {
+			if (i === 0) {
+				expect(child.nodeName).toBe('P');
+			} else {
+				expect(child.nodeName).toBe('DIV');
+				expect(child.className).toBe('cmSection ' + expectedSectionClasses[i - 1]);
+			}
+		});
+	});
+});
