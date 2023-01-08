@@ -80,3 +80,70 @@ describe.each([
 		});
 	});
 });
+
+describe.each([
+	[
+		'line only',
+		{
+			shouldOpenSection: false,
+			shouldClosePriorSection: false,
+			shouldCloseFinalSection: false,
+			sectionWrapperClasses: [],
+		},
+		'^<p class="cmLine">%l</p>$',
+	],
+
+	[
+		'opens section only',
+		{
+			shouldOpenSection: true,
+			shouldClosePriorSection: false,
+			shouldCloseFinalSection: false,
+			sectionWrapperClasses: ["cmSection cmSection-intro"],
+		},
+		'^<div class="%c"><p class="cmLine">%l</p>$',
+	],
+	[
+		'closes prior section only',
+		{
+			shouldOpenSection: false,
+			shouldClosePriorSection: true,
+			shouldCloseFinalSection: false,
+			sectionWrapperClasses: [],
+		},
+		'^</div><p class="cmLine">%l</p>$',
+	],
+	[
+		'closes prior and opens section',
+		{
+			shouldOpenSection: true,
+			shouldClosePriorSection: true,
+			shouldCloseFinalSection: false,
+			sectionWrapperClasses: ["cmSection cmSection-intro"],
+		},
+		'^</div><div class="%c"><p class="cmLine">%l</p>$',
+	],
+	[
+		'closes final section',
+		{
+			shouldOpenSection: false,
+			shouldClosePriorSection: false,
+			shouldCloseFinalSection: true,
+			sectionWrapperClasses: [],
+		},
+		'^<p class="cmLine">%l</p></div>$',
+	],
+
+])('create proper markup', (title, options, expected) => {
+	test('correctly creates expected markup', () => {
+		const l = 'myLine';
+		const expectedMatch = expected
+			.replace('%l', l)
+			.replace('%c', options.sectionWrapperClasses.join(' '))
+			.replace(/"/g,'\\"');
+
+		const rendered = renderLine( l, options);
+
+		expect(rendered).toMatch(new RegExp(expectedMatch));
+	});
+});
