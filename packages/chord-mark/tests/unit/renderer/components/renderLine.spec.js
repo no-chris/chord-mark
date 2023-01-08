@@ -134,6 +134,17 @@ describe.each([
 		'^<p class="cmLine">%l</p></div>$',
 	],
 
+	[
+		'all',
+		{
+			shouldOpenSection: true,
+			shouldClosePriorSection: true,
+			shouldCloseFinalSection: true,
+			sectionWrapperClasses: ["cmSection cmSection-intro"],
+		},
+		'^</div><div class="%c"><p class="cmLine">%l</p></div>$',
+	],
+
 ])('create proper markup', (title, options, expected) => {
 	test('correctly creates expected markup', () => {
 		const l = 'myLine';
