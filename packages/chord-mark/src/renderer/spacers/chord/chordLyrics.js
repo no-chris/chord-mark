@@ -118,8 +118,8 @@ export default function space(
 
 	function getChordToken(bar, chord, shouldOffsetLyricsLine) {
 		let token =
-			getChordString(bar, chord, shouldPrintSubBeatDelimiters) +
-			timeSignatureString; // fixme: not in proper order. A big deal?
+			timeSignatureString +
+			getChordString(bar, chord, shouldPrintSubBeatDelimiters);
 		if (shouldOffsetLyricsLine) {
 			token = symbols.barSeparator + token;
 		}
