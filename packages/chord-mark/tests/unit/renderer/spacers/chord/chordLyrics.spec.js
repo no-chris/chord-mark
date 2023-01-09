@@ -43,21 +43,21 @@ describe.each([
 		' Put    me      on top of     the   correct     lyrics',
 	],
 	[
-		'Chord symbol size equals lyric token size',
+		'Chord symbol length equals lyric token length',
 		'Ami7 Bmi D13 F13',
 		'_Put _me _on _top',
 		'|Ami7 |Bmi |D13 |F13 |',
 		' Put   me   on   top',
 	],
 	[
-		'Chord symbol size equals lyric token size minus 1',
+		'Chord symbol length equals lyric token length minus 1',
 		'Ami B7 D7 F13',
 		'_Put _me _on _top',
 		'|Ami |B7 |D7 |F13 |',
 		' Put  me  on  top',
 	],
 	[
-		'Chord symbol size equals lyric token size minus 2',
+		'Chord symbol length equals lyric token length minus 2',
 		'A7 B D F7',
 		'_Put _me _on _top',
 		'|A7 |B |D |F7 |',
@@ -99,13 +99,6 @@ describe.each([
 		'',
 	],
 	[
-		'Edge case: no chords, positions markers',
-		'',
-		"_I _don't _have _any _chord",
-		'',
-		"I don't have any chord",
-	],
-	[
 		'A position marker followed by a space should create space for the full chord name',
 		'Ami7(#11) B7(b9)',
 		'_ A _ second chord shortly after the first one',
@@ -132,7 +125,7 @@ describe.each([
 		'_ a chord _li_ne',
 		'|C13..        Dmi. E. |',
 		'      a chord li   ne',
-		true,
+		{ shouldPrintChordsDuration: true },
 	],
 	[
 		'take printBarSeparators into account',
@@ -140,8 +133,7 @@ describe.each([
 		'_Put _me _on top _of _the _correct _lyrics',
 		'A   B  Dmi7   A  Gmi F7      E7',
 		'Put me on top of the correct lyrics',
-		undefined,
-		false,
+		{ shouldPrintBarSeparators: false },
 	],
 	[
 		'take printBarSeparators into account, with lyrics tokens starting with space',
@@ -149,8 +141,7 @@ describe.each([
 		'_ Put _me _ on top _of _the _cor_rect lyrics',
 		'A    B  Dmi7       A  Gmi F7 E7',
 		' Put me     on top of the correct lyrics',
-		undefined,
-		false,
+		{ shouldPrintBarSeparators: false },
 	],
 	[
 		'take printBarSeparators into account, with offset',
@@ -158,8 +149,7 @@ describe.each([
 		'Put _me _on top _of _the _cor_rect _lyrics',
 		'    A  B      Dmi7 A   Gmi F7   E7',
 		'Put me on top of   the cor rect lyrics',
-		undefined,
-		false,
+		{ shouldPrintBarSeparators: false },
 	],
 	[
 		'correctly position chord in a sub-beat group',
@@ -167,6 +157,79 @@ describe.each([
 		'_Put _me _on top _of _the _correct _lyrics',
 		'|{A  B  Dmi7}  A  {Gmi F7      E7}   |',
 		' Put me on top of the  correct lyrics',
+	],
+	[
+		'correctly position chord in a sub-beat group',
+		'{A B Dm7} A.. {Gmi F7 E7}',
+		'_Put _me _on top _of _the _correct _lyrics',
+		'|A   B  Dmi7   A  Gmi F7      E7    |',
+		' Put me on top of the correct lyrics',
+		{ shouldPrintSubBeatDelimiters: false },
+	],
+	[
+		'time signature: bar starts at the beginning',
+		'2/4 G 4/4 Gdim',
+		'_It was an _early morning yesterday',
+		'|2/4 G        |4/4 Gdim                   |',
+		'     It was an     early morning yesterday',
+	],
+	[
+		'time signature: lyrics starts after chord',
+		'2/4 G 4/4 Gdim',
+		'_ It was an _early morning yesterday',
+		'|2/4 G         |4/4 Gdim                   |',
+		'      It was an     early morning yesterday',
+	],
+	[
+		'time signature: bar starts in the middle of the lyrics',
+		'2/4 G 4/4 Gdim',
+		'It was an _early morning _yesterday',
+		'         |2/4 G            |4/4 Gdim     |',
+		'It was an     early morning     yesterday',
+	],
+	[
+		'time signature: Chord symbol length equals lyric token length',
+		'2/4 Ami7 3/4 Bmi 4/4 D13 5/4 F13',
+		'_Put _me _on _top',
+		'|2/4 Ami7 |3/4 Bmi |4/4 D13 |5/4 F13 |',
+		'     Put       me       on       top',
+	],
+	[
+		'time signature: Chord symbol length equals lyric token length minus 1',
+		'2/4 Ami 3/4 B7 4/4 D7 5/4 F13',
+		'_Put _me _on _top',
+		'|2/4 Ami |3/4 B7 |4/4 D7 |5/4 F13 |',
+		'     Put      me      on      top',
+	],
+	[
+		'time signature: Chord symbol length equals lyric token length minus 2',
+		'2/4 A7 3/4 B 4/4 D 5/4 F7',
+		'_Put _me _on _top',
+		'|2/4 A7 |3/4 B |4/4 D |5/4 F7 |',
+		'     Put     me     on     top',
+	],
+	[
+		'time signature: Chord without lyrics',
+		'2/4 Gmi7 4/4 Ami13 5/4 G13',
+		'_Put _ _me on top',
+		'|2/4 Gmi7 |4/4 Ami13 |5/4 G13      |',
+		'     Put                  me on top',
+	],
+	[
+		'time signature: disable',
+		'2/4 G 4/4 Gdim',
+		'It was an _early morning _yesterday',
+		'         |G            |Gdim     |',
+		'It was an early morning yesterday',
+		{ shouldPrintInlineTimeSignatures: false },
+	],
+	[
+		'time signature: lyrics shorter than chords names',
+		'3/4 A7(b9). BmiMa7.. 4/4 Dmi7 5/4 A7(b9).. Gmi13.. F7(b9,#11). 4/4 E7',
+		'_Put _me _on top _of _the _correct _lyrics',
+		'|3/4 A7(b9). BmiMa7.. |4/4 Dmi7.... |5/4 A7(b9).. Gmi13.. F7(b9,#11). |4/4 E7.... |',
+		'     Put     me            on top        of       the     correct          lyrics',
+		{ shouldPrintChordsDuration: true },
 	],
 ])(
 	'%s',
@@ -176,8 +239,7 @@ describe.each([
 		lyricsLineInput,
 		chordsLineOutput,
 		LyricsLineOutput,
-		shouldPrintChordsDuration = false,
-		shouldPrintBarSeparators = true
+		options = {}
 	) => {
 		test('Correctly space chord & lyrics lines', () => {
 			// setup
@@ -188,7 +250,8 @@ describe.each([
 				bar.allChords.map((chord) => {
 					chord.symbol = getChordSymbol(chord.model);
 				});
-				bar.shouldPrintChordsDuration = !!shouldPrintChordsDuration;
+				bar.shouldPrintChordsDuration =
+					!!options.shouldPrintChordsDuration;
 			});
 
 			// test
@@ -196,13 +259,13 @@ describe.each([
 			const { chordLine, lyricsLine } = chordLyricsSpacer(
 				parsedChords,
 				parsedLyrics,
-				shouldPrintBarSeparators
+				options
 			);
 
 			// assertions
 
 			const renderedChords = renderChordLine(chordLine, undefined, {
-				shouldPrintBarSeparators,
+				...options,
 			});
 			const renderedLyrics = renderLyricLine(
 				{ model: lyricsLine },
