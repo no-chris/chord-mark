@@ -210,8 +210,13 @@ export default function renderSong(
 				const { chordLine, lyricsLine } = chordLyricsSpacer(
 					spaced,
 					nextLine.model,
-					shouldPrintBarSeparators(line.model),
-					shouldPrintSubBeatDelimiters
+					{
+						shouldPrintBarSeparators: shouldPrintBarSeparators(
+							line.model
+						),
+						shouldPrintSubBeatDelimiters,
+						shouldPrintInlineTimeSignatures,
+					}
 				);
 				allLines[lineIndex + 1].model = lyricsLine;
 				spaced = chordLine;

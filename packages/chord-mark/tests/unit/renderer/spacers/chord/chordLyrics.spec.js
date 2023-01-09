@@ -239,7 +239,7 @@ describe.each([
 		lyricsLineInput,
 		chordsLineOutput,
 		LyricsLineOutput,
-		options = {}
+		options
 	) => {
 		test('Correctly space chord & lyrics lines', () => {
 			// setup
@@ -250,8 +250,8 @@ describe.each([
 				bar.allChords.map((chord) => {
 					chord.symbol = getChordSymbol(chord.model);
 				});
-				bar.shouldPrintChordsDuration =
-					!!options.shouldPrintChordsDuration;
+				bar.shouldPrintChordsDuration = !!(options || {})
+					.shouldPrintChordsDuration;
 			});
 
 			// test

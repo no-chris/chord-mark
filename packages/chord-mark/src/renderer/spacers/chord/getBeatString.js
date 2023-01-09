@@ -35,11 +35,7 @@ export function getBeatString(bar, beat, shouldPrintSubBeatDelimiters = true) {
 	}
 }
 
-export function getChordString(
-	bar,
-	chord,
-	shouldPrintSubBeatDelimiters = true
-) {
+export function getChordString(bar, chord, shouldPrintSubBeatDelimiters) {
 	if (!chord.isInSubBeatGroup) {
 		const chordDuration = bar.shouldPrintChordsDuration
 			? symbols.chordBeat.repeat(chord.duration)
