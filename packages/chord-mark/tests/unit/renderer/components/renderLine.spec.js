@@ -90,7 +90,7 @@ describe.each([
 			shouldCloseFinalSection: false,
 			sectionWrapperClasses: [],
 		},
-		'^<p class="cmLine">%l</p>$',
+		'<p class="cmLine">myLine</p>',
 	],
 
 	[
@@ -101,7 +101,7 @@ describe.each([
 			shouldCloseFinalSection: false,
 			sectionWrapperClasses: ['cmSection','cmSection-intro'],
 		},
-		'^<div class="%c"><p class="cmLine">%l</p>$',
+		'<div class="cmSection cmSection-intro"><p class="cmLine">myLine</p>',
 	],
 	[
 		'closes prior section only',
@@ -111,7 +111,7 @@ describe.each([
 			shouldCloseFinalSection: false,
 			sectionWrapperClasses: [],
 		},
-		'^</div><p class="cmLine">%l</p>$',
+		'</div><p class="cmLine">myLine</p>',
 	],
 	[
 		'closes prior and opens section',
@@ -121,7 +121,7 @@ describe.each([
 			shouldCloseFinalSection: false,
 			sectionWrapperClasses: ['cmSection','cmSection-intro'],
 		},
-		'^</div><div class="%c"><p class="cmLine">%l</p>$',
+		'</div><div class="cmSection cmSection-intro"><p class="cmLine">myLine</p>',
 	],
 	[
 		'closes final section',
@@ -131,7 +131,7 @@ describe.each([
 			shouldCloseFinalSection: true,
 			sectionWrapperClasses: [],
 		},
-		'^<p class="cmLine">%l</p></div>$',
+		'<p class="cmLine">myLine</p></div>',
 	],
 
 	[
@@ -142,19 +142,13 @@ describe.each([
 			shouldCloseFinalSection: true,
 			sectionWrapperClasses: ['cmSection','cmSection-intro'],
 		},
-		'^</div><div class="%c"><p class="cmLine">%l</p></div>$',
+		'</div><div class="cmSection cmSection-intro"><p class="cmLine">myLine</p></div>',
 	],
 
 ])('create proper markup', (title, options, expected) => {
 	test('correctly creates expected markup', () => {
-		const l = 'myLine';
-		const expectedMatch = expected
-			.replace('%l', l)
-			.replace('%c', options.sectionWrapperClasses.join(' '))
-			.replace(/"/g,'\\"');
+		const rendered = renderLine( 'myLine', options);
 
-		const rendered = renderLine( l, options);
-
-		expect(rendered).toMatch(new RegExp(expectedMatch));
+		expect(rendered).toMatch(expected);
 	});
 });

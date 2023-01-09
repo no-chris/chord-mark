@@ -694,7 +694,7 @@ describe('Custom ChordSymbol renderer', () => {
 describe('Wrap Sections in Divs', () => {
 	test('Correctly create and class sections', () => {
 		const song = `4/4
-#v
+#verse
 A B
 verseLine1
 C.. D.. E
@@ -713,25 +713,20 @@ A B
 brigeLine1
 
 #c`;
-		const expectedSectionClasses = [
-			'cmSection-Verse',
-			'cmSection-Verse',
-			'cmSection-Chorus',
-			'cmSection-Bridge',
-			'cmSection-Chorus'
-		];
 		const rendered = renderSongText(song);
 		const element = htmlToElement(rendered);
 
 		expect(element.childElementCount).toBe(6);
-		
-		element.childNodes.forEach((child, i) => {
-			if (i === 0) {
-				expect(child.nodeName).toBe('P');
-			} else {
-				expect(child.nodeName).toBe('DIV');
-				expect(child.className).toBe('cmSection ' + expectedSectionClasses[i - 1]);
-			}
-		});
+		expect(element.childNodes[0].nodeName).toBe('P');
+		expect(element.childNodes[1].nodeName).toBe('DIV');
+		expect(element.childNodes[1].className).toBe('cmSection cmSection-Verse');
+		expect(element.childNodes[2].nodeName).toBe('DIV');
+		expect(element.childNodes[2].className).toBe('cmSection cmSection-Verse');
+		expect(element.childNodes[3].nodeName).toBe('DIV');
+		expect(element.childNodes[3].className).toBe('cmSection cmSection-Chorus');
+		expect(element.childNodes[4].nodeName).toBe('DIV');
+		expect(element.childNodes[4].className).toBe('cmSection cmSection-Bridge');
+		expect(element.childNodes[5].nodeName).toBe('DIV');
+		expect(element.childNodes[5].className).toBe('cmSection cmSection-Chorus');
 	});
 });
