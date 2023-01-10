@@ -2,7 +2,6 @@ import _cloneDeep from 'lodash/cloneDeep';
 import { getChordString } from './getBeatString';
 
 import symbols from '../../symbols';
-import { defaultTimeSignature } from '../../../parser/syntax';
 
 const chordSpaceAfterDefault = 1;
 
@@ -44,7 +43,6 @@ export default function space(
 	);
 
 	let timeSignatureString = '';
-	let previousTimeSignature = defaultTimeSignature.string;
 	let spacedLyricsLine = '';
 	let chordToken;
 	let lyricToken;
@@ -57,11 +55,10 @@ export default function space(
 				timeSignatureString =
 					chordIndex === 0 &&
 					shouldPrintInlineTimeSignatures &&
-					bar.timeSignature.string !== previousTimeSignature
+					bar.shouldPrintBarTimeSignature
 						? bar.timeSignature.string +
 						  symbols.spacesAfterTimeSignature
 						: '';
-				previousTimeSignature = bar.timeSignature.string;
 
 				const shouldOffsetLyricsLine =
 					shouldPrintBarSeparators &&

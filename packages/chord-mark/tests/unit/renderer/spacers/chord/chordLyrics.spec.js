@@ -172,6 +172,7 @@ describe.each([
 		'_It was an _early morning yesterday',
 		'|2/4 G        |4/4 Gdim                   |',
 		'     It was an     early morning yesterday',
+		{ shouldPrintBarTimeSignature: true },
 	],
 	[
 		'time signature: lyrics starts after chord',
@@ -179,6 +180,7 @@ describe.each([
 		'_ It was an _early morning yesterday',
 		'|2/4 G         |4/4 Gdim                   |',
 		'      It was an     early morning yesterday',
+		{ shouldPrintBarTimeSignature: true },
 	],
 	[
 		'time signature: bar starts in the middle of the lyrics',
@@ -186,6 +188,7 @@ describe.each([
 		'It was an _early morning _yesterday',
 		'         |2/4 G            |4/4 Gdim     |',
 		'It was an     early morning     yesterday',
+		{ shouldPrintBarTimeSignature: true },
 	],
 	[
 		'time signature: Chord symbol length equals lyric token length',
@@ -193,6 +196,7 @@ describe.each([
 		'_Put _me _on _top',
 		'|2/4 Ami7 |3/4 Bmi |4/4 D13 |5/4 F13 |',
 		'     Put       me       on       top',
+		{ shouldPrintBarTimeSignature: true },
 	],
 	[
 		'time signature: Chord symbol length equals lyric token length minus 1',
@@ -200,6 +204,7 @@ describe.each([
 		'_Put _me _on _top',
 		'|2/4 Ami |3/4 B7 |4/4 D7 |5/4 F13 |',
 		'     Put      me      on      top',
+		{ shouldPrintBarTimeSignature: true },
 	],
 	[
 		'time signature: Chord symbol length equals lyric token length minus 2',
@@ -207,6 +212,7 @@ describe.each([
 		'_Put _me _on _top',
 		'|2/4 A7 |3/4 B |4/4 D |5/4 F7 |',
 		'     Put     me     on     top',
+		{ shouldPrintBarTimeSignature: true },
 	],
 	[
 		'time signature: Chord without lyrics',
@@ -214,6 +220,7 @@ describe.each([
 		'_Put _ _me on top',
 		'|2/4 Gmi7 |4/4 Ami13 |5/4 G13      |',
 		'     Put                  me on top',
+		{ shouldPrintBarTimeSignature: true },
 	],
 	[
 		'time signature: disable',
@@ -221,7 +228,10 @@ describe.each([
 		'It was an _early morning _yesterday',
 		'         |G            |Gdim     |',
 		'It was an early morning yesterday',
-		{ shouldPrintInlineTimeSignatures: false },
+		{
+			shouldPrintBarTimeSignature: true,
+			shouldPrintInlineTimeSignatures: false,
+		},
 	],
 	[
 		'time signature: lyrics shorter than chords names',
@@ -229,7 +239,7 @@ describe.each([
 		'_Put _me _on top _of _the _correct _lyrics',
 		'|3/4 A7(b9). BmiMa7.. |4/4 Dmi7.... |5/4 A7(b9).. Gmi13.. F7(b9,#11). |4/4 E7.... |',
 		'     Put     me            on top        of       the     correct          lyrics',
-		{ shouldPrintChordsDuration: true },
+		{ shouldPrintBarTimeSignature: true, shouldPrintChordsDuration: true },
 	],
 ])(
 	'%s',
@@ -252,6 +262,8 @@ describe.each([
 				});
 				bar.shouldPrintChordsDuration = !!(options || {})
 					.shouldPrintChordsDuration;
+				bar.shouldPrintBarTimeSignature = !!(options || {})
+					.shouldPrintBarTimeSignature;
 			});
 
 			// test
@@ -264,7 +276,7 @@ describe.each([
 
 			// assertions
 
-			const renderedChords = renderChordLine(chordLine, undefined, {
+			const renderedChords = renderChordLine(chordLine, {
 				...options,
 			});
 			const renderedLyrics = renderLyricLine(

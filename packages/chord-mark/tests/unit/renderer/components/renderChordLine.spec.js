@@ -19,7 +19,7 @@ describe('chordLine renderer', () => {
 	});
 
 	test('Should return valid html', () => {
-		const rendered = renderChordLine(parseChordLine('C'), true);
+		const rendered = renderChordLine(parseChordLine('C'));
 		const element = htmlToElement(rendered);
 
 		expect(element).toBeInstanceOf(Node);
@@ -65,11 +65,9 @@ describe.each([
 	test('respect shouldPrintBarSeparators', () => {
 		const chordLine = parseChordLine(input);
 
-		const rendered = renderChordLine(
-			renderChordSymbols(chordLine),
-			undefined,
-			{ shouldPrintBarSeparators }
-		);
+		const rendered = renderChordLine(renderChordSymbols(chordLine), {
+			shouldPrintBarSeparators,
+		});
 
 		expect(stripTags(rendered)).toEqual(output);
 	});
@@ -83,34 +81,43 @@ describe.each([
 	test('respect shouldPrintSubBeatDelimiters', () => {
 		const chordLine = parseChordLine(input);
 
-		const rendered = renderChordLine(
-			renderChordSymbols(chordLine),
-			undefined,
-			{ shouldPrintSubBeatDelimiters }
-		);
+		const rendered = renderChordLine(renderChordSymbols(chordLine), {
+			shouldPrintSubBeatDelimiters,
+		});
 
 		expect(stripTags(rendered)).toEqual(output);
 	});
 });
 
 describe.each([
-	['4/4 D', '|D  |', true],
-	['3/4 D', '|3/4 D  |', true],
-	['C 3/4 D', '|C  |3/4 D  |', true],
-	['C 3/4 D E', '|C  |3/4 D  |E  |', true],
-	['C 3/4 D 2/4 E', '|C  |3/4 D  |2/4 E  |', true],
-	['C 3/4 D 2/4 E', '|C  |3/4 D  |2/4 E  |', undefined],
-	['C 3/4 D 2/4 E', '|C  |D  |E  |', false],
-])('%s => %s', (input, output, shouldPrintInlineTimeSignatures) => {
-	test('Print time signature after an inline change', () => {
-		const chordLine = parseChordLine(input);
+	['4/4 D', '|D  |', [false], true],
+	['3/4 D', '|3/4 D  |', [true], true],
+	['C 3/4 D', '|C  |3/4 D  |', [false, true], true],
+	['C 3/4 D E', '|C  |3/4 D  |E  |', [false, true, false], true],
+	['C 3/4 D 2/4 E', '|C  |3/4 D  |2/4 E  |', [false, true, true], true],
+	['C 3/4 D 2/4 E', '|C  |3/4 D  |2/4 E  |', [false, true, true], undefined],
+	['C 3/4 D 2/4 E', '|C  |D  |E  |', [true, true, false], false],
+])(
+	'%s => %s',
+	(
+		input,
+		output,
+		shouldPrintBarTimeSignature,
+		shouldPrintInlineTimeSignatures
+	) => {
+		test('Print time signature after an inline change', () => {
+			const chordLine = parseChordLine(input);
 
-		const rendered = renderChordLine(
-			renderChordSymbols(chordLine),
-			undefined,
-			{ shouldPrintInlineTimeSignatures }
-		);
+			chordLine.allBars.forEach((bar, barIndex) => {
+				bar.shouldPrintBarTimeSignature =
+					shouldPrintBarTimeSignature[barIndex];
+			});
 
-		expect(stripTags(rendered)).toEqual(output);
-	});
-});
+			const rendered = renderChordLine(renderChordSymbols(chordLine), {
+				shouldPrintInlineTimeSignatures,
+			});
+
+			expect(stripTags(rendered)).toEqual(output);
+		});
+	}
+);

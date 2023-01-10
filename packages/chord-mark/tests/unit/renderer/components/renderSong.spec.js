@@ -528,6 +528,24 @@ It was an early morning yesterday.
 		});
 		expect(toText(rendered)).toBe(expected);
 	});
+
+	test('time signature different than default', () => {
+		const input2 = `6/8
+Em D. C.
+_ So close no matter _how far _
+3/8 D 6/8 Em % 
+_ But I _know`;
+		const expected = `6/8
+|Em                  |D       C |
+   So close no matter how far
+|3/8 D     |6/8 Em  |% |
+      But I     know`;
+
+		const rendered = renderSongText(input2, {
+			printInlineTimeSignatures: true,
+		});
+		expect(toText(rendered)).toBe(expected);
+	});
 });
 
 describe('printChordsDuration', () => {
