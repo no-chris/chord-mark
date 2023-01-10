@@ -76,7 +76,7 @@ export default function renderSong(
 
 	let isFirstLyricLineOfSection = false;
 	let contextTimeSignature = defaultTimeSignature.string;
-	let previousTimeSignature = defaultTimeSignature.string;
+	let previousBarTimeSignature;
 
 	allLines = renderChords()
 		.map(addPrintChordsDurationsFlag)
@@ -152,8 +152,8 @@ export default function renderSong(
 					(barIndex === 0 &&
 						bar.timeSignature.string !== contextTimeSignature) ||
 					(barIndex > 0 &&
-						bar.timeSignature.string !== previousTimeSignature);
-				previousTimeSignature = bar.timeSignature.string;
+						bar.timeSignature.string !== previousBarTimeSignature);
+				previousBarTimeSignature = bar.timeSignature.string;
 			});
 		}
 		return line;
