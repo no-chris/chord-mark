@@ -6,73 +6,84 @@ import symbols from '../../symbols';
 const chordSpaceAfterDefault = 1;
 
 /**
+ * Space chords and lyrics, so they are aligned with each other:
+ * - for chords: adjust the spaceAfter property of each chord object
+ * - for lyrics: create a new string with extra spaces where needed
+ *
  * @param {ChordLine} chordLineInput
  * @param {LyricLine} lyricsLineInput
  * @param {Boolean} shouldPrintBarSeparators
  * @param {Boolean} shouldPrintSubBeatDelimiters
+ * @param {Boolean} shouldPrintInlineTimeSignatures
  * @returns {Object}
  */
 export default function space(
 	chordLineInput,
 	lyricsLineInput,
-	shouldPrintBarSeparators,
-	shouldPrintSubBeatDelimiters
+	{
+		shouldPrintBarSeparators = true,
+		shouldPrintSubBeatDelimiters = true,
+		shouldPrintInlineTimeSignatures = true,
+	} = {}
 ) {
-	const chordLine = _cloneDeep(chordLineInput);
-	const lyricsLine = _cloneDeep(lyricsLineInput);
-	const barSeparatorToken = shouldPrintBarSeparators
-		? symbols.barSeparator
-		: '';
-
-	if (hasNoPositionMarkers(lyricsLine)) {
+	if (hasNoPositionMarkers(lyricsLineInput)) {
 		return {
-			chordLine,
-			lyricsLine,
+			chordLine: chordLineInput,
+			lyricsLine: lyricsLineInput,
 		};
 	}
+
+	const chordLine = _cloneDeep(chordLineInput);
+	const lyricsLine = _cloneDeep(lyricsLineInput);
 
 	const tokenizedLyrics = lyricsLine.chordPositions.map(
 		(position, i, allPositions) => {
 			return lyricsLine.lyrics.substring(position, allPositions[i + 1]);
 		}
 	);
-	let spacedLyricsLine = '';
 
+	let timeSignatureString = '';
+	let spacedLyricsLine = '';
 	let chordToken;
 	let lyricToken;
-	let currentBarIndex = -1;
 
 	chordLine.allBars.forEach((bar, barIndex) => {
-		bar.allChords.forEach((chord) => {
-			lyricToken = tokenizedLyrics.shift();
+		bar.allChords.forEach((chord, chordIndex, allChords) => {
+			lyricToken = tokenizedLyrics.shift(); // get next lyric token
 
 			if (lyricToken) {
-				chordToken = getChordString(
-					bar,
-					chord,
-					shouldPrintSubBeatDelimiters
-				);
+				timeSignatureString =
+					chordIndex === 0 &&
+					shouldPrintInlineTimeSignatures &&
+					bar.shouldPrintBarTimeSignature
+						? bar.timeSignature.string +
+						  symbols.spacesAfterTimeSignature
+						: '';
 
-				if (isNewBar(currentBarIndex, barIndex)) {
-					chordToken = barSeparatorToken + chordToken;
-					currentBarIndex = barIndex;
-				}
+				const shouldOffsetLyricsLine =
+					shouldPrintBarSeparators &&
+					barIndex === 0 &&
+					chordIndex === 0 &&
+					lyricsLine.chordPositions[0] === 0;
 
-				if (startsWithSpace(lyricToken)) {
-					lyricToken =
-						symbols.lyricsSpacer.repeat(chordToken.length) +
-						lyricToken;
-				}
+				chordToken = getChordToken(bar, chord, shouldOffsetLyricsLine);
+				lyricToken = getAdjustedLyricToken(shouldOffsetLyricsLine);
+
+				const isLastChordOfBar = chordIndex === allChords.length - 1;
 
 				if (lyricToken.length - chordToken.length > 0) {
-					chord.spacesAfter = lyricToken.length - chordToken.length;
+					const isLastLyricToken = tokenizedLyrics.length === 0;
+					// Warning: `getChordSpacesAfter()` has a side effect since its logic might result in updating
+					// the lyricsToken with an extra space
+					chord.spacesAfter = getChordSpacesAfter(
+						isLastChordOfBar,
+						isLastLyricToken
+					);
 				} else {
 					chord.spacesAfter = chordSpaceAfterDefault;
-					const lyricsSpaceAfter =
-						chordToken.length -
-						lyricToken.length +
-						chordSpaceAfterDefault;
-					lyricToken += symbols.lyricsSpacer.repeat(lyricsSpaceAfter);
+					lyricToken += symbols.lyricsSpacer.repeat(
+						getLyricSpacesAfter(isLastChordOfBar)
+					);
 				}
 				spacedLyricsLine += lyricToken;
 			} else {
@@ -85,6 +96,9 @@ export default function space(
 	if (shouldOffsetChordLine(lyricsLine)) {
 		const chordLineOffset = lyricsLine.chordPositions[0];
 		chordLine.offset = chordLineOffset;
+		if (shouldPrintBarSeparators) {
+			chordLine.offset--;
+		}
 		spacedLyricsLine =
 			lyricsLine.lyrics.substring(0, chordLineOffset) + spacedLyricsLine;
 	}
@@ -98,14 +112,65 @@ export default function space(
 		chordLine,
 		lyricsLine,
 	};
+
+	function getChordToken(bar, chord, shouldOffsetLyricsLine) {
+		let token =
+			timeSignatureString +
+			getChordString(bar, chord, shouldPrintSubBeatDelimiters);
+		if (shouldOffsetLyricsLine) {
+			token = symbols.barSeparator + token;
+		}
+		return token;
+	}
+
+	function getAdjustedLyricToken(shouldOffsetLyricsLine) {
+		let token = lyricToken;
+		if (startsWithSpace(token)) {
+			token = symbols.lyricsSpacer.repeat(chordToken.length - 1) + token;
+		} else {
+			if (shouldOffsetLyricsLine) {
+				token = symbols.lyricsSpacer + token;
+			}
+			if (timeSignatureString.length) {
+				token = ' '.repeat(timeSignatureString.length) + token;
+			}
+		}
+
+		return token;
+	}
+
+	function getChordSpacesAfter(isLastChordOfBar, isLastLyricToken) {
+		let spacesAfter = lyricToken.length - chordToken.length;
+
+		const shouldMakeRoomForBarSep =
+			isLastChordOfBar && shouldPrintBarSeparators && !isLastLyricToken;
+
+		if (shouldMakeRoomForBarSep) {
+			if (spacesAfter > 1) {
+				spacesAfter -= 1;
+			} else {
+				lyricToken += symbols.lyricsSpacer; //duh!
+			}
+		}
+		return spacesAfter;
+	}
+
+	function getLyricSpacesAfter(isLastChordOfBar) {
+		let lyricsSpaceAfter =
+			chordToken.length - lyricToken.length + chordSpaceAfterDefault;
+
+		if (isLastChordOfBar && shouldPrintBarSeparators) {
+			lyricsSpaceAfter++;
+		}
+
+		return lyricsSpaceAfter;
+	}
 }
 
 const hasNoPositionMarkers = (lyricsLine) =>
 	lyricsLine.chordPositions.length === 0;
 
 const shouldOffsetChordLine = (lyricsLine) => lyricsLine.chordPositions[0] > 0;
-
-const isNewBar = (currentBarIndex, barIndex) => currentBarIndex !== barIndex;
 
 // source: https://github.com/es-shims/String.prototype.trimEnd/blob/main/implementation.js
 const trimEnd = (str) => {

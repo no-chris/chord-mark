@@ -21,10 +21,19 @@ function removeLastLine(fileContent) {
 }
 
 describe.each([
-	['base rendering', 'song1-input.txt', 'song1-output-default.txt'],
-	['default rendering', 'song1-input.txt', 'song1-output-default.txt', {}],
 	[
-		'explicit parameters',
+		'base rendering (song1-output-default)',
+		'song1-input.txt',
+		'song1-output-default.txt',
+	],
+	[
+		'default rendering (song1-output-default)',
+		'song1-input.txt',
+		'song1-output-default.txt',
+		{},
+	],
+	[
+		'explicit parameters (song1-output-default)',
 		'song1-input.txt',
 		'song1-output-default.txt',
 		{
@@ -34,13 +43,13 @@ describe.each([
 		},
 	],
 	[
-		'aligned bars, no chordLyrics alignment',
+		'aligned bars, no chordLyrics alignment (song1-output-aligned)',
 		'song1-input.txt',
 		'song1-output-aligned.txt',
 		{ alignChordsWithLyrics: false },
 	],
 	[
-		'non-aligned bars, no chordLyrics alignment',
+		'non-aligned bars, no chordLyrics alignment (song1-output-non-aligned)',
 		'song1-input.txt',
 		'song1-output-non-aligned.txt',
 		{
@@ -50,67 +59,67 @@ describe.each([
 		},
 	],
 	[
-		'transposed',
+		'transposed (song1-output-transposed)',
 		'song1-input.txt',
 		'song1-output-transposed.txt',
 		{ transposeValue: -4, accidentalsType: 'flat' },
 	],
 	[
-		'no bar separators',
+		'no bar separators (song1-output-no-bar-sep)',
 		'song1-input.txt',
 		'song1-output-no-bar-sep.txt',
 		{ printBarSeparators: 'never' },
 	],
 	[
-		'grids bar separators',
+		'grids bar separators (song1-output-grids-bar-sep)',
 		'song1-input.txt',
 		'song1-output-grids-bar-sep.txt',
 		{ printBarSeparators: 'grids' },
 	],
 	[
-		'section copy & multiply',
+		'section copy & multiply (song2-output-copy-and-multiply)',
 		'song2-input.txt',
 		'song2-output-copy-and-multiply.txt',
 		{ expandSectionCopy: true, expandSectionMultiply: true },
 	],
 	[
-		'section copy',
+		'section copy (song2-output-copy)',
 		'song2-input.txt',
 		'song2-output-copy.txt',
 		{ expandSectionCopy: true, expandSectionMultiply: false },
 	],
 	[
-		'section copy',
+		'section copy & multiply (song2-output-multiply)',
 		'song2-input.txt',
 		'song2-output-multiply.txt', // <= edge cases here, not sure what should be the expected behavior...
 		{ expandSectionCopy: false, expandSectionMultiply: true },
 	],
 	[
-		'section copy',
+		'section copy (song2-output-no-copy-no-multiply)',
 		'song2-input.txt',
 		'song2-output-no-copy-no-multiply.txt',
 		{ expandSectionCopy: false, expandSectionMultiply: false },
 	],
 	[
-		'sub-beat delimiters',
+		'sub-beat: print delimiters (song3-output-sub-beats)',
 		'song3-input.txt',
 		'song3-output-sub-beats.txt',
 		{ printSubBeatDelimiters: true },
 	],
 	[
-		'sub-beat delimiters',
+		'sub-beat: hide delimiters (song3-output-no-sub-beats)',
 		'song3-input.txt',
 		'song3-output-no-sub-beats.txt',
 		{ printSubBeatDelimiters: false },
 	],
 	[
-		'sub-beat delimiters',
+		'inline time signatures: print (song4-output-inline-time-signatures)',
 		'song4-input.txt',
 		'song4-output-inline-time-signatures.txt',
 		{ printInlineTimeSignatures: true },
 	],
 	[
-		'sub-beat delimiters',
+		'inline time signatures: hide (song4-output-no-inline-time-signatures)',
 		'song4-input.txt',
 		'song4-output-no-inline-time-signatures.txt',
 		{ printInlineTimeSignatures: false },

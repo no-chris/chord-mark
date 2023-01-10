@@ -1,5 +1,3 @@
-import _cloneDeep from 'lodash/cloneDeep';
-
 import getMaxBeatsWidth from '../spacers/chord/getMaxBeatsWidth';
 
 import simpleChordSpacer from '../spacers/chord/simple';
@@ -77,9 +75,12 @@ export default function renderSong(
 	let { allLines, allChords } = parsedSong;
 
 	let isFirstLyricLineOfSection = false;
+	let contextTimeSignature = defaultTimeSignature.string;
+	let previousTimeSignature = defaultTimeSignature.string;
 
 	allLines = renderChords()
 		.map(addPrintChordsDurationsFlag)
+		.map(addPrintBarTimeSignatureFlag)
 		.filter(shouldRenderLine)
 		.map((line) => {
 			return replaceRepeatedBars(line, { alignChordsWithLyrics });
@@ -137,6 +138,22 @@ export default function renderSong(
 		if (line.type === lineTypes.CHORD) {
 			line.model.allBars.forEach((bar) => {
 				bar.shouldPrintChordsDuration = shouldPrintChordsDuration(bar);
+			});
+		}
+		return line;
+	}
+
+	function addPrintBarTimeSignatureFlag(line) {
+		if (line.type === lineTypes.TIME_SIGNATURE) {
+			contextTimeSignature = line.string;
+		} else if (line.type === lineTypes.CHORD) {
+			line.model.allBars.forEach((bar, barIndex) => {
+				bar.shouldPrintBarTimeSignature =
+					(barIndex === 0 &&
+						bar.timeSignature.string !== contextTimeSignature) ||
+					(barIndex > 0 &&
+						bar.timeSignature.string !== previousTimeSignature);
+				previousTimeSignature = bar.timeSignature.string;
 			});
 		}
 		return line;
@@ -210,8 +227,13 @@ export default function renderSong(
 				const { chordLine, lyricsLine } = chordLyricsSpacer(
 					spaced,
 					nextLine.model,
-					shouldPrintBarSeparators(line.model),
-					shouldPrintSubBeatDelimiters
+					{
+						shouldPrintBarSeparators: shouldPrintBarSeparators(
+							line.model
+						),
+						shouldPrintSubBeatDelimiters,
+						shouldPrintInlineTimeSignatures,
+					}
 				);
 				allLines[lineIndex + 1].model = lyricsLine;
 				spaced = chordLine;
@@ -221,14 +243,12 @@ export default function renderSong(
 	}
 
 	function renderAllLines() {
-		let timeSignature = defaultTimeSignature;
-
 		return allLines
 			.map((line) => {
 				let rendered;
 
 				if (line.type === lineTypes.CHORD) {
-					rendered = renderChordLineModel(line.model, timeSignature, {
+					rendered = renderChordLineModel(line.model, {
 						shouldPrintBarSeparators: shouldPrintBarSeparators(
 							line.model
 						),
@@ -240,7 +260,6 @@ export default function renderSong(
 				} else if (line.type === lineTypes.SECTION_LABEL) {
 					rendered = renderSectionLabelLine(line);
 				} else if (line.type === lineTypes.TIME_SIGNATURE) {
-					timeSignature = _cloneDeep(line.model);
 					rendered = renderTimeSignature(line);
 				} else {
 					rendered = renderLyricLine(line, {
