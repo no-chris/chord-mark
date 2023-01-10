@@ -729,4 +729,16 @@ brigeLine1
 		expect(element.childNodes[5].nodeName).toBe('DIV');
 		expect(element.childNodes[5].className).toBe('cmSection cmSection-Chorus');
 	});
+
+	test('If no sections are given, create no DIV wrappers', () => {
+		const song = `A B
+verseLine1`;
+		const rendered = renderSongText(song);
+		const element = htmlToElement(rendered);
+
+		expect(element.childElementCount).toBe(2);
+		expect(element.nodeName).toBe('DIV');
+		expect(element.childNodes[0].nodeName).toBe('P');
+		expect(element.childNodes[1].nodeName).toBe('P');
+	});
 });

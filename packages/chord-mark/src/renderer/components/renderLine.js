@@ -42,9 +42,9 @@ export default function render(
 	return lineTpl({
 		line,
 		lineClasses: lineClasses.join(' '),
-		shouldOpenSection: shouldOpenSection,
+		shouldOpenSection,
 		sectionWrapperClasses: sectionWrapperClasses.join(' '),
-		shouldClosePriorSection: shouldClosePriorSection,
-		shouldCloseFinalSection: shouldCloseFinalSection,
+		shouldClosePriorSection,
+		shouldCloseFinalSection,
 	});
 }
