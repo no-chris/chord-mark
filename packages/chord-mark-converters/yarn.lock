@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-chord-mark@^0.11.0:
-  version "0.11.0"
-  resolved "https://registry.yarnpkg.com/chord-mark/-/chord-mark-0.11.0.tgz#f21cb9824a638ec2712ced076d99e971329994a4"
-  integrity sha512-eoewZZdG5yJpiNK+JAQiBbVLAmg9VuqLUye1FmhD9DU//Pbpj+Hel4wLgOE2aF7/fhYT0YhfPQ+Jhc0cZ1M8mA==
+chord-mark@^0.12.0:
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/chord-mark/-/chord-mark-0.12.0.tgz#499ac3965aee93b4128a97b7b31c5a86b0924457"
+  integrity sha512-LsZ/elw1yLsiPaF32rIayFvKXuMbsfzRXBCMNfwKLsXK8mM3mupdCUFxFUTzYho23U35VKDXFp7sNvhzI/IuCw==
   dependencies:
     chord-symbol "3.0.0"
     dompurify "^2.3.4"
@@ -26,9 +26,9 @@ chord-symbol@3.0.0, chord-symbol@^3.0.0:
     lodash "^4.17.21"
 
 dompurify@^2.3.4:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-2.4.0.tgz#c9c88390f024c2823332615c9e20a453cf3825dd"
-  integrity sha512-Be9tbQMZds4a3C6xTmz68NlMfeONA//4dOavl/1rNw50E+/QO0KVpbcU0PcaW0nsQxurXls9ZocqFxk8R2mWEA==
+  version "2.4.3"
+  resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-2.4.3.tgz#f4133af0e6a50297fc8874e2eaedc13a3c308c03"
+  integrity sha512-q6QaLcakcRjebxjg8/+NP+h0rPfatOgOzc46Fst9VAA3jF2ApfKBNKMzdP4DYTqtUMXSCd5pRS/8Po/OmoCHZQ==
 
 lodash@^4.17.21:
   version "4.17.21"
