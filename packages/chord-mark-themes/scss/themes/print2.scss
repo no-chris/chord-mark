@@ -16,8 +16,8 @@
 	.cmSection {
 		border: 1px solid black;
 		border-radius: 8px;
-		padding: .4em;
-		margin: .2em 0 .2em 0;
+		padding: 0.4em;
+		margin: 0.2em 0 0.2em 0;
 		// below line only needed for wkhtmltopdf
 		break-inside: avoid;
 	}
@@ -28,12 +28,12 @@
 
 	.cmSectionLabel {
 		font-weight: bold;
-		font-size: .85em;
-		text-transform:uppercase; 
+		font-size: 0.85em;
+		text-transform: uppercase;
 	}
 	.cmSectionMultiplier {
 		text-decoration: unset;
-		font-size: .95em;
+		font-size: 0.95em;
 	}
 
 	// Time signature
@@ -43,12 +43,12 @@
 
 	// Empty Lines - Hide to save print space
 	.cmEmptyLine {
-		display:none;
+		display: none;
 	}
 
 	// Chordline
 	.cmChordLine {
-		font-weight:bolder;
+		font-weight: bolder;
 	}
 
 	.cmBarSeparator {

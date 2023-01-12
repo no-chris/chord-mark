@@ -99,7 +99,7 @@ describe.each([
 			shouldOpenSection: true,
 			shouldClosePriorSection: false,
 			shouldCloseFinalSection: false,
-			sectionWrapperClasses: ['cmSection','cmSection-intro'],
+			sectionWrapperClasses: ['cmSection', 'cmSection-intro'],
 		},
 		'<div class="cmSection cmSection-intro"><p class="cmLine">myLine</p>',
 	],
@@ -119,7 +119,7 @@ describe.each([
 			shouldOpenSection: true,
 			shouldClosePriorSection: true,
 			shouldCloseFinalSection: false,
-			sectionWrapperClasses: ['cmSection','cmSection-intro'],
+			sectionWrapperClasses: ['cmSection', 'cmSection-intro'],
 		},
 		'</div><div class="cmSection cmSection-intro"><p class="cmLine">myLine</p>',
 	],
@@ -140,14 +140,13 @@ describe.each([
 			shouldOpenSection: true,
 			shouldClosePriorSection: true,
 			shouldCloseFinalSection: true,
-			sectionWrapperClasses: ['cmSection','cmSection-intro'],
+			sectionWrapperClasses: ['cmSection', 'cmSection-intro'],
 		},
 		'</div><div class="cmSection cmSection-intro"><p class="cmLine">myLine</p></div>',
 	],
-
 ])('create proper markup', (title, options, expected) => {
 	test('correctly creates expected markup', () => {
-		const rendered = renderLine( 'myLine', options);
+		const rendered = renderLine('myLine', options);
 
 		expect(rendered).toMatch(expected);
 	});

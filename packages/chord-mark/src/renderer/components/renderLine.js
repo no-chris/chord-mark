@@ -38,7 +38,7 @@ export default function render(
 	if (isFromSectionMultiply) {
 		lineClasses.push('cmLine--isFromSectionMultiply');
 	}
-	
+
 	return lineTpl({
 		line,
 		lineClasses: lineClasses.join(' '),

@@ -118,9 +118,12 @@ export default function renderSong(
 			useFlats: accidental === 'flat',
 		});
 	}
-	
+
 	function getSectionWrapperClasses(line) {
-		return [ "cmSection" , "cmSection-" + line.model.rendered.label.replace(/[\d\s]/gi,"") ];
+		return [
+			'cmSection',
+			'cmSection-' + line.model.rendered.label.replace(/[\d\s]/gi, ''),
+		];
 	}
 
 	function addPrintChordsDurationsFlag(line) {
@@ -164,8 +167,8 @@ export default function renderSong(
 		);
 	}
 
-	function isLastLine(allLines, i) {
-		return (allLines.length - 1 === i);
+	function isLastLine(i) {
+		return allLines.length - 1 === i;
 	}
 
 	function isFiltered(line) {
@@ -237,7 +240,7 @@ export default function renderSong(
 					lineIsInASection = true;
 
 					sectionWrapperClasses = getSectionWrapperClasses(line);
-					
+
 					rendered = renderSectionLabelLine(line);
 				} else if (line.type === lineTypes.TIME_SIGNATURE) {
 					rendered = renderTimeSignature(line);
@@ -247,7 +250,7 @@ export default function renderSong(
 						chartType,
 					});
 				}
-				
+
 				return renderLine(rendered, {
 					isFromSectionMultiply: line.isFromSectionMultiply,
 					isFromAutoRepeatChords: line.isFromAutoRepeatChords,
@@ -255,7 +258,7 @@ export default function renderSong(
 					isFromSectionCopy: line.isFromSectionCopy,
 					shouldOpenSection,
 					shouldClosePriorSection,
-					shouldCloseFinalSection: isLastLine(allLines, i) && lineIsInASection,
+					shouldCloseFinalSection: isLastLine(i) && lineIsInASection,
 					sectionWrapperClasses,
 				});
 			})

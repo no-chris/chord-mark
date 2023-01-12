@@ -719,15 +719,25 @@ brigeLine1
 		expect(element.childElementCount).toBe(6);
 		expect(element.childNodes[0].nodeName).toBe('P');
 		expect(element.childNodes[1].nodeName).toBe('DIV');
-		expect(element.childNodes[1].className).toBe('cmSection cmSection-Verse');
+		expect(element.childNodes[1].className).toBe(
+			'cmSection cmSection-Verse'
+		);
 		expect(element.childNodes[2].nodeName).toBe('DIV');
-		expect(element.childNodes[2].className).toBe('cmSection cmSection-Verse');
+		expect(element.childNodes[2].className).toBe(
+			'cmSection cmSection-Verse'
+		);
 		expect(element.childNodes[3].nodeName).toBe('DIV');
-		expect(element.childNodes[3].className).toBe('cmSection cmSection-Chorus');
+		expect(element.childNodes[3].className).toBe(
+			'cmSection cmSection-Chorus'
+		);
 		expect(element.childNodes[4].nodeName).toBe('DIV');
-		expect(element.childNodes[4].className).toBe('cmSection cmSection-Bridge');
+		expect(element.childNodes[4].className).toBe(
+			'cmSection cmSection-Bridge'
+		);
 		expect(element.childNodes[5].nodeName).toBe('DIV');
-		expect(element.childNodes[5].className).toBe('cmSection cmSection-Chorus');
+		expect(element.childNodes[5].className).toBe(
+			'cmSection cmSection-Chorus'
+		);
 	});
 
 	test('If no sections are given, create no DIV wrappers', () => {
