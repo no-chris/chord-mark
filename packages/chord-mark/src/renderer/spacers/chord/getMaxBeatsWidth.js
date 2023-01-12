@@ -1,40 +1,52 @@
+import { getBeatString } from './getBeatString';
+
 import lineTypes from '../../../parser/lineTypes';
-import symbols from '../../symbols';
 
 /**
  * @param {SongLine[]} allLines
- * @param {Function} shouldAlignChords
+ * @param {Function} shouldAlignChordsWithLyrics
+ * @param {Boolean} shouldPrintSubBeatDelimiters
  * @returns {Array}
  */
-export default function getMaxBeatsWidth(allLines, shouldAlignChords) {
+export default function getMaxBeatsWidth(
+	allLines,
+	shouldAlignChordsWithLyrics,
+	shouldPrintSubBeatDelimiters = true
+) {
 	const maxBeatsWidth = [];
 
 	allLines
 		.filter((line) => line.type === lineTypes.CHORD)
-		.filter((line) => !shouldAlignChords(line))
+		.filter((line) => !shouldAlignChordsWithLyrics(line))
 		.forEach((line) => {
-			line.model.allBars.forEach((bar, barIndex) => {
-				if (!maxBeatsWidth[barIndex]) {
-					maxBeatsWidth[barIndex] = {};
+			line.model.allBars
+				.filter((bar) => !bar.lineHadTimeSignatureChange)
+				.forEach((bar, barIndex) => {
+					if (!maxBeatsWidth[barIndex]) {
+						maxBeatsWidth[barIndex] = {};
 
-					for (let i = 1; i <= bar.timeSignature.beatCount; i++) {
-						maxBeatsWidth[barIndex][i] = 0;
+						for (let i = 1; i <= bar.timeSignature.beatCount; i++) {
+							maxBeatsWidth[barIndex][i] = 0;
+						}
 					}
-				}
 
-				bar.allChords.forEach((chord) => {
-					let symbolLength = chord.symbol.length;
-					if (bar.shouldPrintChordsDuration) {
-						symbolLength += symbols.chordBeat.repeat(
-							chord.duration
-						).length;
-					}
-					maxBeatsWidth[barIndex][chord.beat] = Math.max(
-						maxBeatsWidth[barIndex][chord.beat],
-						symbolLength
-					);
+					bar.allChords
+						.filter(
+							(chord) =>
+								!chord.isInSubBeatGroup || chord.isLastOfSubBeat
+						)
+						.forEach((chord) => {
+							const beatString = getBeatString(
+								bar,
+								chord.beat,
+								shouldPrintSubBeatDelimiters
+							);
+							maxBeatsWidth[barIndex][chord.beat] = Math.max(
+								maxBeatsWidth[barIndex][chord.beat],
+								beatString.length
+							);
+						});
 				});
-			});
 		});
 
 	return maxBeatsWidth;

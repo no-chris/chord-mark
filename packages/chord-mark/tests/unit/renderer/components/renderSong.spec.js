@@ -88,8 +88,8 @@ _Imagine there's _no hea_ven
 %
 Imagine there's not placeholder`;
 		const expected = `Verse
-|C...           CM7.  |F |
-Imagine there's no heaven
+|C...            CM7. |F  |
+ Imagine there's no heaven
 |C...    CM7.|F     |
 Imagine there's not placeholder`;
 		const rendered = renderSongText(input, {
@@ -393,12 +393,12 @@ Solo
 
 	test('always', () => {
 		const expected = `Verse
-|A7     |%   |%   |%               |
-A first line with positioned chords
+|A7     |%   |%   |%                |
+ A first line with positioned chords
 |D7     |%      |A7     |%     |
 A second line without
-|E7   |D7  |A7  |%  |
-And a last line with
+|E7   |D7  |A7  |%   |
+ And a last line with
 
 Solo
 |A7     |%      |%      |%     |
@@ -440,6 +440,111 @@ Solo
 			});
 			expect(toText(rendered)).toBe(expected);
 		});
+	});
+});
+
+describe('printSubBeatDelimiters', () => {
+	const input = `C.. G.. Am.. F..
+No woman no cry
+C.. {F C/E} {Dm7 C} C.. G..
+No woman no cry
+
+C.. G.. Am.. F..
+_ No _woman no _cry
+C.. {F C/E} {Dm7 C} C.. G..
+_ No _wo_man _no _cry`;
+
+	const outputWithDelimiters = `|C     G               |Am   F   |
+No woman no cry
+|C..   {F C/E}  {Dm7 C}|C    G   |
+No woman no cry
+
+|C   G       |Am F |
+  No woman no cry
+|C..   {F C/E} {Dm7 C} |C G |
+    No wo man  no   cry`;
+
+	test('true by default', () => {
+		const rendered = renderSongText(input);
+		expect(toText(rendered)).toBe(outputWithDelimiters);
+	});
+
+	test('explicit true', () => {
+		const rendered = renderSongText(input, {
+			printSubBeatDelimiters: true,
+		});
+		expect(toText(rendered)).toBe(outputWithDelimiters);
+	});
+
+	test('explicit false', () => {
+		const expected = `|C     G           |Am   F   |
+No woman no cry
+|C..   F C/E  Dm7 C|C    G   |
+No woman no cry
+
+|C   G       |Am F |
+  No woman no cry
+|C..   F C/E Dm7 C  |C G |
+    No woman no  cry`;
+
+		const rendered = renderSongText(input, {
+			printSubBeatDelimiters: false,
+		});
+		expect(toText(rendered)).toBe(expected);
+	});
+});
+
+describe('printInlineTimeSignatures', () => {
+	const input = `2/4 G 4/4 G°
+It was an _early morning _yesterday.
+C/G G
+_ I was up before the da_wn.`;
+
+	const outputWithTimeSignatures = `         |2/4 G            |4/4 G°        |
+It was an     early morning     yesterday.
+|C/G                     |G  |
+    I was up before the dawn.`;
+
+	test('true by default', () => {
+		const rendered = renderSongText(input);
+		expect(toText(rendered)).toBe(outputWithTimeSignatures);
+	});
+
+	test('explicit true', () => {
+		const rendered = renderSongText(input, {
+			printInlineTimeSignatures: true,
+		});
+		expect(toText(rendered)).toBe(outputWithTimeSignatures);
+	});
+
+	test('explicit false', () => {
+		const expected = `         |G            |G°        |
+It was an early morning yesterday.
+|C/G                     |G  |
+    I was up before the dawn.`;
+
+		const rendered = renderSongText(input, {
+			printInlineTimeSignatures: false,
+		});
+		expect(toText(rendered)).toBe(expected);
+	});
+
+	test('time signature different than default', () => {
+		const input2 = `6/8
+Em D. C.
+_ So close no matter _how far _
+3/8 D 6/8 Em % 
+_ But I _know`;
+		const expected = `6/8
+|Em                  |D       C |
+   So close no matter how far
+|3/8 D     |6/8 Em  |% |
+      But I     know`;
+
+		const rendered = renderSongText(input2, {
+			printInlineTimeSignatures: true,
+		});
+		expect(toText(rendered)).toBe(expected);
 	});
 });
 

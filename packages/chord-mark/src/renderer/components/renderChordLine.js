@@ -2,20 +2,33 @@ import chordLineTpl from './tpl/chordLine.js';
 
 import renderBarContent from './renderBarContent';
 import barSeparatorTpl from './tpl/barSeparator.js';
+
 import symbols from '../symbols';
 
 /**
  * @param {ChordLine} chordLineModel
  * @param {Boolean} shouldPrintBarSeparators
+ * @param {Boolean} shouldPrintSubBeatDelimiters
+ * @param {Boolean} shouldPrintInlineTimeSignatures
  * @returns {String} rendered html
  */
 export default function renderChordLine(
 	chordLineModel,
-	shouldPrintBarSeparators
+	{
+		shouldPrintBarSeparators = true,
+		shouldPrintSubBeatDelimiters = true,
+		shouldPrintInlineTimeSignatures = true,
+	} = {}
 ) {
 	const allBarsRendered = chordLineModel.allBars.map((bar, i) => {
 		const isLastBar = !chordLineModel.allBars[i + 1];
-		return renderBarContent(bar, isLastBar, shouldPrintBarSeparators);
+		const shouldPrintTimeSignature =
+			shouldPrintInlineTimeSignatures && bar.shouldPrintBarTimeSignature;
+		return renderBarContent(bar, isLastBar, {
+			shouldPrintBarSeparators,
+			shouldPrintSubBeatDelimiters,
+			shouldPrintTimeSignature,
+		});
 	});
 
 	const barSeparator = shouldPrintBarSeparators

@@ -49,8 +49,8 @@ A chord line starting with blank space`,
 		'should correctly space lyrics starting after the first chord',
 		`Cm7(#9) A
 _ A chord before the _first lyrics`,
-		`[ch]Cm7add#9[/ch]                    [ch]A[/ch]
-         A chord before the first lyrics`,
+		`[ch]Cm7add#9[/ch]                   [ch]A[/ch]
+        A chord before the first lyrics`,
 	],
 	[
 		'Keep bar separators for non-positioned chord lines',
