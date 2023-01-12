@@ -1,11 +1,12 @@
 import '../scss/chordMarkThemes.scss';
 import '../scss/playground.scss';
 
-import sampleSong from './sampleSong';
+import sampleSong1 from './sampleSong';
+import sampleSong2 from './sampleSong2';
 import { parseSong, renderSong } from 'chord-mark';
 
-const parsed = parseSong(sampleSong);
-const rendered = renderSong(parsed).replace(/\n/g, '');
+const rendered1 = renderSong(parseSong(sampleSong1)).replace(/\n/g, '');
+const rendered2 = renderSong(parseSong(sampleSong2)).replace(/\n/g, '');
 
 const themes = [
 	{
@@ -35,7 +36,10 @@ const themes = [
 ];
 
 themes.forEach((theme) => {
-	const themePreview = `<div style="font-weight: bold">${theme.name}</div><div class="cmContainer cmTheme-${theme.key}">${rendered}</div>`;
+	const themePreview = `<div style="font-weight: bold">${theme.name}</div>
+<div class="cmContainer cmTheme-${theme.key}">${rendered1}</div>
+<p>&nbsp;</p>
+<div class="cmContainer cmTheme-${theme.key}">${rendered2}</div>`;
 	const htmlObject = document.createElement('div');
 	htmlObject.classList.add('themePreview');
 	// eslint-disable-next-line no-unsanitized/property

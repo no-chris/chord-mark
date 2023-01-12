@@ -23,6 +23,8 @@ import { chordRendererFactory } from 'chord-symbol';
 import lineTypes from '../../parser/lineTypes';
 import replaceRepeatedBars from '../replaceRepeatedBars';
 
+import { defaultTimeSignature } from '../../parser/syntax';
+
 /**
  * @param {Song} parsedSong
  * @param {('auto'|'flat'|'sharp')} accidentalsType
@@ -39,6 +41,10 @@ import replaceRepeatedBars from '../replaceRepeatedBars';
  * @param {('never'|'uneven'|'always')} printChordsDuration
  * @param {('never'|'grids'|'always')} printBarSeparators - mainly useful when converting a ChordMark file to a format that
  * do not allow bar separators to be printed (e.g. Ultimate Guitar)
+ * @param {Boolean} printSubBeatDelimiters - mainly useful when converting a ChordMark file to a format that
+ * do not allow sub-beat groups to be printed (e.g. Ultimate Guitar)
+ * @param {Boolean} printInlineTimeSignatures - mainly useful when converting a ChordMark file to a format that
+ * do not allow inline time signatures to be printed (e.g. Ultimate Guitar)
  * @param {Number} transposeValue
  * @param {Boolean} useShortNamings
  * @returns {String} rendered HTML
@@ -59,6 +65,8 @@ export default function renderSong(
 		harmonizeAccidentals = true,
 		printChordsDuration = 'uneven',
 		printBarSeparators = 'always',
+		printSubBeatDelimiters: shouldPrintSubBeatDelimiters = true,
+		printInlineTimeSignatures: shouldPrintInlineTimeSignatures = true,
 		simplifyChords = 'none',
 		transposeValue = 0,
 		useShortNamings = true,
@@ -67,15 +75,22 @@ export default function renderSong(
 	let { allLines, allChords } = parsedSong;
 
 	let isFirstLyricLineOfSection = false;
+	let contextTimeSignature = defaultTimeSignature.string;
+	let previousBarTimeSignature;
 
 	allLines = renderChords()
 		.map(addPrintChordsDurationsFlag)
+		.map(addPrintBarTimeSignatureFlag)
 		.filter(shouldRenderLine)
 		.map((line) => {
 			return replaceRepeatedBars(line, { alignChordsWithLyrics });
 		});
 
-	const maxBeatsWidth = getMaxBeatsWidth(allLines, shouldAlignChords);
+	const maxBeatsWidth = getMaxBeatsWidth(
+		allLines,
+		shouldAlignChordsWithLyrics,
+		shouldPrintSubBeatDelimiters
+	);
 
 	allLines = renderAllSectionsLabels(allLines, {
 		expandSectionMultiply,
@@ -130,6 +145,22 @@ export default function renderSong(
 		if (line.type === lineTypes.CHORD) {
 			line.model.allBars.forEach((bar) => {
 				bar.shouldPrintChordsDuration = shouldPrintChordsDuration(bar);
+			});
+		}
+		return line;
+	}
+
+	function addPrintBarTimeSignatureFlag(line) {
+		if (line.type === lineTypes.TIME_SIGNATURE) {
+			contextTimeSignature = line.string;
+		} else if (line.type === lineTypes.CHORD) {
+			line.model.allBars.forEach((bar, barIndex) => {
+				bar.shouldPrintBarTimeSignature =
+					(barIndex === 0 &&
+						bar.timeSignature.string !== contextTimeSignature) ||
+					(barIndex > 0 &&
+						bar.timeSignature.string !== previousBarTimeSignature);
+				previousBarTimeSignature = bar.timeSignature.string;
 			});
 		}
 		return line;
@@ -193,20 +224,27 @@ export default function renderSong(
 	function spaceChordLine(line, lineIndex) {
 		if (line.type === lineTypes.CHORD) {
 			let spaced =
-				alignBars && !shouldAlignChords(line)
+				alignBars && !shouldAlignChordsWithLyrics(line)
 					? alignedChordSpacer(
 							line.model,
 							maxBeatsWidth,
-							shouldPrintBarSeparators(line.model)
+							shouldPrintBarSeparators(line.model),
+							shouldPrintSubBeatDelimiters
 					  )
 					: simpleChordSpacer(line.model);
 
 			const nextLine = allLines[lineIndex + 1];
-			if (shouldAlignChords(line)) {
+			if (shouldAlignChordsWithLyrics(line)) {
 				const { chordLine, lyricsLine } = chordLyricsSpacer(
 					spaced,
 					nextLine.model,
-					shouldPrintBarSeparators(line.model)
+					{
+						shouldPrintBarSeparators: shouldPrintBarSeparators(
+							line.model
+						),
+						shouldPrintSubBeatDelimiters,
+						shouldPrintInlineTimeSignatures,
+					}
 				);
 				allLines[lineIndex + 1].model = lyricsLine;
 				spaced = chordLine;
@@ -226,10 +264,13 @@ export default function renderSong(
 				let shouldClosePriorSection;
 
 				if (line.type === lineTypes.CHORD) {
-					rendered = renderChordLineModel(
-						line.model,
-						shouldPrintBarSeparators(line.model)
-					);
+					rendered = renderChordLineModel(line.model, {
+						shouldPrintBarSeparators: shouldPrintBarSeparators(
+							line.model
+						),
+						shouldPrintSubBeatDelimiters,
+						shouldPrintInlineTimeSignatures,
+					});
 				} else if (line.type === lineTypes.EMPTY_LINE) {
 					rendered = renderEmptyLine();
 				} else if (line.type === lineTypes.SECTION_LABEL) {
@@ -265,7 +306,7 @@ export default function renderSong(
 			.filter(Boolean);
 	}
 
-	function shouldAlignChords(line) {
+	function shouldAlignChordsWithLyrics(line) {
 		return (
 			chartType === 'all' &&
 			alignChordsWithLyrics &&
