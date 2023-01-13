@@ -55,7 +55,9 @@
 		opacity: 0.5;
 	}
 
-	.cmChordDuration {
+	.cmChordDuration,
+	.cmSubBeatGroupOpener,
+	.cmSubBeatGroupCloser {
 		opacity: 0.7;
 	}
 }
