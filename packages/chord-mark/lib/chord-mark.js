@@ -17858,7 +17858,7 @@ function renderSong(parsedSong) {
     });
   }
   function getSectionWrapperClasses(line) {
-    return ["cmSection", "cmSection-" + line.model.rendered.label.replace(/[\d\s]/gi, "")];
+    return ['cmSection', 'cmSection-' + line.model.rendered.label.replace(/[\d\s]/gi, '')];
   }
   function addPrintChordsDurationsFlag(line) {
     if (line.type === parser_lineTypes.CHORD) {
@@ -17891,7 +17891,7 @@ function renderSong(parsedSong) {
     var shouldSkipSectionCopyLine = line.type !== parser_lineTypes.SECTION_LABEL && line.isFromSectionCopy && !expandSectionCopy;
     return !shouldSkipSectionMultiplyLine && !shouldSkipAutoRepeatChordLine && !shouldSkipSectionCopyLine;
   }
-  function isLastLine(allLines, i) {
+  function isLastLine(i) {
     return allLines.length - 1 === i;
   }
   function isFiltered(line) {
@@ -17961,7 +17961,7 @@ function renderSong(parsedSong) {
         isFromSectionCopy: line.isFromSectionCopy,
         shouldOpenSection: shouldOpenSection,
         shouldClosePriorSection: shouldClosePriorSection,
-        shouldCloseFinalSection: isLastLine(allLines, i) && lineIsInASection,
+        shouldCloseFinalSection: isLastLine(i) && lineIsInASection,
         sectionWrapperClasses: sectionWrapperClasses
       });
     }).filter(Boolean);
