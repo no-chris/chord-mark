@@ -17463,8 +17463,23 @@ function renderEmptyLine_render() {
 ;// CONCATENATED MODULE: ./src/renderer/components/tpl/line.js
 var line_render = function render(_ref) {
   var line = _ref.line,
-    lineClasses = _ref.lineClasses;
-  return "<p class=\"".concat(lineClasses, "\">").concat(line, "</p>");
+    lineClasses = _ref.lineClasses,
+    shouldOpenSection = _ref.shouldOpenSection,
+    sectionWrapperClasses = _ref.sectionWrapperClasses,
+    shouldClosePriorSection = _ref.shouldClosePriorSection,
+    shouldCloseFinalSection = _ref.shouldCloseFinalSection;
+  var wrapper = '';
+  if (shouldClosePriorSection) {
+    wrapper += '</div>';
+  }
+  if (shouldOpenSection) {
+    wrapper += "<div class=\"".concat(sectionWrapperClasses, "\">");
+  }
+  wrapper += "<p class=\"".concat(lineClasses, "\">").concat(line, "</p>");
+  if (shouldCloseFinalSection) {
+    wrapper += "</div>";
+  }
+  return wrapper;
 };
 /* harmony default export */ const tpl_line = (line_render);
 ;// CONCATENATED MODULE: ./src/renderer/components/renderLine.js
@@ -17476,6 +17491,10 @@ var line_render = function render(_ref) {
  * @param {Boolean} isFromChordLineRepeater
  * @param {Boolean} isFromSectionCopy
  * @param {Boolean} isFromSectionMultiply
+ * @param {Boolean} shouldOpenSection
+ * @param {Boolean} shouldClosePriorSection
+ * @param {Boolean} shouldCloseFinalSection
+ * @param {Array} sectionWrapperClasses
  * @returns {String} rendered html
  */
 function renderLine_render(line) {
@@ -17487,7 +17506,15 @@ function renderLine_render(line) {
     _ref$isFromSectionCop = _ref.isFromSectionCopy,
     isFromSectionCopy = _ref$isFromSectionCop === void 0 ? false : _ref$isFromSectionCop,
     _ref$isFromSectionMul = _ref.isFromSectionMultiply,
-    isFromSectionMultiply = _ref$isFromSectionMul === void 0 ? false : _ref$isFromSectionMul;
+    isFromSectionMultiply = _ref$isFromSectionMul === void 0 ? false : _ref$isFromSectionMul,
+    _ref$shouldOpenSectio = _ref.shouldOpenSection,
+    shouldOpenSection = _ref$shouldOpenSectio === void 0 ? false : _ref$shouldOpenSectio,
+    _ref$shouldClosePrior = _ref.shouldClosePriorSection,
+    shouldClosePriorSection = _ref$shouldClosePrior === void 0 ? false : _ref$shouldClosePrior,
+    _ref$shouldCloseFinal = _ref.shouldCloseFinalSection,
+    shouldCloseFinalSection = _ref$shouldCloseFinal === void 0 ? false : _ref$shouldCloseFinal,
+    _ref$sectionWrapperCl = _ref.sectionWrapperClasses,
+    sectionWrapperClasses = _ref$sectionWrapperCl === void 0 ? [] : _ref$sectionWrapperCl;
   var lineClasses = ['cmLine'];
   if (isFromAutoRepeatChords) {
     lineClasses.push('cmLine--isFromAutoRepeatChords');
@@ -17503,7 +17530,11 @@ function renderLine_render(line) {
   }
   return tpl_line({
     line: line,
-    lineClasses: lineClasses.join(' ')
+    lineClasses: lineClasses.join(' '),
+    shouldOpenSection: shouldOpenSection,
+    sectionWrapperClasses: sectionWrapperClasses.join(' '),
+    shouldClosePriorSection: shouldClosePriorSection,
+    shouldCloseFinalSection: shouldCloseFinalSection
   });
 }
 ;// CONCATENATED MODULE: ./src/renderer/components/tpl/sectionLabel.js
@@ -17826,6 +17857,9 @@ function renderSong(parsedSong) {
       useFlats: accidental === 'flat'
     });
   }
+  function getSectionWrapperClasses(line) {
+    return ["cmSection", "cmSection-" + line.model.rendered.label.replace(/[\d\s]/gi, "")];
+  }
   function addPrintChordsDurationsFlag(line) {
     if (line.type === parser_lineTypes.CHORD) {
       line.model.allBars.forEach(function (bar) {
@@ -17856,6 +17890,9 @@ function renderSong(parsedSong) {
     var shouldSkipSectionMultiplyLine = line.isFromSectionMultiply && !expandSectionMultiply;
     var shouldSkipSectionCopyLine = line.type !== parser_lineTypes.SECTION_LABEL && line.isFromSectionCopy && !expandSectionCopy;
     return !shouldSkipSectionMultiplyLine && !shouldSkipAutoRepeatChordLine && !shouldSkipSectionCopyLine;
+  }
+  function isLastLine(allLines, i) {
+    return allLines.length - 1 === i;
   }
   function isFiltered(line) {
     if (chartType === 'chordsFirstLyricLine') {
@@ -17889,8 +17926,12 @@ function renderSong(parsedSong) {
     }
   }
   function renderAllLines() {
-    return allLines.map(function (line) {
+    var lineIsInASection = false;
+    return allLines.map(function (line, i) {
       var rendered;
+      var shouldOpenSection = false;
+      var sectionWrapperClasses = [];
+      var shouldClosePriorSection;
       if (line.type === parser_lineTypes.CHORD) {
         rendered = renderChordLine(line.model, {
           shouldPrintBarSeparators: shouldPrintBarSeparators(line.model),
@@ -17900,6 +17941,10 @@ function renderSong(parsedSong) {
       } else if (line.type === parser_lineTypes.EMPTY_LINE) {
         rendered = renderEmptyLine_render();
       } else if (line.type === parser_lineTypes.SECTION_LABEL) {
+        shouldOpenSection = true;
+        shouldClosePriorSection = lineIsInASection;
+        lineIsInASection = true;
+        sectionWrapperClasses = getSectionWrapperClasses(line);
         rendered = renderSectionLabel(line);
       } else if (line.type === parser_lineTypes.TIME_SIGNATURE) {
         rendered = renderTimeSignature_render(line);
@@ -17913,7 +17958,11 @@ function renderSong(parsedSong) {
         isFromSectionMultiply: line.isFromSectionMultiply,
         isFromAutoRepeatChords: line.isFromAutoRepeatChords,
         isFromChordLineRepeater: line.isFromChordLineRepeater,
-        isFromSectionCopy: line.isFromSectionCopy
+        isFromSectionCopy: line.isFromSectionCopy,
+        shouldOpenSection: shouldOpenSection,
+        shouldClosePriorSection: shouldClosePriorSection,
+        shouldCloseFinalSection: isLastLine(allLines, i) && lineIsInASection,
+        sectionWrapperClasses: sectionWrapperClasses
       });
     }).filter(Boolean);
   }

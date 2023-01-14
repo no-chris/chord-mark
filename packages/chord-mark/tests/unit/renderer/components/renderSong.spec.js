@@ -795,3 +795,65 @@ describe('Custom ChordSymbol renderer', () => {
 		expect(toText(rendered)).toBe('|Custom     |Custom     |Custom     |');
 	});
 });
+
+describe('Wrap Sections in Divs', () => {
+	test('Correctly create and class sections', () => {
+		const song = `4/4
+#verse
+A B
+verseLine1
+C.. D.. E
+verseLine2
+
+#v
+A B
+verseLine1
+
+#c
+A B
+chorusLine1
+
+#b
+A B
+brigeLine1
+
+#c`;
+		const rendered = renderSongText(song);
+		const element = htmlToElement(rendered);
+
+		expect(element.childElementCount).toBe(6);
+		expect(element.childNodes[0].nodeName).toBe('P');
+		expect(element.childNodes[1].nodeName).toBe('DIV');
+		expect(element.childNodes[1].className).toBe(
+			'cmSection cmSection-Verse'
+		);
+		expect(element.childNodes[2].nodeName).toBe('DIV');
+		expect(element.childNodes[2].className).toBe(
+			'cmSection cmSection-Verse'
+		);
+		expect(element.childNodes[3].nodeName).toBe('DIV');
+		expect(element.childNodes[3].className).toBe(
+			'cmSection cmSection-Chorus'
+		);
+		expect(element.childNodes[4].nodeName).toBe('DIV');
+		expect(element.childNodes[4].className).toBe(
+			'cmSection cmSection-Bridge'
+		);
+		expect(element.childNodes[5].nodeName).toBe('DIV');
+		expect(element.childNodes[5].className).toBe(
+			'cmSection cmSection-Chorus'
+		);
+	});
+
+	test('If no sections are given, create no DIV wrappers', () => {
+		const song = `A B
+verseLine1`;
+		const rendered = renderSongText(song);
+		const element = htmlToElement(rendered);
+
+		expect(element.childElementCount).toBe(2);
+		expect(element.nodeName).toBe('DIV');
+		expect(element.childNodes[0].nodeName).toBe('P');
+		expect(element.childNodes[1].nodeName).toBe('P');
+	});
+});

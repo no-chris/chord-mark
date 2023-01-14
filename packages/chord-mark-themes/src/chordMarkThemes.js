@@ -26,6 +26,10 @@ const themes = [
 		key: 'print',
 	},
 	{
+		name: 'Print 2',
+		key: 'print2',
+	},
+	{
 		name: 'Text',
 		key: 'text',
 	},

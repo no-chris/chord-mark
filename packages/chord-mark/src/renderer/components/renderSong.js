@@ -134,6 +134,13 @@ export default function renderSong(
 		});
 	}
 
+	function getSectionWrapperClasses(line) {
+		return [
+			'cmSection',
+			'cmSection-' + line.model.rendered.label.replace(/[\d\s]/gi, ''),
+		];
+	}
+
 	function addPrintChordsDurationsFlag(line) {
 		if (line.type === lineTypes.CHORD) {
 			line.model.allBars.forEach((bar) => {
@@ -191,6 +198,10 @@ export default function renderSong(
 		);
 	}
 
+	function isLastLine(i) {
+		return allLines.length - 1 === i;
+	}
+
 	function isFiltered(line) {
 		if (chartType === 'chordsFirstLyricLine') {
 			if (line.type === lineTypes.SECTION_LABEL) {
@@ -243,9 +254,14 @@ export default function renderSong(
 	}
 
 	function renderAllLines() {
+		let lineIsInASection = false;
+
 		return allLines
-			.map((line) => {
+			.map((line, i) => {
 				let rendered;
+				let shouldOpenSection = false;
+				let sectionWrapperClasses = [];
+				let shouldClosePriorSection;
 
 				if (line.type === lineTypes.CHORD) {
 					rendered = renderChordLineModel(line.model, {
@@ -258,6 +274,14 @@ export default function renderSong(
 				} else if (line.type === lineTypes.EMPTY_LINE) {
 					rendered = renderEmptyLine();
 				} else if (line.type === lineTypes.SECTION_LABEL) {
+					shouldOpenSection = true;
+
+					shouldClosePriorSection = lineIsInASection;
+
+					lineIsInASection = true;
+
+					sectionWrapperClasses = getSectionWrapperClasses(line);
+
 					rendered = renderSectionLabelLine(line);
 				} else if (line.type === lineTypes.TIME_SIGNATURE) {
 					rendered = renderTimeSignature(line);
@@ -267,11 +291,16 @@ export default function renderSong(
 						chartType,
 					});
 				}
+
 				return renderLine(rendered, {
 					isFromSectionMultiply: line.isFromSectionMultiply,
 					isFromAutoRepeatChords: line.isFromAutoRepeatChords,
 					isFromChordLineRepeater: line.isFromChordLineRepeater,
 					isFromSectionCopy: line.isFromSectionCopy,
+					shouldOpenSection,
+					shouldClosePriorSection,
+					shouldCloseFinalSection: isLastLine(i) && lineIsInASection,
+					sectionWrapperClasses,
 				});
 			})
 			.filter(Boolean);

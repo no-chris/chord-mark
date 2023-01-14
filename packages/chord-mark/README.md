@@ -50,6 +50,8 @@ You can either use the `chord-mark-themes` module or design your own themes.
 The following list of CSS classes are available:
 
 -   `cmSong`
+-   `cmSection`
+-   `cmSection-xxx`, where `xxx` is the section name
 -   `cmLine`
 -   `cmLine--isFromAutoRepeatChords`
 -   `cmLine--isFromChordLineRepeater`
