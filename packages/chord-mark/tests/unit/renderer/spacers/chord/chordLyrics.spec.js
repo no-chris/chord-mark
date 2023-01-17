@@ -14,7 +14,6 @@ describe('chordLyricsSpacer', () => {
 });
 
 describe.each([
-	/* */
 	[
 		'Single character chords',
 		'A D A E',
@@ -159,7 +158,6 @@ describe.each([
 		'|{A   B  Dmi7}  A {G13 F7      E7}   |',
 		'  Put me on top of the correct lyrics',
 	],
-	/* */
 	[
 		'sub-beat groups: adjust lyric token with extra space(s) before sub-beat group opener',
 		'A.. BbmiMa7. {G13 F7 E7}',
@@ -174,7 +172,6 @@ describe.each([
 		'|C  {F C/E} {Dmi C} |C G |',
 		'  No woman   no  cry',
 	],
-	/* */
 	[
 		'sub-beat group: hide delimiters',
 		'{A B Dm7} A.. {Gmi F7 E7}',
@@ -266,7 +263,6 @@ describe.each([
 		'     Put     me            on top        of       the     correct          lyrics',
 		{ shouldPrintBarTimeSignature: true, shouldPrintChordsDuration: true },
 	],
-	/* */
 ])(
 	'%s',
 	(
