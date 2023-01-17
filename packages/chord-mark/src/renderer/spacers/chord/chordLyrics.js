@@ -72,6 +72,9 @@ export default function space(
 				);
 
 				const isLastChordOfBar = chordIndex === allChords.length - 1;
+				const isFollowedBySubBeatGroup =
+					allChords[chordIndex + 1] &&
+					allChords[chordIndex + 1].isFirstOfSubBeat;
 
 				if (lyricToken.length - chordToken.length > 0) {
 					const isLastLyricToken = tokenizedLyrics.length === 0;
@@ -80,14 +83,14 @@ export default function space(
 					chord.spacesAfter = getChordSpacesAfter(
 						isLastChordOfBar,
 						isLastLyricToken,
-						allChords[chordIndex + 1]
+						isFollowedBySubBeatGroup
 					);
 				} else {
 					chord.spacesAfter = chordSpaceAfterDefault;
 					lyricToken += symbols.lyricsSpacer.repeat(
 						getLyricSpacesAfter(
 							isLastChordOfBar,
-							allChords[chordIndex + 1]
+							isFollowedBySubBeatGroup
 						)
 					);
 				}
@@ -161,7 +164,7 @@ export default function space(
 	function getChordSpacesAfter(
 		isLastChordOfBar,
 		isLastLyricToken,
-		nextChord
+		isFollowedBySubBeatGroup
 	) {
 		let spacesAfter = lyricToken.length - chordToken.length;
 
@@ -171,8 +174,7 @@ export default function space(
 		const shouldMakeRoomForSubBeatOpener =
 			!isLastChordOfBar &&
 			shouldPrintSubBeatDelimiters &&
-			nextChord &&
-			nextChord.isFirstOfSubBeat;
+			isFollowedBySubBeatGroup;
 
 		if (shouldMakeRoomForBarSep || shouldMakeRoomForSubBeatOpener) {
 			if (spacesAfter > 1) {
@@ -184,13 +186,13 @@ export default function space(
 		return spacesAfter;
 	}
 
-	function getLyricSpacesAfter(isLastChordOfBar, nextChord) {
+	function getLyricSpacesAfter(isLastChordOfBar, isFollowedBySubBeatGroup) {
 		let lyricsSpaceAfter =
 			chordToken.length - lyricToken.length + chordSpaceAfterDefault;
 
 		if (isLastChordOfBar && shouldPrintBarSeparators) {
 			lyricsSpaceAfter++;
-		} else if (nextChord && nextChord.isFirstOfSubBeat) {
+		} else if (isFollowedBySubBeatGroup) {
 			lyricsSpaceAfter++;
 		}
 
