@@ -8567,7 +8567,7 @@ var isValidChord = function isValidChord(chord) {
 /***/ 7856:
 /***/ (function(module) {
 
-/*! @license DOMPurify 2.4.3 | (c) Cure53 and other contributors | Released under the Apache license 2.0 and Mozilla Public License 2.0 | github.com/cure53/DOMPurify/blob/2.4.3/LICENSE */
+/*! @license DOMPurify 2.4.0 | (c) Cure53 and other contributors | Released under the Apache license 2.0 and Mozilla Public License 2.0 | github.com/cure53/DOMPurify/blob/2.4.0/LICENSE */
 
 (function (global, factory) {
    true ? module.exports = factory() :
@@ -8697,7 +8697,6 @@ var isValidChord = function isValidChord(chord) {
   var arrayPop = unapply(Array.prototype.pop);
   var arrayPush = unapply(Array.prototype.push);
   var stringToLowerCase = unapply(String.prototype.toLowerCase);
-  var stringToString = unapply(String.prototype.toString);
   var stringMatch = unapply(String.prototype.match);
   var stringReplace = unapply(String.prototype.replace);
   var stringIndexOf = unapply(String.prototype.indexOf);
@@ -8764,7 +8763,7 @@ var isValidChord = function isValidChord(chord) {
     var property;
 
     for (property in object) {
-      if (apply(hasOwnProperty, object, [property]) === true) {
+      if (apply(hasOwnProperty, object, [property])) {
         newObject[property] = object[property];
       }
     }
@@ -8824,7 +8823,6 @@ var isValidChord = function isValidChord(chord) {
   var MUSTACHE_EXPR = seal(/\{\{[\w\W]*|[\w\W]*\}\}/gm); // Specify template detection regex for SAFE_FOR_TEMPLATES mode
 
   var ERB_EXPR = seal(/<%[\w\W]*|[\w\W]*%>/gm);
-  var TMPLIT_EXPR = seal(/\${[\w\W]*}/gm);
   var DATA_ATTR = seal(/^data-[\-\w.\u00B7-\uFFFF]/); // eslint-disable-line no-useless-escape
 
   var ARIA_ATTR = seal(/^aria-[\-\w]+$/); // eslint-disable-line no-useless-escape
@@ -8896,7 +8894,7 @@ var isValidChord = function isValidChord(chord) {
      */
 
 
-    DOMPurify.version = '2.4.3';
+    DOMPurify.version = '2.4.0';
     /**
      * Array of elements that DOMPurify removed during sanitation.
      * Empty if nothing was removed.
@@ -8965,7 +8963,6 @@ var isValidChord = function isValidChord(chord) {
     DOMPurify.isSupported = typeof getParentNode === 'function' && implementation && typeof implementation.createHTMLDocument !== 'undefined' && documentMode !== 9;
     var MUSTACHE_EXPR$1 = MUSTACHE_EXPR,
         ERB_EXPR$1 = ERB_EXPR,
-        TMPLIT_EXPR$1 = TMPLIT_EXPR,
         DATA_ATTR$1 = DATA_ATTR,
         ARIA_ATTR$1 = ARIA_ATTR,
         IS_SCRIPT_OR_DATA$1 = IS_SCRIPT_OR_DATA,
@@ -9105,10 +9102,6 @@ var isValidChord = function isValidChord(chord) {
 
     var NAMESPACE = HTML_NAMESPACE;
     var IS_EMPTY_INPUT = false;
-    /* Allowed XHTML+XML namespaces */
-
-    var ALLOWED_NAMESPACES = null;
-    var DEFAULT_ALLOWED_NAMESPACES = addToSet({}, [MATHML_NAMESPACE, SVG_NAMESPACE, HTML_NAMESPACE], stringToString);
     /* Parsing of strict XHTML documents */
 
     var PARSER_MEDIA_TYPE;
@@ -9152,12 +9145,13 @@ var isValidChord = function isValidChord(chord) {
       PARSER_MEDIA_TYPE = // eslint-disable-next-line unicorn/prefer-includes
       SUPPORTED_PARSER_MEDIA_TYPES.indexOf(cfg.PARSER_MEDIA_TYPE) === -1 ? PARSER_MEDIA_TYPE = DEFAULT_PARSER_MEDIA_TYPE : PARSER_MEDIA_TYPE = cfg.PARSER_MEDIA_TYPE; // HTML tags and attributes are not case-sensitive, converting to lowercase. Keeping XHTML as is.
 
-      transformCaseFunc = PARSER_MEDIA_TYPE === 'application/xhtml+xml' ? stringToString : stringToLowerCase;
+      transformCaseFunc = PARSER_MEDIA_TYPE === 'application/xhtml+xml' ? function (x) {
+        return x;
+      } : stringToLowerCase;
       /* Set configuration parameters */
 
       ALLOWED_TAGS = 'ALLOWED_TAGS' in cfg ? addToSet({}, cfg.ALLOWED_TAGS, transformCaseFunc) : DEFAULT_ALLOWED_TAGS;
       ALLOWED_ATTR = 'ALLOWED_ATTR' in cfg ? addToSet({}, cfg.ALLOWED_ATTR, transformCaseFunc) : DEFAULT_ALLOWED_ATTR;
-      ALLOWED_NAMESPACES = 'ALLOWED_NAMESPACES' in cfg ? addToSet({}, cfg.ALLOWED_NAMESPACES, stringToString) : DEFAULT_ALLOWED_NAMESPACES;
       URI_SAFE_ATTRIBUTES = 'ADD_URI_SAFE_ATTR' in cfg ? addToSet(clone(DEFAULT_URI_SAFE_ATTRIBUTES), // eslint-disable-line indent
       cfg.ADD_URI_SAFE_ATTR, // eslint-disable-line indent
       transformCaseFunc // eslint-disable-line indent
@@ -9340,7 +9334,7 @@ var isValidChord = function isValidChord(chord) {
 
       if (!parent || !parent.tagName) {
         parent = {
-          namespaceURI: NAMESPACE,
+          namespaceURI: HTML_NAMESPACE,
           tagName: 'template'
         };
       }
@@ -9348,17 +9342,13 @@ var isValidChord = function isValidChord(chord) {
       var tagName = stringToLowerCase(element.tagName);
       var parentTagName = stringToLowerCase(parent.tagName);
 
-      if (!ALLOWED_NAMESPACES[element.namespaceURI]) {
-        return false;
-      }
-
       if (element.namespaceURI === SVG_NAMESPACE) {
         // The only way to switch from HTML namespace to SVG
         // is via <svg>. If it happens via any other tag, then
         // it should be killed.
         if (parent.namespaceURI === HTML_NAMESPACE) {
           return tagName === 'svg';
-        } // The only way to switch from MathML to SVG is via`
+        } // The only way to switch from MathML to SVG is via
         // svg if parent is either <annotation-xml> or MathML
         // text integration points.
 
@@ -9406,15 +9396,9 @@ var isValidChord = function isValidChord(chord) {
 
 
         return !ALL_MATHML_TAGS[tagName] && (COMMON_SVG_AND_HTML_ELEMENTS[tagName] || !ALL_SVG_TAGS[tagName]);
-      } // For XHTML and XML documents that support custom namespaces
-
-
-      if (PARSER_MEDIA_TYPE === 'application/xhtml+xml' && ALLOWED_NAMESPACES[element.namespaceURI]) {
-        return true;
       } // The code should never reach this place (this means
       // that the element somehow got namespace that is not
-      // HTML, SVG, MathML or allowed via ALLOWED_NAMESPACES).
-      // Return false just in case.
+      // HTML, SVG or MathML). Return false just in case.
 
 
       return false;
@@ -9498,7 +9482,7 @@ var isValidChord = function isValidChord(chord) {
         leadingWhitespace = matches && matches[0];
       }
 
-      if (PARSER_MEDIA_TYPE === 'application/xhtml+xml' && NAMESPACE === HTML_NAMESPACE) {
+      if (PARSER_MEDIA_TYPE === 'application/xhtml+xml') {
         // Root of XHTML doc must contain xmlns declaration (see https://www.w3.org/TR/xhtml1/normative.html#strict)
         dirty = '<html xmlns="http://www.w3.org/1999/xhtml"><head></head><body>' + dirty + '</body></html>';
       }
@@ -9521,7 +9505,7 @@ var isValidChord = function isValidChord(chord) {
         doc = implementation.createDocument(NAMESPACE, 'template', null);
 
         try {
-          doc.documentElement.innerHTML = IS_EMPTY_INPUT ? emptyHTML : dirtyPayload;
+          doc.documentElement.innerHTML = IS_EMPTY_INPUT ? '' : dirtyPayload;
         } catch (_) {// Syntax error if dirtyPayload is invalid xml
         }
       }
@@ -9561,7 +9545,7 @@ var isValidChord = function isValidChord(chord) {
 
 
     var _isClobbered = function _isClobbered(elm) {
-      return elm instanceof HTMLFormElement && (typeof elm.nodeName !== 'string' || typeof elm.textContent !== 'string' || typeof elm.removeChild !== 'function' || !(elm.attributes instanceof NamedNodeMap) || typeof elm.removeAttribute !== 'function' || typeof elm.setAttribute !== 'function' || typeof elm.namespaceURI !== 'string' || typeof elm.insertBefore !== 'function' || typeof elm.hasChildNodes !== 'function');
+      return elm instanceof HTMLFormElement && (typeof elm.nodeName !== 'string' || typeof elm.textContent !== 'string' || typeof elm.removeChild !== 'function' || !(elm.attributes instanceof NamedNodeMap) || typeof elm.removeAttribute !== 'function' || typeof elm.setAttribute !== 'function' || typeof elm.namespaceURI !== 'string' || typeof elm.insertBefore !== 'function');
     };
     /**
      * _isNode
@@ -9703,7 +9687,6 @@ var isValidChord = function isValidChord(chord) {
         content = currentNode.textContent;
         content = stringReplace(content, MUSTACHE_EXPR$1, ' ');
         content = stringReplace(content, ERB_EXPR$1, ' ');
-        content = stringReplace(content, TMPLIT_EXPR$1, ' ');
 
         if (currentNode.textContent !== content) {
           arrayPush(DOMPurify.removed, {
@@ -9852,7 +9835,6 @@ var isValidChord = function isValidChord(chord) {
         if (SAFE_FOR_TEMPLATES) {
           value = stringReplace(value, MUSTACHE_EXPR$1, ' ');
           value = stringReplace(value, ERB_EXPR$1, ' ');
-          value = stringReplace(value, TMPLIT_EXPR$1, ' ');
         }
         /* Is `value` valid for this attribute? */
 
@@ -10148,7 +10130,6 @@ var isValidChord = function isValidChord(chord) {
       if (SAFE_FOR_TEMPLATES) {
         serializedHTML = stringReplace(serializedHTML, MUSTACHE_EXPR$1, ' ');
         serializedHTML = stringReplace(serializedHTML, ERB_EXPR$1, ' ');
-        serializedHTML = stringReplace(serializedHTML, TMPLIT_EXPR$1, ' ');
       }
 
       return trustedTypesPolicy && RETURN_TRUSTED_TYPE ? trustedTypesPolicy.createHTML(serializedHTML) : serializedHTML;
@@ -15817,7 +15798,6 @@ function isTimeSignatureString(string) {
 }
 ;// CONCATENATED MODULE: ./src/parser/parseTimeSignature.js
 
-
 /**
  * @typedef {Object} TimeSignature
  * @type {Object}
@@ -15831,19 +15811,23 @@ function isTimeSignatureString(string) {
  * @param {String} string
  * @returns {TimeSignature}
  */
+
 function parseTimeSignature(string) {
   if (!isTimeSignatureString(string)) {
     throw new TypeError('Expected time signature string, received: ' + string);
   }
+
   var array = string.split('/');
   var count = Number.parseInt(array[0], 10);
   var value = Number.parseInt(array[1], 10);
   var beatCount = count;
+
   if (value === 2) {
     beatCount = count * 2;
   } else if (value === 8) {
     beatCount = count / 3;
   }
+
   return {
     string: string,
     count: count,
@@ -15896,7 +15880,6 @@ function isChord(potentialChord) {
 
 var chordBeatCountSymbols = new RegExp(escapeRegExp_default()(syntax.chordBeatCount) + '*$', 'g');
 var barRepeatSymbols = new RegExp('^' + escapeRegExp_default()(syntax.barRepeat) + '+$');
-
 /**
  * Check if the given line only contains chords and allowed characters.
  * The parsing might still fail at a later stage if some rules are not properly enforced,
@@ -15904,6 +15887,7 @@ var barRepeatSymbols = new RegExp('^' + escapeRegExp_default()(syntax.barRepeat)
  * @param {String} line
  * @returns {Boolean}
  */
+
 function isChordLine() {
   var line = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
   return clearSpaces(getParseableChordLine(line)).split(' ').every(function (potentialChordToken, index, allTokens) {
@@ -15911,25 +15895,33 @@ function isChordLine() {
     return isChord(clean) || potentialChordToken.match(barRepeatSymbols) && index > 0 || clean === syntax.noChord || isTimeSignatureString(potentialChordToken) && allTokens.length > 1;
   });
 }
+
 var getParseableChordLine = function getParseableChordLine(chordLine) {
   return chordLine.replaceAll('add ', 'add');
 };
+
 var cleanToken = function cleanToken(token) {
   return removeSubBeatDelimiters(removeBeatCount(token));
 };
+
 var removeBeatCount = function removeBeatCount(token) {
   return token.replace(chordBeatCountSymbols, '');
 };
+
 var removeSubBeatDelimiters = function removeSubBeatDelimiters(token) {
   var clean = token;
+
   if (token.startsWith(syntax.subBeatOpener)) {
     clean = clean.substring(syntax.subBeatOpener.length);
   }
+
   if (token.endsWith(syntax.subBeatCloser)) {
     clean = clean.substring(0, clean.length - syntax.subBeatCloser.length);
   }
+
   return clean;
 };
+
 
 ;// CONCATENATED MODULE: ./src/parser/matchers/isChordLineRepeater.js
 
@@ -15948,11 +15940,11 @@ var isEqual = __webpack_require__(8446);
 var isEqual_default = /*#__PURE__*/__webpack_require__.n(isEqual);
 ;// CONCATENATED MODULE: ./src/parser/parseChord.js
 
-
 /**
  * @param chordString
  * @returns {Chord}
  */
+
 function parseChordWrapper(chordString) {
   var parseChord = (0,chord_symbol.chordParserFactory)();
   return parseChord(chordString);
@@ -15965,46 +15957,68 @@ var lodash_isFinite = __webpack_require__(7398);
 var isFinite_default = /*#__PURE__*/__webpack_require__.n(lodash_isFinite);
 ;// CONCATENATED MODULE: ./src/parser/exceptions/InvalidBeatCountException.js
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
-function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
 function _wrapNativeSuper(Class) { var _cache = typeof Map === "function" ? new Map() : undefined; _wrapNativeSuper = function _wrapNativeSuper(Class) { if (Class === null || !_isNativeFunction(Class)) return Class; if (typeof Class !== "function") { throw new TypeError("Super expression must either be null or a function"); } if (typeof _cache !== "undefined") { if (_cache.has(Class)) return _cache.get(Class); _cache.set(Class, Wrapper); } function Wrapper() { return _construct(Class, arguments, _getPrototypeOf(this).constructor); } Wrapper.prototype = Object.create(Class.prototype, { constructor: { value: Wrapper, enumerable: false, writable: true, configurable: true } }); return _setPrototypeOf(Wrapper, Class); }; return _wrapNativeSuper(Class); }
+
 function _construct(Parent, args, Class) { if (_isNativeReflectConstruct()) { _construct = Reflect.construct.bind(); } else { _construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) _setPrototypeOf(instance, Class.prototype); return instance; }; } return _construct.apply(null, arguments); }
+
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
 function _isNativeFunction(fn) { return Function.toString.call(fn).indexOf("[native code]") !== -1; }
+
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
 
 
 var InvalidBeatCountException = /*#__PURE__*/function (_Error) {
   _inherits(InvalidBeatCountException, _Error);
+
   var _super = _createSuper(InvalidBeatCountException);
+
   function InvalidBeatCountException() {
     var _this;
+
     var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-      string = _ref.string,
-      duration = _ref.duration,
-      currentBeatCount = _ref.currentBeatCount,
-      beatCount = _ref.beatCount;
+        string = _ref.string,
+        duration = _ref.duration,
+        currentBeatCount = _ref.currentBeatCount,
+        beatCount = _ref.beatCount;
+
     _classCallCheck(this, InvalidBeatCountException);
+
     if (!string || !isString_default()(string)) {
       throw new TypeError('InvalidBeatCountException cannot be created without chord string, received: ' + string);
     }
+
     if (!duration || !isFinite_default()(duration)) {
       throw new TypeError('InvalidBeatCountException cannot be created without chord duration, received: ' + duration);
     }
+
     if (!currentBeatCount || !isFinite_default()(currentBeatCount)) {
       throw new TypeError('InvalidBeatCountException cannot be created without currentBeatCount, received: ' + currentBeatCount);
     }
+
     if (!beatCount || !isFinite_default()(beatCount)) {
       throw new TypeError('InvalidBeatCountException cannot be created without beatCount, received: ' + beatCount);
     }
+
     _this = _super.call(this);
     _this.name = 'InvalidBeatCountException';
     _this.string = string;
@@ -16013,84 +16027,128 @@ var InvalidBeatCountException = /*#__PURE__*/function (_Error) {
     _this.beatCount = beatCount;
     return _this;
   }
+
   return _createClass(InvalidBeatCountException);
 }( /*#__PURE__*/_wrapNativeSuper(Error));
 
+
 ;// CONCATENATED MODULE: ./src/parser/exceptions/InvalidChordRepetitionException.js
 function InvalidChordRepetitionException_typeof(obj) { "@babel/helpers - typeof"; return InvalidChordRepetitionException_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, InvalidChordRepetitionException_typeof(obj); }
-function InvalidChordRepetitionException_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, InvalidChordRepetitionException_toPropertyKey(descriptor.key), descriptor); } }
+
+function InvalidChordRepetitionException_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
 function InvalidChordRepetitionException_createClass(Constructor, protoProps, staticProps) { if (protoProps) InvalidChordRepetitionException_defineProperties(Constructor.prototype, protoProps); if (staticProps) InvalidChordRepetitionException_defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-function InvalidChordRepetitionException_toPropertyKey(arg) { var key = InvalidChordRepetitionException_toPrimitive(arg, "string"); return InvalidChordRepetitionException_typeof(key) === "symbol" ? key : String(key); }
-function InvalidChordRepetitionException_toPrimitive(input, hint) { if (InvalidChordRepetitionException_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (InvalidChordRepetitionException_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+
 function InvalidChordRepetitionException_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 function InvalidChordRepetitionException_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) InvalidChordRepetitionException_setPrototypeOf(subClass, superClass); }
+
 function InvalidChordRepetitionException_createSuper(Derived) { var hasNativeReflectConstruct = InvalidChordRepetitionException_isNativeReflectConstruct(); return function _createSuperInternal() { var Super = InvalidChordRepetitionException_getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = InvalidChordRepetitionException_getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return InvalidChordRepetitionException_possibleConstructorReturn(this, result); }; }
+
 function InvalidChordRepetitionException_possibleConstructorReturn(self, call) { if (call && (InvalidChordRepetitionException_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return InvalidChordRepetitionException_assertThisInitialized(self); }
+
 function InvalidChordRepetitionException_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
 function InvalidChordRepetitionException_wrapNativeSuper(Class) { var _cache = typeof Map === "function" ? new Map() : undefined; InvalidChordRepetitionException_wrapNativeSuper = function _wrapNativeSuper(Class) { if (Class === null || !InvalidChordRepetitionException_isNativeFunction(Class)) return Class; if (typeof Class !== "function") { throw new TypeError("Super expression must either be null or a function"); } if (typeof _cache !== "undefined") { if (_cache.has(Class)) return _cache.get(Class); _cache.set(Class, Wrapper); } function Wrapper() { return InvalidChordRepetitionException_construct(Class, arguments, InvalidChordRepetitionException_getPrototypeOf(this).constructor); } Wrapper.prototype = Object.create(Class.prototype, { constructor: { value: Wrapper, enumerable: false, writable: true, configurable: true } }); return InvalidChordRepetitionException_setPrototypeOf(Wrapper, Class); }; return InvalidChordRepetitionException_wrapNativeSuper(Class); }
+
 function InvalidChordRepetitionException_construct(Parent, args, Class) { if (InvalidChordRepetitionException_isNativeReflectConstruct()) { InvalidChordRepetitionException_construct = Reflect.construct.bind(); } else { InvalidChordRepetitionException_construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) InvalidChordRepetitionException_setPrototypeOf(instance, Class.prototype); return instance; }; } return InvalidChordRepetitionException_construct.apply(null, arguments); }
+
 function InvalidChordRepetitionException_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
 function InvalidChordRepetitionException_isNativeFunction(fn) { return Function.toString.call(fn).indexOf("[native code]") !== -1; }
+
 function InvalidChordRepetitionException_setPrototypeOf(o, p) { InvalidChordRepetitionException_setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return InvalidChordRepetitionException_setPrototypeOf(o, p); }
+
 function InvalidChordRepetitionException_getPrototypeOf(o) { InvalidChordRepetitionException_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return InvalidChordRepetitionException_getPrototypeOf(o); }
+
+
 
 var InvalidChordRepetitionException = /*#__PURE__*/function (_Error) {
   InvalidChordRepetitionException_inherits(InvalidChordRepetitionException, _Error);
+
   var _super = InvalidChordRepetitionException_createSuper(InvalidChordRepetitionException);
+
   function InvalidChordRepetitionException() {
     var _this;
+
     var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-      string = _ref.string;
+        string = _ref.string;
+
     InvalidChordRepetitionException_classCallCheck(this, InvalidChordRepetitionException);
+
     if (!string || !isString_default()(string)) {
       throw new TypeError('InvalidChordRepetitionException cannot be created without chord string, received: ' + string);
     }
+
     _this = _super.call(this);
     _this.name = 'InvalidChordRepetitionException';
     _this.string = string;
     return _this;
   }
+
   return InvalidChordRepetitionException_createClass(InvalidChordRepetitionException);
 }( /*#__PURE__*/InvalidChordRepetitionException_wrapNativeSuper(Error));
 
+
 ;// CONCATENATED MODULE: ./src/parser/exceptions/InvalidSubBeatGroupException.js
 function InvalidSubBeatGroupException_typeof(obj) { "@babel/helpers - typeof"; return InvalidSubBeatGroupException_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, InvalidSubBeatGroupException_typeof(obj); }
-function InvalidSubBeatGroupException_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, InvalidSubBeatGroupException_toPropertyKey(descriptor.key), descriptor); } }
+
+function InvalidSubBeatGroupException_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
 function InvalidSubBeatGroupException_createClass(Constructor, protoProps, staticProps) { if (protoProps) InvalidSubBeatGroupException_defineProperties(Constructor.prototype, protoProps); if (staticProps) InvalidSubBeatGroupException_defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-function InvalidSubBeatGroupException_toPropertyKey(arg) { var key = InvalidSubBeatGroupException_toPrimitive(arg, "string"); return InvalidSubBeatGroupException_typeof(key) === "symbol" ? key : String(key); }
-function InvalidSubBeatGroupException_toPrimitive(input, hint) { if (InvalidSubBeatGroupException_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (InvalidSubBeatGroupException_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+
 function InvalidSubBeatGroupException_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 function InvalidSubBeatGroupException_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) InvalidSubBeatGroupException_setPrototypeOf(subClass, superClass); }
+
 function InvalidSubBeatGroupException_createSuper(Derived) { var hasNativeReflectConstruct = InvalidSubBeatGroupException_isNativeReflectConstruct(); return function _createSuperInternal() { var Super = InvalidSubBeatGroupException_getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = InvalidSubBeatGroupException_getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return InvalidSubBeatGroupException_possibleConstructorReturn(this, result); }; }
+
 function InvalidSubBeatGroupException_possibleConstructorReturn(self, call) { if (call && (InvalidSubBeatGroupException_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return InvalidSubBeatGroupException_assertThisInitialized(self); }
+
 function InvalidSubBeatGroupException_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
 function InvalidSubBeatGroupException_wrapNativeSuper(Class) { var _cache = typeof Map === "function" ? new Map() : undefined; InvalidSubBeatGroupException_wrapNativeSuper = function _wrapNativeSuper(Class) { if (Class === null || !InvalidSubBeatGroupException_isNativeFunction(Class)) return Class; if (typeof Class !== "function") { throw new TypeError("Super expression must either be null or a function"); } if (typeof _cache !== "undefined") { if (_cache.has(Class)) return _cache.get(Class); _cache.set(Class, Wrapper); } function Wrapper() { return InvalidSubBeatGroupException_construct(Class, arguments, InvalidSubBeatGroupException_getPrototypeOf(this).constructor); } Wrapper.prototype = Object.create(Class.prototype, { constructor: { value: Wrapper, enumerable: false, writable: true, configurable: true } }); return InvalidSubBeatGroupException_setPrototypeOf(Wrapper, Class); }; return InvalidSubBeatGroupException_wrapNativeSuper(Class); }
+
 function InvalidSubBeatGroupException_construct(Parent, args, Class) { if (InvalidSubBeatGroupException_isNativeReflectConstruct()) { InvalidSubBeatGroupException_construct = Reflect.construct.bind(); } else { InvalidSubBeatGroupException_construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) InvalidSubBeatGroupException_setPrototypeOf(instance, Class.prototype); return instance; }; } return InvalidSubBeatGroupException_construct.apply(null, arguments); }
+
 function InvalidSubBeatGroupException_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
 function InvalidSubBeatGroupException_isNativeFunction(fn) { return Function.toString.call(fn).indexOf("[native code]") !== -1; }
+
 function InvalidSubBeatGroupException_setPrototypeOf(o, p) { InvalidSubBeatGroupException_setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return InvalidSubBeatGroupException_setPrototypeOf(o, p); }
+
 function InvalidSubBeatGroupException_getPrototypeOf(o) { InvalidSubBeatGroupException_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return InvalidSubBeatGroupException_getPrototypeOf(o); }
+
+
 
 
 var InvalidSubBeatGroupException = /*#__PURE__*/function (_Error) {
   InvalidSubBeatGroupException_inherits(InvalidSubBeatGroupException, _Error);
+
   var _super = InvalidSubBeatGroupException_createSuper(InvalidSubBeatGroupException);
+
   function InvalidSubBeatGroupException() {
     var _this;
+
     var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-      chordLine = _ref.chordLine,
-      symbol = _ref.symbol,
-      position = _ref.position;
+        chordLine = _ref.chordLine,
+        symbol = _ref.symbol,
+        position = _ref.position;
+
     InvalidSubBeatGroupException_classCallCheck(this, InvalidSubBeatGroupException);
+
     if (!chordLine || !isString_default()(chordLine)) {
       throw new TypeError('InvalidSubBeatGroupException cannot be created without a chordLine, received: ' + chordLine);
     }
+
     if (!symbol || !isString_default()(symbol)) {
       throw new TypeError('InvalidSubBeatGroupException cannot be created without symbol, received: ' + symbol);
     }
+
     if (!isFinite_default()(position)) {
       throw new TypeError('InvalidSubBeatGroupException cannot be created without symbol position, received: ' + position);
     }
+
     _this = _super.call(this);
     _this.name = 'InvalidSubBeatGroupException';
     _this.chordLine = chordLine;
@@ -16098,45 +16156,68 @@ var InvalidSubBeatGroupException = /*#__PURE__*/function (_Error) {
     _this.position = position;
     return _this;
   }
+
   return InvalidSubBeatGroupException_createClass(InvalidSubBeatGroupException);
 }( /*#__PURE__*/InvalidSubBeatGroupException_wrapNativeSuper(Error));
 
+
 ;// CONCATENATED MODULE: ./src/parser/exceptions/InvalidBarRepeatException.js
 function InvalidBarRepeatException_typeof(obj) { "@babel/helpers - typeof"; return InvalidBarRepeatException_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, InvalidBarRepeatException_typeof(obj); }
-function InvalidBarRepeatException_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, InvalidBarRepeatException_toPropertyKey(descriptor.key), descriptor); } }
+
+function InvalidBarRepeatException_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
 function InvalidBarRepeatException_createClass(Constructor, protoProps, staticProps) { if (protoProps) InvalidBarRepeatException_defineProperties(Constructor.prototype, protoProps); if (staticProps) InvalidBarRepeatException_defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-function InvalidBarRepeatException_toPropertyKey(arg) { var key = InvalidBarRepeatException_toPrimitive(arg, "string"); return InvalidBarRepeatException_typeof(key) === "symbol" ? key : String(key); }
-function InvalidBarRepeatException_toPrimitive(input, hint) { if (InvalidBarRepeatException_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (InvalidBarRepeatException_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+
 function InvalidBarRepeatException_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 function InvalidBarRepeatException_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) InvalidBarRepeatException_setPrototypeOf(subClass, superClass); }
+
 function InvalidBarRepeatException_createSuper(Derived) { var hasNativeReflectConstruct = InvalidBarRepeatException_isNativeReflectConstruct(); return function _createSuperInternal() { var Super = InvalidBarRepeatException_getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = InvalidBarRepeatException_getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return InvalidBarRepeatException_possibleConstructorReturn(this, result); }; }
+
 function InvalidBarRepeatException_possibleConstructorReturn(self, call) { if (call && (InvalidBarRepeatException_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return InvalidBarRepeatException_assertThisInitialized(self); }
+
 function InvalidBarRepeatException_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
 function InvalidBarRepeatException_wrapNativeSuper(Class) { var _cache = typeof Map === "function" ? new Map() : undefined; InvalidBarRepeatException_wrapNativeSuper = function _wrapNativeSuper(Class) { if (Class === null || !InvalidBarRepeatException_isNativeFunction(Class)) return Class; if (typeof Class !== "function") { throw new TypeError("Super expression must either be null or a function"); } if (typeof _cache !== "undefined") { if (_cache.has(Class)) return _cache.get(Class); _cache.set(Class, Wrapper); } function Wrapper() { return InvalidBarRepeatException_construct(Class, arguments, InvalidBarRepeatException_getPrototypeOf(this).constructor); } Wrapper.prototype = Object.create(Class.prototype, { constructor: { value: Wrapper, enumerable: false, writable: true, configurable: true } }); return InvalidBarRepeatException_setPrototypeOf(Wrapper, Class); }; return InvalidBarRepeatException_wrapNativeSuper(Class); }
+
 function InvalidBarRepeatException_construct(Parent, args, Class) { if (InvalidBarRepeatException_isNativeReflectConstruct()) { InvalidBarRepeatException_construct = Reflect.construct.bind(); } else { InvalidBarRepeatException_construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) InvalidBarRepeatException_setPrototypeOf(instance, Class.prototype); return instance; }; } return InvalidBarRepeatException_construct.apply(null, arguments); }
+
 function InvalidBarRepeatException_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
 function InvalidBarRepeatException_isNativeFunction(fn) { return Function.toString.call(fn).indexOf("[native code]") !== -1; }
+
 function InvalidBarRepeatException_setPrototypeOf(o, p) { InvalidBarRepeatException_setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return InvalidBarRepeatException_setPrototypeOf(o, p); }
+
 function InvalidBarRepeatException_getPrototypeOf(o) { InvalidBarRepeatException_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return InvalidBarRepeatException_getPrototypeOf(o); }
+
+
 
 var InvalidBarRepeatException = /*#__PURE__*/function (_Error) {
   InvalidBarRepeatException_inherits(InvalidBarRepeatException, _Error);
+
   var _super = InvalidBarRepeatException_createSuper(InvalidBarRepeatException);
+
   function InvalidBarRepeatException() {
     var _this;
+
     var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-      string = _ref.string;
+        string = _ref.string;
+
     InvalidBarRepeatException_classCallCheck(this, InvalidBarRepeatException);
+
     if (!string || !isString_default()(string)) {
       throw new TypeError('InvalidBarRepeatException cannot be created without chord string, received: ' + string);
     }
+
     _this = _super.call(this);
     _this.name = 'InvalidBarRepeatException';
     _this.string = string;
     return _this;
   }
+
   return InvalidBarRepeatException_createClass(InvalidBarRepeatException);
 }( /*#__PURE__*/InvalidBarRepeatException_wrapNativeSuper(Error));
+
 
 ;// CONCATENATED MODULE: ./src/parser/parseChordLine.js
 /* eslint-disable max-lines-per-function */
@@ -16155,7 +16236,6 @@ var InvalidBarRepeatException = /*#__PURE__*/function (_Error) {
 
 var parseChordLine_chordBeatCountSymbols = new RegExp(escapeRegExp_default()(syntax.chordBeatCount), 'g');
 var parseChordLine_barRepeatSymbols = new RegExp('^' + escapeRegExp_default()(syntax.barRepeat) + '+$');
-
 /**
  * @typedef {Object} ChordLine
  * @type {Object}
@@ -16193,18 +16273,22 @@ var parseChordLine_barRepeatSymbols = new RegExp('^' + escapeRegExp_default()(sy
  * @param {TimeSignature} timeSignature
  * @returns {ChordLine}
  */
+
 function parseChordLine(chordLine) {
   var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
-    _ref$timeSignature = _ref.timeSignature,
-    timeSignature = _ref$timeSignature === void 0 ? defaultTimeSignature : _ref$timeSignature;
+      _ref$timeSignature = _ref.timeSignature,
+      timeSignature = _ref$timeSignature === void 0 ? defaultTimeSignature : _ref$timeSignature;
+
   var _timeSignature = timeSignature,
-    beatCount = _timeSignature.beatCount;
+      beatCount = _timeSignature.beatCount;
   var allBars = [];
   var emptyBar = {
     allChords: []
   };
   var subBeatGroupsChordCount = {};
+
   var bar = cloneDeep_default()(emptyBar);
+
   var chord = {};
   var cleanedToken;
   var currentBeatCount = 0;
@@ -16221,6 +16305,7 @@ function parseChordLine(chordLine) {
       changeTimeSignature(token);
     } else {
       parseChordToken(token);
+
       if (shouldChangeBar(currentBeatCount, beatCount)) {
         changeBar();
       } else {
@@ -16232,10 +16317,13 @@ function parseChordLine(chordLine) {
   return {
     allBars: allBars
   };
+
   function repeatPreviousBars(token) {
     if (currentBeatCount === 0 && previousBar && isEqual_default()(timeSignature, previousBar.timeSignature)) {
       var repeatedBar = cloneDeep_default()(previousBar);
+
       repeatedBar.isRepeated = true;
+
       for (var i = 0; i < token.length; i++) {
         allBars.push(cloneDeep_default()(repeatedBar));
       }
@@ -16245,19 +16333,23 @@ function parseChordLine(chordLine) {
       });
     }
   }
+
   function changeTimeSignature(token) {
     timeSignature = parseTimeSignature(token);
     beatCount = timeSignature.beatCount;
     lineHadTimeSignatureChange = true;
   }
+
   function parseChordToken(token) {
     if (token.startsWith(syntax.subBeatOpener)) {
       isInSubBeatGroup = true;
     }
+
     if (isInSubBeatGroup) {
       checkSubBeatGroupToken(chordLine, token);
       updateSubBeatGroupsChordCount(token);
     }
+
     cleanedToken = cleanToken(token);
     chord = {
       string: token,
@@ -16269,6 +16361,7 @@ function parseChordLine(chordLine) {
     currentBeatCount += chord.duration;
     checkInvalidChordRepetition(bar, chord);
     bar.allChords.push(chord);
+
     if (token.endsWith(syntax.subBeatCloser)) {
       checkSubBeatGroupChordCount(token);
       isInSubBeatGroup = false;
@@ -16276,6 +16369,7 @@ function parseChordLine(chordLine) {
       currentBeatCount += 1;
     }
   }
+
   function updateSubBeatGroupsChordCount() {
     if (subBeatGroupsChordCount[subBeatGroupIndex]) {
       subBeatGroupsChordCount[subBeatGroupIndex]++;
@@ -16283,11 +16377,13 @@ function parseChordLine(chordLine) {
       subBeatGroupsChordCount[subBeatGroupIndex] = 1;
     }
   }
+
   function checkSubBeatGroupChordCount(token) {
     if (subBeatGroupsChordCount[subBeatGroupIndex] === 1 || subBeatGroupsChordCount[subBeatGroupIndex] > 4) throw new InvalidSubBeatGroupException({
       chordLine: chordLine,
       symbol: token,
       position: 0 // duh
+
     });
   }
 
@@ -16295,7 +16391,9 @@ function parseChordLine(chordLine) {
     bar.timeSignature = timeSignature;
     bar.lineHadTimeSignatureChange = lineHadTimeSignatureChange;
     bar.hasUnevenChordsDurations = hasUnevenChordsDurations(bar);
+
     var barClone = cloneDeep_default()(bar);
+
     bar.isRepeated = isEqual_default()(bar, previousBar);
     allBars.push(cloneDeep_default()(bar));
     previousBar = barClone;
@@ -16303,12 +16401,14 @@ function parseChordLine(chordLine) {
     currentBeatCount = 0;
   }
 }
+
 function checkSubBeatGroupToken(chordLine, token) {
   if (hasBeatCount(token)) {
     throw new InvalidSubBeatGroupException({
       chordLine: chordLine,
       symbol: token,
       position: 0 // duh
+
     });
   }
 }
@@ -16316,16 +16416,21 @@ function checkSubBeatGroupToken(chordLine, token) {
 function hasBeatCount(token) {
   return token.indexOf(syntax.chordBeatCount) > -1;
 }
+
 function isNoChordSymbol(token) {
   return token === syntax.noChord;
 }
+
 function getChordDuration(token, beatCount, isInSubBeatGroup) {
   if (isInSubBeatGroup) return 0; // duration is computed during post-processing for sub-beats duration
+
   return (token.match(parseChordLine_chordBeatCountSymbols) || []).length || beatCount;
 }
+
 function checkInvalidChordRepetition(bar, currentChord) {
   if (bar.allChords.length > 0) {
     var previousChord = bar.allChords[bar.allChords.length - 1];
+
     if (isEqual_default()(previousChord.model, currentChord.model) && !isChordRepetitionAllowed(previousChord, currentChord)) {
       throw new InvalidChordRepetitionException({
         string: currentChord.string
@@ -16333,12 +16438,15 @@ function checkInvalidChordRepetition(bar, currentChord) {
     }
   }
 }
+
 function isChordRepetitionAllowed(previousChord, currentChord) {
   return currentChord.string.startsWith(syntax.subBeatOpener) || previousChord.string.endsWith(syntax.subBeatCloser) && !currentChord.model.isInSubBeatGroup;
 }
+
 function shouldChangeBar(currentBeatCount, beatCount) {
   return currentBeatCount === beatCount;
 }
+
 function checkInvalidBeatCount(chord, currentBeatCount, beatCount, isLast) {
   if (hasInvalidBeatCount(currentBeatCount, beatCount, isLast)) {
     throw new InvalidBeatCountException({
@@ -16349,21 +16457,26 @@ function checkInvalidBeatCount(chord, currentBeatCount, beatCount, isLast) {
     });
   }
 }
+
 function hasInvalidBeatCount(currentBeatCount, barBeatCount, isLast) {
   return hasTooManyBeats(currentBeatCount, barBeatCount) || hasTooFewBeats(currentBeatCount, barBeatCount, isLast);
 }
+
 function hasTooManyBeats(currentBeatCount, barBeatCount) {
   return currentBeatCount > barBeatCount;
 }
+
 function hasTooFewBeats(currentBeatCount, barBeatCount, isLast) {
   return isLast && currentBeatCount < barBeatCount;
 }
+
 function hasUnevenChordsDurations(bar) {
   var firstChordDuration = bar.allChords[0].duration;
   return bar.allChords.some(function (chord) {
     return chord.duration !== firstChordDuration;
   });
 }
+
 function setSubBeatInfo(allBars, subBeatGroupsChordCount) {
   var subBeatGroupIndex = -1;
   var subBeatChordIndex = 0;
@@ -16372,10 +16485,12 @@ function setSubBeatInfo(allBars, subBeatGroupsChordCount) {
     bar.allChords.forEach(function (chord) {
       if (chord.isInSubBeatGroup) {
         var chordBeatId = barIndex + chord.beat;
+
         if (chordBeatId !== previousChordBeatId) {
           subBeatGroupIndex++;
           subBeatChordIndex = 0;
         }
+
         var durationString = (1 / subBeatGroupsChordCount[subBeatGroupIndex]).toPrecision(2);
         chord.duration = Number.parseFloat(durationString);
         chord.isFirstOfSubBeat = subBeatChordIndex === 0;
@@ -16386,16 +16501,19 @@ function setSubBeatInfo(allBars, subBeatGroupsChordCount) {
     });
   });
 }
+
 function checkSubBeatConsistency(line) {
   var errorParameters = {};
   var inSubBeat = false;
   var match;
   var regexp = new RegExp(syntax.subBeatOpener + '|' + syntax.subBeatCloser, 'g');
+
   while (match = regexp.exec(line)) {
     var symbol = match[0];
     errorParameters.chordLine = line;
     errorParameters.symbol = symbol;
     errorParameters.position = regexp.lastIndex - 1;
+
     if (match[0] === syntax.subBeatOpener) {
       if (inSubBeat) throw new InvalidSubBeatGroupException(errorParameters);
       inSubBeat = true;
@@ -16404,10 +16522,10 @@ function checkSubBeatConsistency(line) {
       inSubBeat = false;
     }
   }
+
   if (inSubBeat) throw new InvalidSubBeatGroupException(errorParameters);
 }
 ;// CONCATENATED MODULE: ./src/parser/parseSectionLabel.js
-
 
 /**
  * @typedef {Object} SectionLabel
@@ -16426,10 +16544,12 @@ function checkSubBeatConsistency(line) {
  * @param {String} string
  * @returns {SectionLabel}
  */
+
 function parseSectionLabel(string) {
   if (!isSectionLabel(string)) {
     throw new TypeError('Expected section identifier string, received: ' + string);
   }
+
   var found = string.trim().match(sectionLabelRegexp);
   return {
     string: string,
@@ -16439,7 +16559,6 @@ function parseSectionLabel(string) {
   };
 }
 ;// CONCATENATED MODULE: ./src/parser/parseLyricLine.js
-
 
 /**
  * @typedef {Object} LyricLine
@@ -16452,18 +16571,22 @@ function parseSectionLabel(string) {
  * @param {String} string
  * @returns {LyricLine}
  */
+
 function parseLyricLine(string) {
   var regexp = new RegExp(syntax.chordPositionMarker, 'g');
   var stringWithoutPositionMarkers = string.replace(regexp, '');
   var chordPositions = [];
   var tmpString = string;
   var position;
+
   while ((position = tmpString.indexOf(syntax.chordPositionMarker)) !== -1) {
     if (!chordPositions.includes(position)) {
       chordPositions.push(position);
     }
+
     tmpString = tmpString.replace(syntax.chordPositionMarker, '');
   }
+
   return {
     lyrics: stringWithoutPositionMarkers,
     chordPositions: chordPositions
@@ -16472,14 +16595,15 @@ function parseLyricLine(string) {
 ;// CONCATENATED MODULE: ./src/parser/helper/songs.js
 
 
-
 /**
  * @param {SongLine[]} allLines
  * @param {Function} fn - to execute on each bar
  * @returns {SongLine[]}
  */
+
 function forEachBarInSong(allLines, fn) {
   var newLines = _cloneDeep(allLines);
+
   newLines.forEach(function (line) {
     if (line.type === lineTypes.CHORD) {
       line.model.allBars.forEach(function (bar) {
@@ -16489,14 +16613,15 @@ function forEachBarInSong(allLines, fn) {
   });
   return newLines;
 }
-
 /**
  * @param {SongLine[]} allLines
  * @param {Function} fn - to execute on each chord
  * @returns {SongLine[]}
  */
+
 function forEachChordInSong(allLines, fn) {
   var newLines = cloneDeep_default()(allLines);
+
   newLines.forEach(function (line) {
     if (line.type === parser_lineTypes.CHORD) {
       line.model.allBars.forEach(function (bar) {
@@ -16508,14 +16633,15 @@ function forEachChordInSong(allLines, fn) {
   });
   return newLines;
 }
-
 /**
  * @param {ChordLine} chordLine
  * @param {Function} fn - to execute on each chord
  * @returns {ChordLine}
  */
+
 function forEachChordInChordLine(chordLine, fn) {
   var newChordLine = cloneDeep_default()(chordLine);
+
   newChordLine.allBars.forEach(function (bar, barIndex) {
     bar.allChords.forEach(function (chord, chordIndex) {
       fn(chord, chordIndex, barIndex);
@@ -16523,13 +16649,13 @@ function forEachChordInChordLine(chordLine, fn) {
   });
   return newChordLine;
 }
-
 /**
  * @param {SongLine[]} allLines
  * @param {String} label - the label to select
  * @param {Number} n - the index of the section to select
  * @returns {SongLine[]} all lines of the requested section
  */
+
 function getNthOfLabel(allLines, label, n) {
   var selected = [];
   var typesCount = {};
@@ -16538,11 +16664,13 @@ function getNthOfLabel(allLines, label, n) {
   allLines.forEach(function (line) {
     if (line.type === parser_lineTypes.SECTION_LABEL) {
       currentLabel = line.model.label;
+
       if (!typesCount[currentLabel]) {
         typesCount[currentLabel] = 1;
       } else {
         typesCount[currentLabel]++;
       }
+
       enableSelect = line.id === label + n;
     } else if (enableSelect) {
       selected.push(line);
@@ -16551,18 +16679,24 @@ function getNthOfLabel(allLines, label, n) {
   return selected;
 }
 ;// CONCATENATED MODULE: ./src/parser/songLinesFactory.js
-function songLinesFactory_typeof(obj) { "@babel/helpers - typeof"; return songLinesFactory_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, songLinesFactory_typeof(obj); }
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
 function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-function _defineProperty(obj, key, value) { key = songLinesFactory_toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-function songLinesFactory_toPropertyKey(arg) { var key = songLinesFactory_toPrimitive(arg, "string"); return songLinesFactory_typeof(key) === "symbol" ? key : String(key); }
-function songLinesFactory_toPrimitive(input, hint) { if (songLinesFactory_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (songLinesFactory_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 /*eslint-disable max-lines-per-function */
 
 
@@ -16578,7 +16712,6 @@ function songLinesFactory_toPrimitive(input, hint) { if (songLinesFactory_typeof
 
 
 var songLinesFactory_defaultTimeSignature = '4/4';
-
 /**
  * @typedef {Object} SongLine
  * @type {Object}
@@ -16632,10 +16765,10 @@ function songLinesFactory() {
   var isRepeatingChords = false;
   var shouldMultiplySection = false;
   var shouldCopySection = false;
-
   /**
    * @returns {SongTimeSignatureLine}
    */
+
   function getTimeSignatureLine(string) {
     currentTimeSignature = parseTimeSignature(string);
     return {
@@ -16644,10 +16777,11 @@ function songLinesFactory() {
       model: currentTimeSignature
     };
   }
-
   /**
    * @returns {SongSectionLabelLine}
    */
+
+
   function getSectionLabelLine(string, lineIndex, allSrcLines) {
     currentSection = parseSectionLabel(string);
     increaseSectionStats(currentSection.label);
@@ -16661,11 +16795,14 @@ function songLinesFactory() {
       id: currentSection.label + currentSectionStats.count
     };
     shouldCopySection = isCurrentSectionEmpty(lineIndex, allSrcLines) && currentSectionStats.count > 1;
+
     if (shouldCopySection) {
       line.isFromSectionCopy = true;
     }
+
     shouldMultiplySection = currentSection.multiplyTimes > 0;
     previousSectionLabelLine = cloneDeep_default()(line);
+
     if (!isFirstOfLabel(currentSection, allLines)) {
       blueprint = getNthOfLabel(allLines, currentSection.label, 1);
       blueprintIndex = 0;
@@ -16673,24 +16810,28 @@ function songLinesFactory() {
     } else {
       isRepeatingChords = false;
     }
+
     return line;
   }
-
   /**
    * @returns {SongLyricLine}
    */
+
+
   function getEmptyLine(string) {
     return {
       string: string,
       type: parser_lineTypes.EMPTY_LINE
     };
   }
-
   /**
    * @returns {SongChordLine|SongLyricLine}
    */
+
+
   function getChordLine(string) {
     var line;
+
     try {
       var model = parseChordLine(string, {
         timeSignature: currentTimeSignature
@@ -16704,33 +16845,40 @@ function songLinesFactory() {
     } catch (e) {
       line = getLyricLine(string);
     }
+
     return line;
   }
+
   function addPreviousChordLine(line) {
     if (previousChordLines.length >= MAX_PREVIOUS_CHORD_LINES) {
       previousChordLines.shift();
     }
+
     previousChordLines.push(line);
   }
-
   /**
    * @returns {SongChordLine|SongLyricLine}
    */
+
+
   function getRepeatedChordLine(string) {
     var repeatString = clearSpaces(string);
     var sliceStart = -repeatString.length;
     var sliceEnd = sliceStart < -1 ? sliceStart + 1 : undefined;
+
     if (previousChordLines.length >= repeatString.length) {
       return _objectSpread(_objectSpread({}, cloneDeep_default().apply(void 0, _toConsumableArray(previousChordLines.slice(sliceStart, sliceEnd)))), {}, {
         isFromChordLineRepeater: true
       });
     }
+
     return getLyricLine(string);
   }
-
   /**
    * @returns {SongLyricLine}
    */
+
+
   function getLyricLine(string) {
     return {
       string: string,
@@ -16738,8 +16886,10 @@ function songLinesFactory() {
       model: parseLyricLine(string)
     };
   }
+
   function increaseSectionStats(label) {
     var isMultiplied = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
     if (!sectionsStats[label]) {
       sectionsStats[label] = {
         count: 1,
@@ -16747,22 +16897,27 @@ function songLinesFactory() {
       };
     } else {
       sectionsStats[label].count++;
+
       if (!isMultiplied) {
         sectionsStats[label].withoutMultiply++;
       }
     }
   }
+
   function getSectionCount(label) {
     return sectionsStats[label];
   }
+
   function repeatLinesFromBlueprint(line) {
     if (isRepeatingChords && line.type !== parser_lineTypes.SECTION_LABEL) {
       blueprintLine = blueprint[blueprintIndex];
       var repeatedLine;
+
       while (shouldRepeatLineFromBlueprint(blueprintLine, line)) {
         if (blueprintLine.type === parser_lineTypes.CHORD) {
           addPreviousChordLine(cloneDeep_default()(blueprintLine));
         }
+
         repeatedLine = _objectSpread(_objectSpread({}, cloneDeep_default()(blueprintLine)), {}, {
           isFromAutoRepeatChords: true
         });
@@ -16770,9 +16925,11 @@ function songLinesFactory() {
         blueprintIndex++;
         blueprintLine = blueprint[blueprintIndex];
       }
+
       blueprintIndex++;
     }
   }
+
   function copySection() {
     if (shouldCopySection) {
       var toCopy = getNthOfLabel(allLines, currentSection.label, currentSection.copyIndex).map(function (line) {
@@ -16781,26 +16938,32 @@ function songLinesFactory() {
         });
       });
       if (!toCopy.length) return;
+
       if (endsWithEmptyLine(toCopy)) {
         toCopy.pop();
       }
+
       allLines.push.apply(allLines, _toConsumableArray(cloneDeep_default()(toCopy)));
       shouldCopySection = false;
     }
   }
+
   function isCurrentSectionEmpty(lineIndex, allSrcLines) {
     var remainingLines = allSrcLines.slice(lineIndex + 1);
     var nextSectionIndex = remainingLines.findIndex(function (line) {
       return isSectionLabel(line);
     });
+
     if (nextSectionIndex === 0) {
       return true;
     }
+
     var currentSectionContent = remainingLines.slice(0, nextSectionIndex !== -1 ? nextSectionIndex : undefined).filter(function (line) {
       return !(isTimeSignatureString(line) || isEmptyLine(line));
     });
     return currentSectionContent.length === 0;
   }
+
   function multiplySection(lineIndex, allSrcLines) {
     if (shouldMultiplySection && isLastLineOfSection(lineIndex, allSrcLines)) {
       var toMultiply = getNthOfLabel(allLines, currentSection.label, currentSectionStats.count).map(function (line) {
@@ -16809,6 +16972,7 @@ function songLinesFactory() {
         });
       });
       var sectionLabelLine;
+
       for (var i = 1; i < currentSection.multiplyTimes; i++) {
         increaseSectionStats(currentSection.label, true);
         currentSectionStats = getSectionCount(currentSection.label);
@@ -16823,9 +16987,11 @@ function songLinesFactory() {
       }
     }
   }
+
   return {
     addLine: function addLine(lineSrc, lineIndex, allSrcLines) {
       var line;
+
       if (isTimeSignatureString(lineSrc)) {
         line = getTimeSignatureLine(lineSrc);
       } else if (isSectionLabel(lineSrc)) {
@@ -16839,11 +17005,13 @@ function songLinesFactory() {
       } else {
         line = getLyricLine(lineSrc);
       }
+
       repeatLinesFromBlueprint(line);
       allLines.push(line);
       copySection();
       multiplySection(lineIndex, allSrcLines);
     },
+
     /**
      * returns {SongLine[]}
      */
@@ -16855,6 +17023,7 @@ function songLinesFactory() {
       var lineChordCount;
       allLines.forEach(function (line, lineIndex) {
         nextLine = allLines[lineIndex + 1];
+
         if (shouldPositionChords(line, nextLine)) {
           lineChordCount = 0;
           line.model.hasPositionedChords = true;
@@ -16872,21 +17041,26 @@ function songLinesFactory() {
     }
   };
 }
+
 function isFirstOfLabel(currentLabel, allLines) {
   return allLines.every(function (line) {
     return line.type === parser_lineTypes.SECTION_LABEL && line.model.label !== currentLabel.label;
   });
 }
+
 function shouldRepeatLineFromBlueprint(blueprintLine, currentLine) {
   return blueprintLine && blueprintLine.type !== parser_lineTypes.LYRIC && blueprintLine.type !== parser_lineTypes.EMPTY_LINE && blueprintLine.type !== currentLine.type && currentLine.type !== parser_lineTypes.EMPTY_LINE;
 }
+
 function isLastLineOfSection(lineIndex, allSrcLines) {
   var nextLine = allSrcLines[lineIndex + 1];
   return typeof nextLine === 'undefined' || isSectionLabel(nextLine);
 }
+
 function shouldPositionChords(line, nextLine) {
   return line.type === parser_lineTypes.CHORD && nextLine && nextLine.type === parser_lineTypes.LYRIC && nextLine.model.chordPositions.length > 0;
 }
+
 function endsWithEmptyLine(allLines) {
   var lastLine = allLines[allLines.length - 1];
   return lastLine.type === parser_lineTypes.EMPTY_LINE;
@@ -16899,11 +17073,11 @@ var findIndex_default = /*#__PURE__*/__webpack_require__.n(findIndex);
 
 
 
-
 /**
  * @param {SongLine[]} allLines
  * @returns {SongChord[]}
  */
+
 function getAllChordsInSong(allLines) {
   var allChords = [];
   var i;
@@ -16911,6 +17085,7 @@ function getAllChordsInSong(allLines) {
     i = findIndex_default()(allChords, function (o) {
       return isEqual_default()(o.model, chord.model);
     });
+
     if (i === -1) {
       allChords.push({
         model: cloneDeep_default()(chord.model),
@@ -16923,7 +17098,6 @@ function getAllChordsInSong(allLines) {
   return allChords;
 }
 ;// CONCATENATED MODULE: ./src/parser/parseSong.js
-
 
 
 
@@ -16947,13 +17121,14 @@ function getAllChordsInSong(allLines) {
  * @param {string|array} songSrc
  * @returns {Song}
  */
+
 function parseSong(songSrc) {
   var songArray = !isArray_default()(songSrc) ? songSrc.split('\n') : songSrc;
   var songLines = songLinesFactory();
-
   /**
    * @type {SongLine[]}
    */
+
   songArray.map(escapeHTML).map(stripTags).forEach(songLines.addLine);
   songLines.flagPositionedChords();
   var allLines = songLines.asArray();
@@ -16980,7 +17155,6 @@ function parseSong(songSrc) {
 });
 ;// CONCATENATED MODULE: ./src/renderer/spacers/chord/getBeatString.js
 
-
 /**
  * Returns the rendered string of a given beat, e.g. a single chord or a sub-beat group of chords.
  * This is useful for the purpose of measuring a beat length (e.g. alignment)
@@ -16989,18 +17163,22 @@ function parseSong(songSrc) {
  * @param {Boolean} shouldPrintSubBeatDelimiters
  * @returns {String}
  */
+
 function getBeatString(bar, beat) {
   var shouldPrintSubBeatDelimiters = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
   var beatChords = bar.allChords.filter(function (chord) {
     return chord.beat === beat;
   });
+
   switch (beatChords.length) {
     case 0:
       return '';
+
     case 1:
       {
         return getChordString(bar, beatChords[0], shouldPrintSubBeatDelimiters);
       }
+
     default:
       {
         return beatChords.reduce(function (allChords, chord, i) {
@@ -17027,13 +17205,13 @@ function getChordString(bar, chord, shouldPrintSubBeatDelimiters) {
 ;// CONCATENATED MODULE: ./src/renderer/spacers/chord/getMaxBeatsWidth.js
 
 
-
 /**
  * @param {SongLine[]} allLines
  * @param {Function} shouldAlignChordsWithLyrics
  * @param {Boolean} shouldPrintSubBeatDelimiters
  * @returns {Array}
  */
+
 function getMaxBeatsWidth(allLines, shouldAlignChordsWithLyrics) {
   var shouldPrintSubBeatDelimiters = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
   var maxBeatsWidth = [];
@@ -17047,10 +17225,12 @@ function getMaxBeatsWidth(allLines, shouldAlignChordsWithLyrics) {
     }).forEach(function (bar, barIndex) {
       if (!maxBeatsWidth[barIndex]) {
         maxBeatsWidth[barIndex] = {};
+
         for (var i = 1; i <= bar.timeSignature.beatCount; i++) {
           maxBeatsWidth[barIndex][i] = 0;
         }
       }
+
       bar.allChords.filter(function (chord) {
         return !chord.isInSubBeatGroup || chord.isLastOfSubBeat;
       }).forEach(function (chord) {
@@ -17064,13 +17244,14 @@ function getMaxBeatsWidth(allLines, shouldAlignChordsWithLyrics) {
 ;// CONCATENATED MODULE: ./src/renderer/spacers/chord/simple.js
 
 
-
 /**
  * Simple spacer: simply happens default spaces value after each chord.
  * @param {ChordLine} chordLineInput
  */
+
 function space(chordLineInput) {
   var chordLine = cloneDeep_default()(chordLineInput);
+
   chordLine.allBars.forEach(function (bar) {
     spaceBar(bar);
   });
@@ -17087,7 +17268,6 @@ function spaceBar(bar) {
 
 
 
-
 /**
  * @param {ChordLine} chordLineInput
  * @param {Array} maxBeatsWidth
@@ -17095,14 +17275,17 @@ function spaceBar(bar) {
  * @param {Boolean} shouldPrintSubBeatDelimiters
  * @returns {ChordLine}
  */
+
 function aligned_space(chordLineInput, maxBeatsWidth, shouldPrintBarSeparators, shouldPrintSubBeatDelimiters) {
   var chordLine = cloneDeep_default()(chordLineInput);
+
   chordLine.allBars.forEach(function (bar, barIndex) {
     if (bar.lineHadTimeSignatureChange) {
       spaceBar(bar);
     } else {
       bar.allChords.forEach(function (chord) {
         var beatString = getBeatString(bar, chord.beat, shouldPrintSubBeatDelimiters);
+
         if (chord.isInSubBeatGroup && !chord.isLastOfSubBeat) {
           chord.spacesWithin = 0;
           chord.spacesAfter = symbols.spacesAfterSubBeatDefault;
@@ -17110,9 +17293,11 @@ function aligned_space(chordLineInput, maxBeatsWidth, shouldPrintBarSeparators, 
           chord.spacesWithin = maxBeatsWidth[barIndex][chord.beat] - beatString.length;
           chord.spacesAfter = 0;
         }
+
         if (shouldFillEmptyBeats(bar, chord)) {
           chord.spacesAfter = symbols.spacesAfterDefault + getEmptyBeatsWidth(bar, chord, maxBeatsWidth[barIndex]);
         }
+
         if (shouldSpaceLastBeat(bar, chord, shouldPrintBarSeparators)) {
           chord.spacesAfter = symbols.spacesAfterDefault;
         }
@@ -17121,23 +17306,30 @@ function aligned_space(chordLineInput, maxBeatsWidth, shouldPrintBarSeparators, 
   });
   return chordLine;
 }
+
 var shouldFillEmptyBeats = function shouldFillEmptyBeats(bar, chord) {
   return (!chord.isInSubBeatGroup || chord.isLastOfSubBeat) && !isLastBeatOfBar(bar, chord);
 };
+
 var getEmptyBeatsWidth = function getEmptyBeatsWidth(bar, chord, maxBeatsWidthForBar) {
   var spacesAfter = 0;
+
   for (var i = chord.beat + 1; i < chord.beat + chord.duration; i++) {
     var beatMaxWidth = maxBeatsWidthForBar[i];
     spacesAfter += beatMaxWidth ? beatMaxWidth : symbols.emptyBeatSpaces;
+
     if (i !== bar.timeSignature.beatCount && beatMaxWidth) {
       spacesAfter += symbols.spacesAfterDefault;
     }
   }
+
   return spacesAfter;
 };
+
 var isLastBeatOfBar = function isLastBeatOfBar(bar, chord) {
   return chord.beat === bar.timeSignature.beatCount;
 };
+
 var shouldSpaceLastBeat = function shouldSpaceLastBeat(bar, chord, shouldPrintBarSeparators) {
   return !shouldPrintBarSeparators && isLastBeatOfBar(bar, chord) && (!chord.isInSubBeatGroup || chord.isLastOfSubBeat);
 };
@@ -17146,7 +17338,6 @@ var shouldSpaceLastBeat = function shouldSpaceLastBeat(bar, chord, shouldPrintBa
 
 
 var chordSpaceAfterDefault = 1;
-
 /**
  * Space chords and lyrics, so they are aligned with each other:
  * - for chords: adjust the spaceAfter property of each chord object
@@ -17159,22 +17350,27 @@ var chordSpaceAfterDefault = 1;
  * @param {Boolean} shouldPrintInlineTimeSignatures
  * @returns {Object}
  */
+
 function chordLyrics_space(chordLineInput, lyricsLineInput) {
   var _ref = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-    _ref$shouldPrintBarSe = _ref.shouldPrintBarSeparators,
-    shouldPrintBarSeparators = _ref$shouldPrintBarSe === void 0 ? true : _ref$shouldPrintBarSe,
-    _ref$shouldPrintSubBe = _ref.shouldPrintSubBeatDelimiters,
-    shouldPrintSubBeatDelimiters = _ref$shouldPrintSubBe === void 0 ? true : _ref$shouldPrintSubBe,
-    _ref$shouldPrintInlin = _ref.shouldPrintInlineTimeSignatures,
-    shouldPrintInlineTimeSignatures = _ref$shouldPrintInlin === void 0 ? true : _ref$shouldPrintInlin;
+      _ref$shouldPrintBarSe = _ref.shouldPrintBarSeparators,
+      shouldPrintBarSeparators = _ref$shouldPrintBarSe === void 0 ? true : _ref$shouldPrintBarSe,
+      _ref$shouldPrintSubBe = _ref.shouldPrintSubBeatDelimiters,
+      shouldPrintSubBeatDelimiters = _ref$shouldPrintSubBe === void 0 ? true : _ref$shouldPrintSubBe,
+      _ref$shouldPrintInlin = _ref.shouldPrintInlineTimeSignatures,
+      shouldPrintInlineTimeSignatures = _ref$shouldPrintInlin === void 0 ? true : _ref$shouldPrintInlin;
+
   if (hasNoPositionMarkers(lyricsLineInput)) {
     return {
       chordLine: chordLineInput,
       lyricsLine: lyricsLineInput
     };
   }
+
   var chordLine = cloneDeep_default()(chordLineInput);
+
   var lyricsLine = cloneDeep_default()(lyricsLineInput);
+
   var tokenizedLyrics = lyricsLine.chordPositions.map(function (position, i, allPositions) {
     return lyricsLine.lyrics.substring(position, allPositions[i + 1]);
   });
@@ -17188,67 +17384,90 @@ function chordLyrics_space(chordLineInput, lyricsLineInput) {
 
       if (lyricToken) {
         timeSignatureString = chordIndex === 0 && shouldPrintInlineTimeSignatures && bar.shouldPrintBarTimeSignature ? bar.timeSignature.string + symbols.spacesAfterTimeSignature : '';
-        var shouldOffsetLyricsLine = shouldPrintBarSeparators && barIndex === 0 && chordIndex === 0 && lyricsLine.chordPositions[0] === 0;
+        var shouldOffsetLyricsLine = barIndex === 0 && chordIndex === 0 && lyricsLine.chordPositions[0] === 0;
         chordToken = getChordToken(bar, chord, shouldOffsetLyricsLine);
-        lyricToken = getAdjustedLyricToken(shouldOffsetLyricsLine);
+        lyricToken = getAdjustedLyricToken(shouldOffsetLyricsLine, chord.isFirstOfSubBeat);
         var isLastChordOfBar = chordIndex === allChords.length - 1;
+        var isFollowedBySubBeatGroup = allChords[chordIndex + 1] && allChords[chordIndex + 1].isFirstOfSubBeat;
+
         if (lyricToken.length - chordToken.length > 0) {
-          var isLastLyricToken = tokenizedLyrics.length === 0;
-          // Warning: `getChordSpacesAfter()` has a side effect since its logic might result in updating
+          var isLastLyricToken = tokenizedLyrics.length === 0; // Warning: `getChordSpacesAfter()` has a side effect since its logic might result in updating
           // the lyricsToken with an extra space
-          chord.spacesAfter = getChordSpacesAfter(isLastChordOfBar, isLastLyricToken);
+
+          chord.spacesAfter = getChordSpacesAfter(isLastChordOfBar, isLastLyricToken, isFollowedBySubBeatGroup);
         } else {
           chord.spacesAfter = chordSpaceAfterDefault;
-          lyricToken += symbols.lyricsSpacer.repeat(getLyricSpacesAfter(isLastChordOfBar));
+          lyricToken += symbols.lyricsSpacer.repeat(getLyricSpacesAfter(isLastChordOfBar, isFollowedBySubBeatGroup));
         }
+
         spacedLyricsLine += lyricToken;
       } else {
         chord.spacesAfter = chordSpaceAfterDefault;
       }
+
       chord.spacesWithin = 0;
     });
   });
+
   if (shouldOffsetChordLine(lyricsLine)) {
     var chordLineOffset = lyricsLine.chordPositions[0];
     chordLine.offset = chordLineOffset;
+
     if (shouldPrintBarSeparators) {
       chordLine.offset--;
     }
+
     spacedLyricsLine = lyricsLine.lyrics.substring(0, chordLineOffset) + spacedLyricsLine;
   }
+
   if (tokenizedLyrics.length) {
     spacedLyricsLine += tokenizedLyrics.join('');
   }
+
   lyricsLine.lyrics = trimEnd(spacedLyricsLine);
   return {
     chordLine: chordLine,
     lyricsLine: lyricsLine
   };
+
   function getChordToken(bar, chord, shouldOffsetLyricsLine) {
-    var token = timeSignatureString + getChordString(bar, chord, shouldPrintSubBeatDelimiters);
+    var token = timeSignatureString + getChordString(bar, chord, chord.isLastOfSubBeat && shouldPrintSubBeatDelimiters);
+
     if (shouldOffsetLyricsLine) {
-      token = symbols.barSeparator + token;
+      if (shouldPrintSubBeatDelimiters && chord.isFirstOfSubBeat) token = symbols.subBeatGroupOpener + token;
+      if (shouldPrintBarSeparators) token = symbols.barSeparator + token;
     }
+
     return token;
   }
-  function getAdjustedLyricToken(shouldOffsetLyricsLine) {
+
+  function getAdjustedLyricToken(shouldOffsetLyricsLine, isFistOfSubBeatGroup) {
     var token = lyricToken;
+
     if (startsWithSpace(token)) {
       token = symbols.lyricsSpacer.repeat(chordToken.length - 1) + token;
     } else {
       if (shouldOffsetLyricsLine) {
-        token = symbols.lyricsSpacer + token;
+        var offset = 0;
+        if (shouldPrintBarSeparators) offset++;
+        if (shouldPrintSubBeatDelimiters && isFistOfSubBeatGroup) offset++;
+        token = symbols.lyricsSpacer.repeat(offset) + token;
       }
+
       if (timeSignatureString.length) {
         token = ' '.repeat(timeSignatureString.length) + token;
       }
     }
+
     return token;
   }
-  function getChordSpacesAfter(isLastChordOfBar, isLastLyricToken) {
+
+  function getChordSpacesAfter(isLastChordOfBar, isLastLyricToken, isFollowedBySubBeatGroup) {
     var spacesAfter = lyricToken.length - chordToken.length;
     var shouldMakeRoomForBarSep = isLastChordOfBar && shouldPrintBarSeparators && !isLastLyricToken;
-    if (shouldMakeRoomForBarSep) {
+    var shouldMakeRoomForSubBeatOpener = !isLastChordOfBar && shouldPrintSubBeatDelimiters && isFollowedBySubBeatGroup;
+
+    if (shouldMakeRoomForBarSep || shouldMakeRoomForSubBeatOpener) {
       if (spacesAfter > 1) {
         spacesAfter -= 1;
       } else {
@@ -17258,51 +17477,59 @@ function chordLyrics_space(chordLineInput, lyricsLineInput) {
 
     return spacesAfter;
   }
-  function getLyricSpacesAfter(isLastChordOfBar) {
+
+  function getLyricSpacesAfter(isLastChordOfBar, isFollowedBySubBeatGroup) {
     var lyricsSpaceAfter = chordToken.length - lyricToken.length + chordSpaceAfterDefault;
+
     if (isLastChordOfBar && shouldPrintBarSeparators) {
       lyricsSpaceAfter++;
+    } else if (isFollowedBySubBeatGroup) {
+      lyricsSpaceAfter++;
     }
+
     return lyricsSpaceAfter;
   }
 }
+
 var hasNoPositionMarkers = function hasNoPositionMarkers(lyricsLine) {
   return lyricsLine.chordPositions.length === 0;
 };
+
 var shouldOffsetChordLine = function shouldOffsetChordLine(lyricsLine) {
   return lyricsLine.chordPositions[0] > 0;
-};
+}; // source: https://github.com/es-shims/String.prototype.trimEnd/blob/main/implementation.js
 
-// source: https://github.com/es-shims/String.prototype.trimEnd/blob/main/implementation.js
+
 var trimEnd = function trimEnd(str) {
-  var endWhitespace =
-  // eslint-disable-next-line max-len,no-control-regex
+  var endWhitespace = // eslint-disable-next-line max-len,no-control-regex
   /[\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u180E\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF]*$/;
   return str.replace(endWhitespace, '');
 };
+
 var startsWithSpace = function startsWithSpace(str) {
   return str.indexOf(' ') === 0;
 };
 ;// CONCATENATED MODULE: ./src/renderer/components/tpl/chordLine.js
 var render = function render(_ref) {
   var chordLineOffset = _ref.chordLineOffset,
-    chordLine = _ref.chordLine;
+      chordLine = _ref.chordLine;
   return "<span class=\"cmChordLine\">".concat(chordLineOffset ? "<span class=\"cmChordLineOffset\">".concat(chordLineOffset, "</span>") : '').concat(chordLine, "</span>");
 };
+
 /* harmony default export */ const tpl_chordLine = (render);
 ;// CONCATENATED MODULE: ./src/renderer/components/tpl/chordSymbol.js
 var chordSymbol_render = function render(_ref) {
   var chordSymbol = _ref.chordSymbol,
-    chordDuration = _ref.chordDuration,
-    subBeatGroupOpener = _ref.subBeatGroupOpener,
-    subBeatGroupCloser = _ref.subBeatGroupCloser;
+      chordDuration = _ref.chordDuration,
+      subBeatGroupOpener = _ref.subBeatGroupOpener,
+      subBeatGroupCloser = _ref.subBeatGroupCloser;
   var groupOpen = subBeatGroupOpener ? "<span class=\"cmSubBeatGroupOpener\">".concat(subBeatGroupOpener, "</span>") : '';
   var groupClose = subBeatGroupCloser ? "<span class=\"cmSubBeatGroupCloser\">".concat(subBeatGroupCloser, "</span>") : '';
   return "".concat(groupOpen, "<span class=\"cmChordSymbol\">").concat(chordSymbol).concat(chordDuration ? "<span class=\"cmChordDuration\">".concat(chordDuration, "</span>") : '', "</span>").concat(groupClose);
 };
+
 /* harmony default export */ const chordSymbol = (chordSymbol_render);
 ;// CONCATENATED MODULE: ./src/renderer/components/renderChordSymbol.js
-
 
 
 /**
@@ -17312,6 +17539,7 @@ var chordSymbol_render = function render(_ref) {
  * @param {Boolean} shouldPrintSubBeatCloser
  * @returns {String} rendered html
  */
+
 function renderChordSymbol(chord) {
   var shouldPrintChordsDuration = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
   var shouldPrintSubBeatOpener = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
@@ -17328,14 +17556,15 @@ var timeSignature_render = function render(_ref) {
   var timeSignature = _ref.timeSignature;
   return "<span class=\"cmTimeSignature\">".concat(timeSignature, "</span>");
 };
+
 /* harmony default export */ const timeSignature = (timeSignature_render);
 ;// CONCATENATED MODULE: ./src/renderer/components/renderTimeSignature.js
-
 
 /**
  * @param {SongTimeSignatureLine} timeSignatureLine
  * @returns {String} rendered html
  */
+
 function renderTimeSignature_render(timeSignatureLine) {
   return timeSignature({
     timeSignature: timeSignatureLine.string
@@ -17346,6 +17575,7 @@ var barContent_render = function render(_ref) {
   var barContent = _ref.barContent;
   return "<span class=\"cmBarContent\">".concat(barContent, "</span>");
 };
+
 /* harmony default export */ const tpl_barContent = (barContent_render);
 ;// CONCATENATED MODULE: ./src/renderer/components/renderBarContent.js
 
@@ -17356,7 +17586,6 @@ var barContent_render = function render(_ref) {
 var renderBarContent_space = ' ';
 var defaultSpacesWithin = 0;
 var defaultSpacesAfter = 2;
-
 /**
  * @param {Bar} bar
  * @param {Boolean} isLastBar
@@ -17365,35 +17594,44 @@ var defaultSpacesAfter = 2;
  * @param {Boolean} shouldPrintTimeSignature
  * @returns {String} rendered html
  */
+
 function renderBarContent(bar) {
   var isLastBar = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
   var _ref = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-    _ref$shouldPrintBarSe = _ref.shouldPrintBarSeparators,
-    shouldPrintBarSeparators = _ref$shouldPrintBarSe === void 0 ? true : _ref$shouldPrintBarSe,
-    _ref$shouldPrintSubBe = _ref.shouldPrintSubBeatDelimiters,
-    shouldPrintSubBeatDelimiters = _ref$shouldPrintSubBe === void 0 ? true : _ref$shouldPrintSubBe,
-    _ref$shouldPrintTimeS = _ref.shouldPrintTimeSignature,
-    shouldPrintTimeSignature = _ref$shouldPrintTimeS === void 0 ? false : _ref$shouldPrintTimeS;
+      _ref$shouldPrintBarSe = _ref.shouldPrintBarSeparators,
+      shouldPrintBarSeparators = _ref$shouldPrintBarSe === void 0 ? true : _ref$shouldPrintBarSe,
+      _ref$shouldPrintSubBe = _ref.shouldPrintSubBeatDelimiters,
+      shouldPrintSubBeatDelimiters = _ref$shouldPrintSubBe === void 0 ? true : _ref$shouldPrintSubBe,
+      _ref$shouldPrintTimeS = _ref.shouldPrintTimeSignature,
+      shouldPrintTimeSignature = _ref$shouldPrintTimeS === void 0 ? false : _ref$shouldPrintTimeS;
+
   var spacesWithin = 0;
   var spacesAfter = 0;
   var barContent = '';
+
   if (shouldPrintTimeSignature) {
     barContent += renderTimeSignature_render(bar.timeSignature) + ' '.repeat(symbols.spacesAfterTimeSignature);
   }
+
   barContent += bar.allChords.reduce(function (rendering, chord, i) {
     spacesWithin = isFinite_default()(chord.spacesWithin) ? chord.spacesWithin : defaultSpacesWithin;
     spacesAfter = isFinite_default()(chord.spacesAfter) ? chord.spacesAfter : defaultSpacesAfter;
     rendering += renderChordSymbol(chord, chord.isInSubBeatGroup ? false : bar.shouldPrintChordsDuration, shouldPrintSubBeatDelimiters && chord.isFirstOfSubBeat, shouldPrintSubBeatDelimiters && chord.isLastOfSubBeat);
+
     if (shouldPrintChordSpaces()) {
       rendering += renderBarContent_space.repeat(spacesWithin) + renderBarContent_space.repeat(spacesAfter);
     }
+
     function shouldPrintChordSpaces() {
       var isLastChordOfLine = isLastChordOfBar() && isLastBar;
       return !isLastChordOfLine || isLastChordOfLine && shouldPrintBarSeparators;
     }
+
     function isLastChordOfBar() {
       return !bar.allChords[i + 1];
     }
+
     return rendering;
   }, '');
   return tpl_barContent({
@@ -17405,9 +17643,9 @@ var barSeparator_render = function render(_ref) {
   var barSeparator = _ref.barSeparator;
   return "<span class=\"cmBarSeparator\">".concat(barSeparator, "</span>");
 };
+
 /* harmony default export */ const tpl_barSeparator = (barSeparator_render);
 ;// CONCATENATED MODULE: ./src/renderer/components/renderChordLine.js
-
 
 
 
@@ -17419,14 +17657,16 @@ var barSeparator_render = function render(_ref) {
  * @param {Boolean} shouldPrintInlineTimeSignatures
  * @returns {String} rendered html
  */
+
 function renderChordLine(chordLineModel) {
   var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
-    _ref$shouldPrintBarSe = _ref.shouldPrintBarSeparators,
-    shouldPrintBarSeparators = _ref$shouldPrintBarSe === void 0 ? true : _ref$shouldPrintBarSe,
-    _ref$shouldPrintSubBe = _ref.shouldPrintSubBeatDelimiters,
-    shouldPrintSubBeatDelimiters = _ref$shouldPrintSubBe === void 0 ? true : _ref$shouldPrintSubBe,
-    _ref$shouldPrintInlin = _ref.shouldPrintInlineTimeSignatures,
-    shouldPrintInlineTimeSignatures = _ref$shouldPrintInlin === void 0 ? true : _ref$shouldPrintInlin;
+      _ref$shouldPrintBarSe = _ref.shouldPrintBarSeparators,
+      shouldPrintBarSeparators = _ref$shouldPrintBarSe === void 0 ? true : _ref$shouldPrintBarSe,
+      _ref$shouldPrintSubBe = _ref.shouldPrintSubBeatDelimiters,
+      shouldPrintSubBeatDelimiters = _ref$shouldPrintSubBe === void 0 ? true : _ref$shouldPrintSubBe,
+      _ref$shouldPrintInlin = _ref.shouldPrintInlineTimeSignatures,
+      shouldPrintInlineTimeSignatures = _ref$shouldPrintInlin === void 0 ? true : _ref$shouldPrintInlin;
+
   var allBarsRendered = chordLineModel.allBars.map(function (bar, i) {
     var isLastBar = !chordLineModel.allBars[i + 1];
     var shouldPrintTimeSignature = shouldPrintInlineTimeSignatures && bar.shouldPrintBarTimeSignature;
@@ -17450,40 +17690,46 @@ function renderChordLine(chordLineModel) {
 var emptyLine_render = function render() {
   return "<span class=\"cmEmptyLine\">&nbsp;</span>";
 };
+
 /* harmony default export */ const emptyLine = (emptyLine_render);
 ;// CONCATENATED MODULE: ./src/renderer/components/renderEmptyLine.js
-
 
 /**
  * @returns {String} rendered html
  */
+
 function renderEmptyLine_render() {
   return emptyLine();
 }
 ;// CONCATENATED MODULE: ./src/renderer/components/tpl/line.js
 var line_render = function render(_ref) {
   var line = _ref.line,
-    lineClasses = _ref.lineClasses,
-    shouldOpenSection = _ref.shouldOpenSection,
-    sectionWrapperClasses = _ref.sectionWrapperClasses,
-    shouldClosePriorSection = _ref.shouldClosePriorSection,
-    shouldCloseFinalSection = _ref.shouldCloseFinalSection;
+      lineClasses = _ref.lineClasses,
+      shouldOpenSection = _ref.shouldOpenSection,
+      sectionWrapperClasses = _ref.sectionWrapperClasses,
+      shouldClosePriorSection = _ref.shouldClosePriorSection,
+      shouldCloseFinalSection = _ref.shouldCloseFinalSection;
   var wrapper = '';
+
   if (shouldClosePriorSection) {
     wrapper += '</div>';
   }
+
   if (shouldOpenSection) {
     wrapper += "<div class=\"".concat(sectionWrapperClasses, "\">");
   }
+
   wrapper += "<p class=\"".concat(lineClasses, "\">").concat(line, "</p>");
+
   if (shouldCloseFinalSection) {
     wrapper += "</div>";
   }
+
   return wrapper;
 };
+
 /* harmony default export */ const tpl_line = (line_render);
 ;// CONCATENATED MODULE: ./src/renderer/components/renderLine.js
-
 
 /**
  * @param {string} line
@@ -17497,37 +17743,44 @@ var line_render = function render(_ref) {
  * @param {Array} sectionWrapperClasses
  * @returns {String} rendered html
  */
+
 function renderLine_render(line) {
   var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
-    _ref$isFromAutoRepeat = _ref.isFromAutoRepeatChords,
-    isFromAutoRepeatChords = _ref$isFromAutoRepeat === void 0 ? false : _ref$isFromAutoRepeat,
-    _ref$isFromChordLineR = _ref.isFromChordLineRepeater,
-    isFromChordLineRepeater = _ref$isFromChordLineR === void 0 ? false : _ref$isFromChordLineR,
-    _ref$isFromSectionCop = _ref.isFromSectionCopy,
-    isFromSectionCopy = _ref$isFromSectionCop === void 0 ? false : _ref$isFromSectionCop,
-    _ref$isFromSectionMul = _ref.isFromSectionMultiply,
-    isFromSectionMultiply = _ref$isFromSectionMul === void 0 ? false : _ref$isFromSectionMul,
-    _ref$shouldOpenSectio = _ref.shouldOpenSection,
-    shouldOpenSection = _ref$shouldOpenSectio === void 0 ? false : _ref$shouldOpenSectio,
-    _ref$shouldClosePrior = _ref.shouldClosePriorSection,
-    shouldClosePriorSection = _ref$shouldClosePrior === void 0 ? false : _ref$shouldClosePrior,
-    _ref$shouldCloseFinal = _ref.shouldCloseFinalSection,
-    shouldCloseFinalSection = _ref$shouldCloseFinal === void 0 ? false : _ref$shouldCloseFinal,
-    _ref$sectionWrapperCl = _ref.sectionWrapperClasses,
-    sectionWrapperClasses = _ref$sectionWrapperCl === void 0 ? [] : _ref$sectionWrapperCl;
+      _ref$isFromAutoRepeat = _ref.isFromAutoRepeatChords,
+      isFromAutoRepeatChords = _ref$isFromAutoRepeat === void 0 ? false : _ref$isFromAutoRepeat,
+      _ref$isFromChordLineR = _ref.isFromChordLineRepeater,
+      isFromChordLineRepeater = _ref$isFromChordLineR === void 0 ? false : _ref$isFromChordLineR,
+      _ref$isFromSectionCop = _ref.isFromSectionCopy,
+      isFromSectionCopy = _ref$isFromSectionCop === void 0 ? false : _ref$isFromSectionCop,
+      _ref$isFromSectionMul = _ref.isFromSectionMultiply,
+      isFromSectionMultiply = _ref$isFromSectionMul === void 0 ? false : _ref$isFromSectionMul,
+      _ref$shouldOpenSectio = _ref.shouldOpenSection,
+      shouldOpenSection = _ref$shouldOpenSectio === void 0 ? false : _ref$shouldOpenSectio,
+      _ref$shouldClosePrior = _ref.shouldClosePriorSection,
+      shouldClosePriorSection = _ref$shouldClosePrior === void 0 ? false : _ref$shouldClosePrior,
+      _ref$shouldCloseFinal = _ref.shouldCloseFinalSection,
+      shouldCloseFinalSection = _ref$shouldCloseFinal === void 0 ? false : _ref$shouldCloseFinal,
+      _ref$sectionWrapperCl = _ref.sectionWrapperClasses,
+      sectionWrapperClasses = _ref$sectionWrapperCl === void 0 ? [] : _ref$sectionWrapperCl;
+
   var lineClasses = ['cmLine'];
+
   if (isFromAutoRepeatChords) {
     lineClasses.push('cmLine--isFromAutoRepeatChords');
   }
+
   if (isFromChordLineRepeater) {
     lineClasses.push('cmLine--isFromChordLineRepeater');
   }
+
   if (isFromSectionCopy) {
     lineClasses.push('cmLine--isFromSectionCopy');
   }
+
   if (isFromSectionMultiply) {
     lineClasses.push('cmLine--isFromSectionMultiply');
   }
+
   return tpl_line({
     line: line,
     lineClasses: lineClasses.join(' '),
@@ -17540,17 +17793,18 @@ function renderLine_render(line) {
 ;// CONCATENATED MODULE: ./src/renderer/components/tpl/sectionLabel.js
 var sectionLabel_render = function render(_ref) {
   var label = _ref.label,
-    multiplier = _ref.multiplier;
+      multiplier = _ref.multiplier;
   return "<span class=\"cmSectionLabel\">".concat(label).concat(multiplier ? "<span class=\"cmSectionMultiplier\"> ".concat(multiplier, "</span>") : '', "</span>");
 };
+
 /* harmony default export */ const sectionLabel = (sectionLabel_render);
 ;// CONCATENATED MODULE: ./src/renderer/components/renderSectionLabel.js
-
 
 /**
  * @param {SongSectionLabelLine} sectionLabelLine
  * @returns {String} rendered html
  */
+
 function renderSectionLabel(sectionLabelLine) {
   return sectionLabel(sectionLabelLine.model.rendered);
 }
@@ -17559,9 +17813,9 @@ var lyricLine_render = function render(_ref) {
   var lyricLine = _ref.lyricLine;
   return "<span class=\"cmLyricLine\">".concat(lyricLine, "</span>");
 };
+
 /* harmony default export */ const tpl_lyricLine = (lyricLine_render);
 ;// CONCATENATED MODULE: ./src/renderer/components/renderLyricLine.js
-
 
 /**
  * @param {SongLyricLine} lyricLine
@@ -17569,17 +17823,20 @@ var lyricLine_render = function render(_ref) {
  * @param {('all'|'lyrics'|'chords'|'chordsFirstLyricLine')} chartType
  * @returns {String} rendered html
  */
+
 function renderLyricLine_render(lyricLine) {
   var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
-    _ref$alignChordsWithL = _ref.alignChordsWithLyrics,
-    alignChordsWithLyrics = _ref$alignChordsWithL === void 0 ? false : _ref$alignChordsWithL,
-    _ref$chartType = _ref.chartType,
-    chartType = _ref$chartType === void 0 ? 'all' : _ref$chartType;
+      _ref$alignChordsWithL = _ref.alignChordsWithLyrics,
+      alignChordsWithLyrics = _ref$alignChordsWithL === void 0 ? false : _ref$alignChordsWithL,
+      _ref$chartType = _ref.chartType,
+      chartType = _ref$chartType === void 0 ? 'all' : _ref$chartType;
+
   var trimmedLyricLine = shouldTrimLine(alignChordsWithLyrics, chartType) ? lyricLine.model.lyrics.trim() : lyricLine.model.lyrics;
   return tpl_lyricLine({
     lyricLine: trimmedLyricLine
   });
 }
+
 var shouldTrimLine = function shouldTrimLine(alignChordsWithLyrics, chartType) {
   return !alignChordsWithLyrics || chartType === 'lyrics';
 };
@@ -17588,31 +17845,34 @@ var song_render = function render(_ref) {
   var song = _ref.song;
   return "<div class=\"cmSong\">".concat(song, "</div>");
 };
+
 /* harmony default export */ const song = (song_render);
 ;// CONCATENATED MODULE: ./src/renderer/helpers/getChordSymbol.js
 
 
 
 var defaultRenderChord = (0,chord_symbol.chordRendererFactory)();
-
 /**
  * @param {Chord|String} model
  * @param {Function} renderChord
  * @returns {string}
  */
+
 /* harmony default export */ function getChordSymbol(model) {
   var renderChord = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultRenderChord;
+
   switch (model) {
     case syntax.noChord:
       return symbols.noChordSymbol;
+
     case symbols.barRepeat:
       return symbols.barRepeat;
+
     default:
       return renderChord(model);
   }
 }
 ;// CONCATENATED MODULE: ./src/renderer/helpers/getMainAccidental.js
-
 
 /**
  * Returns the most used accidental of a song.
@@ -17620,6 +17880,7 @@ var defaultRenderChord = (0,chord_symbol.chordRendererFactory)();
  * @param {SongChord[]} allChords
  * @returns {('flat'|'sharp')}
  */
+
 function getMainAccidental(allChords) {
   var rootNote = '';
   var flatCount = 0;
@@ -17628,8 +17889,10 @@ function getMainAccidental(allChords) {
     return chord.model !== syntax.noChord;
   }).forEach(function (chord) {
     rootNote = chord.model.formatted.rootNote;
+
     if (rootNote.length === 2) {
       var accidental = rootNote[1];
+
       if (accidental === 'b') {
         flatCount += chord.occurrences;
       } else {
@@ -17640,9 +17903,8 @@ function getMainAccidental(allChords) {
   return flatCount > sharpCount ? 'flat' : 'sharp';
 }
 ;// CONCATENATED MODULE: ./src/renderer/helpers/renderAllSectionLabels.js
+ // reminder: update converters whenever a new shortcut is added here!
 
-
-// reminder: update converters whenever a new shortcut is added here!
 var labelsMapping = {
   a: 'adlib',
   b: 'bridge',
@@ -17657,21 +17919,26 @@ var labelsMapping = {
 function renderAllSectionsLabels(allLines, _ref) {
   var expandSectionMultiply = _ref.expandSectionMultiply;
   var sectionsStats = getSectionsStats(allLines);
-  allLines.forEach(function ( /** SongSectionLabelLine */line) {
+  allLines.forEach(function (
+  /** SongSectionLabelLine */
+  line) {
     if (line.type === parser_lineTypes.SECTION_LABEL) {
       var model = line.model,
-        index = line.index,
-        indexWithoutMultiply = line.indexWithoutMultiply;
+          index = line.index,
+          indexWithoutMultiply = line.indexWithoutMultiply;
       var labelRaw = labelsMapping[model.label] ? labelsMapping[model.label] : model.label;
       var rendered = labelRaw[0].toUpperCase() + labelRaw.substring(1);
       var multiplier;
+
       if (sectionsStats[model.label] > 1) {
         rendered += ' ';
         rendered += expandSectionMultiply ? index : indexWithoutMultiply;
       }
+
       if (!expandSectionMultiply && model.multiplyTimes) {
         multiplier = 'x' + model.multiplyTimes;
       }
+
       line.model.rendered = {
         label: rendered,
         multiplier: multiplier
@@ -17680,13 +17947,13 @@ function renderAllSectionsLabels(allLines, _ref) {
   });
   return allLines;
 }
-
 /**
  * Returns the number of usage of each section label
  *
  * @param {SongSectionLabelLine[]} allLines
  * @returns {Object} key = label, value = number of usage
  */
+
 function getSectionsStats(allLines) {
   var stats = {};
   allLines.filter(function (line) {
@@ -17703,8 +17970,10 @@ function getSectionsStats(allLines) {
 ;// CONCATENATED MODULE: ./src/renderer/replaceRepeatedBars.js
 
 
+
 var replaceRepeatedBars = function replaceRepeatedBars(line, _ref) {
   var alignChordsWithLyrics = _ref.alignChordsWithLyrics;
+
   if (line.type === parser_lineTypes.CHORD) {
     line.model.allBars.forEach(function (bar) {
       if (shouldReplaceWithBarRepeat(line, bar, alignChordsWithLyrics)) {
@@ -17719,19 +17988,22 @@ var replaceRepeatedBars = function replaceRepeatedBars(line, _ref) {
       }
     });
   }
+
   return line;
 };
+
 var shouldReplaceWithBarRepeat = function shouldReplaceWithBarRepeat(line, bar, alignChordsWithLyrics) {
   return bar.isRepeated && !barHasMultiplePositionedChords(line, bar, alignChordsWithLyrics);
 };
+
 var barHasMultiplePositionedChords = function barHasMultiplePositionedChords(line, bar, alignChordsWithLyrics) {
   return alignChordsWithLyrics && line.model.hasPositionedChords && bar.allChords.length > 1 && bar.allChords.some(function (chord) {
     return chord.isPositioned;
   });
 };
+
 /* harmony default export */ const renderer_replaceRepeatedBars = (replaceRepeatedBars);
 ;// CONCATENATED MODULE: ./src/renderer/components/renderSong.js
-
 
 
 
@@ -17776,44 +18048,46 @@ var barHasMultiplePositionedChords = function barHasMultiplePositionedChords(lin
  * @returns {String} rendered HTML
  */
 // eslint-disable-next-line max-lines-per-function
+
 function renderSong(parsedSong) {
   var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
-    _ref$accidentalsType = _ref.accidentalsType,
-    accidentalsType = _ref$accidentalsType === void 0 ? 'auto' : _ref$accidentalsType,
-    _ref$alignBars = _ref.alignBars,
-    alignBars = _ref$alignBars === void 0 ? true : _ref$alignBars,
-    _ref$alignChordsWithL = _ref.alignChordsWithLyrics,
-    alignChordsWithLyrics = _ref$alignChordsWithL === void 0 ? true : _ref$alignChordsWithL,
-    _ref$autoRepeatChords = _ref.autoRepeatChords,
-    autoRepeatChords = _ref$autoRepeatChords === void 0 ? true : _ref$autoRepeatChords,
-    _ref$chartType = _ref.chartType,
-    chartType = _ref$chartType === void 0 ? 'all' : _ref$chartType,
-    _ref$chordSymbolRende = _ref.chordSymbolRenderer,
-    chordSymbolRenderer = _ref$chordSymbolRende === void 0 ? false : _ref$chordSymbolRende,
-    _ref$customRenderer = _ref.customRenderer,
-    customRenderer = _ref$customRenderer === void 0 ? false : _ref$customRenderer,
-    _ref$expandSectionCop = _ref.expandSectionCopy,
-    expandSectionCopy = _ref$expandSectionCop === void 0 ? true : _ref$expandSectionCop,
-    _ref$expandSectionMul = _ref.expandSectionMultiply,
-    expandSectionMultiply = _ref$expandSectionMul === void 0 ? false : _ref$expandSectionMul,
-    _ref$harmonizeAcciden = _ref.harmonizeAccidentals,
-    harmonizeAccidentals = _ref$harmonizeAcciden === void 0 ? true : _ref$harmonizeAcciden,
-    _ref$printChordsDurat = _ref.printChordsDuration,
-    printChordsDuration = _ref$printChordsDurat === void 0 ? 'uneven' : _ref$printChordsDurat,
-    _ref$printBarSeparato = _ref.printBarSeparators,
-    printBarSeparators = _ref$printBarSeparato === void 0 ? 'always' : _ref$printBarSeparato,
-    _ref$printSubBeatDeli = _ref.printSubBeatDelimiters,
-    shouldPrintSubBeatDelimiters = _ref$printSubBeatDeli === void 0 ? true : _ref$printSubBeatDeli,
-    _ref$printInlineTimeS = _ref.printInlineTimeSignatures,
-    shouldPrintInlineTimeSignatures = _ref$printInlineTimeS === void 0 ? true : _ref$printInlineTimeS,
-    _ref$simplifyChords = _ref.simplifyChords,
-    simplifyChords = _ref$simplifyChords === void 0 ? 'none' : _ref$simplifyChords,
-    _ref$transposeValue = _ref.transposeValue,
-    transposeValue = _ref$transposeValue === void 0 ? 0 : _ref$transposeValue,
-    _ref$useShortNamings = _ref.useShortNamings,
-    useShortNamings = _ref$useShortNamings === void 0 ? true : _ref$useShortNamings;
+      _ref$accidentalsType = _ref.accidentalsType,
+      accidentalsType = _ref$accidentalsType === void 0 ? 'auto' : _ref$accidentalsType,
+      _ref$alignBars = _ref.alignBars,
+      alignBars = _ref$alignBars === void 0 ? true : _ref$alignBars,
+      _ref$alignChordsWithL = _ref.alignChordsWithLyrics,
+      alignChordsWithLyrics = _ref$alignChordsWithL === void 0 ? true : _ref$alignChordsWithL,
+      _ref$autoRepeatChords = _ref.autoRepeatChords,
+      autoRepeatChords = _ref$autoRepeatChords === void 0 ? true : _ref$autoRepeatChords,
+      _ref$chartType = _ref.chartType,
+      chartType = _ref$chartType === void 0 ? 'all' : _ref$chartType,
+      _ref$chordSymbolRende = _ref.chordSymbolRenderer,
+      chordSymbolRenderer = _ref$chordSymbolRende === void 0 ? false : _ref$chordSymbolRende,
+      _ref$customRenderer = _ref.customRenderer,
+      customRenderer = _ref$customRenderer === void 0 ? false : _ref$customRenderer,
+      _ref$expandSectionCop = _ref.expandSectionCopy,
+      expandSectionCopy = _ref$expandSectionCop === void 0 ? true : _ref$expandSectionCop,
+      _ref$expandSectionMul = _ref.expandSectionMultiply,
+      expandSectionMultiply = _ref$expandSectionMul === void 0 ? false : _ref$expandSectionMul,
+      _ref$harmonizeAcciden = _ref.harmonizeAccidentals,
+      harmonizeAccidentals = _ref$harmonizeAcciden === void 0 ? true : _ref$harmonizeAcciden,
+      _ref$printChordsDurat = _ref.printChordsDuration,
+      printChordsDuration = _ref$printChordsDurat === void 0 ? 'uneven' : _ref$printChordsDurat,
+      _ref$printBarSeparato = _ref.printBarSeparators,
+      printBarSeparators = _ref$printBarSeparato === void 0 ? 'always' : _ref$printBarSeparato,
+      _ref$printSubBeatDeli = _ref.printSubBeatDelimiters,
+      shouldPrintSubBeatDelimiters = _ref$printSubBeatDeli === void 0 ? true : _ref$printSubBeatDeli,
+      _ref$printInlineTimeS = _ref.printInlineTimeSignatures,
+      shouldPrintInlineTimeSignatures = _ref$printInlineTimeS === void 0 ? true : _ref$printInlineTimeS,
+      _ref$simplifyChords = _ref.simplifyChords,
+      simplifyChords = _ref$simplifyChords === void 0 ? 'none' : _ref$simplifyChords,
+      _ref$transposeValue = _ref.transposeValue,
+      transposeValue = _ref$transposeValue === void 0 ? 0 : _ref$transposeValue,
+      _ref$useShortNamings = _ref.useShortNamings,
+      useShortNamings = _ref$useShortNamings === void 0 ? true : _ref$useShortNamings;
+
   var allLines = parsedSong.allLines,
-    allChords = parsedSong.allChords;
+      allChords = parsedSong.allChords;
   var isFirstLyricLineOfSection = false;
   var contextTimeSignature = defaultTimeSignature.string;
   var previousBarTimeSignature;
@@ -17828,6 +18102,7 @@ function renderSong(parsedSong) {
   });
   allLines.forEach(spaceChordLine);
   var allRenderedLines = renderAllLines();
+
   if (customRenderer) {
     return customRenderer(allLines, allRenderedLines, {
       alignChordsWithLyrics: alignChordsWithLyrics,
@@ -17838,16 +18113,19 @@ function renderSong(parsedSong) {
       song: allRenderedLines.join('')
     });
   }
+
   function renderChords() {
     var renderChord = getChordSymbolRenderer();
     return forEachChordInSong(allLines, function (chord) {
       chord.symbol = getChordSymbol(chord.model, renderChord);
     });
   }
+
   function getChordSymbolRenderer() {
     if (typeof chordSymbolRenderer === 'function') {
       return chordSymbolRenderer;
     }
+
     var accidental = accidentalsType === 'auto' ? getMainAccidental(allChords) : accidentalsType;
     return (0,chord_symbol.chordRendererFactory)({
       simplify: simplifyChords,
@@ -17857,17 +18135,21 @@ function renderSong(parsedSong) {
       useFlats: accidental === 'flat'
     });
   }
+
   function getSectionWrapperClasses(line) {
     return ['cmSection', 'cmSection-' + line.model.rendered.label.replace(/[\d\s]/gi, '')];
   }
+
   function addPrintChordsDurationsFlag(line) {
     if (line.type === parser_lineTypes.CHORD) {
       line.model.allBars.forEach(function (bar) {
         bar.shouldPrintChordsDuration = shouldPrintChordsDuration(bar);
       });
     }
+
     return line;
   }
+
   function addPrintBarTimeSignatureFlag(line) {
     if (line.type === parser_lineTypes.TIME_SIGNATURE) {
       contextTimeSignature = line.string;
@@ -17877,54 +18159,67 @@ function renderSong(parsedSong) {
         previousBarTimeSignature = bar.timeSignature.string;
       });
     }
+
     return line;
   }
+
   function shouldPrintChordsDuration(bar) {
     return bar.allChords.length > 1 && (printChordsDuration === 'uneven' && bar.hasUnevenChordsDurations || printChordsDuration === 'always');
   }
+
   function shouldRenderLine(line) {
     return shouldRepeatLines(line) && !isFiltered(line);
   }
+
   function shouldRepeatLines(line) {
     var shouldSkipAutoRepeatChordLine = line.isFromAutoRepeatChords && !autoRepeatChords;
     var shouldSkipSectionMultiplyLine = line.isFromSectionMultiply && !expandSectionMultiply;
     var shouldSkipSectionCopyLine = line.type !== parser_lineTypes.SECTION_LABEL && line.isFromSectionCopy && !expandSectionCopy;
     return !shouldSkipSectionMultiplyLine && !shouldSkipAutoRepeatChordLine && !shouldSkipSectionCopyLine;
   }
+
   function isLastLine(i) {
     return allLines.length - 1 === i;
   }
+
   function isFiltered(line) {
     if (chartType === 'chordsFirstLyricLine') {
       if (line.type === parser_lineTypes.SECTION_LABEL) {
         isFirstLyricLineOfSection = true;
         return false;
       }
+
       if (isFirstLyricLineOfSection && line.type === parser_lineTypes.LYRIC) {
         isFirstLyricLineOfSection = false;
         return false;
       }
     }
+
     return ['chords', 'chordsFirstLyricLine'].includes(chartType) && line.type === parser_lineTypes.LYRIC || chartType === 'lyrics' && line.type === parser_lineTypes.CHORD;
   }
+
   function spaceChordLine(line, lineIndex) {
     if (line.type === parser_lineTypes.CHORD) {
       var spaced = alignBars && !shouldAlignChordsWithLyrics(line) ? aligned_space(line.model, maxBeatsWidth, shouldPrintBarSeparators(line.model), shouldPrintSubBeatDelimiters) : space(line.model);
       var nextLine = allLines[lineIndex + 1];
+
       if (shouldAlignChordsWithLyrics(line)) {
         var _chordLyricsSpacer = chordLyrics_space(spaced, nextLine.model, {
-            shouldPrintBarSeparators: shouldPrintBarSeparators(line.model),
-            shouldPrintSubBeatDelimiters: shouldPrintSubBeatDelimiters,
-            shouldPrintInlineTimeSignatures: shouldPrintInlineTimeSignatures
-          }),
-          chordLine = _chordLyricsSpacer.chordLine,
-          lyricsLine = _chordLyricsSpacer.lyricsLine;
+          shouldPrintBarSeparators: shouldPrintBarSeparators(line.model),
+          shouldPrintSubBeatDelimiters: shouldPrintSubBeatDelimiters,
+          shouldPrintInlineTimeSignatures: shouldPrintInlineTimeSignatures
+        }),
+            chordLine = _chordLyricsSpacer.chordLine,
+            lyricsLine = _chordLyricsSpacer.lyricsLine;
+
         allLines[lineIndex + 1].model = lyricsLine;
         spaced = chordLine;
       }
+
       allLines[lineIndex].model = spaced;
     }
   }
+
   function renderAllLines() {
     var lineIsInASection = false;
     return allLines.map(function (line, i) {
@@ -17932,6 +18227,7 @@ function renderSong(parsedSong) {
       var shouldOpenSection = false;
       var sectionWrapperClasses = [];
       var shouldClosePriorSection;
+
       if (line.type === parser_lineTypes.CHORD) {
         rendered = renderChordLine(line.model, {
           shouldPrintBarSeparators: shouldPrintBarSeparators(line.model),
@@ -17954,6 +18250,7 @@ function renderSong(parsedSong) {
           chartType: chartType
         });
       }
+
       return renderLine_render(rendered, {
         isFromSectionMultiply: line.isFromSectionMultiply,
         isFromAutoRepeatChords: line.isFromAutoRepeatChords,
@@ -17966,14 +18263,16 @@ function renderSong(parsedSong) {
       });
     }).filter(Boolean);
   }
+
   function shouldAlignChordsWithLyrics(line) {
     return chartType === 'all' && alignChordsWithLyrics && line.model.hasPositionedChords;
   }
-
   /**
    * @param {ChordLine} line
    * @returns {boolean}
    */
+
+
   function shouldPrintBarSeparators(line) {
     return printBarSeparators === 'always' || printBarSeparators === 'grids' && !line.hasPositionedChords;
   }
