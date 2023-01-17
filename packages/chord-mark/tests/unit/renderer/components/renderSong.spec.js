@@ -461,8 +461,8 @@ No woman no cry
 
 |C   G       |Am F |
   No woman no cry
-|C..   {F C/E} {Dm7 C} |C G |
-    No wo man  no   cry`;
+|C..  {F C/E} {Dm7 C} |C G |
+    No woman   no  cry`;
 
 	test('true by default', () => {
 		const rendered = renderSongText(input);

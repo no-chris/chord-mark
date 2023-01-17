@@ -14,6 +14,7 @@ describe('chordLyricsSpacer', () => {
 });
 
 describe.each([
+	/* */
 	[
 		'Single character chords',
 		'A D A E',
@@ -152,19 +153,43 @@ describe.each([
 		{ shouldPrintBarSeparators: false },
 	],
 	[
-		'correctly position chord in a sub-beat group',
-		'{A B Dm7} A.. {Gmi F7 E7}',
+		'sub-beat groups: correctly position chords',
+		'{A B Dm7} A.. {G13 F7 E7}',
 		'_Put _me _on top _of _the _correct _lyrics',
-		'|{A  B  Dmi7}  A  {Gmi F7      E7}   |',
-		' Put me on top of the  correct lyrics',
+		'|{A   B  Dmi7}  A {G13 F7      E7}   |',
+		'  Put me on top of the correct lyrics',
+	],
+	/* */
+	[
+		'sub-beat groups: adjust lyric token with extra space(s) before sub-beat group opener',
+		'A.. BbmiMa7. {G13 F7 E7}',
+		'_Put me on _top _of the _correct _lyrics',
+		'|A         BbmiMa7 {G13    F7      E7}   |',
+		' Put me on top      of the correct lyrics',
 	],
 	[
-		'correctly position chord in a sub-beat group',
+		'sub-beat groups: two consecutive groups (it is really the same test as above)',
+		'C.. {F C/E} {Dm C} C.. G..',
+		'_ No _wo_man _no _cry _',
+		'|C  {F C/E} {Dmi C} |C G |',
+		'  No woman   no  cry',
+	],
+	/* */
+	[
+		'sub-beat group: hide delimiters',
 		'{A B Dm7} A.. {Gmi F7 E7}',
 		'_Put _me _on top _of _the _correct _lyrics',
 		'|A   B  Dmi7   A  Gmi F7      E7    |',
 		' Put me on top of the correct lyrics',
 		{ shouldPrintSubBeatDelimiters: false },
+	],
+	[
+		'sub-beat group: show delimiters, hide bar seps',
+		'{A B Dm7} A.. {Gmi F7 E7}',
+		'_Put _me _on top _of _the _correct _lyrics',
+		'{A   B  Dmi7}  A {Gmi F7      E7}',
+		' Put me on top of the correct lyrics',
+		{ shouldPrintBarSeparators: false },
 	],
 	[
 		'time signature: bar starts at the beginning',
@@ -241,6 +266,7 @@ describe.each([
 		'     Put     me            on top        of       the     correct          lyrics',
 		{ shouldPrintBarTimeSignature: true, shouldPrintChordsDuration: true },
 	],
+	/* */
 ])(
 	'%s',
 	(
