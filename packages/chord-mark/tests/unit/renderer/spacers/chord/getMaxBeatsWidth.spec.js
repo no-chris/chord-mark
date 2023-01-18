@@ -126,19 +126,19 @@ describe.each([
 
 	[
 		'2 lines / 1 sub-beat group',
-		['{C G} Fmi7.. G7(#9).', 'G.  B.. A.'],
-		[{ 1: '{C G}'.length, 2: 'Fmi7'.length, 3: 0, 4: 'G7(#9)'.length }],
+		['[C G] Fmi7.. G7(#9).', 'G.  B.. A.'],
+		[{ 1: '[C G]'.length, 2: 'Fmi7'.length, 3: 0, 4: 'G7(#9)'.length }],
 	],
 
 	[
 		'2 lines / 2 sub-beat groups',
-		['{C G} Fmi7.. G7(#9).', 'G.  B.. {C B7 Emi G}'],
+		['[C G] Fmi7.. G7(#9).', 'G.  B.. [C B7 Emi G]'],
 		[
 			{
-				1: '{C G}'.length,
+				1: '[C G]'.length,
 				2: 'Fmi7'.length,
 				3: 0,
-				4: '{C B7 Emi G}'.length,
+				4: '[C B7 Emi G]'.length,
 			},
 		],
 	],
@@ -215,13 +215,13 @@ describe.each([
 	[
 		'do not print chord durations in sub-beat group',
 		true,
-		'A A7. {C G} B7.. Ami7. {Bmi9 G(b13)} Cmi13.. A13... B9.',
+		'A A7. [C G] B7.. Ami7. [Bmi9 G(b13)] Cmi13.. A13... B9.',
 		[
 			{ 1: 'A'.length, 2: 0, 3: 0, 4: 0 },
-			{ 1: 'A7.'.length, 2: '{C G}'.length, 3: 'B7..'.length, 4: 0 },
+			{ 1: 'A7.'.length, 2: '[C G]'.length, 3: 'B7..'.length, 4: 0 },
 			{
 				1: 'Ami7.'.length,
-				2: '{Bmi9 G(b13)}'.length,
+				2: '[Bmi9 G(b13)]'.length,
 				3: 'Cmi13..'.length,
 				4: 0,
 			},
@@ -308,7 +308,7 @@ describe.each([
 	[
 		'no sub-beat delimiters',
 		false,
-		'{C G} Fmi7.. G7(#9). Ami7.. {Bmi9 G(b13)} Cmi13.',
+		'[C G] Fmi7.. G7(#9). Ami7.. [Bmi9 G(b13)] Cmi13.',
 		[
 			{ 1: 'C G'.length, 2: 'Fmi7'.length, 3: 0, 4: 'G7(#9)'.length },
 			{
@@ -322,13 +322,13 @@ describe.each([
 	[
 		'with sub-beat delimiters',
 		true,
-		'{C G} Fmi7.. G7(#9). Ami7.. {Bmi9 G(b13)} Cmi13.',
+		'[C G] Fmi7.. G7(#9). Ami7.. [Bmi9 G(b13)] Cmi13.',
 		[
-			{ 1: '{C G}'.length, 2: 'Fmi7'.length, 3: 0, 4: 'G7(#9)'.length },
+			{ 1: '[C G]'.length, 2: 'Fmi7'.length, 3: 0, 4: 'G7(#9)'.length },
 			{
 				1: 'Ami7'.length,
 				2: 0,
-				3: '{Bmi9 G(b13)}'.length,
+				3: '[Bmi9 G(b13)]'.length,
 				4: 'Cmi13'.length,
 			},
 		],

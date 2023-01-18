@@ -920,7 +920,7 @@ describe.each([
 	],
 	[
 		'sub-beat group / 2 chords',
-		'F... {C/E Dm7}',
+		'F... [C/E Dm7]',
 		ts4_4,
 		{
 			allBars: [
@@ -934,7 +934,7 @@ describe.each([
 							isInSubBeatGroup: false,
 						},
 						{
-							string: '{C/E',
+							string: '[C/E',
 							model: { symbol: 'C/E' },
 							duration: 0.5,
 							beat: 4,
@@ -943,7 +943,7 @@ describe.each([
 							isLastOfSubBeat: false,
 						},
 						{
-							string: 'Dm7}',
+							string: 'Dm7]',
 							model: { symbol: 'Dm7' },
 							duration: 0.5,
 							beat: 4,
@@ -962,7 +962,7 @@ describe.each([
 	],
 	[
 		'sub-beat group / 3 chords',
-		'F... {C/E Dm7 C}',
+		'F... [C/E Dm7 C]',
 		ts4_4,
 		{
 			allBars: [
@@ -976,7 +976,7 @@ describe.each([
 							isInSubBeatGroup: false,
 						},
 						{
-							string: '{C/E',
+							string: '[C/E',
 							model: { symbol: 'C/E' },
 							duration: 0.33,
 							beat: 4,
@@ -994,7 +994,7 @@ describe.each([
 							isLastOfSubBeat: false,
 						},
 						{
-							string: 'C}',
+							string: 'C]',
 							model: { symbol: 'C' },
 							duration: 0.33,
 							beat: 4,
@@ -1013,14 +1013,14 @@ describe.each([
 	],
 	[
 		'sub-beat group / 4 chords',
-		'{C/E Dm7 C Am} F...',
+		'[C/E Dm7 C Am] F...',
 		ts4_4,
 		{
 			allBars: [
 				{
 					allChords: [
 						{
-							string: '{C/E',
+							string: '[C/E',
 							model: { symbol: 'C/E' },
 							duration: 0.25,
 							beat: 1,
@@ -1047,7 +1047,7 @@ describe.each([
 							isLastOfSubBeat: false,
 						},
 						{
-							string: 'Am}',
+							string: 'Am]',
 							model: { symbol: 'Am' },
 							duration: 0.25,
 							beat: 1,
@@ -1073,7 +1073,7 @@ describe.each([
 	],
 	[
 		'2 sub-beat groups / 2 and 3 chords',
-		'F.. {C/E Dm7} {C B7 Am}',
+		'F.. [C/E Dm7] [C B7 Am]',
 		ts4_4,
 		{
 			allBars: [
@@ -1087,7 +1087,7 @@ describe.each([
 							isInSubBeatGroup: false,
 						},
 						{
-							string: '{C/E',
+							string: '[C/E',
 							model: { symbol: 'C/E' },
 							duration: 0.5,
 							beat: 3,
@@ -1096,7 +1096,7 @@ describe.each([
 							isLastOfSubBeat: false,
 						},
 						{
-							string: 'Dm7}',
+							string: 'Dm7]',
 							model: { symbol: 'Dm7' },
 							duration: 0.5,
 							beat: 3,
@@ -1105,7 +1105,7 @@ describe.each([
 							isLastOfSubBeat: true,
 						},
 						{
-							string: '{C',
+							string: '[C',
 							model: { symbol: 'C' },
 							duration: 0.33,
 							beat: 4,
@@ -1123,7 +1123,7 @@ describe.each([
 							isLastOfSubBeat: false,
 						},
 						{
-							string: 'Am}',
+							string: 'Am]',
 							model: { symbol: 'Am' },
 							duration: 0.33,
 							beat: 4,
@@ -1422,9 +1422,9 @@ describe.each([
 	['A... A.', 'A.'],
 	['A... B. C.. C. F.', 'C.'],
 	['A... B. F... F.', 'F.'],
-	['C... {G G C}', 'G'],
-	['C... {G G}', 'G}'],
-	['C... {C G G C}', 'G'],
+	['C... [G G C]', 'G'],
+	['C... [G G]', 'G]'],
+	['C... [C G G C]', 'G'],
 ])('Throw if repeated chord in a bar: %s', (input, string) => {
 	const throwingFn = () => {
 		parseChordLine(input);
@@ -1446,10 +1446,10 @@ describe.each([
 });
 
 describe.each([
-	['A... {A A7/G}'],
-	['A.. {A B7} {B7 A7/G}'],
-	['{A B} {B C} {C D} {D E}'],
-	['{A B} B...'],
+	['A... [A A7/G]'],
+	['A.. [A B7] [B7 A7/G]'],
+	['[A B] [B C] [C D] [D E]'],
+	['[A B] B...'],
 ])('Allowed chord repetitions: %s', (input) => {
 	const notThrowingFn = () => {
 		parseChordLine(input);
@@ -1517,15 +1517,15 @@ describe.each([
 });
 
 describe.each([
-	['A... {B7. D7.}'],
-	['A... {B7. D7}'],
-	['A... {B7 D7.}'],
-	['A... {B7. E7 D7}'],
-	['A... {B7 E7. D7}'],
-	['A... {B7 E7 D7.}'],
-	['A... {B7.. E7 D7}'],
-	['A... {B7 E7.. D7}'],
-	['A... {B7 E7 D7..}'],
+	['A... [B7. D7.]'],
+	['A... [B7. D7]'],
+	['A... [B7 D7.]'],
+	['A... [B7. E7 D7]'],
+	['A... [B7 E7. D7]'],
+	['A... [B7 E7 D7.]'],
+	['A... [B7.. E7 D7]'],
+	['A... [B7 E7.. D7]'],
+	['A... [B7 E7 D7..]'],
 ])('Throw if a sub-beat group contains duration markers: %s', (input) => {
 	const throwingFn = () => {
 		parseChordLine(input);
@@ -1548,17 +1548,17 @@ describe.each([
 });
 
 describe.each([
-	['A.. B7. D7.{', '{', 11],
-	['A... {B7 {D7', '{', 9],
-	['A... {B7 D7', '{', 5],
-	['A.. {C G} {B7 D7', '{', 10],
+	['A.. B7. D7.[', '[', 11],
+	['A... [B7 [D7', '[', 9],
+	['A... [B7 D7', '[', 5],
+	['A.. [C G] [B7 D7', '[', 10],
 
-	['}A.. B7. D7.', '}', 0],
-	['A... B7 D7}', '}', 10],
-	['A.. {C G} B7 D7}', '}', 15],
+	[']A.. B7. D7.', ']', 0],
+	['A... B7 D7]', ']', 10],
+	['A.. [C G] B7 D7]', ']', 15],
 
-	['A... {C G E B7 D7}', 'D7}', 0],
-	['A... {C}', '{C}', 0],
+	['A... [C G E B7 D7]', 'D7]', 0],
+	['A... [C]', '[C]', 0],
 ])(
 	'Throw if sub-beat groups are not properly defined: %s',
 	(input, symbol, position) => {

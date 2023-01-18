@@ -9,6 +9,6 @@ export default {
 	spacesAfterDefault: 2,
 	spacesAfterSubBeatDefault: 1,
 	spacesAfterTimeSignature: 1,
-	subBeatGroupOpener: '{',
-	subBeatGroupCloser: '}',
+	subBeatGroupOpener: '[',
+	subBeatGroupCloser: ']',
 };

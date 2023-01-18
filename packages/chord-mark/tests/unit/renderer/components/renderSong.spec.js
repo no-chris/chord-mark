@@ -446,22 +446,22 @@ Solo
 describe('printSubBeatDelimiters', () => {
 	const input = `C.. G.. Am.. F..
 No woman no cry
-C.. {F C/E} {Dm7 C} C.. G..
+C.. [F C/E] [Dm7 C] C.. G..
 No woman no cry
 
 C.. G.. Am.. F..
 _ No _woman no _cry
-C.. {F C/E} {Dm7 C} C.. G..
+C.. [F C/E] [Dm7 C] C.. G..
 _ No _wo_man _no _cry`;
 
 	const outputWithDelimiters = `|C     G               |Am   F   |
 No woman no cry
-|C..   {F C/E}  {Dm7 C}|C    G   |
+|C..   [F C/E]  [Dm7 C]|C    G   |
 No woman no cry
 
 |C   G       |Am F |
   No woman no cry
-|C..  {F C/E} {Dm7 C} |C G |
+|C..  [F C/E] [Dm7 C] |C G |
     No woman   no  cry`;
 
 	test('true by default', () => {

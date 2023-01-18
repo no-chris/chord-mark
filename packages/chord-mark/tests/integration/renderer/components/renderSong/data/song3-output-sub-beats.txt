@@ -1,25 +1,25 @@
 Intro
 |C               G             |
-|Am.  {Am Am/G}  FM7.  F6.     |
+|Am.  [Am Am/G]  FM7.  F6.     |
 |C               G             |
-|F.   {C/E Dm7}  C..           |
+|F.   [C/E Dm7]  C..           |
 
 Verse
       |C              G               |
 When I find myself in times of trouble
-|Am.      {Am Am/G} FM7.     F6. |
+|Am.      [Am Am/G] FM7.     F6. |
     Mother Ma ry    comes to me
 |C                 G     |
  Speaking words of wisdom
-      |F. {C/E Dm7} C.. |
+      |F. [C/E Dm7] C.. |
 Let it be
    |C             G       |
 And in my hour of darkness
-      |Am.     {Am    Am/G} FM7.     F6. |
+      |Am.     [Am    Am/G] FM7.     F6. |
 She is standing right in    front of me
 |C                 G     |
  Speaking words of wisdom
-      |F. {C/E Dm7} C. G. |
+      |F. [C/E Dm7] C. G. |
 Let it be
 
 Chorus
@@ -29,9 +29,9 @@ Let it be, let it be
 Let it be, let it be
 |C                 G     |
   Whisper words of wisdom
-      |F. {C/E Dm7} C.. |
+      |F. [C/E Dm7] C.. |
 Let it be
 
 Bridge x2
-|F.   {C/E Dm7}  C.    {Bb F/A}|
+|F.   [C/E Dm7]  C.    [Bb F/A]|
 |G.   F.         C..           |

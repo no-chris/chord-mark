@@ -39,7 +39,7 @@ describe.each([
 	[
 		'1 bar / 1 sub-beat group of 16th notes / 4/4',
 		ts4_4,
-		'{C G Am F} G...',
+		'[C G Am F] G...',
 		[1, 1, 1, 2, 2],
 	],
 ])('%s', (title, timeSignature, input, spacesAfter) => {

@@ -318,7 +318,9 @@ function checkSubBeatConsistency(line) {
 	let match;
 
 	const regexp = new RegExp(
-		syntax.subBeatOpener + '|' + syntax.subBeatCloser,
+		_escapeRegExp(syntax.subBeatOpener) +
+			'|' +
+			_escapeRegExp(syntax.subBeatCloser),
 		'g'
 	);
 	while ((match = regexp.exec(line))) {
