@@ -5,7 +5,7 @@
 	"author": "Christophe Noël <touffi51@gmail.com>",
 	"homepage": "https://github.com/no-chris/chord-mark/tree/main/packages/chord-mark-converters#readme",
 	"license": "MIT",
-	"main": "lib/chord-mark-converters.js",
+	"main": "src/chordMarkConverters.js",
 	"directories": {
 		"lib": "lib",
 		"src": "src",
