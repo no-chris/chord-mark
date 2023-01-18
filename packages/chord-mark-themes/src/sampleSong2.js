@@ -1,25 +1,25 @@
 export default `#i
 C.. G.. 
-Am. {Am Am/G} FM7. F6.
+Am. [Am Am/G] FM7. F6.
 C.. G.. 
-F. {C/E Dm7} C..
+F. [C/E Dm7] C..
 
 #v
 C.. G..
 When I _find myself in _times of trouble
-Am. {Am Am/G} FM7. F6.
+Am. [Am Am/G] FM7. F6.
 _ Mother _Ma_ry _comes to _me
 %%
 _Speaking words of _wisdom
-F. {C/E Dm7} C..
+F. [C/E Dm7] C..
 Let it _be _ _ _
 C.. G..
 And _in my hour of _darkness
-Am. {Am Am/G} FM7. F6.
+Am. [Am Am/G] FM7. F6.
 She is _standing _right _in _front of _me
 %%
 _Speaking words of _wisdom
-F. {C/E Dm7} C. G.
+F. [C/E Dm7] C. G.
 Let it _be _ _ _
 
 #c
@@ -29,7 +29,7 @@ F.. C..
 Let it _be, let it _be
 C.. G.. 
 _ Whisper words of _wisdom
-F. {C/E Dm7} C..
+F. [C/E Dm7] C..
 Let it _be _ _ _
 
 #v
@@ -45,14 +45,14 @@ Let it b_e _ _ _
 #c x2
 
 #b x2
-F. {C/E Dm7} C. {Bb F/A}
+F. [C/E Dm7] C. [Bb F/A]
 G. F. C.. 
 
 #s x2
 C.. G.. 
-Am. {Am Am/G} FM7. F6.
+Am. [Am Am/G] FM7. F6.
 C.. G.. 
-F. {C/E Dm7} C..
+F. [C/E Dm7] C..
 
 #c
 
@@ -69,5 +69,5 @@ Let it _be _ _ _
 #c x3
 
 #o
-F. {C/E Dm7} C. {Bb F/A}
+F. [C/E Dm7] C. [Bb F/A]
 G. F. C.. `;
