@@ -3,7 +3,7 @@
 	"version": "0.13.0-beta.1",
 	"description": "ChordMark - chord charts parser and renderer",
 	"private": false,
-	"main": "lib/chord-mark.js",
+	"main": "src/chordMark.js",
 	"author": "Christophe Noël",
 	"license": "MIT",
 	"engines": {

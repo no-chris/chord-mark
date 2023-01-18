@@ -5,7 +5,6 @@
 	"author": "Christophe Noël <touffi51@gmail.com>",
 	"homepage": "https://github.com/no-chris/chord-mark/tree/main/packages/chord-mark-themes#readme",
 	"license": "MIT",
-	"main": "lib/chord-mark-themes.js",
 	"files": [
 		"scss"
 	],
