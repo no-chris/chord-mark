@@ -47,19 +47,19 @@ describe.each([
 		'sub-beat group open',
 		{ symbol: 'AM7', duration: 3 },
 		{ shouldPrintSubBeatOpener: true },
-		'{AM7',
+		'[AM7',
 	],
 	[
 		'sub-beat group close',
 		{ symbol: 'AM7', duration: 3 },
 		{ shouldPrintSubBeatCloser: true },
-		'AM7}',
+		'AM7]',
 	],
 	[
 		'sub-beat group open and close: should never happen, the parser should prevent that',
 		{ symbol: 'AM7', duration: 3 },
 		{ shouldPrintSubBeatOpener: true, shouldPrintSubBeatCloser: true },
-		'{AM7}',
+		'[AM7]',
 	],
 ])('Render chord %s as %s', (title, chord, options, expected) => {
 	test('expected rendering', () => {

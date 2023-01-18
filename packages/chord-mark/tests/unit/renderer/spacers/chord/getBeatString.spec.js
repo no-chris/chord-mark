@@ -34,26 +34,26 @@ describe.each([
 
 	[
 		'sub-beat group 8th / no duration',
-		'A. {C G} B..',
+		'A. [C G] B..',
 		2,
 		false,
 		true,
-		'{C G}',
+		'[C G]',
 	],
 	[
 		'sub-beat group 8th / with duration',
-		'A. {C G} B..',
+		'A. [C G] B..',
 		2,
 		true,
 		true,
-		'{C G}',
+		'[C G]',
 	],
-	['sub-beat group 8thT', 'A. {C Am G} B..', 2, false, true, '{C Ami G}'],
-	['sub-beat group 16th', 'A. {C Am G C} B..', 2, false, true, '{C Ami G C}'],
+	['sub-beat group 8thT', 'A. [C Am G] B..', 2, false, true, '[C Ami G]'],
+	['sub-beat group 16th', 'A. [C Am G C] B..', 2, false, true, '[C Ami G C]'],
 
 	[
 		'no sub-beat delimiters',
-		'A. {C Am G C} B..',
+		'A. [C Am G C] B..',
 		2,
 		false,
 		false,

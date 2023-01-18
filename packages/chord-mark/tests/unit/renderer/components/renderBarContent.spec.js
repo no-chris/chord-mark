@@ -113,9 +113,9 @@ describe.each([
 	['display chord duration', 'C. G. F..', true, 'C.  G.  F..  '],
 	[
 		'do not display chord duration in sub-beat groups',
-		'{C G} F...',
+		'[C G] F...',
 		true,
-		'{C  G}  F...  ',
+		'[C  G]  F...  ',
 	],
 ])(
 	'Chord duration markers',
@@ -179,21 +179,21 @@ describe.each([
 );
 
 describe.each([
-	['1 group, 8th notes, 1st beat', '{C G} F...', '{C G}  F  '],
-	['1 group, 8th notes, 2nd beat', 'F. {C G} Em..', 'F  {C G}  Emi  '],
-	['1 group, 8th notes, 3rd beat', 'F.. {C G} Em.', 'F  {C G}  Emi  '],
-	['1 group, 8th notes, 4th beat', 'F... {C G}', 'F  {C G}  '],
-	['1 group, 8thT notes, 1st beat', '{C A7 G} F...', '{C A7 G}  F  '],
-	['1 group, 8thT notes, 2nd beat', 'F. {C A7 G} Em..', 'F  {C A7 G}  Emi  '],
-	['1 group, 8thT notes, 3rd beat', 'F.. {C A7 G} Em.', 'F  {C A7 G}  Emi  '],
-	['1 group, 8thT notes, 4th beat', 'F... {C A7 G}', 'F  {C A7 G}  '],
-	['2 groups, beats 1 & 2', '{C G} {A7 B7} F..', '{C G}  {A7 B7}  F  '],
-	['2 groups, beats 1 & 3', '{C G} F. {A7 B7} F.', '{C G}  F  {A7 B7}  F  '],
-	['2 groups, beats 1 & 4', '{C G} F.. {A7 B7}', '{C G}  F  {A7 B7}  '],
-	['2 groups, beats 2 & 3', 'F. {C G} {A7 B7} F.', 'F  {C G}  {A7 B7}  F  '],
-	['2 groups, beats 2 & 4', 'F. {C G} F. {A7 B7}', 'F  {C G}  F  {A7 B7}  '],
-	['2 groups, beats 3 & 4', 'F.. {C G} {A7 B7}', 'F  {C G}  {A7 B7}  '],
-	['no sub-beat delimiters', 'F.. {C G} {A7 B7}', 'F  C G  A7 B7  ', false],
+	['1 group, 8th notes, 1st beat', '[C G] F...', '[C G]  F  '],
+	['1 group, 8th notes, 2nd beat', 'F. [C G] Em..', 'F  [C G]  Emi  '],
+	['1 group, 8th notes, 3rd beat', 'F.. [C G] Em.', 'F  [C G]  Emi  '],
+	['1 group, 8th notes, 4th beat', 'F... [C G]', 'F  [C G]  '],
+	['1 group, 8thT notes, 1st beat', '[C A7 G] F...', '[C A7 G]  F  '],
+	['1 group, 8thT notes, 2nd beat', 'F. [C A7 G] Em..', 'F  [C A7 G]  Emi  '],
+	['1 group, 8thT notes, 3rd beat', 'F.. [C A7 G] Em.', 'F  [C A7 G]  Emi  '],
+	['1 group, 8thT notes, 4th beat', 'F... [C A7 G]', 'F  [C A7 G]  '],
+	['2 groups, beats 1 & 2', '[C G] [A7 B7] F..', '[C G]  [A7 B7]  F  '],
+	['2 groups, beats 1 & 3', '[C G] F. [A7 B7] F.', '[C G]  F  [A7 B7]  F  '],
+	['2 groups, beats 1 & 4', '[C G] F.. [A7 B7]', '[C G]  F  [A7 B7]  '],
+	['2 groups, beats 2 & 3', 'F. [C G] [A7 B7] F.', 'F  [C G]  [A7 B7]  F  '],
+	['2 groups, beats 2 & 4', 'F. [C G] F. [A7 B7]', 'F  [C G]  F  [A7 B7]  '],
+	['2 groups, beats 3 & 4', 'F.. [C G] [A7 B7]', 'F  [C G]  [A7 B7]  '],
+	['no sub-beat delimiters', 'F.. [C G] [A7 B7]', 'F  C G  A7 B7  ', false],
 ])('%s: %s', (title, input, output, shouldPrintSubBeatDelimiters = true) => {
 	test('Renders sub-beat groups: ' + output, () => {
 		const parsed = forEachChordInChordLine(

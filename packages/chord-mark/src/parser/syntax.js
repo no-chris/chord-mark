@@ -8,8 +8,8 @@ export default {
 	noChord: 'NC',
 	noLyrics: 'NL',
 	sectionLabel: '#',
-	subBeatOpener: '{',
-	subBeatCloser: '}',
+	subBeatOpener: '[',
+	subBeatCloser: ']',
 };
 
 export const defaultTimeSignature = parseTimeSignature('4/4');

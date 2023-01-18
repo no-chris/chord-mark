@@ -106,7 +106,7 @@ describe.each([
 
 	[
 		'space chords in sub-beat group with 1 space',
-		'A. {C Ami G} C. D.',
+		'A. [C Ami G] C. D.',
 		[{ 1: 1, 2: 9, 3: 1, 4: 1 }],
 		[0, 0, 0, 0, 0, 0],
 		[
@@ -121,7 +121,7 @@ describe.each([
 
 	[
 		'space sub-beat group as a whole, filling spacesWithin property of the last chord',
-		'A. {C Ami G} C. D.',
+		'A. [C Ami G] C. D.',
 		[{ 1: 1, 2: 20, 3: 1, 4: 1 }],
 		[0, 0, 0, 11, 0, 0],
 		[
@@ -136,7 +136,7 @@ describe.each([
 
 	[
 		'sub-beat group at the end, with bar separators',
-		'A. C. D. {C Ami G}',
+		'A. C. D. [C Ami G]',
 		[{ 1: 1, 2: 1, 3: 1, 4: 9 }],
 		[0, 0, 0, 0, 0, 0],
 		[
@@ -153,7 +153,7 @@ describe.each([
 
 	[
 		'sub-beat group at the end, no bar separators',
-		'A. C. D. {C Ami G}',
+		'A. C. D. [C Ami G]',
 		[{ 1: 1, 2: 1, 3: 1, 4: 9 }],
 		[0, 0, 0, 0, 0, 0],
 		[

@@ -12,11 +12,11 @@ describe('parseSong', () => {
 		const input = `4/4
 C.. G..
 When I find myself in times of trouble
-Am. {Am Am/G} FM7. F6.
+Am. [Am Am/G] FM7. F6.
 _ Mother _Ma_ry _comes to _me
 %%
 Speaking words of wisdom
-F. {C/E Dm7} C..
+F. [C/E Dm7] C..
 Let it _be _ _ _`;
 		const expected = {
 			allLines: [
@@ -68,7 +68,7 @@ Let it _be _ _ _`;
 				},
 				{
 					type: 'chord',
-					string: 'Am. {Am Am/G} FM7. F6.',
+					string: 'Am. [Am Am/G] FM7. F6.',
 					model: {
 						allBars: [
 							{
@@ -82,7 +82,7 @@ Let it _be _ _ _`;
 										isPositioned: true,
 									},
 									{
-										string: '{Am',
+										string: '[Am',
 										model: parseChord('Am'),
 										duration: 0.5,
 										beat: 2,
@@ -92,7 +92,7 @@ Let it _be _ _ _`;
 										isPositioned: true,
 									},
 									{
-										string: 'Am/G}',
+										string: 'Am/G]',
 										model: parseChord('Am/G'),
 										duration: 0.5,
 										beat: 2,
@@ -179,7 +179,7 @@ Let it _be _ _ _`;
 				},
 				{
 					type: 'chord',
-					string: 'F. {C/E Dm7} C..',
+					string: 'F. [C/E Dm7] C..',
 					model: {
 						allBars: [
 							{
@@ -193,7 +193,7 @@ Let it _be _ _ _`;
 										isPositioned: true,
 									},
 									{
-										string: '{C/E',
+										string: '[C/E',
 										model: parseChord('C/E'),
 										duration: 0.5,
 										beat: 2,
@@ -203,7 +203,7 @@ Let it _be _ _ _`;
 										isPositioned: true,
 									},
 									{
-										string: 'Dm7}',
+										string: 'Dm7]',
 										model: parseChord('Dm7'),
 										duration: 0.5,
 										beat: 2,

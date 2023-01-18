@@ -74,9 +74,9 @@ describe.each([
 });
 
 describe.each([
-	['A.. B. {C D}', '|A  B  {C  D}  |', undefined],
-	['A.. B. {C D}', '|A  B  {C  D}  |', true],
-	['A.. B. {C D}', '|A  B  C  D  |', false],
+	['A.. B. [C D]', '|A  B  [C  D]  |', undefined],
+	['A.. B. [C D]', '|A  B  [C  D]  |', true],
+	['A.. B. [C D]', '|A  B  C  D  |', false],
 ])('%s => %s', (input, output, shouldPrintSubBeatDelimiters) => {
 	test('respect shouldPrintSubBeatDelimiters', () => {
 		const chordLine = parseChordLine(input);
