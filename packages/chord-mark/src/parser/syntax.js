@@ -5,7 +5,7 @@ export default {
 	chordBeatCount: '.',
 	chordLineRepeat: '%',
 	chordPositionMarker: '_',
-	keyPrefix: 'key ',
+	keyDeclarationPrefix: 'key ',
 	noChord: 'NC',
 	noLyrics: 'NL',
 	sectionLabel: '#',

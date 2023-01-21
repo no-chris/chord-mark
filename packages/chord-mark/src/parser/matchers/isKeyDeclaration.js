@@ -4,7 +4,7 @@ import clearSpaces from '../helper/clearSpaces';
 import { chordParserFactory } from 'chord-symbol';
 
 export const keyDeclarationRegexp = new RegExp(
-	'^' + _escapeRegExp(syntax.keyPrefix) + '([ABCDEFG].*)$'
+	'^' + _escapeRegExp(syntax.keyDeclarationPrefix) + '([ABCDEFG].*)$'
 );
 
 export default function isKeyDeclaration(string) {
