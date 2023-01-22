@@ -1234,3 +1234,28 @@ verseContent2
 		expect(songLines.asArray()).toEqual(expected);
 	});
 });
+
+describe('Key declaration', () => {
+	test('Correctly parse key declaration', () => {
+		const input = ['key C#min', 'key Ab', 'key Bbmaj'];
+
+		const expected = [
+			{
+				type: 'keyDeclaration',
+				string: 'key C#min',
+				model: { key: 'C#mi' },
+			},
+			{ type: 'keyDeclaration', string: 'key Ab', model: { key: 'Ab' } },
+			{
+				type: 'keyDeclaration',
+				string: 'key Bbmaj',
+				model: { key: 'Bb' },
+			},
+		];
+
+		const songLines = songLinesFactory();
+		input.forEach(songLines.addLine);
+
+		expect(songLines.asArray()).toEqual(expected);
+	});
+});
