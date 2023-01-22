@@ -4,6 +4,7 @@ export default {
 	chordBeat: '.',
 	chordLineOffsetSpacer: ' ',
 	emptyBeatSpaces: 1,
+	keyDeclarationPrefix: 'key: ', // https://outils-javascript.aliasdmc.fr/encodage-caracteres-musique/
 	lyricsSpacer: ' ',
 	noChordSymbol: 'NC',
 	spacesAfterDefault: 2,
