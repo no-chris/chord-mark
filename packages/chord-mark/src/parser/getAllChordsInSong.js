@@ -19,11 +19,19 @@ export default function getAllChordsInSong(allLines) {
 			allChords.push({
 				model: _cloneDeep(chord.model),
 				occurrences: 1,
+				duration: chord.duration,
 			});
+			i = allChords.length - 1;
 		} else {
 			allChords[i].occurrences++;
+			allChords[i].duration += chord.duration;
 		}
 	});
+
+	if (allChords.length) {
+		allChords[0].isFirst = true;
+		allChords[i].isLast = true;
+	}
 
 	return allChords;
 }
