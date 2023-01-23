@@ -19,6 +19,7 @@ import getAllChordsInSong from './getAllChordsInSong';
  * @type {Object}
  * @property {ChordDef} model
  * @property {number} occurrences - number of times the chord appears in the song
+ * @property {number} duration - in beats, cumulated duration of the chord
  */
 
 /**
