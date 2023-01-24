@@ -1,4 +1,7 @@
 import parseKeyDeclaration from '../../../src/parser/parseKeyDeclaration';
+import { chordParserFactory } from 'chord-symbol';
+
+const parseChord = chordParserFactory();
 
 describe('parseKeyDeclaration', () => {
 	test('Module', () => {
@@ -7,21 +10,22 @@ describe('parseKeyDeclaration', () => {
 });
 
 describe.each([
-	['key Abmin', 'Abmi'],
-	['key Abmi', 'Abmi'],
-	['key Amin', 'Ami'],
-	['key Abm', 'Abmi'],
-	['key Ami', 'Ami'],
-	['key Am', 'Ami'],
-	['key A', 'A'],
-	['key A#', 'A#'],
-	['key A#m', 'A#mi'],
-	['key A#mi', 'A#mi'],
-	['key A#min', 'A#mi'],
-])('Valid: %s => %s', (string, key) => {
+	['Abmin', 'Abmi'],
+	['Abmi', 'Abmi'],
+	['Amin', 'Ami'],
+	['Abm', 'Abmi'],
+	['Ami', 'Ami'],
+	['Am', 'Ami'],
+	['A', 'A'],
+	['A#', 'A#'],
+	['A#m', 'A#mi'],
+	['A#mi', 'A#mi'],
+	['A#min', 'A#mi'],
+])('Valid: %s => %s', (chordInput, string) => {
 	test('Correctly gets key', () => {
-		expect(parseKeyDeclaration(string)).toEqual({
-			key,
+		expect(parseKeyDeclaration('key ' + chordInput)).toEqual({
+			string,
+			chordModel: parseChord(chordInput),
 		});
 	});
 });
@@ -34,6 +38,10 @@ describe.each([
 	['KEY #A'],
 	['KEY Am7'],
 	['KEY A7'],
+	['KEY La'],
+	['key La'],
+	['key Sol'],
+	['key H'],
 ])('Invalid: %s', (string) => {
 	test('Throws TypeError', () => {
 		const throwingFn = () => parseKeyDeclaration(string);

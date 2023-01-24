@@ -7,7 +7,8 @@ import { chordParserFactory, chordRendererFactory } from 'chord-symbol';
 /**
  * @typedef {Object} KeyDeclaration
  * @type {Object}
- * @property {String} key
+ * @property {String} string
+ * @property {ChordDef} chordModel
  */
 
 /**
@@ -20,10 +21,12 @@ export default function parseKeyDeclaration(string) {
 	}
 
 	const found = clearSpaces(string).match(keyDeclarationRegexp);
-	const parseChord = chordParserFactory({ notationSystems: ['english'] });
+	const parseChord = chordParserFactory();
 	const renderChord = chordRendererFactory();
+	const chordModel = parseChord(found[1]);
 
 	return {
-		key: renderChord(parseChord(found[1])),
+		string: renderChord(chordModel),
+		chordModel,
 	};
 }
