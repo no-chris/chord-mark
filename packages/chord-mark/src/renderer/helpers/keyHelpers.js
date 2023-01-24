@@ -1,6 +1,7 @@
 import _cloneDeep from 'lodash/cloneDeep';
 import _findIndex from 'lodash/findIndex';
-import syntax from '../../parser/syntax';
+
+import { chordParserFactory, chordRendererFactory } from 'chord-symbol';
 
 const sharpKeys = [
 	'G', // 1 sharp
@@ -35,26 +36,73 @@ export function getKeyAccidental(key) {
 }
 
 /**
+ *
+ * @param {KeyDeclaration} keyModel
+ * @param {number} transposeValue
+ * @param {boolean} avoidTheoreticalKeys
+ * @returns {KeyDeclaration}
+ */
+export function transposeKey(keyModel, transposeValue, avoidTheoreticalKeys) {
+	const theoreticalKeys = {
+		'G#': 'Ab',
+		'D#': 'Eb',
+		'A#': 'Bb',
+		Dbmi: 'C#mi',
+		Gbmi: 'F#mi',
+	};
+
+	const parseKeyChord = chordParserFactory();
+	const keyRenderer = chordRendererFactory({
+		transposeValue,
+		harmonizeAccidentals: transposeValue !== 0,
+		useFlats: transposeValue < 0,
+	});
+
+	const tempKey = keyRenderer(keyModel.chordModel);
+	const transposedKey =
+		avoidTheoreticalKeys && theoreticalKeys[tempKey]
+			? theoreticalKeys[tempKey]
+			: tempKey;
+
+	return {
+		string: transposedKey,
+		chordModel: parseKeyChord(transposedKey),
+	};
+}
+
+/**
  * Try to guess the key of a song based on the chords
  *
  * @param {SongChord[]} allChords
- * @returns {undefined|String}
+ * @returns {undefined|KeyDeclaration}
  */
 export function guessKey(allChords) {
+	const keyString = inferKeyFromChords(allChords);
+	const parseChord = chordParserFactory();
+
+	return keyString
+		? {
+				string: keyString,
+				chordModel: parseChord(keyString),
+		  }
+		: undefined;
+}
+
+function inferKeyFromChords(allChords) {
 	const mostUsedChords = getMostUsedChordKeys(allChords);
 
 	if (mostUsedChords.length === 0) return;
-	if (mostUsedChords.length === 1) return mostUsedChords[0].key;
+	if (mostUsedChords.length === 1) return mostUsedChords[0].keyString;
 
 	const lastSongChord = mostUsedChords.find((chord) => chord.isLast === true);
-	if (lastSongChord) return lastSongChord.key;
+	if (lastSongChord) return lastSongChord.keyString;
 
 	const firstSongChord = mostUsedChords.find(
 		(chord) => chord.isFirst === true
 	);
-	if (firstSongChord) return firstSongChord.key;
+	if (firstSongChord) return firstSongChord.keyString;
 
-	return mostUsedChords[0].key; // we give up!
+	return mostUsedChords[0].keyString; // we give up!
 }
 
 function getMostUsedChordKeys(allChords) {
@@ -65,35 +113,46 @@ function getMostUsedChordKeys(allChords) {
 
 	allChords
 		.map((chord) => {
-			chord.key = chord2Key(chord);
+			chord.keyString = chord2Key(chord);
 			return chord;
 		})
 		.forEach((chord) => {
-			const i = _findIndex(allChordsKey, (o) => o.key === chord.key);
+			const i = _findIndex(
+				allChordsKey,
+				(o) => o.keyString === chord.keyString
+			);
 			if (i === -1) {
 				allChordsKey.push(chord);
 			} else {
 				allChordsKey[i].duration += chord.duration;
-				if (chord.isFirst) allChordsKey[i].isFirst = true;
 				if (chord.isLast) allChordsKey[i].isLast = true;
 			}
 		});
 
-	allChordsKey.forEach((chord) => {
-		if (chord.duration > maxFoundDuration) {
-			mostUsedChordKeys = [chord];
-			maxFoundDuration = chord.duration;
-		} else if (chord.duration === maxFoundDuration) {
-			mostUsedChordKeys.push(chord);
-		}
-	});
+	allChordsKey
+		.map((chord) => {
+			// give more weight to first and last chords
+			if (chord.isLast) {
+				chord.duration *= 1.25;
+			}
+			if (chord.isFirst) {
+				chord.duration *= 1.25;
+			}
+			return chord;
+		})
+		.forEach((chord) => {
+			if (chord.duration > maxFoundDuration) {
+				mostUsedChordKeys = [chord];
+				maxFoundDuration = chord.duration;
+			} else if (chord.duration === maxFoundDuration) {
+				mostUsedChordKeys.push(chord);
+			}
+		});
 
 	return mostUsedChordKeys;
 }
 
 function chord2Key(chord) {
-	if (chord.model === syntax.noChord) return chord.model;
-
 	const chordModel = _cloneDeep(chord.model);
 
 	// chord-symbol's qualities: https://github.com/no-chris/chord-symbol/blob/master/packages/chord-symbol/src/dictionaries/qualities.js
@@ -108,14 +167,11 @@ function chord2Key(chord) {
 		'bass', // re-duh!
 	];
 
-	if (!chordModel.formatted) {
-		console.log(chordModel);
-	}
-	let key = chordModel.formatted.rootNote;
+	let keyString = chordModel.formatted.rootNote;
 
 	if (!majorQualities.includes(chordModel.normalized.quality)) {
-		key += 'm';
+		keyString += 'm';
 	}
 
-	return key;
+	return keyString;
 }
