@@ -10,15 +10,15 @@ describe('getAllChordsInSong', () => {
 });
 
 describe('getAllChordsInSong()', () => {
-	test('Should correctly identify each chord', () => {
+	test('Should correctly identify each chord, skipping the "No Chord" symbol', () => {
 		const allLines = [
 			{ type: 'chord', model: parseChordLine('C.. G..') },
 			{ type: 'chord', model: parseChordLine('Am.. F..') },
-			{ type: 'chord', model: parseChordLine('C.. G..') },
+			{ type: 'chord', model: parseChordLine('C.. G.. NC') },
 			{ type: 'chord', model: parseChordLine('F. Em.. C.') },
 			{ type: 'chord', model: parseChordLine('Am.. G..') },
 			{ type: 'chord', model: parseChordLine('C.. F..') },
-			{ type: 'chord', model: parseChordLine('C.. G..') },
+			{ type: 'chord', model: parseChordLine('C.. G.. NC') },
 			{ type: 'chord', model: parseChordLine('F. Em. C. Dm.') },
 		];
 
