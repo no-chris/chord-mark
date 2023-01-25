@@ -9,9 +9,7 @@ describe('renderKeyDeclaration', () => {
 
 	test('Should return valid html', () => {
 		const line = {
-			model: {
-				key: 'C#mi',
-			},
+			symbol: 'C#mi',
 		};
 		const rendered = renderKeyDeclaration(line);
 		const element = htmlToElement(rendered);
