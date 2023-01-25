@@ -857,3 +857,128 @@ verseLine1`;
 		expect(element.childNodes[1].nodeName).toBe('P');
 	});
 });
+
+describe('Keys, accidental & transpose', () => {
+	describe.each([
+		[
+			'accidentals = auto (default): use accidental relevant for detected key (flat)',
+			`F F A#`,
+			'|F  |%  |Bb  |',
+		],
+		[
+			'accidentals = auto (default): use accidental relevant for detected key, with transpose (flat)',
+			`F F A#`,
+			'|Bb  |%  |Eb  |',
+			{ transposeValue: -7 },
+		],
+		[
+			'accidentals = auto (default): use accidental relevant for detected key (sharp)',
+			`G G Gb`,
+			'|G  |%  |F#  |',
+		],
+		[
+			'accidentals = auto (default): use accidental relevant for detected key, with transpose (sharp)',
+			`G G Gb`,
+			'|B  |%  |A#  |',
+			{ transposeValue: +4 },
+		],
+		[
+			'accidentals = force flat',
+			`G G F#`,
+			'|G  |%  |Gb  |',
+			{ accidentalsType: 'flat' },
+		],
+		[
+			'accidentals = force sharp',
+			`F F Bb`,
+			'|F  |%  |A#  |',
+			{ accidentalsType: 'sharp' },
+		],
+		[
+			'Key transpose: use # if transposeValue > 0',
+			`C`,
+			'|C#  |',
+			{ transposeValue: +1 },
+		],
+		[
+			'Key transpose: use b if transposeValue < 0',
+			`C`,
+			'|Db  |',
+			{ transposeValue: -11 },
+		],
+		[
+			'Key transpose: avoid theoretical keys (C+3 => Eb)',
+			`C`,
+			'|Eb  |',
+			{ transposeValue: +3 },
+		],
+		[
+			'Key transpose: avoid theoretical keys (C+8 => Ab)',
+			`C`,
+			'|Ab  |',
+			{ transposeValue: +8 },
+		],
+		[
+			'Key transpose: avoid theoretical keys (Cm-11 => C#m)',
+			`Cm`,
+			'|C#m  |',
+			{ transposeValue: -11 },
+		],
+		[
+			'Key transpose: force sharp on theoretical key (C+8 => G#)',
+			`C`,
+			'|G#  |',
+			{ transposeValue: +8, accidentalsType: 'sharp' },
+		],
+		[
+			'Key transpose: force flat theoretical key (Cm-11 => Dbm)',
+			`Cm`,
+			'|Dbm  |',
+			{ transposeValue: -11, accidentalsType: 'flat' },
+		],
+		[
+			'Explicit key: auto accidentals',
+			`key Dm\n` + 'Dm A# C Dm\n' + 'key C#m\n' + 'Dbm7 Ab7',
+			'key: Dm\n' +
+				'|Dm  |Bb  |C  |Dm  |\n' +
+				'key: C#m\n' +
+				'|C#m7  |G#7  |',
+			{ accidentalsType: 'auto' },
+		],
+		[
+			'Explicit key: force sharp',
+			`key Dm\n` + 'Dm A# C Dm\n' + 'key C#m\n' + 'Dbm7 Ab7',
+			'key: Dm\n' +
+				'|Dm  |A#  |C  |Dm  |\n' +
+				'key: C#m\n' +
+				'|C#m7  |G#7  |',
+			{ accidentalsType: 'sharp' },
+		],
+		[
+			'Explicit key: force flat',
+			`key Dm\n` + 'Dm A# C Dm\n' + 'key C#m\n' + 'C#m7 G#7',
+			'key: Dm\n' +
+				'|Dm  |Bb  |C  |Dm  |\n' +
+				'key: Dbm\n' +
+				'|Dbm7  |Ab7  |',
+			{ accidentalsType: 'flat' },
+		],
+		[
+			'Explicit key + transpose: auto accidentals',
+			`key Dm\n` + 'Dm A# C Dm\n' + 'key C#m\n' + 'C#m7 G#7 D',
+			'key: C#m\n' +
+				'|C#m  |A  |B  |C#m  |\n' +
+				'key: Cm\n' +
+				'|Cm7  |G7  |Db  |',
+			{ accidentalsType: 'auto', transposeValue: -1 },
+		],
+	])('%s', (title, song, expected, options = {}) => {
+		test('renders with correct accidental', () => {
+			const rendered = renderSongText(song, {
+				alignBars: false,
+				...options,
+			});
+			expect(toText(rendered)).toBe(expected);
+		});
+	});
+});

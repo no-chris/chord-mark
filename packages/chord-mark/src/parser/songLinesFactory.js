@@ -63,6 +63,7 @@ const defaultTimeSignature = '4/4';
  * @typedef {SongLine} SongKeyDeclarationLine
  * @type {Object}
  * @property {KeyDeclaration} model
+ * @property {String} [symbol] - rendering property
  */
 
 export default function songLinesFactory() {

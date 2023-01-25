@@ -62,7 +62,7 @@ describe.each([
 		'transposed (song1-output-transposed)',
 		'song1-input.txt',
 		'song1-output-transposed.txt',
-		{ transposeValue: -4, accidentalsType: 'flat' },
+		{ transposeValue: -4, accidentals: 'flat' },
 	],
 	[
 		'no bar separators (song1-output-no-bar-sep)',

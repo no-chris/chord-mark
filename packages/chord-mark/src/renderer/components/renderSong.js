@@ -4,19 +4,22 @@ import simpleChordSpacer from '../spacers/chord/simple';
 import alignedChordSpacer from '../spacers/chord/aligned';
 import chordLyricsSpacer from '../spacers/chord/chordLyrics';
 
-import { forEachChordInSong } from '../../parser/helper/songs';
-
 import renderChordLineModel from './renderChordLine';
 import renderEmptyLine from './renderEmptyLine';
+import renderKeyDeclaration from './renderKeyDeclaration';
 import renderLine from './renderLine';
-import renderSectionLabelLine from './renderSectionLabel';
 import renderLyricLine from './renderLyricLine';
+import renderSectionLabelLine from './renderSectionLabel';
 import renderTimeSignature from './renderTimeSignature';
 
 import songTpl from './tpl/song.js';
 import getChordSymbol from '../helpers/getChordSymbol';
-import getMainAccidental from '../helpers/getMainAccidental';
 import renderAllSectionsLabels from '../helpers/renderAllSectionLabels';
+import {
+	getKeyAccidental,
+	guessKey,
+	transposeKey,
+} from '../helpers/keyHelpers';
 
 import { chordRendererFactory } from 'chord-symbol';
 
@@ -27,26 +30,26 @@ import { defaultTimeSignature } from '../../parser/syntax';
 
 /**
  * @param {Song} parsedSong
- * @param {('auto'|'flat'|'sharp')} accidentalsType
- * @param {Boolean} alignBars
- * @param {Boolean} alignChordsWithLyrics
- * @param {Boolean} autoRepeatChords
- * @param {('all'|'lyrics'|'chords'|'chordsFirstLyricLine')} chartType
- * @param {Function|Boolean} chordSymbolRenderer - must be an instance of a ChordSymbol renderer, returned by chordRendererFactory()
- * @param {Function|Boolean} customRenderer
- * @param {Boolean} expandSectionCopy
- * @param {Boolean} expandSectionMultiply
- * @param {Boolean} harmonizeAccidentals
- * @param {Boolean|('none'|'max'|'core')} simplifyChords
- * @param {('never'|'uneven'|'always')} printChordsDuration
- * @param {('never'|'grids'|'always')} printBarSeparators - mainly useful when converting a ChordMark file to a format that
+ * @param {Object} options
+ * @param {('auto'|'flat'|'sharp')} options.accidentalsType
+ * @param {Boolean} options.alignBars
+ * @param {Boolean} options.alignChordsWithLyrics
+ * @param {Boolean} options.autoRepeatChords
+ * @param {('all'|'lyrics'|'chords'|'chordsFirstLyricLine')} options.chartType
+ * @param {Function|Boolean} options.chordSymbolRenderer - must be an instance of a ChordSymbol renderer, returned by chordRendererFactory()
+ * @param {Function|Boolean} options.customRenderer
+ * @param {Boolean} options.expandSectionCopy
+ * @param {Boolean} options.expandSectionMultiply
+ * @param {Boolean|('none'|'max'|'core')} options.simplifyChords
+ * @param {('never'|'uneven'|'always')} options.printChordsDuration
+ * @param {('never'|'grids'|'always')} options.printBarSeparators - mainly useful when converting a ChordMark file to a format that
  * do not allow bar separators to be printed (e.g. Ultimate Guitar)
- * @param {Boolean} printSubBeatDelimiters - mainly useful when converting a ChordMark file to a format that
+ * @param {Boolean} options.printSubBeatDelimiters - mainly useful when converting a ChordMark file to a format that
  * do not allow sub-beat groups to be printed (e.g. Ultimate Guitar)
- * @param {Boolean} printInlineTimeSignatures - mainly useful when converting a ChordMark file to a format that
+ * @param {Boolean} options.printInlineTimeSignatures - mainly useful when converting a ChordMark file to a format that
  * do not allow inline time signatures to be printed (e.g. Ultimate Guitar)
- * @param {Number} transposeValue
- * @param {Boolean} useShortNamings
+ * @param {Number} options.transposeValue
+ * @param {Boolean} options.useShortNamings
  * @returns {String} rendered HTML
  */
 // eslint-disable-next-line max-lines-per-function
@@ -62,7 +65,6 @@ export default function renderSong(
 		customRenderer = false,
 		expandSectionCopy = true,
 		expandSectionMultiply = false,
-		harmonizeAccidentals = true,
 		printChordsDuration = 'uneven',
 		printBarSeparators = 'always',
 		printSubBeatDelimiters: shouldPrintSubBeatDelimiters = true,
@@ -78,7 +80,20 @@ export default function renderSong(
 	let contextTimeSignature = defaultTimeSignature.string;
 	let previousBarTimeSignature;
 
-	allLines = renderChords()
+	const detectedKey = guessKey(allChords);
+	let currentKey;
+
+	if (detectedKey) {
+		currentKey = transposeKey(
+			detectedKey,
+			transposeValue,
+			accidentalsType === 'auto'
+		);
+	}
+	let renderChord = getChordSymbolRenderer();
+
+	allLines = allLines
+		.map(renderChords)
 		.map(addPrintChordsDurationsFlag)
 		.map(addPrintBarTimeSignatureFlag)
 		.filter(shouldRenderLine)
@@ -108,29 +123,42 @@ export default function renderSong(
 		return songTpl({ song: allRenderedLines.join('') });
 	}
 
-	function renderChords() {
-		const renderChord = getChordSymbolRenderer();
+	function renderChords(line) {
+		if (line.type === lineTypes.KEY_DECLARATION) {
+			currentKey = transposeKey(
+				line.model,
+				transposeValue,
+				accidentalsType === 'auto'
+			);
 
-		return forEachChordInSong(allLines, (chord) => {
-			chord.symbol = getChordSymbol(chord.model, renderChord);
-		});
+			renderChord = getChordSymbolRenderer();
+			line.symbol = renderChord(line.model.chordModel);
+		} else if (line.type === lineTypes.CHORD) {
+			line.model.allBars.forEach((bar) => {
+				bar.allChords.forEach((chord) => {
+					chord.symbol = getChordSymbol(chord.model, renderChord);
+				});
+			});
+		}
+		return line;
 	}
 
 	function getChordSymbolRenderer() {
 		if (typeof chordSymbolRenderer === 'function') {
 			return chordSymbolRenderer;
 		}
-		const accidental =
+		const accidentals =
 			accidentalsType === 'auto'
-				? getMainAccidental(allChords)
+				? currentKey
+					? getKeyAccidental(currentKey)
+					: 'sharp'
 				: accidentalsType;
 
 		return chordRendererFactory({
 			simplify: simplifyChords,
 			useShortNamings,
 			transposeValue,
-			harmonizeAccidentals,
-			useFlats: accidental === 'flat',
+			accidentals,
 		});
 	}
 
@@ -275,16 +303,15 @@ export default function renderSong(
 					rendered = renderEmptyLine();
 				} else if (line.type === lineTypes.SECTION_LABEL) {
 					shouldOpenSection = true;
-
 					shouldClosePriorSection = lineIsInASection;
-
 					lineIsInASection = true;
 
 					sectionWrapperClasses = getSectionWrapperClasses(line);
-
 					rendered = renderSectionLabelLine(line);
 				} else if (line.type === lineTypes.TIME_SIGNATURE) {
 					rendered = renderTimeSignature(line);
+				} else if (line.type === lineTypes.KEY_DECLARATION) {
+					rendered = renderKeyDeclaration(line);
 				} else {
 					rendered = renderLyricLine(line, {
 						alignChordsWithLyrics,
