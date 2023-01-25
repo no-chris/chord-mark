@@ -27,13 +27,13 @@ describe.each([
 	['F', 'flat'],
 	['G', 'sharp'],
 
-	['Cm', 'flat'],
-	['Am', 'flat'],
-	['Bm', 'sharp'],
-	['Dm', 'flat'],
-	['Em', 'sharp'],
-	['Fm', 'flat'],
-	['Gm', 'flat'],
+	['Cmi', 'flat'],
+	['Ami', 'flat'],
+	['Bmi', 'sharp'],
+	['Dmi', 'flat'],
+	['Emi', 'sharp'],
+	['Fmi', 'flat'],
+	['Gmi', 'flat'],
 
 	['A#', 'sharp'],
 	['C#', 'sharp'],
@@ -41,11 +41,11 @@ describe.each([
 	['F#', 'sharp'],
 	['G#', 'sharp'],
 
-	['A#m', 'sharp'],
-	['C#m', 'sharp'],
-	['D#m', 'sharp'],
-	['F#m', 'sharp'],
-	['G#m', 'sharp'],
+	['A#mi', 'sharp'],
+	['C#mi', 'sharp'],
+	['D#mi', 'sharp'],
+	['F#mi', 'sharp'],
+	['G#mi', 'sharp'],
 
 	['Ab', 'flat'],
 	['Bb', 'flat'],
@@ -53,14 +53,14 @@ describe.each([
 	['Eb', 'flat'],
 	['Gb', 'flat'],
 
-	['Abm', 'flat'],
-	['Bbm', 'flat'],
-	['Dbm', 'flat'],
-	['Ebm', 'flat'],
-	['Gbm', 'flat'],
-])('getKeyAccidental(%s) => %s', (key, accidental) => {
+	['Abmi', 'flat'],
+	['Bbmi', 'flat'],
+	['Dbmi', 'flat'],
+	['Ebmi', 'flat'],
+	['Gbmi', 'flat'],
+])('getKeyAccidental(%s) => %s', (string, accidental) => {
 	test('correctly returns key accidental', () => {
-		expect(getKeyAccidental(key)).toBe(accidental);
+		expect(getKeyAccidental({ string })).toBe(accidental);
 	});
 });
 

@@ -5,19 +5,19 @@ import { chordParserFactory, chordRendererFactory } from 'chord-symbol';
 
 const sharpKeys = [
 	'G', // 1 sharp
-	'Em',
+	'Emi',
 	'D', // 2 sharps
-	'Bm',
+	'Bmi',
 	'A', // 3 sharps
-	'F#m',
+	'F#mi',
 	'E', // 4 sharps
-	'C#m',
+	'C#mi',
 	'B', // 5 sharps
-	'G#m',
+	'G#mi',
 	'F#', // 6 sharps
-	'D#m',
+	'D#mi',
 	'C#', // 7 sharps
-	'A#m',
+	'A#mi',
 
 	// Theoretical keys
 	'G#', // 8 sharps
@@ -28,11 +28,11 @@ const sharpKeys = [
 /**
  * Returns the accidental of a given key
  *
- * @param {String} key
+ * @param {KeyDeclaration} keyModel
  * @returns {('flat'|'sharp')}
  */
-export function getKeyAccidental(key) {
-	return sharpKeys.includes(key) ? 'sharp' : 'flat';
+export function getKeyAccidental(keyModel) {
+	return sharpKeys.includes(keyModel.string) ? 'sharp' : 'flat';
 }
 
 /**
@@ -54,8 +54,12 @@ export function transposeKey(keyModel, transposeValue, avoidTheoreticalKeys) {
 	const parseKeyChord = chordParserFactory();
 	const keyRenderer = chordRendererFactory({
 		transposeValue,
-		harmonizeAccidentals: transposeValue !== 0,
-		useFlats: transposeValue < 0,
+		accidentals:
+			transposeValue === 0
+				? 'original'
+				: transposeValue < 0
+				? 'flat'
+				: 'sharp',
 	});
 
 	const tempKey = keyRenderer(keyModel.chordModel);
@@ -74,7 +78,7 @@ export function transposeKey(keyModel, transposeValue, avoidTheoreticalKeys) {
  * Try to guess the key of a song based on the chords
  *
  * @param {SongChord[]} allChords
- * @returns {undefined|KeyDeclaration}
+ * @returns {(KeyDeclaration|undefined)}
  */
 export function guessKey(allChords) {
 	const keyString = inferKeyFromChords(allChords);
