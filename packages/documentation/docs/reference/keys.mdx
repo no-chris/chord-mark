@@ -14,11 +14,14 @@ There are at least two reasons why you might want to do this.
 ### Reason 1: proper rendering of accidentals
 
 The first reason relates to the rendering of chord accidentals (`#` and `b`). If your source file contains mixed accidental, then declaring a key will allow <CM/> to automatically normalize the accidentals choosing the proper symbol
-(Note that if you don't declare a key, <CM/> will try to automatically detect it). 
 
 <TabbedChordMark src={'#v\nkey C#m\nC#m7 Ab7\n_ What will you do when you get _lonely?\nC#m7.. C. D. E.. E7..\n_ No one _waiting _by your _side _'}/>
+
+Note that if you don't declare a key, <CM/> will try to automatically detect it based of the chords used in the song. 
+However, this is done as a best effort and might not always work as expected, especially if the song contains multiple keys.
+So as a best practice, it is recommended to always explicitly declare a key.
  
-This also works if the song contains multiple keys:
+The accidental are also properly chosen if the song contains multiple keys:
 
 <TabbedChordMark src={'#v\nkey C#m\nC#m7 Ab7\n_ What will you do when you get _lonely?\nC#m7.. C. D. E.. E7..\n_ No one _waiting _by your _side _\n\n#c\nkey Dm\nDm.. Bb..\nLayla_\nC.. Dm.. Dm.. A#..\n\_Got me on my _knees, Layla'} />
 
@@ -29,4 +32,4 @@ For example transposing `Layla` 1 semitones down will result in a key of `C#m` i
 
 ### Reason 2: harmonic analysis
 
-Soon.
+Coming soon.
