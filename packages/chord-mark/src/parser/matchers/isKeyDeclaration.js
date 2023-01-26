@@ -12,7 +12,7 @@ export default function isKeyDeclaration(string) {
 	if (found === null) return false;
 
 	// We use chord symbol to manipulate key declarations even though they are not chords per se
-	// But we benefit from the chord symbol parser to validate the key declaration
+	// But we benefit from the chord-symbol parser to validate the key declaration
 	const parseChord = chordParserFactory({ notationSystems: ['english'] });
 	const chord = parseChord(found[1]);
 
@@ -21,6 +21,7 @@ export default function isKeyDeclaration(string) {
 	const chordIntervals = chord.normalized.intervals;
 
 	return (
+		// again, chords are not key, so we just want major or minor triads in here
 		chordIntervals.length === 3 &&
 		['b3', '3'].includes(chordIntervals[1]) &&
 		chordIntervals[2] === '5' &&

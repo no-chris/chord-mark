@@ -6,12 +6,14 @@ import stripTags from '../core/dom/stripTags';
 import songLinesFactory from './songLinesFactory';
 
 import getAllChordsInSong from './getAllChordsInSong';
+import getAllKeysInSong from './getAllKeysInSong';
 
 /**
  * @typedef {Object} Song
  * @type {Object}
  * @property {SongLine[]} allLines
  * @property {SongChord[]} allChords
+ * @property {SongKeys} allKeys
  */
 
 /**
@@ -20,6 +22,13 @@ import getAllChordsInSong from './getAllChordsInSong';
  * @property {ChordDef} model
  * @property {number} occurrences - number of times the chord appears in the song
  * @property {number} duration - in beats, cumulated duration of the chord
+ */
+
+/**
+ * @typedef {Object} SongKeys
+ * @type {Object}
+ * @property {KeyDeclaration} auto - automatically detected key
+ * @property {KeyDeclaration[]} explicit - explicitly declared keys
  */
 
 /**
@@ -40,9 +49,11 @@ export default function parseSong(songSrc) {
 
 	const allLines = songLines.asArray();
 	const allChords = getAllChordsInSong(allLines);
+	const allKeys = getAllKeysInSong(allLines, allChords);
 
 	return {
 		allLines,
 		allChords,
+		allKeys,
 	};
 }

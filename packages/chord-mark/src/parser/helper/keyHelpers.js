@@ -2,16 +2,16 @@ import _cloneDeep from 'lodash/cloneDeep';
 import _findIndex from 'lodash/findIndex';
 
 // We use chord symbol to manipulate key declarations even though they are not chords per se
-// But we benefit from the chord symbol parser to validate the key declaration
+// But we benefit from the chord-symbol parser to validate the key declaration
 import { chordParserFactory, chordRendererFactory } from 'chord-symbol';
 
 /**
  * Returns the accidental of a given key
  *
- * @param {KeyDeclaration} keyModel
+ * @param {string} keyString
  * @returns {('flat'|'sharp')}
  */
-export function getKeyAccidental(keyModel) {
+export function getKeyAccidental(keyString) {
 	const sharpKeys = [
 		'G', // 1 sharp
 		'Emi',
@@ -34,7 +34,7 @@ export function getKeyAccidental(keyModel) {
 		'A#', // 10 sharps
 	];
 
-	return sharpKeys.includes(keyModel.string) ? 'sharp' : 'flat';
+	return sharpKeys.includes(keyString) ? 'sharp' : 'flat';
 }
 
 /**
@@ -73,6 +73,7 @@ export function transposeKey(keyModel, transposeValue, avoidTheoreticalKeys) {
 	return {
 		string: transposedKey,
 		chordModel: parseKeyChord(transposedKey),
+		accidental: getKeyAccidental(transposedKey),
 	};
 }
 
@@ -90,6 +91,7 @@ export function guessKey(allChords) {
 		? {
 				string: keyString,
 				chordModel: parseKeyChord(keyString),
+				accidental: getKeyAccidental(keyString),
 		  }
 		: undefined;
 }
@@ -117,7 +119,7 @@ function getMostUsedChordKeys(allChords) {
 
 	const allChordsKey = [];
 
-	allChords
+	_cloneDeep(allChords)
 		.map((chord) => {
 			chord.keyString = chord2Key(chord);
 			return chord;

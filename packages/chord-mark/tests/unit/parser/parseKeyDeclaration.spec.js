@@ -10,22 +10,23 @@ describe('parseKeyDeclaration', () => {
 });
 
 describe.each([
-	['Abmin', 'Abmi'],
-	['Abmi', 'Abmi'],
-	['Amin', 'Ami'],
-	['Abm', 'Abmi'],
-	['Ami', 'Ami'],
-	['Am', 'Ami'],
-	['A', 'A'],
-	['A#', 'A#'],
-	['A#m', 'A#mi'],
-	['A#mi', 'A#mi'],
-	['A#min', 'A#mi'],
-])('Valid: %s => %s', (chordInput, string) => {
+	['Abmin', 'Abmi', 'flat'],
+	['Abmi', 'Abmi', 'flat'],
+	['Amin', 'Ami', 'flat'],
+	['Abm', 'Abmi', 'flat'],
+	['Ami', 'Ami', 'flat'],
+	['Am', 'Ami', 'flat'],
+	['A', 'A', 'sharp'],
+	['A#', 'A#', 'sharp'],
+	['A#m', 'A#mi', 'sharp'],
+	['A#mi', 'A#mi', 'sharp'],
+	['A#min', 'A#mi', 'sharp'],
+])('Valid: %s => %s', (chordInput, string, accidental) => {
 	test('Correctly gets key', () => {
 		expect(parseKeyDeclaration('key ' + chordInput)).toEqual({
 			string,
 			chordModel: parseChord(chordInput),
+			accidental,
 		});
 	});
 });

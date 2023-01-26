@@ -1246,17 +1246,29 @@ describe('Key declaration', () => {
 			{
 				type: 'keyDeclaration',
 				string: 'key C#mi',
-				model: { string: 'C#mi', chordModel: parseChord('C#mi') },
+				model: {
+					string: 'C#mi',
+					chordModel: parseChord('C#mi'),
+					accidental: 'sharp',
+				},
 			},
 			{
 				type: 'keyDeclaration',
 				string: 'key Ab',
-				model: { string: 'Ab', chordModel: parseChord('Ab') },
+				model: {
+					string: 'Ab',
+					chordModel: parseChord('Ab'),
+					accidental: 'flat',
+				},
 			},
 			{
 				type: 'keyDeclaration',
 				string: 'key Bbmaj',
-				model: { string: 'Bb', chordModel: parseChord('Bbmaj') },
+				model: {
+					string: 'Bb',
+					chordModel: parseChord('Bbmaj'),
+					accidental: 'flat',
+				},
 			},
 		];
 

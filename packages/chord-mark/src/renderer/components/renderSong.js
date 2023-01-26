@@ -15,11 +15,7 @@ import renderTimeSignature from './renderTimeSignature';
 import songTpl from './tpl/song.js';
 import getChordSymbol from '../helpers/getChordSymbol';
 import renderAllSectionsLabels from '../helpers/renderAllSectionLabels';
-import {
-	getKeyAccidental,
-	guessKey,
-	transposeKey,
-} from '../helpers/keyHelpers';
+import { transposeKey } from '../../parser/helper/keyHelpers';
 
 import { chordRendererFactory } from 'chord-symbol';
 
@@ -74,18 +70,17 @@ export default function renderSong(
 		useShortNamings = true,
 	} = {}
 ) {
-	let { allLines, allChords } = parsedSong;
+	let { allLines, allKeys } = parsedSong;
 
 	let isFirstLyricLineOfSection = false;
 	let contextTimeSignature = defaultTimeSignature.string;
 	let previousBarTimeSignature;
 
-	const detectedKey = guessKey(allChords);
 	let currentKey;
 
-	if (detectedKey) {
+	if (allKeys.auto) {
 		currentKey = transposeKey(
-			detectedKey,
+			allKeys.auto,
 			transposeValue,
 			accidentalsType === 'auto'
 		);
@@ -150,7 +145,7 @@ export default function renderSong(
 		const accidentals =
 			accidentalsType === 'auto'
 				? currentKey
-					? getKeyAccidental(currentKey)
+					? currentKey.accidental
 					: 'sharp'
 				: accidentalsType;
 

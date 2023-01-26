@@ -3,7 +3,7 @@ import {
 	getKeyAccidental,
 	transposeKey,
 	guessKey,
-} from '../../../../src/renderer/helpers/keyHelpers';
+} from '../../../../src/parser/helper/keyHelpers';
 import parseSong from '../../../../src/parser/parseSong';
 
 const parseChord = chordParserFactory();
@@ -60,34 +60,34 @@ describe.each([
 	['Gbmi', 'flat'],
 ])('getKeyAccidental(%s) => %s', (string, accidental) => {
 	test('correctly returns key accidental', () => {
-		expect(getKeyAccidental({ string })).toBe(accidental);
+		expect(getKeyAccidental(string)).toBe(accidental);
 	});
 });
 
 describe.each([
-	['avoid theoretical keys: G# => Ab', 'G#', 0, 'Ab', true],
-	['avoid theoretical keys: Dbmi => C#mi', 'Dbmi', 0, 'C#mi', true],
-	['avoid theoretical keys: C+3 => Eb', 'C', 3, 'Eb', true],
-	['avoid theoretical keys: C+8 => Ab', 'C', 8, 'Ab', true],
-	['avoid theoretical keys: C+10 => Bb', 'C', 10, 'Bb', true],
-	['avoid theoretical keys: Cm-6 => F#mi', 'Cm', -6, 'F#mi', true],
-	['avoid theoretical keys: Cm-11 => C#mi', 'Cm', -11, 'C#mi', true],
+	['avoid theoretical keys: G# => Ab', 'G#', 0, 'Ab', 'flat', true],
+	['avoid theoretical keys: Dbmi => C#mi', 'Dbmi', 0, 'C#mi', 'sharp', true],
+	['avoid theoretical keys: C+3 => Eb', 'C', 3, 'Eb', 'flat', true],
+	['avoid theoretical keys: C+8 => Ab', 'C', 8, 'Ab', 'flat', true],
+	['avoid theoretical keys: C+10 => Bb', 'C', 10, 'Bb', 'flat', true],
+	['avoid theoretical keys: Cm-6 => F#mi', 'Cm', -6, 'F#mi', 'sharp', true],
+	['avoid theoretical keys: Cm-11 => C#mi', 'Cm', -11, 'C#mi', 'sharp', true],
 
-	['use flats for negative transpose: C-5 => G', 'C', -5, 'G'],
-	['use flats for negative transpose: C-4 => Ab', 'C', -4, 'Ab'],
-	['use flats for negative transpose: C-3 => A', 'C', -3, 'A'],
-	['use flats for negative transpose: C-2 => Bb', 'C', -2, 'Bb'],
-	['use flats for negative transpose: C-1 => B', 'C', -1, 'B'],
-	['use sharps for positive transpose: C+1 => C#', 'C', 1, 'C#'],
-	['use sharps for positive transpose: C+3 => D#', 'C', 3, 'D#'],
-	['use sharps for positive transpose: C+7 => G', 'C', 7, 'G'],
-	['use sharps for positive transpose: C+8 => G#', 'C', 8, 'G#'],
-	['use sharps for positive transpose: C+9 => A', 'C', 9, 'A'],
-	['use sharps for positive transpose: C+10 => A#', 'C', 10, 'A#'],
-	['use sharps for positive transpose: C+11 => B', 'C', 11, 'B'],
+	['use flats for negative transpose: C-5 => G', 'C', -5, 'G', 'flat'],
+	['use flats for negative transpose: C-4 => Ab', 'C', -4, 'Ab', 'flat'],
+	['use flats for negative transpose: C-3 => A', 'C', -3, 'A', 'flat'],
+	['use flats for negative transpose: C-2 => Bb', 'C', -2, 'Bb', 'flat'],
+	['use flats for negative transpose: C-1 => B', 'C', -1, 'B', 'flat'],
+	['use sharps for positive transpose: C+1 => C#', 'C', 1, 'C#', 'sharp'],
+	['use sharps for positive transpose: C+3 => D#', 'C', 3, 'D#', 'sharp'],
+	['use sharps for positive transpose: C+7 => G', 'C', 7, 'G', 'sharp'],
+	['use sharps for positive transpose: C+8 => G#', 'C', 8, 'G#', 'sharp'],
+	['use sharps for positive transpose: C+9 => A', 'C', 9, 'A', 'sharp'],
+	['use sharps for positive transpose: C+10 => A#', 'C', 10, 'A#', 'sharp'],
+	['use sharps for positive transpose: C+11 => B', 'C', 11, 'B', 'flat'],
 
-	['keep accidental when no transposing (sharps)', 'G#', 0, 'G#'],
-	['keep accidental when no transposing (flats)', 'Db', 0, 'Db'],
+	['keep accidental when no transposing (sharps)', 'G#', 0, 'G#', 'sharp'],
+	['keep accidental when no transposing (flats)', 'Db', 0, 'Db', 'flat'],
 ])(
 	'transposeKey: %s',
 	(
@@ -95,6 +95,7 @@ describe.each([
 		source,
 		transposeValue,
 		transposed,
+		accidental,
 		avoidTheoreticalKeys = false
 	) => {
 		test('correctly transpose key', () => {
@@ -102,6 +103,7 @@ describe.each([
 				{
 					string: source,
 					chordModel: parseChord(source),
+					accidental,
 				},
 				transposeValue,
 				avoidTheoreticalKeys
@@ -191,6 +193,7 @@ describe.each([
 		const expected = {
 			string: key,
 			chordModel: parseChord(key),
+			accidental: getKeyAccidental(key),
 		};
 
 		expect(guessKey(parsed.allChords)).toEqual(expected);
