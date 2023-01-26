@@ -2829,6 +2829,22 @@ cheerio@^1.0.0-rc.12:
   optionalDependencies:
     fsevents "~2.3.2"
 
+chord-mark@^0.13.0-beta.3:
+  version "0.13.0-beta.3"
+  resolved "https://registry.yarnpkg.com/chord-mark/-/chord-mark-0.13.0-beta.3.tgz#53953d533e79f97f4114618a9d8be69055995d6c"
+  integrity sha512-7eW+9uFRIFi55Re+9OFF55v2+73Csd2i6yFpyKhe0HO+vqI8Mj0iIRo4NaaLvcvkixEb76H8A/0JtPQmiD9AHQ==
+  dependencies:
+    chord-symbol "4.0.0-beta.0"
+    dompurify "^2.3.4"
+    lodash "^4.17.21"
+
+chord-symbol@4.0.0-beta.0:
+  version "4.0.0-beta.0"
+  resolved "https://registry.yarnpkg.com/chord-symbol/-/chord-symbol-4.0.0-beta.0.tgz#dd350d2a9c97ef8e0620a518e1a9c5bdd23f4642"
+  integrity sha512-9HeCfZc79mmqJWBY8JABQx5QzIqqjxxCejcFQ67wgdNkvywPnu2nrZsOGzcpWT91vxuKoQ1BWuUgXy+ilLWX8g==
+  dependencies:
+    lodash "^4.17.21"
+
 chrome-trace-event@^1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/chrome-trace-event/-/chrome-trace-event-1.0.3.tgz#1015eced4741e15d06664a957dbbf50d041e26ac"
@@ -3458,7 +3474,7 @@ domhandler@^5.0.1, domhandler@^5.0.2, domhandler@^5.0.3:
   dependencies:
     domelementtype "^2.3.0"
 
-dompurify@^2.3.3:
+dompurify@^2.3.3, dompurify@^2.3.4:
   version "2.4.3"
   resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-2.4.3.tgz#f4133af0e6a50297fc8874e2eaedc13a3c308c03"
   integrity sha512-q6QaLcakcRjebxjg8/+NP+h0rPfatOgOzc46Fst9VAA3jF2ApfKBNKMzdP4DYTqtUMXSCd5pRS/8Po/OmoCHZQ==
@@ -7042,9 +7058,9 @@ typedarray-to-buffer@^3.1.5:
     is-typedarray "^1.0.0"
 
 ua-parser-js@^0.7.30:
-  version "0.7.32"
-  resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.32.tgz#cd8c639cdca949e30fa68c44b7813ef13e36d211"
-  integrity sha512-f9BESNVhzlhEFf2CHMSj40NWOjYPl1YKYbrvIr/hFTDEmLq7SRbWvm7FcdcpCYT95zrOhC7gZSxjdnnTpBcwVw==
+  version "0.7.33"
+  resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.33.tgz#1d04acb4ccef9293df6f70f2c3d22f3030d8b532"
+  integrity sha512-s8ax/CeZdK9R/56Sui0WM6y9OFREJarMRHqLB2EwkovemBxNQ+Bqu8GAsUnVcXKgphb++ghr/B2BZx4mahujPw==
 
 unherit@^1.0.4:
   version "1.1.3"
