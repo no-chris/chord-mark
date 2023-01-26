@@ -1,3 +1,4 @@
+import clearSpaces from './helper/clearSpaces';
 import isSectionLabel, { sectionLabelRegexp } from './matchers/isSectionLabel';
 
 /**
@@ -24,7 +25,7 @@ export default function parseSectionLabel(string) {
 		);
 	}
 
-	const found = string.trim().match(sectionLabelRegexp);
+	const found = clearSpaces(string).match(sectionLabelRegexp);
 
 	return {
 		string,

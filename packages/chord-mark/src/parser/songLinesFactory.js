@@ -1,21 +1,23 @@
-/*eslint-disable max-lines-per-function */
+/*eslint-disable max-lines-per-function,max-lines */
 import _cloneDeep from 'lodash/cloneDeep';
 import lineTypes from './lineTypes';
 
-import isTimeSignature from './matchers/isTimeSignatureString';
-import isSectionLabel from './matchers/isSectionLabel';
 import isChordLine from './matchers/isChordLine';
 import isChordLineRepeater from './matchers/isChordLineRepeater';
 import isEmptyLine from './matchers/isEmptyLine';
+import isSectionLabel from './matchers/isSectionLabel';
+import isTimeSignature from './matchers/isTimeSignatureString';
 
-import parseTimeSignature from './parseTimeSignature';
 import parseChordLine from './parseChordLine';
-import parseSectionLabel from './parseSectionLabel';
+import parseKeyDeclaration from './parseKeyDeclaration';
 import parseLyricLine from './parseLyricLine';
+import parseSectionLabel from './parseSectionLabel';
+import parseTimeSignature from './parseTimeSignature';
 
 import clearSpaces from './helper/clearSpaces';
 
 import { forEachChordInChordLine, getNthOfLabel } from './helper/songs';
+import isKeyDeclaration from './matchers/isKeyDeclaration';
 
 const defaultTimeSignature = '4/4';
 
@@ -57,6 +59,13 @@ const defaultTimeSignature = '4/4';
  * @property {String} id
  */
 
+/**
+ * @typedef {SongLine} SongKeyDeclarationLine
+ * @type {Object}
+ * @property {KeyDeclaration} model
+ * @property {String} [symbol] - rendering property
+ */
+
 export default function songLinesFactory() {
 	const allLines = [];
 	const sectionsStats = {};
@@ -87,6 +96,17 @@ export default function songLinesFactory() {
 			string,
 			type: lineTypes.TIME_SIGNATURE,
 			model: currentTimeSignature,
+		};
+	}
+
+	/**
+	 * @returns {SongKeyDeclarationLine}
+	 */
+	function getKeyDeclarationLine(string) {
+		return {
+			string,
+			type: lineTypes.KEY_DECLARATION,
+			model: parseKeyDeclaration(string),
 		};
 	}
 
@@ -321,6 +341,8 @@ export default function songLinesFactory() {
 				line = getRepeatedChordLine(lineSrc);
 			} else if (isEmptyLine(lineSrc)) {
 				line = getEmptyLine(lineSrc);
+			} else if (isKeyDeclaration(lineSrc)) {
+				line = getKeyDeclarationLine(lineSrc);
 			} else {
 				line = getLyricLine(lineSrc);
 			}

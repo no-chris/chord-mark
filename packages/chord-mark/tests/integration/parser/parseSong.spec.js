@@ -10,6 +10,7 @@ const ts4_4 = parseTimeSignature('4/4');
 describe('parseSong', () => {
 	test('Accept multiline string as an input', () => {
 		const input = `4/4
+key G
 C.. G..
 When I find myself in times of trouble
 Am. [Am Am/G] FM7. F6.
@@ -17,13 +18,23 @@ _ Mother _Ma_ry _comes to _me
 %%
 Speaking words of wisdom
 F. [C/E Dm7] C..
-Let it _be _ _ _`;
+Let it _be _ _ _
+key Am`;
 		const expected = {
 			allLines: [
 				{
 					type: 'timeSignature',
 					string: '4/4',
 					model: _cloneDeep(ts4_4),
+				},
+				{
+					type: 'keyDeclaration',
+					string: 'key G',
+					model: {
+						string: 'G',
+						chordModel: parseChord('G'),
+						accidental: 'sharp',
+					},
 				},
 				{
 					type: 'chord',
@@ -238,18 +249,52 @@ Let it _be _ _ _`;
 						lyrics: 'Let it be   ',
 					},
 				},
+				{
+					type: 'keyDeclaration',
+					string: 'key Am',
+					model: {
+						string: 'Ami',
+						chordModel: parseChord('Am'),
+						accidental: 'flat',
+					},
+				},
 			],
 			allChords: [
-				{ model: parseChord('C'), occurrences: 3 },
-				{ model: parseChord('G'), occurrences: 2 },
-				{ model: parseChord('Am'), occurrences: 2 },
-				{ model: parseChord('Am/G'), occurrences: 1 },
-				{ model: parseChord('FM7'), occurrences: 1 },
-				{ model: parseChord('F6'), occurrences: 1 },
-				{ model: parseChord('F'), occurrences: 1 },
-				{ model: parseChord('C/E'), occurrences: 1 },
-				{ model: parseChord('Dm7'), occurrences: 1 },
+				{
+					model: parseChord('C'),
+					occurrences: 3,
+					duration: 6,
+					isFirst: true,
+					isLast: true,
+				},
+				{ model: parseChord('G'), occurrences: 2, duration: 4 },
+				{ model: parseChord('Am'), occurrences: 2, duration: 1.5 },
+				{ model: parseChord('Am/G'), occurrences: 1, duration: 0.5 },
+				{ model: parseChord('FM7'), occurrences: 1, duration: 1 },
+				{ model: parseChord('F6'), occurrences: 1, duration: 1 },
+				{ model: parseChord('F'), occurrences: 1, duration: 1 },
+				{ model: parseChord('C/E'), occurrences: 1, duration: 0.5 },
+				{ model: parseChord('Dm7'), occurrences: 1, duration: 0.5 },
 			],
+			allKeys: {
+				auto: {
+					string: 'C',
+					chordModel: parseChord('C'),
+					accidental: 'flat',
+				},
+				explicit: [
+					{
+						string: 'G',
+						chordModel: parseChord('G'),
+						accidental: 'sharp',
+					},
+					{
+						string: 'Ami',
+						chordModel: parseChord('Am'),
+						accidental: 'flat',
+					},
+				],
+			},
 		};
 
 		expect(parseSong(input)).toEqual(expected);
@@ -276,6 +321,10 @@ Let it _be _ _ _`;
 				},
 			],
 			allChords: [],
+			allKeys: {
+				auto: undefined,
+				explicit: [],
+			},
 		};
 
 		expect(parseSong(input)).toEqual(expected);

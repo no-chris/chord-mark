@@ -4,6 +4,7 @@ export default {
 	chordBeat: '.',
 	chordLineOffsetSpacer: ' ',
 	emptyBeatSpaces: 1,
+	keyDeclarationPrefix: 'key: ',
 	lyricsSpacer: ' ',
 	noChordSymbol: 'NC',
 	spacesAfterDefault: 2,

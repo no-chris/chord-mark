@@ -3,6 +3,8 @@ jest.mock('../../../src/parser/parseLyricLine');
 
 import _ from 'lodash';
 
+import { chordParserFactory } from 'chord-symbol';
+
 import songLinesFactory from '../../../src/parser/songLinesFactory';
 
 import {
@@ -1230,6 +1232,48 @@ verseContent2
 
 		const songLines = songLinesFactory();
 		input.split('\n').forEach(songLines.addLine);
+
+		expect(songLines.asArray()).toEqual(expected);
+	});
+});
+
+describe('Key declaration', () => {
+	test('Correctly parse key declaration', () => {
+		const parseChord = chordParserFactory();
+		const input = ['key C#mi', 'key Ab', 'key Bbmaj'];
+
+		const expected = [
+			{
+				type: 'keyDeclaration',
+				string: 'key C#mi',
+				model: {
+					string: 'C#mi',
+					chordModel: parseChord('C#mi'),
+					accidental: 'sharp',
+				},
+			},
+			{
+				type: 'keyDeclaration',
+				string: 'key Ab',
+				model: {
+					string: 'Ab',
+					chordModel: parseChord('Ab'),
+					accidental: 'flat',
+				},
+			},
+			{
+				type: 'keyDeclaration',
+				string: 'key Bbmaj',
+				model: {
+					string: 'Bb',
+					chordModel: parseChord('Bbmaj'),
+					accidental: 'flat',
+				},
+			},
+		];
+
+		const songLines = songLinesFactory();
+		input.forEach(songLines.addLine);
 
 		expect(songLines.asArray()).toEqual(expected);
 	});
