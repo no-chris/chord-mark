@@ -1,29 +1,9 @@
 import _cloneDeep from 'lodash/cloneDeep';
 import _findIndex from 'lodash/findIndex';
 
+// We use chord symbol to manipulate key declarations even though they are not chords per se
+// But we benefit from the chord symbol parser to validate the key declaration
 import { chordParserFactory, chordRendererFactory } from 'chord-symbol';
-
-const sharpKeys = [
-	'G', // 1 sharp
-	'Emi',
-	'D', // 2 sharps
-	'Bmi',
-	'A', // 3 sharps
-	'F#mi',
-	'E', // 4 sharps
-	'C#mi',
-	'B', // 5 sharps
-	'G#mi',
-	'F#', // 6 sharps
-	'D#mi',
-	'C#', // 7 sharps
-	'A#mi',
-
-	// Theoretical keys
-	'G#', // 8 sharps
-	'D#', // 9 sharps
-	'A#', // 10 sharps
-];
 
 /**
  * Returns the accidental of a given key
@@ -32,6 +12,28 @@ const sharpKeys = [
  * @returns {('flat'|'sharp')}
  */
 export function getKeyAccidental(keyModel) {
+	const sharpKeys = [
+		'G', // 1 sharp
+		'Emi',
+		'D', // 2 sharps
+		'Bmi',
+		'A', // 3 sharps
+		'F#mi',
+		'E', // 4 sharps
+		'C#mi',
+		'B', // 5 sharps
+		'G#mi',
+		'F#', // 6 sharps
+		'D#mi',
+		'C#', // 7 sharps
+		'A#mi',
+
+		// Theoretical keys
+		'G#', // 8 sharps
+		'D#', // 9 sharps
+		'A#', // 10 sharps
+	];
+
 	return sharpKeys.includes(keyModel.string) ? 'sharp' : 'flat';
 }
 
@@ -52,7 +54,7 @@ export function transposeKey(keyModel, transposeValue, avoidTheoreticalKeys) {
 	};
 
 	const parseKeyChord = chordParserFactory();
-	const keyRenderer = chordRendererFactory({
+	const renderKeyChord = chordRendererFactory({
 		transposeValue,
 		accidentals:
 			transposeValue === 0
@@ -62,7 +64,7 @@ export function transposeKey(keyModel, transposeValue, avoidTheoreticalKeys) {
 				: 'sharp',
 	});
 
-	const tempKey = keyRenderer(keyModel.chordModel);
+	const tempKey = renderKeyChord(keyModel.chordModel);
 	const transposedKey =
 		avoidTheoreticalKeys && theoreticalKeys[tempKey]
 			? theoreticalKeys[tempKey]
@@ -82,12 +84,12 @@ export function transposeKey(keyModel, transposeValue, avoidTheoreticalKeys) {
  */
 export function guessKey(allChords) {
 	const keyString = inferKeyFromChords(allChords);
-	const parseChord = chordParserFactory();
+	const parseKeyChord = chordParserFactory();
 
 	return keyString
 		? {
 				string: keyString,
-				chordModel: parseChord(keyString),
+				chordModel: parseKeyChord(keyString),
 		  }
 		: undefined;
 }

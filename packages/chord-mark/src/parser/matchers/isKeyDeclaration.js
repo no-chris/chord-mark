@@ -11,6 +11,8 @@ export default function isKeyDeclaration(string) {
 	const found = clearSpaces(string).match(keyDeclarationRegexp);
 	if (found === null) return false;
 
+	// We use chord symbol to manipulate key declarations even though they are not chords per se
+	// But we benefit from the chord symbol parser to validate the key declaration
 	const parseChord = chordParserFactory({ notationSystems: ['english'] });
 	const chord = parseChord(found[1]);
 
