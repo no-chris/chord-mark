@@ -18,15 +18,15 @@ return /******/ (() => { // webpackBootstrap
 	if(true)
 		module.exports = factory();
 	else {}
-})(typeof self !== 'undefined' ? self : this, function() {
+})(typeof self !== 'undefined' ? self : this, () => {
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
 /***/ 8552:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_546__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_541__) => {
 
-var getNative = __nested_webpack_require_546__(852),
-    root = __nested_webpack_require_546__(5639);
+var getNative = __nested_webpack_require_541__(852),
+    root = __nested_webpack_require_541__(5639);
 
 /* Built-in method references that are verified to be native. */
 var DataView = getNative(root, 'DataView');
@@ -37,13 +37,13 @@ module.exports = DataView;
 /***/ }),
 
 /***/ 1989:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_858__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_853__) => {
 
-var hashClear = __nested_webpack_require_858__(1789),
-    hashDelete = __nested_webpack_require_858__(401),
-    hashGet = __nested_webpack_require_858__(7667),
-    hashHas = __nested_webpack_require_858__(1327),
-    hashSet = __nested_webpack_require_858__(1866);
+var hashClear = __nested_webpack_require_853__(1789),
+    hashDelete = __nested_webpack_require_853__(401),
+    hashGet = __nested_webpack_require_853__(7667),
+    hashHas = __nested_webpack_require_853__(1327),
+    hashSet = __nested_webpack_require_853__(1866);
 
 /**
  * Creates a hash object.
@@ -76,13 +76,13 @@ module.exports = Hash;
 /***/ }),
 
 /***/ 8407:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_1713__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_1708__) => {
 
-var listCacheClear = __nested_webpack_require_1713__(7040),
-    listCacheDelete = __nested_webpack_require_1713__(4125),
-    listCacheGet = __nested_webpack_require_1713__(2117),
-    listCacheHas = __nested_webpack_require_1713__(7518),
-    listCacheSet = __nested_webpack_require_1713__(4705);
+var listCacheClear = __nested_webpack_require_1708__(7040),
+    listCacheDelete = __nested_webpack_require_1708__(4125),
+    listCacheGet = __nested_webpack_require_1708__(2117),
+    listCacheHas = __nested_webpack_require_1708__(7518),
+    listCacheSet = __nested_webpack_require_1708__(4705);
 
 /**
  * Creates an list cache object.
@@ -115,10 +115,10 @@ module.exports = ListCache;
 /***/ }),
 
 /***/ 7071:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_2666__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_2661__) => {
 
-var getNative = __nested_webpack_require_2666__(852),
-    root = __nested_webpack_require_2666__(5639);
+var getNative = __nested_webpack_require_2661__(852),
+    root = __nested_webpack_require_2661__(5639);
 
 /* Built-in method references that are verified to be native. */
 var Map = getNative(root, 'Map');
@@ -129,13 +129,13 @@ module.exports = Map;
 /***/ }),
 
 /***/ 3369:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_2963__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_2958__) => {
 
-var mapCacheClear = __nested_webpack_require_2963__(4785),
-    mapCacheDelete = __nested_webpack_require_2963__(1285),
-    mapCacheGet = __nested_webpack_require_2963__(6000),
-    mapCacheHas = __nested_webpack_require_2963__(9916),
-    mapCacheSet = __nested_webpack_require_2963__(5265);
+var mapCacheClear = __nested_webpack_require_2958__(4785),
+    mapCacheDelete = __nested_webpack_require_2958__(1285),
+    mapCacheGet = __nested_webpack_require_2958__(6000),
+    mapCacheHas = __nested_webpack_require_2958__(9916),
+    mapCacheSet = __nested_webpack_require_2958__(5265);
 
 /**
  * Creates a map cache object to store key-value pairs.
@@ -168,10 +168,10 @@ module.exports = MapCache;
 /***/ }),
 
 /***/ 3818:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_3921__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_3916__) => {
 
-var getNative = __nested_webpack_require_3921__(852),
-    root = __nested_webpack_require_3921__(5639);
+var getNative = __nested_webpack_require_3916__(852),
+    root = __nested_webpack_require_3916__(5639);
 
 /* Built-in method references that are verified to be native. */
 var Promise = getNative(root, 'Promise');
@@ -182,10 +182,10 @@ module.exports = Promise;
 /***/ }),
 
 /***/ 8525:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_4230__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_4225__) => {
 
-var getNative = __nested_webpack_require_4230__(852),
-    root = __nested_webpack_require_4230__(5639);
+var getNative = __nested_webpack_require_4225__(852),
+    root = __nested_webpack_require_4225__(5639);
 
 /* Built-in method references that are verified to be native. */
 var Set = getNative(root, 'Set');
@@ -196,11 +196,11 @@ module.exports = Set;
 /***/ }),
 
 /***/ 8668:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_4527__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_4522__) => {
 
-var MapCache = __nested_webpack_require_4527__(3369),
-    setCacheAdd = __nested_webpack_require_4527__(619),
-    setCacheHas = __nested_webpack_require_4527__(2385);
+var MapCache = __nested_webpack_require_4522__(3369),
+    setCacheAdd = __nested_webpack_require_4522__(619),
+    setCacheHas = __nested_webpack_require_4522__(2385);
 
 /**
  *
@@ -230,14 +230,14 @@ module.exports = SetCache;
 /***/ }),
 
 /***/ 6384:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_5255__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_5250__) => {
 
-var ListCache = __nested_webpack_require_5255__(8407),
-    stackClear = __nested_webpack_require_5255__(7465),
-    stackDelete = __nested_webpack_require_5255__(3779),
-    stackGet = __nested_webpack_require_5255__(7599),
-    stackHas = __nested_webpack_require_5255__(4758),
-    stackSet = __nested_webpack_require_5255__(4309);
+var ListCache = __nested_webpack_require_5250__(8407),
+    stackClear = __nested_webpack_require_5250__(7465),
+    stackDelete = __nested_webpack_require_5250__(3779),
+    stackGet = __nested_webpack_require_5250__(7599),
+    stackHas = __nested_webpack_require_5250__(4758),
+    stackSet = __nested_webpack_require_5250__(4309);
 
 /**
  * Creates a stack cache object to store key-value pairs.
@@ -264,9 +264,9 @@ module.exports = Stack;
 /***/ }),
 
 /***/ 2705:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_6095__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_6090__) => {
 
-var root = __nested_webpack_require_6095__(5639);
+var root = __nested_webpack_require_6090__(5639);
 
 /** Built-in value references. */
 var Symbol = root.Symbol;
@@ -277,9 +277,9 @@ module.exports = Symbol;
 /***/ }),
 
 /***/ 1149:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_6314__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_6309__) => {
 
-var root = __nested_webpack_require_6314__(5639);
+var root = __nested_webpack_require_6309__(5639);
 
 /** Built-in value references. */
 var Uint8Array = root.Uint8Array;
@@ -290,10 +290,10 @@ module.exports = Uint8Array;
 /***/ }),
 
 /***/ 577:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_6544__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_6539__) => {
 
-var getNative = __nested_webpack_require_6544__(852),
-    root = __nested_webpack_require_6544__(5639);
+var getNative = __nested_webpack_require_6539__(852),
+    root = __nested_webpack_require_6539__(5639);
 
 /* Built-in method references that are verified to be native. */
 var WeakMap = getNative(root, 'WeakMap');
@@ -393,9 +393,9 @@ module.exports = arrayFilter;
 /***/ }),
 
 /***/ 7443:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_8877__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_8872__) => {
 
-var baseIndexOf = __nested_webpack_require_8877__(2118);
+var baseIndexOf = __nested_webpack_require_8872__(2118);
 
 /**
  * A specialized version of `_.includes` for arrays without support for
@@ -446,14 +446,14 @@ module.exports = arrayIncludesWith;
 /***/ }),
 
 /***/ 4636:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_10159__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_10154__) => {
 
-var baseTimes = __nested_webpack_require_10159__(2545),
-    isArguments = __nested_webpack_require_10159__(5694),
-    isArray = __nested_webpack_require_10159__(1469),
-    isBuffer = __nested_webpack_require_10159__(4144),
-    isIndex = __nested_webpack_require_10159__(5776),
-    isTypedArray = __nested_webpack_require_10159__(6719);
+var baseTimes = __nested_webpack_require_10154__(2545),
+    isArguments = __nested_webpack_require_10154__(5694),
+    isArray = __nested_webpack_require_10154__(1469),
+    isBuffer = __nested_webpack_require_10154__(4144),
+    isIndex = __nested_webpack_require_10154__(5776),
+    isTypedArray = __nested_webpack_require_10154__(6719);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -587,10 +587,10 @@ module.exports = arraySome;
 /***/ }),
 
 /***/ 4865:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_13775__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_13770__) => {
 
-var baseAssignValue = __nested_webpack_require_13775__(9465),
-    eq = __nested_webpack_require_13775__(7813);
+var baseAssignValue = __nested_webpack_require_13770__(9465),
+    eq = __nested_webpack_require_13770__(7813);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -622,9 +622,9 @@ module.exports = assignValue;
 /***/ }),
 
 /***/ 8470:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_14774__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_14769__) => {
 
-var eq = __nested_webpack_require_14774__(7813);
+var eq = __nested_webpack_require_14769__(7813);
 
 /**
  * Gets the index at which the `key` is found in `array` of key-value pairs.
@@ -650,10 +650,10 @@ module.exports = assocIndexOf;
 /***/ }),
 
 /***/ 4037:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_15365__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_15360__) => {
 
-var copyObject = __nested_webpack_require_15365__(8363),
-    keys = __nested_webpack_require_15365__(3674);
+var copyObject = __nested_webpack_require_15360__(8363),
+    keys = __nested_webpack_require_15360__(3674);
 
 /**
  * The base implementation of `_.assign` without support for multiple sources
@@ -674,10 +674,10 @@ module.exports = baseAssign;
 /***/ }),
 
 /***/ 3886:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_15938__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_15933__) => {
 
-var copyObject = __nested_webpack_require_15938__(8363),
-    keysIn = __nested_webpack_require_15938__(1704);
+var copyObject = __nested_webpack_require_15933__(8363),
+    keysIn = __nested_webpack_require_15933__(1704);
 
 /**
  * The base implementation of `_.assignIn` without support for multiple sources
@@ -698,9 +698,9 @@ module.exports = baseAssignIn;
 /***/ }),
 
 /***/ 9465:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_16521__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_16516__) => {
 
-var defineProperty = __nested_webpack_require_16521__(8777);
+var defineProperty = __nested_webpack_require_16516__(8777);
 
 /**
  * The base implementation of `assignValue` and `assignMergeValue` without
@@ -730,30 +730,30 @@ module.exports = baseAssignValue;
 /***/ }),
 
 /***/ 5990:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_17237__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_17232__) => {
 
-var Stack = __nested_webpack_require_17237__(6384),
-    arrayEach = __nested_webpack_require_17237__(7412),
-    assignValue = __nested_webpack_require_17237__(4865),
-    baseAssign = __nested_webpack_require_17237__(4037),
-    baseAssignIn = __nested_webpack_require_17237__(3886),
-    cloneBuffer = __nested_webpack_require_17237__(4626),
-    copyArray = __nested_webpack_require_17237__(278),
-    copySymbols = __nested_webpack_require_17237__(8805),
-    copySymbolsIn = __nested_webpack_require_17237__(1911),
-    getAllKeys = __nested_webpack_require_17237__(8234),
-    getAllKeysIn = __nested_webpack_require_17237__(6904),
-    getTag = __nested_webpack_require_17237__(4160),
-    initCloneArray = __nested_webpack_require_17237__(3824),
-    initCloneByTag = __nested_webpack_require_17237__(9148),
-    initCloneObject = __nested_webpack_require_17237__(8517),
-    isArray = __nested_webpack_require_17237__(1469),
-    isBuffer = __nested_webpack_require_17237__(4144),
-    isMap = __nested_webpack_require_17237__(6688),
-    isObject = __nested_webpack_require_17237__(3218),
-    isSet = __nested_webpack_require_17237__(2928),
-    keys = __nested_webpack_require_17237__(3674),
-    keysIn = __nested_webpack_require_17237__(1704);
+var Stack = __nested_webpack_require_17232__(6384),
+    arrayEach = __nested_webpack_require_17232__(7412),
+    assignValue = __nested_webpack_require_17232__(4865),
+    baseAssign = __nested_webpack_require_17232__(4037),
+    baseAssignIn = __nested_webpack_require_17232__(3886),
+    cloneBuffer = __nested_webpack_require_17232__(4626),
+    copyArray = __nested_webpack_require_17232__(278),
+    copySymbols = __nested_webpack_require_17232__(8805),
+    copySymbolsIn = __nested_webpack_require_17232__(1911),
+    getAllKeys = __nested_webpack_require_17232__(8234),
+    getAllKeysIn = __nested_webpack_require_17232__(6904),
+    getTag = __nested_webpack_require_17232__(4160),
+    initCloneArray = __nested_webpack_require_17232__(3824),
+    initCloneByTag = __nested_webpack_require_17232__(9148),
+    initCloneObject = __nested_webpack_require_17232__(8517),
+    isArray = __nested_webpack_require_17232__(1469),
+    isBuffer = __nested_webpack_require_17232__(4144),
+    isMap = __nested_webpack_require_17232__(6688),
+    isObject = __nested_webpack_require_17232__(3218),
+    isSet = __nested_webpack_require_17232__(2928),
+    keys = __nested_webpack_require_17232__(3674),
+    keysIn = __nested_webpack_require_17232__(1704);
 
 /** Used to compose bitmasks for cloning. */
 var CLONE_DEEP_FLAG = 1,
@@ -903,9 +903,9 @@ module.exports = baseClone;
 /***/ }),
 
 /***/ 3118:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_22983__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_22978__) => {
 
-var isObject = __nested_webpack_require_22983__(3218);
+var isObject = __nested_webpack_require_22978__(3218);
 
 /** Built-in value references. */
 var objectCreate = Object.create;
@@ -940,14 +940,14 @@ module.exports = baseCreate;
 /***/ }),
 
 /***/ 731:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_23766__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_23761__) => {
 
-var SetCache = __nested_webpack_require_23766__(8668),
-    arrayIncludes = __nested_webpack_require_23766__(7443),
-    arrayIncludesWith = __nested_webpack_require_23766__(1196),
-    arrayMap = __nested_webpack_require_23766__(9932),
-    baseUnary = __nested_webpack_require_23766__(1717),
-    cacheHas = __nested_webpack_require_23766__(4757);
+var SetCache = __nested_webpack_require_23761__(8668),
+    arrayIncludes = __nested_webpack_require_23761__(7443),
+    arrayIncludesWith = __nested_webpack_require_23761__(1196),
+    arrayMap = __nested_webpack_require_23761__(9932),
+    baseUnary = __nested_webpack_require_23761__(1717),
+    cacheHas = __nested_webpack_require_23761__(4757);
 
 /** Used as the size to enable large array optimizations. */
 var LARGE_ARRAY_SIZE = 200;
@@ -1045,10 +1045,10 @@ module.exports = baseFindIndex;
 /***/ }),
 
 /***/ 1078:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_26593__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_26588__) => {
 
-var arrayPush = __nested_webpack_require_26593__(2488),
-    isFlattenable = __nested_webpack_require_26593__(7285);
+var arrayPush = __nested_webpack_require_26588__(2488),
+    isFlattenable = __nested_webpack_require_26588__(7285);
 
 /**
  * The base implementation of `_.flatten` with support for restricting flattening.
@@ -1090,9 +1090,9 @@ module.exports = baseFlatten;
 /***/ }),
 
 /***/ 8483:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_27888__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_27883__) => {
 
-var createBaseFor = __nested_webpack_require_27888__(5063);
+var createBaseFor = __nested_webpack_require_27883__(5063);
 
 /**
  * The base implementation of `baseForOwn` which iterates over `object`
@@ -1113,10 +1113,10 @@ module.exports = baseFor;
 /***/ }),
 
 /***/ 7816:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_28573__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_28568__) => {
 
-var baseFor = __nested_webpack_require_28573__(8483),
-    keys = __nested_webpack_require_28573__(3674);
+var baseFor = __nested_webpack_require_28568__(8483),
+    keys = __nested_webpack_require_28568__(3674);
 
 /**
  * The base implementation of `_.forOwn` without support for iteratee shorthands.
@@ -1136,10 +1136,10 @@ module.exports = baseForOwn;
 /***/ }),
 
 /***/ 7786:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_29135__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_29130__) => {
 
-var castPath = __nested_webpack_require_29135__(1811),
-    toKey = __nested_webpack_require_29135__(327);
+var castPath = __nested_webpack_require_29130__(1811),
+    toKey = __nested_webpack_require_29130__(327);
 
 /**
  * The base implementation of `_.get` without support for default values.
@@ -1167,10 +1167,10 @@ module.exports = baseGet;
 /***/ }),
 
 /***/ 8866:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_29853__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_29848__) => {
 
-var arrayPush = __nested_webpack_require_29853__(2488),
-    isArray = __nested_webpack_require_29853__(1469);
+var arrayPush = __nested_webpack_require_29848__(2488),
+    isArray = __nested_webpack_require_29848__(1469);
 
 /**
  * The base implementation of `getAllKeys` and `getAllKeysIn` which uses
@@ -1194,11 +1194,11 @@ module.exports = baseGetAllKeys;
 /***/ }),
 
 /***/ 4239:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_30693__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_30688__) => {
 
-var Symbol = __nested_webpack_require_30693__(2705),
-    getRawTag = __nested_webpack_require_30693__(9607),
-    objectToString = __nested_webpack_require_30693__(2333);
+var Symbol = __nested_webpack_require_30688__(2705),
+    getRawTag = __nested_webpack_require_30688__(9607),
+    objectToString = __nested_webpack_require_30688__(2333);
 
 /** `Object#toString` result references. */
 var nullTag = '[object Null]',
@@ -1249,11 +1249,11 @@ module.exports = baseHasIn;
 /***/ }),
 
 /***/ 2118:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_32002__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_31997__) => {
 
-var baseFindIndex = __nested_webpack_require_32002__(1848),
-    baseIsNaN = __nested_webpack_require_32002__(2722),
-    strictIndexOf = __nested_webpack_require_32002__(2351);
+var baseFindIndex = __nested_webpack_require_31997__(1848),
+    baseIsNaN = __nested_webpack_require_31997__(2722),
+    strictIndexOf = __nested_webpack_require_31997__(2351);
 
 /**
  * The base implementation of `_.indexOf` without `fromIndex` bounds checks.
@@ -1276,9 +1276,9 @@ module.exports = baseIndexOf;
 /***/ }),
 
 /***/ 8975:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_32753__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_32748__) => {
 
-var baseForOwn = __nested_webpack_require_32753__(7816);
+var baseForOwn = __nested_webpack_require_32748__(7816);
 
 /**
  * The base implementation of `_.invert` and `_.invertBy` which inverts
@@ -1304,10 +1304,10 @@ module.exports = baseInverter;
 /***/ }),
 
 /***/ 9454:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_33584__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_33579__) => {
 
-var baseGetTag = __nested_webpack_require_33584__(4239),
-    isObjectLike = __nested_webpack_require_33584__(7005);
+var baseGetTag = __nested_webpack_require_33579__(4239),
+    isObjectLike = __nested_webpack_require_33579__(7005);
 
 /** `Object#toString` result references. */
 var argsTag = '[object Arguments]';
@@ -1329,10 +1329,10 @@ module.exports = baseIsArguments;
 /***/ }),
 
 /***/ 939:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_34166__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_34161__) => {
 
-var baseIsEqualDeep = __nested_webpack_require_34166__(2492),
-    isObjectLike = __nested_webpack_require_34166__(7005);
+var baseIsEqualDeep = __nested_webpack_require_34161__(2492),
+    isObjectLike = __nested_webpack_require_34161__(7005);
 
 /**
  * The base implementation of `_.isEqual` which supports partial comparisons
@@ -1364,16 +1364,16 @@ module.exports = baseIsEqual;
 /***/ }),
 
 /***/ 2492:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_35275__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_35270__) => {
 
-var Stack = __nested_webpack_require_35275__(6384),
-    equalArrays = __nested_webpack_require_35275__(7114),
-    equalByTag = __nested_webpack_require_35275__(8351),
-    equalObjects = __nested_webpack_require_35275__(6096),
-    getTag = __nested_webpack_require_35275__(4160),
-    isArray = __nested_webpack_require_35275__(1469),
-    isBuffer = __nested_webpack_require_35275__(4144),
-    isTypedArray = __nested_webpack_require_35275__(6719);
+var Stack = __nested_webpack_require_35270__(6384),
+    equalArrays = __nested_webpack_require_35270__(7114),
+    equalByTag = __nested_webpack_require_35270__(8351),
+    equalObjects = __nested_webpack_require_35270__(6096),
+    getTag = __nested_webpack_require_35270__(4160),
+    isArray = __nested_webpack_require_35270__(1469),
+    isBuffer = __nested_webpack_require_35270__(4144),
+    isTypedArray = __nested_webpack_require_35270__(6719);
 
 /** Used to compose bitmasks for value comparisons. */
 var COMPARE_PARTIAL_FLAG = 1;
@@ -1454,10 +1454,10 @@ module.exports = baseIsEqualDeep;
 /***/ }),
 
 /***/ 5588:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_38399__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_38394__) => {
 
-var getTag = __nested_webpack_require_38399__(4160),
-    isObjectLike = __nested_webpack_require_38399__(7005);
+var getTag = __nested_webpack_require_38394__(4160),
+    isObjectLike = __nested_webpack_require_38394__(7005);
 
 /** `Object#toString` result references. */
 var mapTag = '[object Map]';
@@ -1479,10 +1479,10 @@ module.exports = baseIsMap;
 /***/ }),
 
 /***/ 2958:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_38976__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_38971__) => {
 
-var Stack = __nested_webpack_require_38976__(6384),
-    baseIsEqual = __nested_webpack_require_38976__(939);
+var Stack = __nested_webpack_require_38971__(6384),
+    baseIsEqual = __nested_webpack_require_38971__(939);
 
 /** Used to compose bitmasks for value comparisons. */
 var COMPARE_PARTIAL_FLAG = 1,
@@ -1567,12 +1567,12 @@ module.exports = baseIsNaN;
 /***/ }),
 
 /***/ 8458:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_41183__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_41178__) => {
 
-var isFunction = __nested_webpack_require_41183__(3560),
-    isMasked = __nested_webpack_require_41183__(5346),
-    isObject = __nested_webpack_require_41183__(3218),
-    toSource = __nested_webpack_require_41183__(346);
+var isFunction = __nested_webpack_require_41178__(3560),
+    isMasked = __nested_webpack_require_41178__(5346),
+    isObject = __nested_webpack_require_41178__(3218),
+    toSource = __nested_webpack_require_41178__(346);
 
 /**
  * Used to match `RegExp`
@@ -1621,10 +1621,10 @@ module.exports = baseIsNative;
 /***/ }),
 
 /***/ 9221:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_42705__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_42700__) => {
 
-var getTag = __nested_webpack_require_42705__(4160),
-    isObjectLike = __nested_webpack_require_42705__(7005);
+var getTag = __nested_webpack_require_42700__(4160),
+    isObjectLike = __nested_webpack_require_42700__(7005);
 
 /** `Object#toString` result references. */
 var setTag = '[object Set]';
@@ -1646,11 +1646,11 @@ module.exports = baseIsSet;
 /***/ }),
 
 /***/ 8749:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_43282__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_43277__) => {
 
-var baseGetTag = __nested_webpack_require_43282__(4239),
-    isLength = __nested_webpack_require_43282__(1780),
-    isObjectLike = __nested_webpack_require_43282__(7005);
+var baseGetTag = __nested_webpack_require_43277__(4239),
+    isLength = __nested_webpack_require_43277__(1780),
+    isObjectLike = __nested_webpack_require_43277__(7005);
 
 /** `Object#toString` result references. */
 var argsTag = '[object Arguments]',
@@ -1713,13 +1713,13 @@ module.exports = baseIsTypedArray;
 /***/ }),
 
 /***/ 7206:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_45603__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_45598__) => {
 
-var baseMatches = __nested_webpack_require_45603__(1573),
-    baseMatchesProperty = __nested_webpack_require_45603__(6432),
-    identity = __nested_webpack_require_45603__(6557),
-    isArray = __nested_webpack_require_45603__(1469),
-    property = __nested_webpack_require_45603__(9601);
+var baseMatches = __nested_webpack_require_45598__(1573),
+    baseMatchesProperty = __nested_webpack_require_45598__(6432),
+    identity = __nested_webpack_require_45598__(6557),
+    isArray = __nested_webpack_require_45598__(1469),
+    property = __nested_webpack_require_45598__(9601);
 
 /**
  * The base implementation of `_.iteratee`.
@@ -1751,10 +1751,10 @@ module.exports = baseIteratee;
 /***/ }),
 
 /***/ 280:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_46596__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_46591__) => {
 
-var isPrototype = __nested_webpack_require_46596__(5726),
-    nativeKeys = __nested_webpack_require_46596__(6916);
+var isPrototype = __nested_webpack_require_46591__(5726),
+    nativeKeys = __nested_webpack_require_46591__(6916);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -1788,11 +1788,11 @@ module.exports = baseKeys;
 /***/ }),
 
 /***/ 313:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_47466__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_47461__) => {
 
-var isObject = __nested_webpack_require_47466__(3218),
-    isPrototype = __nested_webpack_require_47466__(5726),
-    nativeKeysIn = __nested_webpack_require_47466__(3498);
+var isObject = __nested_webpack_require_47461__(3218),
+    isPrototype = __nested_webpack_require_47461__(5726),
+    nativeKeysIn = __nested_webpack_require_47461__(3498);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -1828,11 +1828,11 @@ module.exports = baseKeysIn;
 /***/ }),
 
 /***/ 1573:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_48433__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_48428__) => {
 
-var baseIsMatch = __nested_webpack_require_48433__(2958),
-    getMatchData = __nested_webpack_require_48433__(1499),
-    matchesStrictComparable = __nested_webpack_require_48433__(2634);
+var baseIsMatch = __nested_webpack_require_48428__(2958),
+    getMatchData = __nested_webpack_require_48428__(1499),
+    matchesStrictComparable = __nested_webpack_require_48428__(2634);
 
 /**
  * The base implementation of `_.matches` which doesn't clone `source`.
@@ -1857,15 +1857,15 @@ module.exports = baseMatches;
 /***/ }),
 
 /***/ 6432:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_49224__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_49219__) => {
 
-var baseIsEqual = __nested_webpack_require_49224__(939),
-    get = __nested_webpack_require_49224__(7361),
-    hasIn = __nested_webpack_require_49224__(9095),
-    isKey = __nested_webpack_require_49224__(5403),
-    isStrictComparable = __nested_webpack_require_49224__(9162),
-    matchesStrictComparable = __nested_webpack_require_49224__(2634),
-    toKey = __nested_webpack_require_49224__(327);
+var baseIsEqual = __nested_webpack_require_49219__(939),
+    get = __nested_webpack_require_49219__(7361),
+    hasIn = __nested_webpack_require_49219__(9095),
+    isKey = __nested_webpack_require_49219__(5403),
+    isStrictComparable = __nested_webpack_require_49219__(9162),
+    matchesStrictComparable = __nested_webpack_require_49219__(2634),
+    toKey = __nested_webpack_require_49219__(327);
 
 /** Used to compose bitmasks for value comparisons. */
 var COMPARE_PARTIAL_FLAG = 1,
@@ -1918,9 +1918,9 @@ module.exports = baseProperty;
 /***/ }),
 
 /***/ 9152:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_50860__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_50855__) => {
 
-var baseGet = __nested_webpack_require_50860__(7786);
+var baseGet = __nested_webpack_require_50855__(7786);
 
 /**
  * A specialized version of `baseProperty` which supports deep paths.
@@ -1941,11 +1941,11 @@ module.exports = basePropertyDeep;
 /***/ }),
 
 /***/ 5976:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_51349__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_51344__) => {
 
-var identity = __nested_webpack_require_51349__(6557),
-    overRest = __nested_webpack_require_51349__(5357),
-    setToString = __nested_webpack_require_51349__(61);
+var identity = __nested_webpack_require_51344__(6557),
+    overRest = __nested_webpack_require_51344__(5357),
+    setToString = __nested_webpack_require_51344__(61);
 
 /**
  * The base implementation of `_.rest` which doesn't validate or coerce arguments.
@@ -1965,11 +1965,11 @@ module.exports = baseRest;
 /***/ }),
 
 /***/ 6560:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_52007__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_52002__) => {
 
-var constant = __nested_webpack_require_52007__(5703),
-    defineProperty = __nested_webpack_require_52007__(8777),
-    identity = __nested_webpack_require_52007__(6557);
+var constant = __nested_webpack_require_52002__(5703),
+    defineProperty = __nested_webpack_require_52002__(8777),
+    identity = __nested_webpack_require_52002__(6557);
 
 /**
  * The base implementation of `setToString` without support for hot loop shorting.
@@ -2021,12 +2021,12 @@ module.exports = baseTimes;
 /***/ }),
 
 /***/ 531:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_53297__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_53292__) => {
 
-var Symbol = __nested_webpack_require_53297__(2705),
-    arrayMap = __nested_webpack_require_53297__(9932),
-    isArray = __nested_webpack_require_53297__(1469),
-    isSymbol = __nested_webpack_require_53297__(3448);
+var Symbol = __nested_webpack_require_53292__(2705),
+    arrayMap = __nested_webpack_require_53292__(9932),
+    isArray = __nested_webpack_require_53292__(1469),
+    isSymbol = __nested_webpack_require_53292__(3448);
 
 /** Used as references for various `Number` constants. */
 var INFINITY = 1 / 0;
@@ -2065,9 +2065,9 @@ module.exports = baseToString;
 /***/ }),
 
 /***/ 7561:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_54562__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_54557__) => {
 
-var trimmedEndIndex = __nested_webpack_require_54562__(7990);
+var trimmedEndIndex = __nested_webpack_require_54557__(7990);
 
 /** Used to match leading whitespace. */
 var reTrimStart = /^\s+/;
@@ -2112,14 +2112,14 @@ module.exports = baseUnary;
 /***/ }),
 
 /***/ 5652:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_55475__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_55470__) => {
 
-var SetCache = __nested_webpack_require_55475__(8668),
-    arrayIncludes = __nested_webpack_require_55475__(7443),
-    arrayIncludesWith = __nested_webpack_require_55475__(1196),
-    cacheHas = __nested_webpack_require_55475__(4757),
-    createSet = __nested_webpack_require_55475__(3593),
-    setToArray = __nested_webpack_require_55475__(1814);
+var SetCache = __nested_webpack_require_55470__(8668),
+    arrayIncludes = __nested_webpack_require_55470__(7443),
+    arrayIncludesWith = __nested_webpack_require_55470__(1196),
+    cacheHas = __nested_webpack_require_55470__(4757),
+    createSet = __nested_webpack_require_55470__(3593),
+    setToArray = __nested_webpack_require_55470__(1814);
 
 /** Used as the size to enable large array optimizations. */
 var LARGE_ARRAY_SIZE = 200;
@@ -2211,12 +2211,12 @@ module.exports = cacheHas;
 /***/ }),
 
 /***/ 1811:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_57863__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_57858__) => {
 
-var isArray = __nested_webpack_require_57863__(1469),
-    isKey = __nested_webpack_require_57863__(5403),
-    stringToPath = __nested_webpack_require_57863__(5514),
-    toString = __nested_webpack_require_57863__(9833);
+var isArray = __nested_webpack_require_57858__(1469),
+    isKey = __nested_webpack_require_57858__(5403),
+    stringToPath = __nested_webpack_require_57858__(5514),
+    toString = __nested_webpack_require_57858__(9833);
 
 /**
  * Casts `value` to a path array if it's not one.
@@ -2239,9 +2239,9 @@ module.exports = castPath;
 /***/ }),
 
 /***/ 4318:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_58540__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_58535__) => {
 
-var Uint8Array = __nested_webpack_require_58540__(1149);
+var Uint8Array = __nested_webpack_require_58535__(1149);
 
 /**
  * Creates a clone of `arrayBuffer`.
@@ -2262,10 +2262,10 @@ module.exports = cloneArrayBuffer;
 /***/ }),
 
 /***/ 4626:
-/***/ ((module, exports, __nested_webpack_require_59067__) => {
+/***/ ((module, exports, __nested_webpack_require_59062__) => {
 
-/* module decorator */ module = __nested_webpack_require_59067__.nmd(module);
-var root = __nested_webpack_require_59067__(5639);
+/* module decorator */ module = __nested_webpack_require_59062__.nmd(module);
+var root = __nested_webpack_require_59062__(5639);
 
 /** Detect free variable `exports`. */
 var freeExports =   true && exports && !exports.nodeType && exports;
@@ -2305,9 +2305,9 @@ module.exports = cloneBuffer;
 /***/ }),
 
 /***/ 7157:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_60263__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_60258__) => {
 
-var cloneArrayBuffer = __nested_webpack_require_60263__(4318);
+var cloneArrayBuffer = __nested_webpack_require_60258__(4318);
 
 /**
  * Creates a clone of `dataView`.
@@ -2352,9 +2352,9 @@ module.exports = cloneRegExp;
 /***/ }),
 
 /***/ 419:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_61344__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_61339__) => {
 
-var Symbol = __nested_webpack_require_61344__(2705);
+var Symbol = __nested_webpack_require_61339__(2705);
 
 /** Used to convert symbols to primitives and strings. */
 var symbolProto = Symbol ? Symbol.prototype : undefined,
@@ -2377,9 +2377,9 @@ module.exports = cloneSymbol;
 /***/ }),
 
 /***/ 7133:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_61967__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_61962__) => {
 
-var cloneArrayBuffer = __nested_webpack_require_61967__(4318);
+var cloneArrayBuffer = __nested_webpack_require_61962__(4318);
 
 /**
  * Creates a clone of `typedArray`.
@@ -2427,10 +2427,10 @@ module.exports = copyArray;
 /***/ }),
 
 /***/ 8363:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_63083__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_63078__) => {
 
-var assignValue = __nested_webpack_require_63083__(4865),
-    baseAssignValue = __nested_webpack_require_63083__(9465);
+var assignValue = __nested_webpack_require_63078__(4865),
+    baseAssignValue = __nested_webpack_require_63078__(9465);
 
 /**
  * Copies properties of `source` to `object`.
@@ -2474,10 +2474,10 @@ module.exports = copyObject;
 /***/ }),
 
 /***/ 8805:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_64217__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_64212__) => {
 
-var copyObject = __nested_webpack_require_64217__(8363),
-    getSymbols = __nested_webpack_require_64217__(9551);
+var copyObject = __nested_webpack_require_64212__(8363),
+    getSymbols = __nested_webpack_require_64212__(9551);
 
 /**
  * Copies own symbols of `source` to `object`.
@@ -2497,10 +2497,10 @@ module.exports = copySymbols;
 /***/ }),
 
 /***/ 1911:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_64759__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_64754__) => {
 
-var copyObject = __nested_webpack_require_64759__(8363),
-    getSymbolsIn = __nested_webpack_require_64759__(1442);
+var copyObject = __nested_webpack_require_64754__(8363),
+    getSymbolsIn = __nested_webpack_require_64754__(1442);
 
 /**
  * Copies own and inherited symbols of `source` to `object`.
@@ -2520,9 +2520,9 @@ module.exports = copySymbolsIn;
 /***/ }),
 
 /***/ 4429:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_65323__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_65318__) => {
 
-var root = __nested_webpack_require_65323__(5639);
+var root = __nested_webpack_require_65318__(5639);
 
 /** Used to detect overreaching core-js shims. */
 var coreJsData = root['__core-js_shared__'];
@@ -2565,11 +2565,11 @@ module.exports = createBaseFor;
 /***/ }),
 
 /***/ 7740:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_66276__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_66271__) => {
 
-var baseIteratee = __nested_webpack_require_66276__(7206),
-    isArrayLike = __nested_webpack_require_66276__(8612),
-    keys = __nested_webpack_require_66276__(3674);
+var baseIteratee = __nested_webpack_require_66271__(7206),
+    isArrayLike = __nested_webpack_require_66271__(8612),
+    keys = __nested_webpack_require_66271__(3674);
 
 /**
  * Creates a `_.find` or `_.findLast` function.
@@ -2597,9 +2597,9 @@ module.exports = createFind;
 /***/ }),
 
 /***/ 7779:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_67231__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_67226__) => {
 
-var baseInverter = __nested_webpack_require_67231__(8975);
+var baseInverter = __nested_webpack_require_67226__(8975);
 
 /**
  * Creates a function like `_.invertBy`.
@@ -2621,11 +2621,11 @@ module.exports = createInverter;
 /***/ }),
 
 /***/ 3593:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_67821__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_67816__) => {
 
-var Set = __nested_webpack_require_67821__(8525),
-    noop = __nested_webpack_require_67821__(308),
-    setToArray = __nested_webpack_require_67821__(1814);
+var Set = __nested_webpack_require_67816__(8525),
+    noop = __nested_webpack_require_67816__(308),
+    setToArray = __nested_webpack_require_67816__(1814);
 
 /** Used as references for various `Number` constants. */
 var INFINITY = 1 / 0;
@@ -2647,9 +2647,9 @@ module.exports = createSet;
 /***/ }),
 
 /***/ 8777:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_68432__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_68427__) => {
 
-var getNative = __nested_webpack_require_68432__(852);
+var getNative = __nested_webpack_require_68427__(852);
 
 var defineProperty = (function() {
   try {
@@ -2665,11 +2665,11 @@ module.exports = defineProperty;
 /***/ }),
 
 /***/ 7114:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_68760__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_68755__) => {
 
-var SetCache = __nested_webpack_require_68760__(8668),
-    arraySome = __nested_webpack_require_68760__(2908),
-    cacheHas = __nested_webpack_require_68760__(4757);
+var SetCache = __nested_webpack_require_68755__(8668),
+    arraySome = __nested_webpack_require_68755__(2908),
+    cacheHas = __nested_webpack_require_68755__(4757);
 
 /** Used to compose bitmasks for value comparisons. */
 var COMPARE_PARTIAL_FLAG = 1,
@@ -2756,14 +2756,14 @@ module.exports = equalArrays;
 /***/ }),
 
 /***/ 8351:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_71524__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_71519__) => {
 
-var Symbol = __nested_webpack_require_71524__(2705),
-    Uint8Array = __nested_webpack_require_71524__(1149),
-    eq = __nested_webpack_require_71524__(7813),
-    equalArrays = __nested_webpack_require_71524__(7114),
-    mapToArray = __nested_webpack_require_71524__(8776),
-    setToArray = __nested_webpack_require_71524__(1814);
+var Symbol = __nested_webpack_require_71519__(2705),
+    Uint8Array = __nested_webpack_require_71519__(1149),
+    eq = __nested_webpack_require_71519__(7813),
+    equalArrays = __nested_webpack_require_71519__(7114),
+    mapToArray = __nested_webpack_require_71519__(8776),
+    setToArray = __nested_webpack_require_71519__(1814);
 
 /** Used to compose bitmasks for value comparisons. */
 var COMPARE_PARTIAL_FLAG = 1,
@@ -2875,9 +2875,9 @@ module.exports = equalByTag;
 /***/ }),
 
 /***/ 6096:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_75382__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_75377__) => {
 
-var getAllKeys = __nested_webpack_require_75382__(8234);
+var getAllKeys = __nested_webpack_require_75377__(8234);
 
 /** Used to compose bitmasks for value comparisons. */
 var COMPARE_PARTIAL_FLAG = 1;
@@ -2972,10 +2972,10 @@ module.exports = equalObjects;
 /***/ }),
 
 /***/ 1957:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_78448__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_78443__) => {
 
 /** Detect free variable `global` from Node.js. */
-var freeGlobal = typeof __nested_webpack_require_78448__.g == 'object' && __nested_webpack_require_78448__.g && __nested_webpack_require_78448__.g.Object === Object && __nested_webpack_require_78448__.g;
+var freeGlobal = typeof __nested_webpack_require_78443__.g == 'object' && __nested_webpack_require_78443__.g && __nested_webpack_require_78443__.g.Object === Object && __nested_webpack_require_78443__.g;
 
 module.exports = freeGlobal;
 
@@ -2983,11 +2983,11 @@ module.exports = freeGlobal;
 /***/ }),
 
 /***/ 8234:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_78775__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_78770__) => {
 
-var baseGetAllKeys = __nested_webpack_require_78775__(8866),
-    getSymbols = __nested_webpack_require_78775__(9551),
-    keys = __nested_webpack_require_78775__(3674);
+var baseGetAllKeys = __nested_webpack_require_78770__(8866),
+    getSymbols = __nested_webpack_require_78770__(9551),
+    keys = __nested_webpack_require_78770__(3674);
 
 /**
  * Creates an array of own enumerable property names and symbols of `object`.
@@ -3006,11 +3006,11 @@ module.exports = getAllKeys;
 /***/ }),
 
 /***/ 6904:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_79330__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_79325__) => {
 
-var baseGetAllKeys = __nested_webpack_require_79330__(8866),
-    getSymbolsIn = __nested_webpack_require_79330__(1442),
-    keysIn = __nested_webpack_require_79330__(1704);
+var baseGetAllKeys = __nested_webpack_require_79325__(8866),
+    getSymbolsIn = __nested_webpack_require_79325__(1442),
+    keysIn = __nested_webpack_require_79325__(1704);
 
 /**
  * Creates an array of own and inherited enumerable property names and
@@ -3030,9 +3030,9 @@ module.exports = getAllKeysIn;
 /***/ }),
 
 /***/ 5050:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_79914__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_79909__) => {
 
-var isKeyable = __nested_webpack_require_79914__(7019);
+var isKeyable = __nested_webpack_require_79909__(7019);
 
 /**
  * Gets the data for `map`.
@@ -3055,10 +3055,10 @@ module.exports = getMapData;
 /***/ }),
 
 /***/ 1499:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_80410__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_80405__) => {
 
-var isStrictComparable = __nested_webpack_require_80410__(9162),
-    keys = __nested_webpack_require_80410__(3674);
+var isStrictComparable = __nested_webpack_require_80405__(9162),
+    keys = __nested_webpack_require_80405__(3674);
 
 /**
  * Gets the property names, values, and compare flags of `object`.
@@ -3086,10 +3086,10 @@ module.exports = getMatchData;
 /***/ }),
 
 /***/ 852:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_81077__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_81072__) => {
 
-var baseIsNative = __nested_webpack_require_81077__(8458),
-    getValue = __nested_webpack_require_81077__(7801);
+var baseIsNative = __nested_webpack_require_81072__(8458),
+    getValue = __nested_webpack_require_81072__(7801);
 
 /**
  * Gets the native function at `key` of `object`.
@@ -3110,9 +3110,9 @@ module.exports = getNative;
 /***/ }),
 
 /***/ 5924:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_81656__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_81651__) => {
 
-var overArg = __nested_webpack_require_81656__(5569);
+var overArg = __nested_webpack_require_81651__(5569);
 
 /** Built-in value references. */
 var getPrototype = overArg(Object.getPrototypeOf, Object);
@@ -3123,9 +3123,9 @@ module.exports = getPrototype;
 /***/ }),
 
 /***/ 9607:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_81917__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_81912__) => {
 
-var Symbol = __nested_webpack_require_81917__(2705);
+var Symbol = __nested_webpack_require_81912__(2705);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -3176,10 +3176,10 @@ module.exports = getRawTag;
 /***/ }),
 
 /***/ 9551:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_83155__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_83150__) => {
 
-var arrayFilter = __nested_webpack_require_83155__(4963),
-    stubArray = __nested_webpack_require_83155__(479);
+var arrayFilter = __nested_webpack_require_83150__(4963),
+    stubArray = __nested_webpack_require_83150__(479);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -3213,12 +3213,12 @@ module.exports = getSymbols;
 /***/ }),
 
 /***/ 1442:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_84137__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_84132__) => {
 
-var arrayPush = __nested_webpack_require_84137__(2488),
-    getPrototype = __nested_webpack_require_84137__(5924),
-    getSymbols = __nested_webpack_require_84137__(9551),
-    stubArray = __nested_webpack_require_84137__(479);
+var arrayPush = __nested_webpack_require_84132__(2488),
+    getPrototype = __nested_webpack_require_84132__(5924),
+    getSymbols = __nested_webpack_require_84132__(9551),
+    stubArray = __nested_webpack_require_84132__(479);
 
 /* Built-in method references for those with the same name as other `lodash` methods. */
 var nativeGetSymbols = Object.getOwnPropertySymbols;
@@ -3245,15 +3245,15 @@ module.exports = getSymbolsIn;
 /***/ }),
 
 /***/ 4160:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_84989__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_84984__) => {
 
-var DataView = __nested_webpack_require_84989__(8552),
-    Map = __nested_webpack_require_84989__(7071),
-    Promise = __nested_webpack_require_84989__(3818),
-    Set = __nested_webpack_require_84989__(8525),
-    WeakMap = __nested_webpack_require_84989__(577),
-    baseGetTag = __nested_webpack_require_84989__(4239),
-    toSource = __nested_webpack_require_84989__(346);
+var DataView = __nested_webpack_require_84984__(8552),
+    Map = __nested_webpack_require_84984__(7071),
+    Promise = __nested_webpack_require_84984__(3818),
+    Set = __nested_webpack_require_84984__(8525),
+    WeakMap = __nested_webpack_require_84984__(577),
+    baseGetTag = __nested_webpack_require_84984__(4239),
+    toSource = __nested_webpack_require_84984__(346);
 
 /** `Object#toString` result references. */
 var mapTag = '[object Map]',
@@ -3330,14 +3330,14 @@ module.exports = getValue;
 /***/ }),
 
 /***/ 222:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_87321__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_87316__) => {
 
-var castPath = __nested_webpack_require_87321__(1811),
-    isArguments = __nested_webpack_require_87321__(5694),
-    isArray = __nested_webpack_require_87321__(1469),
-    isIndex = __nested_webpack_require_87321__(5776),
-    isLength = __nested_webpack_require_87321__(1780),
-    toKey = __nested_webpack_require_87321__(327);
+var castPath = __nested_webpack_require_87316__(1811),
+    isArguments = __nested_webpack_require_87316__(5694),
+    isArray = __nested_webpack_require_87316__(1469),
+    isIndex = __nested_webpack_require_87316__(5776),
+    isLength = __nested_webpack_require_87316__(1780),
+    toKey = __nested_webpack_require_87316__(327);
 
 /**
  * Checks if `path` exists on `object`.
@@ -3376,9 +3376,9 @@ module.exports = hasPath;
 /***/ }),
 
 /***/ 1789:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_88522__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_88517__) => {
 
-var nativeCreate = __nested_webpack_require_88522__(4536);
+var nativeCreate = __nested_webpack_require_88517__(4536);
 
 /**
  * Removes all key-value entries from the hash.
@@ -3422,9 +3422,9 @@ module.exports = hashDelete;
 /***/ }),
 
 /***/ 7667:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_89387__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_89382__) => {
 
-var nativeCreate = __nested_webpack_require_89387__(4536);
+var nativeCreate = __nested_webpack_require_89382__(4536);
 
 /** Used to stand-in for `undefined` hash values. */
 var HASH_UNDEFINED = '__lodash_hash_undefined__';
@@ -3459,9 +3459,9 @@ module.exports = hashGet;
 /***/ }),
 
 /***/ 1327:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_90252__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_90247__) => {
 
-var nativeCreate = __nested_webpack_require_90252__(4536);
+var nativeCreate = __nested_webpack_require_90247__(4536);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -3489,9 +3489,9 @@ module.exports = hashHas;
 /***/ }),
 
 /***/ 1866:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_90971__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_90966__) => {
 
-var nativeCreate = __nested_webpack_require_90971__(4536);
+var nativeCreate = __nested_webpack_require_90966__(4536);
 
 /** Used to stand-in for `undefined` hash values. */
 var HASH_UNDEFINED = '__lodash_hash_undefined__';
@@ -3552,13 +3552,13 @@ module.exports = initCloneArray;
 /***/ }),
 
 /***/ 9148:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_92401__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_92396__) => {
 
-var cloneArrayBuffer = __nested_webpack_require_92401__(4318),
-    cloneDataView = __nested_webpack_require_92401__(7157),
-    cloneRegExp = __nested_webpack_require_92401__(3147),
-    cloneSymbol = __nested_webpack_require_92401__(419),
-    cloneTypedArray = __nested_webpack_require_92401__(7133);
+var cloneArrayBuffer = __nested_webpack_require_92396__(4318),
+    cloneDataView = __nested_webpack_require_92396__(7157),
+    cloneRegExp = __nested_webpack_require_92396__(3147),
+    cloneSymbol = __nested_webpack_require_92396__(419),
+    cloneTypedArray = __nested_webpack_require_92396__(7133);
 
 /** `Object#toString` result references. */
 var boolTag = '[object Boolean]',
@@ -3636,11 +3636,11 @@ module.exports = initCloneByTag;
 /***/ }),
 
 /***/ 8517:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_94744__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_94739__) => {
 
-var baseCreate = __nested_webpack_require_94744__(3118),
-    getPrototype = __nested_webpack_require_94744__(5924),
-    isPrototype = __nested_webpack_require_94744__(5726);
+var baseCreate = __nested_webpack_require_94739__(3118),
+    getPrototype = __nested_webpack_require_94739__(5924),
+    isPrototype = __nested_webpack_require_94739__(5726);
 
 /**
  * Initializes an object clone.
@@ -3661,11 +3661,11 @@ module.exports = initCloneObject;
 /***/ }),
 
 /***/ 7285:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_95324__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_95319__) => {
 
-var Symbol = __nested_webpack_require_95324__(2705),
-    isArguments = __nested_webpack_require_95324__(5694),
-    isArray = __nested_webpack_require_95324__(1469);
+var Symbol = __nested_webpack_require_95319__(2705),
+    isArguments = __nested_webpack_require_95319__(5694),
+    isArray = __nested_webpack_require_95319__(1469);
 
 /** Built-in value references. */
 var spreadableSymbol = Symbol ? Symbol.isConcatSpreadable : undefined;
@@ -3720,10 +3720,10 @@ module.exports = isIndex;
 /***/ }),
 
 /***/ 5403:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_96843__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_96838__) => {
 
-var isArray = __nested_webpack_require_96843__(1469),
-    isSymbol = __nested_webpack_require_96843__(3448);
+var isArray = __nested_webpack_require_96838__(1469),
+    isSymbol = __nested_webpack_require_96838__(3448);
 
 /** Used to match property names within property paths. */
 var reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/,
@@ -3778,9 +3778,9 @@ module.exports = isKeyable;
 /***/ }),
 
 /***/ 5346:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_98303__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_98298__) => {
 
-var coreJsData = __nested_webpack_require_98303__(4429);
+var coreJsData = __nested_webpack_require_98298__(4429);
 
 /** Used to detect methods masquerading as native. */
 var maskSrcKey = (function() {
@@ -3830,9 +3830,9 @@ module.exports = isPrototype;
 /***/ }),
 
 /***/ 9162:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_99489__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_99484__) => {
 
-var isObject = __nested_webpack_require_99489__(3218);
+var isObject = __nested_webpack_require_99484__(3218);
 
 /**
  * Checks if `value` is suitable for strict equality comparisons, i.e. `===`.
@@ -3872,9 +3872,9 @@ module.exports = listCacheClear;
 /***/ }),
 
 /***/ 4125:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_100266__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_100261__) => {
 
-var assocIndexOf = __nested_webpack_require_100266__(8470);
+var assocIndexOf = __nested_webpack_require_100261__(8470);
 
 /** Used for built-in method references. */
 var arrayProto = Array.prototype;
@@ -3914,9 +3914,9 @@ module.exports = listCacheDelete;
 /***/ }),
 
 /***/ 2117:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_101134__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_101129__) => {
 
-var assocIndexOf = __nested_webpack_require_101134__(8470);
+var assocIndexOf = __nested_webpack_require_101129__(8470);
 
 /**
  * Gets the list cache value for `key`.
@@ -3940,9 +3940,9 @@ module.exports = listCacheGet;
 /***/ }),
 
 /***/ 7518:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_101647__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_101642__) => {
 
-var assocIndexOf = __nested_webpack_require_101647__(8470);
+var assocIndexOf = __nested_webpack_require_101642__(8470);
 
 /**
  * Checks if a list cache value for `key` exists.
@@ -3963,9 +3963,9 @@ module.exports = listCacheHas;
 /***/ }),
 
 /***/ 4705:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_102143__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_102138__) => {
 
-var assocIndexOf = __nested_webpack_require_102143__(8470);
+var assocIndexOf = __nested_webpack_require_102138__(8470);
 
 /**
  * Sets the list cache `key` to `value`.
@@ -3996,11 +3996,11 @@ module.exports = listCacheSet;
 /***/ }),
 
 /***/ 4785:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_102789__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_102784__) => {
 
-var Hash = __nested_webpack_require_102789__(1989),
-    ListCache = __nested_webpack_require_102789__(8407),
-    Map = __nested_webpack_require_102789__(7071);
+var Hash = __nested_webpack_require_102784__(1989),
+    ListCache = __nested_webpack_require_102784__(8407),
+    Map = __nested_webpack_require_102784__(7071);
 
 /**
  * Removes all key-value entries from the map.
@@ -4024,9 +4024,9 @@ module.exports = mapCacheClear;
 /***/ }),
 
 /***/ 1285:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_103293__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_103288__) => {
 
-var getMapData = __nested_webpack_require_103293__(5050);
+var getMapData = __nested_webpack_require_103288__(5050);
 
 /**
  * Removes `key` and its value from the map.
@@ -4049,9 +4049,9 @@ module.exports = mapCacheDelete;
 /***/ }),
 
 /***/ 6000:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_103838__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_103833__) => {
 
-var getMapData = __nested_webpack_require_103838__(5050);
+var getMapData = __nested_webpack_require_103833__(5050);
 
 /**
  * Gets the map value for `key`.
@@ -4072,9 +4072,9 @@ module.exports = mapCacheGet;
 /***/ }),
 
 /***/ 9916:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_104263__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_104258__) => {
 
-var getMapData = __nested_webpack_require_104263__(5050);
+var getMapData = __nested_webpack_require_104258__(5050);
 
 /**
  * Checks if a map value for `key` exists.
@@ -4095,9 +4095,9 @@ module.exports = mapCacheHas;
 /***/ }),
 
 /***/ 5265:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_104740__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_104735__) => {
 
-var getMapData = __nested_webpack_require_104740__(5050);
+var getMapData = __nested_webpack_require_104735__(5050);
 
 /**
  * Sets the map `key` to `value`.
@@ -4176,9 +4176,9 @@ module.exports = matchesStrictComparable;
 /***/ }),
 
 /***/ 4523:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_106355__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_106350__) => {
 
-var memoize = __nested_webpack_require_106355__(8306);
+var memoize = __nested_webpack_require_106350__(8306);
 
 /** Used as the maximum memoize cache size. */
 var MAX_MEMOIZE_SIZE = 500;
@@ -4209,9 +4209,9 @@ module.exports = memoizeCapped;
 /***/ }),
 
 /***/ 4536:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_107087__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_107082__) => {
 
-var getNative = __nested_webpack_require_107087__(852);
+var getNative = __nested_webpack_require_107082__(852);
 
 /* Built-in method references that are verified to be native. */
 var nativeCreate = getNative(Object, 'create');
@@ -4222,9 +4222,9 @@ module.exports = nativeCreate;
 /***/ }),
 
 /***/ 6916:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_107369__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_107364__) => {
 
-var overArg = __nested_webpack_require_107369__(5569);
+var overArg = __nested_webpack_require_107364__(5569);
 
 /* Built-in method references for those with the same name as other `lodash` methods. */
 var nativeKeys = overArg(Object.keys, Object);
@@ -4262,10 +4262,10 @@ module.exports = nativeKeysIn;
 /***/ }),
 
 /***/ 1167:
-/***/ ((module, exports, __nested_webpack_require_108191__) => {
+/***/ ((module, exports, __nested_webpack_require_108186__) => {
 
-/* module decorator */ module = __nested_webpack_require_108191__.nmd(module);
-var freeGlobal = __nested_webpack_require_108191__(1957);
+/* module decorator */ module = __nested_webpack_require_108186__.nmd(module);
+var freeGlobal = __nested_webpack_require_108186__(1957);
 
 /** Detect free variable `exports`. */
 var freeExports =   true && exports && !exports.nodeType && exports;
@@ -4351,9 +4351,9 @@ module.exports = overArg;
 /***/ }),
 
 /***/ 5357:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_110361__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_110356__) => {
 
-var apply = __nested_webpack_require_110361__(6874);
+var apply = __nested_webpack_require_110356__(6874);
 
 /* Built-in method references for those with the same name as other `lodash` methods. */
 var nativeMax = Math.max;
@@ -4394,9 +4394,9 @@ module.exports = overRest;
 /***/ }),
 
 /***/ 5639:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_111557__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_111552__) => {
 
-var freeGlobal = __nested_webpack_require_111557__(1957);
+var freeGlobal = __nested_webpack_require_111552__(1957);
 
 /** Detect free variable `self`. */
 var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
@@ -4482,10 +4482,10 @@ module.exports = setToArray;
 /***/ }),
 
 /***/ 61:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_113175__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_113170__) => {
 
-var baseSetToString = __nested_webpack_require_113175__(6560),
-    shortOut = __nested_webpack_require_113175__(1275);
+var baseSetToString = __nested_webpack_require_113170__(6560),
+    shortOut = __nested_webpack_require_113170__(1275);
 
 /**
  * Sets the `toString` method of `func` to return `string`.
@@ -4547,9 +4547,9 @@ module.exports = shortOut;
 /***/ }),
 
 /***/ 7465:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_114648__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_114643__) => {
 
-var ListCache = __nested_webpack_require_114648__(8407);
+var ListCache = __nested_webpack_require_114643__(8407);
 
 /**
  * Removes all key-value entries from the stack.
@@ -4636,11 +4636,11 @@ module.exports = stackHas;
 /***/ }),
 
 /***/ 4309:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_116138__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_116133__) => {
 
-var ListCache = __nested_webpack_require_116138__(8407),
-    Map = __nested_webpack_require_116138__(7071),
-    MapCache = __nested_webpack_require_116138__(3369);
+var ListCache = __nested_webpack_require_116133__(8407),
+    Map = __nested_webpack_require_116133__(7071),
+    MapCache = __nested_webpack_require_116133__(3369);
 
 /** Used as the size to enable large array optimizations. */
 var LARGE_ARRAY_SIZE = 200;
@@ -4707,9 +4707,9 @@ module.exports = strictIndexOf;
 /***/ }),
 
 /***/ 5514:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_117745__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_117740__) => {
 
-var memoizeCapped = __nested_webpack_require_117745__(4523);
+var memoizeCapped = __nested_webpack_require_117740__(4523);
 
 /** Used to match property names within property paths. */
 var rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|$))/g;
@@ -4741,9 +4741,9 @@ module.exports = stringToPath;
 /***/ }),
 
 /***/ 327:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_118676__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_118671__) => {
 
-var isSymbol = __nested_webpack_require_118676__(3448);
+var isSymbol = __nested_webpack_require_118671__(3448);
 
 /** Used as references for various `Number` constants. */
 var INFINITY = 1 / 0;
@@ -4828,9 +4828,9 @@ module.exports = trimmedEndIndex;
 /***/ }),
 
 /***/ 6678:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_120461__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_120456__) => {
 
-var baseClone = __nested_webpack_require_120461__(5990);
+var baseClone = __nested_webpack_require_120456__(5990);
 
 /** Used to compose bitmasks for cloning. */
 var CLONE_SYMBOLS_FLAG = 4;
@@ -4871,9 +4871,9 @@ module.exports = clone;
 /***/ }),
 
 /***/ 361:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_121621__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_121616__) => {
 
-var baseClone = __nested_webpack_require_121621__(5990);
+var baseClone = __nested_webpack_require_121616__(5990);
 
 /** Used to compose bitmasks for cloning. */
 var CLONE_DEEP_FLAG = 1,
@@ -4940,12 +4940,12 @@ module.exports = constant;
 /***/ }),
 
 /***/ 1966:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_122971__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_122966__) => {
 
-var baseDifference = __nested_webpack_require_122971__(731),
-    baseFlatten = __nested_webpack_require_122971__(1078),
-    baseRest = __nested_webpack_require_122971__(5976),
-    isArrayLikeObject = __nested_webpack_require_122971__(9246);
+var baseDifference = __nested_webpack_require_122966__(731),
+    baseFlatten = __nested_webpack_require_122966__(1078),
+    baseRest = __nested_webpack_require_122966__(5976),
+    isArrayLikeObject = __nested_webpack_require_122966__(9246);
 
 /**
  * Creates an array of `array` values not included in the other given arrays
@@ -5024,10 +5024,10 @@ module.exports = eq;
 /***/ }),
 
 /***/ 3311:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_124968__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_124963__) => {
 
-var createFind = __nested_webpack_require_124968__(7740),
-    findIndex = __nested_webpack_require_124968__(998);
+var createFind = __nested_webpack_require_124963__(7740),
+    findIndex = __nested_webpack_require_124963__(998);
 
 /**
  * Iterates over elements of `collection`, returning the first element
@@ -5073,11 +5073,11 @@ module.exports = find;
 /***/ }),
 
 /***/ 998:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_126368__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_126363__) => {
 
-var baseFindIndex = __nested_webpack_require_126368__(1848),
-    baseIteratee = __nested_webpack_require_126368__(7206),
-    toInteger = __nested_webpack_require_126368__(554);
+var baseFindIndex = __nested_webpack_require_126363__(1848),
+    baseIteratee = __nested_webpack_require_126363__(7206),
+    toInteger = __nested_webpack_require_126363__(554);
 
 /* Built-in method references for those with the same name as other `lodash` methods. */
 var nativeMax = Math.max;
@@ -5135,9 +5135,9 @@ module.exports = findIndex;
 /***/ }),
 
 /***/ 7361:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_128115__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_128110__) => {
 
-var baseGet = __nested_webpack_require_128115__(7786);
+var baseGet = __nested_webpack_require_128110__(7786);
 
 /**
  * Gets the value at `path` of `object`. If the resolved value is
@@ -5175,10 +5175,10 @@ module.exports = get;
 /***/ }),
 
 /***/ 9095:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_129097__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_129092__) => {
 
-var baseHasIn = __nested_webpack_require_129097__(13),
-    hasPath = __nested_webpack_require_129097__(222);
+var baseHasIn = __nested_webpack_require_129092__(13),
+    hasPath = __nested_webpack_require_129092__(222);
 
 /**
  * Checks if `path` is a direct or inherited property of `object`.
@@ -5244,11 +5244,11 @@ module.exports = identity;
 /***/ }),
 
 /***/ 3137:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_130364__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_130359__) => {
 
-var constant = __nested_webpack_require_130364__(5703),
-    createInverter = __nested_webpack_require_130364__(7779),
-    identity = __nested_webpack_require_130364__(6557);
+var constant = __nested_webpack_require_130359__(5703),
+    createInverter = __nested_webpack_require_130359__(7779),
+    identity = __nested_webpack_require_130359__(6557);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -5293,10 +5293,10 @@ module.exports = invert;
 /***/ }),
 
 /***/ 5694:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_131591__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_131586__) => {
 
-var baseIsArguments = __nested_webpack_require_131591__(9454),
-    isObjectLike = __nested_webpack_require_131591__(7005);
+var baseIsArguments = __nested_webpack_require_131586__(9454),
+    isObjectLike = __nested_webpack_require_131586__(7005);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -5369,10 +5369,10 @@ module.exports = isArray;
 /***/ }),
 
 /***/ 8612:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_133242__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_133237__) => {
 
-var isFunction = __nested_webpack_require_133242__(3560),
-    isLength = __nested_webpack_require_133242__(1780);
+var isFunction = __nested_webpack_require_133237__(3560),
+    isLength = __nested_webpack_require_133237__(1780);
 
 /**
  * Checks if `value` is array-like. A value is considered array-like if it's
@@ -5409,10 +5409,10 @@ module.exports = isArrayLike;
 /***/ }),
 
 /***/ 9246:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_134172__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_134167__) => {
 
-var isArrayLike = __nested_webpack_require_134172__(8612),
-    isObjectLike = __nested_webpack_require_134172__(7005);
+var isArrayLike = __nested_webpack_require_134167__(8612),
+    isObjectLike = __nested_webpack_require_134167__(7005);
 
 /**
  * This method is like `_.isArrayLike` except that it also checks if `value`
@@ -5449,11 +5449,11 @@ module.exports = isArrayLikeObject;
 /***/ }),
 
 /***/ 4144:
-/***/ ((module, exports, __nested_webpack_require_134992__) => {
+/***/ ((module, exports, __nested_webpack_require_134987__) => {
 
-/* module decorator */ module = __nested_webpack_require_134992__.nmd(module);
-var root = __nested_webpack_require_134992__(5639),
-    stubFalse = __nested_webpack_require_134992__(5062);
+/* module decorator */ module = __nested_webpack_require_134987__.nmd(module);
+var root = __nested_webpack_require_134987__(5639),
+    stubFalse = __nested_webpack_require_134987__(5062);
 
 /** Detect free variable `exports`. */
 var freeExports =   true && exports && !exports.nodeType && exports;
@@ -5495,9 +5495,9 @@ module.exports = isBuffer;
 /***/ }),
 
 /***/ 8446:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_136249__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_136244__) => {
 
-var baseIsEqual = __nested_webpack_require_136249__(939);
+var baseIsEqual = __nested_webpack_require_136244__(939);
 
 /**
  * Performs a deep comparison between two values to determine if they are
@@ -5537,10 +5537,10 @@ module.exports = isEqual;
 /***/ }),
 
 /***/ 3560:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_137328__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_137323__) => {
 
-var baseGetTag = __nested_webpack_require_137328__(4239),
-    isObject = __nested_webpack_require_137328__(3218);
+var baseGetTag = __nested_webpack_require_137323__(4239),
+    isObject = __nested_webpack_require_137323__(3218);
 
 /** `Object#toString` result references. */
 var asyncTag = '[object AsyncFunction]',
@@ -5623,11 +5623,11 @@ module.exports = isLength;
 /***/ }),
 
 /***/ 6688:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_139269__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_139264__) => {
 
-var baseIsMap = __nested_webpack_require_139269__(5588),
-    baseUnary = __nested_webpack_require_139269__(1717),
-    nodeUtil = __nested_webpack_require_139269__(1167);
+var baseIsMap = __nested_webpack_require_139264__(5588),
+    baseUnary = __nested_webpack_require_139264__(1717),
+    nodeUtil = __nested_webpack_require_139264__(1167);
 
 /* Node.js helper references. */
 var nodeIsMap = nodeUtil && nodeUtil.isMap;
@@ -5731,11 +5731,11 @@ module.exports = isObjectLike;
 /***/ }),
 
 /***/ 2928:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_141424__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_141419__) => {
 
-var baseIsSet = __nested_webpack_require_141424__(9221),
-    baseUnary = __nested_webpack_require_141424__(1717),
-    nodeUtil = __nested_webpack_require_141424__(1167);
+var baseIsSet = __nested_webpack_require_141419__(9221),
+    baseUnary = __nested_webpack_require_141419__(1717),
+    nodeUtil = __nested_webpack_require_141419__(1167);
 
 /* Node.js helper references. */
 var nodeIsSet = nodeUtil && nodeUtil.isSet;
@@ -5765,10 +5765,10 @@ module.exports = isSet;
 /***/ }),
 
 /***/ 3448:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_142138__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_142133__) => {
 
-var baseGetTag = __nested_webpack_require_142138__(4239),
-    isObjectLike = __nested_webpack_require_142138__(7005);
+var baseGetTag = __nested_webpack_require_142133__(4239),
+    isObjectLike = __nested_webpack_require_142133__(7005);
 
 /** `Object#toString` result references. */
 var symbolTag = '[object Symbol]';
@@ -5801,11 +5801,11 @@ module.exports = isSymbol;
 /***/ }),
 
 /***/ 6719:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_142915__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_142910__) => {
 
-var baseIsTypedArray = __nested_webpack_require_142915__(8749),
-    baseUnary = __nested_webpack_require_142915__(1717),
-    nodeUtil = __nested_webpack_require_142915__(1167);
+var baseIsTypedArray = __nested_webpack_require_142910__(8749),
+    baseUnary = __nested_webpack_require_142910__(1717),
+    nodeUtil = __nested_webpack_require_142910__(1167);
 
 /* Node.js helper references. */
 var nodeIsTypedArray = nodeUtil && nodeUtil.isTypedArray;
@@ -5835,11 +5835,11 @@ module.exports = isTypedArray;
 /***/ }),
 
 /***/ 3674:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_143704__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_143699__) => {
 
-var arrayLikeKeys = __nested_webpack_require_143704__(4636),
-    baseKeys = __nested_webpack_require_143704__(280),
-    isArrayLike = __nested_webpack_require_143704__(8612);
+var arrayLikeKeys = __nested_webpack_require_143699__(4636),
+    baseKeys = __nested_webpack_require_143699__(280),
+    isArrayLike = __nested_webpack_require_143699__(8612);
 
 /**
  * Creates an array of the own enumerable property names of `object`.
@@ -5879,11 +5879,11 @@ module.exports = keys;
 /***/ }),
 
 /***/ 1704:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_144683__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_144678__) => {
 
-var arrayLikeKeys = __nested_webpack_require_144683__(4636),
-    baseKeysIn = __nested_webpack_require_144683__(313),
-    isArrayLike = __nested_webpack_require_144683__(8612);
+var arrayLikeKeys = __nested_webpack_require_144678__(4636),
+    baseKeysIn = __nested_webpack_require_144678__(313),
+    isArrayLike = __nested_webpack_require_144678__(8612);
 
 /**
  * Creates an array of the own and inherited enumerable property names of `object`.
@@ -5918,9 +5918,9 @@ module.exports = keysIn;
 /***/ }),
 
 /***/ 8306:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_145554__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_145549__) => {
 
-var MapCache = __nested_webpack_require_145554__(3369);
+var MapCache = __nested_webpack_require_145549__(3369);
 
 /** Error message constants. */
 var FUNC_ERROR_TEXT = 'Expected a function';
@@ -6022,12 +6022,12 @@ module.exports = noop;
 /***/ }),
 
 /***/ 9601:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_148171__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_148166__) => {
 
-var baseProperty = __nested_webpack_require_148171__(371),
-    basePropertyDeep = __nested_webpack_require_148171__(9152),
-    isKey = __nested_webpack_require_148171__(5403),
-    toKey = __nested_webpack_require_148171__(327);
+var baseProperty = __nested_webpack_require_148166__(371),
+    basePropertyDeep = __nested_webpack_require_148166__(9152),
+    isKey = __nested_webpack_require_148166__(5403),
+    toKey = __nested_webpack_require_148166__(327);
 
 /**
  * Creates a function that returns the value at `path` of a given object.
@@ -6116,9 +6116,9 @@ module.exports = stubFalse;
 /***/ }),
 
 /***/ 8601:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_149825__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_149820__) => {
 
-var toNumber = __nested_webpack_require_149825__(4841);
+var toNumber = __nested_webpack_require_149820__(4841);
 
 /** Used as references for various `Number` constants. */
 var INFINITY = 1 / 0,
@@ -6165,9 +6165,9 @@ module.exports = toFinite;
 /***/ }),
 
 /***/ 554:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_150790__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_150785__) => {
 
-var toFinite = __nested_webpack_require_150790__(8601);
+var toFinite = __nested_webpack_require_150785__(8601);
 
 /**
  * Converts `value` to an integer.
@@ -6208,11 +6208,11 @@ module.exports = toInteger;
 /***/ }),
 
 /***/ 4841:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_151648__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_151643__) => {
 
-var baseTrim = __nested_webpack_require_151648__(7561),
-    isObject = __nested_webpack_require_151648__(3218),
-    isSymbol = __nested_webpack_require_151648__(3448);
+var baseTrim = __nested_webpack_require_151643__(7561),
+    isObject = __nested_webpack_require_151643__(3218),
+    isSymbol = __nested_webpack_require_151643__(3448);
 
 /** Used as references for various `Number` constants. */
 var NAN = 0 / 0;
@@ -6279,9 +6279,9 @@ module.exports = toNumber;
 /***/ }),
 
 /***/ 9833:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_153272__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_153267__) => {
 
-var baseToString = __nested_webpack_require_153272__(531);
+var baseToString = __nested_webpack_require_153267__(531);
 
 /**
  * Converts `value` to a string. An empty string is returned for `null`
@@ -6314,9 +6314,9 @@ module.exports = toString;
 /***/ }),
 
 /***/ 4908:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_153944__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_153939__) => {
 
-var baseUniq = __nested_webpack_require_153944__(5652);
+var baseUniq = __nested_webpack_require_153939__(5652);
 
 /**
  * Creates a duplicate-free version of an array, using
@@ -6346,11 +6346,11 @@ module.exports = uniq;
 /***/ }),
 
 /***/ 2569:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_154729__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_154724__) => {
 
-var baseDifference = __nested_webpack_require_154729__(731),
-    baseRest = __nested_webpack_require_154729__(5976),
-    isArrayLikeObject = __nested_webpack_require_154729__(9246);
+var baseDifference = __nested_webpack_require_154724__(731),
+    baseRest = __nested_webpack_require_154724__(5976),
+    isArrayLikeObject = __nested_webpack_require_154724__(9246);
 
 /**
  * Creates an array excluding all given values using
@@ -6389,7 +6389,7 @@ module.exports = without;
 /******/ 	var __webpack_module_cache__ = {};
 /******/ 	
 /******/ 	// The require function
-/******/ 	function __nested_webpack_require_155839__(moduleId) {
+/******/ 	function __nested_webpack_require_155834__(moduleId) {
 /******/ 		// Check if module is in cache
 /******/ 		var cachedModule = __webpack_module_cache__[moduleId];
 /******/ 		if (cachedModule !== undefined) {
@@ -6403,7 +6403,7 @@ module.exports = without;
 /******/ 		};
 /******/ 	
 /******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __nested_webpack_require_155839__);
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __nested_webpack_require_155834__);
 /******/ 	
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
@@ -6416,11 +6416,11 @@ module.exports = without;
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	(() => {
 /******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__nested_webpack_require_155839__.n = (module) => {
+/******/ 		__nested_webpack_require_155834__.n = (module) => {
 /******/ 			var getter = module && module.__esModule ?
 /******/ 				() => (module['default']) :
 /******/ 				() => (module);
-/******/ 			__nested_webpack_require_155839__.d(getter, { a: getter });
+/******/ 			__nested_webpack_require_155834__.d(getter, { a: getter });
 /******/ 			return getter;
 /******/ 		};
 /******/ 	})();
@@ -6428,9 +6428,9 @@ module.exports = without;
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
-/******/ 		__nested_webpack_require_155839__.d = (exports, definition) => {
+/******/ 		__nested_webpack_require_155834__.d = (exports, definition) => {
 /******/ 			for(var key in definition) {
-/******/ 				if(__nested_webpack_require_155839__.o(definition, key) && !__nested_webpack_require_155839__.o(exports, key)) {
+/******/ 				if(__nested_webpack_require_155834__.o(definition, key) && !__nested_webpack_require_155834__.o(exports, key)) {
 /******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
 /******/ 				}
 /******/ 			}
@@ -6439,7 +6439,7 @@ module.exports = without;
 /******/ 	
 /******/ 	/* webpack/runtime/global */
 /******/ 	(() => {
-/******/ 		__nested_webpack_require_155839__.g = (function() {
+/******/ 		__nested_webpack_require_155834__.g = (function() {
 /******/ 			if (typeof globalThis === 'object') return globalThis;
 /******/ 			try {
 /******/ 				return this || new Function('return this')();
@@ -6451,13 +6451,13 @@ module.exports = without;
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
-/******/ 		__nested_webpack_require_155839__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 		__nested_webpack_require_155834__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	(() => {
 /******/ 		// define __esModule on exports
-/******/ 		__nested_webpack_require_155839__.r = (exports) => {
+/******/ 		__nested_webpack_require_155834__.r = (exports) => {
 /******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
 /******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
 /******/ 			}
@@ -6467,7 +6467,7 @@ module.exports = without;
 /******/ 	
 /******/ 	/* webpack/runtime/node module decorator */
 /******/ 	(() => {
-/******/ 		__nested_webpack_require_155839__.nmd = (module) => {
+/******/ 		__nested_webpack_require_155834__.nmd = (module) => {
 /******/ 			module.paths = [];
 /******/ 			if (!module.children) module.children = [];
 /******/ 			return module;
@@ -6480,10 +6480,10 @@ var __webpack_exports__ = {};
 (() => {
 "use strict";
 // ESM COMPAT FLAG
-__nested_webpack_require_155839__.r(__webpack_exports__);
+__nested_webpack_require_155834__.r(__webpack_exports__);
 
 // EXPORTS
-__nested_webpack_require_155839__.d(__webpack_exports__, {
+__nested_webpack_require_155834__.d(__webpack_exports__, {
   "chordParserFactory": () => (/* reexport */ parser_chordParserFactory),
   "chordRendererFactory": () => (/* reexport */ renderer_chordRendererFactory)
 });
@@ -6502,31 +6502,25 @@ function chain(allFunctions, input) {
   }, input);
 }
 // EXTERNAL MODULE: ./node_modules/lodash/cloneDeep.js
-var cloneDeep = __nested_webpack_require_155839__(361);
-var cloneDeep_default = /*#__PURE__*/__nested_webpack_require_155839__.n(cloneDeep);
+var cloneDeep = __nested_webpack_require_155834__(361);
+var cloneDeep_default = /*#__PURE__*/__nested_webpack_require_155834__.n(cloneDeep);
 ;// CONCATENATED MODULE: ./src/helpers/checkCustomFilters.js
 var checkCustomFilters = function checkCustomFilters(customFilters) {
   if (!Array.isArray(customFilters)) {
     throw new TypeError('customFilters should be given as an array');
   }
-
   if (customFilters.some(function (filter) {
     return typeof filter !== 'function';
   })) {
     throw new TypeError("The given filter is not a function");
   }
-
   return true;
 };
-
 /* harmony default export */ const helpers_checkCustomFilters = (checkCustomFilters);
 ;// CONCATENATED MODULE: ./src/dictionaries/notes.js
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 var notes = {
   AFlat: 'Ab',
   A: 'A',
@@ -6618,7 +6612,6 @@ var german = {
   G: notes.G,
   Gis: notes.GSharp
 };
-
 function getAccidentalsVariation(source) {
   var variant;
   return Object.keys(source).reduce(function (acc, curr) {
@@ -6626,19 +6619,13 @@ function getAccidentalsVariation(source) {
       variant = curr.replace('#', '♯').replace('b', '♭');
       acc[variant] = source[curr];
     }
-
     return acc;
   }, {});
 }
-
 var englishVariantsToNotes = _objectSpread(_objectSpread({}, english), getAccidentalsVariation(english));
-
 var latinVariantsToNotes = _objectSpread(_objectSpread({}, latin), getAccidentalsVariation(latin));
-
 var germanVariantsToNotes = _objectSpread({}, german);
-
 var allVariantsToNotes = _objectSpread(_objectSpread(_objectSpread({}, englishVariantsToNotes), latinVariantsToNotes), germanVariantsToNotes);
-
 var allVariants = Object.keys(allVariantsToNotes).sort(function (a, b) {
   return b.length - a.length;
 });
@@ -6664,102 +6651,68 @@ var allVariantsPerGroup = [{
 
 ;// CONCATENATED MODULE: ./src/helpers/ChordParsingError.js
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
-
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _wrapNativeSuper(Class) { var _cache = typeof Map === "function" ? new Map() : undefined; _wrapNativeSuper = function _wrapNativeSuper(Class) { if (Class === null || !_isNativeFunction(Class)) return Class; if (typeof Class !== "function") { throw new TypeError("Super expression must either be null or a function"); } if (typeof _cache !== "undefined") { if (_cache.has(Class)) return _cache.get(Class); _cache.set(Class, Wrapper); } function Wrapper() { return _construct(Class, arguments, _getPrototypeOf(this).constructor); } Wrapper.prototype = Object.create(Class.prototype, { constructor: { value: Wrapper, enumerable: false, writable: true, configurable: true } }); return _setPrototypeOf(Wrapper, Class); }; return _wrapNativeSuper(Class); }
-
-function _construct(Parent, args, Class) { if (_isNativeReflectConstruct()) { _construct = Reflect.construct; } else { _construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) _setPrototypeOf(instance, Class.prototype); return instance; }; } return _construct.apply(null, arguments); }
-
+function _construct(Parent, args, Class) { if (_isNativeReflectConstruct()) { _construct = Reflect.construct.bind(); } else { _construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) _setPrototypeOf(instance, Class.prototype); return instance; }; } return _construct.apply(null, arguments); }
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-
 function _isNativeFunction(fn) { return Function.toString.call(fn).indexOf("[native code]") !== -1; }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 var InvalidInputError = /*#__PURE__*/function (_Error) {
   _inherits(InvalidInputError, _Error);
-
   var _super = _createSuper(InvalidInputError);
-
   /**
    *  The parser was not given a valid string to parse
    *  ex: `parseChord(null)`
    */
   function InvalidInputError() {
     var _this;
-
     _classCallCheck(this, InvalidInputError);
-
     _this = _super.call(this, 'The given symbol is not a valid string');
     _this.name = 'InvalidInput';
     return _this;
   }
-
   return _createClass(InvalidInputError);
 }( /*#__PURE__*/_wrapNativeSuper(Error));
-
 var UnexpectedError = /*#__PURE__*/function (_Error2) {
   _inherits(UnexpectedError, _Error2);
-
   var _super2 = _createSuper(UnexpectedError);
-
   /**
    * This error is very unlikely to happen.
    * If it does, it is probably in the context of a custom filter that returns `null` instead of throwing an exception.
    */
   function UnexpectedError() {
     var _this2;
-
     _classCallCheck(this, UnexpectedError);
-
     var message = 'An unexpected error happened. Maybe a custom filter returned null instead of throwing an exception?';
     _this2 = _super2.call(this, message);
     _this2.name = 'UnexpectedError';
     return _this2;
   }
-
   return _createClass(UnexpectedError);
 }( /*#__PURE__*/_wrapNativeSuper(Error));
-
 var ChordSymbolError = /*#__PURE__*/function (_Error3) {
   _inherits(ChordSymbolError, _Error3);
-
   var _super3 = _createSuper(ChordSymbolError);
-
   function ChordSymbolError(message, chord, errorName) {
     var _this3;
-
     _classCallCheck(this, ChordSymbolError);
-
     _this3 = _super3.call(this, message);
     _this3.name = errorName;
     _this3.chord = chord;
     return _this3;
   }
-
   return _createClass(ChordSymbolError);
 }( /*#__PURE__*/_wrapNativeSuper(Error));
-
 var NoSymbolFoundError = /*#__PURE__*/function (_ChordSymbolError) {
   _inherits(NoSymbolFoundError, _ChordSymbolError);
-
   var _super4 = _createSuper(NoSymbolFoundError);
-
   /**
    * The given string cannot be confused with a chord symbol in the current notation system
    * ex: `parseChord('Ape')`
@@ -6767,19 +6720,14 @@ var NoSymbolFoundError = /*#__PURE__*/function (_ChordSymbolError) {
    */
   function NoSymbolFoundError(chord) {
     _classCallCheck(this, NoSymbolFoundError);
-
     var message = "\"".concat(chord.input.symbol, "\" does not seems to be a chord");
     return _super4.call(this, message, chord, 'NoSymbolFound');
   }
-
   return _createClass(NoSymbolFoundError);
 }(ChordSymbolError);
-
 var InvalidModifierError = /*#__PURE__*/function (_ChordSymbolError2) {
   _inherits(InvalidModifierError, _ChordSymbolError2);
-
   var _super5 = _createSuper(InvalidModifierError);
-
   /**
    * The given string looks like a chord symbol, but `ChordSymbol` does not understand its descriptor.
    * It can be either because of a typo, or just because the given word is not a symbol.
@@ -6789,19 +6737,14 @@ var InvalidModifierError = /*#__PURE__*/function (_ChordSymbolError2) {
    */
   function InvalidModifierError(chord, invalidChars) {
     _classCallCheck(this, InvalidModifierError);
-
     var message = "The chord descriptor \"".concat(chord.input.descriptor, "\" contains unknown or duplicated modifiers: \"").concat(invalidChars, "\"");
     return _super5.call(this, message, chord, 'InvalidModifier');
   }
-
   return _createClass(InvalidModifierError);
 }(ChordSymbolError);
-
 var InvalidIntervalsError = /*#__PURE__*/function (_ChordSymbolError3) {
   _inherits(InvalidIntervalsError, _ChordSymbolError3);
-
   var _super6 = _createSuper(InvalidIntervalsError);
-
   /**
    * The given string is a chord symbol, but the resulting interval list is not valid
    * ex: `parseChord('A7M7')`
@@ -6810,42 +6753,34 @@ var InvalidIntervalsError = /*#__PURE__*/function (_ChordSymbolError3) {
    */
   function InvalidIntervalsError(chord, forbiddenCombo) {
     _classCallCheck(this, InvalidIntervalsError);
-
     var message = "\"".concat(chord.input.symbol, "\" describes a chord with an invalid intervals combo: ") + forbiddenCombo.join(' and ');
     return _super6.call(this, message, chord, 'InvalidIntervals');
   }
-
   return _createClass(InvalidIntervalsError);
 }(ChordSymbolError);
 
-
 // EXTERNAL MODULE: ./node_modules/lodash/isArray.js
-var isArray = __nested_webpack_require_155839__(1469);
-var isArray_default = /*#__PURE__*/__nested_webpack_require_155839__.n(isArray);
+var isArray = __nested_webpack_require_155834__(1469);
+var isArray_default = /*#__PURE__*/__nested_webpack_require_155834__.n(isArray);
 // EXTERNAL MODULE: ./node_modules/lodash/isEqual.js
-var isEqual = __nested_webpack_require_155839__(8446);
-var isEqual_default = /*#__PURE__*/__nested_webpack_require_155839__.n(isEqual);
+var isEqual = __nested_webpack_require_155834__(8446);
+var isEqual_default = /*#__PURE__*/__nested_webpack_require_155834__.n(isEqual);
 ;// CONCATENATED MODULE: ./src/helpers/hasElement.js
-
 
 
 function hasExactly(allIntervals, search) {
   var arraySearch = isArray_default()(search) ? search : [search];
   return isEqual_default()(allIntervals, arraySearch);
 }
-
 function hasOneOf(allIntervals, search) {
   return has(allIntervals, search, 'oneOf');
 }
-
 function hasAll(allIntervals, search) {
   return has(allIntervals, search, 'all');
 }
-
 function hasNoneOf(allIntervals, search) {
   return has(allIntervals, search, 'none');
 }
-
 function has(allIntervals, search, require) {
   var arraySearch = isArray_default()(search) ? search : [search];
   var lookupMethod = require === 'oneOf' ? 'some' : 'every';
@@ -6854,29 +6789,27 @@ function has(allIntervals, search, require) {
   });
 }
 
-
 ;// CONCATENATED MODULE: ./src/parser/filters/checkIntervalsConsistency.js
 
 
-var allForbiddenCombos = [['2', '3'], ['2', '9'], ['3', 'b3'], //['3',  '4'], // valid in the Real Book: F#7SUS(add 3)
+var allForbiddenCombos = [['2', '3'], ['2', '9'], ['3', 'b3'],
+//['3',  '4'], // valid in the Real Book: F#7SUS(add 3)
 ['4', '11'], ['5', 'b5'], ['5', '#5'], ['b6', '#5'], ['b6', '6'], ['b6', '13'], ['6', '13'], ['b7', 'bb7'], ['7', 'b7'], ['9', 'b9'], ['9', '#9'], ['11', '#11'], ['13', 'b13']];
+
 /**
  * Check parsed interval list to detect potential inconsistencies
  *
  * @param {Chord} chord
  * @returns {Chord|Null}
  */
-
 function checkIntervalsConsistency(chord) {
   var intervals = chord.normalized.intervals;
   var forbiddenCombo = allForbiddenCombos.find(function (combo) {
     return hasAll(intervals, combo);
   });
-
   if (forbiddenCombo) {
     throw new InvalidIntervalsError(chord, forbiddenCombo);
   }
-
   return chord;
 }
 ;// CONCATENATED MODULE: ./src/parser/filters/formatSymbol.js
@@ -6888,24 +6821,20 @@ function checkIntervalsConsistency(chord) {
  */
 function formatSymbol(chord) {
   var _chord$formatted = chord.formatted,
-      rootNote = _chord$formatted.rootNote,
-      bassNote = _chord$formatted.bassNote,
-      descriptor = _chord$formatted.descriptor,
-      chordChanges = _chord$formatted.chordChanges;
+    rootNote = _chord$formatted.rootNote,
+    bassNote = _chord$formatted.bassNote,
+    descriptor = _chord$formatted.descriptor,
+    chordChanges = _chord$formatted.chordChanges;
   var symbol = rootNote;
-
   if (descriptor) {
     symbol += descriptor;
   }
-
   if (chordChanges && chordChanges.length) {
     symbol += '(' + chordChanges.join(',') + ')';
   }
-
   if (bassNote) {
     symbol += '/' + bassNote;
   }
-
   chord.formatted.symbol = symbol;
   return chord;
 }
@@ -6930,21 +6859,13 @@ var minorQualities = [qualities.mi, qualities.mi6, qualities.mi7, qualities.miMa
 
 ;// CONCATENATED MODULE: ./src/parser/filters/formatSymbolParts.js
 var _qualityToDescriptor;
-
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
-
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
 function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
-
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
-
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
 function formatSymbolParts_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 
 
 var qualityToDescriptor = (_qualityToDescriptor = {}, formatSymbolParts_defineProperty(_qualityToDescriptor, qualities.ma, function () {
@@ -6980,13 +6901,13 @@ var chordChangesDescriptors = {
   omit: 'omit',
   sus: 'sus'
 };
+
 /**
  * Pre-render the chord by formatting all his components: root and bass notes, descriptor and changes
  *
  * @param {Chord} chord
  * @returns {Chord}
  */
-
 function formatSymbolParts(chord) {
   chord.formatted = {
     rootNote: chord.normalized.rootNote,
@@ -6996,75 +6917,59 @@ function formatSymbolParts(chord) {
   };
   return chord;
 }
-
 function getDescriptor(chord) {
   var descriptor = qualityToDescriptor[chord.normalized.quality](chord);
-
   if (chord.normalized.isSuspended) {
     descriptor += chordChangesDescriptors.sus;
   }
-
   return descriptor;
 }
-
 function getHighestExtension(chord) {
   var extensions = chord.normalized.extensions;
   var highestExtension = extensions[extensions.length - 1];
-
   if (highestExtension === '11' && chord.normalized.intents.major) {
     highestExtension = hasNoneOf(chord.normalized.alterations, ['b9', '#9']) ? '9' : '7';
   }
-
   return highestExtension || '7';
 }
-
 function getChordChanges(chord) {
   var formattedOmits = formatOmits(chord.normalized.omits);
-
   if (isAltered(chord)) {
     return formattedOmits;
   }
-
   var formattedAdds = formatAdds(chord.normalized.quality, chord.normalized.adds);
   return [].concat(_toConsumableArray(chord.normalized.alterations), _toConsumableArray(formattedAdds), _toConsumableArray(formattedOmits));
 }
-
 function isAltered(chord) {
   return chord.normalized.intents.alt && chord.normalized.quality === qualities.dom7;
 }
-
 function formatAdds(quality, adds) {
   return adds.filter(function (add) {
     return !([qualities.ma6, qualities.mi6].includes(quality) && add === '9');
   }).map(function (add, index) {
     var formatted = '';
-
     if (index === 0) {
       formatted += chordChangesDescriptors.add;
-
       if (['b', '#'].includes(add[0])) {
         formatted += ' ';
       }
     }
-
     formatted += add === '7' ? chordChangesDescriptors.add7 : add;
     return formatted;
   });
 }
-
 function formatOmits(omits) {
   return omits.map(function (omitted, index) {
     var formatted = '';
-
     if (index === 0) {
       formatted += chordChangesDescriptors.omit;
     }
-
     formatted += omitted === 'b3' ? '3' : omitted;
     return formatted;
   });
 }
 ;// CONCATENATED MODULE: ./src/parser/filters/getParsableDescriptor.js
+
 
 /**
  * Prepare whatever string has been identified as a descriptor so it is parsable by the next filter
@@ -7072,31 +6977,24 @@ function formatOmits(omits) {
  * @param {Chord} chord
  * @returns {Chord}
  */
-
 function getParsableDescriptor(chord) {
   var allFilters = [toLowerCaseExceptMajorM, removeSpaces, addDisambiguators, addMissingVerbs];
-
   if (chord.input.descriptor) {
     chord.input.parsableDescriptor = chain(allFilters, chord.input.descriptor);
   }
-
   return chord;
 }
-
 function toLowerCaseExceptMajorM(descriptor) {
   return descriptor.replace(/[A-LN-Za-z]+/g, function (match) {
     return match.toLowerCase();
   }).replace('oMit', 'omit').replace('diM', 'dim').replace('augMented', 'augmented');
 }
-
 function removeSpaces(descriptor) {
   return descriptor.replace(/ /g, '');
 }
-
 function addDisambiguators(descriptor) {
   return descriptor.replace(/(7?dim)(alt|add)/g, '$1 $2').replace(/([m|M])(alt|add)/g, '$1 $2').replace(/i(no[35])/g, 'i $1').replace(/([b♭#♯]9)6/g, '$1 6').replace(/(9\/?6)/g, ' $1');
 }
-
 function addMissingVerbs(descriptor) {
   var allTokensWithVerbs;
   var currentVerb;
@@ -7106,7 +7004,6 @@ function addMissingVerbs(descriptor) {
     currentVerb = '';
     parenthesis.split(',').forEach(function (token) {
       hasVerb = true;
-
       if (token.startsWith('add')) {
         currentVerb = 'add';
       } else if (token.startsWith('omit')) {
@@ -7116,7 +7013,6 @@ function addMissingVerbs(descriptor) {
       } else {
         hasVerb = false;
       }
-
       if (hasVerb) {
         allTokensWithVerbs.push(token);
       } else {
@@ -7128,12 +7024,12 @@ function addMissingVerbs(descriptor) {
 }
 ;// CONCATENATED MODULE: ./src/parser/filters/initChord.js
 
+
 /**
  * @param {String} symbol
  * @param {Object} parserConfiguration
  * @returns {Chord}
  */
-
 function initChord() {
   var parserConfiguration = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var symbol = arguments.length > 1 ? arguments[1] : undefined;
@@ -7148,21 +7044,13 @@ function initChord() {
 }
 ;// CONCATENATED MODULE: ./src/parser/filters/nameIndividualChordNotes.js
 var _rootNoteToScaleAccid;
-
 function nameIndividualChordNotes_toConsumableArray(arr) { return nameIndividualChordNotes_arrayWithoutHoles(arr) || nameIndividualChordNotes_iterableToArray(arr) || nameIndividualChordNotes_unsupportedIterableToArray(arr) || nameIndividualChordNotes_nonIterableSpread(); }
-
 function nameIndividualChordNotes_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
 function nameIndividualChordNotes_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return nameIndividualChordNotes_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return nameIndividualChordNotes_arrayLikeToArray(o, minLen); }
-
 function nameIndividualChordNotes_iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
-
 function nameIndividualChordNotes_arrayWithoutHoles(arr) { if (Array.isArray(arr)) return nameIndividualChordNotes_arrayLikeToArray(arr); }
-
 function nameIndividualChordNotes_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
 function nameIndividualChordNotes_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 
 
 var notesSharp = [notes.A, notes.ASharp, notes.B, notes.C, notes.CSharp, notes.D, notes.DSharp, notes.E, notes.F, notes.FSharp, notes.G, notes.GSharp];
@@ -7219,13 +7107,13 @@ var rootNoteToScaleAccidentals = (_rootNoteToScaleAccid = {}, nameIndividualChor
   maj: 'sharp',
   min: 'sharp'
 }), _rootNoteToScaleAccid);
+
 /**
  * Convert intervals in actual notes.
  *
  * @param {Chord} chord
  * @returns {Chord}
  */
-
 function nameIndividualChordNotes(chord) {
   var rootNote = chord.normalized.rootNote;
   var semitones = chord.normalized.semitones;
@@ -7242,51 +7130,41 @@ function nameIndividualChordNotes(chord) {
 }
 ;// CONCATENATED MODULE: ./src/parser/filters/normalizeNotes.js
 
+
 /**
  * Convert root/bass notes to English names
  *
  * @param {Chord} chord
  * @returns {Chord}
  */
-
 function normalizeNotes(chord) {
   chord.normalized.rootNote = allVariantsToNotes[chord.input.rootNote];
-
   if (chord.input.bassNote) {
     chord.normalized.bassNote = allVariantsToNotes[chord.input.bassNote];
   }
-
   return chord;
 }
 // EXTERNAL MODULE: ./node_modules/lodash/clone.js
-var clone = __nested_webpack_require_155839__(6678);
-var clone_default = /*#__PURE__*/__nested_webpack_require_155839__.n(clone);
+var clone = __nested_webpack_require_155834__(6678);
+var clone_default = /*#__PURE__*/__nested_webpack_require_155834__.n(clone);
 // EXTERNAL MODULE: ./node_modules/lodash/find.js
-var find = __nested_webpack_require_155839__(3311);
-var find_default = /*#__PURE__*/__nested_webpack_require_155839__.n(find);
+var find = __nested_webpack_require_155834__(3311);
+var find_default = /*#__PURE__*/__nested_webpack_require_155834__.n(find);
 // EXTERNAL MODULE: ./node_modules/lodash/uniq.js
-var uniq = __nested_webpack_require_155839__(4908);
-var uniq_default = /*#__PURE__*/__nested_webpack_require_155839__.n(uniq);
+var uniq = __nested_webpack_require_155834__(4908);
+var uniq_default = /*#__PURE__*/__nested_webpack_require_155834__.n(uniq);
 // EXTERNAL MODULE: ./node_modules/lodash/without.js
-var without = __nested_webpack_require_155839__(2569);
-var without_default = /*#__PURE__*/__nested_webpack_require_155839__.n(without);
+var without = __nested_webpack_require_155834__(2569);
+var without_default = /*#__PURE__*/__nested_webpack_require_155834__.n(without);
 ;// CONCATENATED MODULE: ./src/parser/filters/normalizeDescriptor.js
 function normalizeDescriptor_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
 function normalizeDescriptor_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? normalizeDescriptor_ownKeys(Object(source), !0).forEach(function (key) { normalizeDescriptor_defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : normalizeDescriptor_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-
 function normalizeDescriptor_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function normalizeDescriptor_toConsumableArray(arr) { return normalizeDescriptor_arrayWithoutHoles(arr) || normalizeDescriptor_iterableToArray(arr) || normalizeDescriptor_unsupportedIterableToArray(arr) || normalizeDescriptor_nonIterableSpread(); }
-
 function normalizeDescriptor_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
 function normalizeDescriptor_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return normalizeDescriptor_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return normalizeDescriptor_arrayLikeToArray(o, minLen); }
-
 function normalizeDescriptor_iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
-
 function normalizeDescriptor_arrayWithoutHoles(arr) { if (Array.isArray(arr)) return normalizeDescriptor_arrayLikeToArray(arr); }
-
 function normalizeDescriptor_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 
@@ -7302,10 +7180,8 @@ function normalizeDescriptor_arrayLikeToArray(arr, len) { if (len == null || len
  * @param {Chord} chord
  * @returns {Chord}
  */
-
 function normalizeDescriptor(chord) {
   var chordIntervals = clone_default()(chord.normalized.intervals);
-
   var normalized = {
     quality: '',
     isSuspended: false,
@@ -7314,7 +7190,6 @@ function normalizeDescriptor(chord) {
     adds: [],
     omits: []
   };
-
   if (isPowerChord(chordIntervals)) {
     normalized.quality = qualities.power;
   } else if (isBass(chordIntervals)) {
@@ -7322,21 +7197,18 @@ function normalizeDescriptor(chord) {
   } else {
     var omits = getOmits(chordIntervals, chord.normalized.intents.major);
     var isSuspended = getIsSuspended(chordIntervals, chord.normalized.intents.major);
-
     var _getChordQuality = getChordQuality(chordIntervals, chord, isSuspended, omits),
-        qualityIntervals = _getChordQuality.qualityIntervals,
-        quality = _getChordQuality.quality;
+      qualityIntervals = _getChordQuality.qualityIntervals,
+      quality = _getChordQuality.quality;
+    var extensions = getExtensions(chordIntervals, quality);
 
-    var extensions = getExtensions(chordIntervals, quality); // to be able to detect adds and alterations, we build the "straight" version of the chord,
+    // to be able to detect adds and alterations, we build the "straight" version of the chord,
     // ie. the chord as if no alterations/adds/omits where present.
     // we will compare this to the actual intervals later on
-
     var baseIntervals = ['1'].concat(normalizeDescriptor_toConsumableArray(qualityIntervals), normalizeDescriptor_toConsumableArray(extensions));
-
     var _getAddsAndAlteration = getAddsAndAlterations(chordIntervals, baseIntervals, quality),
-        adds = _getAddsAndAlteration.adds,
-        alterations = _getAddsAndAlteration.alterations;
-
+      adds = _getAddsAndAlteration.adds,
+      alterations = _getAddsAndAlteration.alterations;
     normalized = normalizeDescriptor_objectSpread(normalizeDescriptor_objectSpread({}, normalized), {}, {
       quality: quality,
       isSuspended: isSuspended,
@@ -7346,41 +7218,33 @@ function normalizeDescriptor(chord) {
       omits: omits
     });
   }
-
   return normalizeDescriptor_objectSpread(normalizeDescriptor_objectSpread({}, chord), {}, {
     normalized: normalizeDescriptor_objectSpread(normalizeDescriptor_objectSpread({}, chord.normalized), normalized)
   });
 }
-
 function isPowerChord(intervals) {
   return hasExactly(intervals, ['1', '5']);
 }
-
 function isBass(intervals) {
   return hasExactly(intervals, ['1']);
 }
-
 function getIsSuspended(intervals, hasMajorIntent) {
   return intervals.includes('4') || intervals.includes('11') && hasMajorIntent && !intervals.includes('3');
 }
-
 function getOmits(intervals, hasMajorIntent) {
   var omits = [];
-
   if (hasNoneOf(intervals, ['b3', '3', '4', '11']) || !hasMajorIntent && hasNoneOf(intervals, ['b3', '4'])) {
     omits.push(hasMajorIntent ? '3' : 'b3');
   }
-
   if (hasNoneOf(intervals, ['b5', '5', '#5', 'b13'])) {
     omits.push('5');
   }
-
   return omits;
 }
-
 function getChordQuality(allIntervals, chord, isSuspended, omits) {
   var intervalsForQualityDetection = getIntervalsForQualityDetection(allIntervals, chord, isSuspended, omits);
-  var intervalsToQualities = [// !!! do not change order without a good reason
+  var intervalsToQualities = [
+  // !!! do not change order without a good reason
   {
     qualityIntervals: ['b3'],
     quality: qualities.mi
@@ -7420,52 +7284,41 @@ function getChordQuality(allIntervals, chord, isSuspended, omits) {
   return find_default()(intervalsToQualities, function (o) {
     return hasAll(intervalsForQualityDetection, o.qualityIntervals);
   });
-} // To properly detect the chord quality, we need a "straight" version of the chord,
+}
+
+// To properly detect the chord quality, we need a "straight" version of the chord,
 // meaning with a third interval (= un-suspended, no omit3)
-
-
 function getIntervalsForQualityDetection(allIntervals, chord, isSuspended, omits) {
   var allFilters = [undoOmit3.bind(null, omits), undoSuspension.bind(null, isSuspended, chord.normalized.intents.major), undoAlt5.bind(null, chord.normalized.intents.alt), (uniq_default())];
   return chain(allFilters, clone_default()(allIntervals));
 }
-
 function undoOmit3(omits, allIntervals) {
   var with3rd = clone_default()(allIntervals);
-
   if (omits.includes('3')) {
     with3rd.push('3');
   } else if (omits.includes('b3')) {
     with3rd.push('b3');
   }
-
   return with3rd;
 }
-
 function undoSuspension(isSuspended, hasMajorIntent, allIntervals) {
   if (isSuspended) {
     var unSuspended = without_default()(allIntervals, '4');
-
     unSuspended.push(hasMajorIntent ? '3' : 'b3');
     return unSuspended;
   }
-
   return allIntervals;
 }
-
 function undoAlt5(isAlt, allIntervals) {
   if (isAlt) {
     var unaltered = without_default()(allIntervals, 'b5', '#5');
-
     unaltered.push('5');
     return unaltered;
   }
-
   return allIntervals;
 }
-
 function getExtensions(allIntervals, quality) {
   var extensions = [];
-
   if (canBeExtended(quality)) {
     if (isMinorExtended13th(allIntervals, quality)) {
       extensions.push('9', '11', '13');
@@ -7477,34 +7330,26 @@ function getExtensions(allIntervals, quality) {
       extensions.push('9');
     }
   }
-
   return extensions;
 }
-
 function canBeExtended(quality) {
   return [qualities.ma7, qualities.dom7, qualities.mi7, qualities.miMa7].includes(quality);
 }
-
 function canHave11th(quality) {
   return [qualities.mi7, qualities.miMa7].includes(quality);
 }
-
 function isMinorExtended13th(allIntervals, quality) {
   return canHave11th(quality) && hasOneOf(allIntervals, '13') && hasOneOf(allIntervals, ['11', '#11']) && hasOneOf(allIntervals, ['b9', '9', '#9']);
 }
-
 function isMajorExtended13th(allIntervals, quality) {
   return !canHave11th(quality) && hasOneOf(allIntervals, '13') && hasOneOf(allIntervals, ['b9', '9', '#9']);
 }
-
 function isExtended11th(allIntervals) {
   return hasOneOf(allIntervals, '11') && hasOneOf(allIntervals, ['b9', '9', '#9']);
 }
-
 function isExtended9th(allIntervals) {
   return allIntervals.includes('9');
 }
-
 function getAddsAndAlterations(chordIntervals, baseIntervals, quality) {
   var adds = [];
   var alterations = [];
@@ -7519,28 +7364,22 @@ function getAddsAndAlterations(chordIntervals, baseIntervals, quality) {
       }
     }
   });
-
   if (hasAdd3(chordIntervals)) {
     adds.push('3');
   }
-
   return {
     adds: sortIntervals(adds),
     alterations: sortIntervals(alterations)
   };
 }
-
 function isAlteration(quality, interval) {
   var _qualityAlterations;
-
   var qualityAlterations = (_qualityAlterations = {}, normalizeDescriptor_defineProperty(_qualityAlterations, qualities.ma, ['b5', '#5', '#11', 'b13']), normalizeDescriptor_defineProperty(_qualityAlterations, qualities.ma6, ['b5', '#5', '#11', 'b13']), normalizeDescriptor_defineProperty(_qualityAlterations, qualities.ma7, ['b5', '#5', '#11', 'b13']), normalizeDescriptor_defineProperty(_qualityAlterations, qualities.dom7, ['b5', '#5', 'b9', '#9', '#11', 'b13']), normalizeDescriptor_defineProperty(_qualityAlterations, qualities.mi, ['b5', '#5', '#11', 'b13']), normalizeDescriptor_defineProperty(_qualityAlterations, qualities.mi6, ['b5', '#5', '#11', 'b13']), normalizeDescriptor_defineProperty(_qualityAlterations, qualities.mi7, ['b5', '#5', '#11', 'b13']), normalizeDescriptor_defineProperty(_qualityAlterations, qualities.miMa7, ['b5', '#5', '#11', 'b13']), normalizeDescriptor_defineProperty(_qualityAlterations, qualities.aug, []), normalizeDescriptor_defineProperty(_qualityAlterations, qualities.dim, []), normalizeDescriptor_defineProperty(_qualityAlterations, qualities.dim7, []), _qualityAlterations);
   return qualityAlterations[quality].includes(interval);
 }
-
 function hasAdd3(allIntervals) {
   return hasAll(allIntervals, ['3', '4']);
 }
-
 function sortIntervals(intervals) {
   return intervals.sort(function (a, b) {
     var sortableA = Number.parseInt(a.replace(/[b#]/, ''));
@@ -7550,6 +7389,7 @@ function sortIntervals(intervals) {
 }
 ;// CONCATENATED MODULE: ./src/parser/filters/parseBase.js
 
+
 /**
  * Split symbol in root/bass note and descriptor.
  * Returns null if the given string does not seems to be a chord.
@@ -7558,24 +7398,19 @@ function sortIntervals(intervals) {
  * @param {Chord} chord
  * @returns {Chord|null}
  */
-
 function parseBase(noteVariants, chord) {
   var symbol = chord.input.symbol;
   var notesRegex = noteVariants.join('|');
   var notesAndDescriptorRegex = new RegExp('^' + '(' + notesRegex + ')' + '(.*?)' + '(/(' + notesRegex + '))?' + '$');
   var result = symbol.match(notesAndDescriptorRegex);
-
   if (result && result[1]) {
     chord.input.rootNote = result[1];
-
     if (result[2]) {
       chord.input.descriptor = result[2];
     }
-
     if (result[4]) {
       chord.input.bassNote = result[4];
     }
-
     return chord;
   } else {
     throw new NoSymbolFoundError(chord);
@@ -7583,11 +7418,8 @@ function parseBase(noteVariants, chord) {
 }
 ;// CONCATENATED MODULE: ./src/dictionaries/modifiers.js
 function modifiers_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
 function modifiers_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? modifiers_ownKeys(Object(source), !0).forEach(function (key) { modifiers_defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : modifiers_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-
 function modifiers_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 var allModifiers = {
   // base
   ma: 'ma',
@@ -7627,6 +7459,7 @@ var allModifiers = {
   power: 'power',
   alt: 'alt'
 };
+
 /**
  * WARNING: when adding new modifiers symbols, be careful of possible edge cases that might arise with some combinations.
  * For example, without edge case handling, "madd9" would be parsed as "ma" instead of "m"+"add9"
@@ -7649,7 +7482,6 @@ var major7th = getDerivedModifiers(major, allModifiers.add7, function (symbol) {
 var add7 = getDerivedModifiers(major, allModifiers.add7, function (symbol) {
   return 'add' + symbol + '7';
 });
-
 var allSymbols = modifiers_objectSpread(modifiers_objectSpread(modifiers_objectSpread(modifiers_objectSpread({}, major), major7th), {}, {
   // minor
   '-': allModifiers.mi,
@@ -7735,14 +7567,12 @@ var allSymbols = modifiers_objectSpread(modifiers_objectSpread(modifiers_objectS
   'alt.': allModifiers.alt,
   altered: allModifiers.alt
 });
-
 function getDerivedModifiers(source, modifierId, derivedFn) {
   return Object.keys(source).map(derivedFn).reduce(function (acc, curr) {
     acc[curr] = modifierId;
     return acc;
   }, {});
 }
-
 var modifiers_allVariants = Object.keys(allSymbols).sort(function (a, b) {
   return b.length - a.length;
 });
@@ -7773,15 +7603,10 @@ var modifiers_allVariants = Object.keys(allSymbols).sort(function (a, b) {
 });
 ;// CONCATENATED MODULE: ./src/parser/filters/parseDescriptor.js
 function parseDescriptor_toConsumableArray(arr) { return parseDescriptor_arrayWithoutHoles(arr) || parseDescriptor_iterableToArray(arr) || parseDescriptor_unsupportedIterableToArray(arr) || parseDescriptor_nonIterableSpread(); }
-
 function parseDescriptor_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
 function parseDescriptor_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return parseDescriptor_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return parseDescriptor_arrayLikeToArray(o, minLen); }
-
 function parseDescriptor_iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
-
 function parseDescriptor_arrayWithoutHoles(arr) { if (Array.isArray(arr)) return parseDescriptor_arrayLikeToArray(arr); }
-
 function parseDescriptor_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 
@@ -7797,21 +7622,17 @@ function parseDescriptor_arrayLikeToArray(arr, len) { if (len == null || len > a
  * @param {Chord} chord
  * @returns {Chord|Null}
  */
-
 function parseDescriptor(altIntervals, chord) {
   var allModifiers = [];
-
   if (chord.input.parsableDescriptor) {
     allModifiers = getModifiers(chord);
   }
-
   chord.input.modifiers = allModifiers;
   chord.normalized.intervals = getIntervals(allModifiers, altIntervals);
   chord.normalized.semitones = getSemitones(chord.normalized.intervals);
   chord.normalized.intents = getIntents(allModifiers);
   return chord;
 }
-
 function getModifiers(chord) {
   var parsableDescriptor = chord.input.parsableDescriptor;
   var modifiers = [];
@@ -7819,56 +7640,44 @@ function getModifiers(chord) {
   var descriptorMatches = parsableDescriptor.match(descriptorRegex);
   var remainingChars = parsableDescriptor;
   var allModifiersId;
-
   if (descriptorMatches) {
     descriptorMatches.forEach(function (match) {
       allModifiersId = allSymbols[match];
-
       if (!Array.isArray(allModifiersId)) {
         allModifiersId = [allModifiersId];
       }
-
       allModifiersId.forEach(function (modifierId) {
         if (modifiers.includes(modifierId)) {
           return;
         }
-
         modifiers.push(modifierId);
         remainingChars = remainingChars.replace(match, '');
       });
     });
   }
-
   if (modifiers.length === 0) {
     throw new NoSymbolFoundError(chord);
   }
-
   if (remainingChars.trim().length > 0) {
     throw new InvalidModifierError(chord, remainingChars);
   }
-
   return modifiers;
 }
-
 function getIntervals(allModifiers, altIntervals) {
   if (allModifiers.includes(modifiers.power)) {
     return ['1', '5'];
   } else if (allModifiers.includes(modifiers.bass)) {
     return ['1'];
   }
-
   return uniq_default()(['1'].concat(parseDescriptor_toConsumableArray(getThird(allModifiers)), parseDescriptor_toConsumableArray(getFourth(allModifiers)), parseDescriptor_toConsumableArray(getFifths(allModifiers, altIntervals)), parseDescriptor_toConsumableArray(getSixth(allModifiers)), parseDescriptor_toConsumableArray(getSevenths(allModifiers)), parseDescriptor_toConsumableArray(getNinths(allModifiers, altIntervals)), parseDescriptor_toConsumableArray(getElevenths(allModifiers, altIntervals)), parseDescriptor_toConsumableArray(getThirteenths(allModifiers, altIntervals)))).sort(function (a, b) {
     return intervalsToSemitones[a] - intervalsToSemitones[b];
   });
 }
-
 function getThird(allModifiers) {
   var third = [];
-
   if (allModifiers.includes(modifiers.omit3)) {
     return [];
   }
-
   if (!hasOneOf(allModifiers, [modifiers.sus, modifiers.sus2])) {
     if (!hasMajorIntent(allModifiers)) {
       third.push('b3');
@@ -7876,67 +7685,49 @@ function getThird(allModifiers) {
       third.push('3');
     }
   }
-
   if (allModifiers.includes(modifiers.add3)) {
     third.push('3');
   }
-
   return third;
 }
-
 function getFourth(allModifiers) {
   var fourth = [];
-
   if (hasOneOf(allModifiers, [modifiers.sus, modifiers.add4])) {
     fourth.push('4');
   }
-
   return fourth;
 }
-
 function getFifths(allModifiers, altIntervals) {
   var fifths = [];
-
   if (allModifiers.includes(modifiers.omit5)) {
     return [];
   }
-
   if (hasOneOf(allModifiers, [modifiers.dim, modifiers.halfDim, modifiers.fifthFlat]) || shouldAlter(allModifiers, altIntervals, 'b5')) {
     fifths.push('b5');
   }
-
   if (hasOneOf(allModifiers, [modifiers.aug, modifiers.fifthSharp]) || shouldAlter(allModifiers, altIntervals, '#5')) {
     fifths.push('#5');
   }
-
   if (!fifths.length && !allModifiers.includes(modifiers.thirteenthFlat)) {
     fifths.push('5');
   }
-
   return fifths;
 }
-
 function getSixth(allModifiers) {
   var sixth = [];
-
   if (hasOneOf(allModifiers, [modifiers.addb6])) {
     sixth.push('b6');
   }
-
   if (hasOneOf(allModifiers, [modifiers.add6, modifiers.add69]) && !isExtended(allModifiers) && !hasOneOf(allModifiers, [modifiers.halfDim])) {
     sixth.push('6');
   }
-
   return sixth;
 }
-
 function getSevenths(allModifiers) {
   var sevenths = [];
-
   if (hasOneOf(allModifiers, [modifiers.alt])) {
     sevenths.push('b7');
   }
-
   if (hasOneOf(allModifiers, [modifiers.seventh, modifiers.halfDim])) {
     if (allModifiers.includes(modifiers.dim)) {
       sevenths.push('bb7');
@@ -7948,96 +7739,75 @@ function getSevenths(allModifiers) {
   } else if (hasOneOf(allModifiers, [modifiers.ninth, modifiers.eleventh, modifiers.thirteenth])) {
     sevenths.push(getMinorOrMajorSeventh(allModifiers));
   }
-
   if (allModifiers.includes(modifiers.add7)) {
     sevenths.push('7');
   }
-
   return sevenths;
 }
-
 function getMinorOrMajorSeventh(allModifiers) {
   return allModifiers.includes(modifiers.ma) ? '7' : 'b7';
 }
-
 function getNinths(allModifiers, altIntervals) {
   var ninth = [];
-
   if (hasOneOf(allModifiers, [modifiers.add69, modifiers.ninth, modifiers.eleventh, modifiers.thirteenth]) && hasNoneOf(allModifiers, [modifiers.ninthFlat, modifiers.ninthSharp])) {
     ninth.push('9');
   }
-
   if (hasOneOf(allModifiers, [modifiers.sus2, modifiers.add9])) {
     ninth.push('9');
   }
-
   if (hasOneOf(allModifiers, [modifiers.ninthFlat]) || shouldAlter(allModifiers, altIntervals, 'b9')) {
     ninth.push('b9');
   }
-
   if (hasOneOf(allModifiers, [modifiers.ninthSharp]) || shouldAlter(allModifiers, altIntervals, '#9')) {
     ninth.push('#9');
   }
-
   return ninth;
 }
-
 function getElevenths(allModifiers, altIntervals) {
   var elevenths = [];
-
   if (hasOneOf(allModifiers, [modifiers.thirteenth]) && !hasMajorIntent(allModifiers)) {
     elevenths.push('11');
   } else if (hasOneOf(allModifiers, [modifiers.eleventh, modifiers.add11])) {
     elevenths.push('11');
   }
-
   if (hasOneOf(allModifiers, [modifiers.eleventhSharp]) || shouldAlter(allModifiers, altIntervals, '#11')) {
     elevenths.push('#11');
   }
-
   return elevenths;
 }
-
 function getThirteenths(allModifiers, altIntervals) {
   var thirteenths = [];
-
   if (hasOneOf(allModifiers, [modifiers.add13, modifiers.thirteenth]) || hasOneOf(allModifiers, [modifiers.add6, modifiers.add69]) && isExtended(allModifiers) || hasOneOf(allModifiers, [modifiers.add6, modifiers.add69]) && hasOneOf(allModifiers, [modifiers.halfDim])) {
     thirteenths.push('13');
   }
-
   if (hasOneOf(allModifiers, [modifiers.thirteenthFlat]) || shouldAlter(allModifiers, altIntervals, 'b13')) {
     thirteenths.push('b13');
   }
-
   return thirteenths;
 }
-
 function shouldAlter(allModifiers, altIntervals, interval) {
   return allModifiers.includes(modifiers.alt) && altIntervals.includes(interval);
 }
-
 function hasMajorIntent(allModifiers) {
   return hasNoneOf(allModifiers, [modifiers.mi, modifiers.dim, modifiers.dim7, modifiers.halfDim]);
 }
-
 function isExtended(allModifiers) {
   return hasOneOf(allModifiers, [modifiers.seventh, modifiers.ninth, modifiers.eleventh, modifiers.thirteenth]);
-} // Based on https://stackoverflow.com/a/6969486
+}
 
-
+// Based on https://stackoverflow.com/a/6969486
 function escapeRegex(string) {
   return string.replace(/[.\-*+?^${}()|[\]\\]/g, '\\$&');
 }
-
 function getSemitones(allIntervals) {
   return allIntervals.map(function (interval) {
     return intervalsToSemitones[interval];
   }).sort(function (a, b) {
     return a - b;
   });
-} // intents will be used later at formatting for disambiguation of some potentially confusing cases
+}
 
-
+// intents will be used later at formatting for disambiguation of some potentially confusing cases
 function getIntents(allModifiers) {
   return {
     major: hasMajorIntent(allModifiers),
@@ -8047,15 +7817,10 @@ function getIntents(allModifiers) {
 }
 ;// CONCATENATED MODULE: ./src/parser/chordParserFactory.js
 function chordParserFactory_toConsumableArray(arr) { return chordParserFactory_arrayWithoutHoles(arr) || chordParserFactory_iterableToArray(arr) || chordParserFactory_unsupportedIterableToArray(arr) || chordParserFactory_nonIterableSpread(); }
-
 function chordParserFactory_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
 function chordParserFactory_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return chordParserFactory_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return chordParserFactory_arrayLikeToArray(o, minLen); }
-
 function chordParserFactory_iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
-
 function chordParserFactory_arrayWithoutHoles(arr) { if (Array.isArray(arr)) return chordParserFactory_arrayLikeToArray(arr); }
-
 function chordParserFactory_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 
@@ -8078,51 +7843,44 @@ function chordParserFactory_arrayLikeToArray(arr, len) { if (len == null || len 
  * @param {ParserConfiguration} [parserConfiguration]
  * @returns {function(String): Chord}
  */
-
 function chordParserFactory() {
   var parserConfiguration = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var allAltIntervals = ['b5', '#5', 'b9', '#9', '#11', 'b13'];
   var allNotationSystems = ['english', 'german', 'latin'];
   var _parserConfiguration$ = parserConfiguration.notationSystems,
-      notationSystems = _parserConfiguration$ === void 0 ? cloneDeep_default()(allNotationSystems) : _parserConfiguration$,
-      _parserConfiguration$2 = parserConfiguration.altIntervals,
-      altIntervals = _parserConfiguration$2 === void 0 ? cloneDeep_default()(allAltIntervals) : _parserConfiguration$2,
-      _parserConfiguration$3 = parserConfiguration.customFilters,
-      customFilters = _parserConfiguration$3 === void 0 ? [] : _parserConfiguration$3;
+    notationSystems = _parserConfiguration$ === void 0 ? cloneDeep_default()(allNotationSystems) : _parserConfiguration$,
+    _parserConfiguration$2 = parserConfiguration.altIntervals,
+    altIntervals = _parserConfiguration$2 === void 0 ? cloneDeep_default()(allAltIntervals) : _parserConfiguration$2,
+    _parserConfiguration$3 = parserConfiguration.customFilters,
+    customFilters = _parserConfiguration$3 === void 0 ? [] : _parserConfiguration$3;
   checkAltIntervals(altIntervals, allAltIntervals);
   checkNotationSystems(notationSystems, allNotationSystems);
   helpers_checkCustomFilters(customFilters);
   return parseChord;
+
   /**
    * Convert an input string into an abstract chord structure
    * @param {String} symbol - the chord symbol candidate
    * @returns {Chord|Object} A chord object if the given string is successfully parsed. An object with an `error` property otherwise.
    */
-
   function parseChord(symbol) {
     var allErrors = [];
-
     if (!isInputValid(symbol)) {
       var e = new InvalidInputError();
       allErrors.push(formatError(e));
     }
-
     var allVariantsPerGroupCopy = cloneDeep_default()(allVariantsPerGroup).filter(function (variantsGroup) {
       return notationSystems.includes(variantsGroup.name);
     });
-
     var chord;
     var allFilters;
     var variants;
-
     if (!allErrors.length) {
       while (allVariantsPerGroupCopy.length && !chord) {
         variants = allVariantsPerGroupCopy.shift();
         allFilters = [initChord.bind(null, parserConfiguration), parseBase.bind(null, variants.notes), getParsableDescriptor, parseDescriptor.bind(null, altIntervals), checkIntervalsConsistency, normalizeNotes, normalizeDescriptor, formatSymbolParts, formatSymbol, nameIndividualChordNotes].concat(chordParserFactory_toConsumableArray(customFilters));
-
         try {
           chord = chain(allFilters, symbol);
-
           if (chord) {
             chord.input.notationSystem = variants.name;
           } else {
@@ -8133,46 +7891,37 @@ function chordParserFactory() {
         }
       }
     }
-
     return chord ? chord : {
       error: allErrors
     };
   }
 }
-
 function checkAltIntervals(altIntervals, allAltIntervals) {
   checkArray('altIntervals', altIntervals, allAltIntervals, true);
 }
-
 function checkNotationSystems(notationSystems, allNotationSystems) {
   checkArray('notationSystems', notationSystems, allNotationSystems);
 }
-
 function checkArray(arrayName, arrayToTest, allowedValues, allowEmpty) {
   if (!Array.isArray(arrayToTest)) {
     throw new TypeError("'".concat(arrayName, "' should be an array"));
   }
-
   if (!allowEmpty && arrayToTest.length === 0) {
     throw new TypeError("'".concat(arrayName, "' cannot be empty"));
   }
-
   arrayToTest.forEach(function (system) {
     if (!allowedValues.includes(system)) {
       throw new TypeError("'".concat(system, "' is not a valid value for ").concat(arrayName));
     }
   });
 }
-
 function isInputValid(input) {
   return typeof input === 'string' && input.length > 0;
 }
-
 function getUnexpectedError(notationSystem) {
   var error = new UnexpectedError();
   return formatError(error, notationSystem);
 }
-
 function formatError(exceptionError, notationSystem) {
   return {
     type: exceptionError.name,
@@ -8181,20 +7930,16 @@ function formatError(exceptionError, notationSystem) {
     notationSystem: notationSystem
   };
 }
+
 /**
  * @module chordParserFactory
  * Expose the chordParserFactory() function
  */
-
-
 /* harmony default export */ const parser_chordParserFactory = (chordParserFactory);
 ;// CONCATENATED MODULE: ./src/renderer/filters/shortenNormalized.js
 function shortenNormalized_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
 function shortenNormalized_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? shortenNormalized_ownKeys(Object(source), !0).forEach(function (key) { shortenNormalized_defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : shortenNormalized_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-
 function shortenNormalized_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 
 var shortDescriptors = {
   sus2: 'sus2',
@@ -8206,15 +7951,14 @@ var shortDescriptors = {
   aug7: '7+',
   eleventh: '11'
 };
+
 /**
  * @param {Chord} chord
  * @returns {Chord}
  */
-
 function shortenNormalized(chord) {
   var descriptor;
   var chordChanges = chord.formatted.chordChanges;
-
   if (isSus2(chord)) {
     descriptor = shortDescriptors.sus2;
     chordChanges = [];
@@ -8226,12 +7970,10 @@ function shortenNormalized(chord) {
     chordChanges = [];
   } else {
     descriptor = chord.formatted.descriptor.replace('mi', shortDescriptors.mi).replace(/[m|M]a/, shortDescriptors.ma).replace('dim', shortDescriptors.dim);
-
     if (isEleventh(chord)) {
       descriptor = descriptor.replace(/7sus|9sus/, shortDescriptors.eleventh);
     }
   }
-
   chordChanges = chordChanges.map(function (change) {
     return change.replace(/[m|M]a/, shortDescriptors.ma).replace('omit', shortDescriptors.omit);
   });
@@ -8242,26 +7984,23 @@ function shortenNormalized(chord) {
     })
   });
 }
-
 function isSus2(chord) {
   return hasExactly(chord.normalized.intervals, ['1', '5', '9']);
 }
-
 function isAdd2(chord) {
   return hasExactly(chord.normalized.intervals, ['1', '3', '5', '9']);
 }
-
 function isAug7(chord) {
   return hasExactly(chord.normalized.intervals, ['1', '3', '#5', 'b7']);
 }
-
 function isEleventh(chord) {
   return chord.normalized.intents.eleventh;
 }
 // EXTERNAL MODULE: ./node_modules/lodash/difference.js
-var difference = __nested_webpack_require_155839__(1966);
-var difference_default = /*#__PURE__*/__nested_webpack_require_155839__.n(difference);
+var difference = __nested_webpack_require_155834__(1966);
+var difference_default = /*#__PURE__*/__nested_webpack_require_155834__.n(difference);
 ;// CONCATENATED MODULE: ./src/renderer/filters/simplify.js
+
 
 
 
@@ -8274,47 +8013,38 @@ var difference_default = /*#__PURE__*/__nested_webpack_require_155839__.n(differ
  * @param {('none'|'max'|'core')} level
  * @returns {Chord}
  */
-
 function simplify_simplify() {
   var level = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'none';
   var chord = arguments.length > 1 ? arguments[1] : undefined;
-
   if (level === 'none') {
     return chord;
   }
-
   var intervalsToRemove = {
     max: ['4', 'b5', '#5', '6', 'bb7', 'b7', '7', 'b9', '9', '#9', '11', '#11', 'b13', '13'],
     core: ['4', 'b9', '9', '#9', '11', '#11', 'b13', '13']
   };
-
   var intervals = difference_default()(chord.normalized.intervals, intervalsToRemove[level]);
-
   if (hasNoneOf(intervals, ['b3', '3'])) {
     intervals.push(chord.normalized.intents.major ? '3' : 'b3');
   }
-
   if (hasNoneOf(intervals, ['b5', '5', '#5'])) {
     intervals.push('5');
   }
-
   chord.normalized.intervals = intervals;
   chord.normalized.semitones = intervals.map(function (interval) {
     return intervalsToSemitones[interval];
   });
   chord.normalized.intents.eleventh = false;
   chord.normalized.intents.alt = false;
-
   if (level === 'max') {
     delete chord.normalized.bassNote;
   }
-
   var allFilters = [normalizeDescriptor, formatSymbolParts, nameIndividualChordNotes];
   return chain(allFilters, chord);
 }
 // EXTERNAL MODULE: ./node_modules/lodash/invert.js
-var invert = __nested_webpack_require_155839__(3137);
-var invert_default = /*#__PURE__*/__nested_webpack_require_155839__.n(invert);
+var invert = __nested_webpack_require_155834__(3137);
+var invert_default = /*#__PURE__*/__nested_webpack_require_155834__.n(invert);
 ;// CONCATENATED MODULE: ./src/renderer/filters/transpose.js
 
 
@@ -8326,35 +8056,29 @@ var sharpsToFlats = {
   'G#': 'Ab',
   'A#': 'Bb'
 };
-
 var flatsToSharps = invert_default()(sharpsToFlats);
-
-function transpose(transposeValue, useFlats, chord) {
+function transpose(transposeValue, accidentals, chord) {
   var _chord$normalized = chord.normalized,
-      rootNote = _chord$normalized.rootNote,
-      bassNote = _chord$normalized.bassNote;
+    rootNote = _chord$normalized.rootNote,
+    bassNote = _chord$normalized.bassNote;
   var rootSharp = convertToSharp(rootNote);
-  chord.normalized.rootNote = transposeNote(rootSharp, transposeValue, useFlats);
+  chord.normalized.rootNote = transposeNote(rootSharp, transposeValue, accidentals);
   chord.formatted.rootNote = chord.normalized.rootNote;
-
   if (bassNote) {
     var bassSharp = convertToSharp(bassNote);
-    chord.normalized.bassNote = transposeNote(bassSharp, transposeValue, useFlats);
+    chord.normalized.bassNote = transposeNote(bassSharp, transposeValue, accidentals);
     chord.formatted.bassNote = chord.normalized.bassNote;
   }
-
   return nameIndividualChordNotes(chord);
 }
-
-function transposeNote(note, value, useFlats) {
+function transposeNote(note, value, accidentals) {
   var noteIndex = transpose_notes.indexOf(note);
   var transposedIndex = noteIndex + value;
   var octaves = Math.floor(transposedIndex / 12);
   var correctedTransposedIndex = transposedIndex - octaves * 12;
   var transposed = transpose_notes[correctedTransposedIndex];
-  return useFlats ? sharpsToFlats[transposed] || transposed : transposed;
+  return accidentals === 'flat' ? sharpsToFlats[transposed] || transposed : transposed;
 }
-
 function convertToSharp(note) {
   return flatsToSharps[note] || note;
 }
@@ -8400,12 +8124,12 @@ var translationTables = {
   }
 };
 var allNotationSystems = Object.keys(translationTables);
+
 /**
  * @param {('auto'|'english'|'german'|'latin')} notationSystem
  * @param {Chord} chord
  * @returns {Chord|Null}
  */
-
 function convertNotationSystem() {
   var notationSystem = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'english';
   var chord = arguments.length > 1 ? arguments[1] : undefined;
@@ -8413,11 +8137,9 @@ function convertNotationSystem() {
   if (finalNotationSystem === 'english') return chord;
   if (!allNotationSystems.includes(finalNotationSystem)) return null;
   chord.formatted.rootNote = translationTables[finalNotationSystem][chord.formatted.rootNote];
-
   if (chord.formatted.bassNote) {
     chord.formatted.bassNote = translationTables[finalNotationSystem][chord.formatted.bassNote];
   }
-
   return chord;
 }
 ;// CONCATENATED MODULE: ./src/renderer/printer/text.js
@@ -8432,6 +8154,7 @@ function textPrinter(chord) {
 
 
 
+
 /**
  * This printer returns a `chord` object reflecting the applied rendering filters. This object is very close to what would
  * be obtained by re-parsing the rendered chord.
@@ -8442,14 +8165,12 @@ function textPrinter(chord) {
  * @param {Chord} chord
  * @returns {Chord}
  */
-
 function rawPrinter(chord) {
   // make sure the chord can be re-parsed, whichever notation system was used for the rendering
   delete chord.parserConfiguration.notationSystems;
+  var cloned = cloneDeep_default()(chord);
 
-  var cloned = cloneDeep_default()(chord); // Re-parse the rendered chord to get the 'input' property right
-
-
+  // Re-parse the rendered chord to get the 'input' property right
   var textPrinted = textPrinter(chord);
   var parseChord = parser_chordParserFactory(chord.parserConfiguration);
   var reParsed = parseChord(textPrinted);
@@ -8458,17 +8179,11 @@ function rawPrinter(chord) {
 }
 ;// CONCATENATED MODULE: ./src/renderer/chordRendererFactory.js
 function chordRendererFactory_typeof(obj) { "@babel/helpers - typeof"; return chordRendererFactory_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, chordRendererFactory_typeof(obj); }
-
 function chordRendererFactory_toConsumableArray(arr) { return chordRendererFactory_arrayWithoutHoles(arr) || chordRendererFactory_iterableToArray(arr) || chordRendererFactory_unsupportedIterableToArray(arr) || chordRendererFactory_nonIterableSpread(); }
-
 function chordRendererFactory_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
 function chordRendererFactory_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return chordRendererFactory_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return chordRendererFactory_arrayLikeToArray(o, minLen); }
-
 function chordRendererFactory_iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
-
 function chordRendererFactory_arrayWithoutHoles(arr) { if (Array.isArray(arr)) return chordRendererFactory_arrayLikeToArray(arr); }
-
 function chordRendererFactory_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 
@@ -8486,68 +8201,57 @@ function chordRendererFactory_arrayLikeToArray(arr, len) { if (len == null || le
  * @param {RendererConfiguration} [rendererConfiguration]
  * @returns {function(Chord): String}
  */
-
 function chordRendererFactory() {
   var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-      _ref$useShortNamings = _ref.useShortNamings,
-      useShortNamings = _ref$useShortNamings === void 0 ? false : _ref$useShortNamings,
-      _ref$simplify = _ref.simplify,
-      simplify = _ref$simplify === void 0 ? 'none' : _ref$simplify,
-      _ref$transposeValue = _ref.transposeValue,
-      transposeValue = _ref$transposeValue === void 0 ? 0 : _ref$transposeValue,
-      _ref$harmonizeAcciden = _ref.harmonizeAccidentals,
-      harmonizeAccidentals = _ref$harmonizeAcciden === void 0 ? false : _ref$harmonizeAcciden,
-      _ref$useFlats = _ref.useFlats,
-      useFlats = _ref$useFlats === void 0 ? false : _ref$useFlats,
-      _ref$printer = _ref.printer,
-      printer = _ref$printer === void 0 ? 'text' : _ref$printer,
-      _ref$notationSystem = _ref.notationSystem,
-      notationSystem = _ref$notationSystem === void 0 ? 'english' : _ref$notationSystem,
-      _ref$customFilters = _ref.customFilters,
-      customFilters = _ref$customFilters === void 0 ? [] : _ref$customFilters;
-
+    _ref$accidentals = _ref.accidentals,
+    accidentals = _ref$accidentals === void 0 ? 'original' : _ref$accidentals,
+    _ref$customFilters = _ref.customFilters,
+    customFilters = _ref$customFilters === void 0 ? [] : _ref$customFilters,
+    _ref$notationSystem = _ref.notationSystem,
+    notationSystem = _ref$notationSystem === void 0 ? 'english' : _ref$notationSystem,
+    _ref$printer = _ref.printer,
+    printer = _ref$printer === void 0 ? 'text' : _ref$printer,
+    _ref$simplify = _ref.simplify,
+    simplify = _ref$simplify === void 0 ? 'none' : _ref$simplify,
+    _ref$transposeValue = _ref.transposeValue,
+    transposeValue = _ref$transposeValue === void 0 ? 0 : _ref$transposeValue,
+    _ref$useShortNamings = _ref.useShortNamings,
+    useShortNamings = _ref$useShortNamings === void 0 ? false : _ref$useShortNamings;
   helpers_checkCustomFilters(customFilters);
   var allFilters = [];
-
   if (['max', 'core'].includes(simplify)) {
     allFilters.push(simplify_simplify.bind(null, simplify));
   }
-
-  if (harmonizeAccidentals || transposeValue !== 0) {
-    allFilters.push(transpose.bind(null, transposeValue, useFlats));
+  if (accidentals !== 'original' || transposeValue !== 0) {
+    allFilters.push(transpose.bind(null, transposeValue, accidentals));
   }
-
   if (useShortNamings) {
     allFilters.push(shortenNormalized);
   }
-
   allFilters.push.apply(allFilters, [convertNotationSystem.bind(null, notationSystem), formatSymbol].concat(chordRendererFactory_toConsumableArray(customFilters)));
   return renderChord;
+
   /**
    * Render a chord structure
    * @param {Chord} chord - the chord structure to render
    * @returns {String|Chord} output depends on the selected printer: string for text printer (default), Chord for raw printer
    */
-
   function renderChord(chord) {
     if (!isValidChord(chord)) {
       return null;
     }
-
     var filteredChord = chain(allFilters, cloneDeep_default()(chord));
     return printer === 'raw' ? rawPrinter(filteredChord) : textPrinter(filteredChord);
   }
 }
-
 var isValidChord = function isValidChord(chord) {
   return chord && chordRendererFactory_typeof(chord) === 'object' && !chord.error && chord.input;
 };
+
 /**
  * @module chordRendererFactory
  * Expose the chordRendererFactory() function
  **/
-
-
 /* harmony default export */ const renderer_chordRendererFactory = (chordRendererFactory);
 ;// CONCATENATED MODULE: ./src/index.js
 
@@ -10275,15 +9979,15 @@ var isValidChord = function isValidChord(chord) {
 	if(true)
 		module.exports = factory();
 	else {}
-})(typeof self !== 'undefined' ? self : this, function() {
+})(typeof self !== 'undefined' ? self : this, () => {
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
 /***/ 8552:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_546__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_541__) => {
 
-var getNative = __nested_webpack_require_546__(852),
-    root = __nested_webpack_require_546__(5639);
+var getNative = __nested_webpack_require_541__(852),
+    root = __nested_webpack_require_541__(5639);
 
 /* Built-in method references that are verified to be native. */
 var DataView = getNative(root, 'DataView');
@@ -10294,13 +9998,13 @@ module.exports = DataView;
 /***/ }),
 
 /***/ 1989:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_858__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_853__) => {
 
-var hashClear = __nested_webpack_require_858__(1789),
-    hashDelete = __nested_webpack_require_858__(401),
-    hashGet = __nested_webpack_require_858__(7667),
-    hashHas = __nested_webpack_require_858__(1327),
-    hashSet = __nested_webpack_require_858__(1866);
+var hashClear = __nested_webpack_require_853__(1789),
+    hashDelete = __nested_webpack_require_853__(401),
+    hashGet = __nested_webpack_require_853__(7667),
+    hashHas = __nested_webpack_require_853__(1327),
+    hashSet = __nested_webpack_require_853__(1866);
 
 /**
  * Creates a hash object.
@@ -10333,13 +10037,13 @@ module.exports = Hash;
 /***/ }),
 
 /***/ 8407:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_1713__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_1708__) => {
 
-var listCacheClear = __nested_webpack_require_1713__(7040),
-    listCacheDelete = __nested_webpack_require_1713__(4125),
-    listCacheGet = __nested_webpack_require_1713__(2117),
-    listCacheHas = __nested_webpack_require_1713__(7518),
-    listCacheSet = __nested_webpack_require_1713__(4705);
+var listCacheClear = __nested_webpack_require_1708__(7040),
+    listCacheDelete = __nested_webpack_require_1708__(4125),
+    listCacheGet = __nested_webpack_require_1708__(2117),
+    listCacheHas = __nested_webpack_require_1708__(7518),
+    listCacheSet = __nested_webpack_require_1708__(4705);
 
 /**
  * Creates an list cache object.
@@ -10372,10 +10076,10 @@ module.exports = ListCache;
 /***/ }),
 
 /***/ 7071:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_2666__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_2661__) => {
 
-var getNative = __nested_webpack_require_2666__(852),
-    root = __nested_webpack_require_2666__(5639);
+var getNative = __nested_webpack_require_2661__(852),
+    root = __nested_webpack_require_2661__(5639);
 
 /* Built-in method references that are verified to be native. */
 var Map = getNative(root, 'Map');
@@ -10386,13 +10090,13 @@ module.exports = Map;
 /***/ }),
 
 /***/ 3369:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_2963__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_2958__) => {
 
-var mapCacheClear = __nested_webpack_require_2963__(4785),
-    mapCacheDelete = __nested_webpack_require_2963__(1285),
-    mapCacheGet = __nested_webpack_require_2963__(6000),
-    mapCacheHas = __nested_webpack_require_2963__(9916),
-    mapCacheSet = __nested_webpack_require_2963__(5265);
+var mapCacheClear = __nested_webpack_require_2958__(4785),
+    mapCacheDelete = __nested_webpack_require_2958__(1285),
+    mapCacheGet = __nested_webpack_require_2958__(6000),
+    mapCacheHas = __nested_webpack_require_2958__(9916),
+    mapCacheSet = __nested_webpack_require_2958__(5265);
 
 /**
  * Creates a map cache object to store key-value pairs.
@@ -10425,10 +10129,10 @@ module.exports = MapCache;
 /***/ }),
 
 /***/ 3818:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_3921__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_3916__) => {
 
-var getNative = __nested_webpack_require_3921__(852),
-    root = __nested_webpack_require_3921__(5639);
+var getNative = __nested_webpack_require_3916__(852),
+    root = __nested_webpack_require_3916__(5639);
 
 /* Built-in method references that are verified to be native. */
 var Promise = getNative(root, 'Promise');
@@ -10439,10 +10143,10 @@ module.exports = Promise;
 /***/ }),
 
 /***/ 8525:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_4230__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_4225__) => {
 
-var getNative = __nested_webpack_require_4230__(852),
-    root = __nested_webpack_require_4230__(5639);
+var getNative = __nested_webpack_require_4225__(852),
+    root = __nested_webpack_require_4225__(5639);
 
 /* Built-in method references that are verified to be native. */
 var Set = getNative(root, 'Set');
@@ -10453,11 +10157,11 @@ module.exports = Set;
 /***/ }),
 
 /***/ 8668:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_4527__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_4522__) => {
 
-var MapCache = __nested_webpack_require_4527__(3369),
-    setCacheAdd = __nested_webpack_require_4527__(619),
-    setCacheHas = __nested_webpack_require_4527__(2385);
+var MapCache = __nested_webpack_require_4522__(3369),
+    setCacheAdd = __nested_webpack_require_4522__(619),
+    setCacheHas = __nested_webpack_require_4522__(2385);
 
 /**
  *
@@ -10487,14 +10191,14 @@ module.exports = SetCache;
 /***/ }),
 
 /***/ 6384:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_5255__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_5250__) => {
 
-var ListCache = __nested_webpack_require_5255__(8407),
-    stackClear = __nested_webpack_require_5255__(7465),
-    stackDelete = __nested_webpack_require_5255__(3779),
-    stackGet = __nested_webpack_require_5255__(7599),
-    stackHas = __nested_webpack_require_5255__(4758),
-    stackSet = __nested_webpack_require_5255__(4309);
+var ListCache = __nested_webpack_require_5250__(8407),
+    stackClear = __nested_webpack_require_5250__(7465),
+    stackDelete = __nested_webpack_require_5250__(3779),
+    stackGet = __nested_webpack_require_5250__(7599),
+    stackHas = __nested_webpack_require_5250__(4758),
+    stackSet = __nested_webpack_require_5250__(4309);
 
 /**
  * Creates a stack cache object to store key-value pairs.
@@ -10521,9 +10225,9 @@ module.exports = Stack;
 /***/ }),
 
 /***/ 2705:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_6095__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_6090__) => {
 
-var root = __nested_webpack_require_6095__(5639);
+var root = __nested_webpack_require_6090__(5639);
 
 /** Built-in value references. */
 var Symbol = root.Symbol;
@@ -10534,9 +10238,9 @@ module.exports = Symbol;
 /***/ }),
 
 /***/ 1149:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_6314__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_6309__) => {
 
-var root = __nested_webpack_require_6314__(5639);
+var root = __nested_webpack_require_6309__(5639);
 
 /** Built-in value references. */
 var Uint8Array = root.Uint8Array;
@@ -10547,10 +10251,10 @@ module.exports = Uint8Array;
 /***/ }),
 
 /***/ 577:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_6544__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_6539__) => {
 
-var getNative = __nested_webpack_require_6544__(852),
-    root = __nested_webpack_require_6544__(5639);
+var getNative = __nested_webpack_require_6539__(852),
+    root = __nested_webpack_require_6539__(5639);
 
 /* Built-in method references that are verified to be native. */
 var WeakMap = getNative(root, 'WeakMap');
@@ -10650,9 +10354,9 @@ module.exports = arrayFilter;
 /***/ }),
 
 /***/ 7443:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_8877__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_8872__) => {
 
-var baseIndexOf = __nested_webpack_require_8877__(2118);
+var baseIndexOf = __nested_webpack_require_8872__(2118);
 
 /**
  * A specialized version of `_.includes` for arrays without support for
@@ -10703,14 +10407,14 @@ module.exports = arrayIncludesWith;
 /***/ }),
 
 /***/ 4636:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_10159__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_10154__) => {
 
-var baseTimes = __nested_webpack_require_10159__(2545),
-    isArguments = __nested_webpack_require_10159__(5694),
-    isArray = __nested_webpack_require_10159__(1469),
-    isBuffer = __nested_webpack_require_10159__(4144),
-    isIndex = __nested_webpack_require_10159__(5776),
-    isTypedArray = __nested_webpack_require_10159__(6719);
+var baseTimes = __nested_webpack_require_10154__(2545),
+    isArguments = __nested_webpack_require_10154__(5694),
+    isArray = __nested_webpack_require_10154__(1469),
+    isBuffer = __nested_webpack_require_10154__(4144),
+    isIndex = __nested_webpack_require_10154__(5776),
+    isTypedArray = __nested_webpack_require_10154__(6719);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -10844,10 +10548,10 @@ module.exports = arraySome;
 /***/ }),
 
 /***/ 4865:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_13775__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_13770__) => {
 
-var baseAssignValue = __nested_webpack_require_13775__(9465),
-    eq = __nested_webpack_require_13775__(7813);
+var baseAssignValue = __nested_webpack_require_13770__(9465),
+    eq = __nested_webpack_require_13770__(7813);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -10879,9 +10583,9 @@ module.exports = assignValue;
 /***/ }),
 
 /***/ 8470:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_14774__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_14769__) => {
 
-var eq = __nested_webpack_require_14774__(7813);
+var eq = __nested_webpack_require_14769__(7813);
 
 /**
  * Gets the index at which the `key` is found in `array` of key-value pairs.
@@ -10907,10 +10611,10 @@ module.exports = assocIndexOf;
 /***/ }),
 
 /***/ 4037:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_15365__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_15360__) => {
 
-var copyObject = __nested_webpack_require_15365__(8363),
-    keys = __nested_webpack_require_15365__(3674);
+var copyObject = __nested_webpack_require_15360__(8363),
+    keys = __nested_webpack_require_15360__(3674);
 
 /**
  * The base implementation of `_.assign` without support for multiple sources
@@ -10931,10 +10635,10 @@ module.exports = baseAssign;
 /***/ }),
 
 /***/ 3886:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_15938__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_15933__) => {
 
-var copyObject = __nested_webpack_require_15938__(8363),
-    keysIn = __nested_webpack_require_15938__(1704);
+var copyObject = __nested_webpack_require_15933__(8363),
+    keysIn = __nested_webpack_require_15933__(1704);
 
 /**
  * The base implementation of `_.assignIn` without support for multiple sources
@@ -10955,9 +10659,9 @@ module.exports = baseAssignIn;
 /***/ }),
 
 /***/ 9465:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_16521__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_16516__) => {
 
-var defineProperty = __nested_webpack_require_16521__(8777);
+var defineProperty = __nested_webpack_require_16516__(8777);
 
 /**
  * The base implementation of `assignValue` and `assignMergeValue` without
@@ -10987,30 +10691,30 @@ module.exports = baseAssignValue;
 /***/ }),
 
 /***/ 5990:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_17237__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_17232__) => {
 
-var Stack = __nested_webpack_require_17237__(6384),
-    arrayEach = __nested_webpack_require_17237__(7412),
-    assignValue = __nested_webpack_require_17237__(4865),
-    baseAssign = __nested_webpack_require_17237__(4037),
-    baseAssignIn = __nested_webpack_require_17237__(3886),
-    cloneBuffer = __nested_webpack_require_17237__(4626),
-    copyArray = __nested_webpack_require_17237__(278),
-    copySymbols = __nested_webpack_require_17237__(8805),
-    copySymbolsIn = __nested_webpack_require_17237__(1911),
-    getAllKeys = __nested_webpack_require_17237__(8234),
-    getAllKeysIn = __nested_webpack_require_17237__(6904),
-    getTag = __nested_webpack_require_17237__(4160),
-    initCloneArray = __nested_webpack_require_17237__(3824),
-    initCloneByTag = __nested_webpack_require_17237__(9148),
-    initCloneObject = __nested_webpack_require_17237__(8517),
-    isArray = __nested_webpack_require_17237__(1469),
-    isBuffer = __nested_webpack_require_17237__(4144),
-    isMap = __nested_webpack_require_17237__(6688),
-    isObject = __nested_webpack_require_17237__(3218),
-    isSet = __nested_webpack_require_17237__(2928),
-    keys = __nested_webpack_require_17237__(3674),
-    keysIn = __nested_webpack_require_17237__(1704);
+var Stack = __nested_webpack_require_17232__(6384),
+    arrayEach = __nested_webpack_require_17232__(7412),
+    assignValue = __nested_webpack_require_17232__(4865),
+    baseAssign = __nested_webpack_require_17232__(4037),
+    baseAssignIn = __nested_webpack_require_17232__(3886),
+    cloneBuffer = __nested_webpack_require_17232__(4626),
+    copyArray = __nested_webpack_require_17232__(278),
+    copySymbols = __nested_webpack_require_17232__(8805),
+    copySymbolsIn = __nested_webpack_require_17232__(1911),
+    getAllKeys = __nested_webpack_require_17232__(8234),
+    getAllKeysIn = __nested_webpack_require_17232__(6904),
+    getTag = __nested_webpack_require_17232__(4160),
+    initCloneArray = __nested_webpack_require_17232__(3824),
+    initCloneByTag = __nested_webpack_require_17232__(9148),
+    initCloneObject = __nested_webpack_require_17232__(8517),
+    isArray = __nested_webpack_require_17232__(1469),
+    isBuffer = __nested_webpack_require_17232__(4144),
+    isMap = __nested_webpack_require_17232__(6688),
+    isObject = __nested_webpack_require_17232__(3218),
+    isSet = __nested_webpack_require_17232__(2928),
+    keys = __nested_webpack_require_17232__(3674),
+    keysIn = __nested_webpack_require_17232__(1704);
 
 /** Used to compose bitmasks for cloning. */
 var CLONE_DEEP_FLAG = 1,
@@ -11160,9 +10864,9 @@ module.exports = baseClone;
 /***/ }),
 
 /***/ 3118:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_22983__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_22978__) => {
 
-var isObject = __nested_webpack_require_22983__(3218);
+var isObject = __nested_webpack_require_22978__(3218);
 
 /** Built-in value references. */
 var objectCreate = Object.create;
@@ -11197,14 +10901,14 @@ module.exports = baseCreate;
 /***/ }),
 
 /***/ 731:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_23766__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_23761__) => {
 
-var SetCache = __nested_webpack_require_23766__(8668),
-    arrayIncludes = __nested_webpack_require_23766__(7443),
-    arrayIncludesWith = __nested_webpack_require_23766__(1196),
-    arrayMap = __nested_webpack_require_23766__(9932),
-    baseUnary = __nested_webpack_require_23766__(1717),
-    cacheHas = __nested_webpack_require_23766__(4757);
+var SetCache = __nested_webpack_require_23761__(8668),
+    arrayIncludes = __nested_webpack_require_23761__(7443),
+    arrayIncludesWith = __nested_webpack_require_23761__(1196),
+    arrayMap = __nested_webpack_require_23761__(9932),
+    baseUnary = __nested_webpack_require_23761__(1717),
+    cacheHas = __nested_webpack_require_23761__(4757);
 
 /** Used as the size to enable large array optimizations. */
 var LARGE_ARRAY_SIZE = 200;
@@ -11302,10 +11006,10 @@ module.exports = baseFindIndex;
 /***/ }),
 
 /***/ 1078:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_26593__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_26588__) => {
 
-var arrayPush = __nested_webpack_require_26593__(2488),
-    isFlattenable = __nested_webpack_require_26593__(7285);
+var arrayPush = __nested_webpack_require_26588__(2488),
+    isFlattenable = __nested_webpack_require_26588__(7285);
 
 /**
  * The base implementation of `_.flatten` with support for restricting flattening.
@@ -11347,9 +11051,9 @@ module.exports = baseFlatten;
 /***/ }),
 
 /***/ 8483:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_27888__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_27883__) => {
 
-var createBaseFor = __nested_webpack_require_27888__(5063);
+var createBaseFor = __nested_webpack_require_27883__(5063);
 
 /**
  * The base implementation of `baseForOwn` which iterates over `object`
@@ -11370,10 +11074,10 @@ module.exports = baseFor;
 /***/ }),
 
 /***/ 7816:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_28573__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_28568__) => {
 
-var baseFor = __nested_webpack_require_28573__(8483),
-    keys = __nested_webpack_require_28573__(3674);
+var baseFor = __nested_webpack_require_28568__(8483),
+    keys = __nested_webpack_require_28568__(3674);
 
 /**
  * The base implementation of `_.forOwn` without support for iteratee shorthands.
@@ -11393,10 +11097,10 @@ module.exports = baseForOwn;
 /***/ }),
 
 /***/ 7786:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_29135__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_29130__) => {
 
-var castPath = __nested_webpack_require_29135__(1811),
-    toKey = __nested_webpack_require_29135__(327);
+var castPath = __nested_webpack_require_29130__(1811),
+    toKey = __nested_webpack_require_29130__(327);
 
 /**
  * The base implementation of `_.get` without support for default values.
@@ -11424,10 +11128,10 @@ module.exports = baseGet;
 /***/ }),
 
 /***/ 8866:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_29853__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_29848__) => {
 
-var arrayPush = __nested_webpack_require_29853__(2488),
-    isArray = __nested_webpack_require_29853__(1469);
+var arrayPush = __nested_webpack_require_29848__(2488),
+    isArray = __nested_webpack_require_29848__(1469);
 
 /**
  * The base implementation of `getAllKeys` and `getAllKeysIn` which uses
@@ -11451,11 +11155,11 @@ module.exports = baseGetAllKeys;
 /***/ }),
 
 /***/ 4239:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_30693__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_30688__) => {
 
-var Symbol = __nested_webpack_require_30693__(2705),
-    getRawTag = __nested_webpack_require_30693__(9607),
-    objectToString = __nested_webpack_require_30693__(2333);
+var Symbol = __nested_webpack_require_30688__(2705),
+    getRawTag = __nested_webpack_require_30688__(9607),
+    objectToString = __nested_webpack_require_30688__(2333);
 
 /** `Object#toString` result references. */
 var nullTag = '[object Null]',
@@ -11506,11 +11210,11 @@ module.exports = baseHasIn;
 /***/ }),
 
 /***/ 2118:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_32002__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_31997__) => {
 
-var baseFindIndex = __nested_webpack_require_32002__(1848),
-    baseIsNaN = __nested_webpack_require_32002__(2722),
-    strictIndexOf = __nested_webpack_require_32002__(2351);
+var baseFindIndex = __nested_webpack_require_31997__(1848),
+    baseIsNaN = __nested_webpack_require_31997__(2722),
+    strictIndexOf = __nested_webpack_require_31997__(2351);
 
 /**
  * The base implementation of `_.indexOf` without `fromIndex` bounds checks.
@@ -11533,9 +11237,9 @@ module.exports = baseIndexOf;
 /***/ }),
 
 /***/ 8975:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_32753__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_32748__) => {
 
-var baseForOwn = __nested_webpack_require_32753__(7816);
+var baseForOwn = __nested_webpack_require_32748__(7816);
 
 /**
  * The base implementation of `_.invert` and `_.invertBy` which inverts
@@ -11561,10 +11265,10 @@ module.exports = baseInverter;
 /***/ }),
 
 /***/ 9454:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_33584__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_33579__) => {
 
-var baseGetTag = __nested_webpack_require_33584__(4239),
-    isObjectLike = __nested_webpack_require_33584__(7005);
+var baseGetTag = __nested_webpack_require_33579__(4239),
+    isObjectLike = __nested_webpack_require_33579__(7005);
 
 /** `Object#toString` result references. */
 var argsTag = '[object Arguments]';
@@ -11586,10 +11290,10 @@ module.exports = baseIsArguments;
 /***/ }),
 
 /***/ 939:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_34166__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_34161__) => {
 
-var baseIsEqualDeep = __nested_webpack_require_34166__(2492),
-    isObjectLike = __nested_webpack_require_34166__(7005);
+var baseIsEqualDeep = __nested_webpack_require_34161__(2492),
+    isObjectLike = __nested_webpack_require_34161__(7005);
 
 /**
  * The base implementation of `_.isEqual` which supports partial comparisons
@@ -11621,16 +11325,16 @@ module.exports = baseIsEqual;
 /***/ }),
 
 /***/ 2492:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_35275__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_35270__) => {
 
-var Stack = __nested_webpack_require_35275__(6384),
-    equalArrays = __nested_webpack_require_35275__(7114),
-    equalByTag = __nested_webpack_require_35275__(8351),
-    equalObjects = __nested_webpack_require_35275__(6096),
-    getTag = __nested_webpack_require_35275__(4160),
-    isArray = __nested_webpack_require_35275__(1469),
-    isBuffer = __nested_webpack_require_35275__(4144),
-    isTypedArray = __nested_webpack_require_35275__(6719);
+var Stack = __nested_webpack_require_35270__(6384),
+    equalArrays = __nested_webpack_require_35270__(7114),
+    equalByTag = __nested_webpack_require_35270__(8351),
+    equalObjects = __nested_webpack_require_35270__(6096),
+    getTag = __nested_webpack_require_35270__(4160),
+    isArray = __nested_webpack_require_35270__(1469),
+    isBuffer = __nested_webpack_require_35270__(4144),
+    isTypedArray = __nested_webpack_require_35270__(6719);
 
 /** Used to compose bitmasks for value comparisons. */
 var COMPARE_PARTIAL_FLAG = 1;
@@ -11711,10 +11415,10 @@ module.exports = baseIsEqualDeep;
 /***/ }),
 
 /***/ 5588:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_38399__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_38394__) => {
 
-var getTag = __nested_webpack_require_38399__(4160),
-    isObjectLike = __nested_webpack_require_38399__(7005);
+var getTag = __nested_webpack_require_38394__(4160),
+    isObjectLike = __nested_webpack_require_38394__(7005);
 
 /** `Object#toString` result references. */
 var mapTag = '[object Map]';
@@ -11736,10 +11440,10 @@ module.exports = baseIsMap;
 /***/ }),
 
 /***/ 2958:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_38976__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_38971__) => {
 
-var Stack = __nested_webpack_require_38976__(6384),
-    baseIsEqual = __nested_webpack_require_38976__(939);
+var Stack = __nested_webpack_require_38971__(6384),
+    baseIsEqual = __nested_webpack_require_38971__(939);
 
 /** Used to compose bitmasks for value comparisons. */
 var COMPARE_PARTIAL_FLAG = 1,
@@ -11824,12 +11528,12 @@ module.exports = baseIsNaN;
 /***/ }),
 
 /***/ 8458:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_41183__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_41178__) => {
 
-var isFunction = __nested_webpack_require_41183__(3560),
-    isMasked = __nested_webpack_require_41183__(5346),
-    isObject = __nested_webpack_require_41183__(3218),
-    toSource = __nested_webpack_require_41183__(346);
+var isFunction = __nested_webpack_require_41178__(3560),
+    isMasked = __nested_webpack_require_41178__(5346),
+    isObject = __nested_webpack_require_41178__(3218),
+    toSource = __nested_webpack_require_41178__(346);
 
 /**
  * Used to match `RegExp`
@@ -11878,10 +11582,10 @@ module.exports = baseIsNative;
 /***/ }),
 
 /***/ 9221:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_42705__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_42700__) => {
 
-var getTag = __nested_webpack_require_42705__(4160),
-    isObjectLike = __nested_webpack_require_42705__(7005);
+var getTag = __nested_webpack_require_42700__(4160),
+    isObjectLike = __nested_webpack_require_42700__(7005);
 
 /** `Object#toString` result references. */
 var setTag = '[object Set]';
@@ -11903,11 +11607,11 @@ module.exports = baseIsSet;
 /***/ }),
 
 /***/ 8749:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_43282__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_43277__) => {
 
-var baseGetTag = __nested_webpack_require_43282__(4239),
-    isLength = __nested_webpack_require_43282__(1780),
-    isObjectLike = __nested_webpack_require_43282__(7005);
+var baseGetTag = __nested_webpack_require_43277__(4239),
+    isLength = __nested_webpack_require_43277__(1780),
+    isObjectLike = __nested_webpack_require_43277__(7005);
 
 /** `Object#toString` result references. */
 var argsTag = '[object Arguments]',
@@ -11970,13 +11674,13 @@ module.exports = baseIsTypedArray;
 /***/ }),
 
 /***/ 7206:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_45603__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_45598__) => {
 
-var baseMatches = __nested_webpack_require_45603__(1573),
-    baseMatchesProperty = __nested_webpack_require_45603__(6432),
-    identity = __nested_webpack_require_45603__(6557),
-    isArray = __nested_webpack_require_45603__(1469),
-    property = __nested_webpack_require_45603__(9601);
+var baseMatches = __nested_webpack_require_45598__(1573),
+    baseMatchesProperty = __nested_webpack_require_45598__(6432),
+    identity = __nested_webpack_require_45598__(6557),
+    isArray = __nested_webpack_require_45598__(1469),
+    property = __nested_webpack_require_45598__(9601);
 
 /**
  * The base implementation of `_.iteratee`.
@@ -12008,10 +11712,10 @@ module.exports = baseIteratee;
 /***/ }),
 
 /***/ 280:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_46596__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_46591__) => {
 
-var isPrototype = __nested_webpack_require_46596__(5726),
-    nativeKeys = __nested_webpack_require_46596__(6916);
+var isPrototype = __nested_webpack_require_46591__(5726),
+    nativeKeys = __nested_webpack_require_46591__(6916);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -12045,11 +11749,11 @@ module.exports = baseKeys;
 /***/ }),
 
 /***/ 313:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_47466__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_47461__) => {
 
-var isObject = __nested_webpack_require_47466__(3218),
-    isPrototype = __nested_webpack_require_47466__(5726),
-    nativeKeysIn = __nested_webpack_require_47466__(3498);
+var isObject = __nested_webpack_require_47461__(3218),
+    isPrototype = __nested_webpack_require_47461__(5726),
+    nativeKeysIn = __nested_webpack_require_47461__(3498);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -12085,11 +11789,11 @@ module.exports = baseKeysIn;
 /***/ }),
 
 /***/ 1573:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_48433__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_48428__) => {
 
-var baseIsMatch = __nested_webpack_require_48433__(2958),
-    getMatchData = __nested_webpack_require_48433__(1499),
-    matchesStrictComparable = __nested_webpack_require_48433__(2634);
+var baseIsMatch = __nested_webpack_require_48428__(2958),
+    getMatchData = __nested_webpack_require_48428__(1499),
+    matchesStrictComparable = __nested_webpack_require_48428__(2634);
 
 /**
  * The base implementation of `_.matches` which doesn't clone `source`.
@@ -12114,15 +11818,15 @@ module.exports = baseMatches;
 /***/ }),
 
 /***/ 6432:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_49224__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_49219__) => {
 
-var baseIsEqual = __nested_webpack_require_49224__(939),
-    get = __nested_webpack_require_49224__(7361),
-    hasIn = __nested_webpack_require_49224__(9095),
-    isKey = __nested_webpack_require_49224__(5403),
-    isStrictComparable = __nested_webpack_require_49224__(9162),
-    matchesStrictComparable = __nested_webpack_require_49224__(2634),
-    toKey = __nested_webpack_require_49224__(327);
+var baseIsEqual = __nested_webpack_require_49219__(939),
+    get = __nested_webpack_require_49219__(7361),
+    hasIn = __nested_webpack_require_49219__(9095),
+    isKey = __nested_webpack_require_49219__(5403),
+    isStrictComparable = __nested_webpack_require_49219__(9162),
+    matchesStrictComparable = __nested_webpack_require_49219__(2634),
+    toKey = __nested_webpack_require_49219__(327);
 
 /** Used to compose bitmasks for value comparisons. */
 var COMPARE_PARTIAL_FLAG = 1,
@@ -12175,9 +11879,9 @@ module.exports = baseProperty;
 /***/ }),
 
 /***/ 9152:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_50860__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_50855__) => {
 
-var baseGet = __nested_webpack_require_50860__(7786);
+var baseGet = __nested_webpack_require_50855__(7786);
 
 /**
  * A specialized version of `baseProperty` which supports deep paths.
@@ -12198,11 +11902,11 @@ module.exports = basePropertyDeep;
 /***/ }),
 
 /***/ 5976:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_51349__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_51344__) => {
 
-var identity = __nested_webpack_require_51349__(6557),
-    overRest = __nested_webpack_require_51349__(5357),
-    setToString = __nested_webpack_require_51349__(61);
+var identity = __nested_webpack_require_51344__(6557),
+    overRest = __nested_webpack_require_51344__(5357),
+    setToString = __nested_webpack_require_51344__(61);
 
 /**
  * The base implementation of `_.rest` which doesn't validate or coerce arguments.
@@ -12222,11 +11926,11 @@ module.exports = baseRest;
 /***/ }),
 
 /***/ 6560:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_52007__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_52002__) => {
 
-var constant = __nested_webpack_require_52007__(5703),
-    defineProperty = __nested_webpack_require_52007__(8777),
-    identity = __nested_webpack_require_52007__(6557);
+var constant = __nested_webpack_require_52002__(5703),
+    defineProperty = __nested_webpack_require_52002__(8777),
+    identity = __nested_webpack_require_52002__(6557);
 
 /**
  * The base implementation of `setToString` without support for hot loop shorting.
@@ -12278,12 +11982,12 @@ module.exports = baseTimes;
 /***/ }),
 
 /***/ 531:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_53297__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_53292__) => {
 
-var Symbol = __nested_webpack_require_53297__(2705),
-    arrayMap = __nested_webpack_require_53297__(9932),
-    isArray = __nested_webpack_require_53297__(1469),
-    isSymbol = __nested_webpack_require_53297__(3448);
+var Symbol = __nested_webpack_require_53292__(2705),
+    arrayMap = __nested_webpack_require_53292__(9932),
+    isArray = __nested_webpack_require_53292__(1469),
+    isSymbol = __nested_webpack_require_53292__(3448);
 
 /** Used as references for various `Number` constants. */
 var INFINITY = 1 / 0;
@@ -12322,9 +12026,9 @@ module.exports = baseToString;
 /***/ }),
 
 /***/ 7561:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_54562__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_54557__) => {
 
-var trimmedEndIndex = __nested_webpack_require_54562__(7990);
+var trimmedEndIndex = __nested_webpack_require_54557__(7990);
 
 /** Used to match leading whitespace. */
 var reTrimStart = /^\s+/;
@@ -12369,14 +12073,14 @@ module.exports = baseUnary;
 /***/ }),
 
 /***/ 5652:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_55475__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_55470__) => {
 
-var SetCache = __nested_webpack_require_55475__(8668),
-    arrayIncludes = __nested_webpack_require_55475__(7443),
-    arrayIncludesWith = __nested_webpack_require_55475__(1196),
-    cacheHas = __nested_webpack_require_55475__(4757),
-    createSet = __nested_webpack_require_55475__(3593),
-    setToArray = __nested_webpack_require_55475__(1814);
+var SetCache = __nested_webpack_require_55470__(8668),
+    arrayIncludes = __nested_webpack_require_55470__(7443),
+    arrayIncludesWith = __nested_webpack_require_55470__(1196),
+    cacheHas = __nested_webpack_require_55470__(4757),
+    createSet = __nested_webpack_require_55470__(3593),
+    setToArray = __nested_webpack_require_55470__(1814);
 
 /** Used as the size to enable large array optimizations. */
 var LARGE_ARRAY_SIZE = 200;
@@ -12468,12 +12172,12 @@ module.exports = cacheHas;
 /***/ }),
 
 /***/ 1811:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_57863__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_57858__) => {
 
-var isArray = __nested_webpack_require_57863__(1469),
-    isKey = __nested_webpack_require_57863__(5403),
-    stringToPath = __nested_webpack_require_57863__(5514),
-    toString = __nested_webpack_require_57863__(9833);
+var isArray = __nested_webpack_require_57858__(1469),
+    isKey = __nested_webpack_require_57858__(5403),
+    stringToPath = __nested_webpack_require_57858__(5514),
+    toString = __nested_webpack_require_57858__(9833);
 
 /**
  * Casts `value` to a path array if it's not one.
@@ -12496,9 +12200,9 @@ module.exports = castPath;
 /***/ }),
 
 /***/ 4318:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_58540__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_58535__) => {
 
-var Uint8Array = __nested_webpack_require_58540__(1149);
+var Uint8Array = __nested_webpack_require_58535__(1149);
 
 /**
  * Creates a clone of `arrayBuffer`.
@@ -12519,10 +12223,10 @@ module.exports = cloneArrayBuffer;
 /***/ }),
 
 /***/ 4626:
-/***/ ((module, exports, __nested_webpack_require_59067__) => {
+/***/ ((module, exports, __nested_webpack_require_59062__) => {
 
-/* module decorator */ module = __nested_webpack_require_59067__.nmd(module);
-var root = __nested_webpack_require_59067__(5639);
+/* module decorator */ module = __nested_webpack_require_59062__.nmd(module);
+var root = __nested_webpack_require_59062__(5639);
 
 /** Detect free variable `exports`. */
 var freeExports =   true && exports && !exports.nodeType && exports;
@@ -12562,9 +12266,9 @@ module.exports = cloneBuffer;
 /***/ }),
 
 /***/ 7157:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_60263__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_60258__) => {
 
-var cloneArrayBuffer = __nested_webpack_require_60263__(4318);
+var cloneArrayBuffer = __nested_webpack_require_60258__(4318);
 
 /**
  * Creates a clone of `dataView`.
@@ -12609,9 +12313,9 @@ module.exports = cloneRegExp;
 /***/ }),
 
 /***/ 419:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_61344__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_61339__) => {
 
-var Symbol = __nested_webpack_require_61344__(2705);
+var Symbol = __nested_webpack_require_61339__(2705);
 
 /** Used to convert symbols to primitives and strings. */
 var symbolProto = Symbol ? Symbol.prototype : undefined,
@@ -12634,9 +12338,9 @@ module.exports = cloneSymbol;
 /***/ }),
 
 /***/ 7133:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_61967__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_61962__) => {
 
-var cloneArrayBuffer = __nested_webpack_require_61967__(4318);
+var cloneArrayBuffer = __nested_webpack_require_61962__(4318);
 
 /**
  * Creates a clone of `typedArray`.
@@ -12684,10 +12388,10 @@ module.exports = copyArray;
 /***/ }),
 
 /***/ 8363:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_63083__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_63078__) => {
 
-var assignValue = __nested_webpack_require_63083__(4865),
-    baseAssignValue = __nested_webpack_require_63083__(9465);
+var assignValue = __nested_webpack_require_63078__(4865),
+    baseAssignValue = __nested_webpack_require_63078__(9465);
 
 /**
  * Copies properties of `source` to `object`.
@@ -12731,10 +12435,10 @@ module.exports = copyObject;
 /***/ }),
 
 /***/ 8805:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_64217__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_64212__) => {
 
-var copyObject = __nested_webpack_require_64217__(8363),
-    getSymbols = __nested_webpack_require_64217__(9551);
+var copyObject = __nested_webpack_require_64212__(8363),
+    getSymbols = __nested_webpack_require_64212__(9551);
 
 /**
  * Copies own symbols of `source` to `object`.
@@ -12754,10 +12458,10 @@ module.exports = copySymbols;
 /***/ }),
 
 /***/ 1911:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_64759__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_64754__) => {
 
-var copyObject = __nested_webpack_require_64759__(8363),
-    getSymbolsIn = __nested_webpack_require_64759__(1442);
+var copyObject = __nested_webpack_require_64754__(8363),
+    getSymbolsIn = __nested_webpack_require_64754__(1442);
 
 /**
  * Copies own and inherited symbols of `source` to `object`.
@@ -12777,9 +12481,9 @@ module.exports = copySymbolsIn;
 /***/ }),
 
 /***/ 4429:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_65323__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_65318__) => {
 
-var root = __nested_webpack_require_65323__(5639);
+var root = __nested_webpack_require_65318__(5639);
 
 /** Used to detect overreaching core-js shims. */
 var coreJsData = root['__core-js_shared__'];
@@ -12822,11 +12526,11 @@ module.exports = createBaseFor;
 /***/ }),
 
 /***/ 7740:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_66276__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_66271__) => {
 
-var baseIteratee = __nested_webpack_require_66276__(7206),
-    isArrayLike = __nested_webpack_require_66276__(8612),
-    keys = __nested_webpack_require_66276__(3674);
+var baseIteratee = __nested_webpack_require_66271__(7206),
+    isArrayLike = __nested_webpack_require_66271__(8612),
+    keys = __nested_webpack_require_66271__(3674);
 
 /**
  * Creates a `_.find` or `_.findLast` function.
@@ -12854,9 +12558,9 @@ module.exports = createFind;
 /***/ }),
 
 /***/ 7779:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_67231__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_67226__) => {
 
-var baseInverter = __nested_webpack_require_67231__(8975);
+var baseInverter = __nested_webpack_require_67226__(8975);
 
 /**
  * Creates a function like `_.invertBy`.
@@ -12878,11 +12582,11 @@ module.exports = createInverter;
 /***/ }),
 
 /***/ 3593:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_67821__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_67816__) => {
 
-var Set = __nested_webpack_require_67821__(8525),
-    noop = __nested_webpack_require_67821__(308),
-    setToArray = __nested_webpack_require_67821__(1814);
+var Set = __nested_webpack_require_67816__(8525),
+    noop = __nested_webpack_require_67816__(308),
+    setToArray = __nested_webpack_require_67816__(1814);
 
 /** Used as references for various `Number` constants. */
 var INFINITY = 1 / 0;
@@ -12904,9 +12608,9 @@ module.exports = createSet;
 /***/ }),
 
 /***/ 8777:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_68432__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_68427__) => {
 
-var getNative = __nested_webpack_require_68432__(852);
+var getNative = __nested_webpack_require_68427__(852);
 
 var defineProperty = (function() {
   try {
@@ -12922,11 +12626,11 @@ module.exports = defineProperty;
 /***/ }),
 
 /***/ 7114:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_68760__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_68755__) => {
 
-var SetCache = __nested_webpack_require_68760__(8668),
-    arraySome = __nested_webpack_require_68760__(2908),
-    cacheHas = __nested_webpack_require_68760__(4757);
+var SetCache = __nested_webpack_require_68755__(8668),
+    arraySome = __nested_webpack_require_68755__(2908),
+    cacheHas = __nested_webpack_require_68755__(4757);
 
 /** Used to compose bitmasks for value comparisons. */
 var COMPARE_PARTIAL_FLAG = 1,
@@ -13013,14 +12717,14 @@ module.exports = equalArrays;
 /***/ }),
 
 /***/ 8351:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_71524__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_71519__) => {
 
-var Symbol = __nested_webpack_require_71524__(2705),
-    Uint8Array = __nested_webpack_require_71524__(1149),
-    eq = __nested_webpack_require_71524__(7813),
-    equalArrays = __nested_webpack_require_71524__(7114),
-    mapToArray = __nested_webpack_require_71524__(8776),
-    setToArray = __nested_webpack_require_71524__(1814);
+var Symbol = __nested_webpack_require_71519__(2705),
+    Uint8Array = __nested_webpack_require_71519__(1149),
+    eq = __nested_webpack_require_71519__(7813),
+    equalArrays = __nested_webpack_require_71519__(7114),
+    mapToArray = __nested_webpack_require_71519__(8776),
+    setToArray = __nested_webpack_require_71519__(1814);
 
 /** Used to compose bitmasks for value comparisons. */
 var COMPARE_PARTIAL_FLAG = 1,
@@ -13132,9 +12836,9 @@ module.exports = equalByTag;
 /***/ }),
 
 /***/ 6096:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_75382__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_75377__) => {
 
-var getAllKeys = __nested_webpack_require_75382__(8234);
+var getAllKeys = __nested_webpack_require_75377__(8234);
 
 /** Used to compose bitmasks for value comparisons. */
 var COMPARE_PARTIAL_FLAG = 1;
@@ -13229,10 +12933,10 @@ module.exports = equalObjects;
 /***/ }),
 
 /***/ 1957:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_78448__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_78443__) => {
 
 /** Detect free variable `global` from Node.js. */
-var freeGlobal = typeof __nested_webpack_require_78448__.g == 'object' && __nested_webpack_require_78448__.g && __nested_webpack_require_78448__.g.Object === Object && __nested_webpack_require_78448__.g;
+var freeGlobal = typeof __nested_webpack_require_78443__.g == 'object' && __nested_webpack_require_78443__.g && __nested_webpack_require_78443__.g.Object === Object && __nested_webpack_require_78443__.g;
 
 module.exports = freeGlobal;
 
@@ -13240,11 +12944,11 @@ module.exports = freeGlobal;
 /***/ }),
 
 /***/ 8234:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_78775__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_78770__) => {
 
-var baseGetAllKeys = __nested_webpack_require_78775__(8866),
-    getSymbols = __nested_webpack_require_78775__(9551),
-    keys = __nested_webpack_require_78775__(3674);
+var baseGetAllKeys = __nested_webpack_require_78770__(8866),
+    getSymbols = __nested_webpack_require_78770__(9551),
+    keys = __nested_webpack_require_78770__(3674);
 
 /**
  * Creates an array of own enumerable property names and symbols of `object`.
@@ -13263,11 +12967,11 @@ module.exports = getAllKeys;
 /***/ }),
 
 /***/ 6904:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_79330__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_79325__) => {
 
-var baseGetAllKeys = __nested_webpack_require_79330__(8866),
-    getSymbolsIn = __nested_webpack_require_79330__(1442),
-    keysIn = __nested_webpack_require_79330__(1704);
+var baseGetAllKeys = __nested_webpack_require_79325__(8866),
+    getSymbolsIn = __nested_webpack_require_79325__(1442),
+    keysIn = __nested_webpack_require_79325__(1704);
 
 /**
  * Creates an array of own and inherited enumerable property names and
@@ -13287,9 +12991,9 @@ module.exports = getAllKeysIn;
 /***/ }),
 
 /***/ 5050:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_79914__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_79909__) => {
 
-var isKeyable = __nested_webpack_require_79914__(7019);
+var isKeyable = __nested_webpack_require_79909__(7019);
 
 /**
  * Gets the data for `map`.
@@ -13312,10 +13016,10 @@ module.exports = getMapData;
 /***/ }),
 
 /***/ 1499:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_80410__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_80405__) => {
 
-var isStrictComparable = __nested_webpack_require_80410__(9162),
-    keys = __nested_webpack_require_80410__(3674);
+var isStrictComparable = __nested_webpack_require_80405__(9162),
+    keys = __nested_webpack_require_80405__(3674);
 
 /**
  * Gets the property names, values, and compare flags of `object`.
@@ -13343,10 +13047,10 @@ module.exports = getMatchData;
 /***/ }),
 
 /***/ 852:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_81077__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_81072__) => {
 
-var baseIsNative = __nested_webpack_require_81077__(8458),
-    getValue = __nested_webpack_require_81077__(7801);
+var baseIsNative = __nested_webpack_require_81072__(8458),
+    getValue = __nested_webpack_require_81072__(7801);
 
 /**
  * Gets the native function at `key` of `object`.
@@ -13367,9 +13071,9 @@ module.exports = getNative;
 /***/ }),
 
 /***/ 5924:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_81656__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_81651__) => {
 
-var overArg = __nested_webpack_require_81656__(5569);
+var overArg = __nested_webpack_require_81651__(5569);
 
 /** Built-in value references. */
 var getPrototype = overArg(Object.getPrototypeOf, Object);
@@ -13380,9 +13084,9 @@ module.exports = getPrototype;
 /***/ }),
 
 /***/ 9607:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_81917__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_81912__) => {
 
-var Symbol = __nested_webpack_require_81917__(2705);
+var Symbol = __nested_webpack_require_81912__(2705);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -13433,10 +13137,10 @@ module.exports = getRawTag;
 /***/ }),
 
 /***/ 9551:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_83155__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_83150__) => {
 
-var arrayFilter = __nested_webpack_require_83155__(4963),
-    stubArray = __nested_webpack_require_83155__(479);
+var arrayFilter = __nested_webpack_require_83150__(4963),
+    stubArray = __nested_webpack_require_83150__(479);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -13470,12 +13174,12 @@ module.exports = getSymbols;
 /***/ }),
 
 /***/ 1442:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_84137__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_84132__) => {
 
-var arrayPush = __nested_webpack_require_84137__(2488),
-    getPrototype = __nested_webpack_require_84137__(5924),
-    getSymbols = __nested_webpack_require_84137__(9551),
-    stubArray = __nested_webpack_require_84137__(479);
+var arrayPush = __nested_webpack_require_84132__(2488),
+    getPrototype = __nested_webpack_require_84132__(5924),
+    getSymbols = __nested_webpack_require_84132__(9551),
+    stubArray = __nested_webpack_require_84132__(479);
 
 /* Built-in method references for those with the same name as other `lodash` methods. */
 var nativeGetSymbols = Object.getOwnPropertySymbols;
@@ -13502,15 +13206,15 @@ module.exports = getSymbolsIn;
 /***/ }),
 
 /***/ 4160:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_84989__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_84984__) => {
 
-var DataView = __nested_webpack_require_84989__(8552),
-    Map = __nested_webpack_require_84989__(7071),
-    Promise = __nested_webpack_require_84989__(3818),
-    Set = __nested_webpack_require_84989__(8525),
-    WeakMap = __nested_webpack_require_84989__(577),
-    baseGetTag = __nested_webpack_require_84989__(4239),
-    toSource = __nested_webpack_require_84989__(346);
+var DataView = __nested_webpack_require_84984__(8552),
+    Map = __nested_webpack_require_84984__(7071),
+    Promise = __nested_webpack_require_84984__(3818),
+    Set = __nested_webpack_require_84984__(8525),
+    WeakMap = __nested_webpack_require_84984__(577),
+    baseGetTag = __nested_webpack_require_84984__(4239),
+    toSource = __nested_webpack_require_84984__(346);
 
 /** `Object#toString` result references. */
 var mapTag = '[object Map]',
@@ -13587,14 +13291,14 @@ module.exports = getValue;
 /***/ }),
 
 /***/ 222:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_87321__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_87316__) => {
 
-var castPath = __nested_webpack_require_87321__(1811),
-    isArguments = __nested_webpack_require_87321__(5694),
-    isArray = __nested_webpack_require_87321__(1469),
-    isIndex = __nested_webpack_require_87321__(5776),
-    isLength = __nested_webpack_require_87321__(1780),
-    toKey = __nested_webpack_require_87321__(327);
+var castPath = __nested_webpack_require_87316__(1811),
+    isArguments = __nested_webpack_require_87316__(5694),
+    isArray = __nested_webpack_require_87316__(1469),
+    isIndex = __nested_webpack_require_87316__(5776),
+    isLength = __nested_webpack_require_87316__(1780),
+    toKey = __nested_webpack_require_87316__(327);
 
 /**
  * Checks if `path` exists on `object`.
@@ -13633,9 +13337,9 @@ module.exports = hasPath;
 /***/ }),
 
 /***/ 1789:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_88522__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_88517__) => {
 
-var nativeCreate = __nested_webpack_require_88522__(4536);
+var nativeCreate = __nested_webpack_require_88517__(4536);
 
 /**
  * Removes all key-value entries from the hash.
@@ -13679,9 +13383,9 @@ module.exports = hashDelete;
 /***/ }),
 
 /***/ 7667:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_89387__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_89382__) => {
 
-var nativeCreate = __nested_webpack_require_89387__(4536);
+var nativeCreate = __nested_webpack_require_89382__(4536);
 
 /** Used to stand-in for `undefined` hash values. */
 var HASH_UNDEFINED = '__lodash_hash_undefined__';
@@ -13716,9 +13420,9 @@ module.exports = hashGet;
 /***/ }),
 
 /***/ 1327:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_90252__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_90247__) => {
 
-var nativeCreate = __nested_webpack_require_90252__(4536);
+var nativeCreate = __nested_webpack_require_90247__(4536);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -13746,9 +13450,9 @@ module.exports = hashHas;
 /***/ }),
 
 /***/ 1866:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_90971__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_90966__) => {
 
-var nativeCreate = __nested_webpack_require_90971__(4536);
+var nativeCreate = __nested_webpack_require_90966__(4536);
 
 /** Used to stand-in for `undefined` hash values. */
 var HASH_UNDEFINED = '__lodash_hash_undefined__';
@@ -13809,13 +13513,13 @@ module.exports = initCloneArray;
 /***/ }),
 
 /***/ 9148:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_92401__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_92396__) => {
 
-var cloneArrayBuffer = __nested_webpack_require_92401__(4318),
-    cloneDataView = __nested_webpack_require_92401__(7157),
-    cloneRegExp = __nested_webpack_require_92401__(3147),
-    cloneSymbol = __nested_webpack_require_92401__(419),
-    cloneTypedArray = __nested_webpack_require_92401__(7133);
+var cloneArrayBuffer = __nested_webpack_require_92396__(4318),
+    cloneDataView = __nested_webpack_require_92396__(7157),
+    cloneRegExp = __nested_webpack_require_92396__(3147),
+    cloneSymbol = __nested_webpack_require_92396__(419),
+    cloneTypedArray = __nested_webpack_require_92396__(7133);
 
 /** `Object#toString` result references. */
 var boolTag = '[object Boolean]',
@@ -13893,11 +13597,11 @@ module.exports = initCloneByTag;
 /***/ }),
 
 /***/ 8517:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_94744__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_94739__) => {
 
-var baseCreate = __nested_webpack_require_94744__(3118),
-    getPrototype = __nested_webpack_require_94744__(5924),
-    isPrototype = __nested_webpack_require_94744__(5726);
+var baseCreate = __nested_webpack_require_94739__(3118),
+    getPrototype = __nested_webpack_require_94739__(5924),
+    isPrototype = __nested_webpack_require_94739__(5726);
 
 /**
  * Initializes an object clone.
@@ -13918,11 +13622,11 @@ module.exports = initCloneObject;
 /***/ }),
 
 /***/ 7285:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_95324__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_95319__) => {
 
-var Symbol = __nested_webpack_require_95324__(2705),
-    isArguments = __nested_webpack_require_95324__(5694),
-    isArray = __nested_webpack_require_95324__(1469);
+var Symbol = __nested_webpack_require_95319__(2705),
+    isArguments = __nested_webpack_require_95319__(5694),
+    isArray = __nested_webpack_require_95319__(1469);
 
 /** Built-in value references. */
 var spreadableSymbol = Symbol ? Symbol.isConcatSpreadable : undefined;
@@ -13977,10 +13681,10 @@ module.exports = isIndex;
 /***/ }),
 
 /***/ 5403:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_96843__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_96838__) => {
 
-var isArray = __nested_webpack_require_96843__(1469),
-    isSymbol = __nested_webpack_require_96843__(3448);
+var isArray = __nested_webpack_require_96838__(1469),
+    isSymbol = __nested_webpack_require_96838__(3448);
 
 /** Used to match property names within property paths. */
 var reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/,
@@ -14035,9 +13739,9 @@ module.exports = isKeyable;
 /***/ }),
 
 /***/ 5346:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_98303__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_98298__) => {
 
-var coreJsData = __nested_webpack_require_98303__(4429);
+var coreJsData = __nested_webpack_require_98298__(4429);
 
 /** Used to detect methods masquerading as native. */
 var maskSrcKey = (function() {
@@ -14087,9 +13791,9 @@ module.exports = isPrototype;
 /***/ }),
 
 /***/ 9162:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_99489__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_99484__) => {
 
-var isObject = __nested_webpack_require_99489__(3218);
+var isObject = __nested_webpack_require_99484__(3218);
 
 /**
  * Checks if `value` is suitable for strict equality comparisons, i.e. `===`.
@@ -14129,9 +13833,9 @@ module.exports = listCacheClear;
 /***/ }),
 
 /***/ 4125:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_100266__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_100261__) => {
 
-var assocIndexOf = __nested_webpack_require_100266__(8470);
+var assocIndexOf = __nested_webpack_require_100261__(8470);
 
 /** Used for built-in method references. */
 var arrayProto = Array.prototype;
@@ -14171,9 +13875,9 @@ module.exports = listCacheDelete;
 /***/ }),
 
 /***/ 2117:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_101134__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_101129__) => {
 
-var assocIndexOf = __nested_webpack_require_101134__(8470);
+var assocIndexOf = __nested_webpack_require_101129__(8470);
 
 /**
  * Gets the list cache value for `key`.
@@ -14197,9 +13901,9 @@ module.exports = listCacheGet;
 /***/ }),
 
 /***/ 7518:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_101647__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_101642__) => {
 
-var assocIndexOf = __nested_webpack_require_101647__(8470);
+var assocIndexOf = __nested_webpack_require_101642__(8470);
 
 /**
  * Checks if a list cache value for `key` exists.
@@ -14220,9 +13924,9 @@ module.exports = listCacheHas;
 /***/ }),
 
 /***/ 4705:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_102143__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_102138__) => {
 
-var assocIndexOf = __nested_webpack_require_102143__(8470);
+var assocIndexOf = __nested_webpack_require_102138__(8470);
 
 /**
  * Sets the list cache `key` to `value`.
@@ -14253,11 +13957,11 @@ module.exports = listCacheSet;
 /***/ }),
 
 /***/ 4785:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_102789__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_102784__) => {
 
-var Hash = __nested_webpack_require_102789__(1989),
-    ListCache = __nested_webpack_require_102789__(8407),
-    Map = __nested_webpack_require_102789__(7071);
+var Hash = __nested_webpack_require_102784__(1989),
+    ListCache = __nested_webpack_require_102784__(8407),
+    Map = __nested_webpack_require_102784__(7071);
 
 /**
  * Removes all key-value entries from the map.
@@ -14281,9 +13985,9 @@ module.exports = mapCacheClear;
 /***/ }),
 
 /***/ 1285:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_103293__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_103288__) => {
 
-var getMapData = __nested_webpack_require_103293__(5050);
+var getMapData = __nested_webpack_require_103288__(5050);
 
 /**
  * Removes `key` and its value from the map.
@@ -14306,9 +14010,9 @@ module.exports = mapCacheDelete;
 /***/ }),
 
 /***/ 6000:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_103838__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_103833__) => {
 
-var getMapData = __nested_webpack_require_103838__(5050);
+var getMapData = __nested_webpack_require_103833__(5050);
 
 /**
  * Gets the map value for `key`.
@@ -14329,9 +14033,9 @@ module.exports = mapCacheGet;
 /***/ }),
 
 /***/ 9916:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_104263__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_104258__) => {
 
-var getMapData = __nested_webpack_require_104263__(5050);
+var getMapData = __nested_webpack_require_104258__(5050);
 
 /**
  * Checks if a map value for `key` exists.
@@ -14352,9 +14056,9 @@ module.exports = mapCacheHas;
 /***/ }),
 
 /***/ 5265:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_104740__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_104735__) => {
 
-var getMapData = __nested_webpack_require_104740__(5050);
+var getMapData = __nested_webpack_require_104735__(5050);
 
 /**
  * Sets the map `key` to `value`.
@@ -14433,9 +14137,9 @@ module.exports = matchesStrictComparable;
 /***/ }),
 
 /***/ 4523:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_106355__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_106350__) => {
 
-var memoize = __nested_webpack_require_106355__(8306);
+var memoize = __nested_webpack_require_106350__(8306);
 
 /** Used as the maximum memoize cache size. */
 var MAX_MEMOIZE_SIZE = 500;
@@ -14466,9 +14170,9 @@ module.exports = memoizeCapped;
 /***/ }),
 
 /***/ 4536:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_107087__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_107082__) => {
 
-var getNative = __nested_webpack_require_107087__(852);
+var getNative = __nested_webpack_require_107082__(852);
 
 /* Built-in method references that are verified to be native. */
 var nativeCreate = getNative(Object, 'create');
@@ -14479,9 +14183,9 @@ module.exports = nativeCreate;
 /***/ }),
 
 /***/ 6916:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_107369__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_107364__) => {
 
-var overArg = __nested_webpack_require_107369__(5569);
+var overArg = __nested_webpack_require_107364__(5569);
 
 /* Built-in method references for those with the same name as other `lodash` methods. */
 var nativeKeys = overArg(Object.keys, Object);
@@ -14519,10 +14223,10 @@ module.exports = nativeKeysIn;
 /***/ }),
 
 /***/ 1167:
-/***/ ((module, exports, __nested_webpack_require_108191__) => {
+/***/ ((module, exports, __nested_webpack_require_108186__) => {
 
-/* module decorator */ module = __nested_webpack_require_108191__.nmd(module);
-var freeGlobal = __nested_webpack_require_108191__(1957);
+/* module decorator */ module = __nested_webpack_require_108186__.nmd(module);
+var freeGlobal = __nested_webpack_require_108186__(1957);
 
 /** Detect free variable `exports`. */
 var freeExports =   true && exports && !exports.nodeType && exports;
@@ -14608,9 +14312,9 @@ module.exports = overArg;
 /***/ }),
 
 /***/ 5357:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_110361__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_110356__) => {
 
-var apply = __nested_webpack_require_110361__(6874);
+var apply = __nested_webpack_require_110356__(6874);
 
 /* Built-in method references for those with the same name as other `lodash` methods. */
 var nativeMax = Math.max;
@@ -14651,9 +14355,9 @@ module.exports = overRest;
 /***/ }),
 
 /***/ 5639:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_111557__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_111552__) => {
 
-var freeGlobal = __nested_webpack_require_111557__(1957);
+var freeGlobal = __nested_webpack_require_111552__(1957);
 
 /** Detect free variable `self`. */
 var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
@@ -14739,10 +14443,10 @@ module.exports = setToArray;
 /***/ }),
 
 /***/ 61:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_113175__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_113170__) => {
 
-var baseSetToString = __nested_webpack_require_113175__(6560),
-    shortOut = __nested_webpack_require_113175__(1275);
+var baseSetToString = __nested_webpack_require_113170__(6560),
+    shortOut = __nested_webpack_require_113170__(1275);
 
 /**
  * Sets the `toString` method of `func` to return `string`.
@@ -14804,9 +14508,9 @@ module.exports = shortOut;
 /***/ }),
 
 /***/ 7465:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_114648__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_114643__) => {
 
-var ListCache = __nested_webpack_require_114648__(8407);
+var ListCache = __nested_webpack_require_114643__(8407);
 
 /**
  * Removes all key-value entries from the stack.
@@ -14893,11 +14597,11 @@ module.exports = stackHas;
 /***/ }),
 
 /***/ 4309:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_116138__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_116133__) => {
 
-var ListCache = __nested_webpack_require_116138__(8407),
-    Map = __nested_webpack_require_116138__(7071),
-    MapCache = __nested_webpack_require_116138__(3369);
+var ListCache = __nested_webpack_require_116133__(8407),
+    Map = __nested_webpack_require_116133__(7071),
+    MapCache = __nested_webpack_require_116133__(3369);
 
 /** Used as the size to enable large array optimizations. */
 var LARGE_ARRAY_SIZE = 200;
@@ -14964,9 +14668,9 @@ module.exports = strictIndexOf;
 /***/ }),
 
 /***/ 5514:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_117745__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_117740__) => {
 
-var memoizeCapped = __nested_webpack_require_117745__(4523);
+var memoizeCapped = __nested_webpack_require_117740__(4523);
 
 /** Used to match property names within property paths. */
 var rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|$))/g;
@@ -14998,9 +14702,9 @@ module.exports = stringToPath;
 /***/ }),
 
 /***/ 327:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_118676__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_118671__) => {
 
-var isSymbol = __nested_webpack_require_118676__(3448);
+var isSymbol = __nested_webpack_require_118671__(3448);
 
 /** Used as references for various `Number` constants. */
 var INFINITY = 1 / 0;
@@ -15085,9 +14789,9 @@ module.exports = trimmedEndIndex;
 /***/ }),
 
 /***/ 6678:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_120461__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_120456__) => {
 
-var baseClone = __nested_webpack_require_120461__(5990);
+var baseClone = __nested_webpack_require_120456__(5990);
 
 /** Used to compose bitmasks for cloning. */
 var CLONE_SYMBOLS_FLAG = 4;
@@ -15128,9 +14832,9 @@ module.exports = clone;
 /***/ }),
 
 /***/ 361:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_121621__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_121616__) => {
 
-var baseClone = __nested_webpack_require_121621__(5990);
+var baseClone = __nested_webpack_require_121616__(5990);
 
 /** Used to compose bitmasks for cloning. */
 var CLONE_DEEP_FLAG = 1,
@@ -15197,12 +14901,12 @@ module.exports = constant;
 /***/ }),
 
 /***/ 1966:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_122971__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_122966__) => {
 
-var baseDifference = __nested_webpack_require_122971__(731),
-    baseFlatten = __nested_webpack_require_122971__(1078),
-    baseRest = __nested_webpack_require_122971__(5976),
-    isArrayLikeObject = __nested_webpack_require_122971__(9246);
+var baseDifference = __nested_webpack_require_122966__(731),
+    baseFlatten = __nested_webpack_require_122966__(1078),
+    baseRest = __nested_webpack_require_122966__(5976),
+    isArrayLikeObject = __nested_webpack_require_122966__(9246);
 
 /**
  * Creates an array of `array` values not included in the other given arrays
@@ -15281,10 +14985,10 @@ module.exports = eq;
 /***/ }),
 
 /***/ 3311:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_124968__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_124963__) => {
 
-var createFind = __nested_webpack_require_124968__(7740),
-    findIndex = __nested_webpack_require_124968__(998);
+var createFind = __nested_webpack_require_124963__(7740),
+    findIndex = __nested_webpack_require_124963__(998);
 
 /**
  * Iterates over elements of `collection`, returning the first element
@@ -15330,11 +15034,11 @@ module.exports = find;
 /***/ }),
 
 /***/ 998:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_126368__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_126363__) => {
 
-var baseFindIndex = __nested_webpack_require_126368__(1848),
-    baseIteratee = __nested_webpack_require_126368__(7206),
-    toInteger = __nested_webpack_require_126368__(554);
+var baseFindIndex = __nested_webpack_require_126363__(1848),
+    baseIteratee = __nested_webpack_require_126363__(7206),
+    toInteger = __nested_webpack_require_126363__(554);
 
 /* Built-in method references for those with the same name as other `lodash` methods. */
 var nativeMax = Math.max;
@@ -15392,9 +15096,9 @@ module.exports = findIndex;
 /***/ }),
 
 /***/ 7361:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_128115__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_128110__) => {
 
-var baseGet = __nested_webpack_require_128115__(7786);
+var baseGet = __nested_webpack_require_128110__(7786);
 
 /**
  * Gets the value at `path` of `object`. If the resolved value is
@@ -15432,10 +15136,10 @@ module.exports = get;
 /***/ }),
 
 /***/ 9095:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_129097__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_129092__) => {
 
-var baseHasIn = __nested_webpack_require_129097__(13),
-    hasPath = __nested_webpack_require_129097__(222);
+var baseHasIn = __nested_webpack_require_129092__(13),
+    hasPath = __nested_webpack_require_129092__(222);
 
 /**
  * Checks if `path` is a direct or inherited property of `object`.
@@ -15501,11 +15205,11 @@ module.exports = identity;
 /***/ }),
 
 /***/ 3137:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_130364__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_130359__) => {
 
-var constant = __nested_webpack_require_130364__(5703),
-    createInverter = __nested_webpack_require_130364__(7779),
-    identity = __nested_webpack_require_130364__(6557);
+var constant = __nested_webpack_require_130359__(5703),
+    createInverter = __nested_webpack_require_130359__(7779),
+    identity = __nested_webpack_require_130359__(6557);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -15550,10 +15254,10 @@ module.exports = invert;
 /***/ }),
 
 /***/ 5694:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_131591__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_131586__) => {
 
-var baseIsArguments = __nested_webpack_require_131591__(9454),
-    isObjectLike = __nested_webpack_require_131591__(7005);
+var baseIsArguments = __nested_webpack_require_131586__(9454),
+    isObjectLike = __nested_webpack_require_131586__(7005);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -15626,10 +15330,10 @@ module.exports = isArray;
 /***/ }),
 
 /***/ 8612:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_133242__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_133237__) => {
 
-var isFunction = __nested_webpack_require_133242__(3560),
-    isLength = __nested_webpack_require_133242__(1780);
+var isFunction = __nested_webpack_require_133237__(3560),
+    isLength = __nested_webpack_require_133237__(1780);
 
 /**
  * Checks if `value` is array-like. A value is considered array-like if it's
@@ -15666,10 +15370,10 @@ module.exports = isArrayLike;
 /***/ }),
 
 /***/ 9246:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_134172__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_134167__) => {
 
-var isArrayLike = __nested_webpack_require_134172__(8612),
-    isObjectLike = __nested_webpack_require_134172__(7005);
+var isArrayLike = __nested_webpack_require_134167__(8612),
+    isObjectLike = __nested_webpack_require_134167__(7005);
 
 /**
  * This method is like `_.isArrayLike` except that it also checks if `value`
@@ -15706,11 +15410,11 @@ module.exports = isArrayLikeObject;
 /***/ }),
 
 /***/ 4144:
-/***/ ((module, exports, __nested_webpack_require_134992__) => {
+/***/ ((module, exports, __nested_webpack_require_134987__) => {
 
-/* module decorator */ module = __nested_webpack_require_134992__.nmd(module);
-var root = __nested_webpack_require_134992__(5639),
-    stubFalse = __nested_webpack_require_134992__(5062);
+/* module decorator */ module = __nested_webpack_require_134987__.nmd(module);
+var root = __nested_webpack_require_134987__(5639),
+    stubFalse = __nested_webpack_require_134987__(5062);
 
 /** Detect free variable `exports`. */
 var freeExports =   true && exports && !exports.nodeType && exports;
@@ -15752,9 +15456,9 @@ module.exports = isBuffer;
 /***/ }),
 
 /***/ 8446:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_136249__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_136244__) => {
 
-var baseIsEqual = __nested_webpack_require_136249__(939);
+var baseIsEqual = __nested_webpack_require_136244__(939);
 
 /**
  * Performs a deep comparison between two values to determine if they are
@@ -15794,10 +15498,10 @@ module.exports = isEqual;
 /***/ }),
 
 /***/ 3560:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_137328__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_137323__) => {
 
-var baseGetTag = __nested_webpack_require_137328__(4239),
-    isObject = __nested_webpack_require_137328__(3218);
+var baseGetTag = __nested_webpack_require_137323__(4239),
+    isObject = __nested_webpack_require_137323__(3218);
 
 /** `Object#toString` result references. */
 var asyncTag = '[object AsyncFunction]',
@@ -15880,11 +15584,11 @@ module.exports = isLength;
 /***/ }),
 
 /***/ 6688:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_139269__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_139264__) => {
 
-var baseIsMap = __nested_webpack_require_139269__(5588),
-    baseUnary = __nested_webpack_require_139269__(1717),
-    nodeUtil = __nested_webpack_require_139269__(1167);
+var baseIsMap = __nested_webpack_require_139264__(5588),
+    baseUnary = __nested_webpack_require_139264__(1717),
+    nodeUtil = __nested_webpack_require_139264__(1167);
 
 /* Node.js helper references. */
 var nodeIsMap = nodeUtil && nodeUtil.isMap;
@@ -15988,11 +15692,11 @@ module.exports = isObjectLike;
 /***/ }),
 
 /***/ 2928:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_141424__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_141419__) => {
 
-var baseIsSet = __nested_webpack_require_141424__(9221),
-    baseUnary = __nested_webpack_require_141424__(1717),
-    nodeUtil = __nested_webpack_require_141424__(1167);
+var baseIsSet = __nested_webpack_require_141419__(9221),
+    baseUnary = __nested_webpack_require_141419__(1717),
+    nodeUtil = __nested_webpack_require_141419__(1167);
 
 /* Node.js helper references. */
 var nodeIsSet = nodeUtil && nodeUtil.isSet;
@@ -16022,10 +15726,10 @@ module.exports = isSet;
 /***/ }),
 
 /***/ 3448:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_142138__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_142133__) => {
 
-var baseGetTag = __nested_webpack_require_142138__(4239),
-    isObjectLike = __nested_webpack_require_142138__(7005);
+var baseGetTag = __nested_webpack_require_142133__(4239),
+    isObjectLike = __nested_webpack_require_142133__(7005);
 
 /** `Object#toString` result references. */
 var symbolTag = '[object Symbol]';
@@ -16058,11 +15762,11 @@ module.exports = isSymbol;
 /***/ }),
 
 /***/ 6719:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_142915__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_142910__) => {
 
-var baseIsTypedArray = __nested_webpack_require_142915__(8749),
-    baseUnary = __nested_webpack_require_142915__(1717),
-    nodeUtil = __nested_webpack_require_142915__(1167);
+var baseIsTypedArray = __nested_webpack_require_142910__(8749),
+    baseUnary = __nested_webpack_require_142910__(1717),
+    nodeUtil = __nested_webpack_require_142910__(1167);
 
 /* Node.js helper references. */
 var nodeIsTypedArray = nodeUtil && nodeUtil.isTypedArray;
@@ -16092,11 +15796,11 @@ module.exports = isTypedArray;
 /***/ }),
 
 /***/ 3674:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_143704__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_143699__) => {
 
-var arrayLikeKeys = __nested_webpack_require_143704__(4636),
-    baseKeys = __nested_webpack_require_143704__(280),
-    isArrayLike = __nested_webpack_require_143704__(8612);
+var arrayLikeKeys = __nested_webpack_require_143699__(4636),
+    baseKeys = __nested_webpack_require_143699__(280),
+    isArrayLike = __nested_webpack_require_143699__(8612);
 
 /**
  * Creates an array of the own enumerable property names of `object`.
@@ -16136,11 +15840,11 @@ module.exports = keys;
 /***/ }),
 
 /***/ 1704:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_144683__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_144678__) => {
 
-var arrayLikeKeys = __nested_webpack_require_144683__(4636),
-    baseKeysIn = __nested_webpack_require_144683__(313),
-    isArrayLike = __nested_webpack_require_144683__(8612);
+var arrayLikeKeys = __nested_webpack_require_144678__(4636),
+    baseKeysIn = __nested_webpack_require_144678__(313),
+    isArrayLike = __nested_webpack_require_144678__(8612);
 
 /**
  * Creates an array of the own and inherited enumerable property names of `object`.
@@ -16175,9 +15879,9 @@ module.exports = keysIn;
 /***/ }),
 
 /***/ 8306:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_145554__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_145549__) => {
 
-var MapCache = __nested_webpack_require_145554__(3369);
+var MapCache = __nested_webpack_require_145549__(3369);
 
 /** Error message constants. */
 var FUNC_ERROR_TEXT = 'Expected a function';
@@ -16279,12 +15983,12 @@ module.exports = noop;
 /***/ }),
 
 /***/ 9601:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_148171__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_148166__) => {
 
-var baseProperty = __nested_webpack_require_148171__(371),
-    basePropertyDeep = __nested_webpack_require_148171__(9152),
-    isKey = __nested_webpack_require_148171__(5403),
-    toKey = __nested_webpack_require_148171__(327);
+var baseProperty = __nested_webpack_require_148166__(371),
+    basePropertyDeep = __nested_webpack_require_148166__(9152),
+    isKey = __nested_webpack_require_148166__(5403),
+    toKey = __nested_webpack_require_148166__(327);
 
 /**
  * Creates a function that returns the value at `path` of a given object.
@@ -16373,9 +16077,9 @@ module.exports = stubFalse;
 /***/ }),
 
 /***/ 8601:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_149825__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_149820__) => {
 
-var toNumber = __nested_webpack_require_149825__(4841);
+var toNumber = __nested_webpack_require_149820__(4841);
 
 /** Used as references for various `Number` constants. */
 var INFINITY = 1 / 0,
@@ -16422,9 +16126,9 @@ module.exports = toFinite;
 /***/ }),
 
 /***/ 554:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_150790__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_150785__) => {
 
-var toFinite = __nested_webpack_require_150790__(8601);
+var toFinite = __nested_webpack_require_150785__(8601);
 
 /**
  * Converts `value` to an integer.
@@ -16465,11 +16169,11 @@ module.exports = toInteger;
 /***/ }),
 
 /***/ 4841:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_151648__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_151643__) => {
 
-var baseTrim = __nested_webpack_require_151648__(7561),
-    isObject = __nested_webpack_require_151648__(3218),
-    isSymbol = __nested_webpack_require_151648__(3448);
+var baseTrim = __nested_webpack_require_151643__(7561),
+    isObject = __nested_webpack_require_151643__(3218),
+    isSymbol = __nested_webpack_require_151643__(3448);
 
 /** Used as references for various `Number` constants. */
 var NAN = 0 / 0;
@@ -16536,9 +16240,9 @@ module.exports = toNumber;
 /***/ }),
 
 /***/ 9833:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_153272__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_153267__) => {
 
-var baseToString = __nested_webpack_require_153272__(531);
+var baseToString = __nested_webpack_require_153267__(531);
 
 /**
  * Converts `value` to a string. An empty string is returned for `null`
@@ -16571,9 +16275,9 @@ module.exports = toString;
 /***/ }),
 
 /***/ 4908:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_153944__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_153939__) => {
 
-var baseUniq = __nested_webpack_require_153944__(5652);
+var baseUniq = __nested_webpack_require_153939__(5652);
 
 /**
  * Creates a duplicate-free version of an array, using
@@ -16603,11 +16307,11 @@ module.exports = uniq;
 /***/ }),
 
 /***/ 2569:
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_154729__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_154724__) => {
 
-var baseDifference = __nested_webpack_require_154729__(731),
-    baseRest = __nested_webpack_require_154729__(5976),
-    isArrayLikeObject = __nested_webpack_require_154729__(9246);
+var baseDifference = __nested_webpack_require_154724__(731),
+    baseRest = __nested_webpack_require_154724__(5976),
+    isArrayLikeObject = __nested_webpack_require_154724__(9246);
 
 /**
  * Creates an array excluding all given values using
@@ -16646,7 +16350,7 @@ module.exports = without;
 /******/ 	var __webpack_module_cache__ = {};
 /******/ 	
 /******/ 	// The require function
-/******/ 	function __nested_webpack_require_155839__(moduleId) {
+/******/ 	function __nested_webpack_require_155834__(moduleId) {
 /******/ 		// Check if module is in cache
 /******/ 		var cachedModule = __webpack_module_cache__[moduleId];
 /******/ 		if (cachedModule !== undefined) {
@@ -16660,7 +16364,7 @@ module.exports = without;
 /******/ 		};
 /******/ 	
 /******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __nested_webpack_require_155839__);
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __nested_webpack_require_155834__);
 /******/ 	
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
@@ -16673,11 +16377,11 @@ module.exports = without;
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	(() => {
 /******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__nested_webpack_require_155839__.n = (module) => {
+/******/ 		__nested_webpack_require_155834__.n = (module) => {
 /******/ 			var getter = module && module.__esModule ?
 /******/ 				() => (module['default']) :
 /******/ 				() => (module);
-/******/ 			__nested_webpack_require_155839__.d(getter, { a: getter });
+/******/ 			__nested_webpack_require_155834__.d(getter, { a: getter });
 /******/ 			return getter;
 /******/ 		};
 /******/ 	})();
@@ -16685,9 +16389,9 @@ module.exports = without;
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
-/******/ 		__nested_webpack_require_155839__.d = (exports, definition) => {
+/******/ 		__nested_webpack_require_155834__.d = (exports, definition) => {
 /******/ 			for(var key in definition) {
-/******/ 				if(__nested_webpack_require_155839__.o(definition, key) && !__nested_webpack_require_155839__.o(exports, key)) {
+/******/ 				if(__nested_webpack_require_155834__.o(definition, key) && !__nested_webpack_require_155834__.o(exports, key)) {
 /******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
 /******/ 				}
 /******/ 			}
@@ -16696,7 +16400,7 @@ module.exports = without;
 /******/ 	
 /******/ 	/* webpack/runtime/global */
 /******/ 	(() => {
-/******/ 		__nested_webpack_require_155839__.g = (function() {
+/******/ 		__nested_webpack_require_155834__.g = (function() {
 /******/ 			if (typeof globalThis === 'object') return globalThis;
 /******/ 			try {
 /******/ 				return this || new Function('return this')();
@@ -16708,13 +16412,13 @@ module.exports = without;
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
-/******/ 		__nested_webpack_require_155839__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 		__nested_webpack_require_155834__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	(() => {
 /******/ 		// define __esModule on exports
-/******/ 		__nested_webpack_require_155839__.r = (exports) => {
+/******/ 		__nested_webpack_require_155834__.r = (exports) => {
 /******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
 /******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
 /******/ 			}
@@ -16724,7 +16428,7 @@ module.exports = without;
 /******/ 	
 /******/ 	/* webpack/runtime/node module decorator */
 /******/ 	(() => {
-/******/ 		__nested_webpack_require_155839__.nmd = (module) => {
+/******/ 		__nested_webpack_require_155834__.nmd = (module) => {
 /******/ 			module.paths = [];
 /******/ 			if (!module.children) module.children = [];
 /******/ 			return module;
@@ -16737,10 +16441,10 @@ var __webpack_exports__ = {};
 (() => {
 "use strict";
 // ESM COMPAT FLAG
-__nested_webpack_require_155839__.r(__webpack_exports__);
+__nested_webpack_require_155834__.r(__webpack_exports__);
 
 // EXPORTS
-__nested_webpack_require_155839__.d(__webpack_exports__, {
+__nested_webpack_require_155834__.d(__webpack_exports__, {
   "chordParserFactory": () => (/* reexport */ parser_chordParserFactory),
   "chordRendererFactory": () => (/* reexport */ renderer_chordRendererFactory)
 });
@@ -16759,31 +16463,25 @@ function chain(allFunctions, input) {
   }, input);
 }
 // EXTERNAL MODULE: ./node_modules/lodash/cloneDeep.js
-var cloneDeep = __nested_webpack_require_155839__(361);
-var cloneDeep_default = /*#__PURE__*/__nested_webpack_require_155839__.n(cloneDeep);
+var cloneDeep = __nested_webpack_require_155834__(361);
+var cloneDeep_default = /*#__PURE__*/__nested_webpack_require_155834__.n(cloneDeep);
 ;// CONCATENATED MODULE: ./src/helpers/checkCustomFilters.js
 var checkCustomFilters = function checkCustomFilters(customFilters) {
   if (!Array.isArray(customFilters)) {
     throw new TypeError('customFilters should be given as an array');
   }
-
   if (customFilters.some(function (filter) {
     return typeof filter !== 'function';
   })) {
     throw new TypeError("The given filter is not a function");
   }
-
   return true;
 };
-
 /* harmony default export */ const helpers_checkCustomFilters = (checkCustomFilters);
 ;// CONCATENATED MODULE: ./src/dictionaries/notes.js
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 var notes = {
   AFlat: 'Ab',
   A: 'A',
@@ -16875,7 +16573,6 @@ var german = {
   G: notes.G,
   Gis: notes.GSharp
 };
-
 function getAccidentalsVariation(source) {
   var variant;
   return Object.keys(source).reduce(function (acc, curr) {
@@ -16883,19 +16580,13 @@ function getAccidentalsVariation(source) {
       variant = curr.replace('#', '♯').replace('b', '♭');
       acc[variant] = source[curr];
     }
-
     return acc;
   }, {});
 }
-
 var englishVariantsToNotes = _objectSpread(_objectSpread({}, english), getAccidentalsVariation(english));
-
 var latinVariantsToNotes = _objectSpread(_objectSpread({}, latin), getAccidentalsVariation(latin));
-
 var germanVariantsToNotes = _objectSpread({}, german);
-
 var allVariantsToNotes = _objectSpread(_objectSpread(_objectSpread({}, englishVariantsToNotes), latinVariantsToNotes), germanVariantsToNotes);
-
 var allVariants = Object.keys(allVariantsToNotes).sort(function (a, b) {
   return b.length - a.length;
 });
@@ -16921,102 +16612,68 @@ var allVariantsPerGroup = [{
 
 ;// CONCATENATED MODULE: ./src/helpers/ChordParsingError.js
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
-
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _wrapNativeSuper(Class) { var _cache = typeof Map === "function" ? new Map() : undefined; _wrapNativeSuper = function _wrapNativeSuper(Class) { if (Class === null || !_isNativeFunction(Class)) return Class; if (typeof Class !== "function") { throw new TypeError("Super expression must either be null or a function"); } if (typeof _cache !== "undefined") { if (_cache.has(Class)) return _cache.get(Class); _cache.set(Class, Wrapper); } function Wrapper() { return _construct(Class, arguments, _getPrototypeOf(this).constructor); } Wrapper.prototype = Object.create(Class.prototype, { constructor: { value: Wrapper, enumerable: false, writable: true, configurable: true } }); return _setPrototypeOf(Wrapper, Class); }; return _wrapNativeSuper(Class); }
-
-function _construct(Parent, args, Class) { if (_isNativeReflectConstruct()) { _construct = Reflect.construct; } else { _construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) _setPrototypeOf(instance, Class.prototype); return instance; }; } return _construct.apply(null, arguments); }
-
+function _construct(Parent, args, Class) { if (_isNativeReflectConstruct()) { _construct = Reflect.construct.bind(); } else { _construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) _setPrototypeOf(instance, Class.prototype); return instance; }; } return _construct.apply(null, arguments); }
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-
 function _isNativeFunction(fn) { return Function.toString.call(fn).indexOf("[native code]") !== -1; }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 var InvalidInputError = /*#__PURE__*/function (_Error) {
   _inherits(InvalidInputError, _Error);
-
   var _super = _createSuper(InvalidInputError);
-
   /**
    *  The parser was not given a valid string to parse
    *  ex: `parseChord(null)`
    */
   function InvalidInputError() {
     var _this;
-
     _classCallCheck(this, InvalidInputError);
-
     _this = _super.call(this, 'The given symbol is not a valid string');
     _this.name = 'InvalidInput';
     return _this;
   }
-
   return _createClass(InvalidInputError);
 }( /*#__PURE__*/_wrapNativeSuper(Error));
-
 var UnexpectedError = /*#__PURE__*/function (_Error2) {
   _inherits(UnexpectedError, _Error2);
-
   var _super2 = _createSuper(UnexpectedError);
-
   /**
    * This error is very unlikely to happen.
    * If it does, it is probably in the context of a custom filter that returns `null` instead of throwing an exception.
    */
   function UnexpectedError() {
     var _this2;
-
     _classCallCheck(this, UnexpectedError);
-
     var message = 'An unexpected error happened. Maybe a custom filter returned null instead of throwing an exception?';
     _this2 = _super2.call(this, message);
     _this2.name = 'UnexpectedError';
     return _this2;
   }
-
   return _createClass(UnexpectedError);
 }( /*#__PURE__*/_wrapNativeSuper(Error));
-
 var ChordSymbolError = /*#__PURE__*/function (_Error3) {
   _inherits(ChordSymbolError, _Error3);
-
   var _super3 = _createSuper(ChordSymbolError);
-
   function ChordSymbolError(message, chord, errorName) {
     var _this3;
-
     _classCallCheck(this, ChordSymbolError);
-
     _this3 = _super3.call(this, message);
     _this3.name = errorName;
     _this3.chord = chord;
     return _this3;
   }
-
   return _createClass(ChordSymbolError);
 }( /*#__PURE__*/_wrapNativeSuper(Error));
-
 var NoSymbolFoundError = /*#__PURE__*/function (_ChordSymbolError) {
   _inherits(NoSymbolFoundError, _ChordSymbolError);
-
   var _super4 = _createSuper(NoSymbolFoundError);
-
   /**
    * The given string cannot be confused with a chord symbol in the current notation system
    * ex: `parseChord('Ape')`
@@ -17024,19 +16681,14 @@ var NoSymbolFoundError = /*#__PURE__*/function (_ChordSymbolError) {
    */
   function NoSymbolFoundError(chord) {
     _classCallCheck(this, NoSymbolFoundError);
-
     var message = "\"".concat(chord.input.symbol, "\" does not seems to be a chord");
     return _super4.call(this, message, chord, 'NoSymbolFound');
   }
-
   return _createClass(NoSymbolFoundError);
 }(ChordSymbolError);
-
 var InvalidModifierError = /*#__PURE__*/function (_ChordSymbolError2) {
   _inherits(InvalidModifierError, _ChordSymbolError2);
-
   var _super5 = _createSuper(InvalidModifierError);
-
   /**
    * The given string looks like a chord symbol, but `ChordSymbol` does not understand its descriptor.
    * It can be either because of a typo, or just because the given word is not a symbol.
@@ -17046,19 +16698,14 @@ var InvalidModifierError = /*#__PURE__*/function (_ChordSymbolError2) {
    */
   function InvalidModifierError(chord, invalidChars) {
     _classCallCheck(this, InvalidModifierError);
-
     var message = "The chord descriptor \"".concat(chord.input.descriptor, "\" contains unknown or duplicated modifiers: \"").concat(invalidChars, "\"");
     return _super5.call(this, message, chord, 'InvalidModifier');
   }
-
   return _createClass(InvalidModifierError);
 }(ChordSymbolError);
-
 var InvalidIntervalsError = /*#__PURE__*/function (_ChordSymbolError3) {
   _inherits(InvalidIntervalsError, _ChordSymbolError3);
-
   var _super6 = _createSuper(InvalidIntervalsError);
-
   /**
    * The given string is a chord symbol, but the resulting interval list is not valid
    * ex: `parseChord('A7M7')`
@@ -17067,42 +16714,34 @@ var InvalidIntervalsError = /*#__PURE__*/function (_ChordSymbolError3) {
    */
   function InvalidIntervalsError(chord, forbiddenCombo) {
     _classCallCheck(this, InvalidIntervalsError);
-
     var message = "\"".concat(chord.input.symbol, "\" describes a chord with an invalid intervals combo: ") + forbiddenCombo.join(' and ');
     return _super6.call(this, message, chord, 'InvalidIntervals');
   }
-
   return _createClass(InvalidIntervalsError);
 }(ChordSymbolError);
 
-
 // EXTERNAL MODULE: ./node_modules/lodash/isArray.js
-var isArray = __nested_webpack_require_155839__(1469);
-var isArray_default = /*#__PURE__*/__nested_webpack_require_155839__.n(isArray);
+var isArray = __nested_webpack_require_155834__(1469);
+var isArray_default = /*#__PURE__*/__nested_webpack_require_155834__.n(isArray);
 // EXTERNAL MODULE: ./node_modules/lodash/isEqual.js
-var isEqual = __nested_webpack_require_155839__(8446);
-var isEqual_default = /*#__PURE__*/__nested_webpack_require_155839__.n(isEqual);
+var isEqual = __nested_webpack_require_155834__(8446);
+var isEqual_default = /*#__PURE__*/__nested_webpack_require_155834__.n(isEqual);
 ;// CONCATENATED MODULE: ./src/helpers/hasElement.js
-
 
 
 function hasExactly(allIntervals, search) {
   var arraySearch = isArray_default()(search) ? search : [search];
   return isEqual_default()(allIntervals, arraySearch);
 }
-
 function hasOneOf(allIntervals, search) {
   return has(allIntervals, search, 'oneOf');
 }
-
 function hasAll(allIntervals, search) {
   return has(allIntervals, search, 'all');
 }
-
 function hasNoneOf(allIntervals, search) {
   return has(allIntervals, search, 'none');
 }
-
 function has(allIntervals, search, require) {
   var arraySearch = isArray_default()(search) ? search : [search];
   var lookupMethod = require === 'oneOf' ? 'some' : 'every';
@@ -17111,29 +16750,27 @@ function has(allIntervals, search, require) {
   });
 }
 
-
 ;// CONCATENATED MODULE: ./src/parser/filters/checkIntervalsConsistency.js
 
 
-var allForbiddenCombos = [['2', '3'], ['2', '9'], ['3', 'b3'], //['3',  '4'], // valid in the Real Book: F#7SUS(add 3)
+var allForbiddenCombos = [['2', '3'], ['2', '9'], ['3', 'b3'],
+//['3',  '4'], // valid in the Real Book: F#7SUS(add 3)
 ['4', '11'], ['5', 'b5'], ['5', '#5'], ['b6', '#5'], ['b6', '6'], ['b6', '13'], ['6', '13'], ['b7', 'bb7'], ['7', 'b7'], ['9', 'b9'], ['9', '#9'], ['11', '#11'], ['13', 'b13']];
+
 /**
  * Check parsed interval list to detect potential inconsistencies
  *
  * @param {Chord} chord
  * @returns {Chord|Null}
  */
-
 function checkIntervalsConsistency(chord) {
   var intervals = chord.normalized.intervals;
   var forbiddenCombo = allForbiddenCombos.find(function (combo) {
     return hasAll(intervals, combo);
   });
-
   if (forbiddenCombo) {
     throw new InvalidIntervalsError(chord, forbiddenCombo);
   }
-
   return chord;
 }
 ;// CONCATENATED MODULE: ./src/parser/filters/formatSymbol.js
@@ -17145,24 +16782,20 @@ function checkIntervalsConsistency(chord) {
  */
 function formatSymbol(chord) {
   var _chord$formatted = chord.formatted,
-      rootNote = _chord$formatted.rootNote,
-      bassNote = _chord$formatted.bassNote,
-      descriptor = _chord$formatted.descriptor,
-      chordChanges = _chord$formatted.chordChanges;
+    rootNote = _chord$formatted.rootNote,
+    bassNote = _chord$formatted.bassNote,
+    descriptor = _chord$formatted.descriptor,
+    chordChanges = _chord$formatted.chordChanges;
   var symbol = rootNote;
-
   if (descriptor) {
     symbol += descriptor;
   }
-
   if (chordChanges && chordChanges.length) {
     symbol += '(' + chordChanges.join(',') + ')';
   }
-
   if (bassNote) {
     symbol += '/' + bassNote;
   }
-
   chord.formatted.symbol = symbol;
   return chord;
 }
@@ -17187,21 +16820,13 @@ var minorQualities = [qualities.mi, qualities.mi6, qualities.mi7, qualities.miMa
 
 ;// CONCATENATED MODULE: ./src/parser/filters/formatSymbolParts.js
 var _qualityToDescriptor;
-
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
-
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
 function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
-
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
-
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
 function formatSymbolParts_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 
 
 var qualityToDescriptor = (_qualityToDescriptor = {}, formatSymbolParts_defineProperty(_qualityToDescriptor, qualities.ma, function () {
@@ -17237,13 +16862,13 @@ var chordChangesDescriptors = {
   omit: 'omit',
   sus: 'sus'
 };
+
 /**
  * Pre-render the chord by formatting all his components: root and bass notes, descriptor and changes
  *
  * @param {Chord} chord
  * @returns {Chord}
  */
-
 function formatSymbolParts(chord) {
   chord.formatted = {
     rootNote: chord.normalized.rootNote,
@@ -17253,75 +16878,59 @@ function formatSymbolParts(chord) {
   };
   return chord;
 }
-
 function getDescriptor(chord) {
   var descriptor = qualityToDescriptor[chord.normalized.quality](chord);
-
   if (chord.normalized.isSuspended) {
     descriptor += chordChangesDescriptors.sus;
   }
-
   return descriptor;
 }
-
 function getHighestExtension(chord) {
   var extensions = chord.normalized.extensions;
   var highestExtension = extensions[extensions.length - 1];
-
   if (highestExtension === '11' && chord.normalized.intents.major) {
     highestExtension = hasNoneOf(chord.normalized.alterations, ['b9', '#9']) ? '9' : '7';
   }
-
   return highestExtension || '7';
 }
-
 function getChordChanges(chord) {
   var formattedOmits = formatOmits(chord.normalized.omits);
-
   if (isAltered(chord)) {
     return formattedOmits;
   }
-
   var formattedAdds = formatAdds(chord.normalized.quality, chord.normalized.adds);
   return [].concat(_toConsumableArray(chord.normalized.alterations), _toConsumableArray(formattedAdds), _toConsumableArray(formattedOmits));
 }
-
 function isAltered(chord) {
   return chord.normalized.intents.alt && chord.normalized.quality === qualities.dom7;
 }
-
 function formatAdds(quality, adds) {
   return adds.filter(function (add) {
     return !([qualities.ma6, qualities.mi6].includes(quality) && add === '9');
   }).map(function (add, index) {
     var formatted = '';
-
     if (index === 0) {
       formatted += chordChangesDescriptors.add;
-
       if (['b', '#'].includes(add[0])) {
         formatted += ' ';
       }
     }
-
     formatted += add === '7' ? chordChangesDescriptors.add7 : add;
     return formatted;
   });
 }
-
 function formatOmits(omits) {
   return omits.map(function (omitted, index) {
     var formatted = '';
-
     if (index === 0) {
       formatted += chordChangesDescriptors.omit;
     }
-
     formatted += omitted === 'b3' ? '3' : omitted;
     return formatted;
   });
 }
 ;// CONCATENATED MODULE: ./src/parser/filters/getParsableDescriptor.js
+
 
 /**
  * Prepare whatever string has been identified as a descriptor so it is parsable by the next filter
@@ -17329,31 +16938,24 @@ function formatOmits(omits) {
  * @param {Chord} chord
  * @returns {Chord}
  */
-
 function getParsableDescriptor(chord) {
   var allFilters = [toLowerCaseExceptMajorM, removeSpaces, addDisambiguators, addMissingVerbs];
-
   if (chord.input.descriptor) {
     chord.input.parsableDescriptor = chain(allFilters, chord.input.descriptor);
   }
-
   return chord;
 }
-
 function toLowerCaseExceptMajorM(descriptor) {
   return descriptor.replace(/[A-LN-Za-z]+/g, function (match) {
     return match.toLowerCase();
   }).replace('oMit', 'omit').replace('diM', 'dim').replace('augMented', 'augmented');
 }
-
 function removeSpaces(descriptor) {
   return descriptor.replace(/ /g, '');
 }
-
 function addDisambiguators(descriptor) {
   return descriptor.replace(/(7?dim)(alt|add)/g, '$1 $2').replace(/([m|M])(alt|add)/g, '$1 $2').replace(/i(no[35])/g, 'i $1').replace(/([b♭#♯]9)6/g, '$1 6').replace(/(9\/?6)/g, ' $1');
 }
-
 function addMissingVerbs(descriptor) {
   var allTokensWithVerbs;
   var currentVerb;
@@ -17363,7 +16965,6 @@ function addMissingVerbs(descriptor) {
     currentVerb = '';
     parenthesis.split(',').forEach(function (token) {
       hasVerb = true;
-
       if (token.startsWith('add')) {
         currentVerb = 'add';
       } else if (token.startsWith('omit')) {
@@ -17373,7 +16974,6 @@ function addMissingVerbs(descriptor) {
       } else {
         hasVerb = false;
       }
-
       if (hasVerb) {
         allTokensWithVerbs.push(token);
       } else {
@@ -17385,12 +16985,12 @@ function addMissingVerbs(descriptor) {
 }
 ;// CONCATENATED MODULE: ./src/parser/filters/initChord.js
 
+
 /**
  * @param {String} symbol
  * @param {Object} parserConfiguration
  * @returns {Chord}
  */
-
 function initChord() {
   var parserConfiguration = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var symbol = arguments.length > 1 ? arguments[1] : undefined;
@@ -17405,21 +17005,13 @@ function initChord() {
 }
 ;// CONCATENATED MODULE: ./src/parser/filters/nameIndividualChordNotes.js
 var _rootNoteToScaleAccid;
-
 function nameIndividualChordNotes_toConsumableArray(arr) { return nameIndividualChordNotes_arrayWithoutHoles(arr) || nameIndividualChordNotes_iterableToArray(arr) || nameIndividualChordNotes_unsupportedIterableToArray(arr) || nameIndividualChordNotes_nonIterableSpread(); }
-
 function nameIndividualChordNotes_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
 function nameIndividualChordNotes_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return nameIndividualChordNotes_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return nameIndividualChordNotes_arrayLikeToArray(o, minLen); }
-
 function nameIndividualChordNotes_iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
-
 function nameIndividualChordNotes_arrayWithoutHoles(arr) { if (Array.isArray(arr)) return nameIndividualChordNotes_arrayLikeToArray(arr); }
-
 function nameIndividualChordNotes_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
 function nameIndividualChordNotes_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 
 
 var notesSharp = [notes.A, notes.ASharp, notes.B, notes.C, notes.CSharp, notes.D, notes.DSharp, notes.E, notes.F, notes.FSharp, notes.G, notes.GSharp];
@@ -17476,13 +17068,13 @@ var rootNoteToScaleAccidentals = (_rootNoteToScaleAccid = {}, nameIndividualChor
   maj: 'sharp',
   min: 'sharp'
 }), _rootNoteToScaleAccid);
+
 /**
  * Convert intervals in actual notes.
  *
  * @param {Chord} chord
  * @returns {Chord}
  */
-
 function nameIndividualChordNotes(chord) {
   var rootNote = chord.normalized.rootNote;
   var semitones = chord.normalized.semitones;
@@ -17499,51 +17091,41 @@ function nameIndividualChordNotes(chord) {
 }
 ;// CONCATENATED MODULE: ./src/parser/filters/normalizeNotes.js
 
+
 /**
  * Convert root/bass notes to English names
  *
  * @param {Chord} chord
  * @returns {Chord}
  */
-
 function normalizeNotes(chord) {
   chord.normalized.rootNote = allVariantsToNotes[chord.input.rootNote];
-
   if (chord.input.bassNote) {
     chord.normalized.bassNote = allVariantsToNotes[chord.input.bassNote];
   }
-
   return chord;
 }
 // EXTERNAL MODULE: ./node_modules/lodash/clone.js
-var clone = __nested_webpack_require_155839__(6678);
-var clone_default = /*#__PURE__*/__nested_webpack_require_155839__.n(clone);
+var clone = __nested_webpack_require_155834__(6678);
+var clone_default = /*#__PURE__*/__nested_webpack_require_155834__.n(clone);
 // EXTERNAL MODULE: ./node_modules/lodash/find.js
-var find = __nested_webpack_require_155839__(3311);
-var find_default = /*#__PURE__*/__nested_webpack_require_155839__.n(find);
+var find = __nested_webpack_require_155834__(3311);
+var find_default = /*#__PURE__*/__nested_webpack_require_155834__.n(find);
 // EXTERNAL MODULE: ./node_modules/lodash/uniq.js
-var uniq = __nested_webpack_require_155839__(4908);
-var uniq_default = /*#__PURE__*/__nested_webpack_require_155839__.n(uniq);
+var uniq = __nested_webpack_require_155834__(4908);
+var uniq_default = /*#__PURE__*/__nested_webpack_require_155834__.n(uniq);
 // EXTERNAL MODULE: ./node_modules/lodash/without.js
-var without = __nested_webpack_require_155839__(2569);
-var without_default = /*#__PURE__*/__nested_webpack_require_155839__.n(without);
+var without = __nested_webpack_require_155834__(2569);
+var without_default = /*#__PURE__*/__nested_webpack_require_155834__.n(without);
 ;// CONCATENATED MODULE: ./src/parser/filters/normalizeDescriptor.js
 function normalizeDescriptor_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
 function normalizeDescriptor_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? normalizeDescriptor_ownKeys(Object(source), !0).forEach(function (key) { normalizeDescriptor_defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : normalizeDescriptor_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-
 function normalizeDescriptor_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function normalizeDescriptor_toConsumableArray(arr) { return normalizeDescriptor_arrayWithoutHoles(arr) || normalizeDescriptor_iterableToArray(arr) || normalizeDescriptor_unsupportedIterableToArray(arr) || normalizeDescriptor_nonIterableSpread(); }
-
 function normalizeDescriptor_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
 function normalizeDescriptor_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return normalizeDescriptor_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return normalizeDescriptor_arrayLikeToArray(o, minLen); }
-
 function normalizeDescriptor_iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
-
 function normalizeDescriptor_arrayWithoutHoles(arr) { if (Array.isArray(arr)) return normalizeDescriptor_arrayLikeToArray(arr); }
-
 function normalizeDescriptor_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 
@@ -17559,10 +17141,8 @@ function normalizeDescriptor_arrayLikeToArray(arr, len) { if (len == null || len
  * @param {Chord} chord
  * @returns {Chord}
  */
-
 function normalizeDescriptor(chord) {
   var chordIntervals = clone_default()(chord.normalized.intervals);
-
   var normalized = {
     quality: '',
     isSuspended: false,
@@ -17571,7 +17151,6 @@ function normalizeDescriptor(chord) {
     adds: [],
     omits: []
   };
-
   if (isPowerChord(chordIntervals)) {
     normalized.quality = qualities.power;
   } else if (isBass(chordIntervals)) {
@@ -17579,21 +17158,18 @@ function normalizeDescriptor(chord) {
   } else {
     var omits = getOmits(chordIntervals, chord.normalized.intents.major);
     var isSuspended = getIsSuspended(chordIntervals, chord.normalized.intents.major);
-
     var _getChordQuality = getChordQuality(chordIntervals, chord, isSuspended, omits),
-        qualityIntervals = _getChordQuality.qualityIntervals,
-        quality = _getChordQuality.quality;
+      qualityIntervals = _getChordQuality.qualityIntervals,
+      quality = _getChordQuality.quality;
+    var extensions = getExtensions(chordIntervals, quality);
 
-    var extensions = getExtensions(chordIntervals, quality); // to be able to detect adds and alterations, we build the "straight" version of the chord,
+    // to be able to detect adds and alterations, we build the "straight" version of the chord,
     // ie. the chord as if no alterations/adds/omits where present.
     // we will compare this to the actual intervals later on
-
     var baseIntervals = ['1'].concat(normalizeDescriptor_toConsumableArray(qualityIntervals), normalizeDescriptor_toConsumableArray(extensions));
-
     var _getAddsAndAlteration = getAddsAndAlterations(chordIntervals, baseIntervals, quality),
-        adds = _getAddsAndAlteration.adds,
-        alterations = _getAddsAndAlteration.alterations;
-
+      adds = _getAddsAndAlteration.adds,
+      alterations = _getAddsAndAlteration.alterations;
     normalized = normalizeDescriptor_objectSpread(normalizeDescriptor_objectSpread({}, normalized), {}, {
       quality: quality,
       isSuspended: isSuspended,
@@ -17603,41 +17179,33 @@ function normalizeDescriptor(chord) {
       omits: omits
     });
   }
-
   return normalizeDescriptor_objectSpread(normalizeDescriptor_objectSpread({}, chord), {}, {
     normalized: normalizeDescriptor_objectSpread(normalizeDescriptor_objectSpread({}, chord.normalized), normalized)
   });
 }
-
 function isPowerChord(intervals) {
   return hasExactly(intervals, ['1', '5']);
 }
-
 function isBass(intervals) {
   return hasExactly(intervals, ['1']);
 }
-
 function getIsSuspended(intervals, hasMajorIntent) {
   return intervals.includes('4') || intervals.includes('11') && hasMajorIntent && !intervals.includes('3');
 }
-
 function getOmits(intervals, hasMajorIntent) {
   var omits = [];
-
   if (hasNoneOf(intervals, ['b3', '3', '4', '11']) || !hasMajorIntent && hasNoneOf(intervals, ['b3', '4'])) {
     omits.push(hasMajorIntent ? '3' : 'b3');
   }
-
   if (hasNoneOf(intervals, ['b5', '5', '#5', 'b13'])) {
     omits.push('5');
   }
-
   return omits;
 }
-
 function getChordQuality(allIntervals, chord, isSuspended, omits) {
   var intervalsForQualityDetection = getIntervalsForQualityDetection(allIntervals, chord, isSuspended, omits);
-  var intervalsToQualities = [// !!! do not change order without a good reason
+  var intervalsToQualities = [
+  // !!! do not change order without a good reason
   {
     qualityIntervals: ['b3'],
     quality: qualities.mi
@@ -17677,52 +17245,41 @@ function getChordQuality(allIntervals, chord, isSuspended, omits) {
   return find_default()(intervalsToQualities, function (o) {
     return hasAll(intervalsForQualityDetection, o.qualityIntervals);
   });
-} // To properly detect the chord quality, we need a "straight" version of the chord,
+}
+
+// To properly detect the chord quality, we need a "straight" version of the chord,
 // meaning with a third interval (= un-suspended, no omit3)
-
-
 function getIntervalsForQualityDetection(allIntervals, chord, isSuspended, omits) {
   var allFilters = [undoOmit3.bind(null, omits), undoSuspension.bind(null, isSuspended, chord.normalized.intents.major), undoAlt5.bind(null, chord.normalized.intents.alt), (uniq_default())];
   return chain(allFilters, clone_default()(allIntervals));
 }
-
 function undoOmit3(omits, allIntervals) {
   var with3rd = clone_default()(allIntervals);
-
   if (omits.includes('3')) {
     with3rd.push('3');
   } else if (omits.includes('b3')) {
     with3rd.push('b3');
   }
-
   return with3rd;
 }
-
 function undoSuspension(isSuspended, hasMajorIntent, allIntervals) {
   if (isSuspended) {
     var unSuspended = without_default()(allIntervals, '4');
-
     unSuspended.push(hasMajorIntent ? '3' : 'b3');
     return unSuspended;
   }
-
   return allIntervals;
 }
-
 function undoAlt5(isAlt, allIntervals) {
   if (isAlt) {
     var unaltered = without_default()(allIntervals, 'b5', '#5');
-
     unaltered.push('5');
     return unaltered;
   }
-
   return allIntervals;
 }
-
 function getExtensions(allIntervals, quality) {
   var extensions = [];
-
   if (canBeExtended(quality)) {
     if (isMinorExtended13th(allIntervals, quality)) {
       extensions.push('9', '11', '13');
@@ -17734,34 +17291,26 @@ function getExtensions(allIntervals, quality) {
       extensions.push('9');
     }
   }
-
   return extensions;
 }
-
 function canBeExtended(quality) {
   return [qualities.ma7, qualities.dom7, qualities.mi7, qualities.miMa7].includes(quality);
 }
-
 function canHave11th(quality) {
   return [qualities.mi7, qualities.miMa7].includes(quality);
 }
-
 function isMinorExtended13th(allIntervals, quality) {
   return canHave11th(quality) && hasOneOf(allIntervals, '13') && hasOneOf(allIntervals, ['11', '#11']) && hasOneOf(allIntervals, ['b9', '9', '#9']);
 }
-
 function isMajorExtended13th(allIntervals, quality) {
   return !canHave11th(quality) && hasOneOf(allIntervals, '13') && hasOneOf(allIntervals, ['b9', '9', '#9']);
 }
-
 function isExtended11th(allIntervals) {
   return hasOneOf(allIntervals, '11') && hasOneOf(allIntervals, ['b9', '9', '#9']);
 }
-
 function isExtended9th(allIntervals) {
   return allIntervals.includes('9');
 }
-
 function getAddsAndAlterations(chordIntervals, baseIntervals, quality) {
   var adds = [];
   var alterations = [];
@@ -17776,28 +17325,22 @@ function getAddsAndAlterations(chordIntervals, baseIntervals, quality) {
       }
     }
   });
-
   if (hasAdd3(chordIntervals)) {
     adds.push('3');
   }
-
   return {
     adds: sortIntervals(adds),
     alterations: sortIntervals(alterations)
   };
 }
-
 function isAlteration(quality, interval) {
   var _qualityAlterations;
-
   var qualityAlterations = (_qualityAlterations = {}, normalizeDescriptor_defineProperty(_qualityAlterations, qualities.ma, ['b5', '#5', '#11', 'b13']), normalizeDescriptor_defineProperty(_qualityAlterations, qualities.ma6, ['b5', '#5', '#11', 'b13']), normalizeDescriptor_defineProperty(_qualityAlterations, qualities.ma7, ['b5', '#5', '#11', 'b13']), normalizeDescriptor_defineProperty(_qualityAlterations, qualities.dom7, ['b5', '#5', 'b9', '#9', '#11', 'b13']), normalizeDescriptor_defineProperty(_qualityAlterations, qualities.mi, ['b5', '#5', '#11', 'b13']), normalizeDescriptor_defineProperty(_qualityAlterations, qualities.mi6, ['b5', '#5', '#11', 'b13']), normalizeDescriptor_defineProperty(_qualityAlterations, qualities.mi7, ['b5', '#5', '#11', 'b13']), normalizeDescriptor_defineProperty(_qualityAlterations, qualities.miMa7, ['b5', '#5', '#11', 'b13']), normalizeDescriptor_defineProperty(_qualityAlterations, qualities.aug, []), normalizeDescriptor_defineProperty(_qualityAlterations, qualities.dim, []), normalizeDescriptor_defineProperty(_qualityAlterations, qualities.dim7, []), _qualityAlterations);
   return qualityAlterations[quality].includes(interval);
 }
-
 function hasAdd3(allIntervals) {
   return hasAll(allIntervals, ['3', '4']);
 }
-
 function sortIntervals(intervals) {
   return intervals.sort(function (a, b) {
     var sortableA = Number.parseInt(a.replace(/[b#]/, ''));
@@ -17807,6 +17350,7 @@ function sortIntervals(intervals) {
 }
 ;// CONCATENATED MODULE: ./src/parser/filters/parseBase.js
 
+
 /**
  * Split symbol in root/bass note and descriptor.
  * Returns null if the given string does not seems to be a chord.
@@ -17815,24 +17359,19 @@ function sortIntervals(intervals) {
  * @param {Chord} chord
  * @returns {Chord|null}
  */
-
 function parseBase(noteVariants, chord) {
   var symbol = chord.input.symbol;
   var notesRegex = noteVariants.join('|');
   var notesAndDescriptorRegex = new RegExp('^' + '(' + notesRegex + ')' + '(.*?)' + '(/(' + notesRegex + '))?' + '$');
   var result = symbol.match(notesAndDescriptorRegex);
-
   if (result && result[1]) {
     chord.input.rootNote = result[1];
-
     if (result[2]) {
       chord.input.descriptor = result[2];
     }
-
     if (result[4]) {
       chord.input.bassNote = result[4];
     }
-
     return chord;
   } else {
     throw new NoSymbolFoundError(chord);
@@ -17840,11 +17379,8 @@ function parseBase(noteVariants, chord) {
 }
 ;// CONCATENATED MODULE: ./src/dictionaries/modifiers.js
 function modifiers_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
 function modifiers_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? modifiers_ownKeys(Object(source), !0).forEach(function (key) { modifiers_defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : modifiers_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-
 function modifiers_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 var allModifiers = {
   // base
   ma: 'ma',
@@ -17884,6 +17420,7 @@ var allModifiers = {
   power: 'power',
   alt: 'alt'
 };
+
 /**
  * WARNING: when adding new modifiers symbols, be careful of possible edge cases that might arise with some combinations.
  * For example, without edge case handling, "madd9" would be parsed as "ma" instead of "m"+"add9"
@@ -17906,7 +17443,6 @@ var major7th = getDerivedModifiers(major, allModifiers.add7, function (symbol) {
 var add7 = getDerivedModifiers(major, allModifiers.add7, function (symbol) {
   return 'add' + symbol + '7';
 });
-
 var allSymbols = modifiers_objectSpread(modifiers_objectSpread(modifiers_objectSpread(modifiers_objectSpread({}, major), major7th), {}, {
   // minor
   '-': allModifiers.mi,
@@ -17992,14 +17528,12 @@ var allSymbols = modifiers_objectSpread(modifiers_objectSpread(modifiers_objectS
   'alt.': allModifiers.alt,
   altered: allModifiers.alt
 });
-
 function getDerivedModifiers(source, modifierId, derivedFn) {
   return Object.keys(source).map(derivedFn).reduce(function (acc, curr) {
     acc[curr] = modifierId;
     return acc;
   }, {});
 }
-
 var modifiers_allVariants = Object.keys(allSymbols).sort(function (a, b) {
   return b.length - a.length;
 });
@@ -18030,15 +17564,10 @@ var modifiers_allVariants = Object.keys(allSymbols).sort(function (a, b) {
 });
 ;// CONCATENATED MODULE: ./src/parser/filters/parseDescriptor.js
 function parseDescriptor_toConsumableArray(arr) { return parseDescriptor_arrayWithoutHoles(arr) || parseDescriptor_iterableToArray(arr) || parseDescriptor_unsupportedIterableToArray(arr) || parseDescriptor_nonIterableSpread(); }
-
 function parseDescriptor_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
 function parseDescriptor_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return parseDescriptor_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return parseDescriptor_arrayLikeToArray(o, minLen); }
-
 function parseDescriptor_iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
-
 function parseDescriptor_arrayWithoutHoles(arr) { if (Array.isArray(arr)) return parseDescriptor_arrayLikeToArray(arr); }
-
 function parseDescriptor_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 
@@ -18054,21 +17583,17 @@ function parseDescriptor_arrayLikeToArray(arr, len) { if (len == null || len > a
  * @param {Chord} chord
  * @returns {Chord|Null}
  */
-
 function parseDescriptor(altIntervals, chord) {
   var allModifiers = [];
-
   if (chord.input.parsableDescriptor) {
     allModifiers = getModifiers(chord);
   }
-
   chord.input.modifiers = allModifiers;
   chord.normalized.intervals = getIntervals(allModifiers, altIntervals);
   chord.normalized.semitones = getSemitones(chord.normalized.intervals);
   chord.normalized.intents = getIntents(allModifiers);
   return chord;
 }
-
 function getModifiers(chord) {
   var parsableDescriptor = chord.input.parsableDescriptor;
   var modifiers = [];
@@ -18076,56 +17601,44 @@ function getModifiers(chord) {
   var descriptorMatches = parsableDescriptor.match(descriptorRegex);
   var remainingChars = parsableDescriptor;
   var allModifiersId;
-
   if (descriptorMatches) {
     descriptorMatches.forEach(function (match) {
       allModifiersId = allSymbols[match];
-
       if (!Array.isArray(allModifiersId)) {
         allModifiersId = [allModifiersId];
       }
-
       allModifiersId.forEach(function (modifierId) {
         if (modifiers.includes(modifierId)) {
           return;
         }
-
         modifiers.push(modifierId);
         remainingChars = remainingChars.replace(match, '');
       });
     });
   }
-
   if (modifiers.length === 0) {
     throw new NoSymbolFoundError(chord);
   }
-
   if (remainingChars.trim().length > 0) {
     throw new InvalidModifierError(chord, remainingChars);
   }
-
   return modifiers;
 }
-
 function getIntervals(allModifiers, altIntervals) {
   if (allModifiers.includes(modifiers.power)) {
     return ['1', '5'];
   } else if (allModifiers.includes(modifiers.bass)) {
     return ['1'];
   }
-
   return uniq_default()(['1'].concat(parseDescriptor_toConsumableArray(getThird(allModifiers)), parseDescriptor_toConsumableArray(getFourth(allModifiers)), parseDescriptor_toConsumableArray(getFifths(allModifiers, altIntervals)), parseDescriptor_toConsumableArray(getSixth(allModifiers)), parseDescriptor_toConsumableArray(getSevenths(allModifiers)), parseDescriptor_toConsumableArray(getNinths(allModifiers, altIntervals)), parseDescriptor_toConsumableArray(getElevenths(allModifiers, altIntervals)), parseDescriptor_toConsumableArray(getThirteenths(allModifiers, altIntervals)))).sort(function (a, b) {
     return intervalsToSemitones[a] - intervalsToSemitones[b];
   });
 }
-
 function getThird(allModifiers) {
   var third = [];
-
   if (allModifiers.includes(modifiers.omit3)) {
     return [];
   }
-
   if (!hasOneOf(allModifiers, [modifiers.sus, modifiers.sus2])) {
     if (!hasMajorIntent(allModifiers)) {
       third.push('b3');
@@ -18133,67 +17646,49 @@ function getThird(allModifiers) {
       third.push('3');
     }
   }
-
   if (allModifiers.includes(modifiers.add3)) {
     third.push('3');
   }
-
   return third;
 }
-
 function getFourth(allModifiers) {
   var fourth = [];
-
   if (hasOneOf(allModifiers, [modifiers.sus, modifiers.add4])) {
     fourth.push('4');
   }
-
   return fourth;
 }
-
 function getFifths(allModifiers, altIntervals) {
   var fifths = [];
-
   if (allModifiers.includes(modifiers.omit5)) {
     return [];
   }
-
   if (hasOneOf(allModifiers, [modifiers.dim, modifiers.halfDim, modifiers.fifthFlat]) || shouldAlter(allModifiers, altIntervals, 'b5')) {
     fifths.push('b5');
   }
-
   if (hasOneOf(allModifiers, [modifiers.aug, modifiers.fifthSharp]) || shouldAlter(allModifiers, altIntervals, '#5')) {
     fifths.push('#5');
   }
-
   if (!fifths.length && !allModifiers.includes(modifiers.thirteenthFlat)) {
     fifths.push('5');
   }
-
   return fifths;
 }
-
 function getSixth(allModifiers) {
   var sixth = [];
-
   if (hasOneOf(allModifiers, [modifiers.addb6])) {
     sixth.push('b6');
   }
-
   if (hasOneOf(allModifiers, [modifiers.add6, modifiers.add69]) && !isExtended(allModifiers) && !hasOneOf(allModifiers, [modifiers.halfDim])) {
     sixth.push('6');
   }
-
   return sixth;
 }
-
 function getSevenths(allModifiers) {
   var sevenths = [];
-
   if (hasOneOf(allModifiers, [modifiers.alt])) {
     sevenths.push('b7');
   }
-
   if (hasOneOf(allModifiers, [modifiers.seventh, modifiers.halfDim])) {
     if (allModifiers.includes(modifiers.dim)) {
       sevenths.push('bb7');
@@ -18205,96 +17700,75 @@ function getSevenths(allModifiers) {
   } else if (hasOneOf(allModifiers, [modifiers.ninth, modifiers.eleventh, modifiers.thirteenth])) {
     sevenths.push(getMinorOrMajorSeventh(allModifiers));
   }
-
   if (allModifiers.includes(modifiers.add7)) {
     sevenths.push('7');
   }
-
   return sevenths;
 }
-
 function getMinorOrMajorSeventh(allModifiers) {
   return allModifiers.includes(modifiers.ma) ? '7' : 'b7';
 }
-
 function getNinths(allModifiers, altIntervals) {
   var ninth = [];
-
   if (hasOneOf(allModifiers, [modifiers.add69, modifiers.ninth, modifiers.eleventh, modifiers.thirteenth]) && hasNoneOf(allModifiers, [modifiers.ninthFlat, modifiers.ninthSharp])) {
     ninth.push('9');
   }
-
   if (hasOneOf(allModifiers, [modifiers.sus2, modifiers.add9])) {
     ninth.push('9');
   }
-
   if (hasOneOf(allModifiers, [modifiers.ninthFlat]) || shouldAlter(allModifiers, altIntervals, 'b9')) {
     ninth.push('b9');
   }
-
   if (hasOneOf(allModifiers, [modifiers.ninthSharp]) || shouldAlter(allModifiers, altIntervals, '#9')) {
     ninth.push('#9');
   }
-
   return ninth;
 }
-
 function getElevenths(allModifiers, altIntervals) {
   var elevenths = [];
-
   if (hasOneOf(allModifiers, [modifiers.thirteenth]) && !hasMajorIntent(allModifiers)) {
     elevenths.push('11');
   } else if (hasOneOf(allModifiers, [modifiers.eleventh, modifiers.add11])) {
     elevenths.push('11');
   }
-
   if (hasOneOf(allModifiers, [modifiers.eleventhSharp]) || shouldAlter(allModifiers, altIntervals, '#11')) {
     elevenths.push('#11');
   }
-
   return elevenths;
 }
-
 function getThirteenths(allModifiers, altIntervals) {
   var thirteenths = [];
-
   if (hasOneOf(allModifiers, [modifiers.add13, modifiers.thirteenth]) || hasOneOf(allModifiers, [modifiers.add6, modifiers.add69]) && isExtended(allModifiers) || hasOneOf(allModifiers, [modifiers.add6, modifiers.add69]) && hasOneOf(allModifiers, [modifiers.halfDim])) {
     thirteenths.push('13');
   }
-
   if (hasOneOf(allModifiers, [modifiers.thirteenthFlat]) || shouldAlter(allModifiers, altIntervals, 'b13')) {
     thirteenths.push('b13');
   }
-
   return thirteenths;
 }
-
 function shouldAlter(allModifiers, altIntervals, interval) {
   return allModifiers.includes(modifiers.alt) && altIntervals.includes(interval);
 }
-
 function hasMajorIntent(allModifiers) {
   return hasNoneOf(allModifiers, [modifiers.mi, modifiers.dim, modifiers.dim7, modifiers.halfDim]);
 }
-
 function isExtended(allModifiers) {
   return hasOneOf(allModifiers, [modifiers.seventh, modifiers.ninth, modifiers.eleventh, modifiers.thirteenth]);
-} // Based on https://stackoverflow.com/a/6969486
+}
 
-
+// Based on https://stackoverflow.com/a/6969486
 function escapeRegex(string) {
   return string.replace(/[.\-*+?^${}()|[\]\\]/g, '\\$&');
 }
-
 function getSemitones(allIntervals) {
   return allIntervals.map(function (interval) {
     return intervalsToSemitones[interval];
   }).sort(function (a, b) {
     return a - b;
   });
-} // intents will be used later at formatting for disambiguation of some potentially confusing cases
+}
 
-
+// intents will be used later at formatting for disambiguation of some potentially confusing cases
 function getIntents(allModifiers) {
   return {
     major: hasMajorIntent(allModifiers),
@@ -18304,15 +17778,10 @@ function getIntents(allModifiers) {
 }
 ;// CONCATENATED MODULE: ./src/parser/chordParserFactory.js
 function chordParserFactory_toConsumableArray(arr) { return chordParserFactory_arrayWithoutHoles(arr) || chordParserFactory_iterableToArray(arr) || chordParserFactory_unsupportedIterableToArray(arr) || chordParserFactory_nonIterableSpread(); }
-
 function chordParserFactory_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
 function chordParserFactory_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return chordParserFactory_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return chordParserFactory_arrayLikeToArray(o, minLen); }
-
 function chordParserFactory_iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
-
 function chordParserFactory_arrayWithoutHoles(arr) { if (Array.isArray(arr)) return chordParserFactory_arrayLikeToArray(arr); }
-
 function chordParserFactory_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 
@@ -18335,51 +17804,44 @@ function chordParserFactory_arrayLikeToArray(arr, len) { if (len == null || len 
  * @param {ParserConfiguration} [parserConfiguration]
  * @returns {function(String): Chord}
  */
-
 function chordParserFactory() {
   var parserConfiguration = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var allAltIntervals = ['b5', '#5', 'b9', '#9', '#11', 'b13'];
   var allNotationSystems = ['english', 'german', 'latin'];
   var _parserConfiguration$ = parserConfiguration.notationSystems,
-      notationSystems = _parserConfiguration$ === void 0 ? cloneDeep_default()(allNotationSystems) : _parserConfiguration$,
-      _parserConfiguration$2 = parserConfiguration.altIntervals,
-      altIntervals = _parserConfiguration$2 === void 0 ? cloneDeep_default()(allAltIntervals) : _parserConfiguration$2,
-      _parserConfiguration$3 = parserConfiguration.customFilters,
-      customFilters = _parserConfiguration$3 === void 0 ? [] : _parserConfiguration$3;
+    notationSystems = _parserConfiguration$ === void 0 ? cloneDeep_default()(allNotationSystems) : _parserConfiguration$,
+    _parserConfiguration$2 = parserConfiguration.altIntervals,
+    altIntervals = _parserConfiguration$2 === void 0 ? cloneDeep_default()(allAltIntervals) : _parserConfiguration$2,
+    _parserConfiguration$3 = parserConfiguration.customFilters,
+    customFilters = _parserConfiguration$3 === void 0 ? [] : _parserConfiguration$3;
   checkAltIntervals(altIntervals, allAltIntervals);
   checkNotationSystems(notationSystems, allNotationSystems);
   helpers_checkCustomFilters(customFilters);
   return parseChord;
+
   /**
    * Convert an input string into an abstract chord structure
    * @param {String} symbol - the chord symbol candidate
    * @returns {Chord|Object} A chord object if the given string is successfully parsed. An object with an `error` property otherwise.
    */
-
   function parseChord(symbol) {
     var allErrors = [];
-
     if (!isInputValid(symbol)) {
       var e = new InvalidInputError();
       allErrors.push(formatError(e));
     }
-
     var allVariantsPerGroupCopy = cloneDeep_default()(allVariantsPerGroup).filter(function (variantsGroup) {
       return notationSystems.includes(variantsGroup.name);
     });
-
     var chord;
     var allFilters;
     var variants;
-
     if (!allErrors.length) {
       while (allVariantsPerGroupCopy.length && !chord) {
         variants = allVariantsPerGroupCopy.shift();
         allFilters = [initChord.bind(null, parserConfiguration), parseBase.bind(null, variants.notes), getParsableDescriptor, parseDescriptor.bind(null, altIntervals), checkIntervalsConsistency, normalizeNotes, normalizeDescriptor, formatSymbolParts, formatSymbol, nameIndividualChordNotes].concat(chordParserFactory_toConsumableArray(customFilters));
-
         try {
           chord = chain(allFilters, symbol);
-
           if (chord) {
             chord.input.notationSystem = variants.name;
           } else {
@@ -18390,46 +17852,37 @@ function chordParserFactory() {
         }
       }
     }
-
     return chord ? chord : {
       error: allErrors
     };
   }
 }
-
 function checkAltIntervals(altIntervals, allAltIntervals) {
   checkArray('altIntervals', altIntervals, allAltIntervals, true);
 }
-
 function checkNotationSystems(notationSystems, allNotationSystems) {
   checkArray('notationSystems', notationSystems, allNotationSystems);
 }
-
 function checkArray(arrayName, arrayToTest, allowedValues, allowEmpty) {
   if (!Array.isArray(arrayToTest)) {
     throw new TypeError("'".concat(arrayName, "' should be an array"));
   }
-
   if (!allowEmpty && arrayToTest.length === 0) {
     throw new TypeError("'".concat(arrayName, "' cannot be empty"));
   }
-
   arrayToTest.forEach(function (system) {
     if (!allowedValues.includes(system)) {
       throw new TypeError("'".concat(system, "' is not a valid value for ").concat(arrayName));
     }
   });
 }
-
 function isInputValid(input) {
   return typeof input === 'string' && input.length > 0;
 }
-
 function getUnexpectedError(notationSystem) {
   var error = new UnexpectedError();
   return formatError(error, notationSystem);
 }
-
 function formatError(exceptionError, notationSystem) {
   return {
     type: exceptionError.name,
@@ -18438,20 +17891,16 @@ function formatError(exceptionError, notationSystem) {
     notationSystem: notationSystem
   };
 }
+
 /**
  * @module chordParserFactory
  * Expose the chordParserFactory() function
  */
-
-
 /* harmony default export */ const parser_chordParserFactory = (chordParserFactory);
 ;// CONCATENATED MODULE: ./src/renderer/filters/shortenNormalized.js
 function shortenNormalized_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
 function shortenNormalized_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? shortenNormalized_ownKeys(Object(source), !0).forEach(function (key) { shortenNormalized_defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : shortenNormalized_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-
 function shortenNormalized_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 
 var shortDescriptors = {
   sus2: 'sus2',
@@ -18463,15 +17912,14 @@ var shortDescriptors = {
   aug7: '7+',
   eleventh: '11'
 };
+
 /**
  * @param {Chord} chord
  * @returns {Chord}
  */
-
 function shortenNormalized(chord) {
   var descriptor;
   var chordChanges = chord.formatted.chordChanges;
-
   if (isSus2(chord)) {
     descriptor = shortDescriptors.sus2;
     chordChanges = [];
@@ -18483,12 +17931,10 @@ function shortenNormalized(chord) {
     chordChanges = [];
   } else {
     descriptor = chord.formatted.descriptor.replace('mi', shortDescriptors.mi).replace(/[m|M]a/, shortDescriptors.ma).replace('dim', shortDescriptors.dim);
-
     if (isEleventh(chord)) {
       descriptor = descriptor.replace(/7sus|9sus/, shortDescriptors.eleventh);
     }
   }
-
   chordChanges = chordChanges.map(function (change) {
     return change.replace(/[m|M]a/, shortDescriptors.ma).replace('omit', shortDescriptors.omit);
   });
@@ -18499,26 +17945,23 @@ function shortenNormalized(chord) {
     })
   });
 }
-
 function isSus2(chord) {
   return hasExactly(chord.normalized.intervals, ['1', '5', '9']);
 }
-
 function isAdd2(chord) {
   return hasExactly(chord.normalized.intervals, ['1', '3', '5', '9']);
 }
-
 function isAug7(chord) {
   return hasExactly(chord.normalized.intervals, ['1', '3', '#5', 'b7']);
 }
-
 function isEleventh(chord) {
   return chord.normalized.intents.eleventh;
 }
 // EXTERNAL MODULE: ./node_modules/lodash/difference.js
-var difference = __nested_webpack_require_155839__(1966);
-var difference_default = /*#__PURE__*/__nested_webpack_require_155839__.n(difference);
+var difference = __nested_webpack_require_155834__(1966);
+var difference_default = /*#__PURE__*/__nested_webpack_require_155834__.n(difference);
 ;// CONCATENATED MODULE: ./src/renderer/filters/simplify.js
+
 
 
 
@@ -18531,47 +17974,38 @@ var difference_default = /*#__PURE__*/__nested_webpack_require_155839__.n(differ
  * @param {('none'|'max'|'core')} level
  * @returns {Chord}
  */
-
 function simplify_simplify() {
   var level = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'none';
   var chord = arguments.length > 1 ? arguments[1] : undefined;
-
   if (level === 'none') {
     return chord;
   }
-
   var intervalsToRemove = {
     max: ['4', 'b5', '#5', '6', 'bb7', 'b7', '7', 'b9', '9', '#9', '11', '#11', 'b13', '13'],
     core: ['4', 'b9', '9', '#9', '11', '#11', 'b13', '13']
   };
-
   var intervals = difference_default()(chord.normalized.intervals, intervalsToRemove[level]);
-
   if (hasNoneOf(intervals, ['b3', '3'])) {
     intervals.push(chord.normalized.intents.major ? '3' : 'b3');
   }
-
   if (hasNoneOf(intervals, ['b5', '5', '#5'])) {
     intervals.push('5');
   }
-
   chord.normalized.intervals = intervals;
   chord.normalized.semitones = intervals.map(function (interval) {
     return intervalsToSemitones[interval];
   });
   chord.normalized.intents.eleventh = false;
   chord.normalized.intents.alt = false;
-
   if (level === 'max') {
     delete chord.normalized.bassNote;
   }
-
   var allFilters = [normalizeDescriptor, formatSymbolParts, nameIndividualChordNotes];
   return chain(allFilters, chord);
 }
 // EXTERNAL MODULE: ./node_modules/lodash/invert.js
-var invert = __nested_webpack_require_155839__(3137);
-var invert_default = /*#__PURE__*/__nested_webpack_require_155839__.n(invert);
+var invert = __nested_webpack_require_155834__(3137);
+var invert_default = /*#__PURE__*/__nested_webpack_require_155834__.n(invert);
 ;// CONCATENATED MODULE: ./src/renderer/filters/transpose.js
 
 
@@ -18583,35 +18017,29 @@ var sharpsToFlats = {
   'G#': 'Ab',
   'A#': 'Bb'
 };
-
 var flatsToSharps = invert_default()(sharpsToFlats);
-
-function transpose(transposeValue, useFlats, chord) {
+function transpose(transposeValue, accidentals, chord) {
   var _chord$normalized = chord.normalized,
-      rootNote = _chord$normalized.rootNote,
-      bassNote = _chord$normalized.bassNote;
+    rootNote = _chord$normalized.rootNote,
+    bassNote = _chord$normalized.bassNote;
   var rootSharp = convertToSharp(rootNote);
-  chord.normalized.rootNote = transposeNote(rootSharp, transposeValue, useFlats);
+  chord.normalized.rootNote = transposeNote(rootSharp, transposeValue, accidentals);
   chord.formatted.rootNote = chord.normalized.rootNote;
-
   if (bassNote) {
     var bassSharp = convertToSharp(bassNote);
-    chord.normalized.bassNote = transposeNote(bassSharp, transposeValue, useFlats);
+    chord.normalized.bassNote = transposeNote(bassSharp, transposeValue, accidentals);
     chord.formatted.bassNote = chord.normalized.bassNote;
   }
-
   return nameIndividualChordNotes(chord);
 }
-
-function transposeNote(note, value, useFlats) {
+function transposeNote(note, value, accidentals) {
   var noteIndex = transpose_notes.indexOf(note);
   var transposedIndex = noteIndex + value;
   var octaves = Math.floor(transposedIndex / 12);
   var correctedTransposedIndex = transposedIndex - octaves * 12;
   var transposed = transpose_notes[correctedTransposedIndex];
-  return useFlats ? sharpsToFlats[transposed] || transposed : transposed;
+  return accidentals === 'flat' ? sharpsToFlats[transposed] || transposed : transposed;
 }
-
 function convertToSharp(note) {
   return flatsToSharps[note] || note;
 }
@@ -18657,12 +18085,12 @@ var translationTables = {
   }
 };
 var allNotationSystems = Object.keys(translationTables);
+
 /**
  * @param {('auto'|'english'|'german'|'latin')} notationSystem
  * @param {Chord} chord
  * @returns {Chord|Null}
  */
-
 function convertNotationSystem() {
   var notationSystem = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'english';
   var chord = arguments.length > 1 ? arguments[1] : undefined;
@@ -18670,11 +18098,9 @@ function convertNotationSystem() {
   if (finalNotationSystem === 'english') return chord;
   if (!allNotationSystems.includes(finalNotationSystem)) return null;
   chord.formatted.rootNote = translationTables[finalNotationSystem][chord.formatted.rootNote];
-
   if (chord.formatted.bassNote) {
     chord.formatted.bassNote = translationTables[finalNotationSystem][chord.formatted.bassNote];
   }
-
   return chord;
 }
 ;// CONCATENATED MODULE: ./src/renderer/printer/text.js
@@ -18689,6 +18115,7 @@ function textPrinter(chord) {
 
 
 
+
 /**
  * This printer returns a `chord` object reflecting the applied rendering filters. This object is very close to what would
  * be obtained by re-parsing the rendered chord.
@@ -18699,14 +18126,12 @@ function textPrinter(chord) {
  * @param {Chord} chord
  * @returns {Chord}
  */
-
 function rawPrinter(chord) {
   // make sure the chord can be re-parsed, whichever notation system was used for the rendering
   delete chord.parserConfiguration.notationSystems;
+  var cloned = cloneDeep_default()(chord);
 
-  var cloned = cloneDeep_default()(chord); // Re-parse the rendered chord to get the 'input' property right
-
-
+  // Re-parse the rendered chord to get the 'input' property right
   var textPrinted = textPrinter(chord);
   var parseChord = parser_chordParserFactory(chord.parserConfiguration);
   var reParsed = parseChord(textPrinted);
@@ -18715,17 +18140,11 @@ function rawPrinter(chord) {
 }
 ;// CONCATENATED MODULE: ./src/renderer/chordRendererFactory.js
 function chordRendererFactory_typeof(obj) { "@babel/helpers - typeof"; return chordRendererFactory_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, chordRendererFactory_typeof(obj); }
-
 function chordRendererFactory_toConsumableArray(arr) { return chordRendererFactory_arrayWithoutHoles(arr) || chordRendererFactory_iterableToArray(arr) || chordRendererFactory_unsupportedIterableToArray(arr) || chordRendererFactory_nonIterableSpread(); }
-
 function chordRendererFactory_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
 function chordRendererFactory_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return chordRendererFactory_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return chordRendererFactory_arrayLikeToArray(o, minLen); }
-
 function chordRendererFactory_iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
-
 function chordRendererFactory_arrayWithoutHoles(arr) { if (Array.isArray(arr)) return chordRendererFactory_arrayLikeToArray(arr); }
-
 function chordRendererFactory_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 
@@ -18743,68 +18162,57 @@ function chordRendererFactory_arrayLikeToArray(arr, len) { if (len == null || le
  * @param {RendererConfiguration} [rendererConfiguration]
  * @returns {function(Chord): String}
  */
-
 function chordRendererFactory() {
   var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-      _ref$useShortNamings = _ref.useShortNamings,
-      useShortNamings = _ref$useShortNamings === void 0 ? false : _ref$useShortNamings,
-      _ref$simplify = _ref.simplify,
-      simplify = _ref$simplify === void 0 ? 'none' : _ref$simplify,
-      _ref$transposeValue = _ref.transposeValue,
-      transposeValue = _ref$transposeValue === void 0 ? 0 : _ref$transposeValue,
-      _ref$harmonizeAcciden = _ref.harmonizeAccidentals,
-      harmonizeAccidentals = _ref$harmonizeAcciden === void 0 ? false : _ref$harmonizeAcciden,
-      _ref$useFlats = _ref.useFlats,
-      useFlats = _ref$useFlats === void 0 ? false : _ref$useFlats,
-      _ref$printer = _ref.printer,
-      printer = _ref$printer === void 0 ? 'text' : _ref$printer,
-      _ref$notationSystem = _ref.notationSystem,
-      notationSystem = _ref$notationSystem === void 0 ? 'english' : _ref$notationSystem,
-      _ref$customFilters = _ref.customFilters,
-      customFilters = _ref$customFilters === void 0 ? [] : _ref$customFilters;
-
+    _ref$accidentals = _ref.accidentals,
+    accidentals = _ref$accidentals === void 0 ? 'original' : _ref$accidentals,
+    _ref$customFilters = _ref.customFilters,
+    customFilters = _ref$customFilters === void 0 ? [] : _ref$customFilters,
+    _ref$notationSystem = _ref.notationSystem,
+    notationSystem = _ref$notationSystem === void 0 ? 'english' : _ref$notationSystem,
+    _ref$printer = _ref.printer,
+    printer = _ref$printer === void 0 ? 'text' : _ref$printer,
+    _ref$simplify = _ref.simplify,
+    simplify = _ref$simplify === void 0 ? 'none' : _ref$simplify,
+    _ref$transposeValue = _ref.transposeValue,
+    transposeValue = _ref$transposeValue === void 0 ? 0 : _ref$transposeValue,
+    _ref$useShortNamings = _ref.useShortNamings,
+    useShortNamings = _ref$useShortNamings === void 0 ? false : _ref$useShortNamings;
   helpers_checkCustomFilters(customFilters);
   var allFilters = [];
-
   if (['max', 'core'].includes(simplify)) {
     allFilters.push(simplify_simplify.bind(null, simplify));
   }
-
-  if (harmonizeAccidentals || transposeValue !== 0) {
-    allFilters.push(transpose.bind(null, transposeValue, useFlats));
+  if (accidentals !== 'original' || transposeValue !== 0) {
+    allFilters.push(transpose.bind(null, transposeValue, accidentals));
   }
-
   if (useShortNamings) {
     allFilters.push(shortenNormalized);
   }
-
   allFilters.push.apply(allFilters, [convertNotationSystem.bind(null, notationSystem), formatSymbol].concat(chordRendererFactory_toConsumableArray(customFilters)));
   return renderChord;
+
   /**
    * Render a chord structure
    * @param {Chord} chord - the chord structure to render
    * @returns {String|Chord} output depends on the selected printer: string for text printer (default), Chord for raw printer
    */
-
   function renderChord(chord) {
     if (!isValidChord(chord)) {
       return null;
     }
-
     var filteredChord = chain(allFilters, cloneDeep_default()(chord));
     return printer === 'raw' ? rawPrinter(filteredChord) : textPrinter(filteredChord);
   }
 }
-
 var isValidChord = function isValidChord(chord) {
   return chord && chordRendererFactory_typeof(chord) === 'object' && !chord.error && chord.input;
 };
+
 /**
  * @module chordRendererFactory
  * Expose the chordRendererFactory() function
  **/
-
-
 /* harmony default export */ const renderer_chordRendererFactory = (chordRendererFactory);
 ;// CONCATENATED MODULE: ./src/index.js
 
@@ -26569,10 +25977,14 @@ var cloneDeep = __webpack_require__(3279);
   CHORD: 'chord',
   CHORD_LINE_REPEATER: 'chordLineRepeater',
   EMPTY_LINE: 'emptyLine',
+  KEY_DECLARATION: 'keyDeclaration',
   LYRIC: 'lyric',
   SECTION_LABEL: 'sectionLabel',
   TIME_SIGNATURE: 'timeSignature'
 });
+// EXTERNAL MODULE: ../chord-mark/node_modules/lodash/escapeRegExp.js
+var escapeRegExp = __webpack_require__(3181);
+var escapeRegExp_default = /*#__PURE__*/__webpack_require__.n(escapeRegExp);
 ;// CONCATENATED MODULE: ../chord-mark/src/parser/matchers/isTimeSignatureString.js
 var allowedTimeSignatures = ['2/2', '3/2', '2/4', '3/4', '4/4', '5/4', '3/8', '6/8', '9/8', '12/8'];
 function isTimeSignatureString_isTimeSignatureString(string) {
@@ -26624,6 +26036,7 @@ function parseTimeSignature_parseTimeSignature(string) {
   chordBeatCount: '.',
   chordLineRepeat: '%',
   chordPositionMarker: '_',
+  keyDeclarationPrefix: 'key ',
   noChord: 'NC',
   noLyrics: 'NL',
   sectionLabel: '#',
@@ -26631,16 +26044,6 @@ function parseTimeSignature_parseTimeSignature(string) {
   subBeatCloser: ']'
 });
 var syntax_defaultTimeSignature = parseTimeSignature_parseTimeSignature('4/4');
-;// CONCATENATED MODULE: ../chord-mark/src/parser/matchers/isSectionLabel.js
-
-var isSectionLabel_sectionLabelRegexp = new RegExp('^' + parser_syntax.sectionLabel + '([a-zA-Z]+)([1-9])?( x[2-9])?$');
-function isSectionLabel_isSectionLabel(string) {
-  var found = string.trim().match(isSectionLabel_sectionLabelRegexp);
-  return found !== null;
-}
-// EXTERNAL MODULE: ../chord-mark/node_modules/lodash/escapeRegExp.js
-var escapeRegExp = __webpack_require__(3181);
-var escapeRegExp_default = /*#__PURE__*/__webpack_require__.n(escapeRegExp);
 // EXTERNAL MODULE: ../chord-mark/node_modules/chord-symbol/lib/chord-symbol.js
 var lib_chord_symbol = __webpack_require__(5604);
 ;// CONCATENATED MODULE: ../chord-mark/src/parser/matchers/isChord.js
@@ -26707,6 +26110,15 @@ var removeSubBeatDelimiters = function removeSubBeatDelimiters(token) {
 function isChordLineRepeater_isChordLineRepeater(string) {
   var candidate = clearSpaces(string);
   return candidate === syntax.chordLineRepeat || candidate === syntax.chordLineRepeat.repeat(2);
+}
+;// CONCATENATED MODULE: ../chord-mark/src/parser/matchers/isSectionLabel.js
+
+
+
+var isSectionLabel_sectionLabelRegexp = new RegExp('^' + escapeRegExp_default()(parser_syntax.sectionLabel) + '([a-zA-Z]+)([1-9])?( x[2-9])?$');
+function isSectionLabel_isSectionLabel(string) {
+  var found = clearSpaces(string).match(isSectionLabel_sectionLabelRegexp);
+  return found !== null;
 }
 // EXTERNAL MODULE: ../chord-mark/node_modules/lodash/isEqual.js
 var isEqual = __webpack_require__(8653);
@@ -27297,37 +26709,208 @@ function checkSubBeatConsistency(line) {
 
   if (inSubBeat) throw new InvalidSubBeatGroupException(errorParameters);
 }
-;// CONCATENATED MODULE: ../chord-mark/src/parser/parseSectionLabel.js
+;// CONCATENATED MODULE: ../chord-mark/src/parser/matchers/isKeyDeclaration.js
+
+
+
+
+var isKeyDeclaration_keyDeclarationRegexp = new RegExp('^' + escapeRegExp_default()(parser_syntax.keyDeclarationPrefix) + '([ABCDEFG].*)$');
+function isKeyDeclaration_isKeyDeclaration(string) {
+  var found = clearSpaces(string).match(isKeyDeclaration_keyDeclarationRegexp);
+  if (found === null) return false; // We use chord symbol to manipulate key declarations even though they are not chords per se
+  // But we benefit from the chord-symbol parser to validate the key declaration
+
+  var parseChord = chordParserFactory({
+    notationSystems: ['english']
+  });
+  var chord = parseChord(found[1]);
+  if (chord.error) return false;
+  var chordIntervals = chord.normalized.intervals;
+  return (// again, chords are not key, so we just want major or minor triads in here
+    chordIntervals.length === 3 && ['b3', '3'].includes(chordIntervals[1]) && chordIntervals[2] === '5' && chordIntervals[0] === '1'
+  );
+}
+// EXTERNAL MODULE: ../chord-mark/node_modules/lodash/findIndex.js
+var findIndex = __webpack_require__(2060);
+;// CONCATENATED MODULE: ../chord-mark/src/parser/helper/keyHelpers.js
+
+ // We use chord symbol to manipulate key declarations even though they are not chords per se
+// But we benefit from the chord-symbol parser to validate the key declaration
+
 
 /**
- * @typedef {Object} SectionLabel
+ * Returns the accidental of a given key
+ *
+ * @param {string} keyString
+ * @returns {('flat'|'sharp')}
+ */
+
+function keyHelpers_getKeyAccidental(keyString) {
+  var sharpKeys = ['G', // 1 sharp
+  'Emi', 'D', // 2 sharps
+  'Bmi', 'A', // 3 sharps
+  'F#mi', 'E', // 4 sharps
+  'C#mi', 'B', // 5 sharps
+  'G#mi', 'F#', // 6 sharps
+  'D#mi', 'C#', // 7 sharps
+  'A#mi', // Theoretical keys
+  'G#', // 8 sharps
+  'D#', // 9 sharps
+  'A#' // 10 sharps
+  ];
+  return sharpKeys.includes(keyString) ? 'sharp' : 'flat';
+}
+/**
+ *
+ * @param {KeyDeclaration} keyModel
+ * @param {number} transposeValue
+ * @param {boolean} avoidTheoreticalKeys
+ * @returns {KeyDeclaration}
+ */
+
+function keyHelpers_transposeKey(keyModel, transposeValue, avoidTheoreticalKeys) {
+  var theoreticalKeys = {
+    'G#': 'Ab',
+    'D#': 'Eb',
+    'A#': 'Bb',
+    Dbmi: 'C#mi',
+    Gbmi: 'F#mi'
+  };
+  var parseKeyChord = chordParserFactory();
+  var renderKeyChord = chordRendererFactory({
+    transposeValue: transposeValue,
+    accidentals: transposeValue === 0 ? 'original' : transposeValue < 0 ? 'flat' : 'sharp'
+  });
+  var tempKey = renderKeyChord(keyModel.chordModel);
+  var transposedKey = avoidTheoreticalKeys && theoreticalKeys[tempKey] ? theoreticalKeys[tempKey] : tempKey;
+  return {
+    string: transposedKey,
+    chordModel: parseKeyChord(transposedKey),
+    accidental: keyHelpers_getKeyAccidental(transposedKey)
+  };
+}
+/**
+ * Try to guess the key of a song based on the chords
+ *
+ * @param {SongChord[]} allChords
+ * @returns {(KeyDeclaration|undefined)}
+ */
+
+function keyHelpers_guessKey(allChords) {
+  var keyString = inferKeyFromChords(allChords);
+  var parseKeyChord = chordParserFactory();
+  return keyString ? {
+    string: keyString,
+    chordModel: parseKeyChord(keyString),
+    accidental: keyHelpers_getKeyAccidental(keyString)
+  } : undefined;
+}
+
+function inferKeyFromChords(allChords) {
+  var mostUsedChords = getMostUsedChordKeys(allChords);
+  if (mostUsedChords.length === 0) return;
+  if (mostUsedChords.length === 1) return mostUsedChords[0].keyString;
+  var lastSongChord = mostUsedChords.find(function (chord) {
+    return chord.isLast === true;
+  });
+  if (lastSongChord) return lastSongChord.keyString;
+  var firstSongChord = mostUsedChords.find(function (chord) {
+    return chord.isFirst === true;
+  });
+  if (firstSongChord) return firstSongChord.keyString;
+  return mostUsedChords[0].keyString; // we give up!
+}
+
+function getMostUsedChordKeys(allChords) {
+  var maxFoundDuration = 0;
+  var mostUsedChordKeys = [];
+  var allChordsKey = [];
+
+  _cloneDeep(allChords).map(function (chord) {
+    chord.keyString = chord2Key(chord);
+    return chord;
+  }).forEach(function (chord) {
+    var i = _findIndex(allChordsKey, function (o) {
+      return o.keyString === chord.keyString;
+    });
+
+    if (i === -1) {
+      allChordsKey.push(chord);
+    } else {
+      allChordsKey[i].duration += chord.duration;
+      if (chord.isLast) allChordsKey[i].isLast = true;
+    }
+  });
+
+  allChordsKey.map(function (chord) {
+    // give more weight to first and last chords
+    if (chord.isLast) {
+      chord.duration *= 1.25;
+    }
+
+    if (chord.isFirst) {
+      chord.duration *= 1.25;
+    }
+
+    return chord;
+  }).forEach(function (chord) {
+    if (chord.duration > maxFoundDuration) {
+      mostUsedChordKeys = [chord];
+      maxFoundDuration = chord.duration;
+    } else if (chord.duration === maxFoundDuration) {
+      mostUsedChordKeys.push(chord);
+    }
+  });
+  return mostUsedChordKeys;
+}
+
+function chord2Key(chord) {
+  var chordModel = _cloneDeep(chord.model); // chord-symbol's qualities: https://github.com/no-chris/chord-symbol/blob/master/packages/chord-symbol/src/dictionaries/qualities.js
+
+
+  var majorQualities = ['major', 'major6', 'major7', 'dominant7', 'augmented', 'power', // duh!
+  'bass' // re-duh!
+  ];
+  var keyString = chordModel.formatted.rootNote;
+
+  if (!majorQualities.includes(chordModel.normalized.quality)) {
+    keyString += 'm';
+  }
+
+  return keyString;
+}
+;// CONCATENATED MODULE: ../chord-mark/src/parser/parseKeyDeclaration.js
+
+
+
+
+/**
+ * @typedef {Object} KeyDeclaration
  * @type {Object}
- * @property {String} string - original string
- * @property {String} label - label of the section
- * @property {Number} multiplyTimes - number of times the section should be multiplied
- * @property {Number} copyIndex - index of the section that should be copied
- * Render-time properties
- * @property {Object} [rendered]
- * @property {String} [rendered.label]
- * @property {String} [rendered.multiplier]
+ * @property {String} string
+ * @property {ChordDef} chordModel
+ * @property {('flat'|'sharp')} accidental
  */
 
 /**
  * @param {String} string
- * @returns {SectionLabel}
+ * @returns {KeyDeclaration}
  */
 
-function parseSectionLabel_parseSectionLabel(string) {
-  if (!isSectionLabel(string)) {
-    throw new TypeError('Expected section identifier string, received: ' + string);
+function parseKeyDeclaration_parseKeyDeclaration(string) {
+  if (!isKeyDeclaration(string)) {
+    throw new TypeError('Expected key declaration, received: ' + string);
   }
 
-  var found = string.trim().match(sectionLabelRegexp);
+  var parseChord = chordParserFactory();
+  var renderChord = chordRendererFactory();
+  var found = clearSpaces(string).match(keyDeclarationRegexp);
+  var chordModel = parseChord(found[1]);
+  var keyString = renderChord(chordModel);
   return {
-    string: string,
-    label: found[1],
-    copyIndex: found[2] ? Number.parseInt(found[2]) : 1,
-    multiplyTimes: found[3] ? Number.parseInt(found[3].replace(' x', '')) : 0
+    string: keyString,
+    chordModel: chordModel,
+    accidental: getKeyAccidental(keyString)
   };
 }
 ;// CONCATENATED MODULE: ../chord-mark/src/parser/parseLyricLine.js
@@ -27362,6 +26945,40 @@ function parseLyricLine_parseLyricLine(string) {
   return {
     lyrics: stringWithoutPositionMarkers,
     chordPositions: chordPositions
+  };
+}
+;// CONCATENATED MODULE: ../chord-mark/src/parser/parseSectionLabel.js
+
+
+/**
+ * @typedef {Object} SectionLabel
+ * @type {Object}
+ * @property {String} string - original string
+ * @property {String} label - label of the section
+ * @property {Number} multiplyTimes - number of times the section should be multiplied
+ * @property {Number} copyIndex - index of the section that should be copied
+ * Render-time properties
+ * @property {Object} [rendered]
+ * @property {String} [rendered.label]
+ * @property {String} [rendered.multiplier]
+ */
+
+/**
+ * @param {String} string
+ * @returns {SectionLabel}
+ */
+
+function parseSectionLabel_parseSectionLabel(string) {
+  if (!isSectionLabel(string)) {
+    throw new TypeError('Expected section identifier string, received: ' + string);
+  }
+
+  var found = clearSpaces(string).match(sectionLabelRegexp);
+  return {
+    string: string,
+    label: found[1],
+    copyIndex: found[2] ? Number.parseInt(found[2]) : 1,
+    multiplyTimes: found[3] ? Number.parseInt(found[3].replace(' x', '')) : 0
   };
 }
 ;// CONCATENATED MODULE: ../chord-mark/src/parser/helper/songs.js
@@ -27469,7 +27086,9 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function songLinesFactory_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-/*eslint-disable max-lines-per-function */
+/*eslint-disable max-lines-per-function,max-lines */
+
+
 
 
 
@@ -27522,6 +27141,13 @@ var songLinesFactory_defaultTimeSignature = '4/4';
  * @property {String} id
  */
 
+/**
+ * @typedef {SongLine} SongKeyDeclarationLine
+ * @type {Object}
+ * @property {KeyDeclaration} model
+ * @property {String} [symbol] - rendering property
+ */
+
 function songLinesFactory_songLinesFactory() {
   var allLines = [];
   var sectionsStats = {};
@@ -27547,6 +27173,18 @@ function songLinesFactory_songLinesFactory() {
       string: string,
       type: lineTypes.TIME_SIGNATURE,
       model: currentTimeSignature
+    };
+  }
+  /**
+   * @returns {SongKeyDeclarationLine}
+   */
+
+
+  function getKeyDeclarationLine(string) {
+    return {
+      string: string,
+      type: lineTypes.KEY_DECLARATION,
+      model: parseKeyDeclaration(string)
     };
   }
   /**
@@ -27774,6 +27412,8 @@ function songLinesFactory_songLinesFactory() {
         line = getRepeatedChordLine(lineSrc);
       } else if (isEmptyLine(lineSrc)) {
         line = getEmptyLine(lineSrc);
+      } else if (isKeyDeclaration(lineSrc)) {
+        line = getKeyDeclarationLine(lineSrc);
       } else {
         line = getLyricLine(lineSrc);
       }
@@ -27837,9 +27477,8 @@ function endsWithEmptyLine(allLines) {
   var lastLine = allLines[allLines.length - 1];
   return lastLine.type === lineTypes.EMPTY_LINE;
 }
-// EXTERNAL MODULE: ../chord-mark/node_modules/lodash/findIndex.js
-var findIndex = __webpack_require__(2060);
 ;// CONCATENATED MODULE: ../chord-mark/src/parser/getAllChordsInSong.js
+
 
 
 
@@ -27853,22 +27492,62 @@ function getAllChordsInSong_getAllChordsInSong(allLines) {
   var allChords = [];
   var i;
   forEachChordInSong(allLines, function (chord) {
-    i = _findIndex(allChords, function (o) {
-      return _isEqual(o.model, chord.model);
-    });
-
-    if (i === -1) {
-      allChords.push({
-        model: _cloneDeep(chord.model),
-        occurrences: 1
+    if (chord.model !== syntax.noChord) {
+      i = _findIndex(allChords, function (o) {
+        return _isEqual(o.model, chord.model);
       });
-    } else {
-      allChords[i].occurrences++;
+
+      if (i === -1) {
+        allChords.push({
+          model: _cloneDeep(chord.model),
+          occurrences: 1,
+          duration: chord.duration
+        });
+        i = allChords.length - 1;
+      } else {
+        allChords[i].occurrences++;
+        allChords[i].duration += chord.duration;
+      }
     }
   });
+
+  if (allChords.length) {
+    allChords[0].isFirst = true;
+    allChords[i].isLast = true;
+  }
+
   return allChords;
 }
+;// CONCATENATED MODULE: ../chord-mark/src/parser/getAllKeysInSong.js
+
+
+
+/**
+ * @param {SongLine[]} allLines
+ * @param {SongChord[]} allChords
+ * @returns {SongKeys}
+ */
+
+function getAllKeysInSong_getAllKeysInSong(allLines, allChords) {
+  var allKeys = {
+    auto: undefined,
+    explicit: []
+  };
+  var autoDetectedKey = guessKey(allChords);
+
+  if (autoDetectedKey) {
+    allKeys.auto = autoDetectedKey;
+  }
+
+  allLines.forEach(function (line) {
+    if (line.type === lineTypes.KEY_DECLARATION) {
+      allKeys.explicit.push(_cloneDeep(line.model));
+    }
+  });
+  return allKeys;
+}
 ;// CONCATENATED MODULE: ../chord-mark/src/parser/parseSong.js
+
 
 
 
@@ -27879,6 +27558,7 @@ function getAllChordsInSong_getAllChordsInSong(allLines) {
  * @type {Object}
  * @property {SongLine[]} allLines
  * @property {SongChord[]} allChords
+ * @property {SongKeys} allKeys
  */
 
 /**
@@ -27886,6 +27566,14 @@ function getAllChordsInSong_getAllChordsInSong(allLines) {
  * @type {Object}
  * @property {ChordDef} model
  * @property {number} occurrences - number of times the chord appears in the song
+ * @property {number} duration - in beats, cumulated duration of the chord
+ */
+
+/**
+ * @typedef {Object} SongKeys
+ * @type {Object}
+ * @property {KeyDeclaration} auto - automatically detected key
+ * @property {KeyDeclaration[]} explicit - explicitly declared keys
  */
 
 /**
@@ -27904,9 +27592,11 @@ function parseSong(songSrc) {
   songLines.flagPositionedChords();
   var allLines = songLines.asArray();
   var allChords = getAllChordsInSong(allLines);
+  var allKeys = getAllKeysInSong(allLines, allChords);
   return {
     allLines: allLines,
-    allChords: allChords
+    allChords: allChords,
+    allKeys: allKeys
   };
 }
 ;// CONCATENATED MODULE: ../chord-mark/src/renderer/symbols.js
@@ -27916,6 +27606,7 @@ function parseSong(songSrc) {
   chordBeat: '.',
   chordLineOffsetSpacer: ' ',
   emptyBeatSpaces: 1,
+  keyDeclarationPrefix: 'key: ',
   lyricsSpacer: ' ',
   noChordSymbol: 'NC',
   spacesAfterDefault: 2,
@@ -28404,6 +28095,20 @@ function renderChordLine(chordLineModel) {
     chordLine: chordLine
   });
 }
+;// CONCATENATED MODULE: ../chord-mark/src/renderer/components/renderKeyDeclaration.js
+
+
+/**
+ * @param {SongKeyDeclarationLine} keyDeclarationLine
+ * @returns {String} rendered html
+ */
+
+function renderSectionLabel(keyDeclarationLine) {
+  return keyDeclarationTpl({
+    keyDeclarationPrefix: symbols.keyDeclarationPrefix,
+    key: keyDeclarationLine.symbol
+  });
+}
 ;// CONCATENATED MODULE: ../chord-mark/src/renderer/helpers/getChordSymbol.js
 
 
@@ -28428,36 +28133,6 @@ var defaultRenderChord = (0,lib_chord_symbol.chordRendererFactory)();
     default:
       return renderChord(model);
   }
-}
-;// CONCATENATED MODULE: ../chord-mark/src/renderer/helpers/getMainAccidental.js
-
-/**
- * Returns the most used accidental of a song.
- *
- * @param {SongChord[]} allChords
- * @returns {('flat'|'sharp')}
- */
-
-function getMainAccidental_getMainAccidental(allChords) {
-  var rootNote = '';
-  var flatCount = 0;
-  var sharpCount = 0;
-  allChords.filter(function (chord) {
-    return chord.model !== syntax.noChord;
-  }).forEach(function (chord) {
-    rootNote = chord.model.formatted.rootNote;
-
-    if (rootNote.length === 2) {
-      var accidental = rootNote[1];
-
-      if (accidental === 'b') {
-        flatCount += chord.occurrences;
-      } else {
-        sharpCount += chord.occurrences;
-      }
-    }
-  });
-  return flatCount > sharpCount ? 'flat' : 'sharp';
 }
 ;// CONCATENATED MODULE: ../chord-mark/src/renderer/helpers/renderAllSectionLabels.js
  // reminder: update converters whenever a new shortcut is added here!
@@ -28582,26 +28257,26 @@ var barHasMultiplePositionedChords = function barHasMultiplePositionedChords(lin
 
 /**
  * @param {Song} parsedSong
- * @param {('auto'|'flat'|'sharp')} accidentalsType
- * @param {Boolean} alignBars
- * @param {Boolean} alignChordsWithLyrics
- * @param {Boolean} autoRepeatChords
- * @param {('all'|'lyrics'|'chords'|'chordsFirstLyricLine')} chartType
- * @param {Function|Boolean} chordSymbolRenderer - must be an instance of a ChordSymbol renderer, returned by chordRendererFactory()
- * @param {Function|Boolean} customRenderer
- * @param {Boolean} expandSectionCopy
- * @param {Boolean} expandSectionMultiply
- * @param {Boolean} harmonizeAccidentals
- * @param {Boolean|('none'|'max'|'core')} simplifyChords
- * @param {('never'|'uneven'|'always')} printChordsDuration
- * @param {('never'|'grids'|'always')} printBarSeparators - mainly useful when converting a ChordMark file to a format that
+ * @param {Object} options
+ * @param {('auto'|'flat'|'sharp')} options.accidentalsType
+ * @param {Boolean} options.alignBars
+ * @param {Boolean} options.alignChordsWithLyrics
+ * @param {Boolean} options.autoRepeatChords
+ * @param {('all'|'lyrics'|'chords'|'chordsFirstLyricLine')} options.chartType
+ * @param {Function|Boolean} options.chordSymbolRenderer - must be an instance of a ChordSymbol renderer, returned by chordRendererFactory()
+ * @param {Function|Boolean} options.customRenderer
+ * @param {Boolean} options.expandSectionCopy
+ * @param {Boolean} options.expandSectionMultiply
+ * @param {Boolean|('none'|'max'|'core')} options.simplifyChords
+ * @param {('never'|'uneven'|'always')} options.printChordsDuration
+ * @param {('never'|'grids'|'always')} options.printBarSeparators - mainly useful when converting a ChordMark file to a format that
  * do not allow bar separators to be printed (e.g. Ultimate Guitar)
- * @param {Boolean} printSubBeatDelimiters - mainly useful when converting a ChordMark file to a format that
+ * @param {Boolean} options.printSubBeatDelimiters - mainly useful when converting a ChordMark file to a format that
  * do not allow sub-beat groups to be printed (e.g. Ultimate Guitar)
- * @param {Boolean} printInlineTimeSignatures - mainly useful when converting a ChordMark file to a format that
+ * @param {Boolean} options.printInlineTimeSignatures - mainly useful when converting a ChordMark file to a format that
  * do not allow inline time signatures to be printed (e.g. Ultimate Guitar)
- * @param {Number} transposeValue
- * @param {Boolean} useShortNamings
+ * @param {Number} options.transposeValue
+ * @param {Boolean} options.useShortNamings
  * @returns {String} rendered HTML
  */
 // eslint-disable-next-line max-lines-per-function
@@ -28626,8 +28301,6 @@ function renderSong(parsedSong) {
       expandSectionCopy = _ref$expandSectionCop === void 0 ? true : _ref$expandSectionCop,
       _ref$expandSectionMul = _ref.expandSectionMultiply,
       expandSectionMultiply = _ref$expandSectionMul === void 0 ? false : _ref$expandSectionMul,
-      _ref$harmonizeAcciden = _ref.harmonizeAccidentals,
-      harmonizeAccidentals = _ref$harmonizeAcciden === void 0 ? true : _ref$harmonizeAcciden,
       _ref$printChordsDurat = _ref.printChordsDuration,
       printChordsDuration = _ref$printChordsDurat === void 0 ? 'uneven' : _ref$printChordsDurat,
       _ref$printBarSeparato = _ref.printBarSeparators,
@@ -28644,11 +28317,18 @@ function renderSong(parsedSong) {
       useShortNamings = _ref$useShortNamings === void 0 ? true : _ref$useShortNamings;
 
   var allLines = parsedSong.allLines,
-      allChords = parsedSong.allChords;
+      allKeys = parsedSong.allKeys;
   var isFirstLyricLineOfSection = false;
   var contextTimeSignature = defaultTimeSignature.string;
   var previousBarTimeSignature;
-  allLines = renderChords().map(addPrintChordsDurationsFlag).map(addPrintBarTimeSignatureFlag).filter(shouldRenderLine).map(function (line) {
+  var currentKey;
+
+  if (allKeys.auto) {
+    currentKey = transposeKey(allKeys.auto, transposeValue, accidentalsType === 'auto');
+  }
+
+  var renderChord = getChordSymbolRenderer();
+  allLines = allLines.map(renderChords).map(addPrintChordsDurationsFlag).map(addPrintBarTimeSignatureFlag).filter(shouldRenderLine).map(function (line) {
     return replaceRepeatedBars(line, {
       alignChordsWithLyrics: alignChordsWithLyrics
     });
@@ -28671,11 +28351,20 @@ function renderSong(parsedSong) {
     });
   }
 
-  function renderChords() {
-    var renderChord = getChordSymbolRenderer();
-    return forEachChordInSong(allLines, function (chord) {
-      chord.symbol = getChordSymbol(chord.model, renderChord);
-    });
+  function renderChords(line) {
+    if (line.type === lineTypes.KEY_DECLARATION) {
+      currentKey = transposeKey(line.model, transposeValue, accidentalsType === 'auto');
+      renderChord = getChordSymbolRenderer();
+      line.symbol = renderChord(line.model.chordModel);
+    } else if (line.type === lineTypes.CHORD) {
+      line.model.allBars.forEach(function (bar) {
+        bar.allChords.forEach(function (chord) {
+          chord.symbol = getChordSymbol(chord.model, renderChord);
+        });
+      });
+    }
+
+    return line;
   }
 
   function getChordSymbolRenderer() {
@@ -28683,13 +28372,12 @@ function renderSong(parsedSong) {
       return chordSymbolRenderer;
     }
 
-    var accidental = accidentalsType === 'auto' ? getMainAccidental(allChords) : accidentalsType;
+    var accidentals = accidentalsType === 'auto' ? currentKey ? currentKey.accidental : 'sharp' : accidentalsType;
     return chordRendererFactory({
       simplify: simplifyChords,
       useShortNamings: useShortNamings,
       transposeValue: transposeValue,
-      harmonizeAccidentals: harmonizeAccidentals,
-      useFlats: accidental === 'flat'
+      accidentals: accidentals
     });
   }
 
@@ -28801,6 +28489,8 @@ function renderSong(parsedSong) {
         rendered = renderSectionLabelLine(line);
       } else if (line.type === lineTypes.TIME_SIGNATURE) {
         rendered = renderTimeSignature(line);
+      } else if (line.type === lineTypes.KEY_DECLARATION) {
+        rendered = renderKeyDeclaration(line);
       } else {
         rendered = renderLyricLine(line, {
           alignChordsWithLyrics: alignChordsWithLyrics,
