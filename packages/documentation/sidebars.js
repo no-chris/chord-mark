@@ -30,6 +30,7 @@ const sidebars = {
 				'reference/chords',
 				'reference/lyrics',
 				'reference/sections',
+				'reference/keys',
 				'reference/rendering',
 			],
 		},

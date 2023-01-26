@@ -1,0 +1,31 @@
+import { CM, CCS, CS } from '../../src/components/shortcuts';
+import TabbedChordMark from '../../src/components/TabbedChordMark';
+
+# Keys declarations
+
+## Key declaration lines
+
+It is possible to declare the key of any part of the song using they `key` keyword:
+
+<TabbedChordMark src={'key C\nC F G C'} />
+
+There are at least two reasons why you might want to do this.
+
+### Reason 1: proper rendering of accidentals
+
+The first reason relates to the rendering of chord accidentals (`#` and `b`). If your source file contains mixed accidental, then declaring a key will allow <CM/> to automatically normalize the accidentals choosing the proper symbol.
+
+<TabbedChordMark src={'#v\nkey C#m\nC#m7 Ab7\n_ What will you do when you get _lonely?\nC#m7.. C. D. E.. E7..\n_ No one _waiting _by your _side _'}/>
+ 
+This also works if the song contains multiple keys:
+
+<TabbedChordMark src={'#v\nkey C#m\nC#m7 Ab7\n_ What will you do when you get _lonely?\nC#m7.. C. D. E.. E7..\n_ No one _waiting _by your _side _\n\n#c\nkey Dm\nDm.. Bb..\nLayla_\nC.. Dm.. Dm.. A#..\n\_Got me on my _knees, Layla'} />
+
+When transposing in the accidental `auto` mode, <CM/> tries to be smart and avoid [theoretical keys](https://en.wikipedia.org/wiki/Theoretical_key) that are not used in practice. 
+For example transposing `Layla` 1 semitones down will result in a key of `C#m` instead of `Dbm` for the chorus. Again, note that the proper accidentals are used for each key.
+
+<TabbedChordMark src={'#v\nkey C#m\nC#m7 Ab7\n_ What will you do when you get _lonely?\nC#m7.. C. D. E.. E7..\n_ No one _waiting _by your _side _\n\n#c\nkey Dm\nDm.. Bb..\nLayla_\nC.. Dm.. Dm.. A#..\n\_Got me on my _knees, Layla'} options={{ transposeValue: -1}} />
+
+### Reason 2: harmonic analysis
+
+Soon.
