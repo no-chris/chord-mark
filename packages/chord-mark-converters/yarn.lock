@@ -2,6 +2,15 @@
 # yarn lockfile v1
 
 
+chord-mark@^0.13.0-beta.3:
+  version "0.13.0-beta.3"
+  resolved "https://registry.yarnpkg.com/chord-mark/-/chord-mark-0.13.0-beta.3.tgz#53953d533e79f97f4114618a9d8be69055995d6c"
+  integrity sha512-7eW+9uFRIFi55Re+9OFF55v2+73Csd2i6yFpyKhe0HO+vqI8Mj0iIRo4NaaLvcvkixEb76H8A/0JtPQmiD9AHQ==
+  dependencies:
+    chord-symbol "4.0.0-beta.0"
+    dompurify "^2.3.4"
+    lodash "^4.17.21"
+
 chord-symbol-ultimateguitar@3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/chord-symbol-ultimateguitar/-/chord-symbol-ultimateguitar-3.0.0.tgz#fba93b5baf8d503f72dda2760956759c903bd6d3"

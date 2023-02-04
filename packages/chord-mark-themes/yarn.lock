@@ -2,19 +2,19 @@
 # yarn lockfile v1
 
 
-chord-mark@^0.12.0:
-  version "0.12.0"
-  resolved "https://registry.yarnpkg.com/chord-mark/-/chord-mark-0.12.0.tgz#499ac3965aee93b4128a97b7b31c5a86b0924457"
-  integrity sha512-LsZ/elw1yLsiPaF32rIayFvKXuMbsfzRXBCMNfwKLsXK8mM3mupdCUFxFUTzYho23U35VKDXFp7sNvhzI/IuCw==
+chord-mark@^0.13.0-beta.3:
+  version "0.13.0-beta.3"
+  resolved "https://registry.yarnpkg.com/chord-mark/-/chord-mark-0.13.0-beta.3.tgz#53953d533e79f97f4114618a9d8be69055995d6c"
+  integrity sha512-7eW+9uFRIFi55Re+9OFF55v2+73Csd2i6yFpyKhe0HO+vqI8Mj0iIRo4NaaLvcvkixEb76H8A/0JtPQmiD9AHQ==
   dependencies:
-    chord-symbol "3.0.0"
+    chord-symbol "4.0.0-beta.0"
     dompurify "^2.3.4"
     lodash "^4.17.21"
 
-chord-symbol@3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/chord-symbol/-/chord-symbol-3.0.0.tgz#d16c4871f70fdaa5c1c13d837c865e0474e959db"
-  integrity sha512-mONjRMrU1RFm/LWSN8Np4lq52mM6sqbB3JI7WMEDb15ZOqcUAMB2ttdzEfJDa6QQJPol+gZrMA4P0mJK8uiq7w==
+chord-symbol@4.0.0-beta.0:
+  version "4.0.0-beta.0"
+  resolved "https://registry.yarnpkg.com/chord-symbol/-/chord-symbol-4.0.0-beta.0.tgz#dd350d2a9c97ef8e0620a518e1a9c5bdd23f4642"
+  integrity sha512-9HeCfZc79mmqJWBY8JABQx5QzIqqjxxCejcFQ67wgdNkvywPnu2nrZsOGzcpWT91vxuKoQ1BWuUgXy+ilLWX8g==
   dependencies:
     lodash "^4.17.21"
 
