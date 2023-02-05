@@ -14,19 +14,19 @@ import { chordParserFactory, chordRendererFactory } from 'chord-symbol';
 export function getKeyAccidental(keyString) {
 	const sharpKeys = [
 		'G', // 1 sharp
-		'Emi',
+		'Em',
 		'D', // 2 sharps
-		'Bmi',
+		'Bm',
 		'A', // 3 sharps
-		'F#mi',
+		'F#m',
 		'E', // 4 sharps
-		'C#mi',
+		'C#m',
 		'B', // 5 sharps
-		'G#mi',
+		'G#m',
 		'F#', // 6 sharps
-		'D#mi',
+		'D#m',
 		'C#', // 7 sharps
-		'A#mi',
+		'A#m',
 
 		// Theoretical keys
 		'G#', // 8 sharps
@@ -49,12 +49,13 @@ export function transposeKey(keyModel, transposeValue, avoidTheoreticalKeys) {
 		'G#': 'Ab',
 		'D#': 'Eb',
 		'A#': 'Bb',
-		Dbmi: 'C#mi',
-		Gbmi: 'F#mi',
+		Dbm: 'C#m',
+		Gbm: 'F#m',
 	};
 
 	const parseKeyChord = chordParserFactory();
 	const renderKeyChord = chordRendererFactory({
+		useShortNamings: true,
 		transposeValue,
 		accidentals:
 			transposeValue === 0

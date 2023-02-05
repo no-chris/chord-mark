@@ -23,7 +23,7 @@ export default function parseKeyDeclaration(string) {
 	}
 
 	const parseChord = chordParserFactory();
-	const renderChord = chordRendererFactory();
+	const renderChord = chordRendererFactory({ useShortNamings: true });
 
 	const found = clearSpaces(string).match(keyDeclarationRegexp);
 	const chordModel = parseChord(found[1]);

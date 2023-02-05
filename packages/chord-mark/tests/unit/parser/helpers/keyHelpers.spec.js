@@ -27,13 +27,13 @@ describe.each([
 	['F', 'flat'],
 	['G', 'sharp'],
 
-	['Cmi', 'flat'],
-	['Ami', 'flat'],
-	['Bmi', 'sharp'],
-	['Dmi', 'flat'],
-	['Emi', 'sharp'],
-	['Fmi', 'flat'],
-	['Gmi', 'flat'],
+	['Cm', 'flat'],
+	['Am', 'flat'],
+	['Bm', 'sharp'],
+	['Dm', 'flat'],
+	['Em', 'sharp'],
+	['Fm', 'flat'],
+	['Gm', 'flat'],
 
 	['A#', 'sharp'],
 	['C#', 'sharp'],
@@ -41,11 +41,11 @@ describe.each([
 	['F#', 'sharp'],
 	['G#', 'sharp'],
 
-	['A#mi', 'sharp'],
-	['C#mi', 'sharp'],
-	['D#mi', 'sharp'],
-	['F#mi', 'sharp'],
-	['G#mi', 'sharp'],
+	['A#m', 'sharp'],
+	['C#m', 'sharp'],
+	['D#m', 'sharp'],
+	['F#m', 'sharp'],
+	['G#m', 'sharp'],
 
 	['Ab', 'flat'],
 	['Bb', 'flat'],
@@ -53,11 +53,11 @@ describe.each([
 	['Eb', 'flat'],
 	['Gb', 'flat'],
 
-	['Abmi', 'flat'],
-	['Bbmi', 'flat'],
-	['Dbmi', 'flat'],
-	['Ebmi', 'flat'],
-	['Gbmi', 'flat'],
+	['Abm', 'flat'],
+	['Bbm', 'flat'],
+	['Dbm', 'flat'],
+	['Ebm', 'flat'],
+	['Gbm', 'flat'],
 ])('getKeyAccidental(%s) => %s', (string, accidental) => {
 	test('correctly returns key accidental', () => {
 		expect(getKeyAccidental(string)).toBe(accidental);
@@ -66,12 +66,12 @@ describe.each([
 
 describe.each([
 	['avoid theoretical keys: G# => Ab', 'G#', 0, 'Ab', 'flat', true],
-	['avoid theoretical keys: Dbmi => C#mi', 'Dbmi', 0, 'C#mi', 'sharp', true],
+	['avoid theoretical keys: Dbmi => C#m', 'Dbm', 0, 'C#m', 'sharp', true],
 	['avoid theoretical keys: C+3 => Eb', 'C', 3, 'Eb', 'flat', true],
 	['avoid theoretical keys: C+8 => Ab', 'C', 8, 'Ab', 'flat', true],
 	['avoid theoretical keys: C+10 => Bb', 'C', 10, 'Bb', 'flat', true],
-	['avoid theoretical keys: Cm-6 => F#mi', 'Cm', -6, 'F#mi', 'sharp', true],
-	['avoid theoretical keys: Cm-11 => C#mi', 'Cm', -11, 'C#mi', 'sharp', true],
+	['avoid theoretical keys: Cm-6 => F#m', 'Cm', -6, 'F#m', 'sharp', true],
+	['avoid theoretical keys: Cm-11 => C#m', 'Cm', -11, 'C#m', 'sharp', true],
 
 	['use flats for negative transpose: C-5 => G', 'C', -5, 'G', 'flat'],
 	['use flats for negative transpose: C-4 => Ab', 'C', -4, 'Ab', 'flat'],
