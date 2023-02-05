@@ -2,15 +2,6 @@
 # yarn lockfile v1
 
 
-chord-mark@^0.13.0-beta.3:
-  version "0.13.0-beta.3"
-  resolved "https://registry.yarnpkg.com/chord-mark/-/chord-mark-0.13.0-beta.3.tgz#53953d533e79f97f4114618a9d8be69055995d6c"
-  integrity sha512-7eW+9uFRIFi55Re+9OFF55v2+73Csd2i6yFpyKhe0HO+vqI8Mj0iIRo4NaaLvcvkixEb76H8A/0JtPQmiD9AHQ==
-  dependencies:
-    chord-symbol "4.0.0-beta.0"
-    dompurify "^2.3.4"
-    lodash "^4.17.21"
-
 chord-symbol-ultimateguitar@3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/chord-symbol-ultimateguitar/-/chord-symbol-ultimateguitar-3.0.0.tgz#fba93b5baf8d503f72dda2760956759c903bd6d3"
@@ -18,10 +9,10 @@ chord-symbol-ultimateguitar@3.0.0:
   dependencies:
     chord-symbol "^3.0.0"
 
-chord-symbol@4.0.0-beta.0:
-  version "4.0.0-beta.0"
-  resolved "https://registry.yarnpkg.com/chord-symbol/-/chord-symbol-4.0.0-beta.0.tgz#dd350d2a9c97ef8e0620a518e1a9c5bdd23f4642"
-  integrity sha512-9HeCfZc79mmqJWBY8JABQx5QzIqqjxxCejcFQ67wgdNkvywPnu2nrZsOGzcpWT91vxuKoQ1BWuUgXy+ilLWX8g==
+chord-symbol@4.0.0-beta.3:
+  version "4.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/chord-symbol/-/chord-symbol-4.0.0-beta.3.tgz#19e83198f83addaf627404708b1041344067111e"
+  integrity sha512-dOpcMDijtfkKNThPyTgzztbrhEKiX7NZcPsO5V3Y88866O+7Z/pORQUlJhP/j2T9Mfzg/aafO5imp620eeU0AA==
   dependencies:
     lodash "^4.17.21"
 
