@@ -145,14 +145,17 @@ describe('timeSignature', () => {
 		expect(parseChordLine.mock.calls[0][0]).toEqual('Em D. C.');
 		expect(parseChordLine.mock.calls[0][1]).toEqual({
 			timeSignature: ts6_8,
+			key: {},
 		});
 		expect(parseChordLine.mock.calls[1][0]).toEqual('C.. G..');
 		expect(parseChordLine.mock.calls[1][1]).toEqual({
 			timeSignature: ts4_4,
+			key: {},
 		});
 		expect(parseChordLine.mock.calls[2][0]).toEqual('D D C A');
 		expect(parseChordLine.mock.calls[2][1]).toEqual({
 			timeSignature: ts3_4,
+			key: {},
 		});
 	});
 });
@@ -1247,7 +1250,7 @@ describe('Key declaration', () => {
 				type: 'keyDeclaration',
 				string: 'key C#mi',
 				model: {
-					string: 'C#mi',
+					string: 'C#m',
 					chordModel: parseChord('C#mi'),
 					accidental: 'sharp',
 				},

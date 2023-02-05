@@ -60,7 +60,7 @@ describe('getAllKeysInSong()', () => {
 					accidental: 'flat',
 				},
 				{
-					string: 'F#mi',
+					string: 'F#m',
 					chordModel: parseChord('F#m'),
 					accidental: 'sharp',
 				},
