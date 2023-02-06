@@ -52,4 +52,24 @@ $pink: rgb(237, 123, 255);
 		opacity: 0.8;
 		font-weight: bold;
 	}
+
+	.cmChordLine-romanNumeral,
+	.cmRomanNumeral {
+		color: $bitterSweet;
+	}
+
+	.cmRomanNumeral-diatonic {
+		font-weight: bold;
+		color: $ccs-background;
+		background-color: $bitterSweet;
+	}
+
+	.cmRomanNumeral-borrowed {
+		color: $ccs-background;
+		background-color: rgba($bitterSweet, 0.7);
+	}
+
+	.cmRomanNumeral-unknown {
+		opacity: 0.8;
+	}
 }
