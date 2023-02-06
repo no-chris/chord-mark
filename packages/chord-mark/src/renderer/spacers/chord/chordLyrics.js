@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 import _cloneDeep from 'lodash/cloneDeep';
 import { getChordString } from './getBeatString';
 
@@ -15,6 +16,7 @@ const chordSpaceAfterDefault = 1;
  * @param {Boolean} shouldPrintBarSeparators
  * @param {Boolean} shouldPrintSubBeatDelimiters
  * @param {Boolean} shouldPrintInlineTimeSignatures
+ * @param {('chord'|'roman')} symbolType
  * @returns {Object}
  */
 export default function space(
@@ -24,6 +26,7 @@ export default function space(
 		shouldPrintBarSeparators = true,
 		shouldPrintSubBeatDelimiters = true,
 		shouldPrintInlineTimeSignatures = true,
+		symbolType = 'chord',
 	} = {}
 ) {
 	if (hasNoPositionMarkers(lyricsLineInput)) {
@@ -125,11 +128,11 @@ export default function space(
 	function getChordToken(bar, chord, shouldOffsetLyricsLine) {
 		let token =
 			timeSignatureString +
-			getChordString(
-				bar,
-				chord,
-				chord.isLastOfSubBeat && shouldPrintSubBeatDelimiters
-			);
+			getChordString(bar, chord, {
+				shouldPrintSubBeatDelimiters:
+					chord.isLastOfSubBeat && shouldPrintSubBeatDelimiters,
+				symbolType,
+			});
 		if (shouldOffsetLyricsLine) {
 			if (shouldPrintSubBeatDelimiters && chord.isFirstOfSubBeat)
 				token = symbols.subBeatGroupOpener + token;

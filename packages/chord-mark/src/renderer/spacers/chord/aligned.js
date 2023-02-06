@@ -6,15 +6,20 @@ import { spaceBar } from './simple';
 /**
  * @param {ChordLine} chordLineInput
  * @param {Array} maxBeatsWidth
- * @param {Boolean} shouldPrintBarSeparators
- * @param {Boolean} shouldPrintSubBeatDelimiters
+ * @param {Object} options
+ * @param {Boolean} options.shouldPrintBarSeparators
+ * @param {Boolean} options.shouldPrintSubBeatDelimiters
+ * @param {('chord'|'roman')} options.symbolType
  * @returns {ChordLine}
  */
 export default function space(
 	chordLineInput,
 	maxBeatsWidth,
-	shouldPrintBarSeparators,
-	shouldPrintSubBeatDelimiters
+	{
+		shouldPrintBarSeparators = true,
+		shouldPrintSubBeatDelimiters = true,
+		symbolType = 'chord',
+	}
 ) {
 	const chordLine = _cloneDeep(chordLineInput);
 
@@ -23,11 +28,10 @@ export default function space(
 			spaceBar(bar);
 		} else {
 			bar.allChords.forEach((chord) => {
-				const beatString = getBeatString(
-					bar,
-					chord.beat,
-					shouldPrintSubBeatDelimiters
-				);
+				const beatString = getBeatString(bar, chord.beat, {
+					shouldPrintSubBeatDelimiters,
+					symbolType,
+				});
 
 				if (chord.isInSubBeatGroup && !chord.isLastOfSubBeat) {
 					chord.spacesWithin = 0;

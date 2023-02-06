@@ -210,11 +210,9 @@ describe.each([
 				bar.shouldPrintChordsDuration = !!shouldPrintChordsDuration;
 			});
 
-			const spaced = alignedSpacer(
-				parsed,
-				maxBeatWidth,
-				shouldPrintBarSeparators
-			);
+			const spaced = alignedSpacer(parsed, maxBeatWidth, {
+				shouldPrintBarSeparators,
+			});
 
 			const actualSpacesWithin = [];
 			const actualSpacesAfter = [];
