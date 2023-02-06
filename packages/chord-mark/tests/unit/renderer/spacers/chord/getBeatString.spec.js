@@ -83,7 +83,7 @@ describe.each([
 			const beatString = getBeatString(
 				allLines[0].model.allBars[0],
 				beat,
-				shouldPrintSubBeatDelimiters
+				{ shouldPrintSubBeatDelimiters }
 			);
 			expect(beatString).toEqual(output);
 		});
