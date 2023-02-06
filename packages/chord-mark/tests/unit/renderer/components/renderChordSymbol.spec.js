@@ -63,12 +63,7 @@ describe.each([
 	],
 ])('Render chord %s as %s', (title, chord, options, expected) => {
 	test('expected rendering', () => {
-		const rendered = renderChordSymbol(
-			chord,
-			options.shouldPrintChordsDuration,
-			options.shouldPrintSubBeatOpener,
-			options.shouldPrintSubBeatCloser
-		);
+		const rendered = renderChordSymbol(chord, options);
 		expect(stripTags(rendered)).toEqual(expected);
 	});
 });

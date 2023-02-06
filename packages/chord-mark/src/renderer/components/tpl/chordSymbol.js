@@ -3,6 +3,7 @@ const render = ({
 	chordDuration,
 	subBeatGroupOpener,
 	subBeatGroupCloser,
+	numeralType,
 }) => {
 	const groupOpen = subBeatGroupOpener
 		? `<span class="cmSubBeatGroupOpener">${subBeatGroupOpener}</span>`
@@ -12,7 +13,15 @@ const render = ({
 		? `<span class="cmSubBeatGroupCloser">${subBeatGroupCloser}</span>`
 		: '';
 
-	return `${groupOpen}<span class="cmChordSymbol">${chordSymbol}${
+	const symbolClasses = ['cmChordSymbol'];
+
+	if (numeralType) {
+		symbolClasses.push(`cmRomanNumeral`, `cmRomanNumeral-${numeralType}`);
+	}
+
+	return `${groupOpen}<span class="${symbolClasses.join(
+		' '
+	)}">${chordSymbol}${
 		chordDuration
 			? `<span class="cmChordDuration">${chordDuration}</span>`
 			: ''
