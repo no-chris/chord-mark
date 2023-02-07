@@ -1,7 +1,4 @@
 import parseKeyDeclaration from '../../../src/parser/parseKeyDeclaration';
-import { chordParserFactory } from 'chord-symbol';
-
-const parseChord = chordParserFactory();
 
 describe('parseKeyDeclaration', () => {
 	test('Module', () => {
@@ -10,28 +7,27 @@ describe('parseKeyDeclaration', () => {
 });
 
 describe.each([
-	['Abmin', 'Abm', 'flat'],
-	['Abmi', 'Abm', 'flat'],
-	['Amin', 'Am', 'flat'],
 	['Abm', 'Abm', 'flat'],
-	['Ami', 'Am', 'flat'],
 	['Am', 'Am', 'flat'],
 	['A', 'A', 'sharp'],
 	['A#', 'A#', 'sharp'],
 	['A#m', 'A#m', 'sharp'],
-	['A#mi', 'A#m', 'sharp'],
-	['A#min', 'A#m', 'sharp'],
 ])('Valid: %s => %s', (chordInput, string, accidental) => {
 	test('Correctly gets key', () => {
 		expect(parseKeyDeclaration('key ' + chordInput)).toEqual({
 			string,
-			chordModel: parseChord(chordInput),
 			accidental,
 		});
 	});
 });
 
 describe.each([
+	['key Abmin'],
+	['key Abmi'],
+	['key Amin'],
+	['key Ami'],
+	['key A#mi'],
+	['key A#min'],
 	['keyA'],
 	['Key A'],
 	['KEY A'],

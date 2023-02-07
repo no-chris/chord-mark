@@ -2,7 +2,6 @@ import getAllChordsInSong from '../../../src/parser/getAllChordsInSong';
 import getAllKeysInSong from '../../../src/parser/getAllKeysInSong';
 
 import parseChordLine from '../../../src/parser/parseChordLine';
-import parseChord from '../../../src/parser/parseChord';
 import parseKeyDeclaration from '../../../src/parser/parseKeyDeclaration';
 import parseLyricLine from '../../../src/parser/parseLyricLine';
 
@@ -26,7 +25,6 @@ describe('getAllKeysInSong()', () => {
 		const expectedAllKeys = {
 			auto: {
 				string: 'C',
-				chordModel: parseChord('C'),
 				accidental: 'flat',
 			},
 			explicit: [],
@@ -50,18 +48,15 @@ describe('getAllKeysInSong()', () => {
 		const expectedAllKeys = {
 			auto: {
 				string: 'C',
-				chordModel: parseChord('C'),
 				accidental: 'flat',
 			},
 			explicit: [
 				{
 					string: 'C',
-					chordModel: parseChord('C'),
 					accidental: 'flat',
 				},
 				{
 					string: 'F#m',
-					chordModel: parseChord('F#m'),
 					accidental: 'sharp',
 				},
 			],

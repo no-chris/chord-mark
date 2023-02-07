@@ -1243,15 +1243,14 @@ verseContent2
 describe('Key declaration', () => {
 	test('Correctly parse key declaration', () => {
 		const parseChord = chordParserFactory();
-		const input = ['key C#mi', 'key Ab', 'key Bbmaj'];
+		const input = ['key C#m', 'key Ab', 'key Bb'];
 
 		const expected = [
 			{
 				type: 'keyDeclaration',
-				string: 'key C#mi',
+				string: 'key C#m',
 				model: {
 					string: 'C#m',
-					chordModel: parseChord('C#mi'),
 					accidental: 'sharp',
 				},
 			},
@@ -1260,16 +1259,14 @@ describe('Key declaration', () => {
 				string: 'key Ab',
 				model: {
 					string: 'Ab',
-					chordModel: parseChord('Ab'),
 					accidental: 'flat',
 				},
 			},
 			{
 				type: 'keyDeclaration',
-				string: 'key Bbmaj',
+				string: 'key Bb',
 				model: {
 					string: 'Bb',
-					chordModel: parseChord('Bbmaj'),
 					accidental: 'flat',
 				},
 			},

@@ -7,22 +7,23 @@ describe('isKeyDeclaration', () => {
 });
 
 describe.each([
-	['key A♭min', true],
-	['key Abmin', true],
-	['key Abmi', true],
 	['key Abm', true],
 	['key Ab', true],
 	['key A', true],
 	['key A#', true],
-	['key Ami', true],
 	['key A#m', true],
-	['key A#mi', true],
-	['key A#min', true],
-	['key A♯min', true],
 
 	['key   Ab', true],
 	['   key   Ab', true],
 	['   key   Ab  ', true],
+
+	['key A♭min', false],
+	['key Abmin', false],
+	['key Abmi', false],
+	['key Ami', false],
+	['key A#mi', false],
+	['key A#min', false],
+	['key A♯min', false],
 
 	['key A#mine', false],
 	['key Do', false],

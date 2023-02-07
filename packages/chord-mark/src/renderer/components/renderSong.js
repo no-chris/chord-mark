@@ -84,7 +84,7 @@ export default function renderSong(
 		currentKey = transposeKey(
 			allKeys.auto,
 			transposeValue,
-			accidentalsType === 'auto'
+			accidentalsType
 		);
 	}
 	let renderChord = getChordSymbolRenderer();
@@ -125,11 +125,11 @@ export default function renderSong(
 			currentKey = transposeKey(
 				line.model,
 				transposeValue,
-				accidentalsType === 'auto'
+				accidentalsType
 			);
 
 			renderChord = getChordSymbolRenderer();
-			line.symbol = renderChord(line.model.chordModel);
+			line.symbol = currentKey.string;
 		} else if (line.type === lineTypes.CHORD) {
 			line.model.allBars.forEach((bar) => {
 				bar.allChords.forEach((chord) => {

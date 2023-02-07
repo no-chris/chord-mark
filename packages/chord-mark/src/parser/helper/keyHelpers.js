@@ -1,13 +1,32 @@
 import _cloneDeep from 'lodash/cloneDeep';
 import _findIndex from 'lodash/findIndex';
+import _invert from 'lodash/invert';
 
-// We use chord symbol to manipulate key declarations even though they are not chords per se
-// But we benefit from the chord-symbol parser to validate the key declaration
-import { chordParserFactory, chordRendererFactory } from 'chord-symbol';
+const allNotesSharp = 'A,A#,B,C,C#,D,D#,E,F,F#,G,G#'.split(',');
+const allFlats = 'Ab,Bb,Db,Eb,Gb'.split(',');
+const allNotes = [...allNotesSharp, ...allFlats];
+const allKeys = [...allNotes, ...allNotes.map((note) => note + 'm')];
+
+const flatsToSharps = {
+	Ab: 'G#',
+	Bb: 'A#',
+	Db: 'C#',
+	Eb: 'D#',
+	Gb: 'F#',
+};
+const sharpsToFlats = _invert(flatsToSharps);
+
+/**
+ * Check if the given string is a valid key
+ * @param {String} keyString
+ * @returns {Boolean}
+ */
+export function isKey(keyString) {
+	return allKeys.includes(keyString);
+}
 
 /**
  * Returns the accidental of a given key
- *
  * @param {string} keyString
  * @returns {('flat'|'sharp')}
  */
@@ -38,13 +57,14 @@ export function getKeyAccidental(keyString) {
 }
 
 /**
- *
+ * Transpose a key, trying to avoid theoretical keys when `accidentalsType` is 'auto'.
+ * Otherwise, the transposed key will use the given `accidentalsType`, e.g. 'sharp' or 'flat'.
  * @param {KeyDeclaration} keyModel
  * @param {number} transposeValue
- * @param {boolean} avoidTheoreticalKeys
+ * @param {('auto'|'sharp'|'flat')} accidentalsType
  * @returns {KeyDeclaration}
  */
-export function transposeKey(keyModel, transposeValue, avoidTheoreticalKeys) {
+export function transposeKey(keyModel, transposeValue, accidentalsType) {
 	const theoreticalKeys = {
 		'G#': 'Ab',
 		'D#': 'Eb',
@@ -53,45 +73,67 @@ export function transposeKey(keyModel, transposeValue, avoidTheoreticalKeys) {
 		Gbm: 'F#m',
 	};
 
-	const parseKeyChord = chordParserFactory();
-	const renderKeyChord = chordRendererFactory({
-		useShortNamings: true,
-		transposeValue,
-		accidentals:
-			transposeValue === 0
-				? 'original'
-				: transposeValue < 0
-				? 'flat'
-				: 'sharp',
-	});
+	let keyTemp;
 
-	const tempKey = renderKeyChord(keyModel.chordModel);
+	if (transposeValue === 0 && accidentalsType === 'auto') {
+		keyTemp = keyModel.string;
+	} else {
+		const accidental =
+			accidentalsType === 'auto'
+				? transposeValue < 0
+					? 'flat'
+					: 'sharp'
+				: accidentalsType;
+		keyTemp = doTranspose(keyModel.string, transposeValue, accidental);
+	}
+
 	const transposedKey =
-		avoidTheoreticalKeys && theoreticalKeys[tempKey]
-			? theoreticalKeys[tempKey]
-			: tempKey;
+		accidentalsType === 'auto' && theoreticalKeys[keyTemp]
+			? theoreticalKeys[keyTemp]
+			: keyTemp;
 
 	return {
 		string: transposedKey,
-		chordModel: parseKeyChord(transposedKey),
 		accidental: getKeyAccidental(transposedKey),
 	};
 }
 
+function doTranspose(key, value, accidental) {
+	const isMinor = key.endsWith('m');
+	const note = key.replace('m', '');
+
+	const noteSharp = flatsToSharps[note] || note;
+	const noteIndex = allNotesSharp.indexOf(noteSharp);
+
+	let transposedIndex = noteIndex + value;
+
+	if (transposedIndex < 0) {
+		transposedIndex += allNotesSharp.length;
+	} else if (transposedIndex >= allNotesSharp.length) {
+		transposedIndex -= allNotesSharp.length;
+	}
+
+	const transposedSharp = allNotesSharp[transposedIndex];
+
+	const transposed =
+		accidental === 'flat'
+			? sharpsToFlats[transposedSharp] || transposedSharp
+			: transposedSharp;
+
+	return isMinor ? transposed + 'm' : transposed;
+}
+
 /**
- * Try to guess the key of a song based on the chords
- *
+ * Try to guess the key of a song based on its chords
  * @param {SongChord[]} allChords
  * @returns {(KeyDeclaration|undefined)}
  */
 export function guessKey(allChords) {
 	const keyString = inferKeyFromChords(allChords);
-	const parseKeyChord = chordParserFactory();
 
 	return keyString
 		? {
 				string: keyString,
-				chordModel: parseKeyChord(keyString),
 				accidental: getKeyAccidental(keyString),
 		  }
 		: undefined;

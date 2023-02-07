@@ -9,7 +9,7 @@ describe('renderKeyDeclaration', () => {
 
 	test('Should return valid html', () => {
 		const line = {
-			symbol: 'C#mi',
+			symbol: 'C#m',
 		};
 		const rendered = renderKeyDeclaration(line);
 		const element = htmlToElement(rendered);
@@ -18,6 +18,6 @@ describe('renderKeyDeclaration', () => {
 		expect(element.nodeName).toBe('SPAN');
 		expect(element.classList.contains('cmKeyDeclaration')).toBe(true);
 
-		expect(stripTags(rendered)).toEqual('key: C#mi');
+		expect(stripTags(rendered)).toEqual('key: C#m');
 	});
 });

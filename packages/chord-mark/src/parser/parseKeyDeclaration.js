@@ -2,14 +2,12 @@ import clearSpaces from './helper/clearSpaces';
 import isKeyDeclaration, {
 	keyDeclarationRegexp,
 } from './matchers/isKeyDeclaration';
-import { chordParserFactory, chordRendererFactory } from 'chord-symbol';
 import { getKeyAccidental } from './helper/keyHelpers';
 
 /**
  * @typedef {Object} KeyDeclaration
  * @type {Object}
  * @property {String} string
- * @property {ChordDef} chordModel
  * @property {('flat'|'sharp')} accidental
  */
 
@@ -22,16 +20,11 @@ export default function parseKeyDeclaration(string) {
 		throw new TypeError('Expected key declaration, received: ' + string);
 	}
 
-	const parseChord = chordParserFactory();
-	const renderChord = chordRendererFactory({ useShortNamings: true });
-
 	const found = clearSpaces(string).match(keyDeclarationRegexp);
-	const chordModel = parseChord(found[1]);
-	const keyString = renderChord(chordModel);
+	const keyString = found[1];
 
 	return {
 		string: keyString,
-		chordModel,
 		accidental: getKeyAccidental(keyString),
 	};
 }
