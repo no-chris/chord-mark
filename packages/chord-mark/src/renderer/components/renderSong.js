@@ -33,7 +33,7 @@ import { defaultTimeSignature } from '../../parser/syntax';
  * @param {Boolean} options.autoRepeatChords
  * @param {('all'|'lyrics'|'chords'|'chordsFirstLyricLine')} options.chartType
  * @param {Function|Boolean} options.chordSymbolRenderer - must be an instance of a ChordSymbol renderer, returned by chordRendererFactory()
- * @param {('chord'|'roman'|'chord+roman')} options.symbolType
+ * @param {('chord'|'roman')} options.symbolType
  * @param {Function|Boolean} options.customRenderer
  * @param {Boolean} options.expandSectionCopy
  * @param {Boolean} options.expandSectionMultiply

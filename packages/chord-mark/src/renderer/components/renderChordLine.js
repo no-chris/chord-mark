@@ -10,6 +10,7 @@ import symbols from '../symbols';
  * @param {Boolean} shouldPrintBarSeparators
  * @param {Boolean} shouldPrintSubBeatDelimiters
  * @param {Boolean} shouldPrintInlineTimeSignatures
+ * @param {('chord'|'roman')} options.symbolType
  * @returns {String} rendered html
  */
 export default function renderChordLine(

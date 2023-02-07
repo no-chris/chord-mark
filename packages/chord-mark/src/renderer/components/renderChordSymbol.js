@@ -7,7 +7,7 @@ import symbols from '../symbols';
  * @param {Boolean} options.shouldPrintChordsDuration
  * @param {Boolean} options.shouldPrintSubBeatOpener
  * @param {Boolean} options.shouldPrintSubBeatCloser
- * @param {String} options.symbolType
+ * @param {('chord'|'roman')} options.symbolType
  * @returns {String} rendered html
  */
 export default function renderChordSymbol(

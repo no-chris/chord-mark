@@ -16,7 +16,7 @@ export default function getMaxBeatsWidth(
 		shouldAlignChordsWithLyrics,
 		shouldPrintSubBeatDelimiters = true,
 		symbolType = 'chord',
-	} = {}
+	}
 ) {
 	const maxBeatsWidth = [];
 

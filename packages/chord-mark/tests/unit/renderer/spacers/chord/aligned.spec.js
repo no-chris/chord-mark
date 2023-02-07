@@ -76,7 +76,7 @@ describe.each([
 		[{ 1: 3, 2: 6, 3: 2, 4: 5 }],
 		[1, 0, 2],
 		[defaultSpacesAfter, defaultSpacesAfter + 2 + defaultSpacesAfter, 0],
-		true,
+		{ shouldPrintChordsDuration: true },
 	],
 
 	[
@@ -85,8 +85,7 @@ describe.each([
 		[{ 1: 1, 2: 1, 3: 1, 4: 1 }],
 		[0, 0, 0, 0],
 		[defaultSpacesAfter, defaultSpacesAfter, defaultSpacesAfter, 0],
-		undefined,
-		true,
+		{ shouldPrintBarSeparators: true },
 	],
 
 	[
@@ -100,8 +99,7 @@ describe.each([
 			defaultSpacesAfter,
 			defaultSpacesAfter,
 		],
-		undefined,
-		false,
+		{ shouldPrintBarSeparators: false },
 	],
 
 	[
@@ -147,8 +145,7 @@ describe.each([
 			defaultSubBeatSpacesAfter,
 			0,
 		],
-		false,
-		true,
+		{ shouldPrintChordsDuration: false, shouldPrintBarSeparators: true },
 	],
 
 	[
@@ -164,8 +161,7 @@ describe.each([
 			defaultSubBeatSpacesAfter,
 			defaultSpacesAfter,
 		],
-		false,
-		false,
+		{ shouldPrintChordsDuration: false, shouldPrintBarSeparators: false },
 	],
 
 	[
@@ -185,8 +181,21 @@ describe.each([
 			defaultSpacesAfter,
 			defaultSpacesAfter,
 		],
-		true,
-		true,
+		{ shouldPrintChordsDuration: true, shouldPrintBarSeparators: true },
+	],
+
+	[
+		'take roman numerals symbol into account',
+		'B°',
+		[{ 1: 20, 2: 0, 3: 0, 4: 0 }],
+		[20 - 'vii°'.length],
+		[
+			defaultSpacesAfter +
+				emptyBeatSpaces +
+				emptyBeatSpaces +
+				emptyBeatSpaces,
+		],
+		{ symbolType: 'roman' },
 	],
 ])(
 	'Aligned spacer: %s',
@@ -196,23 +205,21 @@ describe.each([
 		maxBeatWidth,
 		spacesWithin,
 		spacesAfter,
-		shouldPrintChordsDuration = false,
-		shouldPrintBarSeparators = true
+		options = {}
 	) => {
 		test('Correctly fills .spacesWithin and .spacesAfter properties', () => {
-			let parsed = parseChordLine(chordLine);
+			let parsed = parseChordLine(chordLine, { key: { string: 'C' } });
 			parsed = forEachChordInChordLine(
 				parsed,
 				(chord) => (chord.symbol = getChordSymbol(chord.model))
 			);
 
 			parsed.allBars.map((bar) => {
-				bar.shouldPrintChordsDuration = !!shouldPrintChordsDuration;
+				bar.shouldPrintChordsDuration =
+					!!options.shouldPrintChordsDuration;
 			});
 
-			const spaced = alignedSpacer(parsed, maxBeatWidth, {
-				shouldPrintBarSeparators,
-			});
+			const spaced = alignedSpacer(parsed, maxBeatWidth, options);
 
 			const actualSpacesWithin = [];
 			const actualSpacesAfter = [];

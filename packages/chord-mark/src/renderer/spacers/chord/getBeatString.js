@@ -13,7 +13,7 @@ import symbols from '../../symbols';
 export function getBeatString(
 	bar,
 	beatIndex,
-	{ shouldPrintSubBeatDelimiters = true, symbolType = 'chord' }
+	{ shouldPrintSubBeatDelimiters = true, symbolType = 'chord' } = {}
 ) {
 	const beatChords = bar.allChords.filter(
 		(chord) => chord.beat === beatIndex

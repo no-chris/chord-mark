@@ -17,6 +17,7 @@ const defaultSpacesAfter = 2;
  * @param {Boolean} shouldPrintBarSeparators
  * @param {Boolean} shouldPrintSubBeatDelimiters
  * @param {Boolean} shouldPrintTimeSignature
+ * @param {('chord'|'roman')} options.symbolType
  * @returns {String} rendered html
  */
 export default function renderBarContent(

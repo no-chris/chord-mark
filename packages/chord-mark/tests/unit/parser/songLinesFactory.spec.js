@@ -3,8 +3,6 @@ jest.mock('../../../src/parser/parseLyricLine');
 
 import _ from 'lodash';
 
-import { chordParserFactory } from 'chord-symbol';
-
 import songLinesFactory from '../../../src/parser/songLinesFactory';
 
 import {
@@ -1242,7 +1240,6 @@ verseContent2
 
 describe('Key declaration', () => {
 	test('Correctly parse key declaration', () => {
-		const parseChord = chordParserFactory();
 		const input = ['key C#m', 'key Ab', 'key Bb'];
 
 		const expected = [
