@@ -48,4 +48,24 @@
 		opacity: 0.8;
 		font-weight: bold;
 	}
+
+	.cmChordLine-romanNumeral,
+	.cmRomanNumeral {
+		color: $dracula-green;
+	}
+
+	.cmRomanNumeral-diatonic {
+		font-weight: bold;
+		color: $ccs-background;
+		background-color: $dracula-green;
+	}
+
+	.cmRomanNumeral-borrowed {
+		color: $ccs-background;
+		background-color: rgba($dracula-green, 0.7);
+	}
+
+	.cmRomanNumeral-unknown {
+		opacity: 0.8;
+	}
 }

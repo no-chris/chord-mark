@@ -55,18 +55,18 @@ $pink: rgb(237, 123, 255);
 
 	.cmChordLine-romanNumeral,
 	.cmRomanNumeral {
-		color: $bitterSweet;
+		color: $ccs-accent;
 	}
 
 	.cmRomanNumeral-diatonic {
 		font-weight: bold;
 		color: $ccs-background;
-		background-color: $bitterSweet;
+		background-color: $ccs-accent;
 	}
 
 	.cmRomanNumeral-borrowed {
 		color: $ccs-background;
-		background-color: rgba($bitterSweet, 0.7);
+		background-color: rgba($ccs-accent, 0.7);
 	}
 
 	.cmRomanNumeral-unknown {
