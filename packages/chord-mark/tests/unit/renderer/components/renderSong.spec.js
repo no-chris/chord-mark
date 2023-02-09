@@ -982,3 +982,26 @@ describe('Keys, accidental & transpose', () => {
 		});
 	});
 });
+
+describe('Roman numerals symbols', () => {
+	describe.each([
+		[
+			'Single key',
+			'key C\nC Dm F G B°',
+			'key: C\n|I     |ii     |IV     |V     |vii°     |',
+		],
+		[
+			'Multiple keys',
+			'key C\nC Dm F G B°\n' + 'key G\nC Dm F G B°',
+			'key: C\n|I     |ii     |IV     |V     |vii°     |\n' +
+				'key: G\n|IV     |v     |♭VII     |I     |?°     |',
+		],
+	])(`%s`, (title, song, expected) => {
+		test('renders with correct roman numerals', () => {
+			const rendered = renderSongText(song, {
+				symbolType: 'roman',
+			});
+			expect(toText(rendered)).toBe(expected);
+		});
+	});
+});
