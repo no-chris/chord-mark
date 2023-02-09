@@ -32,7 +32,6 @@ key Am`;
 					string: 'key G',
 					model: {
 						string: 'G',
-						chordModel: parseChord('G'),
 						accidental: 'sharp',
 					},
 				},
@@ -45,7 +44,7 @@ key Am`;
 								allChords: [
 									{
 										string: 'C..',
-										model: parseChord('C'),
+										model: parseChord('C', { string: 'G' }),
 										duration: 2,
 										beat: 1,
 										isInSubBeatGroup: false,
@@ -53,7 +52,7 @@ key Am`;
 									},
 									{
 										string: 'G..',
-										model: parseChord('G'),
+										model: parseChord('G', { string: 'G' }),
 										duration: 2,
 										beat: 3,
 										isInSubBeatGroup: false,
@@ -86,7 +85,9 @@ key Am`;
 								allChords: [
 									{
 										string: 'Am.',
-										model: parseChord('Am'),
+										model: parseChord('Am', {
+											string: 'G',
+										}),
 										duration: 1,
 										beat: 1,
 										isInSubBeatGroup: false,
@@ -94,7 +95,9 @@ key Am`;
 									},
 									{
 										string: '[Am',
-										model: parseChord('Am'),
+										model: parseChord('Am', {
+											string: 'G',
+										}),
 										duration: 0.5,
 										beat: 2,
 										isInSubBeatGroup: true,
@@ -104,7 +107,9 @@ key Am`;
 									},
 									{
 										string: 'Am/G]',
-										model: parseChord('Am/G'),
+										model: parseChord('Am/G', {
+											string: 'G',
+										}),
 										duration: 0.5,
 										beat: 2,
 										isInSubBeatGroup: true,
@@ -114,7 +119,9 @@ key Am`;
 									},
 									{
 										string: 'FM7.',
-										model: parseChord('FM7'),
+										model: parseChord('FM7', {
+											string: 'G',
+										}),
 										duration: 1,
 										beat: 3,
 										isInSubBeatGroup: false,
@@ -122,7 +129,9 @@ key Am`;
 									},
 									{
 										string: 'F6.',
-										model: parseChord('F6'),
+										model: parseChord('F6', {
+											string: 'G',
+										}),
 										duration: 1,
 										beat: 4,
 										isInSubBeatGroup: false,
@@ -156,7 +165,7 @@ key Am`;
 								allChords: [
 									{
 										string: 'C..',
-										model: parseChord('C'),
+										model: parseChord('C', { string: 'G' }),
 										duration: 2,
 										beat: 1,
 										isInSubBeatGroup: false,
@@ -164,7 +173,7 @@ key Am`;
 									},
 									{
 										string: 'G..',
-										model: parseChord('G'),
+										model: parseChord('G', { string: 'G' }),
 										duration: 2,
 										beat: 3,
 										isInSubBeatGroup: false,
@@ -197,7 +206,7 @@ key Am`;
 								allChords: [
 									{
 										string: 'F.',
-										model: parseChord('F'),
+										model: parseChord('F', { string: 'G' }),
 										duration: 1,
 										beat: 1,
 										isInSubBeatGroup: false,
@@ -205,7 +214,9 @@ key Am`;
 									},
 									{
 										string: '[C/E',
-										model: parseChord('C/E'),
+										model: parseChord('C/E', {
+											string: 'G',
+										}),
 										duration: 0.5,
 										beat: 2,
 										isInSubBeatGroup: true,
@@ -215,7 +226,9 @@ key Am`;
 									},
 									{
 										string: 'Dm7]',
-										model: parseChord('Dm7'),
+										model: parseChord('Dm7', {
+											string: 'G',
+										}),
 										duration: 0.5,
 										beat: 2,
 										isInSubBeatGroup: true,
@@ -225,7 +238,7 @@ key Am`;
 									},
 									{
 										string: 'C..',
-										model: parseChord('C'),
+										model: parseChord('C', { string: 'G' }),
 										duration: 2,
 										beat: 3,
 										isInSubBeatGroup: false,
@@ -253,44 +266,72 @@ key Am`;
 					type: 'keyDeclaration',
 					string: 'key Am',
 					model: {
-						string: 'Ami',
-						chordModel: parseChord('Am'),
+						string: 'Am',
 						accidental: 'flat',
 					},
 				},
 			],
 			allChords: [
 				{
-					model: parseChord('C'),
+					model: parseChord('C', { string: 'G' }),
 					occurrences: 3,
 					duration: 6,
 					isFirst: true,
 					isLast: true,
 				},
-				{ model: parseChord('G'), occurrences: 2, duration: 4 },
-				{ model: parseChord('Am'), occurrences: 2, duration: 1.5 },
-				{ model: parseChord('Am/G'), occurrences: 1, duration: 0.5 },
-				{ model: parseChord('FM7'), occurrences: 1, duration: 1 },
-				{ model: parseChord('F6'), occurrences: 1, duration: 1 },
-				{ model: parseChord('F'), occurrences: 1, duration: 1 },
-				{ model: parseChord('C/E'), occurrences: 1, duration: 0.5 },
-				{ model: parseChord('Dm7'), occurrences: 1, duration: 0.5 },
+				{
+					model: parseChord('G', { string: 'G' }),
+					occurrences: 2,
+					duration: 4,
+				},
+				{
+					model: parseChord('Am', { string: 'G' }),
+					occurrences: 2,
+					duration: 1.5,
+				},
+				{
+					model: parseChord('Am/G', { string: 'G' }),
+					occurrences: 1,
+					duration: 0.5,
+				},
+				{
+					model: parseChord('FM7', { string: 'G' }),
+					occurrences: 1,
+					duration: 1,
+				},
+				{
+					model: parseChord('F6', { string: 'G' }),
+					occurrences: 1,
+					duration: 1,
+				},
+				{
+					model: parseChord('F', { string: 'G' }),
+					occurrences: 1,
+					duration: 1,
+				},
+				{
+					model: parseChord('C/E', { string: 'G' }),
+					occurrences: 1,
+					duration: 0.5,
+				},
+				{
+					model: parseChord('Dm7', { string: 'G' }),
+					occurrences: 1,
+					duration: 0.5,
+				},
 			],
 			allKeys: {
 				auto: {
 					string: 'C',
-					chordModel: parseChord('C'),
 					accidental: 'flat',
 				},
 				explicit: [
 					{
 						string: 'G',
-						chordModel: parseChord('G'),
 						accidental: 'sharp',
 					},
 					{
-						string: 'Ami',
-						chordModel: parseChord('Am'),
+						string: 'Am',
 						accidental: 'flat',
 					},
 				],

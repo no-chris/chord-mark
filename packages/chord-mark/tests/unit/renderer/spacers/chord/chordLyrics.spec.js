@@ -263,6 +263,14 @@ describe.each([
 		'     Put     me            on top        of       the     correct          lyrics',
 		{ shouldPrintBarTimeSignature: true, shouldPrintChordsDuration: true },
 	],
+	[
+		'Roman numeral symbols',
+		'C Dm Em F G B°',
+		'_Put me _on top _of _the _correct _lyrics',
+		'|I     |ii    |iii |IV |V      |vii°  |',
+		' Put me on top of   the correct lyrics',
+		{ symbolType: 'roman' },
+	],
 ])(
 	'%s',
 	(
@@ -277,7 +285,9 @@ describe.each([
 			// setup
 			const parsedLyrics = parseLyricLine(lyricsLineInput);
 
-			const parsedChords = parseChordLine(chordLineInput);
+			const parsedChords = parseChordLine(chordLineInput, {
+				key: { string: 'C' },
+			});
 			parsedChords.allBars.map((bar) => {
 				bar.allChords.map((chord) => {
 					chord.symbol = getChordSymbol(chord.model);

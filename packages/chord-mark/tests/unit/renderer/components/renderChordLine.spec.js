@@ -26,6 +26,20 @@ describe('chordLine renderer', () => {
 		expect(element.nodeName).toBe('SPAN');
 		expect(element.classList.contains('cmChordLine')).toBe(true);
 	});
+
+	test('Should add proper class if roman numeral', () => {
+		const rendered = renderChordLine(parseChordLine('C'), {
+			symbolType: 'roman',
+		});
+		const element = htmlToElement(rendered);
+
+		expect(element).toBeInstanceOf(Node);
+		expect(element.nodeName).toBe('SPAN');
+		expect(element.classList.contains('cmChordLine')).toBe(true);
+		expect(element.classList.contains('cmChordLine-romanNumeral')).toBe(
+			true
+		);
+	});
 });
 
 describe.each([

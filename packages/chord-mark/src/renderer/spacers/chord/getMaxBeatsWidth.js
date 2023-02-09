@@ -4,14 +4,19 @@ import lineTypes from '../../../parser/lineTypes';
 
 /**
  * @param {SongLine[]} allLines
- * @param {Function} shouldAlignChordsWithLyrics
- * @param {Boolean} shouldPrintSubBeatDelimiters
+ * @param {Object} options
+ * @param {Function} options.shouldAlignChordsWithLyrics
+ * @param {Boolean} options.shouldPrintSubBeatDelimiters
+ * @param {('chord'|'roman')} options.symbolType
  * @returns {Array}
  */
 export default function getMaxBeatsWidth(
 	allLines,
-	shouldAlignChordsWithLyrics,
-	shouldPrintSubBeatDelimiters = true
+	{
+		shouldAlignChordsWithLyrics,
+		shouldPrintSubBeatDelimiters = true,
+		symbolType = 'chord',
+	}
 ) {
 	const maxBeatsWidth = [];
 
@@ -36,11 +41,10 @@ export default function getMaxBeatsWidth(
 								!chord.isInSubBeatGroup || chord.isLastOfSubBeat
 						)
 						.forEach((chord) => {
-							const beatString = getBeatString(
-								bar,
-								chord.beat,
-								shouldPrintSubBeatDelimiters
-							);
+							const beatString = getBeatString(bar, chord.beat, {
+								shouldPrintSubBeatDelimiters,
+								symbolType,
+							});
 							maxBeatsWidth[barIndex][chord.beat] = Math.max(
 								maxBeatsWidth[barIndex][chord.beat],
 								beatString.length

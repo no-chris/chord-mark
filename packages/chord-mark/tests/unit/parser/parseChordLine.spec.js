@@ -25,8 +25,12 @@ const ts4_4 = parseTimeSignature('4/4');
 const ts5_4 = parseTimeSignature('5/4');
 const ts3_8 = parseTimeSignature('3/8');
 
-parseChord.mockImplementation((chordString) => ({ symbol: chordString }));
-getChordSymbol.mockImplementation((chordDef) => chordDef.symbol);
+beforeEach(() => {
+	parseChord.mockReset();
+	getChordSymbol.mockReset();
+	parseChord.mockImplementation((chordString) => ({ symbol: chordString }));
+	getChordSymbol.mockImplementation((chordDef) => chordDef.symbol);
+});
 
 describe.each([
 	[
@@ -1367,6 +1371,17 @@ describe.each([
 		const parsed = parseChordLine(input, options);
 
 		expect(parsed).toEqual(expected);
+	});
+});
+
+describe('chord key', () => {
+	test('should forward the key to the chord parser', () => {
+		const options = { key: { string: 'C' } };
+		parseChordLine('C F G', options);
+
+		expect(parseChord).toHaveBeenNthCalledWith(1, 'C', options.key);
+		expect(parseChord).toHaveBeenNthCalledWith(2, 'F', options.key);
+		expect(parseChord).toHaveBeenNthCalledWith(3, 'G', options.key);
 	});
 });
 

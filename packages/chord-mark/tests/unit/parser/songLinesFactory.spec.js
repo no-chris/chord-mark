@@ -3,8 +3,6 @@ jest.mock('../../../src/parser/parseLyricLine');
 
 import _ from 'lodash';
 
-import { chordParserFactory } from 'chord-symbol';
-
 import songLinesFactory from '../../../src/parser/songLinesFactory';
 
 import {
@@ -145,14 +143,17 @@ describe('timeSignature', () => {
 		expect(parseChordLine.mock.calls[0][0]).toEqual('Em D. C.');
 		expect(parseChordLine.mock.calls[0][1]).toEqual({
 			timeSignature: ts6_8,
+			key: {},
 		});
 		expect(parseChordLine.mock.calls[1][0]).toEqual('C.. G..');
 		expect(parseChordLine.mock.calls[1][1]).toEqual({
 			timeSignature: ts4_4,
+			key: {},
 		});
 		expect(parseChordLine.mock.calls[2][0]).toEqual('D D C A');
 		expect(parseChordLine.mock.calls[2][1]).toEqual({
 			timeSignature: ts3_4,
+			key: {},
 		});
 	});
 });
@@ -1239,16 +1240,14 @@ verseContent2
 
 describe('Key declaration', () => {
 	test('Correctly parse key declaration', () => {
-		const parseChord = chordParserFactory();
-		const input = ['key C#mi', 'key Ab', 'key Bbmaj'];
+		const input = ['key C#m', 'key Ab', 'key Bb'];
 
 		const expected = [
 			{
 				type: 'keyDeclaration',
-				string: 'key C#mi',
+				string: 'key C#m',
 				model: {
-					string: 'C#mi',
-					chordModel: parseChord('C#mi'),
+					string: 'C#m',
 					accidental: 'sharp',
 				},
 			},
@@ -1257,16 +1256,14 @@ describe('Key declaration', () => {
 				string: 'key Ab',
 				model: {
 					string: 'Ab',
-					chordModel: parseChord('Ab'),
 					accidental: 'flat',
 				},
 			},
 			{
 				type: 'keyDeclaration',
-				string: 'key Bbmaj',
+				string: 'key Bb',
 				model: {
 					string: 'Bb',
-					chordModel: parseChord('Bbmaj'),
 					accidental: 'flat',
 				},
 			},

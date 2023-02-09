@@ -10,6 +10,7 @@ import symbols from '../symbols';
  * @param {Boolean} shouldPrintBarSeparators
  * @param {Boolean} shouldPrintSubBeatDelimiters
  * @param {Boolean} shouldPrintInlineTimeSignatures
+ * @param {('chord'|'roman')} options.symbolType
  * @returns {String} rendered html
  */
 export default function renderChordLine(
@@ -18,6 +19,7 @@ export default function renderChordLine(
 		shouldPrintBarSeparators = true,
 		shouldPrintSubBeatDelimiters = true,
 		shouldPrintInlineTimeSignatures = true,
+		symbolType = 'chord',
 	} = {}
 ) {
 	const allBarsRendered = chordLineModel.allBars.map((bar, i) => {
@@ -28,6 +30,7 @@ export default function renderChordLine(
 			shouldPrintBarSeparators,
 			shouldPrintSubBeatDelimiters,
 			shouldPrintTimeSignature,
+			symbolType,
 		});
 	});
 
@@ -44,5 +47,5 @@ export default function renderChordLine(
 		chordLineModel.offset || 0
 	);
 
-	return chordLineTpl({ chordLineOffset, chordLine });
+	return chordLineTpl({ chordLineOffset, chordLine, symbolType });
 }

@@ -1,10 +1,11 @@
 import { chordParserFactory } from 'chord-symbol';
 
 /**
- * @param chordString
+ * @param {String} chordString
+ * @param {KeyDeclaration} key
  * @returns {Chord}
  */
-export default function parseChordWrapper(chordString) {
-	const parseChord = chordParserFactory();
+export default function parseChordWrapper(chordString, key = {}) {
+	const parseChord = chordParserFactory({ key: key.string });
 	return parseChord(chordString);
 }

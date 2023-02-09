@@ -2,6 +2,7 @@ import getAllChordsInSong from '../../../src/parser/getAllChordsInSong';
 
 import parseChordLine from '../../../src/parser/parseChordLine';
 import parseChord from '../../../src/parser/parseChord';
+import parseKeyDeclaration from '../../../src/parser/parseKeyDeclaration';
 
 describe('getAllChordsInSong', () => {
 	test('Module', () => {
@@ -102,6 +103,46 @@ describe('getAllChordsInSong()', () => {
 				model: parseChord('G'),
 				occurrences: 1,
 				duration: 2,
+				isLast: true,
+			},
+		];
+
+		const allChords = getAllChordsInSong(allLines);
+
+		expect(allChords).toEqual(expectedAllChords);
+	});
+
+	test('Should groupt the same chords regardless of the key they are in', () => {
+		const allLines = [
+			{ type: 'keyDeclaration', model: parseKeyDeclaration('key C') },
+			{ type: 'chord', model: parseChordLine('C.. G..') },
+			{ type: 'chord', model: parseChordLine('Am.. F..') },
+			{ type: 'keyDeclaration', model: parseKeyDeclaration('key G') },
+			{ type: 'chord', model: parseChordLine('C.. G.. NC') },
+			{ type: 'chord', model: parseChordLine('F. Em.. C.') },
+			{ type: 'keyDeclaration', model: parseKeyDeclaration('key F') },
+			{ type: 'chord', model: parseChordLine('Am.. G..') },
+			{ type: 'chord', model: parseChordLine('C.. F..') },
+			{ type: 'keyDeclaration', model: parseKeyDeclaration('key F#') },
+			{ type: 'chord', model: parseChordLine('C.. G.. NC') },
+			{ type: 'chord', model: parseChordLine('F. Em. C. Dm.') },
+		];
+
+		const expectedAllChords = [
+			{
+				model: parseChord('C'),
+				occurrences: 6,
+				duration: 10,
+				isFirst: true,
+			},
+			{ model: parseChord('G'), occurrences: 4, duration: 8 },
+			{ model: parseChord('Am'), occurrences: 2, duration: 4 },
+			{ model: parseChord('F'), occurrences: 4, duration: 6 },
+			{ model: parseChord('Em'), occurrences: 2, duration: 3 },
+			{
+				model: parseChord('Dm'),
+				occurrences: 1,
+				duration: 1,
 				isLast: true,
 			},
 		];

@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-chord-symbol@4.0.0-beta.0:
-  version "4.0.0-beta.0"
-  resolved "https://registry.yarnpkg.com/chord-symbol/-/chord-symbol-4.0.0-beta.0.tgz#dd350d2a9c97ef8e0620a518e1a9c5bdd23f4642"
-  integrity sha512-9HeCfZc79mmqJWBY8JABQx5QzIqqjxxCejcFQ67wgdNkvywPnu2nrZsOGzcpWT91vxuKoQ1BWuUgXy+ilLWX8g==
+chord-symbol@4.0.0-beta.3:
+  version "4.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/chord-symbol/-/chord-symbol-4.0.0-beta.3.tgz#19e83198f83addaf627404708b1041344067111e"
+  integrity sha512-dOpcMDijtfkKNThPyTgzztbrhEKiX7NZcPsO5V3Y88866O+7Z/pORQUlJhP/j2T9Mfzg/aafO5imp620eeU0AA==
   dependencies:
     lodash "^4.17.21"
 

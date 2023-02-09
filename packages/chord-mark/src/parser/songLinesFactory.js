@@ -74,6 +74,8 @@ export default function songLinesFactory() {
 	let currentSection;
 	let currentSectionStats;
 
+	let currentKey = {};
+
 	const MAX_PREVIOUS_CHORD_LINES = 2;
 	let previousChordLines = [];
 	let previousSectionLabelLine;
@@ -103,10 +105,11 @@ export default function songLinesFactory() {
 	 * @returns {SongKeyDeclarationLine}
 	 */
 	function getKeyDeclarationLine(string) {
+		currentKey = parseKeyDeclaration(string);
 		return {
 			string,
 			type: lineTypes.KEY_DECLARATION,
-			model: parseKeyDeclaration(string),
+			model: _cloneDeep(currentKey),
 		};
 	}
 
@@ -166,6 +169,7 @@ export default function songLinesFactory() {
 		try {
 			const model = parseChordLine(string, {
 				timeSignature: currentTimeSignature,
+				key: currentKey,
 			});
 			line = {
 				string,
