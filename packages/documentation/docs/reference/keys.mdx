@@ -1,7 +1,7 @@
 import { CM, CCS, CS } from '../../src/components/shortcuts';
 import TabbedChordMark from '../../src/components/TabbedChordMark';
 
-# Keys declarations
+# Key declaration
 
 ## Key declaration lines
 
@@ -15,21 +15,59 @@ There are at least two reasons why you might want to do this.
 
 The first reason relates to the rendering of chord accidentals (`#` and `b`). If your source file contains mixed accidental, then declaring a key will allow <CM/> to automatically normalize the accidentals choosing the proper symbol
 
-<TabbedChordMark src={'#v\nkey C#m\nC#m7 Ab7\n_ What will you do when you get _lonely?\nC#m7.. C. D. E.. E7..\n_ No one _waiting _by your _side _'}/>
+<TabbedChordMark
+	src={
+		'#v\nkey C#m\nC#m7 Ab7\n_ What will you do when you get _lonely?\nC#m7.. C. D. E.. E7..\n_ No one _waiting _by your _side _'
+	}
+/>
 
-Note that if you don't declare a key, <CM/> will try to automatically detect it based of the chords used in the song. 
-However, this is done as a best effort and might not always work as expected, especially if the song contains multiple keys.
+Note that if you don't declare a key, <CM/> will try to automatically detect it based of the chords used in the song.
+While this should work reasonnably well for simple songs, it will probably fail on more complex cases.
 So as a best practice, it is recommended to always explicitly declare a key.
- 
-The accidental are also properly chosen if the song contains multiple keys:
 
-<TabbedChordMark src={'#v\nkey C#m\nC#m7 Ab7\n_ What will you do when you get _lonely?\nC#m7.. C. D. E.. E7..\n_ No one _waiting _by your _side _\n\n#c\nkey Dm\nDm.. Bb..\nLayla_\nC.. Dm.. Dm.. A#..\n\_Got me on my _knees, Layla'} />
+Accidentals are also properly chosen if the song contains multiple keys:
 
-When transposing in the accidental `auto` mode, <CM/> tries to be smart and avoid [theoretical keys](https://en.wikipedia.org/wiki/Theoretical_key) that are not used in practice. 
-For example transposing `Layla` 1 semitones down will result in a key of `C#m` instead of `Dbm` for the chorus. Again, note that the proper accidentals are used for each key.
+<TabbedChordMark
+	src={
+		'#v\nkey C#m\nC#m7 Ab7\n_ What will you do when you get _lonely?\nC#m7.. C. D. E.. E7..\n_ No one _waiting _by your _side _\n\n#c\nkey Dm\nDm.. Bb..\nLayla_\nC.. Dm.. Dm.. A#..\n_Got me on my _knees, Layla'
+	}
+/>
 
-<TabbedChordMark src={'#v\nkey C#m\nC#m7 Ab7\n_ What will you do when you get _lonely?\nC#m7.. C. D. E.. E7..\n_ No one _waiting _by your _side _\n\n#c\nkey Dm\nDm.. Bb..\nLayla_\nC.. Dm.. Dm.. A#..\n\_Got me on my _knees, Layla'} options={{ transposeValue: -1}} />
+When transposing in the accidental `auto` mode, <CM/> tries to be smart and avoid [theoretical keys](https://en.wikipedia.org/wiki/Theoretical_key) that are not used in practice.
+For example transposing down `Layla` by 1 semitone will result in a key of `C#m` instead of `Dbm` for the chorus. Again, note that the proper accidentals are used for each key.
+
+<TabbedChordMark
+	src={
+		'#v\nkey C#m\nC#m7 Ab7\n_ What will you do when you get _lonely?\nC#m7.. C. D. E.. E7..\n_ No one _waiting _by your _side _\n\n#c\nkey Dm\nDm.. Bb..\nLayla_\nC.. Dm.. Dm.. A#..\n_Got me on my _knees, Layla'
+	}
+	options={{ transposeValue: -1 }}
+/>
 
 ### Reason 2: harmonic analysis
 
-Coming soon.
+The second reason is if you want <CM/> to help with harmonic analysis by rendering the chord symbols as [roman numeral symbols](https://en.wikipedia.org/wiki/Roman_numeral_analysis).
+This can only be done if a key is explicitly set, otherwise all symbols will be rendered as `I`, `i` or `?`.
+The approach to convert chords from notes to numerals symbols is very basic and naive: based on the declared key, <CM/> will just detect if the song's chord are diatonic to the key,
+or diatonic to the parallel major/minor key (e.g. "borrowed" chords).
+Of course there is much more to harmonic analysis than this simple approach and I hope to enrich <CM/>'s capabilities with more functionality in the future.
+
+<TabbedChordMark
+	src={
+		'key Em\n6/8\nEm D. C.\n_ Forever trusting _who we are\nG.  B7. Em %\n_ and _nothing else _matters'
+	}
+	options={{ symbolType: 'roman' }}
+/>
+
+Please note that:
+
+-   symbols diatonic to the keys are rendered with color background
+-   borrowed chords are rendered with a slightly darker background
+-   unindentified chords are rendered without a background color
+
+<TabbedChordMark
+	src={'key C\nC/E Dm7/F Fm Gm Ab7'}
+	options={{ symbolType: 'roman' }}
+/>
+
+If you are unsure of the key, just try a few candidates! You will be able to see immediately if the song has a lot of diatonic chords for this key.
+And if it does, then the given key might be a good candidate.
