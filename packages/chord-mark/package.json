@@ -1,6 +1,6 @@
 {
 	"name": "chord-mark",
-	"version": "0.13.0-beta.4",
+	"version": "0.13.0-beta.5",
 	"description": "ChordMark - chord charts parser and renderer",
 	"private": false,
 	"main": "src/chordMark.js",
