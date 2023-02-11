@@ -28693,7 +28693,10 @@ function getBeatString_getBeatString(bar, beatIndex) {
       return '';
     case 1:
       {
-        return getBeatString_getChordString(bar, beatChords[0], shouldPrintSubBeatDelimiters, symbolType);
+        return getBeatString_getChordString(bar, beatChords[0], {
+          shouldPrintSubBeatDelimiters: shouldPrintSubBeatDelimiters,
+          symbolType: symbolType
+        });
       }
     default:
       {
@@ -29469,7 +29472,7 @@ function renderSong(parsedSong) {
     return shouldRepeatLines(line) && !isFiltered(line);
   }
   function shouldRepeatLines(line) {
-    var shouldSkipAutoRepeatChordLine = line.isFromAutoRepeatChords && !autoRepeatChords;
+    var shouldSkipAutoRepeatChordLine = !autoRepeatChords && (line.isFromAutoRepeatChords || line.type === lineTypes.CHORD && line.isFromSectionCopy);
     var shouldSkipSectionMultiplyLine = line.isFromSectionMultiply && !expandSectionMultiply;
     var shouldSkipSectionCopyLine = line.type !== lineTypes.SECTION_LABEL && line.isFromSectionCopy && !expandSectionCopy;
     return !shouldSkipSectionMultiplyLine && !shouldSkipAutoRepeatChordLine && !shouldSkipSectionCopyLine;

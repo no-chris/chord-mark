@@ -20,14 +20,14 @@ Tests:
 
 ---------- Result ------------
 
-            Physical :  8617
-              Source :  7905
+            Physical :  8717
+              Source :  7992
              Comment :  23
  Single-line comment :  23
        Block comment :  0
                Mixed :  13
  Empty block comment :  0
-               Empty :  702
+               Empty :  715
                To Do :  0
 
 Number of files read :  49
@@ -38,14 +38,14 @@ Total:
 
 ---------- Result ------------
 
-            Physical :  11704
-              Source :  10181
+            Physical :  11804
+              Source :  10268
              Comment :  456
  Single-line comment :  50
        Block comment :  406
                Mixed :  32
  Empty block comment :  0
-               Empty :  1099
+               Empty :  1112
                To Do :  0
 
 Number of files read :  110
