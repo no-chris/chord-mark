@@ -993,8 +993,8 @@ describe('Roman numerals symbols', () => {
 		[
 			'Multiple keys',
 			'key C\nC Dm F G B°\n' + 'key G\nC Dm F G B°',
-			'key: C\n|I     |ii     |IV     |V     |vii°     |\n' +
-				'key: G\n|IV     |v     |♭VII     |I     |?°     |',
+			'key: C\n|I      |ii     |IV       |V     |vii°     |\n' +
+				'key: G\n|IV     |v      |♭VII     |I     |?°       |',
 		],
 	])(`%s`, (title, song, expected) => {
 		test('renders with correct roman numerals', () => {
