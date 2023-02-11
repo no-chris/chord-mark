@@ -23,12 +23,10 @@ export function getBeatString(
 		case 0:
 			return '';
 		case 1: {
-			return getChordString(
-				bar,
-				beatChords[0],
+			return getChordString(bar, beatChords[0], {
 				shouldPrintSubBeatDelimiters,
-				symbolType
-			);
+				symbolType,
+			});
 		}
 		default: {
 			return beatChords.reduce((allChords, chord, i) => {

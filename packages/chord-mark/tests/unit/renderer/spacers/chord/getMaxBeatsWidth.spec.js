@@ -376,3 +376,37 @@ describe('Sub-beat delimiters', () => {
 		}
 	);
 });
+
+describe('Roman numerals', () => {
+	describe.each([
+		[
+			'Single chord per beat',
+			'key C\nC\nF',
+			[{ 1: 'IV'.length, 2: 0, 3: 0, 4: 0 }],
+		],
+		[
+			'With sub-beat groups',
+			'key C\n[F Em F Em] C...',
+			[{ 1: '[IV iii IV iii]'.length, 2: 'C'.length, 3: 0, 4: 0 }],
+		],
+	])(
+		'take roman numerals width into account instead of chord symbols',
+		(title, input, output) => {
+			test(title, () => {
+				const parsedSong = parseSong(input);
+				let { allLines } = parsedSong;
+
+				allLines = forEachChordInSong(
+					allLines,
+					(chord) => (chord.symbol = getChordSymbol(chord.model))
+				);
+
+				const maxBeatsWidth = getMaxBeatsWidth(allLines, {
+					shouldAlignChordsWithLyrics: () => false,
+					symbolType: 'roman',
+				});
+				expect(maxBeatsWidth).toEqual(output);
+			});
+		}
+	);
+});

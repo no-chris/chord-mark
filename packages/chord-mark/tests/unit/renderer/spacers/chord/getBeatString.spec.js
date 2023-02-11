@@ -228,3 +228,27 @@ describe('getBeatString()', () => {
 		});
 	});
 });
+
+describe('getChordString()', () => {
+	describe.each([
+		['A', 0, 'A'],
+		['A', 0, 'I', { symbolType: 'roman' }],
+		['Am', 0, 'i', { symbolType: 'roman' }],
+	])('%s', (input, chordIndex, output, options = {}) => {
+		test('returns the correct chord string', () => {
+			const parsedSong = parseSong(input);
+			let { allLines } = parsedSong;
+
+			allLines = forEachChordInSong(
+				allLines,
+				(chord) => (chord.symbol = getChordSymbol(chord.model))
+			);
+
+			const bar = allLines[0].model.allBars[0];
+			const chord = bar.allChords[chordIndex];
+
+			const beatString = getChordString(bar, chord, options);
+			expect(beatString).toEqual(output);
+		});
+	});
+});
