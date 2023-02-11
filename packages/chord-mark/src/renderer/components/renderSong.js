@@ -206,7 +206,9 @@ export default function renderSong(
 
 	function shouldRepeatLines(line) {
 		const shouldSkipAutoRepeatChordLine =
-			line.isFromAutoRepeatChords && !autoRepeatChords;
+			!autoRepeatChords &&
+			(line.isFromAutoRepeatChords ||
+				(line.type === lineTypes.CHORD && line.isFromSectionCopy));
 
 		const shouldSkipSectionMultiplyLine =
 			line.isFromSectionMultiply && !expandSectionMultiply;

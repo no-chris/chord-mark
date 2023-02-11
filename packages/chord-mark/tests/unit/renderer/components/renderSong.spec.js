@@ -132,6 +132,48 @@ verseLine`;
 		expect(toText(rendered)).toBe(expected);
 	});
 
+	test('should not repeat chords when autoRepeatChords === false', () => {
+		const input = `#v
+A B
+verseLine
+#v
+#v`;
+		const expected = `Verse 1
+|A     |B     |
+verseLine
+Verse 2
+verseLine
+Verse 3
+verseLine`;
+		const rendered = renderSongText(input, {
+			expandSectionCopy: true,
+			autoRepeatChords: false,
+		});
+		expect(toText(rendered)).toBe(expected);
+	});
+
+	test('should not repeat chords when autoRepeatChords === false, even if the section contains only chords', () => {
+		const input = `#v
+A B
+C D
+
+#v
+
+#v`;
+		const expected = `Verse 1
+|A     |B     |
+|C     |D     |
+
+Verse 2
+
+Verse 3`;
+		const rendered = renderSongText(input, {
+			expandSectionCopy: true,
+			autoRepeatChords: false,
+		});
+		expect(toText(rendered)).toBe(expected);
+	});
+
 	test('should only repeat section label when expandSectionCopy === false', () => {
 		const input = `#v
 A B
