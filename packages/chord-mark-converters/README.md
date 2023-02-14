@@ -19,7 +19,7 @@ Websites like Ultimate Guitar use this format.
 Use as follow:
 
 ```javascript
-import { convert2ChordMark } from 'chord-mark-converters';
+import { convert2ChordMark } from 'chord-mark-converters/lib/chord-mark-converters.js';
 
 const input = `[Verse]
   C                 Am
@@ -31,7 +31,7 @@ const chordMark = convert2ChordMark(input, { inputFormat: 'chordsOverLyrics' });
 ### From ChordPro format
 
 ```javascript
-import { convert2ChordMark } from 'chord-mark-converters';
+import { convert2ChordMark } from 'chord-mark-converters/lib/chord-mark-converters.js';
 
 const input = `I [C]heard there was a [Am]secret chord`;
 
@@ -64,7 +64,7 @@ If you use a digital songbook application such as `MobileSheetPro` or `onSong`, 
 To convert a song in the ChordMark format to ChordPro, proceed as follow:
 
 ```javascript
-import { chordMarkToChordPro } from 'chord-mark-converters';
+import { chordMarkToChordPro } from 'chord-mark-converters/lib/chord-mark-converters.js';
 
 const input = `#v
 C Am
@@ -92,11 +92,11 @@ Due to the website publication rules, however, you will lose most of the ChordMa
 You also need to use the appropriate chord symbol renderer (e.g. `chord-symbol-ultimateguitar`) and configure the rendering as follow:
 
 ```javascript
-import { parseSong, renderSong } from 'chord-mark';
-import { chordMarkToUltimateGuitar } from 'chord-mark-converters';
+import { parseSong, renderSong } from 'chord-mark/lib/chord-mark.js';
+import { chordMarkToUltimateGuitar } from 'chord-mark-converters/lib/chord-mark-converters.js';
 
-import { chordRendererFactory } from 'chord-symbol';
-import chordSymbolUltimateGuitar from 'chord-symbol-ultimateguitar';
+import { chordRendererFactory } from 'chord-symbol/lib/chord-symbol.js';
+import chordSymbolUltimateGuitar from 'chord-symbol-ultimateguitar/lib/chord-symbol-ultimateguitar.js';
 
 const input = `#v
 C Am

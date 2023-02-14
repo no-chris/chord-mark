@@ -144,7 +144,7 @@ export default function renderSong(
 		if (typeof chordSymbolRenderer === 'function') {
 			return chordSymbolRenderer;
 		}
-		const accidentals =
+		const accidental =
 			accidentalsType === 'auto'
 				? currentKey
 					? currentKey.accidental
@@ -155,7 +155,7 @@ export default function renderSong(
 			simplify: simplifyChords,
 			useShortNamings,
 			transposeValue,
-			accidentals,
+			accidental,
 		});
 	}
 

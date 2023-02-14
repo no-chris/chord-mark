@@ -9,7 +9,7 @@ npm install chord-mark
 ## Usage
 
 ```javascript
-import { parseSong, renderSong } from 'chord-mark';
+import { parseSong, renderSong } from 'chord-mark/lib/chord-mark.js';
 
 const parsed = parseSong('A\n_mySong');
 const rendered = renderSong(parsed);
