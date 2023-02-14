@@ -1,6 +1,6 @@
 {
 	"name": "chord-mark-themes",
-	"version": "0.13.0-beta.6",
+	"version": "0.13.0",
 	"description": "Themes for ChordMark",
 	"author": "Christophe Noël <touffi51@gmail.com>",
 	"homepage": "https://github.com/no-chris/chord-mark/tree/main/packages/chord-mark-themes#readme",
@@ -19,6 +19,6 @@
 		"url": "https://github.com/no-chris/chord-mark/issues"
 	},
 	"dependencies": {
-		"chord-mark": "^0.13.0-beta.6"
+		"chord-mark": "^0.13.0"
 	}
 }
