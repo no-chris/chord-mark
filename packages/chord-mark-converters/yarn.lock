@@ -9,10 +9,10 @@ chord-symbol-ultimateguitar@3.0.0:
   dependencies:
     chord-symbol "^3.0.0"
 
-chord-symbol@4.0.0-beta.6:
-  version "4.0.0-beta.6"
-  resolved "https://registry.yarnpkg.com/chord-symbol/-/chord-symbol-4.0.0-beta.6.tgz#5eaede647b7bd75c4ed3399b02b0c3d160a92188"
-  integrity sha512-ToTzeQJEjxG8QNhM1oEzBdXrh7rdxA0SPWA/GI/ksGh0bAeei96E7dYhr7AvlxZcMroPBE40QbcZbD2H7LXClw==
+chord-symbol@4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/chord-symbol/-/chord-symbol-4.0.0.tgz#916603db52b028384991898217be9c89c3bcafdb"
+  integrity sha512-GeECWgVsAAC85G1qpvZo9eLkhfN/9cfX1gD7IXiYFary+JvMIhef3w/Wrm9O6tmjdP5nNeIb3pKDYuA1z25SLg==
   dependencies:
     lodash "^4.17.21"
 
