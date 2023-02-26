@@ -29,7 +29,7 @@ describe.each([
 	});
 });
 
-describe.each([['2/1'], ['3/1'], ['5/8'], ['13/7']])(
+describe.each([['2/1'], ['3/1'], ['11/8'], ['13/7']])(
 	'Invalid time signature of %s',
 	(string) => {
 		test('Throws TypeError', () => {
