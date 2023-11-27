@@ -26,7 +26,7 @@
 	"dependencies": {
 		"chord-mark": "workspace:^",
 		"chord-symbol": "4.0.0",
-		"chord-symbol-ultimateguitar": "3.0.0",
+		"chord-symbol-ultimateguitar": "4.0.0",
 		"dompurify": "^2.3.4"
 	},
 	"scripts": {

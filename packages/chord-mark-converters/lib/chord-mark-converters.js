@@ -8633,9 +8633,9 @@ __webpack_require__.r(__webpack_exports__);
 
 // EXPORTS
 __webpack_require__.d(__webpack_exports__, {
-  "chordMark2ChordPro": () => (/* reexport */ converters_chordMark2ChordPro),
-  "chordMark2UltimateGuitar": () => (/* reexport */ converters_chordMark2UltimateGuitar),
-  "convert2ChordMark": () => (/* reexport */ src_convert2ChordMark)
+  chordMark2ChordPro: () => (/* reexport */ converters_chordMark2ChordPro),
+  chordMark2UltimateGuitar: () => (/* reexport */ converters_chordMark2UltimateGuitar),
+  convert2ChordMark: () => (/* reexport */ src_convert2ChordMark)
 });
 
 // EXTERNAL MODULE: ../../node_modules/dompurify/dist/purify.js
@@ -11177,19 +11177,19 @@ var trimArray = function trimArray(array, fn) {
 /* harmony default export */ const helpers_trimArray = (trimArray);
 ;// CONCATENATED MODULE: ./src/helpers/getSectionLabel.js
 var _longLabelToShort;
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
-function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i.return && (_r = _i.return(), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 var longLabelToShort = (_longLabelToShort = {
   adlib: 'a'
-}, _defineProperty(_longLabelToShort, 'ad-lib', 'a'), _defineProperty(_longLabelToShort, 'ad.lib.', 'a'), _defineProperty(_longLabelToShort, "bridge", 'b'), _defineProperty(_longLabelToShort, "chorus", 'c'), _defineProperty(_longLabelToShort, "intro", 'i'), _defineProperty(_longLabelToShort, "introduction", 'i'), _defineProperty(_longLabelToShort, "outro", 'o'), _defineProperty(_longLabelToShort, "prechorus", 'p'), _defineProperty(_longLabelToShort, 'pre-chorus', 'p'), _defineProperty(_longLabelToShort, 'pre chorus', 'p'), _defineProperty(_longLabelToShort, "solo", 's'), _defineProperty(_longLabelToShort, "interlude", 'u'), _defineProperty(_longLabelToShort, "verse", 'v'), _longLabelToShort);
+}, _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_longLabelToShort, 'ad-lib', 'a'), 'ad.lib.', 'a'), "bridge", 'b'), "chorus", 'c'), "intro", 'i'), "introduction", 'i'), "outro", 'o'), "prechorus", 'p'), 'pre-chorus', 'p'), 'pre chorus', 'p'), _defineProperty(_defineProperty(_defineProperty(_longLabelToShort, "solo", 's'), "interlude", 'u'), "verse", 'v'));
 var getSectionLabel = function getSectionLabel(input) {
   var chordMarkLabel = '#';
   var rawLabelRe = '(.*?)';
@@ -11213,7 +11213,7 @@ function chordPro2ChordMark_slicedToArray(arr, i) { return chordPro2ChordMark_ar
 function chordPro2ChordMark_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function chordPro2ChordMark_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return chordPro2ChordMark_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return chordPro2ChordMark_arrayLikeToArray(o, minLen); }
 function chordPro2ChordMark_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
-function chordPro2ChordMark_iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i.return && (_r = _i.return(), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
+function chordPro2ChordMark_iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function chordPro2ChordMark_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
@@ -11725,9 +11725,8 @@ function parseChordWrapper(chordString) {
 }
 // EXTERNAL MODULE: ../../node_modules/lodash/isFinite.js
 var lodash_isFinite = __webpack_require__(9574);
-var isFinite_default = /*#__PURE__*/__webpack_require__.n(lodash_isFinite);
 ;// CONCATENATED MODULE: ../chord-mark/src/parser/exceptions/InvalidBeatCountException.js
-function InvalidBeatCountException_typeof(obj) { "@babel/helpers - typeof"; return InvalidBeatCountException_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, InvalidBeatCountException_typeof(obj); }
+function InvalidBeatCountException_typeof(o) { "@babel/helpers - typeof"; return InvalidBeatCountException_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, InvalidBeatCountException_typeof(o); }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, InvalidBeatCountException_toPropertyKey(descriptor.key), descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 function InvalidBeatCountException_toPropertyKey(arg) { var key = InvalidBeatCountException_toPrimitive(arg, "string"); return InvalidBeatCountException_typeof(key) === "symbol" ? key : String(key); }
@@ -11740,12 +11739,12 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _wrapNativeSuper(Class) { var _cache = typeof Map === "function" ? new Map() : undefined; _wrapNativeSuper = function _wrapNativeSuper(Class) { if (Class === null || !_isNativeFunction(Class)) return Class; if (typeof Class !== "function") { throw new TypeError("Super expression must either be null or a function"); } if (typeof _cache !== "undefined") { if (_cache.has(Class)) return _cache.get(Class); _cache.set(Class, Wrapper); } function Wrapper() { return _construct(Class, arguments, _getPrototypeOf(this).constructor); } Wrapper.prototype = Object.create(Class.prototype, { constructor: { value: Wrapper, enumerable: false, writable: true, configurable: true } }); return _setPrototypeOf(Wrapper, Class); }; return _wrapNativeSuper(Class); }
 function _construct(Parent, args, Class) { if (_isNativeReflectConstruct()) { _construct = Reflect.construct.bind(); } else { _construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) _setPrototypeOf(instance, Class.prototype); return instance; }; } return _construct.apply(null, arguments); }
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-function _isNativeFunction(fn) { return Function.toString.call(fn).indexOf("[native code]") !== -1; }
+function _isNativeFunction(fn) { try { return Function.toString.call(fn).indexOf("[native code]") !== -1; } catch (e) { return typeof fn === "function"; } }
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 
-var InvalidBeatCountException_InvalidBeatCountException = /*#__PURE__*/function (_Error) {
+var InvalidBeatCountException_InvalidBeatCountException = /*#__PURE__*/(/* unused pure expression or super */ null && (function (_Error) {
   _inherits(InvalidBeatCountException, _Error);
   var _super = _createSuper(InvalidBeatCountException);
   function InvalidBeatCountException() {
@@ -11756,16 +11755,16 @@ var InvalidBeatCountException_InvalidBeatCountException = /*#__PURE__*/function 
       currentBeatCount = _ref.currentBeatCount,
       beatCount = _ref.beatCount;
     _classCallCheck(this, InvalidBeatCountException);
-    if (!string || !isString_default()(string)) {
+    if (!string || !_isString(string)) {
       throw new TypeError('InvalidBeatCountException cannot be created without chord string, received: ' + string);
     }
-    if (!duration || !isFinite_default()(duration)) {
+    if (!duration || !_isFinite(duration)) {
       throw new TypeError('InvalidBeatCountException cannot be created without chord duration, received: ' + duration);
     }
-    if (!currentBeatCount || !isFinite_default()(currentBeatCount)) {
+    if (!currentBeatCount || !_isFinite(currentBeatCount)) {
       throw new TypeError('InvalidBeatCountException cannot be created without currentBeatCount, received: ' + currentBeatCount);
     }
-    if (!beatCount || !isFinite_default()(beatCount)) {
+    if (!beatCount || !_isFinite(beatCount)) {
       throw new TypeError('InvalidBeatCountException cannot be created without beatCount, received: ' + beatCount);
     }
     _this = _super.call(this);
@@ -11777,10 +11776,10 @@ var InvalidBeatCountException_InvalidBeatCountException = /*#__PURE__*/function 
     return _this;
   }
   return _createClass(InvalidBeatCountException);
-}( /*#__PURE__*/_wrapNativeSuper(Error));
+}( /*#__PURE__*/_wrapNativeSuper(Error))));
 
 ;// CONCATENATED MODULE: ../chord-mark/src/parser/exceptions/InvalidChordRepetitionException.js
-function InvalidChordRepetitionException_typeof(obj) { "@babel/helpers - typeof"; return InvalidChordRepetitionException_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, InvalidChordRepetitionException_typeof(obj); }
+function InvalidChordRepetitionException_typeof(o) { "@babel/helpers - typeof"; return InvalidChordRepetitionException_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, InvalidChordRepetitionException_typeof(o); }
 function InvalidChordRepetitionException_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, InvalidChordRepetitionException_toPropertyKey(descriptor.key), descriptor); } }
 function InvalidChordRepetitionException_createClass(Constructor, protoProps, staticProps) { if (protoProps) InvalidChordRepetitionException_defineProperties(Constructor.prototype, protoProps); if (staticProps) InvalidChordRepetitionException_defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 function InvalidChordRepetitionException_toPropertyKey(arg) { var key = InvalidChordRepetitionException_toPrimitive(arg, "string"); return InvalidChordRepetitionException_typeof(key) === "symbol" ? key : String(key); }
@@ -11793,11 +11792,11 @@ function InvalidChordRepetitionException_assertThisInitialized(self) { if (self 
 function InvalidChordRepetitionException_wrapNativeSuper(Class) { var _cache = typeof Map === "function" ? new Map() : undefined; InvalidChordRepetitionException_wrapNativeSuper = function _wrapNativeSuper(Class) { if (Class === null || !InvalidChordRepetitionException_isNativeFunction(Class)) return Class; if (typeof Class !== "function") { throw new TypeError("Super expression must either be null or a function"); } if (typeof _cache !== "undefined") { if (_cache.has(Class)) return _cache.get(Class); _cache.set(Class, Wrapper); } function Wrapper() { return InvalidChordRepetitionException_construct(Class, arguments, InvalidChordRepetitionException_getPrototypeOf(this).constructor); } Wrapper.prototype = Object.create(Class.prototype, { constructor: { value: Wrapper, enumerable: false, writable: true, configurable: true } }); return InvalidChordRepetitionException_setPrototypeOf(Wrapper, Class); }; return InvalidChordRepetitionException_wrapNativeSuper(Class); }
 function InvalidChordRepetitionException_construct(Parent, args, Class) { if (InvalidChordRepetitionException_isNativeReflectConstruct()) { InvalidChordRepetitionException_construct = Reflect.construct.bind(); } else { InvalidChordRepetitionException_construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) InvalidChordRepetitionException_setPrototypeOf(instance, Class.prototype); return instance; }; } return InvalidChordRepetitionException_construct.apply(null, arguments); }
 function InvalidChordRepetitionException_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-function InvalidChordRepetitionException_isNativeFunction(fn) { return Function.toString.call(fn).indexOf("[native code]") !== -1; }
+function InvalidChordRepetitionException_isNativeFunction(fn) { try { return Function.toString.call(fn).indexOf("[native code]") !== -1; } catch (e) { return typeof fn === "function"; } }
 function InvalidChordRepetitionException_setPrototypeOf(o, p) { InvalidChordRepetitionException_setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return InvalidChordRepetitionException_setPrototypeOf(o, p); }
 function InvalidChordRepetitionException_getPrototypeOf(o) { InvalidChordRepetitionException_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return InvalidChordRepetitionException_getPrototypeOf(o); }
 
-var InvalidChordRepetitionException_InvalidChordRepetitionException = /*#__PURE__*/function (_Error) {
+var InvalidChordRepetitionException_InvalidChordRepetitionException = /*#__PURE__*/(/* unused pure expression or super */ null && (function (_Error) {
   InvalidChordRepetitionException_inherits(InvalidChordRepetitionException, _Error);
   var _super = InvalidChordRepetitionException_createSuper(InvalidChordRepetitionException);
   function InvalidChordRepetitionException() {
@@ -11805,7 +11804,7 @@ var InvalidChordRepetitionException_InvalidChordRepetitionException = /*#__PURE_
     var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
       string = _ref.string;
     InvalidChordRepetitionException_classCallCheck(this, InvalidChordRepetitionException);
-    if (!string || !isString_default()(string)) {
+    if (!string || !_isString(string)) {
       throw new TypeError('InvalidChordRepetitionException cannot be created without chord string, received: ' + string);
     }
     _this = _super.call(this);
@@ -11814,10 +11813,10 @@ var InvalidChordRepetitionException_InvalidChordRepetitionException = /*#__PURE_
     return _this;
   }
   return InvalidChordRepetitionException_createClass(InvalidChordRepetitionException);
-}( /*#__PURE__*/InvalidChordRepetitionException_wrapNativeSuper(Error));
+}( /*#__PURE__*/InvalidChordRepetitionException_wrapNativeSuper(Error))));
 
 ;// CONCATENATED MODULE: ../chord-mark/src/parser/exceptions/InvalidSubBeatGroupException.js
-function InvalidSubBeatGroupException_typeof(obj) { "@babel/helpers - typeof"; return InvalidSubBeatGroupException_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, InvalidSubBeatGroupException_typeof(obj); }
+function InvalidSubBeatGroupException_typeof(o) { "@babel/helpers - typeof"; return InvalidSubBeatGroupException_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, InvalidSubBeatGroupException_typeof(o); }
 function InvalidSubBeatGroupException_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, InvalidSubBeatGroupException_toPropertyKey(descriptor.key), descriptor); } }
 function InvalidSubBeatGroupException_createClass(Constructor, protoProps, staticProps) { if (protoProps) InvalidSubBeatGroupException_defineProperties(Constructor.prototype, protoProps); if (staticProps) InvalidSubBeatGroupException_defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 function InvalidSubBeatGroupException_toPropertyKey(arg) { var key = InvalidSubBeatGroupException_toPrimitive(arg, "string"); return InvalidSubBeatGroupException_typeof(key) === "symbol" ? key : String(key); }
@@ -11830,12 +11829,12 @@ function InvalidSubBeatGroupException_assertThisInitialized(self) { if (self ===
 function InvalidSubBeatGroupException_wrapNativeSuper(Class) { var _cache = typeof Map === "function" ? new Map() : undefined; InvalidSubBeatGroupException_wrapNativeSuper = function _wrapNativeSuper(Class) { if (Class === null || !InvalidSubBeatGroupException_isNativeFunction(Class)) return Class; if (typeof Class !== "function") { throw new TypeError("Super expression must either be null or a function"); } if (typeof _cache !== "undefined") { if (_cache.has(Class)) return _cache.get(Class); _cache.set(Class, Wrapper); } function Wrapper() { return InvalidSubBeatGroupException_construct(Class, arguments, InvalidSubBeatGroupException_getPrototypeOf(this).constructor); } Wrapper.prototype = Object.create(Class.prototype, { constructor: { value: Wrapper, enumerable: false, writable: true, configurable: true } }); return InvalidSubBeatGroupException_setPrototypeOf(Wrapper, Class); }; return InvalidSubBeatGroupException_wrapNativeSuper(Class); }
 function InvalidSubBeatGroupException_construct(Parent, args, Class) { if (InvalidSubBeatGroupException_isNativeReflectConstruct()) { InvalidSubBeatGroupException_construct = Reflect.construct.bind(); } else { InvalidSubBeatGroupException_construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) InvalidSubBeatGroupException_setPrototypeOf(instance, Class.prototype); return instance; }; } return InvalidSubBeatGroupException_construct.apply(null, arguments); }
 function InvalidSubBeatGroupException_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-function InvalidSubBeatGroupException_isNativeFunction(fn) { return Function.toString.call(fn).indexOf("[native code]") !== -1; }
+function InvalidSubBeatGroupException_isNativeFunction(fn) { try { return Function.toString.call(fn).indexOf("[native code]") !== -1; } catch (e) { return typeof fn === "function"; } }
 function InvalidSubBeatGroupException_setPrototypeOf(o, p) { InvalidSubBeatGroupException_setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return InvalidSubBeatGroupException_setPrototypeOf(o, p); }
 function InvalidSubBeatGroupException_getPrototypeOf(o) { InvalidSubBeatGroupException_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return InvalidSubBeatGroupException_getPrototypeOf(o); }
 
 
-var InvalidSubBeatGroupException_InvalidSubBeatGroupException = /*#__PURE__*/function (_Error) {
+var InvalidSubBeatGroupException_InvalidSubBeatGroupException = /*#__PURE__*/(/* unused pure expression or super */ null && (function (_Error) {
   InvalidSubBeatGroupException_inherits(InvalidSubBeatGroupException, _Error);
   var _super = InvalidSubBeatGroupException_createSuper(InvalidSubBeatGroupException);
   function InvalidSubBeatGroupException() {
@@ -11845,13 +11844,13 @@ var InvalidSubBeatGroupException_InvalidSubBeatGroupException = /*#__PURE__*/fun
       symbol = _ref.symbol,
       position = _ref.position;
     InvalidSubBeatGroupException_classCallCheck(this, InvalidSubBeatGroupException);
-    if (!chordLine || !isString_default()(chordLine)) {
+    if (!chordLine || !_isString(chordLine)) {
       throw new TypeError('InvalidSubBeatGroupException cannot be created without a chordLine, received: ' + chordLine);
     }
-    if (!symbol || !isString_default()(symbol)) {
+    if (!symbol || !_isString(symbol)) {
       throw new TypeError('InvalidSubBeatGroupException cannot be created without symbol, received: ' + symbol);
     }
-    if (!isFinite_default()(position)) {
+    if (!_isFinite(position)) {
       throw new TypeError('InvalidSubBeatGroupException cannot be created without symbol position, received: ' + position);
     }
     _this = _super.call(this);
@@ -11862,10 +11861,10 @@ var InvalidSubBeatGroupException_InvalidSubBeatGroupException = /*#__PURE__*/fun
     return _this;
   }
   return InvalidSubBeatGroupException_createClass(InvalidSubBeatGroupException);
-}( /*#__PURE__*/InvalidSubBeatGroupException_wrapNativeSuper(Error));
+}( /*#__PURE__*/InvalidSubBeatGroupException_wrapNativeSuper(Error))));
 
 ;// CONCATENATED MODULE: ../chord-mark/src/parser/exceptions/InvalidBarRepeatException.js
-function InvalidBarRepeatException_typeof(obj) { "@babel/helpers - typeof"; return InvalidBarRepeatException_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, InvalidBarRepeatException_typeof(obj); }
+function InvalidBarRepeatException_typeof(o) { "@babel/helpers - typeof"; return InvalidBarRepeatException_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, InvalidBarRepeatException_typeof(o); }
 function InvalidBarRepeatException_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, InvalidBarRepeatException_toPropertyKey(descriptor.key), descriptor); } }
 function InvalidBarRepeatException_createClass(Constructor, protoProps, staticProps) { if (protoProps) InvalidBarRepeatException_defineProperties(Constructor.prototype, protoProps); if (staticProps) InvalidBarRepeatException_defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 function InvalidBarRepeatException_toPropertyKey(arg) { var key = InvalidBarRepeatException_toPrimitive(arg, "string"); return InvalidBarRepeatException_typeof(key) === "symbol" ? key : String(key); }
@@ -11878,11 +11877,11 @@ function InvalidBarRepeatException_assertThisInitialized(self) { if (self === vo
 function InvalidBarRepeatException_wrapNativeSuper(Class) { var _cache = typeof Map === "function" ? new Map() : undefined; InvalidBarRepeatException_wrapNativeSuper = function _wrapNativeSuper(Class) { if (Class === null || !InvalidBarRepeatException_isNativeFunction(Class)) return Class; if (typeof Class !== "function") { throw new TypeError("Super expression must either be null or a function"); } if (typeof _cache !== "undefined") { if (_cache.has(Class)) return _cache.get(Class); _cache.set(Class, Wrapper); } function Wrapper() { return InvalidBarRepeatException_construct(Class, arguments, InvalidBarRepeatException_getPrototypeOf(this).constructor); } Wrapper.prototype = Object.create(Class.prototype, { constructor: { value: Wrapper, enumerable: false, writable: true, configurable: true } }); return InvalidBarRepeatException_setPrototypeOf(Wrapper, Class); }; return InvalidBarRepeatException_wrapNativeSuper(Class); }
 function InvalidBarRepeatException_construct(Parent, args, Class) { if (InvalidBarRepeatException_isNativeReflectConstruct()) { InvalidBarRepeatException_construct = Reflect.construct.bind(); } else { InvalidBarRepeatException_construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) InvalidBarRepeatException_setPrototypeOf(instance, Class.prototype); return instance; }; } return InvalidBarRepeatException_construct.apply(null, arguments); }
 function InvalidBarRepeatException_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-function InvalidBarRepeatException_isNativeFunction(fn) { return Function.toString.call(fn).indexOf("[native code]") !== -1; }
+function InvalidBarRepeatException_isNativeFunction(fn) { try { return Function.toString.call(fn).indexOf("[native code]") !== -1; } catch (e) { return typeof fn === "function"; } }
 function InvalidBarRepeatException_setPrototypeOf(o, p) { InvalidBarRepeatException_setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return InvalidBarRepeatException_setPrototypeOf(o, p); }
 function InvalidBarRepeatException_getPrototypeOf(o) { InvalidBarRepeatException_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return InvalidBarRepeatException_getPrototypeOf(o); }
 
-var InvalidBarRepeatException_InvalidBarRepeatException = /*#__PURE__*/function (_Error) {
+var InvalidBarRepeatException_InvalidBarRepeatException = /*#__PURE__*/(/* unused pure expression or super */ null && (function (_Error) {
   InvalidBarRepeatException_inherits(InvalidBarRepeatException, _Error);
   var _super = InvalidBarRepeatException_createSuper(InvalidBarRepeatException);
   function InvalidBarRepeatException() {
@@ -11890,7 +11889,7 @@ var InvalidBarRepeatException_InvalidBarRepeatException = /*#__PURE__*/function 
     var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
       string = _ref.string;
     InvalidBarRepeatException_classCallCheck(this, InvalidBarRepeatException);
-    if (!string || !isString_default()(string)) {
+    if (!string || !_isString(string)) {
       throw new TypeError('InvalidBarRepeatException cannot be created without chord string, received: ' + string);
     }
     _this = _super.call(this);
@@ -11899,7 +11898,7 @@ var InvalidBarRepeatException_InvalidBarRepeatException = /*#__PURE__*/function 
     return _this;
   }
   return InvalidBarRepeatException_createClass(InvalidBarRepeatException);
-}( /*#__PURE__*/InvalidBarRepeatException_wrapNativeSuper(Error));
+}( /*#__PURE__*/InvalidBarRepeatException_wrapNativeSuper(Error))));
 
 ;// CONCATENATED MODULE: ../chord-mark/src/parser/parseChordLine.js
 /* eslint-disable max-lines-per-function */
@@ -12549,15 +12548,15 @@ function songs_getNthOfLabel(allLines, label, n) {
   return selected;
 }
 ;// CONCATENATED MODULE: ../chord-mark/src/parser/songLinesFactory.js
-function songLinesFactory_typeof(obj) { "@babel/helpers - typeof"; return songLinesFactory_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, songLinesFactory_typeof(obj); }
+function songLinesFactory_typeof(o) { "@babel/helpers - typeof"; return songLinesFactory_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, songLinesFactory_typeof(o); }
 function songLinesFactory_toConsumableArray(arr) { return songLinesFactory_arrayWithoutHoles(arr) || songLinesFactory_iterableToArray(arr) || songLinesFactory_unsupportedIterableToArray(arr) || songLinesFactory_nonIterableSpread(); }
 function songLinesFactory_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function songLinesFactory_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return songLinesFactory_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return songLinesFactory_arrayLikeToArray(o, minLen); }
 function songLinesFactory_iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
 function songLinesFactory_arrayWithoutHoles(arr) { if (Array.isArray(arr)) return songLinesFactory_arrayLikeToArray(arr); }
 function songLinesFactory_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { songLinesFactory_defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { songLinesFactory_defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function songLinesFactory_defineProperty(obj, key, value) { key = songLinesFactory_toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function songLinesFactory_toPropertyKey(arg) { var key = songLinesFactory_toPrimitive(arg, "string"); return songLinesFactory_typeof(key) === "symbol" ? key : String(key); }
 function songLinesFactory_toPrimitive(input, hint) { if (songLinesFactory_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (songLinesFactory_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
@@ -13964,7 +13963,7 @@ function chordMark2ChordPro_slicedToArray(arr, i) { return chordMark2ChordPro_ar
 function chordMark2ChordPro_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function chordMark2ChordPro_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return chordMark2ChordPro_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return chordMark2ChordPro_arrayLikeToArray(o, minLen); }
 function chordMark2ChordPro_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
-function chordMark2ChordPro_iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i.return && (_r = _i.return(), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
+function chordMark2ChordPro_iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function chordMark2ChordPro_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
