@@ -19,6 +19,7 @@ jobs:
           node-version: 20
 
       # Install & build & test:
+      - run: corepack enable
       - run: yarn install
       - run: yarn npm audit --environment production
       - run: yarn run build
