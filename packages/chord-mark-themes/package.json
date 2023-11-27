@@ -19,6 +19,6 @@
 		"url": "https://github.com/no-chris/chord-mark/issues"
 	},
 	"dependencies": {
-		"chord-mark": "^0.14.0"
+		"chord-mark": "workspace:^"
 	}
 }
