@@ -26,6 +26,8 @@ describe.each([
 	['#v x2', 'v', 2, 1],
 	['#c x3', 'c', 3, 1],
 	['#i x9', 'i', 9, 1],
+	['#i x10', 'i', 10, 1],
+	['#i x33', 'i', 33, 1],
 
 	['#c1', 'c', 0, 1],
 	['#c2', 'c', 0, 2],
@@ -41,7 +43,7 @@ describe.each([
 	});
 });
 
-describe.each([['#'], ['#'], ['#a x'], ['#a x33']])(
+describe.each([['#'], ['#'], ['#a x'], ['#a x333']])(
 	'Invalid section identifier of %s',
 	(string) => {
 		test('Throws TypeError', () => {
