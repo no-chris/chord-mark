@@ -1015,7 +1015,7 @@ describe('Keys, accidental & transpose', () => {
 			{ accidentalsType: 'auto', transposeValue: -1 },
 		],
 		[
-			'Transpose repeated sections',
+			'Transpose repeated section chords',
 			'key C\n' +
 				'#v\n' +
 				'Dm7 G7 C %\n' +
@@ -1031,6 +1031,40 @@ describe('Keys, accidental & transpose', () => {
 				'Verse 2\n' +
 				'|Am7  |D7  |G  |%  |\n' +
 				'And the second one in the key of G!\n',
+		],
+		[
+			'Transpose repeated chord lines',
+			'key C\n' +
+				'Dm7 G7 C %\n' +
+				'G7 % C %\n' +
+				'key G\n' +
+				'%%\n' +
+				'%\n',
+			'key: C\n' +
+				'|Dm7  |G7  |C  |%  |\n' +
+				'|G7  |%  |C  |%  |\n' +
+				'key: G\n' +
+				'|Am7  |D7  |G  |%  |\n' +
+				'|D7  |%  |G  |%  |\n',
+		],
+		[
+			'Transpose repeated sections',
+			'key C\n' +
+				'#v\n' +
+				'Dm7 G7 C %\n' +
+				'myVerse\n' +
+				'#b\n' +
+				'key G\n' +
+				'#v\n',
+			'key: C\n' +
+				'Verse 1\n' +
+				'|Dm7  |G7  |C  |%  |\n' +
+				'myVerse\n' +
+				'Bridge\n' +
+				'key: G\n' +
+				'Verse 2\n' +
+				'|Am7  |D7  |G  |%  |\n' +
+				'myVerse\n',
 		],
 	])('%s', (title, song, expected, options = {}) => {
 		test('renders with correct accidental', () => {
