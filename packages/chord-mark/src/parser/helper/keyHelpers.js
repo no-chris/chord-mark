@@ -228,6 +228,7 @@ function chord2Key(chord) {
 }
 
 /**
+ * Return the number of semitones between two keys notes
  * @param {string} key1
  * @param {string} key2
  * @returns {Number}
