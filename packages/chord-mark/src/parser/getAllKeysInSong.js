@@ -14,16 +14,18 @@ export default function getAllKeysInSong(allLines, allChords) {
 		explicit: [],
 	};
 
-	const autoDetectedKey = guessKey(allChords);
-	if (autoDetectedKey) {
-		allKeys.auto = autoDetectedKey;
-	}
-
 	allLines.forEach((line) => {
 		if (line.type === lineTypes.KEY_DECLARATION) {
 			allKeys.explicit.push(_cloneDeep(line.model));
 		}
 	});
+
+	if (allKeys.explicit.length === 0) {
+		const autoDetectedKey = guessKey(allChords);
+		if (autoDetectedKey) {
+			allKeys.auto = autoDetectedKey;
+		}
+	}
 
 	return allKeys;
 }

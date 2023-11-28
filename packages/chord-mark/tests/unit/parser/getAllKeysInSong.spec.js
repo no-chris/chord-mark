@@ -46,10 +46,7 @@ describe('getAllKeysInSong()', () => {
 		const allKeys = getAllKeysInSong(allLines, allChords);
 
 		const expectedAllKeys = {
-			auto: {
-				string: 'C',
-				accidental: 'flat',
-			},
+			auto: undefined, // detection is disabled as soon as an explicit key is declared
 			explicit: [
 				{
 					string: 'C',

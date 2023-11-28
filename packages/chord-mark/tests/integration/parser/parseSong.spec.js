@@ -321,10 +321,7 @@ key Am`;
 				},
 			],
 			allKeys: {
-				auto: {
-					string: 'C',
-					accidental: 'flat',
-				},
+				auto: undefined,
 				explicit: [
 					{
 						string: 'G',
