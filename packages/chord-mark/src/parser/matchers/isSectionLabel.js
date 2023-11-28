@@ -3,7 +3,9 @@ import syntax from '../syntax';
 import clearSpaces from '../helper/clearSpaces';
 
 export const sectionLabelRegexp = new RegExp(
-	'^' + _escapeRegExp(syntax.sectionLabel) + '([a-zA-Z]+)([1-9])?( x[2-9])?$'
+	'^' +
+		_escapeRegExp(syntax.sectionLabel) +
+		'([a-zA-Z]+)([1-9])?( x[1-9][0-9]?)?$'
 );
 
 export default function isSectionLabel(string) {

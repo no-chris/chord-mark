@@ -43,6 +43,10 @@ describe.each([
 	['#a4', true],
 	['#a9', true],
 	['#a1 x2', true],
+	['#a x10', true],
+	['#a x22', true],
+	['#a x99', true],
+	['#a x1', true],
 
 	['# a', false],
 	['#a b', false],
@@ -54,11 +58,13 @@ describe.each([
 
 	['#a x', false],
 	['#a x0', false],
-	['#a x1', false],
-	['#a x10', false],
 	['#a x-1', false],
+	['#a x01', false],
+	['#a x09', false],
+	['#a x100', false],
+	['#a x130', false],
 ])('%s => %s', (string, result) => {
-	test('Correctly detect section label', () => {
+	test('Correctly detect section label in ' + string, () => {
 		expect(isSectionLabel(string)).toEqual(result);
 	});
 });
