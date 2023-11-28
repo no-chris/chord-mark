@@ -1014,6 +1014,24 @@ describe('Keys, accidental & transpose', () => {
 				'|Cm7  |G7  |Db  |',
 			{ accidentalsType: 'auto', transposeValue: -1 },
 		],
+		[
+			'Transpose repeated sections',
+			'key C\n' +
+				'#v\n' +
+				'Dm7 G7 C %\n' +
+				'The first verse is in the key of C\n' +
+				'key G\n' +
+				'#v\n' +
+				'And the second one in the key of G!\n',
+			'key: C\n' +
+				'Verse 1\n' +
+				'|Dm7  |G7  |C  |%  |\n' +
+				'The first verse is in the key of C\n' +
+				'key: G\n' +
+				'Verse 2\n' +
+				'|Am7  |D7  |G  |%  |\n' +
+				'And the second one in the key of G!\n',
+		],
 	])('%s', (title, song, expected, options = {}) => {
 		test('renders with correct accidental', () => {
 			const rendered = renderSongText(song, {
