@@ -13,11 +13,8 @@ import renderSectionLabelLine from './renderSectionLabel';
 import renderTimeSignature from './renderTimeSignature';
 
 import songTpl from './tpl/song.js';
-import getChordSymbol from '../helpers/getChordSymbol';
 import renderAllSectionsLabels from '../helpers/renderAllSectionLabels';
-import { transposeKey } from '../../parser/helper/keyHelpers';
-
-import { chordRendererFactory } from 'chord-symbol';
+import renderAllChords from '../helpers/renderAllChords';
 
 import lineTypes from '../../parser/lineTypes';
 import replaceRepeatedBars from '../replaceRepeatedBars';
@@ -78,19 +75,13 @@ export default function renderSong(
 	let contextTimeSignature = defaultTimeSignature.string;
 	let previousBarTimeSignature;
 
-	let currentKey;
-
-	if (allKeys.auto) {
-		currentKey = transposeKey(
-			allKeys.auto,
-			transposeValue,
-			accidentalsType
-		);
-	}
-	let renderChord = getChordSymbolRenderer();
-
-	allLines = allLines
-		.map(renderChords)
+	allLines = renderAllChords(allLines, allKeys.auto, {
+		transposeValue,
+		accidentalsType,
+		chordSymbolRenderer,
+		simplifyChords,
+		useShortNamings,
+	})
 		.map(addPrintChordsDurationsFlag)
 		.map(addPrintBarTimeSignatureFlag)
 		.filter(shouldRenderLine)
@@ -118,45 +109,6 @@ export default function renderSong(
 		});
 	} else {
 		return songTpl({ song: allRenderedLines.join('') });
-	}
-
-	function renderChords(line) {
-		if (line.type === lineTypes.KEY_DECLARATION) {
-			currentKey = transposeKey(
-				line.model,
-				transposeValue,
-				accidentalsType
-			);
-
-			renderChord = getChordSymbolRenderer();
-			line.symbol = currentKey.string;
-		} else if (line.type === lineTypes.CHORD) {
-			line.model.allBars.forEach((bar) => {
-				bar.allChords.forEach((chord) => {
-					chord.symbol = getChordSymbol(chord.model, renderChord);
-				});
-			});
-		}
-		return line;
-	}
-
-	function getChordSymbolRenderer() {
-		if (typeof chordSymbolRenderer === 'function') {
-			return chordSymbolRenderer;
-		}
-		const accidental =
-			accidentalsType === 'auto'
-				? currentKey
-					? currentKey.accidental
-					: 'sharp'
-				: accidentalsType;
-
-		return chordRendererFactory({
-			simplify: simplifyChords,
-			useShortNamings,
-			transposeValue,
-			accidental,
-		});
 	}
 
 	function getSectionWrapperClasses(line) {
