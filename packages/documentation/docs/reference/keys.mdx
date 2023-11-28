@@ -9,11 +9,26 @@ It is possible to declare the key of any part of the song using they `key` keywo
 
 <TabbedChordMark src={'key C\nC F G C'} />
 
-There are at least two reasons why you might want to do this.
+Appart from bringing clarity to the chord chart's reader, which is always a good thing, declaring one or multiple keys will bring at least 3 benefits.
 
-### Reason 1: proper rendering of accidentals
+### 1/ Automatic transposition
 
-The first reason relates to the rendering of chord accidentals (`#` and `b`). If your source file contains mixed accidental, then declaring a key will allow <CM/> to automatically normalize the accidentals choosing the proper symbol
+The first benefit is - in my opinion - one of the coolest features of <CM />!
+Whenever there is a key change during a song, and when using automatic repetition of chords accross sections, <CM /> will automatically transpose the repeated chords based on the new key declaration.
+See the example below:
+
+<TabbedChordMark
+	src={
+		'key C\n#v\nDm7 G7 C %\nThe first verse is in the key of C\n\nkey G\n#v\nAnd the second one in the key of G!'
+	}
+/>
+
+The base key from which the transposition is done is always the first one explicitely declared, so make sure to always define a key prior to the first chord line.
+
+### 2/ Proper rendering of accidentals
+
+The second benefit relates to the rendering of chord accidentals (`#` and `b`).
+If your source file contains mixed accidental, then declaring a key will allow <CM/> to automatically normalize the accidentals choosing the proper symbol
 
 <TabbedChordMark
 	src={
@@ -43,9 +58,9 @@ For example transposing down `Layla` by 1 semitone will result in a key of `C#m`
 	options={{ transposeValue: -1 }}
 />
 
-### Reason 2: harmonic analysis
+### 3/ Harmonic analysis
 
-The second reason is if you want <CM/> to help with harmonic analysis by rendering the chord symbols as [roman numeral symbols](https://en.wikipedia.org/wiki/Roman_numeral_analysis).
+The third benefit of using keys lies in <CM/> abilities to help with harmonic analysis by rendering the chord symbols as [roman numeral symbols](https://en.wikipedia.org/wiki/Roman_numeral_analysis).
 This can only be done if a key is explicitly set, otherwise all symbols will be rendered as `I`, `i` or `?`.
 The approach to convert chords from notes to numerals symbols is very basic and naive: based on the declared key, <CM/> will just detect if the song's chord are diatonic to the key,
 or diatonic to the parallel major/minor key (e.g. "borrowed" chords).
