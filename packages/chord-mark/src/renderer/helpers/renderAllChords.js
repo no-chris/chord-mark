@@ -20,7 +20,7 @@ export default function renderAllChords(
 	}
 ) {
 	let currentKey;
-	let originalKey;
+	let baseKey;
 
 	if (detectedKey) {
 		currentKey = transposeKey(detectedKey, transposeValue, accidentalsType);
@@ -37,18 +37,14 @@ export default function renderAllChords(
 			);
 			line.symbol = currentKey.string;
 
-			if (!originalKey) {
-				originalKey = currentKey;
+			if (!baseKey) {
+				baseKey = currentKey;
 			}
 		} else if (line.type === lineTypes.CHORD) {
 			let transposeOffSet = 0;
-			if (
-				line.isFromAutoRepeatChords ||
-				line.isFromSectionCopy ||
-				line.isFromChordLineRepeater
-			) {
+			if (shouldTransposeRepeatedChords(line)) {
 				transposeOffSet = getSemitonesBetweenKeys(
-					originalKey && originalKey.string,
+					baseKey && baseKey.string,
 					currentKey && currentKey.string
 				);
 			}
@@ -61,6 +57,14 @@ export default function renderAllChords(
 			});
 		}
 		return line;
+	}
+
+	function shouldTransposeRepeatedChords(line) {
+		return (
+			line.isFromAutoRepeatChords ||
+			line.isFromSectionCopy ||
+			line.isFromChordLineRepeater
+		);
 	}
 
 	function getChordSymbolRenderer(transposeOffSet) {
