@@ -1,0 +1,33 @@
+key C
+
+#v
+C % F G
+my 1st verse
+
+#c
+Dm G7 C %
+my 1st chorus
+
+key D
+
+#v
+my 2nd verse
+
+key E
+
+#v
+my 3rd verse
+
+key Bb
+
+#v
+
+#o
+key G
+
+#c
+my second chorus
+
+#b
+%
+%%

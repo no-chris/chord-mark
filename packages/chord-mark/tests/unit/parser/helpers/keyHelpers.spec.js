@@ -2,6 +2,7 @@ import {
 	getKeyAccidental,
 	transposeKey,
 	guessKey,
+	getSemitonesBetweenKeys,
 } from '../../../../src/parser/helper/keyHelpers';
 import parseSong from '../../../../src/parser/parseSong';
 
@@ -10,6 +11,7 @@ describe('keyHelpers', () => {
 		expect(typeof getKeyAccidental).toBe('function');
 		expect(typeof transposeKey).toBe('function');
 		expect(typeof guessKey).toBe('function');
+		expect(typeof getSemitonesBetweenKeys).toBe('function');
 	});
 });
 
@@ -218,5 +220,34 @@ describe.each([
 		const parsed = parseSong(input);
 
 		expect(guessKey(parsed.allChords)).toBeUndefined();
+	});
+});
+
+describe('getSemitonesBetweenKeys', () => {
+	describe.each([
+		[undefined, undefined, 0],
+		['C', undefined, 0],
+		[undefined, 'D', 0],
+
+		['C', 'C', 0],
+		['C', 'C#', 1],
+		['C', 'Db', 1],
+		['C', 'G#', 8],
+		['C', 'Ab', 8],
+		['C', 'A', 9],
+		['C', 'B', 11],
+
+		['C', 'Cm', 0],
+		['Cm', 'C', 0],
+		['C', 'Dbm', 1],
+		['C', 'G#m', 8],
+
+		['C', 'B#', 0],
+		['B#', 'A', 0],
+		['B#', 'E#', 0],
+	])('getSemitonesBetweenKeys(%s, %s) => %s', (key1, key2, semitones) => {
+		test('correctly returns semitones between keys', () => {
+			expect(getSemitonesBetweenKeys(key1, key2)).toBe(semitones);
+		});
 	});
 });

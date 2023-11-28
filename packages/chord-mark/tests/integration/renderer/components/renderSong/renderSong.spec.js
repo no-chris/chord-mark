@@ -124,6 +124,11 @@ describe.each([
 		'song4-output-no-inline-time-signatures.txt',
 		{ printInlineTimeSignatures: false },
 	],
+	[
+		'chord transposition based on key declaration',
+		'song5-input.txt',
+		'song5-output-key-transposition.txt',
+	],
 ])('Render components: %s', (title, inputFile, outputFile, options) => {
 	test('produces expected rendering', () => {
 		const input = removeLastLine(

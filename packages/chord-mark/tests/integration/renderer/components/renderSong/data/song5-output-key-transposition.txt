@@ -1,0 +1,38 @@
+key: C
+
+Verse 1
+|C      |%      |F      |G     |
+my 1st verse
+
+Chorus 1
+|Dm     |G7     |C      |%     |
+my 1st chorus
+
+key: D
+
+Verse 2
+|D      |%      |G      |A     |
+my 2nd verse
+
+key: E
+
+Verse 3
+|E      |%      |A      |B     |
+my 3rd verse
+
+key: Bb
+
+Verse 4
+|Bb     |%      |Eb     |F     |
+my 1st verse
+
+Outro
+key: G
+
+Chorus 2
+|Am     |D7     |G      |%     |
+my second chorus
+
+Bridge
+|Am     |D7     |G      |%     |
+|G      |%      |C      |D     |

@@ -226,3 +226,32 @@ function chord2Key(chord) {
 
 	return keyString;
 }
+
+/**
+ * Return the number of semitones between two keys notes
+ * @param {string} key1
+ * @param {string} key2
+ * @returns {Number}
+ */
+export function getSemitonesBetweenKeys(key1, key2) {
+	if (!key1 || !key2) return 0;
+
+	return getSemitonesBetweenNotes(
+		key1.replace('m', ''),
+		key2.replace('m', '')
+	);
+}
+
+function getSemitonesBetweenNotes(note1, note2) {
+	const noteSharp1 = flatsToSharps[note1] || note1;
+	const noteSharp2 = flatsToSharps[note2] || note2;
+
+	const indexNote1 = allNotesSharp.indexOf(noteSharp1);
+	const indexNote2 = allNotesSharp.indexOf(noteSharp2);
+
+	if (indexNote1 === -1 || indexNote2 === -1) return 0;
+
+	const semitones = indexNote2 - indexNote1;
+
+	return semitones < 0 ? semitones + 12 : semitones;
+}
