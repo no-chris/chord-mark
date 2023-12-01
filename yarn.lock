@@ -2048,7 +2048,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@docusaurus/core@npm:3.0.0, @docusaurus/core@npm:^3.0.0":
+"@docusaurus/core@npm:3.0.0":
   version: 3.0.0
   resolution: "@docusaurus/core@npm:3.0.0"
   dependencies:
@@ -2131,6 +2131,88 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@docusaurus/core@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "@docusaurus/core@npm:3.0.1"
+  dependencies:
+    "@babel/core": "npm:^7.23.3"
+    "@babel/generator": "npm:^7.23.3"
+    "@babel/plugin-syntax-dynamic-import": "npm:^7.8.3"
+    "@babel/plugin-transform-runtime": "npm:^7.22.9"
+    "@babel/preset-env": "npm:^7.22.9"
+    "@babel/preset-react": "npm:^7.22.5"
+    "@babel/preset-typescript": "npm:^7.22.5"
+    "@babel/runtime": "npm:^7.22.6"
+    "@babel/runtime-corejs3": "npm:^7.22.6"
+    "@babel/traverse": "npm:^7.22.8"
+    "@docusaurus/cssnano-preset": "npm:3.0.1"
+    "@docusaurus/logger": "npm:3.0.1"
+    "@docusaurus/mdx-loader": "npm:3.0.1"
+    "@docusaurus/react-loadable": "npm:5.5.2"
+    "@docusaurus/utils": "npm:3.0.1"
+    "@docusaurus/utils-common": "npm:3.0.1"
+    "@docusaurus/utils-validation": "npm:3.0.1"
+    "@slorber/static-site-generator-webpack-plugin": "npm:^4.0.7"
+    "@svgr/webpack": "npm:^6.5.1"
+    autoprefixer: "npm:^10.4.14"
+    babel-loader: "npm:^9.1.3"
+    babel-plugin-dynamic-import-node: "npm:^2.3.3"
+    boxen: "npm:^6.2.1"
+    chalk: "npm:^4.1.2"
+    chokidar: "npm:^3.5.3"
+    clean-css: "npm:^5.3.2"
+    cli-table3: "npm:^0.6.3"
+    combine-promises: "npm:^1.1.0"
+    commander: "npm:^5.1.0"
+    copy-webpack-plugin: "npm:^11.0.0"
+    core-js: "npm:^3.31.1"
+    css-loader: "npm:^6.8.1"
+    css-minimizer-webpack-plugin: "npm:^4.2.2"
+    cssnano: "npm:^5.1.15"
+    del: "npm:^6.1.1"
+    detect-port: "npm:^1.5.1"
+    escape-html: "npm:^1.0.3"
+    eta: "npm:^2.2.0"
+    file-loader: "npm:^6.2.0"
+    fs-extra: "npm:^11.1.1"
+    html-minifier-terser: "npm:^7.2.0"
+    html-tags: "npm:^3.3.1"
+    html-webpack-plugin: "npm:^5.5.3"
+    leven: "npm:^3.1.0"
+    lodash: "npm:^4.17.21"
+    mini-css-extract-plugin: "npm:^2.7.6"
+    postcss: "npm:^8.4.26"
+    postcss-loader: "npm:^7.3.3"
+    prompts: "npm:^2.4.2"
+    react-dev-utils: "npm:^12.0.1"
+    react-helmet-async: "npm:^1.3.0"
+    react-loadable: "npm:@docusaurus/react-loadable@5.5.2"
+    react-loadable-ssr-addon-v5-slorber: "npm:^1.0.1"
+    react-router: "npm:^5.3.4"
+    react-router-config: "npm:^5.1.1"
+    react-router-dom: "npm:^5.3.4"
+    rtl-detect: "npm:^1.0.4"
+    semver: "npm:^7.5.4"
+    serve-handler: "npm:^6.1.5"
+    shelljs: "npm:^0.8.5"
+    terser-webpack-plugin: "npm:^5.3.9"
+    tslib: "npm:^2.6.0"
+    update-notifier: "npm:^6.0.2"
+    url-loader: "npm:^4.1.1"
+    webpack: "npm:^5.88.1"
+    webpack-bundle-analyzer: "npm:^4.9.0"
+    webpack-dev-server: "npm:^4.15.1"
+    webpack-merge: "npm:^5.9.0"
+    webpackbar: "npm:^5.0.2"
+  peerDependencies:
+    react: ^18.0.0
+    react-dom: ^18.0.0
+  bin:
+    docusaurus: bin/docusaurus.mjs
+  checksum: 3897f4cf1f71bd1dea58525548a9547a699e0514d29ed7637aba5eb36f584361dc81ec8f916eafe450402b4850bee0bea1e6dd25c9dc3d7244ac519029818296
+  languageName: node
+  linkType: hard
+
 "@docusaurus/cssnano-preset@npm:3.0.0":
   version: 3.0.0
   resolution: "@docusaurus/cssnano-preset@npm:3.0.0"
@@ -2143,6 +2225,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@docusaurus/cssnano-preset@npm:3.0.1":
+  version: 3.0.1
+  resolution: "@docusaurus/cssnano-preset@npm:3.0.1"
+  dependencies:
+    cssnano-preset-advanced: "npm:^5.3.10"
+    postcss: "npm:^8.4.26"
+    postcss-sort-media-queries: "npm:^4.4.1"
+    tslib: "npm:^2.6.0"
+  checksum: 21f1d87a6f42450e70c379c3795a4e2951ccbdae480bf4c1f7de53e83747cdf11f1031511eaa7cd0fecc52bb425dc66f4fe6c624f33c13d1f0d84235663ab360
+  languageName: node
+  linkType: hard
+
 "@docusaurus/logger@npm:3.0.0":
   version: 3.0.0
   resolution: "@docusaurus/logger@npm:3.0.0"
@@ -2150,6 +2244,16 @@ __metadata:
     chalk: "npm:^4.1.2"
     tslib: "npm:^2.6.0"
   checksum: 493732d2e2f03824728bdd1dba5c5515dbad81be12864f4570aff999f782d2f9fa1b47155d105e309f88a93334977dd70d964a336cc4ffb26d76d13a18ef7362
+  languageName: node
+  linkType: hard
+
+"@docusaurus/logger@npm:3.0.1":
+  version: 3.0.1
+  resolution: "@docusaurus/logger@npm:3.0.1"
+  dependencies:
+    chalk: "npm:^4.1.2"
+    tslib: "npm:^2.6.0"
+  checksum: 803c6db9646c111ac8e45d38a9b79b96503042838447e6fa250165fabff88ed94f5964d5be08d7c448ad2b8035255fd34c26a4ccf2082548b33a753e2f0a23fb
   languageName: node
   linkType: hard
 
@@ -2187,6 +2291,43 @@ __metadata:
     react: ^18.0.0
     react-dom: ^18.0.0
   checksum: 35d62c4128b639880b3037027348f98adc10dcd837300e9876a5a03711ffcf969cd626d5ef1fe10cf139d14e26c0f7b3bfb5e00d83992b4559b0eebc05e4e8c7
+  languageName: node
+  linkType: hard
+
+"@docusaurus/mdx-loader@npm:3.0.1":
+  version: 3.0.1
+  resolution: "@docusaurus/mdx-loader@npm:3.0.1"
+  dependencies:
+    "@babel/parser": "npm:^7.22.7"
+    "@babel/traverse": "npm:^7.22.8"
+    "@docusaurus/logger": "npm:3.0.1"
+    "@docusaurus/utils": "npm:3.0.1"
+    "@docusaurus/utils-validation": "npm:3.0.1"
+    "@mdx-js/mdx": "npm:^3.0.0"
+    "@slorber/remark-comment": "npm:^1.0.0"
+    escape-html: "npm:^1.0.3"
+    estree-util-value-to-estree: "npm:^3.0.1"
+    file-loader: "npm:^6.2.0"
+    fs-extra: "npm:^11.1.1"
+    image-size: "npm:^1.0.2"
+    mdast-util-mdx: "npm:^3.0.0"
+    mdast-util-to-string: "npm:^4.0.0"
+    rehype-raw: "npm:^7.0.0"
+    remark-directive: "npm:^3.0.0"
+    remark-emoji: "npm:^4.0.0"
+    remark-frontmatter: "npm:^5.0.0"
+    remark-gfm: "npm:^4.0.0"
+    stringify-object: "npm:^3.3.0"
+    tslib: "npm:^2.6.0"
+    unified: "npm:^11.0.3"
+    unist-util-visit: "npm:^5.0.0"
+    url-loader: "npm:^4.1.1"
+    vfile: "npm:^6.0.1"
+    webpack: "npm:^5.88.1"
+  peerDependencies:
+    react: ^18.0.0
+    react-dom: ^18.0.0
+  checksum: 2892440de8a0606e893236eaf4f9c873091199481815139fe5f120ba2e5bd7fef062b63db7431027a73ee4d240bc785095374cddfd55313de35b8a5c62c53e9f
   languageName: node
   linkType: hard
 
@@ -2533,6 +2674,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@docusaurus/utils-common@npm:3.0.1":
+  version: 3.0.1
+  resolution: "@docusaurus/utils-common@npm:3.0.1"
+  dependencies:
+    tslib: "npm:^2.6.0"
+  peerDependencies:
+    "@docusaurus/types": "*"
+  peerDependenciesMeta:
+    "@docusaurus/types":
+      optional: true
+  checksum: 3c446655ddbda2052c08c46e6c06e68dab9d4203704aa5c81f29b38a57a636852a8e794dc4cbe4d11bf176e99d50a4db91ec8b650fc8ff55673d63066d246d97
+  languageName: node
+  linkType: hard
+
 "@docusaurus/utils-validation@npm:3.0.0":
   version: 3.0.0
   resolution: "@docusaurus/utils-validation@npm:3.0.0"
@@ -2543,6 +2698,19 @@ __metadata:
     js-yaml: "npm:^4.1.0"
     tslib: "npm:^2.6.0"
   checksum: 80cd186db7d2deb46580200045b8c411e66980fa7e10b347a15d81e5f99e2a91099a34a629beda69536c6182e1f29c0ca9102bcf240a2684ec0fe7517e0e61ce
+  languageName: node
+  linkType: hard
+
+"@docusaurus/utils-validation@npm:3.0.1":
+  version: 3.0.1
+  resolution: "@docusaurus/utils-validation@npm:3.0.1"
+  dependencies:
+    "@docusaurus/logger": "npm:3.0.1"
+    "@docusaurus/utils": "npm:3.0.1"
+    joi: "npm:^17.9.2"
+    js-yaml: "npm:^4.1.0"
+    tslib: "npm:^2.6.0"
+  checksum: 874b761f4f59cbcc64f3b33a9e0cecdf0221686263237add53ac6cbf73db03b28252af86154f5546b3a2db1718a4287f2ed5eb9b4390da0a410778cadbf445ae
   languageName: node
   linkType: hard
 
@@ -2573,6 +2741,36 @@ __metadata:
     "@docusaurus/types":
       optional: true
   checksum: 74095238c5704cb29de0b700981ea237018788de1340049dc9f03d5d15b0894ec3edf040da8faffc5ccf4a8cd5f6f3d974287b3cc1ab4818d3894c787bbccd5a
+  languageName: node
+  linkType: hard
+
+"@docusaurus/utils@npm:3.0.1":
+  version: 3.0.1
+  resolution: "@docusaurus/utils@npm:3.0.1"
+  dependencies:
+    "@docusaurus/logger": "npm:3.0.1"
+    "@svgr/webpack": "npm:^6.5.1"
+    escape-string-regexp: "npm:^4.0.0"
+    file-loader: "npm:^6.2.0"
+    fs-extra: "npm:^11.1.1"
+    github-slugger: "npm:^1.5.0"
+    globby: "npm:^11.1.0"
+    gray-matter: "npm:^4.0.3"
+    jiti: "npm:^1.20.0"
+    js-yaml: "npm:^4.1.0"
+    lodash: "npm:^4.17.21"
+    micromatch: "npm:^4.0.5"
+    resolve-pathname: "npm:^3.0.0"
+    shelljs: "npm:^0.8.5"
+    tslib: "npm:^2.6.0"
+    url-loader: "npm:^4.1.1"
+    webpack: "npm:^5.88.1"
+  peerDependencies:
+    "@docusaurus/types": "*"
+  peerDependenciesMeta:
+    "@docusaurus/types":
+      optional: true
+  checksum: b15ff773b41a27dadd68a8d10476e77270de1133da0d102b536aa4a8ba758379aa77686002f283d7126365a39487bedafdc11f2c5cbfa088bb9061f4b0c05d99
   languageName: node
   linkType: hard
 
@@ -7984,7 +8182,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "documentation@workspace:packages/documentation"
   dependencies:
-    "@docusaurus/core": "npm:^3.0.0"
+    "@docusaurus/core": "npm:^3.0.1"
     "@docusaurus/plugin-google-gtag": "npm:^3.0.0"
     "@docusaurus/preset-classic": "npm:^3.0.0"
     "@mdx-js/react": "npm:^3.0.0"
