@@ -37,7 +37,7 @@
     "sass": "^1.69.5",
     "sass-loader": "^13.3.2",
     "size-limit": "^11.0.0",
-    "sloc": "^0.2.1",
+    "sloc": "^0.3.0",
     "style-loader": "^3.3.3",
     "webpack": "^5.89.0",
     "webpack-bundle-analyzer": "^4.10.1",
