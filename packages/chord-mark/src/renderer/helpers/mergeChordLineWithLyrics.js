@@ -1,12 +1,5 @@
+import _intersection from 'lodash/intersection';
 import stripTags from '../../core/dom/stripTags';
-import symbols from '../symbols';
-import isTimeSignatureString from '../../parser/matchers/isTimeSignatureString';
-
-const barSeparatorsRe = /<[^<]*?cmBarSeparator.*?span>/gm;
-const chordSymbolRe = /<[^<]*?cmChordSymbol.*?span>/gm;
-const timeSignatureRe = /<[^<]*?cmTimeSignature.*?span>/gm;
-const subBeatGroupOpenerRe = /<[^<]*?cmSubBeatGroupOpener.*?span>/gm;
-const subBeatGroupCloserRe = /<[^<]*?cmSubBeatGroupCloser.*?span>/gm;
 
 /**
  *
@@ -16,89 +9,192 @@ const subBeatGroupCloserRe = /<[^<]*?cmSubBeatGroupCloser.*?span>/gm;
  */
 // eslint-disable-next-line max-lines-per-function
 export function mergeChordLineWithLyrics(chordLine, lyricLine) {
-	const allTokens = [];
-	let currentToken = '';
+	const allChordTokens = getAllChordTokens(chordLine);
+	const allLyricTokens = getAllLyricTokens(lyricLine);
 
-	let barSeparatorIndex = 0;
-	let chordSymbolIndex = 0;
-	let timeSignatureIndex = 0;
-	let subBeatGroupOpenerIndex = 0;
-	let subBeatGroupCloserIndex = 0;
+	const allBreakPoints = getAllBreakpoints(allChordTokens, allLyricTokens);
 
-	let allBarSeparators = [...chordLine.matchAll(barSeparatorsRe)];
-	let allChordSymbols = [...chordLine.matchAll(chordSymbolRe)];
-	let allTimeSignatures = [...chordLine.matchAll(timeSignatureRe)];
-	let allSbgOpeners = [...chordLine.matchAll(subBeatGroupOpenerRe)];
-	let allSbgClosers = [...chordLine.matchAll(subBeatGroupCloserRe)];
+	const chordLyricsPairs = getChordLyricsPairs(
+		allBreakPoints,
+		allChordTokens,
+		allLyricTokens
+	);
 
-	Array.from(stripTags(chordLine)).forEach((char, charIndex) => {
-		switch (char) {
-			case ' ': //fixme: handle spaces in chord symbol
-				if (currentToken) {
-					addToken(currentToken, charIndex - currentToken.length);
-					currentToken = '';
-				}
-				break;
-			case symbols.barSeparator:
-				if (currentToken) {
-					addToken(currentToken, charIndex - currentToken.length);
-				}
-				addToken(char, charIndex);
-				currentToken = '';
-				break;
-			case symbols.subBeatGroupOpener:
-				if (currentToken) {
-					addToken(currentToken, charIndex - currentToken.length);
-				}
-				addToken(char, charIndex);
-				currentToken = '';
-				break;
-			case symbols.subBeatGroupCloser:
-				if (currentToken) {
-					addToken(currentToken, charIndex - currentToken.length);
-				}
-				addToken(char, charIndex);
-				currentToken = '';
-				break;
-			default:
-				currentToken += char;
-				break;
-		}
+	let mergedLine = '<span class="cmChordLyricLine">';
+
+	chordLyricsPairs.forEach((pair) => {
+		mergedLine +=
+			'<span class="cmChordLyricPair">' +
+			`<span class="cmChordLyricPair--chords">${pair.chords}</span>` +
+			`<span class="cmChordLyricPair--lyrics">${pair.lyrics}</span>` +
+			'</span>';
 	});
 
-	function addToken(string, index) {
-		let html;
-		if (string === symbols.barSeparator) {
-			html = allBarSeparators[barSeparatorIndex][0];
-			barSeparatorIndex++;
-		} else if (string === symbols.subBeatGroupOpener) {
-			html = allSbgOpeners[subBeatGroupOpenerIndex][0];
-			subBeatGroupOpenerIndex++;
-		} else if (string === symbols.subBeatGroupCloser) {
-			html = allSbgClosers[subBeatGroupCloserIndex][0];
-			subBeatGroupCloserIndex++;
-		} else if (isTimeSignatureString(string)) {
-			html = allTimeSignatures[timeSignatureIndex][0];
-			timeSignatureIndex++;
-		} else {
-			html = allChordSymbols[chordSymbolIndex][0];
-			chordSymbolIndex++;
-		}
-		allTokens.push({ string, html, index });
-	}
+	mergedLine += '</span>';
 
-	let offset = 0;
-	let mergedLine = stripTags(lyricLine); // fixme: do that properly
-	allTokens.forEach((token) => {
-		mergedLine = insertAt(mergedLine, token.html, token.index + offset);
-		offset += token.html.length;
-	});
-	return '<span class="cmChordLyricsLine">' + mergedLine + '</span>'; //fixme: move to render helper
+	return mergedLine; //fixme: move to render helper
 }
 
-const insertAt = (insertInto, toInsert, at) => {
-	if (at > insertInto.length) {
-		insertInto += ' '.repeat(at - insertInto.length);
+// eslint-disable-next-line max-lines-per-function
+function getAllChordTokens(chordLine) {
+	const breakPointsClasses = [
+		'cmBarSeparator', //fixme:
+		'cmChordSymbol',
+		'cmTimeSignature',
+		'cmSubBeatGroupOpener', //fixme:
+		'cmSubBeatGroupCloser', //fixme:
+	];
+
+	const allChordTokens = [];
+	const chordLineNodes = document
+		.createRange()
+		.createContextualFragment(chordLine);
+
+	let textIndex = 0;
+	walkDom(chordLineNodes, allChordTokens, 0);
+
+	allChordTokens.push({
+		tokenText: '',
+		tokenTextIndex: stripTags(chordLine).length,
+	});
+
+	function walkDom(startNode, allNodes) {
+		startNode.childNodes.forEach((childNode) => {
+			if (childNode.nodeType === Node.TEXT_NODE) {
+				const textContent = childNode.textContent;
+				if (isOnlySpaces(textContent)) {
+					for (let i = 0; i < textContent.length; i++) {
+						allNodes.push({
+							tokenText: ' ',
+							tokenTextIndex: textIndex,
+						});
+						textIndex++;
+					}
+				} else {
+					//fixme: is this needed at all? yes, for sub beat group delimiters?
+					allNodes.push({
+						tokenText: childNode.textContent,
+						tokenTextIndex: textIndex,
+					});
+					textIndex += childNode.textContent.length;
+				}
+			} else {
+				if (breakPointsClasses.includes(childNode.classList.value)) {
+					allNodes.push({
+						tokenText: childNode.textContent,
+						tokenTextIndex: textIndex,
+						tokenHtml: childNode.outerHTML,
+					});
+					textIndex += childNode.textContent.length;
+				} else {
+					walkDom(childNode, allNodes);
+				}
+			}
+		});
 	}
-	return insertInto.slice(0, at) + toInsert + insertInto.slice(at);
-};
+
+	function isOnlySpaces(string) {
+		return Array.from(string).every((char) => char === ' ');
+	}
+
+	return allChordTokens;
+}
+
+function getAllLyricTokens(lyricLine) {
+	const allTextNodes = [];
+	const textLyricLine = stripTags(lyricLine);
+
+	let textToken = '';
+
+	Array.from(textLyricLine).forEach((char, charIndex, allChars) => {
+		if (char === ' ') {
+			if (textToken) {
+				allTextNodes.push({
+					tokenText: textToken,
+					tokenTextIndex: charIndex - textToken.length,
+				});
+				textToken = '';
+			}
+			allTextNodes.push({
+				tokenText: ' ',
+				tokenTextIndex: charIndex,
+			});
+		} else {
+			textToken += char;
+		}
+		if (!allChars[charIndex + 1]) {
+			allTextNodes.push({
+				tokenText: textToken,
+				tokenTextIndex: charIndex - textToken.length + 1,
+			});
+		}
+	});
+	allTextNodes.push({
+		tokenText: '',
+		tokenTextIndex: textLyricLine.length,
+	});
+	return allTextNodes;
+}
+
+function getAllBreakpoints(allChordTokens, allLyricTokens) {
+	const chordLineBreakPoints = allChordTokens.map(
+		(token) => token.tokenTextIndex
+	);
+	const lyricLineBreakPoints = allLyricTokens.map(
+		(token) => token.tokenTextIndex
+	);
+	const allBreakpoints = _intersection(
+		chordLineBreakPoints,
+		lyricLineBreakPoints
+	);
+
+	const longestLine =
+		chordLineBreakPoints[chordLineBreakPoints.length - 1] >
+		lyricLineBreakPoints[lyricLineBreakPoints.length - 1]
+			? chordLineBreakPoints
+			: lyricLineBreakPoints;
+
+	const lastBreakpoint = allBreakpoints[allBreakpoints.length - 1];
+	const remainingBreakpoints = longestLine.slice(
+		longestLine.indexOf(lastBreakpoint) + 1
+	);
+	if (remainingBreakpoints.length) {
+		allBreakpoints.push(...remainingBreakpoints);
+	}
+	allBreakpoints.shift();
+
+	return allBreakpoints;
+}
+
+function getChordLyricsPairs(allBreakpoints, allChordTokens, allLyricTokens) {
+	const chordLyricsPairs = [];
+
+	allBreakpoints.forEach((breakpoint) => {
+		let chordLineFragment = '';
+		let textLineFragment = '';
+		while (
+			allChordTokens.length &&
+			allChordTokens[0].tokenTextIndex < breakpoint
+		) {
+			const currentNode = allChordTokens.shift();
+			chordLineFragment += currentNode.tokenHtml
+				? currentNode.tokenHtml
+				: currentNode.tokenText;
+		}
+
+		while (
+			allLyricTokens.length &&
+			allLyricTokens[0].tokenTextIndex < breakpoint
+		) {
+			const currentNode = allLyricTokens.shift();
+			textLineFragment += currentNode.tokenText;
+		}
+
+		chordLyricsPairs.push({
+			index: breakpoint,
+			chords: chordLineFragment,
+			lyrics: textLineFragment,
+		});
+	});
+	return chordLyricsPairs;
+}
