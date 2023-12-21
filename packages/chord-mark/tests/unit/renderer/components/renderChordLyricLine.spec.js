@@ -1,12 +1,7 @@
-import { mergeChordLineWithLyrics } from '../../../../src/renderer/helpers/mergeChordLineWithLyrics';
 import { parseSong, renderSong } from '../../../../src/chordMark';
 import stripTags from '../../../../src/core/dom/stripTags';
 
 describe('mergeChordLineWithLyrics', () => {
-	test('Module', () => {
-		expect(mergeChordLineWithLyrics).toBeInstanceOf(Function);
-	});
-
 	describe('should properly split the chord lyrics lines into breakable blocs', () => {
 		describe.each([
 			/**/

@@ -5,6 +5,7 @@ import alignedChordSpacer from '../spacers/chord/aligned';
 import chordLyricsSpacer from '../spacers/chord/chordLyrics';
 
 import renderChordLineModel from './renderChordLine';
+import renderChordLyricLine from './renderChordLyricLine';
 import renderEmptyLine from './renderEmptyLine';
 import renderKeyDeclaration from './renderKeyDeclaration';
 import renderLine from './renderLine';
@@ -15,7 +16,6 @@ import renderTimeSignature from './renderTimeSignature';
 import songTpl from './tpl/song.js';
 import renderAllSectionsLabels from '../helpers/renderAllSectionLabels';
 import renderAllChords from '../helpers/renderAllChords';
-import { mergeChordLineWithLyrics } from '../helpers/mergeChordLineWithLyrics';
 
 import lineTypes from '../../parser/lineTypes';
 import replaceRepeatedBars from '../replaceRepeatedBars';
@@ -69,7 +69,7 @@ export default function renderSong(
 		symbolType = 'chord',
 		transposeValue = 0,
 		useShortNamings = true,
-		chordLineRendering = 'merged',
+		chordLineRendering = 'discrete',
 	} = {}
 ) {
 	let { allLines, allKeys } = parsedSong;
@@ -283,7 +283,7 @@ export default function renderSong(
 							chartType,
 						});
 						if (chordLineToMerge) {
-							rendered = mergeChordLineWithLyrics(
+							rendered = renderChordLyricLine(
 								chordLineToMerge,
 								rendered
 							);
