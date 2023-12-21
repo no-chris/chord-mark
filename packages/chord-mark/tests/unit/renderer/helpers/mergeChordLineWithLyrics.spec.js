@@ -69,6 +69,7 @@ describe('mergeChordLineWithLyrics', () => {
 				],
 				{ printBarSeparators: false },
 			],
+			//todo: add time signature test
 			/**/
 			[
 				'Let it be, 1',
@@ -173,11 +174,11 @@ describe('mergeChordLineWithLyrics', () => {
 				});
 				const allChordTokens = getAllNodesOf(
 					renderedMerged,
-					'cmChordLyricPair--chords'
+					'cmChordLine'
 				);
 				const allLyricTokens = getAllNodesOf(
 					renderedMerged,
-					'cmChordLyricPair--lyrics'
+					'cmLyricLine'
 				);
 				expect(allChordTokens.length).toBe(pairs.length);
 				expect(allLyricTokens.length).toBe(pairs.length);

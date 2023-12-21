@@ -25,8 +25,8 @@ export function mergeChordLineWithLyrics(chordLine, lyricLine) {
 	chordLyricsPairs.forEach((pair) => {
 		mergedLine +=
 			'<span class="cmChordLyricPair">' +
-			`<span class="cmChordLyricPair--chords">${pair.chords}</span>` +
-			`<span class="cmChordLyricPair--lyrics">${pair.lyrics}</span>` +
+			`<span class="cmChordLine">${pair.chords}</span>` +
+			`<span class="cmLyricLine">${pair.lyrics}</span>` +
 			'</span>';
 	});
 
