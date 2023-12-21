@@ -9,7 +9,7 @@ describe('mergeChordLineWithLyrics', () => {
 
 	describe('should properly split the chord lyrics lines into breakable blocs', () => {
 		describe.each([
-			/* */
+			/**/
 			[
 				'Longer chord line, 1',
 				'C',
@@ -18,13 +18,12 @@ describe('mergeChordLineWithLyrics', () => {
 				// Clean ending
 				[
 					['|', ' '],
-					['C', 'Clean'],
+					['C    ', 'Clean'],
 					[' ', ' '],
 					['      ', 'ending'],
 					['|', ''],
 				],
 			],
-			/* */
 			[
 				'Longer chord line, 2',
 				'C G',
@@ -33,7 +32,7 @@ describe('mergeChordLineWithLyrics', () => {
 				// Extra Chord
 				[
 					['|', ' '],
-					['C', 'Extra'],
+					['C    ', 'Extra'],
 					[' ', ' '],
 					['     ', 'Chord'],
 					['|', ''],
@@ -42,7 +41,6 @@ describe('mergeChordLineWithLyrics', () => {
 					['|', ''],
 				],
 			],
-			/* */
 			[
 				'Longer text line',
 				'C',
@@ -65,12 +63,13 @@ describe('mergeChordLineWithLyrics', () => {
 				//C       Am7
 				//Same length
 				[
-					['C', 'Same'],
+					['C   ', 'Same'],
 					[' ', ' '],
 					['   Am7', 'length'],
 				],
 				{ printBarSeparators: false },
 			],
+			/**/
 			[
 				'Let it be, 1',
 				'C.. G..',
@@ -82,13 +81,13 @@ describe('mergeChordLineWithLyrics', () => {
 					[' ', ' '],
 					[' ', 'I'],
 					['|', ' '],
-					['C', 'find'],
+					['C   ', 'find'],
 					[' ', ' '],
 					['      ', 'myself'],
 					[' ', ' '],
 					['  ', 'in'],
 					[' ', ' '],
-					['G', 'times'],
+					['G    ', 'times'],
 					[' ', ' '],
 					['  ', 'of'],
 					[' ', ' '],
@@ -113,7 +112,7 @@ describe('mergeChordLineWithLyrics', () => {
 					['Am/G', 'ry  '],
 					[']', ' '],
 					[' ', ' '],
-					['FM7.', 'comes'],
+					['FM7. ', 'comes'],
 					[' ', ' '],
 					['  ', 'to'],
 					[' ', ' '],
@@ -122,7 +121,6 @@ describe('mergeChordLineWithLyrics', () => {
 					['|', ''],
 				],
 			],
-			/* */
 			[
 				'Let it be, 3',
 				'C.. G..',
@@ -131,17 +129,16 @@ describe('mergeChordLineWithLyrics', () => {
 				// Speaking words of wisdom
 				[
 					['|', ' '],
-					['C', 'Speaking'],
+					['C       ', 'Speaking'],
 					[' ', ' '],
 					['     ', 'words'],
 					[' ', ' '],
 					['  ', 'of'],
 					[' ', ' '],
-					['G', 'wisdom'],
+					['G     ', 'wisdom'],
 					['|', ''],
 				],
 			],
-			/* */
 			[
 				'Let it be, 4',
 				'F. [C/E Dm7] C..',
@@ -174,65 +171,46 @@ describe('mergeChordLineWithLyrics', () => {
 					...options,
 					chordLineRendering: 'merged',
 				});
-				const allChordTokens = [
-					...renderedMerged.matchAll(
-						/<span class="cmChordLyricPair--chords">(.*?)<\/span>/gm
-					),
-				];
-				const allLyricTokens = [
-					...renderedMerged.matchAll(
-						/<span class="cmChordLyricPair--lyrics">(.*?)<\/span>/gm
-					),
-				];
+				const allChordTokens = getAllNodesOf(
+					renderedMerged,
+					'cmChordLyricPair--chords'
+				);
+				const allLyricTokens = getAllNodesOf(
+					renderedMerged,
+					'cmChordLyricPair--lyrics'
+				);
 				expect(allChordTokens.length).toBe(pairs.length);
 				expect(allLyricTokens.length).toBe(pairs.length);
 
 				pairs.forEach(([chord, lyric], i) => {
-					expect(stripTags(allChordTokens[i][0])).toEqual(chord);
-					expect(stripTags(allLyricTokens[i][0])).toEqual(lyric);
+					console.log('===', allChordTokens[i], '===');
+					console.log('===', stripTags(allChordTokens[i]), '===');
+					expect(stripTags(allChordTokens[i])).toEqual(chord);
+					expect(stripTags(allLyricTokens[i])).toEqual(lyric);
 				});
 			});
 		});
-		/*
-		describe.skip.each([
-			[
-				'C.. G..',
-				'When I _find myself in _times of trouble',
-				'<span class="cmChordLyricsLine">' +
-					'When I<span class="cmBarSeparator">|</span> ' +
-					'<span class="cmChordSymbol">C</span>find myself in ' +
-					'<span class="cmChordSymbol">G</span>times of trouble' +
-					'<span class="cmBarSeparator">|</span>' +
-					'</span>',
-			],
-			[
-				'Am. [Am Am/G] FM7. F6.',
-				'_ Mother _Ma_ry _comes to _me',
-				'<span class="cmBarSeparator">|</span> ' +
-					'<span class="cmChordSymbol">Am<span class="cmChordDuration">.</span></span>   Mother' +
-					'<span class="cmSubBeatGroupOpener">[</span> ' +
-					'<span class="cmChordSymbol">Am</span>Ma ' +
-					'<span class="cmChordSymbol">Am/G</span>ry  ' +
-					'<span class="cmSubBeatGroupCloser">]</span>  ' +
-					'<span class="cmChordSymbol">FM7<span class="cmChordDuration">.</span></span>' +
-					'comes to ' +
-					'<span class="cmChordSymbol">F6<span class="cmChordDuration">.</span></span>me  ' +
-					'</span><span class="cmBarSeparator">|</span>',
-			],
-			['A', 'My _first verse', 'My| Afirst verse|'],
-		])('renders correct html', (chordLine, lyricLine, output) => {
-			test('chordLine', () => {
-				const parsed = parseSong(chordLine + '\n' + lyricLine);
-				const renderedMerged = renderSong(parsed, {
-					chordLineRendering: 'merged',
-				});
-				const fullOutput =
-					'<div class="cmSong"><p class="cmLine"><span class="cmChordLyricsLine">' +
-					output +
-					'</span></p></div>';
-				expect(renderedMerged).toEqual(fullOutput);
-			});
-		});
-		*/
+
+		//todo: markup test
 	});
+
+	// helpers functions
+	function getAllNodesOf(html, className) {
+		const allNodesOf = [];
+		const startNode = document.createRange().createContextualFragment(html);
+		searchForNodesOf(startNode, className, allNodesOf);
+		return allNodesOf;
+	}
+
+	function searchForNodesOf(startNode, className, allNodesOf) {
+		startNode.childNodes.forEach((childNode) => {
+			if (childNode.nodeType !== Node.TEXT_NODE) {
+				if (childNode.classList.value.indexOf(className) !== -1) {
+					allNodesOf.push(childNode.innerHTML);
+				} else {
+					searchForNodesOf(childNode, className, allNodesOf);
+				}
+			}
+		});
+	}
 });
