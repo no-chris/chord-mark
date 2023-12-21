@@ -179,8 +179,6 @@ describe('mergeChordLineWithLyrics', () => {
 				expect(allLyricTokens.length).toBe(pairs.length);
 
 				pairs.forEach(([chord, lyric], i) => {
-					console.log('===', allChordTokens[i], '===');
-					console.log('===', stripTags(allChordTokens[i]), '===');
 					expect(stripTags(allChordTokens[i])).toEqual(chord);
 					expect(stripTags(allLyricTokens[i])).toEqual(lyric);
 				});
