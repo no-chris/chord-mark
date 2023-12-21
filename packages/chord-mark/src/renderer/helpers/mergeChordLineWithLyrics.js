@@ -46,6 +46,8 @@ function getAllChordTokens(chordLine) {
 	];
 
 	const allChordTokens = [];
+	// disbaling eslint warning since a chordLine is only made of ChordMark-generated html
+	// eslint-disable-next-line no-unsanitized/method
 	const chordLineNodes = document
 		.createRange()
 		.createContextualFragment(chordLine);

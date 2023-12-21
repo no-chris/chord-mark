@@ -197,6 +197,7 @@ describe('mergeChordLineWithLyrics', () => {
 	// helpers functions
 	function getAllNodesOf(html, className) {
 		const allNodesOf = [];
+		// eslint-disable-next-line no-unsanitized/method
 		const startNode = document.createRange().createContextualFragment(html);
 		searchForNodesOf(startNode, className, allNodesOf);
 		return allNodesOf;
