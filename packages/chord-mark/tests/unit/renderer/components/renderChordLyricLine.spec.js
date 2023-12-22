@@ -19,6 +19,7 @@ describe('renderChordLyricLine', () => {
 					['|', ''],
 				],
 			],
+			/**/
 			[
 				'Longer chord line, 2',
 				'C G',
@@ -65,7 +66,6 @@ describe('renderChordLyricLine', () => {
 				{ printBarSeparators: false },
 			],
 			//todo: add time signature test
-			/**/
 			[
 				'Let it be, 1',
 				'C.. G..',
@@ -91,7 +91,6 @@ describe('renderChordLyricLine', () => {
 					['|', ''],
 				],
 			],
-			/* */
 			[
 				'Let it be, 2',
 				'Am. [Am Am/G] FM7. F6.',
