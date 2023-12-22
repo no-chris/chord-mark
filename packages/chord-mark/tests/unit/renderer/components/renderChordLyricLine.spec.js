@@ -44,10 +44,10 @@ describe('renderChordLyricLine', () => {
 				//No bar separators
 				[
 					['C', 'No'],
-					['', ' '],
-					['', 'bar'],
-					['', ' '],
-					['', 'separators'],
+					['&nbsp;', ' '],
+					['&nbsp;', 'bar'],
+					['&nbsp;', ' '],
+					['&nbsp;', 'separators'],
 				],
 				{ printBarSeparators: false },
 			],
