@@ -4,7 +4,7 @@ const render = ({ chordLyricsPairs }) => {
 	chordLyricsPairs.forEach((pair) => {
 		chordLyricLine +=
 			'<span class="cmChordLyricPair">' +
-			`<span class="cmChordLine">${pair.chords}</span>` +
+			`<span class="cmChordLine">${pair.chords || '&nbsp;'}</span>` +
 			`<span class="cmLyricLine">${pair.lyrics}</span>` +
 			'</span>';
 	});

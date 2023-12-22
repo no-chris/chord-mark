@@ -17,7 +17,7 @@ const breakPointsClasses = [
  * It does not render from the model but from the HTML markup of previously rendered chords and lyrics lines.
  * The existing markup is split and combined into a new markup suitable for small screens,
  * e.g. wrappable chord/lyric lines as a single entity.
- * This approach was chosen to avoid:
+ * Although complex, this approach was chosen to avoid:
  * - duplicating the significant rendering business logic of chord lines,
  * - refactoring entirely the chord/lyrics line rendering to implement the small screen renderer
  * @param {String} chordLine - html of a rendered chord line
@@ -47,7 +47,7 @@ function getAllChordTokens(chordLine) {
 
 	addChordTokens(chordLineNodes, allChordTokens, textIndex);
 
-	// manually adding an extra empty token at the end of the line
+	// fixme:manually adding an extra empty token at the end of the line
 	allChordTokens.push(getToken('', stripTags(chordLine).length));
 
 	return allChordTokens;
@@ -59,6 +59,7 @@ function getNodesFromHtmlString(html) {
 	return document.createRange().createContextualFragment(html);
 }
 
+// recursive
 function addChordTokens(startNode, allNodes, textIndex) {
 	startNode.childNodes.forEach((childNode) => {
 		if (childNode.nodeType === Node.TEXT_NODE) {
@@ -127,7 +128,7 @@ function getAllLyricTokens(lyricLine) {
 		);
 	}
 
-	// manually adding an extra token at the end of the line
+	// fixme:manually adding an extra token at the end of the line
 	allTextNodes.push(getToken('', textLyricLine.length));
 	return allTextNodes;
 }
@@ -153,7 +154,7 @@ function getAllBreakpoints(allChordTokens, allLyricTokens) {
 	if (remainingBreakpoints.length) {
 		allBreakpoints.push(...remainingBreakpoints);
 	}
-	allBreakpoints.shift(); // duh! remove 0 index breakpoint
+	allBreakpoints.shift(); // fixme: duh! remove 0 index breakpoint
 
 	return allBreakpoints;
 }
