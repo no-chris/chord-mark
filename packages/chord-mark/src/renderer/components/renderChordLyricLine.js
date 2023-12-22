@@ -18,7 +18,7 @@ const breakPointsClasses = [
  * The existing markup is split and combined into a new markup suitable for small screens,
  * e.g. wrappable chord/lyric lines as a single entity.
  * Although complex, this approach was chosen to avoid:
- * - duplicating the significant rendering business logic of chord lines,
+ * - duplicating the significant rendering business logic of chord lines and/or
  * - refactoring entirely the chord/lyrics line rendering to implement the small screen renderer
  * @param {String} chordLine - html of a rendered chord line
  * @param {String} lyricLine - html of a rendered lyric line

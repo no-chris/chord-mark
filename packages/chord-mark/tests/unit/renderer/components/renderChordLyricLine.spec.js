@@ -165,7 +165,7 @@ describe('renderChordLyricLine', () => {
 				const parsed = parseSong(chordLine + '\n' + lyricLine);
 				const renderedMerged = renderSong(parsed, {
 					...options,
-					chordLineRendering: 'merged',
+					wrapChordLyricsLines: true,
 				});
 				const allChordTokens = getAllNodesOf(
 					renderedMerged,

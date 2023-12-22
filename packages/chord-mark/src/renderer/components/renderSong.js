@@ -45,7 +45,7 @@ import { defaultTimeSignature } from '../../parser/syntax';
  * do not allow inline time signatures to be printed (e.g. Ultimate Guitar)
  * @param {Number} options.transposeValue
  * @param {Boolean} options.useShortNamings
- * @param {('discrete'|'merged')} options.chordLineRendering
+ * @param {Boolean} options.wrapChordLyricsLines
  * @returns {String} rendered HTML
  */
 // eslint-disable-next-line max-lines-per-function
@@ -69,7 +69,7 @@ export default function renderSong(
 		symbolType = 'chord',
 		transposeValue = 0,
 		useShortNamings = true,
-		chordLineRendering = 'discrete',
+		wrapChordLyricsLines = false,
 	} = {}
 ) {
 	let { allLines, allKeys } = parsedSong;
@@ -323,7 +323,7 @@ export default function renderSong(
 		return (
 			nextLine &&
 			nextLine.type === lineTypes.LYRIC &&
-			chordLineRendering === 'merged' &&
+			wrapChordLyricsLines &&
 			shouldAlignChordsWithLyrics(line)
 		);
 	}
