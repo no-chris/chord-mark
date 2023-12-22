@@ -1,15 +1,25 @@
 import chordLyricLineTpl from './tpl/chordLyricLine';
 
 import _intersection from 'lodash/intersection';
+import _last from 'lodash/last';
 import stripTags from '../../core/dom/stripTags';
 
+const breakPointsClasses = [
+	'cmBarSeparator', //fixme:
+	'cmChordSymbol',
+	'cmTimeSignature',
+	'cmSubBeatGroupOpener', //fixme:
+	'cmSubBeatGroupCloser', //fixme:
+];
+
 /**
- * This is the most complex renderer because it works from the previously rendered
- * chords and lyrics markup, combining them into a merged chord/lyrics markup suitable for small screen,
- * instead of rendering directly from the model.
- * This is to avoid duplicating the significant rendering business logic of chord lines,
- * and also to avoid a too big refactoring in order to implement the small screen renderer
- * (e.g. wrappable chord/lyric lines).
+ * This is by far the most complex renderer.
+ * It does not render from the model but from the HTML markup of previously rendered chords and lyrics lines.
+ * The existing markup is split and combined into a new markup suitable for small screens,
+ * e.g. wrappable chord/lyric lines as a single entity.
+ * This approach was chosen to avoid:
+ * - duplicating the significant rendering business logic of chord lines,
+ * - refactoring entirely the chord/lyrics line rendering to implement the small screen renderer
  * @param {String} chordLine - html of a rendered chord line
  * @param {String} lyricLine - html of a rendered lyric line
  * @returns {String} rendered html
@@ -29,71 +39,67 @@ export default function renderChordLyricLine(chordLine, lyricLine) {
 	return chordLyricLineTpl({ chordLyricsPairs });
 }
 
-// eslint-disable-next-line max-lines-per-function
 function getAllChordTokens(chordLine) {
-	const breakPointsClasses = [
-		'cmBarSeparator', //fixme:
-		'cmChordSymbol',
-		'cmTimeSignature',
-		'cmSubBeatGroupOpener', //fixme:
-		'cmSubBeatGroupCloser', //fixme:
-	];
+	const chordLineNodes = getNodesFromHtmlString(chordLine);
 
 	const allChordTokens = [];
-	// disbaling eslint warning since a chordLine is only made of ChordMark-generated html
-	// eslint-disable-next-line no-unsanitized/method
-	const chordLineNodes = document
-		.createRange()
-		.createContextualFragment(chordLine);
+	let textIndex = { i: 0 }; // counter object to pass a reference in the recursive loop
 
-	let textIndex = 0;
-	walkDom(chordLineNodes, allChordTokens, 0);
+	addChordTokens(chordLineNodes, allChordTokens, textIndex);
 
-	allChordTokens.push({
-		tokenText: '',
-		tokenTextIndex: stripTags(chordLine).length,
-	});
-
-	function walkDom(startNode, allNodes) {
-		startNode.childNodes.forEach((childNode) => {
-			if (childNode.nodeType === Node.TEXT_NODE) {
-				const textContent = childNode.textContent;
-				if (isOnlySpaces(textContent)) {
-					for (let i = 0; i < textContent.length; i++) {
-						allNodes.push({
-							tokenText: ' ',
-							tokenTextIndex: textIndex,
-						});
-						textIndex++;
-					}
-				} else {
-					//fixme: is this needed at all? yes, for sub beat group delimiters?
-					allNodes.push({
-						tokenText: childNode.textContent,
-						tokenTextIndex: textIndex,
-					});
-					textIndex += childNode.textContent.length;
-				}
-			} else {
-				if (breakPointsClasses.includes(childNode.classList.value)) {
-					allNodes.push({
-						tokenText: childNode.textContent,
-						tokenTextIndex: textIndex,
-						tokenHtml: childNode.outerHTML,
-					});
-					textIndex += childNode.textContent.length;
-				} else {
-					walkDom(childNode, allNodes);
-				}
-			}
-		});
-	}
-
-	function isOnlySpaces(string) {
-		return Array.from(string).every((char) => char === ' ');
-	}
+	// manually adding an extra empty token at the end of the line
+	allChordTokens.push(getToken('', stripTags(chordLine).length));
 
 	return allChordTokens;
+}
+
+function getNodesFromHtmlString(html) {
+	// Since a chordLine is only made of ChordMark-generated html, we consider it safe
+	// eslint-disable-next-line no-unsanitized/method
+	return document.createRange().createContextualFragment(html);
+}
+
+function addChordTokens(startNode, allNodes, textIndex) {
+	startNode.childNodes.forEach((childNode) => {
+		if (childNode.nodeType === Node.TEXT_NODE) {
+			const textContent = childNode.textContent;
+			if (stringContainsOnlySpaces(textContent)) {
+				for (const space of textContent) {
+					allNodes.push(getToken(space, textIndex.i));
+					textIndex.i++;
+				}
+			} else {
+				//fixme: is this needed at all? yes, for sub beat group delimiters?
+				allNodes.push(getToken(childNode.textContent, textIndex.i));
+				textIndex.i += childNode.textContent.length;
+			}
+		} else {
+			if (breakPointsClasses.includes(childNode.classList.value)) {
+				allNodes.push(
+					getToken(
+						childNode.textContent,
+						textIndex.i,
+						childNode.outerHTML
+					)
+				);
+				textIndex.i += childNode.textContent.length;
+			} else {
+				addChordTokens(childNode, allNodes, textIndex);
+			}
+		}
+	});
+}
+
+function getToken(text, textIndex, html) {
+	return {
+		text,
+		textIndex,
+		html,
+	};
+}
+
+function stringContainsOnlySpaces(string) {
+	return Array.from(string).every((char) => char === ' ');
 }
 
 function getAllLyricTokens(lyricLine) {
@@ -102,64 +108,58 @@ function getAllLyricTokens(lyricLine) {
 
 	let textToken = '';
 
-	Array.from(textLyricLine).forEach((char, charIndex, allChars) => {
+	Array.from(textLyricLine).forEach((char, charIndex) => {
 		if (char === ' ') {
 			if (textToken) {
-				allTextNodes.push({
-					tokenText: textToken,
-					tokenTextIndex: charIndex - textToken.length,
-				});
+				allTextNodes.push(
+					getToken(textToken, charIndex - textToken.length)
+				);
 				textToken = '';
 			}
-			allTextNodes.push({
-				tokenText: ' ',
-				tokenTextIndex: charIndex,
-			});
+			allTextNodes.push(getToken(' ', charIndex));
 		} else {
 			textToken += char;
 		}
-		if (!allChars[charIndex + 1]) {
-			allTextNodes.push({
-				tokenText: textToken,
-				tokenTextIndex: charIndex - textToken.length + 1,
-			});
-		}
 	});
-	allTextNodes.push({
-		tokenText: '',
-		tokenTextIndex: textLyricLine.length,
-	});
+	if (textToken) {
+		allTextNodes.push(
+			getToken(textToken, textLyricLine.length - textToken.length)
+		);
+	}
+
+	// manually adding an extra token at the end of the line
+	allTextNodes.push(getToken('', textLyricLine.length));
 	return allTextNodes;
 }
 
 function getAllBreakpoints(allChordTokens, allLyricTokens) {
-	const chordLineBreakPoints = allChordTokens.map(
-		(token) => token.tokenTextIndex
-	);
-	const lyricLineBreakPoints = allLyricTokens.map(
-		(token) => token.tokenTextIndex
-	);
+	const chordLineBreakPoints = getBreakpointsFromTokens(allChordTokens);
+	const lyricLineBreakPoints = getBreakpointsFromTokens(allLyricTokens);
+
 	const allBreakpoints = _intersection(
 		chordLineBreakPoints,
 		lyricLineBreakPoints
 	);
 
-	const longestLine =
-		chordLineBreakPoints[chordLineBreakPoints.length - 1] >
-		lyricLineBreakPoints[lyricLineBreakPoints.length - 1]
+	const longestLineBreakpoints =
+		_last(chordLineBreakPoints) > _last(lyricLineBreakPoints)
 			? chordLineBreakPoints
 			: lyricLineBreakPoints;
 
-	const lastBreakpoint = allBreakpoints[allBreakpoints.length - 1];
-	const remainingBreakpoints = longestLine.slice(
-		longestLine.indexOf(lastBreakpoint) + 1
+	const lastBreakpoint = _last(allBreakpoints);
+	const remainingBreakpoints = longestLineBreakpoints.slice(
+		longestLineBreakpoints.indexOf(lastBreakpoint) + 1
 	);
 	if (remainingBreakpoints.length) {
 		allBreakpoints.push(...remainingBreakpoints);
 	}
-	allBreakpoints.shift();
+	allBreakpoints.shift(); // duh! remove 0 index breakpoint
 
 	return allBreakpoints;
+}
+
+function getBreakpointsFromTokens(allTokens) {
+	return allTokens.map((token) => token.textIndex);
 }
 
 function getChordLyricsPairs(allBreakpoints, allChordTokens, allLyricTokens) {
@@ -170,24 +170,21 @@ function getChordLyricsPairs(allBreakpoints, allChordTokens, allLyricTokens) {
 		let textLineFragment = '';
 		while (
 			allChordTokens.length &&
-			allChordTokens[0].tokenTextIndex < breakpoint
+			allChordTokens[0].textIndex < breakpoint
 		) {
-			const currentNode = allChordTokens.shift();
-			chordLineFragment += currentNode.tokenHtml
-				? currentNode.tokenHtml
-				: currentNode.tokenText;
+			const token = allChordTokens.shift();
+			chordLineFragment += token.html || token.text;
 		}
 
 		while (
 			allLyricTokens.length &&
-			allLyricTokens[0].tokenTextIndex < breakpoint
+			allLyricTokens[0].textIndex < breakpoint
 		) {
 			const currentNode = allLyricTokens.shift();
-			textLineFragment += currentNode.tokenText;
+			textLineFragment += currentNode.text;
 		}
 
 		chordLyricsPairs.push({
-			index: breakpoint,
 			chords: chordLineFragment,
 			lyrics: textLineFragment,
 		});

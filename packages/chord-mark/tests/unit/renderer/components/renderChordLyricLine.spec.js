@@ -1,7 +1,7 @@
 import { parseSong, renderSong } from '../../../../src/chordMark';
 import stripTags from '../../../../src/core/dom/stripTags';
 
-describe('mergeChordLineWithLyrics', () => {
+describe('renderChordLyricLine', () => {
 	describe('should properly split the chord lyrics lines into breakable blocs', () => {
 		describe.each([
 			/**/
@@ -161,7 +161,7 @@ describe('mergeChordLineWithLyrics', () => {
 			],
 			/* */
 		])('%s', (title, chordLine, lyricLine, pairs, options) => {
-			test('returns ', () => {
+			test(`${chordLine} ${lyricLine}`, () => {
 				const parsed = parseSong(chordLine + '\n' + lyricLine);
 				const renderedMerged = renderSong(parsed, {
 					...options,
@@ -193,17 +193,17 @@ describe('mergeChordLineWithLyrics', () => {
 		const allNodesOf = [];
 		// eslint-disable-next-line no-unsanitized/method
 		const startNode = document.createRange().createContextualFragment(html);
-		searchForNodesOf(startNode, className, allNodesOf);
+		addNodesOf(startNode, className, allNodesOf);
 		return allNodesOf;
 	}
 
-	function searchForNodesOf(startNode, className, allNodesOf) {
+	function addNodesOf(startNode, className, allNodesOf) {
 		startNode.childNodes.forEach((childNode) => {
 			if (childNode.nodeType !== Node.TEXT_NODE) {
 				if (childNode.classList.value.indexOf(className) !== -1) {
 					allNodesOf.push(childNode.innerHTML);
 				} else {
-					searchForNodesOf(childNode, className, allNodesOf);
+					addNodesOf(childNode, className, allNodesOf);
 				}
 			}
 		});
