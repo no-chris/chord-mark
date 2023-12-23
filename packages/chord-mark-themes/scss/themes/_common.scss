@@ -40,3 +40,20 @@
 		line-height: 2.15em;
 	}
 }
+
+.cmChordLyricLine {
+	display: flex;
+	flex-wrap: wrap;
+
+	.cmChordLyricPair {
+		flex: 0 0 auto;
+		display: flex;
+		flex-direction: column;
+
+		.cmChordLine,
+		.cmLyricLine {
+			flex: 0 0 auto;
+			white-space: pre;
+		}
+	}
+}
