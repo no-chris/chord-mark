@@ -65,6 +65,27 @@ describe('renderChordLyricLine', () => {
 				],
 				{ printBarSeparators: false },
 			],
+			[
+				'Text ends with space',
+				'C G',
+				'_Ends with spaces  _   ',
+				//|C                |G  |
+				// Ends with spaces      //
+				[
+					['|', ' '],
+					['C   ', 'Ends'],
+					[' ', ' '],
+					['    ', 'with'],
+					[' ', ' '],
+					['      ', 'spaces'],
+					[' ', ''],
+					['|', ''],
+					['G', ''],
+					[' ', ''],
+					[' ', ''],
+					['|', ''],
+				],
+			],
 			//todo: add time signature test
 			[
 				'Let it be, 1',

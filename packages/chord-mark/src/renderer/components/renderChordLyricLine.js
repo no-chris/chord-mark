@@ -7,7 +7,8 @@ import stripTags from '../../core/dom/stripTags';
 const breakPointsClasses = [
 	'cmChordSymbol',
 	'cmTimeSignature',
-	//fixme: those should not always generate a breakpoint
+	//fixme: consider smarter breakpoints rules at some point
+	// as it would be better not to always break on those symbols
 	'cmBarSeparator',
 	'cmSubBeatGroupOpener',
 	'cmSubBeatGroupCloser',
@@ -44,7 +45,9 @@ function getAllChordTokens(chordLine) {
 	const chordLineNodes = getChordLineNodes(chordLine);
 
 	const allChordTokens = [];
-	let textIndex = { i: 0 }; // counter object to pass a reference in the recursive loop
+	// using an object as a counter instead of an integer
+	// so the counter can be used in a recursive loop
+	let textIndex = { i: 0 };
 
 	addChordTokens(chordLineNodes, allChordTokens, textIndex);
 
@@ -63,11 +66,9 @@ function addChordTokens(startNode, allNodes, textIndex) {
 		if (childNode.nodeType === Node.TEXT_NODE) {
 			const textContent = childNode.textContent;
 			// if we reach a text node, then it has to be composed of spaces only
-			if (stringContainsOnlySpaces(textContent)) {
-				for (const space of textContent) {
-					allNodes.push(getToken(space, textIndex.i));
-					textIndex.i++;
-				}
+			for (const space of textContent) {
+				allNodes.push(getToken(space, textIndex.i));
+				textIndex.i++;
 			}
 		} else {
 			if (breakPointsClasses.includes(childNode.classList.value)) {
@@ -94,10 +95,6 @@ function getToken(text, textIndex, html) {
 	};
 }
 
-function stringContainsOnlySpaces(string) {
-	return Array.from(string).every((char) => char === ' ');
-}
-
 function getAllLyricTokens(lyricLine) {
 	const allTextNodes = [];
 	const textLyricLine = stripTags(lyricLine);
@@ -117,11 +114,9 @@ function getAllLyricTokens(lyricLine) {
 			textToken += char;
 		}
 	});
-	if (textToken) {
-		allTextNodes.push(
-			getToken(textToken, textLyricLine.length - textToken.length)
-		);
-	}
+	allTextNodes.push(
+		getToken(textToken, textLyricLine.length - textToken.length)
+	);
 	return allTextNodes;
 }
 
