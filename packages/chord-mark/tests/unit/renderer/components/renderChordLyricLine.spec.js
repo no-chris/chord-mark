@@ -86,7 +86,28 @@ describe('renderChordLyricLine', () => {
 					['|', ''],
 				],
 			],
-			//todo: add time signature test
+			[
+				'With inline time signature changes',
+				'C 2/4 G 3/4 E7',
+				'_With _time signature _changes',
+				//|C   |2/4 G             |3/4 E7     |
+				// With     time signature     changes
+				[
+					['|', ' '],
+					['C   ', 'With'],
+					['|', ' '],
+					['2/4', '   '],
+					[' ', ' '],
+					['G   ', 'time'],
+					[' ', ' '],
+					['         ', 'signature'],
+					['|', ' '],
+					['3/4', '   '],
+					[' ', ' '],
+					['E7     ', 'changes'],
+					['|', ''],
+				],
+			],
 			[
 				'Let it be, 1',
 				'C.. G..',
@@ -204,8 +225,88 @@ describe('renderChordLyricLine', () => {
 				});
 			});
 		});
+	});
 
-		//todo: markup test
+	test('Markup test', () => {
+		const expected =
+			'<div class="cmSong">' +
+			'<p class="cmLine">' +
+			'<span class="cmChordLyricLine">' +
+			'<span class="cmChordLyricPair">' +
+			'<span class="cmChordLine">' +
+			'<span class="cmBarSeparator">|</span>' +
+			'</span>' +
+			'<span class="cmLyricLine"> </span>' +
+			'</span>' +
+			'<span class="cmChordLyricPair">' +
+			'<span class="cmChordLine"><span class="cmChordSymbol">Am<span class="cmChordDuration">.</span></span></span>' +
+			'<span class="cmLyricLine">   </span>' +
+			'</span>' +
+			'<span class="cmChordLyricPair">' +
+			'<span class="cmChordLine">      </span>' +
+			'<span class="cmLyricLine">Mother</span>' +
+			'</span>' +
+			'<span class="cmChordLyricPair">' +
+			'<span class="cmChordLine"><span class="cmSubBeatGroupOpener">[</span></span>' +
+			'<span class="cmLyricLine"> </span>' +
+			'</span>' +
+			'<span class="cmChordLyricPair">' +
+			'<span class="cmChordLine"><span class="cmChordSymbol">Am</span></span>' +
+			'<span class="cmLyricLine">Ma</span>' +
+			'</span>' +
+			'<span class="cmChordLyricPair">' +
+			'<span class="cmChordLine"> </span>' +
+			'<span class="cmLyricLine"> </span>' +
+			'</span>' +
+			'<span class="cmChordLyricPair">' +
+			'<span class="cmChordLine"><span class="cmChordSymbol">Am/G</span></span>' +
+			'<span class="cmLyricLine">ry  </span>' +
+			'</span>' +
+			'<span class="cmChordLyricPair">' +
+			'<span class="cmChordLine"><span class="cmSubBeatGroupCloser">]</span></span>' +
+			'<span class="cmLyricLine"> </span>' +
+			'</span>' +
+			'<span class="cmChordLyricPair"><span class="cmChordLine"> </span>' +
+			'<span class="cmLyricLine"> </span>' +
+			'</span>' +
+			'<span class="cmChordLyricPair">' +
+			'<span class="cmChordLine"><span class="cmChordSymbol">FM7<span class="cmChordDuration">.</span></span> </span>' +
+			'<span class="cmLyricLine">comes</span>' +
+			'</span>' +
+			'<span class="cmChordLyricPair">' +
+			'<span class="cmChordLine"> </span>' +
+			'<span class="cmLyricLine"> </span>' +
+			'</span>' +
+			'<span class="cmChordLyricPair">' +
+			'<span class="cmChordLine">  </span>' +
+			'<span class="cmLyricLine">to</span>' +
+			'</span>' +
+			'<span class="cmChordLyricPair">' +
+			'<span class="cmChordLine"> </span>' +
+			'<span class="cmLyricLine"> </span>' +
+			'</span>' +
+			'<span class="cmChordLyricPair">' +
+			'<span class="cmChordLine"><span class="cmChordSymbol">F6<span class="cmChordDuration">.</span></span></span>' +
+			'<span class="cmLyricLine">me</span>' +
+			'</span>' +
+			'<span class="cmChordLyricPair">' +
+			'<span class="cmChordLine"> </span>' +
+			'<span class="cmLyricLine"></span>' +
+			'</span>' +
+			'<span class="cmChordLyricPair">' +
+			'<span class="cmChordLine"><span class="cmBarSeparator">|</span></span>' +
+			'<span class="cmLyricLine"></span>' +
+			'</span>' +
+			'</span>' +
+			'</p>' +
+			'</div>';
+		const parsed = parseSong(
+			'Am. [Am Am/G] FM7. F6.\n_ Mother _Ma_ry _comes to _me'
+		);
+		const rendered = renderSong(parsed, {
+			wrapChordLyricsLines: true,
+		});
+		expect(rendered).toEqual(expected);
 	});
 
 	// helpers functions
