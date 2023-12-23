@@ -213,7 +213,7 @@ export default function renderSong(
 							),
 							shouldPrintSubBeatDelimiters,
 							symbolType,
-					  })
+						})
 					: simpleChordSpacer(line.model);
 
 			const nextLine = allLines[lineIndex + 1];

@@ -37,7 +37,7 @@ export default function renderChordLine(
 	const barSeparator = shouldPrintBarSeparators
 		? barSeparatorTpl({
 				barSeparator: symbols.barSeparator,
-		  })
+			})
 		: '';
 
 	const chordLine =

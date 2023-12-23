@@ -135,7 +135,7 @@ export function guessKey(allChords) {
 		? {
 				string: keyString,
 				accidental: getKeyAccidental(keyString),
-		  }
+			}
 		: undefined;
 }
 

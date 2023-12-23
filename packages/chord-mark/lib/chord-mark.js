@@ -2943,6 +2943,87 @@ module.exports = baseIndexOf;
 
 /***/ }),
 
+/***/ 7596:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var SetCache = __webpack_require__(5386),
+    arrayIncludes = __webpack_require__(8333),
+    arrayIncludesWith = __webpack_require__(4893),
+    arrayMap = __webpack_require__(343),
+    baseUnary = __webpack_require__(7826),
+    cacheHas = __webpack_require__(9950);
+
+/* Built-in method references for those with the same name as other `lodash` methods. */
+var nativeMin = Math.min;
+
+/**
+ * The base implementation of methods like `_.intersection`, without support
+ * for iteratee shorthands, that accepts an array of arrays to inspect.
+ *
+ * @private
+ * @param {Array} arrays The arrays to inspect.
+ * @param {Function} [iteratee] The iteratee invoked per element.
+ * @param {Function} [comparator] The comparator invoked per element.
+ * @returns {Array} Returns the new array of shared values.
+ */
+function baseIntersection(arrays, iteratee, comparator) {
+  var includes = comparator ? arrayIncludesWith : arrayIncludes,
+      length = arrays[0].length,
+      othLength = arrays.length,
+      othIndex = othLength,
+      caches = Array(othLength),
+      maxLength = Infinity,
+      result = [];
+
+  while (othIndex--) {
+    var array = arrays[othIndex];
+    if (othIndex && iteratee) {
+      array = arrayMap(array, baseUnary(iteratee));
+    }
+    maxLength = nativeMin(array.length, maxLength);
+    caches[othIndex] = !comparator && (iteratee || (length >= 120 && array.length >= 120))
+      ? new SetCache(othIndex && array)
+      : undefined;
+  }
+  array = arrays[0];
+
+  var index = -1,
+      seen = caches[0];
+
+  outer:
+  while (++index < length && result.length < maxLength) {
+    var value = array[index],
+        computed = iteratee ? iteratee(value) : value;
+
+    value = (comparator || value !== 0) ? value : 0;
+    if (!(seen
+          ? cacheHas(seen, computed)
+          : includes(result, computed, comparator)
+        )) {
+      othIndex = othLength;
+      while (--othIndex) {
+        var cache = caches[othIndex];
+        if (!(cache
+              ? cacheHas(cache, computed)
+              : includes(arrays[othIndex], computed, comparator))
+            ) {
+          continue outer;
+        }
+      }
+      if (seen) {
+        seen.push(computed);
+      }
+      result.push(value);
+    }
+  }
+  return result;
+}
+
+module.exports = baseIntersection;
+
+
+/***/ }),
+
 /***/ 8656:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -3939,6 +4020,27 @@ function cacheHas(cache, key) {
 }
 
 module.exports = cacheHas;
+
+
+/***/ }),
+
+/***/ 5642:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var isArrayLikeObject = __webpack_require__(3746);
+
+/**
+ * Casts `value` to an empty array if it's not an array like object.
+ *
+ * @private
+ * @param {*} value The value to inspect.
+ * @returns {Array|Object} Returns the cast array-like object.
+ */
+function castArrayLikeObject(value) {
+  return isArrayLikeObject(value) ? value : [];
+}
+
+module.exports = castArrayLikeObject;
 
 
 /***/ }),
@@ -7109,6 +7211,43 @@ function identity(value) {
 }
 
 module.exports = identity;
+
+
+/***/ }),
+
+/***/ 898:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var arrayMap = __webpack_require__(343),
+    baseIntersection = __webpack_require__(7596),
+    baseRest = __webpack_require__(6060),
+    castArrayLikeObject = __webpack_require__(5642);
+
+/**
+ * Creates an array of unique values that are included in all given arrays
+ * using [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+ * for equality comparisons. The order and references of result values are
+ * determined by the first array.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Array
+ * @param {...Array} [arrays] The arrays to inspect.
+ * @returns {Array} Returns the new array of intersecting values.
+ * @example
+ *
+ * _.intersection([2, 1], [2, 3]);
+ * // => [2]
+ */
+var intersection = baseRest(function(arrays) {
+  var mapped = arrayMap(arrays, castArrayLikeObject);
+  return (mapped.length && mapped[0] === arrays[0])
+    ? baseIntersection(mapped)
+    : [];
+});
+
+module.exports = intersection;
 
 
 /***/ }),
@@ -11248,7 +11387,7 @@ function isEmptyLine(string) {
 
 
 
-var sectionLabelRegexp = new RegExp('^' + escapeRegExp_default()(syntax.sectionLabel) + '([a-zA-Z]+)([1-9])?( x[2-9])?$');
+var sectionLabelRegexp = new RegExp('^' + escapeRegExp_default()(syntax.sectionLabel) + '([a-zA-Z]+)([1-9])?( x[1-9][0-9]?)?$');
 function isSectionLabel(string) {
   var found = clearSpaces(string).match(sectionLabelRegexp);
   return found !== null;
@@ -11275,8 +11414,8 @@ var isFinite_default = /*#__PURE__*/__webpack_require__.n(lodash_isFinite);
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
-function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : String(i); }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
@@ -11328,8 +11467,8 @@ var InvalidBeatCountException = /*#__PURE__*/function (_Error) {
 function InvalidChordRepetitionException_typeof(o) { "@babel/helpers - typeof"; return InvalidChordRepetitionException_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, InvalidChordRepetitionException_typeof(o); }
 function InvalidChordRepetitionException_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, InvalidChordRepetitionException_toPropertyKey(descriptor.key), descriptor); } }
 function InvalidChordRepetitionException_createClass(Constructor, protoProps, staticProps) { if (protoProps) InvalidChordRepetitionException_defineProperties(Constructor.prototype, protoProps); if (staticProps) InvalidChordRepetitionException_defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-function InvalidChordRepetitionException_toPropertyKey(arg) { var key = InvalidChordRepetitionException_toPrimitive(arg, "string"); return InvalidChordRepetitionException_typeof(key) === "symbol" ? key : String(key); }
-function InvalidChordRepetitionException_toPrimitive(input, hint) { if (InvalidChordRepetitionException_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (InvalidChordRepetitionException_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+function InvalidChordRepetitionException_toPropertyKey(t) { var i = InvalidChordRepetitionException_toPrimitive(t, "string"); return "symbol" == InvalidChordRepetitionException_typeof(i) ? i : String(i); }
+function InvalidChordRepetitionException_toPrimitive(t, r) { if ("object" != InvalidChordRepetitionException_typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != InvalidChordRepetitionException_typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 function InvalidChordRepetitionException_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function InvalidChordRepetitionException_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) InvalidChordRepetitionException_setPrototypeOf(subClass, superClass); }
 function InvalidChordRepetitionException_createSuper(Derived) { var hasNativeReflectConstruct = InvalidChordRepetitionException_isNativeReflectConstruct(); return function _createSuperInternal() { var Super = InvalidChordRepetitionException_getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = InvalidChordRepetitionException_getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return InvalidChordRepetitionException_possibleConstructorReturn(this, result); }; }
@@ -11365,8 +11504,8 @@ var InvalidChordRepetitionException = /*#__PURE__*/function (_Error) {
 function InvalidSubBeatGroupException_typeof(o) { "@babel/helpers - typeof"; return InvalidSubBeatGroupException_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, InvalidSubBeatGroupException_typeof(o); }
 function InvalidSubBeatGroupException_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, InvalidSubBeatGroupException_toPropertyKey(descriptor.key), descriptor); } }
 function InvalidSubBeatGroupException_createClass(Constructor, protoProps, staticProps) { if (protoProps) InvalidSubBeatGroupException_defineProperties(Constructor.prototype, protoProps); if (staticProps) InvalidSubBeatGroupException_defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-function InvalidSubBeatGroupException_toPropertyKey(arg) { var key = InvalidSubBeatGroupException_toPrimitive(arg, "string"); return InvalidSubBeatGroupException_typeof(key) === "symbol" ? key : String(key); }
-function InvalidSubBeatGroupException_toPrimitive(input, hint) { if (InvalidSubBeatGroupException_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (InvalidSubBeatGroupException_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+function InvalidSubBeatGroupException_toPropertyKey(t) { var i = InvalidSubBeatGroupException_toPrimitive(t, "string"); return "symbol" == InvalidSubBeatGroupException_typeof(i) ? i : String(i); }
+function InvalidSubBeatGroupException_toPrimitive(t, r) { if ("object" != InvalidSubBeatGroupException_typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != InvalidSubBeatGroupException_typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 function InvalidSubBeatGroupException_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function InvalidSubBeatGroupException_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) InvalidSubBeatGroupException_setPrototypeOf(subClass, superClass); }
 function InvalidSubBeatGroupException_createSuper(Derived) { var hasNativeReflectConstruct = InvalidSubBeatGroupException_isNativeReflectConstruct(); return function _createSuperInternal() { var Super = InvalidSubBeatGroupException_getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = InvalidSubBeatGroupException_getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return InvalidSubBeatGroupException_possibleConstructorReturn(this, result); }; }
@@ -11413,8 +11552,8 @@ var InvalidSubBeatGroupException = /*#__PURE__*/function (_Error) {
 function InvalidBarRepeatException_typeof(o) { "@babel/helpers - typeof"; return InvalidBarRepeatException_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, InvalidBarRepeatException_typeof(o); }
 function InvalidBarRepeatException_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, InvalidBarRepeatException_toPropertyKey(descriptor.key), descriptor); } }
 function InvalidBarRepeatException_createClass(Constructor, protoProps, staticProps) { if (protoProps) InvalidBarRepeatException_defineProperties(Constructor.prototype, protoProps); if (staticProps) InvalidBarRepeatException_defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-function InvalidBarRepeatException_toPropertyKey(arg) { var key = InvalidBarRepeatException_toPrimitive(arg, "string"); return InvalidBarRepeatException_typeof(key) === "symbol" ? key : String(key); }
-function InvalidBarRepeatException_toPrimitive(input, hint) { if (InvalidBarRepeatException_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (InvalidBarRepeatException_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+function InvalidBarRepeatException_toPropertyKey(t) { var i = InvalidBarRepeatException_toPrimitive(t, "string"); return "symbol" == InvalidBarRepeatException_typeof(i) ? i : String(i); }
+function InvalidBarRepeatException_toPrimitive(t, r) { if ("object" != InvalidBarRepeatException_typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != InvalidBarRepeatException_typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 function InvalidBarRepeatException_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function InvalidBarRepeatException_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) InvalidBarRepeatException_setPrototypeOf(subClass, superClass); }
 function InvalidBarRepeatException_createSuper(Derived) { var hasNativeReflectConstruct = InvalidBarRepeatException_isNativeReflectConstruct(); return function _createSuperInternal() { var Super = InvalidBarRepeatException_getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = InvalidBarRepeatException_getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return InvalidBarRepeatException_possibleConstructorReturn(this, result); }; }
@@ -11602,7 +11741,6 @@ function parseChordLine(chordLine) {
       position: 0 // duh
     });
   }
-
   function changeBar() {
     bar.timeSignature = timeSignature;
     bar.lineHadTimeSignatureChange = lineHadTimeSignatureChange;
@@ -11624,7 +11762,6 @@ function checkSubBeatGroupToken(chordLine, token) {
     });
   }
 }
-
 function hasBeatCount(token) {
   return token.indexOf(syntax.chordBeatCount) > -1;
 }
@@ -11783,7 +11920,6 @@ function getKeyAccidental(keyString) {
   // 9 sharps
   'A#' // 10 sharps
   ];
-
   return sharpKeys.includes(keyString) ? 'sharp' : 'flat';
 }
 
@@ -11858,7 +11994,6 @@ function inferKeyFromChords(allChords) {
   if (firstSongChord) return firstSongChord.keyString;
   return mostUsedChords[0].keyString; // we give up!
 }
-
 function getMostUsedChordKeys(allChords) {
   var maxFoundDuration = 0;
   var mostUsedChordKeys = [];
@@ -11904,12 +12039,31 @@ function chord2Key(chord) {
   // duh!
   'bass' // re-duh!
   ];
-
   var keyString = chordModel.formatted.rootNote;
   if (!majorQualities.includes(chordModel.normalized.quality)) {
     keyString += 'm';
   }
   return keyString;
+}
+
+/**
+ * Return the number of semitones between two keys notes
+ * @param {string} key1
+ * @param {string} key2
+ * @returns {Number}
+ */
+function getSemitonesBetweenKeys(key1, key2) {
+  if (!key1 || !key2) return 0;
+  return getSemitonesBetweenNotes(key1.replace('m', ''), key2.replace('m', ''));
+}
+function getSemitonesBetweenNotes(note1, note2) {
+  var noteSharp1 = keyHelpers_flatsToSharps[note1] || note1;
+  var noteSharp2 = keyHelpers_flatsToSharps[note2] || note2;
+  var indexNote1 = allNotesSharp.indexOf(noteSharp1);
+  var indexNote2 = allNotesSharp.indexOf(noteSharp2);
+  if (indexNote1 === -1 || indexNote2 === -1) return 0;
+  var semitones = indexNote2 - indexNote1;
+  return semitones < 0 ? semitones + 12 : semitones;
 }
 ;// CONCATENATED MODULE: ./src/parser/matchers/isKeyDeclaration.js
 
@@ -12105,8 +12259,8 @@ function songLinesFactory_arrayLikeToArray(arr, len) { if (len == null || len > 
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(obj, key, value) { key = songLinesFactory_toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-function songLinesFactory_toPropertyKey(arg) { var key = songLinesFactory_toPrimitive(arg, "string"); return songLinesFactory_typeof(key) === "symbol" ? key : String(key); }
-function songLinesFactory_toPrimitive(input, hint) { if (songLinesFactory_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (songLinesFactory_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+function songLinesFactory_toPropertyKey(t) { var i = songLinesFactory_toPrimitive(t, "string"); return "symbol" == songLinesFactory_typeof(i) ? i : String(i); }
+function songLinesFactory_toPrimitive(t, r) { if ("object" != songLinesFactory_typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != songLinesFactory_typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 /*eslint-disable max-lines-per-function,max-lines */
 
 
@@ -12514,15 +12668,17 @@ function getAllKeysInSong(allLines, allChords) {
     auto: undefined,
     explicit: []
   };
-  var autoDetectedKey = guessKey(allChords);
-  if (autoDetectedKey) {
-    allKeys.auto = autoDetectedKey;
-  }
   allLines.forEach(function (line) {
     if (line.type === parser_lineTypes.KEY_DECLARATION) {
       allKeys.explicit.push(cloneDeep_default()(line.model));
     }
   });
+  if (allKeys.explicit.length === 0) {
+    var autoDetectedKey = guessKey(allChords);
+    if (autoDetectedKey) {
+      allKeys.auto = autoDetectedKey;
+    }
+  }
   return allKeys;
 }
 ;// CONCATENATED MODULE: ./src/parser/parseSong.js
@@ -12932,7 +13088,6 @@ function chordLyrics_space(chordLineInput, lyricsLineInput) {
         lyricToken += symbols.lyricsSpacer; //duh!
       }
     }
-
     return spacesAfter;
   }
   function getLyricSpacesAfter(isLastChordOfBar, isFollowedBySubBeatGroup) {
@@ -13156,6 +13311,176 @@ function renderChordLine(chordLineModel) {
     symbolType: symbolType
   });
 }
+;// CONCATENATED MODULE: ./src/renderer/components/tpl/chordLyricLine.js
+var chordLyricLine_render = function render(_ref) {
+  var chordLyricsPairs = _ref.chordLyricsPairs;
+  var chordLyricLine = '<span class="cmChordLyricLine">';
+  chordLyricsPairs.forEach(function (pair) {
+    chordLyricLine += '<span class="cmChordLyricPair">' + "<span class=\"cmChordLine\">".concat(pair.chords || '&nbsp;', "</span>") + "<span class=\"cmLyricLine\">".concat(pair.lyrics, "</span>") + '</span>';
+  });
+  chordLyricLine += '</span>';
+  return chordLyricLine;
+};
+/* harmony default export */ const chordLyricLine = (chordLyricLine_render);
+// EXTERNAL MODULE: ../../node_modules/lodash/intersection.js
+var intersection = __webpack_require__(898);
+var intersection_default = /*#__PURE__*/__webpack_require__.n(intersection);
+// EXTERNAL MODULE: ../../node_modules/lodash/last.js
+var last = __webpack_require__(6974);
+var last_default = /*#__PURE__*/__webpack_require__.n(last);
+;// CONCATENATED MODULE: ./src/renderer/components/renderChordLyricLine.js
+function renderChordLyricLine_toConsumableArray(arr) { return renderChordLyricLine_arrayWithoutHoles(arr) || renderChordLyricLine_iterableToArray(arr) || renderChordLyricLine_unsupportedIterableToArray(arr) || renderChordLyricLine_nonIterableSpread(); }
+function renderChordLyricLine_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function renderChordLyricLine_iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+function renderChordLyricLine_arrayWithoutHoles(arr) { if (Array.isArray(arr)) return renderChordLyricLine_arrayLikeToArray(arr); }
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = renderChordLyricLine_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+function renderChordLyricLine_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return renderChordLyricLine_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return renderChordLyricLine_arrayLikeToArray(o, minLen); }
+function renderChordLyricLine_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+
+
+
+
+var breakPointsClasses = ['cmChordSymbol', 'cmTimeSignature',
+//fixme: consider smarter breakpoints rules at some point
+// as it would be better not to always break on those symbols
+'cmBarSeparator', 'cmSubBeatGroupOpener', 'cmSubBeatGroupCloser'];
+
+/**
+ * This is by far the most complex renderer.
+ * It does not render from the model but from the HTML markup of previously rendered chords and lyrics lines.
+ * The existing markup is split and combined into a new markup suitable for small screens,
+ * e.g. wrappable chord/lyric lines as a single entity.
+ * Although complex, this approach was chosen to avoid:
+ * - duplicating the significant rendering business logic of chord lines and/or
+ * - refactoring entirely the chord/lyrics line rendering to implement the small screen renderer
+ * @param {String} chordLine - html of a rendered chord line
+ * @param {String} lyricLine - html of a rendered lyric line
+ * @returns {String} rendered html
+ */
+function renderChordLyricLine(chordLine, lyricLine) {
+  var allChordTokens = getAllChordTokens(chordLine);
+  var allLyricTokens = getAllLyricTokens(lyricLine);
+  var allBreakPoints = getAllBreakpoints(allChordTokens, allLyricTokens);
+  var chordLyricsPairs = getChordLyricsPairs(allBreakPoints, allChordTokens, allLyricTokens);
+  return chordLyricLine({
+    chordLyricsPairs: chordLyricsPairs
+  });
+}
+function getAllChordTokens(chordLine) {
+  var chordLineNodes = getChordLineNodes(chordLine);
+  var allChordTokens = [];
+  // using an object as a counter instead of an integer
+  // so the counter can be used in a recursive loop
+  var textIndex = {
+    i: 0
+  };
+  addChordTokens(chordLineNodes, allChordTokens, textIndex);
+  return allChordTokens;
+}
+function getChordLineNodes(chordLine) {
+  // Since a chordLine is only made of ChordMark-generated html, we consider it safe
+  // eslint-disable-next-line no-unsanitized/method
+  return document.createRange().createContextualFragment(chordLine);
+}
+
+// recursive
+function addChordTokens(startNode, allNodes, textIndex) {
+  startNode.childNodes.forEach(function (childNode) {
+    if (childNode.nodeType === Node.TEXT_NODE) {
+      var textContent = childNode.textContent;
+      // if we reach a text node, then it has to be composed of spaces only
+      var _iterator = _createForOfIteratorHelper(textContent),
+        _step;
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var space = _step.value;
+          allNodes.push(getToken(space, textIndex.i));
+          textIndex.i++;
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+    } else {
+      if (breakPointsClasses.includes(childNode.classList.value)) {
+        allNodes.push(getToken(childNode.textContent, textIndex.i, childNode.outerHTML));
+        textIndex.i += childNode.textContent.length;
+      } else {
+        addChordTokens(childNode, allNodes, textIndex);
+      }
+    }
+  });
+}
+function getToken(text, textIndex, html) {
+  return {
+    text: text,
+    textIndex: textIndex,
+    html: html
+  };
+}
+function getAllLyricTokens(lyricLine) {
+  var allTextNodes = [];
+  var textLyricLine = stripTags(lyricLine);
+  var textToken = '';
+  Array.from(textLyricLine).forEach(function (char, charIndex) {
+    if (char === ' ') {
+      if (textToken) {
+        allTextNodes.push(getToken(textToken, charIndex - textToken.length));
+        textToken = '';
+      }
+      allTextNodes.push(getToken(' ', charIndex));
+    } else {
+      textToken += char;
+    }
+  });
+  allTextNodes.push(getToken(textToken, textLyricLine.length - textToken.length));
+  return allTextNodes;
+}
+function getAllBreakpoints(allChordTokens, allLyricTokens) {
+  var chordLineBreakPoints = getBreakpointsFromTokens(allChordTokens);
+  var lyricLineBreakPoints = getBreakpointsFromTokens(allLyricTokens);
+  var allBreakpoints = intersection_default()(chordLineBreakPoints, lyricLineBreakPoints);
+  var longestLineBreakpoints = last_default()(chordLineBreakPoints) > last_default()(lyricLineBreakPoints) ? chordLineBreakPoints : lyricLineBreakPoints;
+  var lastBreakpoint = last_default()(allBreakpoints);
+  var remainingBreakpoints = longestLineBreakpoints.slice(longestLineBreakpoints.indexOf(lastBreakpoint) + 1);
+  if (remainingBreakpoints.length) {
+    allBreakpoints.push.apply(allBreakpoints, renderChordLyricLine_toConsumableArray(remainingBreakpoints));
+  }
+  // remove the 0-index breakpoint of the first token
+  allBreakpoints.shift();
+  return allBreakpoints;
+}
+function getBreakpointsFromTokens(allTokens) {
+  var allBreakPoints = allTokens.map(function (token) {
+    return token.textIndex;
+  });
+  var lastBreakpoint = allTokens.reduce(function (originalLine, token) {
+    return originalLine + token.text;
+  }, '').length;
+  allBreakPoints.push(lastBreakpoint);
+  return allBreakPoints;
+}
+function getChordLyricsPairs(allBreakpoints, allChordTokens, allLyricTokens) {
+  var chordLyricsPairs = [];
+  allBreakpoints.forEach(function (breakpoint) {
+    var chordLineFragment = '';
+    var textLineFragment = '';
+    while (allChordTokens.length && allChordTokens[0].textIndex < breakpoint) {
+      var token = allChordTokens.shift();
+      chordLineFragment += token.html || token.text;
+    }
+    while (allLyricTokens.length && allLyricTokens[0].textIndex < breakpoint) {
+      var currentNode = allLyricTokens.shift();
+      textLineFragment += currentNode.text;
+    }
+    chordLyricsPairs.push({
+      chords: chordLineFragment,
+      lyrics: textLineFragment
+    });
+  });
+  return chordLyricsPairs;
+}
 ;// CONCATENATED MODULE: ./src/renderer/components/tpl/emptyLine.js
 var emptyLine_render = function render() {
   return "<span class=\"cmEmptyLine\">&nbsp;</span>";
@@ -13320,28 +13645,6 @@ var song_render = function render(_ref) {
   return "<div class=\"cmSong\">".concat(song, "</div>");
 };
 /* harmony default export */ const song = (song_render);
-;// CONCATENATED MODULE: ./src/renderer/helpers/getChordSymbol.js
-
-
-
-var defaultRenderChord = renderer_chordRendererFactory();
-
-/**
- * @param {Chord|String} model
- * @param {Function} renderChord
- * @returns {string}
- */
-/* harmony default export */ function getChordSymbol(model) {
-  var renderChord = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultRenderChord;
-  switch (model) {
-    case syntax.noChord:
-      return symbols.noChordSymbol;
-    case symbols.barRepeat:
-      return symbols.barRepeat;
-    default:
-      return renderChord(model);
-  }
-}
 ;// CONCATENATED MODULE: ./src/renderer/helpers/renderAllSectionLabels.js
 
 
@@ -13403,6 +13706,85 @@ function getSectionsStats(allLines) {
   });
   return stats;
 }
+;// CONCATENATED MODULE: ./src/renderer/helpers/getChordSymbol.js
+
+
+
+var defaultRenderChord = renderer_chordRendererFactory();
+
+/**
+ * @param {Chord|String} model
+ * @param {Function} renderChord
+ * @returns {string}
+ */
+/* harmony default export */ function getChordSymbol(model) {
+  var renderChord = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultRenderChord;
+  switch (model) {
+    case syntax.noChord:
+      return symbols.noChordSymbol;
+    case symbols.barRepeat:
+      return symbols.barRepeat;
+    default:
+      return renderChord(model);
+  }
+}
+;// CONCATENATED MODULE: ./src/renderer/helpers/renderAllChords.js
+
+
+
+
+
+// eslint-disable-next-line max-lines-per-function
+function renderAllChords(allLines, detectedKey, _ref) {
+  var transposeValue = _ref.transposeValue,
+    accidentalsType = _ref.accidentalsType,
+    chordSymbolRenderer = _ref.chordSymbolRenderer,
+    simplifyChords = _ref.simplifyChords,
+    useShortNamings = _ref.useShortNamings;
+  var currentKey;
+  var baseKey;
+  if (detectedKey) {
+    currentKey = transposeKey(detectedKey, transposeValue, accidentalsType);
+  }
+  var renderChord = getChordSymbolRenderer();
+  function renderChords(line) {
+    if (line.type === parser_lineTypes.KEY_DECLARATION) {
+      currentKey = transposeKey(line.model, transposeValue, accidentalsType);
+      line.symbol = currentKey.string;
+      if (!baseKey) {
+        baseKey = currentKey;
+      }
+    } else if (line.type === parser_lineTypes.CHORD) {
+      var transposeOffSet = 0;
+      if (shouldTransposeRepeatedChords(line)) {
+        transposeOffSet = getSemitonesBetweenKeys(baseKey && baseKey.string, currentKey && currentKey.string);
+      }
+      renderChord = getChordSymbolRenderer(transposeOffSet);
+      line.model.allBars.forEach(function (bar) {
+        bar.allChords.forEach(function (chord) {
+          chord.symbol = getChordSymbol(chord.model, renderChord);
+        });
+      });
+    }
+    return line;
+  }
+  function shouldTransposeRepeatedChords(line) {
+    return line.isFromAutoRepeatChords || line.isFromSectionCopy || line.isFromChordLineRepeater;
+  }
+  function getChordSymbolRenderer(transposeOffSet) {
+    if (typeof chordSymbolRenderer === 'function') {
+      return chordSymbolRenderer;
+    }
+    var accidental = accidentalsType === 'auto' ? currentKey ? currentKey.accidental : 'sharp' : accidentalsType;
+    return renderer_chordRendererFactory({
+      simplify: simplifyChords,
+      useShortNamings: useShortNamings,
+      transposeValue: transposeValue + transposeOffSet,
+      accidental: accidental
+    });
+  }
+  return allLines.map(renderChords);
+}
 ;// CONCATENATED MODULE: ./src/renderer/replaceRepeatedBars.js
 
 
@@ -13453,7 +13835,6 @@ var barHasMultiplePositionedChords = function barHasMultiplePositionedChords(lin
 
 
 
-
 /**
  * @param {Song} parsedSong
  * @param {Object} options
@@ -13477,6 +13858,7 @@ var barHasMultiplePositionedChords = function barHasMultiplePositionedChords(lin
  * do not allow inline time signatures to be printed (e.g. Ultimate Guitar)
  * @param {Number} options.transposeValue
  * @param {Boolean} options.useShortNamings
+ * @param {Boolean} options.wrapChordLyricLines
  * @returns {String} rendered HTML
  */
 // eslint-disable-next-line max-lines-per-function
@@ -13515,18 +13897,21 @@ function renderSong(parsedSong) {
     _ref$transposeValue = _ref.transposeValue,
     transposeValue = _ref$transposeValue === void 0 ? 0 : _ref$transposeValue,
     _ref$useShortNamings = _ref.useShortNamings,
-    useShortNamings = _ref$useShortNamings === void 0 ? true : _ref$useShortNamings;
+    useShortNamings = _ref$useShortNamings === void 0 ? true : _ref$useShortNamings,
+    _ref$wrapChordLyricLi = _ref.wrapChordLyricLines,
+    wrapChordLyricLines = _ref$wrapChordLyricLi === void 0 ? false : _ref$wrapChordLyricLi;
   var allLines = parsedSong.allLines,
     allKeys = parsedSong.allKeys;
   var isFirstLyricLineOfSection = false;
   var contextTimeSignature = defaultTimeSignature.string;
   var previousBarTimeSignature;
-  var currentKey;
-  if (allKeys.auto) {
-    currentKey = transposeKey(allKeys.auto, transposeValue, accidentalsType);
-  }
-  var renderChord = getChordSymbolRenderer();
-  allLines = allLines.map(renderChords).map(addPrintChordsDurationsFlag).map(addPrintBarTimeSignatureFlag).filter(shouldRenderLine).map(function (line) {
+  allLines = renderAllChords(allLines, allKeys.auto, {
+    transposeValue: transposeValue,
+    accidentalsType: accidentalsType,
+    chordSymbolRenderer: chordSymbolRenderer,
+    simplifyChords: simplifyChords,
+    useShortNamings: useShortNamings
+  }).map(addPrintChordsDurationsFlag).map(addPrintBarTimeSignatureFlag).filter(shouldRenderLine).map(function (line) {
     return renderer_replaceRepeatedBars(line, {
       alignChordsWithLyrics: alignChordsWithLyrics
     });
@@ -13549,32 +13934,6 @@ function renderSong(parsedSong) {
   } else {
     return song({
       song: allRenderedLines.join('')
-    });
-  }
-  function renderChords(line) {
-    if (line.type === parser_lineTypes.KEY_DECLARATION) {
-      currentKey = transposeKey(line.model, transposeValue, accidentalsType);
-      renderChord = getChordSymbolRenderer();
-      line.symbol = currentKey.string;
-    } else if (line.type === parser_lineTypes.CHORD) {
-      line.model.allBars.forEach(function (bar) {
-        bar.allChords.forEach(function (chord) {
-          chord.symbol = getChordSymbol(chord.model, renderChord);
-        });
-      });
-    }
-    return line;
-  }
-  function getChordSymbolRenderer() {
-    if (typeof chordSymbolRenderer === 'function') {
-      return chordSymbolRenderer;
-    }
-    var accidental = accidentalsType === 'auto' ? currentKey ? currentKey.accidental : 'sharp' : accidentalsType;
-    return renderer_chordRendererFactory({
-      simplify: simplifyChords,
-      useShortNamings: useShortNamings,
-      transposeValue: transposeValue,
-      accidental: accidental
     });
   }
   function getSectionWrapperClasses(line) {
@@ -13650,9 +14009,14 @@ function renderSong(parsedSong) {
       allLines[lineIndex].model = spaced;
     }
   }
+
+  // eslint-disable-next-line max-lines-per-function
   function renderAllLines() {
     var lineIsInASection = false;
-    return allLines.map(function (line, i) {
+    var chordLineToMerge;
+    return allLines
+    // eslint-disable-next-line max-lines-per-function
+    .map(function (line, i) {
       var rendered;
       var shouldOpenSection = false;
       var sectionWrapperClasses = [];
@@ -13664,6 +14028,10 @@ function renderSong(parsedSong) {
           shouldPrintSubBeatDelimiters: shouldPrintSubBeatDelimiters,
           shouldPrintInlineTimeSignatures: shouldPrintInlineTimeSignatures
         });
+        if (shouldMergeChordLine(line, allLines[i + 1])) {
+          chordLineToMerge = rendered;
+          rendered = false;
+        }
       } else if (line.type === parser_lineTypes.EMPTY_LINE) {
         rendered = renderEmptyLine_render();
       } else if (line.type === parser_lineTypes.SECTION_LABEL) {
@@ -13681,8 +14049,12 @@ function renderSong(parsedSong) {
           alignChordsWithLyrics: alignChordsWithLyrics,
           chartType: chartType
         });
+        if (chordLineToMerge) {
+          rendered = renderChordLyricLine(chordLineToMerge, rendered);
+          chordLineToMerge = '';
+        }
       }
-      return renderLine_render(rendered, {
+      return rendered && renderLine_render(rendered, {
         isFromSectionMultiply: line.isFromSectionMultiply,
         isFromAutoRepeatChords: line.isFromAutoRepeatChords,
         isFromChordLineRepeater: line.isFromChordLineRepeater,
@@ -13696,6 +14068,9 @@ function renderSong(parsedSong) {
   }
   function shouldAlignChordsWithLyrics(line) {
     return chartType === 'all' && alignChordsWithLyrics && line.model.hasPositionedChords;
+  }
+  function shouldMergeChordLine(line, nextLine) {
+    return nextLine && nextLine.type === parser_lineTypes.LYRIC && wrapChordLyricLines && shouldAlignChordsWithLyrics(line);
   }
 
   /**

@@ -60,7 +60,7 @@ export default function space(
 					shouldPrintInlineTimeSignatures &&
 					bar.shouldPrintBarTimeSignature
 						? bar.timeSignature.string +
-						  symbols.spacesAfterTimeSignature
+							symbols.spacesAfterTimeSignature
 						: '';
 
 				const shouldOffsetLyricsLine =
