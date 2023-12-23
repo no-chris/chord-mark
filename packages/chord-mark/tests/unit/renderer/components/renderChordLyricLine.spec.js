@@ -206,7 +206,7 @@ describe('renderChordLyricLine', () => {
 				const parsed = parseSong(chordLine + '\n' + lyricLine);
 				const renderedMerged = renderSong(parsed, {
 					...options,
-					wrapChordLyricsLines: true,
+					wrapChordLyricLines: true,
 				});
 				const allChordTokens = getAllNodesOf(
 					renderedMerged,
@@ -304,7 +304,7 @@ describe('renderChordLyricLine', () => {
 			'Am. [Am Am/G] FM7. F6.\n_ Mother _Ma_ry _comes to _me'
 		);
 		const rendered = renderSong(parsed, {
-			wrapChordLyricsLines: true,
+			wrapChordLyricLines: true,
 		});
 		expect(rendered).toEqual(expected);
 	});
