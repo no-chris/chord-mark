@@ -20,11 +20,13 @@ describe('renderBarContent', () => {
 		);
 
 		const rendered = renderBarContent(parsed.allBars[0]);
-		const element = htmlToElement(rendered);
+		const element = htmlToElement('<p>' + rendered + '</p>');
 
-		expect(element).toBeInstanceOf(Node);
-		expect(element.nodeName).toBe('SPAN');
-		expect(element.classList.contains('cmBarContent')).toBe(true);
+		expect(element.firstChild).toBeInstanceOf(Node);
+		expect(element.firstChild.nodeName).toBe('SPAN');
+		expect(element.firstChild.classList.contains('cmChordSymbol')).toBe(
+			true
+		);
 	});
 });
 

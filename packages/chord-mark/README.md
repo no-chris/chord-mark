@@ -3,7 +3,7 @@
 ## Installation
 
 ```shell
-npm install chord-mark
+yarn add chord-mark chord-mark-themes
 ```
 
 ## Usage
@@ -11,7 +11,9 @@ npm install chord-mark
 ```javascript
 import { parseSong, renderSong } from 'chord-mark/lib/chord-mark.js';
 
-const parsed = parseSong('A\n_mySong');
+const song = 'C.. G..\n' + 'When I _find myself in _times of trouble';
+
+const parsed = parseSong(song);
 const rendered = renderSong(parsed);
 ```
 
@@ -20,16 +22,16 @@ ChordMark's default renderer produces a string containing an HTML markup.
 ```html
 <div class="cmSong">
 	<p class="cmLine">
-		<span class="cmChordLine">
-			<span class="cmBarSeparator">|</span>
-			<span class="cmBarContent"
-				><span class="cmChordSymbol">A</span>
-			</span>
-			<span class="cmBarSeparator">|</span>
-		</span>
+		<span class="cmChordLine"
+			><span class="cmChordLineOffset"> </span
+			><span class="cmBarSeparator">|</span
+			><span class="cmChordSymbol">C</span>
+			<span class="cmChordSymbol">G</span>
+			<span class="cmBarSeparator">|</span></span
+		>
 	</p>
 	<p class="cmLine">
-		<span class="cmLyricLine">mySong</span>
+		<span class="cmLyricLine">When I find myself in times of trouble</span>
 	</p>
 </div>
 ```
@@ -37,7 +39,7 @@ ChordMark's default renderer produces a string containing an HTML markup.
 ## Configuration
 
 The renderer function can be configured.
-Until proper documentation is available, the list of parameter can be checked here: https://github.com/no-chris/chord-mark/blob/master/packages/chord-mark/src/renderer/components/renderSong.js#L27
+Until proper documentation is available, the list of parameters can be checked here: https://github.com/no-chris/chord-mark/blob/master/packages/chord-mark/src/renderer/components/renderSong.js#L27
 
 ## Documentation
 
@@ -59,7 +61,6 @@ The following list of CSS classes are available:
 -   `cmLine--isFromSectionMultiply`
 -   `cmChordLine`
 -   `cmChordLineOffset`
--   `cmBarContent`
 -   `cmBarSeparator`
 -   `cmChordSymbol`
 -   `cmChordDuration`
