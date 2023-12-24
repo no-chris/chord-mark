@@ -3,6 +3,7 @@ import chordLyricLineTpl from './tpl/chordLyricLine';
 import _intersection from 'lodash/intersection';
 import _last from 'lodash/last';
 import stripTags from '../../core/dom/stripTags';
+import htmlToElement from '../../core/dom/htmlToElement';
 
 const breakPointsClasses = [
 	'cmChordSymbol',
@@ -42,7 +43,7 @@ export default function renderChordLyricLine(chordLine, lyricLine) {
 }
 
 function getAllChordTokens(chordLine) {
-	const chordLineNodes = getChordLineNodes(chordLine);
+	const chordLineNodes = htmlToElement(chordLine);
 
 	const allChordTokens = [];
 	// using an object as a counter instead of an integer
@@ -52,12 +53,6 @@ function getAllChordTokens(chordLine) {
 	addChordTokens(chordLineNodes, allChordTokens, textIndex);
 
 	return allChordTokens;
-}
-
-function getChordLineNodes(chordLine) {
-	// Since a chordLine is only made of ChordMark-generated html, we consider it safe
-	// eslint-disable-next-line no-unsanitized/method
-	return document.createRange().createContextualFragment(chordLine);
 }
 
 // recursive
