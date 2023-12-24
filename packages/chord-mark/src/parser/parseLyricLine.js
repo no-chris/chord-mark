@@ -12,11 +12,18 @@ import syntax from './syntax';
  * @returns {LyricLine}
  */
 export default function parseLyricLine(string) {
+	const stringWithoutForceLyricSymbol = string.startsWith(syntax.lyricLine)
+		? string.substring(1)
+		: string;
+
 	const regexp = new RegExp(syntax.chordPositionMarker, 'g');
-	const stringWithoutPositionMarkers = string.replace(regexp, '');
+	const stringWithoutPositionMarkers = stringWithoutForceLyricSymbol.replace(
+		regexp,
+		''
+	);
 
 	const chordPositions = [];
-	let tmpString = string;
+	let tmpString = stringWithoutForceLyricSymbol;
 	let position;
 
 	while ((position = tmpString.indexOf(syntax.chordPositionMarker)) !== -1) {

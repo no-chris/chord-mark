@@ -87,6 +87,26 @@ describe.each([
 			'A lyric line ending with a lot of chords    '.length,
 		],
 	],
+	[
+		'forced lyric lines should be rendered without the lyricLine symbol',
+		':A forced lyric line',
+		'A forced lyric line',
+		[],
+	],
+	[
+		'the lyricLine symbol should not impact chord positions',
+		':_A lyric _ _ _line with a lot _ _of _chords',
+		'A lyric   line with a lot  of chords',
+		[
+			0,
+			'A lyric '.length,
+			'A lyric  '.length,
+			'A lyric   '.length,
+			'A lyric   line with a lot '.length,
+			'A lyric   line with a lot  '.length,
+			'A lyric   line with a lot  of '.length,
+		],
+	],
 ])('%s ', (title, lyricLine, lyrics, chordPositions) => {
 	test('Correctly detects chords position', () => {
 		const parsed = parseLyricLine(lyricLine);
