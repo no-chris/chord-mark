@@ -1,4 +1,4 @@
 const render = ({ barContent }) => {
-	return `<span class="cmBarContent">${barContent}</span>`;
+	return `${barContent}`;
 };
 export default render;
