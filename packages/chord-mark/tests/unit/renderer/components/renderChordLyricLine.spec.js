@@ -1,4 +1,5 @@
 import { parseSong, renderSong } from '../../../../src/chordMark';
+import htmlToElement from '../../../../src/core/dom/htmlToElement';
 import stripTags from '../../../../src/core/dom/stripTags';
 
 describe('renderChordLyricLine', () => {
@@ -312,8 +313,7 @@ describe('renderChordLyricLine', () => {
 	// helpers functions
 	function getAllNodesOf(html, className) {
 		const allNodesOf = [];
-		// eslint-disable-next-line no-unsanitized/method
-		const startNode = document.createRange().createContextualFragment(html);
+		const startNode = htmlToElement(html);
 		addNodesOf(startNode, className, allNodesOf);
 		return allNodesOf;
 	}
