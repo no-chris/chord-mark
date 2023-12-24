@@ -47,3 +47,41 @@ describe('flagPositionedChords()', () => {
 		});
 	});
 });
+
+describe('Force lyric line symbol', () => {
+	test('Correctly detects a forced lyric line', () => {
+		const input = [':Ah', ':C G', ':Fish'];
+
+		const expected = [
+			{
+				model: {
+					chordPositions: [],
+					lyrics: 'Ah',
+				},
+				string: ':Ah',
+				type: 'lyric',
+			},
+			{
+				model: {
+					chordPositions: [],
+					lyrics: 'C G',
+				},
+				string: ':C G',
+				type: 'lyric',
+			},
+			{
+				model: {
+					chordPositions: [],
+					lyrics: 'Fish',
+				},
+				string: ':Fish',
+				type: 'lyric',
+			},
+		];
+
+		const songLines = songLinesFactory();
+		input.forEach(songLines.addLine);
+
+		expect(songLines.asArray()).toEqual(expected);
+	});
+});
