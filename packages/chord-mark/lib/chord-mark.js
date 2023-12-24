@@ -8829,9 +8829,9 @@ function parseTimeSignature(string) {
   chordBeatCount: '.',
   chordLineRepeat: '%',
   chordPositionMarker: '_',
+  lyricLine: ':',
   keyDeclarationPrefix: 'key ',
   noChord: 'NC',
-  noLyrics: 'NL',
   sectionLabel: '#',
   subBeatOpener: '[',
   subBeatCloser: ']'
@@ -12118,10 +12118,11 @@ function parseKeyDeclaration(string) {
  * @returns {LyricLine}
  */
 function parseLyricLine(string) {
+  var stringWithoutForceLyricSymbol = string.startsWith(syntax.lyricLine) ? string.substring(1) : string;
   var regexp = new RegExp(syntax.chordPositionMarker, 'g');
-  var stringWithoutPositionMarkers = string.replace(regexp, '');
+  var stringWithoutPositionMarkers = stringWithoutForceLyricSymbol.replace(regexp, '');
   var chordPositions = [];
-  var tmpString = string;
+  var tmpString = stringWithoutForceLyricSymbol;
   var position;
   while ((position = tmpString.indexOf(syntax.chordPositionMarker)) !== -1) {
     if (!chordPositions.includes(position)) {
@@ -13196,7 +13197,7 @@ function renderTimeSignature_render(timeSignatureLine) {
 ;// CONCATENATED MODULE: ./src/renderer/components/tpl/barContent.js
 var barContent_render = function render(_ref) {
   var barContent = _ref.barContent;
-  return "<span class=\"cmBarContent\">".concat(barContent, "</span>");
+  return "".concat(barContent);
 };
 /* harmony default export */ const tpl_barContent = (barContent_render);
 ;// CONCATENATED MODULE: ./src/renderer/components/renderBarContent.js
@@ -13328,6 +13329,13 @@ var intersection_default = /*#__PURE__*/__webpack_require__.n(intersection);
 // EXTERNAL MODULE: ../../node_modules/lodash/last.js
 var last = __webpack_require__(6974);
 var last_default = /*#__PURE__*/__webpack_require__.n(last);
+;// CONCATENATED MODULE: ./src/core/dom/htmlToElement.js
+
+function htmlToElement(html) {
+  return purify_default().sanitize(html, {
+    RETURN_DOM_FRAGMENT: true
+  }).firstChild;
+}
 ;// CONCATENATED MODULE: ./src/renderer/components/renderChordLyricLine.js
 function renderChordLyricLine_toConsumableArray(arr) { return renderChordLyricLine_arrayWithoutHoles(arr) || renderChordLyricLine_iterableToArray(arr) || renderChordLyricLine_unsupportedIterableToArray(arr) || renderChordLyricLine_nonIterableSpread(); }
 function renderChordLyricLine_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -13336,6 +13344,7 @@ function renderChordLyricLine_arrayWithoutHoles(arr) { if (Array.isArray(arr)) r
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = renderChordLyricLine_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 function renderChordLyricLine_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return renderChordLyricLine_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return renderChordLyricLine_arrayLikeToArray(o, minLen); }
 function renderChordLyricLine_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+
 
 
 
@@ -13367,7 +13376,7 @@ function renderChordLyricLine(chordLine, lyricLine) {
   });
 }
 function getAllChordTokens(chordLine) {
-  var chordLineNodes = getChordLineNodes(chordLine);
+  var chordLineNodes = htmlToElement(chordLine);
   var allChordTokens = [];
   // using an object as a counter instead of an integer
   // so the counter can be used in a recursive loop
@@ -13376,11 +13385,6 @@ function getAllChordTokens(chordLine) {
   };
   addChordTokens(chordLineNodes, allChordTokens, textIndex);
   return allChordTokens;
-}
-function getChordLineNodes(chordLine) {
-  // Since a chordLine is only made of ChordMark-generated html, we consider it safe
-  // eslint-disable-next-line no-unsanitized/method
-  return document.createRange().createContextualFragment(chordLine);
 }
 
 // recursive
