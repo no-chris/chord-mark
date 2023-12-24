@@ -8,7 +8,6 @@ export default {
 	lyricLine: ':',
 	keyDeclarationPrefix: 'key ',
 	noChord: 'NC',
-	noLyrics: 'NL',
 	sectionLabel: '#',
 	subBeatOpener: '[',
 	subBeatCloser: ']',
