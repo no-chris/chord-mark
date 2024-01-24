@@ -82,9 +82,7 @@ export default function songLinesFactory() {
 
 	let blueprint = [];
 	let blueprintIndex = 0;
-	let blueprintLine = '';
 
-	let isRepeatingChords = false;
 	let shouldMultiplySection = false;
 	let shouldCopySection = false;
 
@@ -141,13 +139,12 @@ export default function songLinesFactory() {
 		shouldMultiplySection = currentSection.multiplyTimes > 0;
 		previousSectionLabelLine = _cloneDeep(line);
 
-		if (!isFirstOfLabel(currentSection, allLines)) {
-			blueprint = getNthOfLabel(allLines, currentSection.label, 1);
-			blueprintIndex = 0;
-			isRepeatingChords = true;
-		} else {
-			isRepeatingChords = false;
-		}
+		blueprint =
+			currentSectionStats.count > 1
+				? getNthOfLabel(allLines, currentSection.label, 1)
+				: [];
+		blueprintIndex = 0;
+
 		return line;
 	}
 
@@ -239,8 +236,8 @@ export default function songLinesFactory() {
 	}
 
 	function repeatLinesFromBlueprint(line) {
-		if (isRepeatingChords && line.type !== lineTypes.SECTION_LABEL) {
-			blueprintLine = blueprint[blueprintIndex];
+		if (blueprint.length && line.type !== lineTypes.SECTION_LABEL) {
+			let blueprintLine = blueprint[blueprintIndex];
 			let repeatedLine;
 
 			while (shouldRepeatLineFromBlueprint(blueprintLine, line)) {
@@ -257,6 +254,16 @@ export default function songLinesFactory() {
 			}
 			blueprintIndex++;
 		}
+	}
+
+	function shouldRepeatLineFromBlueprint(blueprintLine, currentLine) {
+		const nonRepeatableLinesTypes = [lineTypes.LYRIC, lineTypes.EMPTY_LINE];
+		return (
+			blueprintLine &&
+			!nonRepeatableLinesTypes.includes(blueprintLine.type) &&
+			blueprintLine.type !== currentLine.type &&
+			currentLine.type !== lineTypes.EMPTY_LINE
+		);
 	}
 
 	function copySection() {
@@ -397,24 +404,6 @@ export default function songLinesFactory() {
 			});
 		},
 	};
-}
-
-function isFirstOfLabel(currentLabel, allLines) {
-	return allLines.every(
-		(line) =>
-			line.type === lineTypes.SECTION_LABEL &&
-			line.model.label !== currentLabel.label
-	);
-}
-
-function shouldRepeatLineFromBlueprint(blueprintLine, currentLine) {
-	return (
-		blueprintLine &&
-		blueprintLine.type !== lineTypes.LYRIC &&
-		blueprintLine.type !== lineTypes.EMPTY_LINE &&
-		blueprintLine.type !== currentLine.type &&
-		currentLine.type !== lineTypes.EMPTY_LINE
-	);
 }
 
 function isLastLineOfSection(lineIndex, allSrcLines) {
