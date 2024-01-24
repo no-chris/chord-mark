@@ -152,7 +152,7 @@ describe('getNthOfLabel', () => {
 		expect(getNthOfLabel).toBeInstanceOf(Function);
 	});
 
-	test('Should return the section identified by its label and index', () => {
+	test('Should return the section identified by its label and index, without trailing directives', () => {
 		const song2 = `
 #v
 Verse1-line1
@@ -160,12 +160,16 @@ Verse1-line2
 Verse1-line3
 Verse1-line4
 
+4/4
 #v
 Verse2-line1
 Verse2-line2
 Verse2-line3
 Verse2-line4
 
+
+key B
+3/4
 #v
 Verse3-line1
 Verse3-line2
@@ -185,6 +189,7 @@ Verse3-line4`;
 			'Verse2-line2',
 			'Verse2-line3',
 			'Verse2-line4',
+			'',
 			'',
 		];
 		const v3 = [

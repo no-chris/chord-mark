@@ -1,4 +1,5 @@
 import _cloneDeep from 'lodash/cloneDeep';
+import _last from 'lodash/last';
 
 import lineTypes from '../lineTypes';
 
@@ -85,5 +86,17 @@ export function getNthOfLabel(allLines, label, n) {
 			selected.push(line);
 		}
 	});
+
+	// remmove trailing directive lines
+	// because they likely apply to the next section
+	/**/
+	while (
+		_last(selected) &&
+		(_last(selected).type === lineTypes.KEY_DECLARATION ||
+			_last(selected).type === lineTypes.TIME_SIGNATURE)
+	) {
+		selected.pop();
+	}
+	/** */
 	return selected;
 }
