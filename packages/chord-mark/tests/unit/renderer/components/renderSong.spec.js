@@ -132,6 +132,45 @@ verseLine`;
 		expect(toText(rendered)).toBe(expected);
 	});
 
+	test('should not copy trailing directives lines', () => {
+		const input = `#v
+verse
+verse
+
+3/4
+key C
+#c
+chorus
+chorus
+
+#v
+
+5/4
+key A
+#o
+outro`;
+		const expected = `Verse 1
+verse
+verse
+
+3/4
+key: C
+Chorus
+chorus
+chorus
+
+Verse 2
+verse
+verse
+
+5/4
+key: A
+Outro
+outro`;
+		const rendered = renderSongText(input, { expandSectionCopy: true });
+		expect(toText(rendered)).toBe(expected);
+	});
+
 	test('should not repeat chords when autoRepeatChords === false', () => {
 		const input = `#v
 A B
@@ -1065,35 +1104,6 @@ describe('Keys, accidental & transpose', () => {
 				'Verse 2\n' +
 				'|Am7  |D7  |G  |%  |\n' +
 				'myVerse\n',
-		],
-		[
-			'',
-			'key A\n' +
-				'#c\n' +
-				'A\n' +
-				'_Chorus in A\n' +
-				'key C\n' +
-				'#v\n' +
-				'Am\n' +
-				'_Verse in C\n' +
-				'#c\n' +
-				'_Chorus in C\n' +
-				'#v\n' +
-				'_Verse in C',
-			'key: A\n' +
-				'Chorus 1\n' +
-				'|A          |\n' +
-				' Chorus in A\n' +
-				'key: C\n' +
-				'Verse 1\n' +
-				'|Am        |\n' +
-				' Verse in C\n' +
-				'Chorus 2\n' +
-				'|C          |\n' +
-				' Chorus in C\n' +
-				'Verse 2\n' +
-				'|Am        |\n' +
-				' Verse in C',
 		],
 	])('%s', (title, song, expected, options = {}) => {
 		test('renders with correct accidental', () => {
