@@ -208,7 +208,9 @@ describe.each([
 		options = {}
 	) => {
 		test('Correctly fills .spacesWithin and .spacesAfter properties', () => {
-			let parsed = parseChordLine(chordLine, { key: { string: 'C' } });
+			let parsed = parseChordLine(chordLine, {
+				originalKey: { string: 'C' },
+			});
 			parsed = forEachChordInChordLine(
 				parsed,
 				(chord) => (chord.symbol = getChordSymbol(chord.model))

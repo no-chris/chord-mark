@@ -296,7 +296,7 @@ describe('symbolType', () => {
 	])('%s: %s', (title, input, output, symbolType) => {
 		test('Print proper symbols: ' + output, () => {
 			const parsed = forEachChordInChordLine(
-				parseChordLine(input, { key: { string: 'C' } }),
+				parseChordLine(input, { originalKey: { string: 'C' } }),
 				(chord) => (chord.symbol = getChordSymbol(chord.model))
 			);
 			const spaced = simpleSpacer(parsed);
