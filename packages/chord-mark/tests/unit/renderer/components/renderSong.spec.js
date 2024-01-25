@@ -1066,6 +1066,35 @@ describe('Keys, accidental & transpose', () => {
 				'|Am7  |D7  |G  |%  |\n' +
 				'myVerse\n',
 		],
+		[
+			'',
+			'key A\n' +
+				'#c\n' +
+				'A\n' +
+				'_Chorus in A\n' +
+				'key C\n' +
+				'#v\n' +
+				'Am\n' +
+				'_Verse in C\n' +
+				'#c\n' +
+				'_Chorus in C\n' +
+				'#v\n' +
+				'_Verse in C',
+			'key: A\n' +
+				'Chorus 1\n' +
+				'|A          |\n' +
+				' Chorus in A\n' +
+				'key: C\n' +
+				'Verse 1\n' +
+				'|Am        |\n' +
+				' Verse in C\n' +
+				'Chorus 2\n' +
+				'|C          |\n' +
+				' Chorus in C\n' +
+				'Verse 2\n' +
+				'|Am        |\n' +
+				' Verse in C',
+		],
 	])('%s', (title, song, expected, options = {}) => {
 		test('renders with correct accidental', () => {
 			const rendered = renderSongText(song, {
