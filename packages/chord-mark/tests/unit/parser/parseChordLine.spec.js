@@ -55,6 +55,7 @@ describe.each([
 					lineHadTimeSignatureChange: false,
 				},
 			],
+			originalKey: {},
 		},
 	],
 
@@ -87,6 +88,7 @@ describe.each([
 					lineHadTimeSignatureChange: false,
 				},
 			],
+			originalKey: {},
 		},
 	],
 
@@ -126,6 +128,7 @@ describe.each([
 					lineHadTimeSignatureChange: false,
 				},
 			],
+			originalKey: {},
 		},
 	],
 
@@ -172,6 +175,7 @@ describe.each([
 					lineHadTimeSignatureChange: false,
 				},
 			],
+			originalKey: {},
 		},
 	],
 
@@ -212,6 +216,7 @@ describe.each([
 					lineHadTimeSignatureChange: false,
 				},
 			],
+			originalKey: {},
 		},
 	],
 
@@ -259,6 +264,7 @@ describe.each([
 					lineHadTimeSignatureChange: false,
 				},
 			],
+			originalKey: {},
 		},
 	],
 
@@ -313,6 +319,7 @@ describe.each([
 					lineHadTimeSignatureChange: false,
 				},
 			],
+			originalKey: {},
 		},
 	],
 
@@ -375,6 +382,7 @@ describe.each([
 					lineHadTimeSignatureChange: false,
 				},
 			],
+			originalKey: {},
 		},
 	],
 
@@ -400,6 +408,7 @@ describe.each([
 					lineHadTimeSignatureChange: false,
 				},
 			],
+			originalKey: {},
 		},
 	],
 
@@ -432,6 +441,7 @@ describe.each([
 					lineHadTimeSignatureChange: false,
 				},
 			],
+			originalKey: {},
 		},
 	],
 
@@ -464,6 +474,7 @@ describe.each([
 					lineHadTimeSignatureChange: false,
 				},
 			],
+			originalKey: {},
 		},
 	],
 
@@ -503,6 +514,7 @@ describe.each([
 					lineHadTimeSignatureChange: false,
 				},
 			],
+			originalKey: {},
 		},
 	],
 
@@ -558,6 +570,7 @@ describe.each([
 					lineHadTimeSignatureChange: false,
 				},
 			],
+			originalKey: {},
 		},
 	],
 
@@ -583,6 +596,7 @@ describe.each([
 					lineHadTimeSignatureChange: false,
 				},
 			],
+			originalKey: {},
 		},
 	],
 
@@ -608,6 +622,7 @@ describe.each([
 					lineHadTimeSignatureChange: false,
 				},
 			],
+			originalKey: {},
 		},
 	],
 
@@ -633,6 +648,7 @@ describe.each([
 					lineHadTimeSignatureChange: false,
 				},
 			],
+			originalKey: {},
 		},
 	],
 
@@ -665,6 +681,7 @@ describe.each([
 					lineHadTimeSignatureChange: false,
 				},
 			],
+			originalKey: {},
 		},
 	],
 
@@ -742,6 +759,7 @@ describe.each([
 					lineHadTimeSignatureChange: false,
 				},
 			],
+			originalKey: {},
 		},
 	],
 
@@ -812,6 +830,7 @@ describe.each([
 					lineHadTimeSignatureChange: false,
 				},
 			],
+			originalKey: {},
 		},
 	],
 
@@ -880,6 +899,7 @@ describe.each([
 					lineHadTimeSignatureChange: false,
 				},
 			],
+			originalKey: {},
 		},
 	],
 
@@ -920,6 +940,7 @@ describe.each([
 					lineHadTimeSignatureChange: false,
 				},
 			],
+			originalKey: {},
 		},
 	],
 	[
@@ -962,6 +983,7 @@ describe.each([
 					lineHadTimeSignatureChange: false,
 				},
 			],
+			originalKey: {},
 		},
 	],
 	[
@@ -1013,6 +1035,7 @@ describe.each([
 					lineHadTimeSignatureChange: false,
 				},
 			],
+			originalKey: {},
 		},
 	],
 	[
@@ -1073,6 +1096,7 @@ describe.each([
 					lineHadTimeSignatureChange: false,
 				},
 			],
+			originalKey: {},
 		},
 	],
 	[
@@ -1142,6 +1166,7 @@ describe.each([
 					lineHadTimeSignatureChange: false,
 				},
 			],
+			originalKey: {},
 		},
 	],
 	[
@@ -1188,6 +1213,7 @@ describe.each([
 					lineHadTimeSignatureChange: true,
 				},
 			],
+			originalKey: {},
 		},
 	],
 	[
@@ -1256,6 +1282,7 @@ describe.each([
 					lineHadTimeSignatureChange: true,
 				},
 			],
+			originalKey: {},
 		},
 	],
 	[
@@ -1324,6 +1351,7 @@ describe.each([
 					lineHadTimeSignatureChange: true,
 				},
 			],
+			originalKey: {},
 		},
 	],
 	[
@@ -1363,6 +1391,7 @@ describe.each([
 					lineHadTimeSignatureChange: true,
 				},
 			],
+			originalKey: {},
 		},
 	],
 ])('%s: %s', (title, input, timeSignature, expected) => {
@@ -1376,12 +1405,19 @@ describe.each([
 
 describe('chord key', () => {
 	test('should forward the key to the chord parser', () => {
-		const options = { key: { string: 'C' } };
+		const options = { originalKey: { string: 'C' } };
 		parseChordLine('C F G', options);
 
-		expect(parseChord).toHaveBeenNthCalledWith(1, 'C', options.key);
-		expect(parseChord).toHaveBeenNthCalledWith(2, 'F', options.key);
-		expect(parseChord).toHaveBeenNthCalledWith(3, 'G', options.key);
+		expect(parseChord).toHaveBeenNthCalledWith(1, 'C', options.originalKey);
+		expect(parseChord).toHaveBeenNthCalledWith(2, 'F', options.originalKey);
+		expect(parseChord).toHaveBeenNthCalledWith(3, 'G', options.originalKey);
+	});
+
+	test('should save the original key as a property', () => {
+		const options = { originalKey: { string: 'C' } };
+		const parsed = parseChordLine('C F G', options);
+
+		expect(parsed.originalKey).toEqual(options.originalKey);
 	});
 });
 

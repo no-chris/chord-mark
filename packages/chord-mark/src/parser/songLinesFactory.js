@@ -166,7 +166,7 @@ export default function songLinesFactory() {
 		try {
 			const model = parseChordLine(string, {
 				timeSignature: currentTimeSignature,
-				key: currentKey,
+				originalKey: currentKey,
 			});
 			line = {
 				string,
@@ -302,7 +302,7 @@ export default function songLinesFactory() {
 
 		const currentSectionContent = remainingLines
 			.slice(0, nextSectionIndex !== -1 ? nextSectionIndex : undefined)
-			.filter((line) => !(isTimeSignature(line) || isEmptyLine(line)));
+			.filter((line) => !(isTimeSignature(line) || isEmptyLine(line))); //todo: add key definition line type as well
 
 		return currentSectionContent.length === 0;
 	}

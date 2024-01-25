@@ -28,6 +28,7 @@ const barRepeatSymbols = new RegExp(
  * @typedef {Object} ChordLine
  * @type {Object}
  * @property {Bar[]} allBars
+ * @property {KeyDeclaration} originalKey
  * @property {Boolean} hasPositionedChords
  */
 
@@ -60,12 +61,12 @@ const barRepeatSymbols = new RegExp(
  * @param {String} chordLine
  * @param {Object} options
  * @param {TimeSignature} options.timeSignature
- * @param {KeyDeclaration} options.key
+ * @param {KeyDeclaration} options.originalKey
  * @returns {ChordLine}
  */
 export default function parseChordLine(
 	chordLine,
-	{ timeSignature = defaultTimeSignature, key = {} } = {}
+	{ timeSignature = defaultTimeSignature, originalKey = {} } = {}
 ) {
 	let { beatCount } = timeSignature;
 
@@ -111,6 +112,7 @@ export default function parseChordLine(
 
 	return {
 		allBars,
+		originalKey,
 	};
 
 	function repeatPreviousBars(token) {
@@ -151,7 +153,7 @@ export default function parseChordLine(
 			duration: getChordDuration(token, beatCount, isInSubBeatGroup),
 			model: isNoChordSymbol(cleanedToken)
 				? syntax.noChord
-				: parseChord(cleanedToken, key),
+				: parseChord(cleanedToken, originalKey),
 			beat: currentBeatCount + 1,
 			isInSubBeatGroup,
 		};

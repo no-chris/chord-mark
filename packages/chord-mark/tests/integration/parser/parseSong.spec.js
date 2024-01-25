@@ -65,6 +65,10 @@ key Am`;
 								lineHadTimeSignatureChange: false,
 							},
 						],
+						originalKey: {
+							string: 'G',
+							accidental: 'sharp',
+						},
 						hasPositionedChords: false,
 					},
 				},
@@ -144,6 +148,10 @@ key Am`;
 								lineHadTimeSignatureChange: false,
 							},
 						],
+						originalKey: {
+							string: 'G',
+							accidental: 'sharp',
+						},
 						hasPositionedChords: true,
 					},
 				},
@@ -186,6 +194,10 @@ key Am`;
 								lineHadTimeSignatureChange: false,
 							},
 						],
+						originalKey: {
+							string: 'G',
+							accidental: 'sharp',
+						},
 						hasPositionedChords: false,
 					},
 				},
@@ -251,6 +263,10 @@ key Am`;
 								lineHadTimeSignatureChange: false,
 							},
 						],
+						originalKey: {
+							string: 'G',
+							accidental: 'sharp',
+						},
 						hasPositionedChords: true,
 					},
 				},

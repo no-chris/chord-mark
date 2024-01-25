@@ -60,10 +60,16 @@ export default function renderAllChords(
 	}
 
 	function shouldTransposeRepeatedChords(line) {
+		const currentKeyEqualsOriginalKey =
+			currentKey &&
+			line.model.originalKey &&
+			line.model.originalKey.string === currentKey.string;
+
 		return (
-			line.isFromAutoRepeatChords ||
-			line.isFromSectionCopy ||
-			line.isFromChordLineRepeater
+			(line.isFromAutoRepeatChords ||
+				line.isFromSectionCopy ||
+				line.isFromChordLineRepeater) &&
+			!currentKeyEqualsOriginalKey
 		);
 	}
 

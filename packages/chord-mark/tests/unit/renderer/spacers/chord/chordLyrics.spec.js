@@ -286,7 +286,7 @@ describe.each([
 			const parsedLyrics = parseLyricLine(lyricsLineInput);
 
 			const parsedChords = parseChordLine(chordLineInput, {
-				key: { string: 'C' },
+				originalKey: { string: 'C' },
 			});
 			parsedChords.allBars.map((bar) => {
 				bar.allChords.map((chord) => {
