@@ -302,7 +302,14 @@ export default function songLinesFactory() {
 
 		const currentSectionContent = remainingLines
 			.slice(0, nextSectionIndex !== -1 ? nextSectionIndex : undefined)
-			.filter((line) => !(isTimeSignature(line) || isEmptyLine(line))); //todo: add key definition line type as well
+			.filter(
+				(line) =>
+					!(
+						isTimeSignature(line) ||
+						isKeyDeclaration(line) ||
+						isEmptyLine(line)
+					)
+			);
 
 		return currentSectionContent.length === 0;
 	}
