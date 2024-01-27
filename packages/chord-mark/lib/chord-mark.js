@@ -8767,7 +8767,6 @@ var cloneDeep_default = /*#__PURE__*/__webpack_require__.n(cloneDeep);
  */
 /* harmony default export */ const parser_lineTypes = ({
   CHORD: 'chord',
-  CHORD_LINE_REPEATER: 'chordLineRepeater',
   EMPTY_LINE: 'emptyLine',
   KEY_DECLARATION: 'keyDeclaration',
   LYRIC: 'lyric',
@@ -11607,6 +11606,7 @@ var parseChordLine_barRepeatSymbols = new RegExp('^' + escapeRegExp_default()(sy
  * @typedef {Object} ChordLine
  * @type {Object}
  * @property {Bar[]} allBars
+ * @property {KeyDeclaration} originalKey
  * @property {Boolean} hasPositionedChords
  */
 
@@ -11639,15 +11639,15 @@ var parseChordLine_barRepeatSymbols = new RegExp('^' + escapeRegExp_default()(sy
  * @param {String} chordLine
  * @param {Object} options
  * @param {TimeSignature} options.timeSignature
- * @param {KeyDeclaration} options.key
+ * @param {KeyDeclaration} options.originalKey
  * @returns {ChordLine}
  */
 function parseChordLine(chordLine) {
   var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
     _ref$timeSignature = _ref.timeSignature,
     timeSignature = _ref$timeSignature === void 0 ? defaultTimeSignature : _ref$timeSignature,
-    _ref$key = _ref.key,
-    key = _ref$key === void 0 ? {} : _ref$key;
+    _ref$originalKey = _ref.originalKey,
+    originalKey = _ref$originalKey === void 0 ? {} : _ref$originalKey;
   var _timeSignature = timeSignature,
     beatCount = _timeSignature.beatCount;
   var allBars = [];
@@ -11681,7 +11681,8 @@ function parseChordLine(chordLine) {
   });
   setSubBeatInfo(allBars, subBeatGroupsChordCount);
   return {
-    allBars: allBars
+    allBars: allBars,
+    originalKey: originalKey
   };
   function repeatPreviousBars(token) {
     if (currentBeatCount === 0 && previousBar && isEqual_default()(timeSignature, previousBar.timeSignature)) {
@@ -11713,7 +11714,7 @@ function parseChordLine(chordLine) {
     chord = {
       string: token,
       duration: getChordDuration(token, beatCount, isInSubBeatGroup),
-      model: isNoChordSymbol(cleanedToken) ? syntax.noChord : parseChordWrapper(cleanedToken, key),
+      model: isNoChordSymbol(cleanedToken) ? syntax.noChord : parseChordWrapper(cleanedToken, originalKey),
       beat: currentBeatCount + 1,
       isInSubBeatGroup: isInSubBeatGroup
     };
@@ -12168,7 +12169,11 @@ function parseSectionLabel(string) {
     multiplyTimes: found[3] ? Number.parseInt(found[3].replace(' x', '')) : 0
   };
 }
+// EXTERNAL MODULE: ../../node_modules/lodash/last.js
+var last = __webpack_require__(6974);
+var last_default = /*#__PURE__*/__webpack_require__.n(last);
 ;// CONCATENATED MODULE: ./src/parser/helper/songs.js
+
 
 
 
@@ -12247,6 +12252,14 @@ function getNthOfLabel(allLines, label, n) {
       selected.push(line);
     }
   });
+
+  // remmove trailing directive lines
+  // because they likely apply to the next section
+  /**/
+  while (last_default()(selected) && (last_default()(selected).type === parser_lineTypes.KEY_DECLARATION || last_default()(selected).type === parser_lineTypes.TIME_SIGNATURE)) {
+    selected.pop();
+  }
+  /** */
   return selected;
 }
 ;// CONCATENATED MODULE: ./src/parser/songLinesFactory.js
@@ -12337,8 +12350,6 @@ function songLinesFactory() {
   var previousSectionLabelLine;
   var blueprint = [];
   var blueprintIndex = 0;
-  var blueprintLine = '';
-  var isRepeatingChords = false;
   var shouldMultiplySection = false;
   var shouldCopySection = false;
 
@@ -12387,13 +12398,8 @@ function songLinesFactory() {
     }
     shouldMultiplySection = currentSection.multiplyTimes > 0;
     previousSectionLabelLine = cloneDeep_default()(line);
-    if (!isFirstOfLabel(currentSection, allLines)) {
-      blueprint = getNthOfLabel(allLines, currentSection.label, 1);
-      blueprintIndex = 0;
-      isRepeatingChords = true;
-    } else {
-      isRepeatingChords = false;
-    }
+    blueprint = currentSectionStats.count > 1 ? getNthOfLabel(allLines, currentSection.label, 1) : [];
+    blueprintIndex = 0;
     return line;
   }
 
@@ -12415,7 +12421,7 @@ function songLinesFactory() {
     try {
       var model = parseChordLine(string, {
         timeSignature: currentTimeSignature,
-        key: currentKey
+        originalKey: currentKey
       });
       line = {
         string: string,
@@ -12478,8 +12484,8 @@ function songLinesFactory() {
     return sectionsStats[label];
   }
   function repeatLinesFromBlueprint(line) {
-    if (isRepeatingChords && line.type !== parser_lineTypes.SECTION_LABEL) {
-      blueprintLine = blueprint[blueprintIndex];
+    if (blueprint.length && line.type !== parser_lineTypes.SECTION_LABEL) {
+      var blueprintLine = blueprint[blueprintIndex];
       var repeatedLine;
       while (shouldRepeatLineFromBlueprint(blueprintLine, line)) {
         if (blueprintLine.type === parser_lineTypes.CHORD) {
@@ -12494,6 +12500,10 @@ function songLinesFactory() {
       }
       blueprintIndex++;
     }
+  }
+  function shouldRepeatLineFromBlueprint(blueprintLine, currentLine) {
+    var nonRepeatableLinesTypes = [parser_lineTypes.LYRIC, parser_lineTypes.EMPTY_LINE];
+    return blueprintLine && !nonRepeatableLinesTypes.includes(blueprintLine.type) && blueprintLine.type !== currentLine.type && currentLine.type !== parser_lineTypes.EMPTY_LINE;
   }
   function copySection() {
     if (shouldCopySection) {
@@ -12519,7 +12529,7 @@ function songLinesFactory() {
       return true;
     }
     var currentSectionContent = remainingLines.slice(0, nextSectionIndex !== -1 ? nextSectionIndex : undefined).filter(function (line) {
-      return !(isTimeSignatureString(line) || isEmptyLine(line));
+      return !(isTimeSignatureString(line) || isKeyDeclaration(line) || isEmptyLine(line));
     });
     return currentSectionContent.length === 0;
   }
@@ -12595,14 +12605,6 @@ function songLinesFactory() {
       });
     }
   };
-}
-function isFirstOfLabel(currentLabel, allLines) {
-  return allLines.every(function (line) {
-    return line.type === parser_lineTypes.SECTION_LABEL && line.model.label !== currentLabel.label;
-  });
-}
-function shouldRepeatLineFromBlueprint(blueprintLine, currentLine) {
-  return blueprintLine && blueprintLine.type !== parser_lineTypes.LYRIC && blueprintLine.type !== parser_lineTypes.EMPTY_LINE && blueprintLine.type !== currentLine.type && currentLine.type !== parser_lineTypes.EMPTY_LINE;
 }
 function isLastLineOfSection(lineIndex, allSrcLines) {
   var nextLine = allSrcLines[lineIndex + 1];
@@ -13326,9 +13328,6 @@ var chordLyricLine_render = function render(_ref) {
 // EXTERNAL MODULE: ../../node_modules/lodash/intersection.js
 var intersection = __webpack_require__(898);
 var intersection_default = /*#__PURE__*/__webpack_require__.n(intersection);
-// EXTERNAL MODULE: ../../node_modules/lodash/last.js
-var last = __webpack_require__(6974);
-var last_default = /*#__PURE__*/__webpack_require__.n(last);
 ;// CONCATENATED MODULE: ./src/core/dom/htmlToElement.js
 
 function htmlToElement(html) {
@@ -13445,9 +13444,18 @@ function getAllBreakpoints(allChordTokens, allLyricTokens) {
   var chordLineBreakPoints = getBreakpointsFromTokens(allChordTokens);
   var lyricLineBreakPoints = getBreakpointsFromTokens(allLyricTokens);
   var allBreakpoints = intersection_default()(chordLineBreakPoints, lyricLineBreakPoints);
-  var longestLineBreakpoints = last_default()(chordLineBreakPoints) > last_default()(lyricLineBreakPoints) ? chordLineBreakPoints : lyricLineBreakPoints;
-  var lastBreakpoint = last_default()(allBreakpoints);
-  var remainingBreakpoints = longestLineBreakpoints.slice(longestLineBreakpoints.indexOf(lastBreakpoint) + 1);
+  var shortestLineBreakpoints;
+  var longestLineBreakpoints;
+  if (last_default()(chordLineBreakPoints) > last_default()(lyricLineBreakPoints)) {
+    longestLineBreakpoints = chordLineBreakPoints;
+    shortestLineBreakpoints = lyricLineBreakPoints;
+  } else {
+    longestLineBreakpoints = lyricLineBreakPoints;
+    shortestLineBreakpoints = chordLineBreakPoints;
+  }
+  var remainingBreakpoints = longestLineBreakpoints.filter(function (bp) {
+    return bp > last_default()(shortestLineBreakpoints);
+  });
   if (remainingBreakpoints.length) {
     allBreakpoints.push.apply(allBreakpoints, renderChordLyricLine_toConsumableArray(remainingBreakpoints));
   }
@@ -13773,7 +13781,8 @@ function renderAllChords(allLines, detectedKey, _ref) {
     return line;
   }
   function shouldTransposeRepeatedChords(line) {
-    return line.isFromAutoRepeatChords || line.isFromSectionCopy || line.isFromChordLineRepeater;
+    var currentKeyEqualsOriginalKey = currentKey && line.model.originalKey && line.model.originalKey.string === currentKey.string;
+    return (line.isFromAutoRepeatChords || line.isFromSectionCopy || line.isFromChordLineRepeater) && !currentKeyEqualsOriginalKey;
   }
   function getChordSymbolRenderer(transposeOffSet) {
     if (typeof chordSymbolRenderer === 'function') {
