@@ -33,14 +33,14 @@
 		"url": "https://github.com/no-chris/chord-mark/issues"
 	},
 	"dependencies": {
-		"@docusaurus/core": "^3.0.1",
-		"@docusaurus/plugin-google-gtag": "^3.0.1",
-		"@docusaurus/preset-classic": "^3.0.1",
+		"@docusaurus/core": "^3.1.1",
+		"@docusaurus/plugin-google-gtag": "^3.1.1",
+		"@docusaurus/preset-classic": "^3.1.1",
 		"@mdx-js/react": "^3.0.0",
 		"@svgr/webpack": "^8.1.0",
 		"chord-mark": "workspace:^",
-		"clsx": "^2.0.0",
-		"dompurify": "^3.0.6",
+		"clsx": "^2.1.0",
+		"dompurify": "^3.0.8",
 		"file-loader": "^6.2.0",
 		"prism-react-renderer": "^2.3.1",
 		"react": "^18.2.0",
@@ -61,6 +61,6 @@
 	},
 	"devDependencies": {
 		"docusaurus-plugin-sass": "^0.2.5",
-		"sass": "^1.69.5"
+		"sass": "^1.70.0"
 	}
 }

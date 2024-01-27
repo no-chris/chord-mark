@@ -14,7 +14,7 @@ return /******/ (() => { // webpackBootstrap
 /***/ 5368:
 /***/ (function(module) {
 
-/*! @license DOMPurify 3.0.6 | (c) Cure53 and other contributors | Released under the Apache license 2.0 and Mozilla Public License 2.0 | github.com/cure53/DOMPurify/blob/3.0.6/LICENSE */
+/*! @license DOMPurify 3.0.8 | (c) Cure53 and other contributors | Released under the Apache license 2.0 and Mozilla Public License 2.0 | github.com/cure53/DOMPurify/blob/3.0.8/LICENSE */
 
 (function (global, factory) {
    true ? module.exports = factory() :
@@ -33,36 +33,30 @@ return /******/ (() => { // webpackBootstrap
     seal,
     create
   } = Object; // eslint-disable-line import/no-mutable-exports
-
   let {
     apply,
     construct
   } = typeof Reflect !== 'undefined' && Reflect;
-
   if (!freeze) {
     freeze = function freeze(x) {
       return x;
     };
   }
-
   if (!seal) {
     seal = function seal(x) {
       return x;
     };
   }
-
   if (!apply) {
     apply = function apply(fun, thisValue, args) {
       return fun.apply(thisValue, args);
     };
   }
-
   if (!construct) {
     construct = function construct(Func, args) {
       return new Func(...args);
     };
   }
-
   const arrayForEach = unapply(Array.prototype.forEach);
   const arrayPop = unapply(Array.prototype.pop);
   const arrayPush = unapply(Array.prototype.push);
@@ -74,39 +68,37 @@ return /******/ (() => { // webpackBootstrap
   const stringTrim = unapply(String.prototype.trim);
   const regExpTest = unapply(RegExp.prototype.test);
   const typeErrorCreate = unconstruct(TypeError);
+
   /**
    * Creates a new function that calls the given function with a specified thisArg and arguments.
    *
    * @param {Function} func - The function to be wrapped and called.
    * @returns {Function} A new function that calls the given function with a specified thisArg and arguments.
    */
-
   function unapply(func) {
     return function (thisArg) {
       for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
         args[_key - 1] = arguments[_key];
       }
-
       return apply(func, thisArg, args);
     };
   }
+
   /**
    * Creates a new function that constructs an instance of the given constructor function with the provided arguments.
    *
    * @param {Function} func - The constructor function to be wrapped and called.
    * @returns {Function} A new function that constructs an instance of the given constructor function with the provided arguments.
    */
-
-
   function unconstruct(func) {
     return function () {
       for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
         args[_key2] = arguments[_key2];
       }
-
       return construct(func, args);
     };
   }
+
   /**
    * Add properties to a lookup table
    *
@@ -115,60 +107,69 @@ return /******/ (() => { // webpackBootstrap
    * @param {Function} transformCaseFunc - An optional function to transform the case of each element before adding to the set.
    * @returns {Object} The modified set with added elements.
    */
-
-
   function addToSet(set, array) {
     let transformCaseFunc = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : stringToLowerCase;
-
     if (setPrototypeOf) {
       // Make 'in' and truthy checks like Boolean(set.constructor)
       // independent of any properties defined on Object.prototype.
       // Prevent prototype setters from intercepting set as a this value.
       setPrototypeOf(set, null);
     }
-
     let l = array.length;
-
     while (l--) {
       let element = array[l];
-
       if (typeof element === 'string') {
         const lcElement = transformCaseFunc(element);
-
         if (lcElement !== element) {
           // Config presets (e.g. tags.js, attrs.js) are immutable.
           if (!isFrozen(array)) {
             array[l] = lcElement;
           }
-
           element = lcElement;
         }
       }
-
       set[element] = true;
     }
-
     return set;
   }
+
+  /**
+   * Clean up an array to harden against CSPP
+   *
+   * @param {Array} array - The array to be cleaned.
+   * @returns {Array} The cleaned version of the array
+   */
+  function cleanArray(array) {
+    for (let index = 0; index < array.length; index++) {
+      if (getOwnPropertyDescriptor(array, index) === undefined) {
+        array[index] = null;
+      }
+    }
+    return array;
+  }
+
   /**
    * Shallow clone an object
    *
    * @param {Object} object - The object to be cloned.
    * @returns {Object} A new object that copies the original.
    */
-
-
   function clone(object) {
     const newObject = create(null);
-
     for (const [property, value] of entries(object)) {
       if (getOwnPropertyDescriptor(object, property) !== undefined) {
-        newObject[property] = value;
+        if (Array.isArray(value)) {
+          newObject[property] = cleanArray(value);
+        } else if (value && typeof value === 'object' && value.constructor === Object) {
+          newObject[property] = clone(value);
+        } else {
+          newObject[property] = value;
+        }
       }
     }
-
     return newObject;
   }
+
   /**
    * This method automatically checks if the prop is function or getter and behaves accordingly.
    *
@@ -176,44 +177,41 @@ return /******/ (() => { // webpackBootstrap
    * @param {String} prop - The property name for which to find the getter function.
    * @returns {Function} The getter function found in the prototype chain or a fallback function.
    */
-
   function lookupGetter(object, prop) {
     while (object !== null) {
       const desc = getOwnPropertyDescriptor(object, prop);
-
       if (desc) {
         if (desc.get) {
           return unapply(desc.get);
         }
-
         if (typeof desc.value === 'function') {
           return unapply(desc.value);
         }
       }
-
       object = getPrototypeOf(object);
     }
-
     function fallbackValue(element) {
       console.warn('fallback value for', element);
       return null;
     }
-
     return fallbackValue;
   }
 
-  const html$1 = freeze(['a', 'abbr', 'acronym', 'address', 'area', 'article', 'aside', 'audio', 'b', 'bdi', 'bdo', 'big', 'blink', 'blockquote', 'body', 'br', 'button', 'canvas', 'caption', 'center', 'cite', 'code', 'col', 'colgroup', 'content', 'data', 'datalist', 'dd', 'decorator', 'del', 'details', 'dfn', 'dialog', 'dir', 'div', 'dl', 'dt', 'element', 'em', 'fieldset', 'figcaption', 'figure', 'font', 'footer', 'form', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'head', 'header', 'hgroup', 'hr', 'html', 'i', 'img', 'input', 'ins', 'kbd', 'label', 'legend', 'li', 'main', 'map', 'mark', 'marquee', 'menu', 'menuitem', 'meter', 'nav', 'nobr', 'ol', 'optgroup', 'option', 'output', 'p', 'picture', 'pre', 'progress', 'q', 'rp', 'rt', 'ruby', 's', 'samp', 'section', 'select', 'shadow', 'small', 'source', 'spacer', 'span', 'strike', 'strong', 'style', 'sub', 'summary', 'sup', 'table', 'tbody', 'td', 'template', 'textarea', 'tfoot', 'th', 'thead', 'time', 'tr', 'track', 'tt', 'u', 'ul', 'var', 'video', 'wbr']); // SVG
+  const html$1 = freeze(['a', 'abbr', 'acronym', 'address', 'area', 'article', 'aside', 'audio', 'b', 'bdi', 'bdo', 'big', 'blink', 'blockquote', 'body', 'br', 'button', 'canvas', 'caption', 'center', 'cite', 'code', 'col', 'colgroup', 'content', 'data', 'datalist', 'dd', 'decorator', 'del', 'details', 'dfn', 'dialog', 'dir', 'div', 'dl', 'dt', 'element', 'em', 'fieldset', 'figcaption', 'figure', 'font', 'footer', 'form', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'head', 'header', 'hgroup', 'hr', 'html', 'i', 'img', 'input', 'ins', 'kbd', 'label', 'legend', 'li', 'main', 'map', 'mark', 'marquee', 'menu', 'menuitem', 'meter', 'nav', 'nobr', 'ol', 'optgroup', 'option', 'output', 'p', 'picture', 'pre', 'progress', 'q', 'rp', 'rt', 'ruby', 's', 'samp', 'section', 'select', 'shadow', 'small', 'source', 'spacer', 'span', 'strike', 'strong', 'style', 'sub', 'summary', 'sup', 'table', 'tbody', 'td', 'template', 'textarea', 'tfoot', 'th', 'thead', 'time', 'tr', 'track', 'tt', 'u', 'ul', 'var', 'video', 'wbr']);
 
+  // SVG
   const svg$1 = freeze(['svg', 'a', 'altglyph', 'altglyphdef', 'altglyphitem', 'animatecolor', 'animatemotion', 'animatetransform', 'circle', 'clippath', 'defs', 'desc', 'ellipse', 'filter', 'font', 'g', 'glyph', 'glyphref', 'hkern', 'image', 'line', 'lineargradient', 'marker', 'mask', 'metadata', 'mpath', 'path', 'pattern', 'polygon', 'polyline', 'radialgradient', 'rect', 'stop', 'style', 'switch', 'symbol', 'text', 'textpath', 'title', 'tref', 'tspan', 'view', 'vkern']);
-  const svgFilters = freeze(['feBlend', 'feColorMatrix', 'feComponentTransfer', 'feComposite', 'feConvolveMatrix', 'feDiffuseLighting', 'feDisplacementMap', 'feDistantLight', 'feDropShadow', 'feFlood', 'feFuncA', 'feFuncB', 'feFuncG', 'feFuncR', 'feGaussianBlur', 'feImage', 'feMerge', 'feMergeNode', 'feMorphology', 'feOffset', 'fePointLight', 'feSpecularLighting', 'feSpotLight', 'feTile', 'feTurbulence']); // List of SVG elements that are disallowed by default.
+  const svgFilters = freeze(['feBlend', 'feColorMatrix', 'feComponentTransfer', 'feComposite', 'feConvolveMatrix', 'feDiffuseLighting', 'feDisplacementMap', 'feDistantLight', 'feDropShadow', 'feFlood', 'feFuncA', 'feFuncB', 'feFuncG', 'feFuncR', 'feGaussianBlur', 'feImage', 'feMerge', 'feMergeNode', 'feMorphology', 'feOffset', 'fePointLight', 'feSpecularLighting', 'feSpotLight', 'feTile', 'feTurbulence']);
+
+  // List of SVG elements that are disallowed by default.
   // We still need to know them so that we can do namespace
   // checks properly in case one wants to add them to
   // allow-list.
-
   const svgDisallowed = freeze(['animate', 'color-profile', 'cursor', 'discard', 'font-face', 'font-face-format', 'font-face-name', 'font-face-src', 'font-face-uri', 'foreignobject', 'hatch', 'hatchpath', 'mesh', 'meshgradient', 'meshpatch', 'meshrow', 'missing-glyph', 'script', 'set', 'solidcolor', 'unknown', 'use']);
-  const mathMl$1 = freeze(['math', 'menclose', 'merror', 'mfenced', 'mfrac', 'mglyph', 'mi', 'mlabeledtr', 'mmultiscripts', 'mn', 'mo', 'mover', 'mpadded', 'mphantom', 'mroot', 'mrow', 'ms', 'mspace', 'msqrt', 'mstyle', 'msub', 'msup', 'msubsup', 'mtable', 'mtd', 'mtext', 'mtr', 'munder', 'munderover', 'mprescripts']); // Similarly to SVG, we want to know all MathML elements,
-  // even those that we disallow by default.
+  const mathMl$1 = freeze(['math', 'menclose', 'merror', 'mfenced', 'mfrac', 'mglyph', 'mi', 'mlabeledtr', 'mmultiscripts', 'mn', 'mo', 'mover', 'mpadded', 'mphantom', 'mroot', 'mrow', 'ms', 'mspace', 'msqrt', 'mstyle', 'msub', 'msup', 'msubsup', 'mtable', 'mtd', 'mtext', 'mtr', 'munder', 'munderover', 'mprescripts']);
 
+  // Similarly to SVG, we want to know all MathML elements,
+  // even those that we disallow by default.
   const mathMlDisallowed = freeze(['maction', 'maligngroup', 'malignmark', 'mlongdiv', 'mscarries', 'mscarry', 'msgroup', 'mstack', 'msline', 'msrow', 'semantics', 'annotation', 'annotation-xml', 'mprescripts', 'none']);
   const text = freeze(['#text']);
 
@@ -222,19 +220,19 @@ return /******/ (() => { // webpackBootstrap
   const mathMl = freeze(['accent', 'accentunder', 'align', 'bevelled', 'close', 'columnsalign', 'columnlines', 'columnspan', 'denomalign', 'depth', 'dir', 'display', 'displaystyle', 'encoding', 'fence', 'frame', 'height', 'href', 'id', 'largeop', 'length', 'linethickness', 'lspace', 'lquote', 'mathbackground', 'mathcolor', 'mathsize', 'mathvariant', 'maxsize', 'minsize', 'movablelimits', 'notation', 'numalign', 'open', 'rowalign', 'rowlines', 'rowspacing', 'rowspan', 'rspace', 'rquote', 'scriptlevel', 'scriptminsize', 'scriptsizemultiplier', 'selection', 'separator', 'separators', 'stretchy', 'subscriptshift', 'supscriptshift', 'symmetric', 'voffset', 'width', 'xmlns']);
   const xml = freeze(['xlink:href', 'xml:id', 'xlink:title', 'xml:space', 'xmlns:xlink']);
 
+  // eslint-disable-next-line unicorn/better-regex
   const MUSTACHE_EXPR = seal(/\{\{[\w\W]*|[\w\W]*\}\}/gm); // Specify template detection regex for SAFE_FOR_TEMPLATES mode
-
   const ERB_EXPR = seal(/<%[\w\W]*|[\w\W]*%>/gm);
   const TMPLIT_EXPR = seal(/\${[\w\W]*}/gm);
   const DATA_ATTR = seal(/^data-[\-\w.\u00B7-\uFFFF]/); // eslint-disable-line no-useless-escape
-
   const ARIA_ATTR = seal(/^aria-[\-\w]+$/); // eslint-disable-line no-useless-escape
-
   const IS_ALLOWED_URI = seal(/^(?:(?:(?:f|ht)tps?|mailto|tel|callto|sms|cid|xmpp):|[^a-z]|[a-z+.\-]+(?:[^a-z+.\-:]|$))/i // eslint-disable-line no-useless-escape
   );
+
   const IS_SCRIPT_OR_DATA = seal(/^(?:\w+script|data):/i);
   const ATTR_WHITESPACE = seal(/[\u0000-\u0020\u00A0\u1680\u180E\u2000-\u2029\u205F\u3000]/g // eslint-disable-line no-control-regex
   );
+
   const DOCTYPE_NAME = seal(/^html$/i);
 
   var EXPRESSIONS = /*#__PURE__*/Object.freeze({
@@ -253,43 +251,37 @@ return /******/ (() => { // webpackBootstrap
   const getGlobal = function getGlobal() {
     return typeof window === 'undefined' ? null : window;
   };
+
   /**
    * Creates a no-op policy for internal use only.
    * Don't export this function outside this module!
-   * @param {?TrustedTypePolicyFactory} trustedTypes The policy factory.
+   * @param {TrustedTypePolicyFactory} trustedTypes The policy factory.
    * @param {HTMLScriptElement} purifyHostElement The Script element used to load DOMPurify (to determine policy name suffix).
-   * @return {?TrustedTypePolicy} The policy created (or null, if Trusted Types
+   * @return {TrustedTypePolicy} The policy created (or null, if Trusted Types
    * are not supported or creating the policy failed).
    */
-
-
   const _createTrustedTypesPolicy = function _createTrustedTypesPolicy(trustedTypes, purifyHostElement) {
     if (typeof trustedTypes !== 'object' || typeof trustedTypes.createPolicy !== 'function') {
       return null;
-    } // Allow the callers to control the unique policy name
+    }
+
+    // Allow the callers to control the unique policy name
     // by adding a data-tt-policy-suffix to the script element with the DOMPurify.
     // Policy creation with duplicate names throws in Trusted Types.
-
-
     let suffix = null;
     const ATTR_NAME = 'data-tt-policy-suffix';
-
     if (purifyHostElement && purifyHostElement.hasAttribute(ATTR_NAME)) {
       suffix = purifyHostElement.getAttribute(ATTR_NAME);
     }
-
     const policyName = 'dompurify' + (suffix ? '#' + suffix : '');
-
     try {
       return trustedTypes.createPolicy(policyName, {
         createHTML(html) {
           return html;
         },
-
         createScriptURL(scriptUrl) {
           return scriptUrl;
         }
-
       });
     } catch (_) {
       // Policy creation failed (most likely another DOMPurify script has
@@ -299,32 +291,27 @@ return /******/ (() => { // webpackBootstrap
       return null;
     }
   };
-
   function createDOMPurify() {
     let window = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : getGlobal();
-
     const DOMPurify = root => createDOMPurify(root);
+
     /**
      * Version label, exposed for easier checks
      * if DOMPurify is up to date or not
      */
+    DOMPurify.version = '3.0.8';
 
-
-    DOMPurify.version = '3.0.6';
     /**
      * Array of elements that DOMPurify removed during sanitation.
      * Empty if nothing was removed.
      */
-
     DOMPurify.removed = [];
-
     if (!window || !window.document || window.document.nodeType !== 9) {
       // Not running in a browser, provide a factory function
       // so that you can pass your own Window
       DOMPurify.isSupported = false;
       return DOMPurify;
     }
-
     let {
       document
     } = window;
@@ -345,21 +332,20 @@ return /******/ (() => { // webpackBootstrap
     const cloneNode = lookupGetter(ElementPrototype, 'cloneNode');
     const getNextSibling = lookupGetter(ElementPrototype, 'nextSibling');
     const getChildNodes = lookupGetter(ElementPrototype, 'childNodes');
-    const getParentNode = lookupGetter(ElementPrototype, 'parentNode'); // As per issue #47, the web-components registry is inherited by a
+    const getParentNode = lookupGetter(ElementPrototype, 'parentNode');
+
+    // As per issue #47, the web-components registry is inherited by a
     // new document created via createHTMLDocument. As per the spec
     // (http://w3c.github.io/webcomponents/spec/custom/#creating-and-passing-registries)
     // a new empty registry is used when creating a template contents owner
     // document, so we use that as our parent document to ensure nothing
     // is inherited.
-
     if (typeof HTMLTemplateElement === 'function') {
       const template = document.createElement('template');
-
       if (template.content && template.content.ownerDocument) {
         document = template.content.ownerDocument;
       }
     }
-
     let trustedTypesPolicy;
     let emptyHTML = '';
     const {
@@ -372,10 +358,10 @@ return /******/ (() => { // webpackBootstrap
       importNode
     } = originalDocument;
     let hooks = {};
+
     /**
      * Expose whether this browser supports running the full DOMPurify.
      */
-
     DOMPurify.isSupported = typeof entries === 'function' && typeof getParentNode === 'function' && implementation && implementation.createHTMLDocument !== undefined;
     const {
       MUSTACHE_EXPR,
@@ -389,26 +375,26 @@ return /******/ (() => { // webpackBootstrap
     let {
       IS_ALLOWED_URI: IS_ALLOWED_URI$1
     } = EXPRESSIONS;
+
     /**
      * We consider the elements and attributes below to be safe. Ideally
      * don't add any new ones but feel free to remove unwanted ones.
      */
 
     /* allowed element names */
-
     let ALLOWED_TAGS = null;
     const DEFAULT_ALLOWED_TAGS = addToSet({}, [...html$1, ...svg$1, ...svgFilters, ...mathMl$1, ...text]);
-    /* Allowed attribute names */
 
+    /* Allowed attribute names */
     let ALLOWED_ATTR = null;
     const DEFAULT_ALLOWED_ATTR = addToSet({}, [...html, ...svg, ...mathMl, ...xml]);
+
     /*
      * Configure how DOMPUrify should handle custom elements and their attributes as well as customized built-in elements.
      * @property {RegExp|Function|null} tagNameCheck one of [null, regexPattern, predicate]. Default: `null` (disallow any custom elements)
      * @property {RegExp|Function|null} attributeNameCheck one of [null, regexPattern, predicate]. Default: `null` (disallow any attributes not on the allow list)
      * @property {boolean} allowCustomizedBuiltInElements allow custom elements derived from built-ins if they pass CUSTOM_ELEMENT_HANDLING.tagNameCheck. Default: `false`.
      */
-
     let CUSTOM_ELEMENT_HANDLING = Object.seal(create(null, {
       tagNameCheck: {
         writable: true,
@@ -429,59 +415,60 @@ return /******/ (() => { // webpackBootstrap
         value: false
       }
     }));
+
     /* Explicitly forbidden tags (overrides ALLOWED_TAGS/ADD_TAGS) */
-
     let FORBID_TAGS = null;
+
     /* Explicitly forbidden attributes (overrides ALLOWED_ATTR/ADD_ATTR) */
-
     let FORBID_ATTR = null;
+
     /* Decide if ARIA attributes are okay */
-
     let ALLOW_ARIA_ATTR = true;
+
     /* Decide if custom data attributes are okay */
-
     let ALLOW_DATA_ATTR = true;
-    /* Decide if unknown protocols are okay */
 
+    /* Decide if unknown protocols are okay */
     let ALLOW_UNKNOWN_PROTOCOLS = false;
+
     /* Decide if self-closing tags in attributes are allowed.
      * Usually removed due to a mXSS issue in jQuery 3.0 */
-
     let ALLOW_SELF_CLOSE_IN_ATTR = true;
+
     /* Output should be safe for common template engines.
      * This means, DOMPurify removes data attributes, mustaches and ERB
      */
-
     let SAFE_FOR_TEMPLATES = false;
+
     /* Decide if document with <html>... should be returned */
-
     let WHOLE_DOCUMENT = false;
-    /* Track whether config is already set on this instance of DOMPurify. */
 
+    /* Track whether config is already set on this instance of DOMPurify. */
     let SET_CONFIG = false;
+
     /* Decide if all elements (e.g. style, script) must be children of
      * document.body. By default, browsers might move them to document.head */
-
     let FORCE_BODY = false;
+
     /* Decide if a DOM `HTMLBodyElement` should be returned, instead of a html
      * string (or a TrustedHTML object if Trusted Types are supported).
      * If `WHOLE_DOCUMENT` is enabled a `HTMLHtmlElement` will be returned instead
      */
-
     let RETURN_DOM = false;
+
     /* Decide if a DOM `DocumentFragment` should be returned, instead of a html
      * string  (or a TrustedHTML object if Trusted Types are supported) */
-
     let RETURN_DOM_FRAGMENT = false;
+
     /* Try to return a Trusted Type object instead of a string, return a string in
      * case Trusted Types are not supported  */
-
     let RETURN_TRUSTED_TYPE = false;
+
     /* Output should be free from DOM clobbering attacks?
      * This sanitizes markups named with colliding, clobberable built-in DOM APIs.
      */
-
     let SANITIZE_DOM = true;
+
     /* Achieve full DOM Clobbering protection by isolating the namespace of named
      * properties and JS variables, mitigating attacks that abuse the HTML/DOM spec rules.
      *
@@ -495,100 +482,99 @@ return /******/ (() => { // webpackBootstrap
      * Namespace isolation is implemented by prefixing `id` and `name` attributes
      * with a constant string, i.e., `user-content-`
      */
-
     let SANITIZE_NAMED_PROPS = false;
     const SANITIZE_NAMED_PROPS_PREFIX = 'user-content-';
-    /* Keep element content when removing element? */
 
+    /* Keep element content when removing element? */
     let KEEP_CONTENT = true;
+
     /* If a `Node` is passed to sanitize(), then performs sanitization in-place instead
      * of importing it into a new Document and returning a sanitized copy */
-
     let IN_PLACE = false;
+
     /* Allow usage of profiles like html, svg and mathMl */
-
     let USE_PROFILES = {};
-    /* Tags to ignore content of when KEEP_CONTENT is true */
 
+    /* Tags to ignore content of when KEEP_CONTENT is true */
     let FORBID_CONTENTS = null;
     const DEFAULT_FORBID_CONTENTS = addToSet({}, ['annotation-xml', 'audio', 'colgroup', 'desc', 'foreignobject', 'head', 'iframe', 'math', 'mi', 'mn', 'mo', 'ms', 'mtext', 'noembed', 'noframes', 'noscript', 'plaintext', 'script', 'style', 'svg', 'template', 'thead', 'title', 'video', 'xmp']);
-    /* Tags that are safe for data: URIs */
 
+    /* Tags that are safe for data: URIs */
     let DATA_URI_TAGS = null;
     const DEFAULT_DATA_URI_TAGS = addToSet({}, ['audio', 'video', 'img', 'source', 'image', 'track']);
-    /* Attributes safe for values like "javascript:" */
 
+    /* Attributes safe for values like "javascript:" */
     let URI_SAFE_ATTRIBUTES = null;
     const DEFAULT_URI_SAFE_ATTRIBUTES = addToSet({}, ['alt', 'class', 'for', 'id', 'label', 'name', 'pattern', 'placeholder', 'role', 'summary', 'title', 'value', 'style', 'xmlns']);
     const MATHML_NAMESPACE = 'http://www.w3.org/1998/Math/MathML';
     const SVG_NAMESPACE = 'http://www.w3.org/2000/svg';
     const HTML_NAMESPACE = 'http://www.w3.org/1999/xhtml';
     /* Document namespace */
-
     let NAMESPACE = HTML_NAMESPACE;
     let IS_EMPTY_INPUT = false;
-    /* Allowed XHTML+XML namespaces */
 
+    /* Allowed XHTML+XML namespaces */
     let ALLOWED_NAMESPACES = null;
     const DEFAULT_ALLOWED_NAMESPACES = addToSet({}, [MATHML_NAMESPACE, SVG_NAMESPACE, HTML_NAMESPACE], stringToString);
-    /* Parsing of strict XHTML documents */
 
+    /* Parsing of strict XHTML documents */
     let PARSER_MEDIA_TYPE = null;
     const SUPPORTED_PARSER_MEDIA_TYPES = ['application/xhtml+xml', 'text/html'];
     const DEFAULT_PARSER_MEDIA_TYPE = 'text/html';
     let transformCaseFunc = null;
+
     /* Keep a reference to config to pass to hooks */
-
     let CONFIG = null;
-    /* Ideally, do not touch anything below this line */
 
+    /* Ideally, do not touch anything below this line */
     /* ______________________________________________ */
 
     const formElement = document.createElement('form');
-
     const isRegexOrFunction = function isRegexOrFunction(testValue) {
       return testValue instanceof RegExp || testValue instanceof Function;
     };
+
     /**
      * _parseConfig
      *
      * @param  {Object} cfg optional config literal
      */
     // eslint-disable-next-line complexity
-
-
     const _parseConfig = function _parseConfig() {
       let cfg = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
       if (CONFIG && CONFIG === cfg) {
         return;
       }
+
       /* Shield configuration object from tampering */
-
-
       if (!cfg || typeof cfg !== 'object') {
         cfg = {};
       }
+
       /* Shield configuration object from prototype pollution */
-
-
       cfg = clone(cfg);
-      PARSER_MEDIA_TYPE = // eslint-disable-next-line unicorn/prefer-includes
-      SUPPORTED_PARSER_MEDIA_TYPES.indexOf(cfg.PARSER_MEDIA_TYPE) === -1 ? PARSER_MEDIA_TYPE = DEFAULT_PARSER_MEDIA_TYPE : PARSER_MEDIA_TYPE = cfg.PARSER_MEDIA_TYPE; // HTML tags and attributes are not case-sensitive, converting to lowercase. Keeping XHTML as is.
+      PARSER_MEDIA_TYPE =
+      // eslint-disable-next-line unicorn/prefer-includes
+      SUPPORTED_PARSER_MEDIA_TYPES.indexOf(cfg.PARSER_MEDIA_TYPE) === -1 ? DEFAULT_PARSER_MEDIA_TYPE : cfg.PARSER_MEDIA_TYPE;
 
+      // HTML tags and attributes are not case-sensitive, converting to lowercase. Keeping XHTML as is.
       transformCaseFunc = PARSER_MEDIA_TYPE === 'application/xhtml+xml' ? stringToString : stringToLowerCase;
-      /* Set configuration parameters */
 
+      /* Set configuration parameters */
       ALLOWED_TAGS = 'ALLOWED_TAGS' in cfg ? addToSet({}, cfg.ALLOWED_TAGS, transformCaseFunc) : DEFAULT_ALLOWED_TAGS;
       ALLOWED_ATTR = 'ALLOWED_ATTR' in cfg ? addToSet({}, cfg.ALLOWED_ATTR, transformCaseFunc) : DEFAULT_ALLOWED_ATTR;
       ALLOWED_NAMESPACES = 'ALLOWED_NAMESPACES' in cfg ? addToSet({}, cfg.ALLOWED_NAMESPACES, stringToString) : DEFAULT_ALLOWED_NAMESPACES;
-      URI_SAFE_ATTRIBUTES = 'ADD_URI_SAFE_ATTR' in cfg ? addToSet(clone(DEFAULT_URI_SAFE_ATTRIBUTES), // eslint-disable-line indent
-      cfg.ADD_URI_SAFE_ATTR, // eslint-disable-line indent
+      URI_SAFE_ATTRIBUTES = 'ADD_URI_SAFE_ATTR' in cfg ? addToSet(clone(DEFAULT_URI_SAFE_ATTRIBUTES),
+      // eslint-disable-line indent
+      cfg.ADD_URI_SAFE_ATTR,
+      // eslint-disable-line indent
       transformCaseFunc // eslint-disable-line indent
       ) // eslint-disable-line indent
       : DEFAULT_URI_SAFE_ATTRIBUTES;
-      DATA_URI_TAGS = 'ADD_DATA_URI_TAGS' in cfg ? addToSet(clone(DEFAULT_DATA_URI_TAGS), // eslint-disable-line indent
-      cfg.ADD_DATA_URI_TAGS, // eslint-disable-line indent
+      DATA_URI_TAGS = 'ADD_DATA_URI_TAGS' in cfg ? addToSet(clone(DEFAULT_DATA_URI_TAGS),
+      // eslint-disable-line indent
+      cfg.ADD_DATA_URI_TAGS,
+      // eslint-disable-line indent
       transformCaseFunc // eslint-disable-line indent
       ) // eslint-disable-line indent
       : DEFAULT_DATA_URI_TAGS;
@@ -597,250 +583,207 @@ return /******/ (() => { // webpackBootstrap
       FORBID_ATTR = 'FORBID_ATTR' in cfg ? addToSet({}, cfg.FORBID_ATTR, transformCaseFunc) : {};
       USE_PROFILES = 'USE_PROFILES' in cfg ? cfg.USE_PROFILES : false;
       ALLOW_ARIA_ATTR = cfg.ALLOW_ARIA_ATTR !== false; // Default true
-
       ALLOW_DATA_ATTR = cfg.ALLOW_DATA_ATTR !== false; // Default true
-
       ALLOW_UNKNOWN_PROTOCOLS = cfg.ALLOW_UNKNOWN_PROTOCOLS || false; // Default false
-
       ALLOW_SELF_CLOSE_IN_ATTR = cfg.ALLOW_SELF_CLOSE_IN_ATTR !== false; // Default true
-
       SAFE_FOR_TEMPLATES = cfg.SAFE_FOR_TEMPLATES || false; // Default false
-
       WHOLE_DOCUMENT = cfg.WHOLE_DOCUMENT || false; // Default false
-
       RETURN_DOM = cfg.RETURN_DOM || false; // Default false
-
       RETURN_DOM_FRAGMENT = cfg.RETURN_DOM_FRAGMENT || false; // Default false
-
       RETURN_TRUSTED_TYPE = cfg.RETURN_TRUSTED_TYPE || false; // Default false
-
       FORCE_BODY = cfg.FORCE_BODY || false; // Default false
-
       SANITIZE_DOM = cfg.SANITIZE_DOM !== false; // Default true
-
       SANITIZE_NAMED_PROPS = cfg.SANITIZE_NAMED_PROPS || false; // Default false
-
       KEEP_CONTENT = cfg.KEEP_CONTENT !== false; // Default true
-
       IN_PLACE = cfg.IN_PLACE || false; // Default false
-
       IS_ALLOWED_URI$1 = cfg.ALLOWED_URI_REGEXP || IS_ALLOWED_URI;
       NAMESPACE = cfg.NAMESPACE || HTML_NAMESPACE;
       CUSTOM_ELEMENT_HANDLING = cfg.CUSTOM_ELEMENT_HANDLING || {};
-
       if (cfg.CUSTOM_ELEMENT_HANDLING && isRegexOrFunction(cfg.CUSTOM_ELEMENT_HANDLING.tagNameCheck)) {
         CUSTOM_ELEMENT_HANDLING.tagNameCheck = cfg.CUSTOM_ELEMENT_HANDLING.tagNameCheck;
       }
-
       if (cfg.CUSTOM_ELEMENT_HANDLING && isRegexOrFunction(cfg.CUSTOM_ELEMENT_HANDLING.attributeNameCheck)) {
         CUSTOM_ELEMENT_HANDLING.attributeNameCheck = cfg.CUSTOM_ELEMENT_HANDLING.attributeNameCheck;
       }
-
       if (cfg.CUSTOM_ELEMENT_HANDLING && typeof cfg.CUSTOM_ELEMENT_HANDLING.allowCustomizedBuiltInElements === 'boolean') {
         CUSTOM_ELEMENT_HANDLING.allowCustomizedBuiltInElements = cfg.CUSTOM_ELEMENT_HANDLING.allowCustomizedBuiltInElements;
       }
-
       if (SAFE_FOR_TEMPLATES) {
         ALLOW_DATA_ATTR = false;
       }
-
       if (RETURN_DOM_FRAGMENT) {
         RETURN_DOM = true;
       }
+
       /* Parse profile info */
-
-
       if (USE_PROFILES) {
-        ALLOWED_TAGS = addToSet({}, [...text]);
+        ALLOWED_TAGS = addToSet({}, text);
         ALLOWED_ATTR = [];
-
         if (USE_PROFILES.html === true) {
           addToSet(ALLOWED_TAGS, html$1);
           addToSet(ALLOWED_ATTR, html);
         }
-
         if (USE_PROFILES.svg === true) {
           addToSet(ALLOWED_TAGS, svg$1);
           addToSet(ALLOWED_ATTR, svg);
           addToSet(ALLOWED_ATTR, xml);
         }
-
         if (USE_PROFILES.svgFilters === true) {
           addToSet(ALLOWED_TAGS, svgFilters);
           addToSet(ALLOWED_ATTR, svg);
           addToSet(ALLOWED_ATTR, xml);
         }
-
         if (USE_PROFILES.mathMl === true) {
           addToSet(ALLOWED_TAGS, mathMl$1);
           addToSet(ALLOWED_ATTR, mathMl);
           addToSet(ALLOWED_ATTR, xml);
         }
       }
+
       /* Merge configuration parameters */
-
-
       if (cfg.ADD_TAGS) {
         if (ALLOWED_TAGS === DEFAULT_ALLOWED_TAGS) {
           ALLOWED_TAGS = clone(ALLOWED_TAGS);
         }
-
         addToSet(ALLOWED_TAGS, cfg.ADD_TAGS, transformCaseFunc);
       }
-
       if (cfg.ADD_ATTR) {
         if (ALLOWED_ATTR === DEFAULT_ALLOWED_ATTR) {
           ALLOWED_ATTR = clone(ALLOWED_ATTR);
         }
-
         addToSet(ALLOWED_ATTR, cfg.ADD_ATTR, transformCaseFunc);
       }
-
       if (cfg.ADD_URI_SAFE_ATTR) {
         addToSet(URI_SAFE_ATTRIBUTES, cfg.ADD_URI_SAFE_ATTR, transformCaseFunc);
       }
-
       if (cfg.FORBID_CONTENTS) {
         if (FORBID_CONTENTS === DEFAULT_FORBID_CONTENTS) {
           FORBID_CONTENTS = clone(FORBID_CONTENTS);
         }
-
         addToSet(FORBID_CONTENTS, cfg.FORBID_CONTENTS, transformCaseFunc);
       }
+
       /* Add #text in case KEEP_CONTENT is set to true */
-
-
       if (KEEP_CONTENT) {
         ALLOWED_TAGS['#text'] = true;
       }
+
       /* Add html, head and body to ALLOWED_TAGS in case WHOLE_DOCUMENT is true */
-
-
       if (WHOLE_DOCUMENT) {
         addToSet(ALLOWED_TAGS, ['html', 'head', 'body']);
       }
+
       /* Add tbody to ALLOWED_TAGS in case tables are permitted, see #286, #365 */
-
-
       if (ALLOWED_TAGS.table) {
         addToSet(ALLOWED_TAGS, ['tbody']);
         delete FORBID_TAGS.tbody;
       }
-
       if (cfg.TRUSTED_TYPES_POLICY) {
         if (typeof cfg.TRUSTED_TYPES_POLICY.createHTML !== 'function') {
           throw typeErrorCreate('TRUSTED_TYPES_POLICY configuration option must provide a "createHTML" hook.');
         }
-
         if (typeof cfg.TRUSTED_TYPES_POLICY.createScriptURL !== 'function') {
           throw typeErrorCreate('TRUSTED_TYPES_POLICY configuration option must provide a "createScriptURL" hook.');
-        } // Overwrite existing TrustedTypes policy.
+        }
 
+        // Overwrite existing TrustedTypes policy.
+        trustedTypesPolicy = cfg.TRUSTED_TYPES_POLICY;
 
-        trustedTypesPolicy = cfg.TRUSTED_TYPES_POLICY; // Sign local variables required by `sanitize`.
-
+        // Sign local variables required by `sanitize`.
         emptyHTML = trustedTypesPolicy.createHTML('');
       } else {
         // Uninitialized policy, attempt to initialize the internal dompurify policy.
         if (trustedTypesPolicy === undefined) {
           trustedTypesPolicy = _createTrustedTypesPolicy(trustedTypes, currentScript);
-        } // If creating the internal policy succeeded sign internal variables.
+        }
 
-
+        // If creating the internal policy succeeded sign internal variables.
         if (trustedTypesPolicy !== null && typeof emptyHTML === 'string') {
           emptyHTML = trustedTypesPolicy.createHTML('');
         }
-      } // Prevent further manipulation of configuration.
+      }
+
+      // Prevent further manipulation of configuration.
       // Not available in IE8, Safari 5, etc.
-
-
       if (freeze) {
         freeze(cfg);
       }
-
       CONFIG = cfg;
     };
-
     const MATHML_TEXT_INTEGRATION_POINTS = addToSet({}, ['mi', 'mo', 'mn', 'ms', 'mtext']);
-    const HTML_INTEGRATION_POINTS = addToSet({}, ['foreignobject', 'desc', 'title', 'annotation-xml']); // Certain elements are allowed in both SVG and HTML
+    const HTML_INTEGRATION_POINTS = addToSet({}, ['foreignobject', 'desc', 'title', 'annotation-xml']);
+
+    // Certain elements are allowed in both SVG and HTML
     // namespace. We need to specify them explicitly
     // so that they don't get erroneously deleted from
     // HTML namespace.
-
     const COMMON_SVG_AND_HTML_ELEMENTS = addToSet({}, ['title', 'style', 'font', 'a', 'script']);
+
     /* Keep track of all possible SVG and MathML tags
      * so that we can perform the namespace checks
      * correctly. */
+    const ALL_SVG_TAGS = addToSet({}, [...svg$1, ...svgFilters, ...svgDisallowed]);
+    const ALL_MATHML_TAGS = addToSet({}, [...mathMl$1, ...mathMlDisallowed]);
 
-    const ALL_SVG_TAGS = addToSet({}, svg$1);
-    addToSet(ALL_SVG_TAGS, svgFilters);
-    addToSet(ALL_SVG_TAGS, svgDisallowed);
-    const ALL_MATHML_TAGS = addToSet({}, mathMl$1);
-    addToSet(ALL_MATHML_TAGS, mathMlDisallowed);
     /**
      * @param  {Element} element a DOM element whose namespace is being checked
      * @returns {boolean} Return false if the element has a
      *  namespace that a spec-compliant parser would never
      *  return. Return true otherwise.
      */
-
     const _checkValidNamespace = function _checkValidNamespace(element) {
-      let parent = getParentNode(element); // In JSDOM, if we're inside shadow DOM, then parentNode
-      // can be null. We just simulate parent in this case.
+      let parent = getParentNode(element);
 
+      // In JSDOM, if we're inside shadow DOM, then parentNode
+      // can be null. We just simulate parent in this case.
       if (!parent || !parent.tagName) {
         parent = {
           namespaceURI: NAMESPACE,
           tagName: 'template'
         };
       }
-
       const tagName = stringToLowerCase(element.tagName);
       const parentTagName = stringToLowerCase(parent.tagName);
-
       if (!ALLOWED_NAMESPACES[element.namespaceURI]) {
         return false;
       }
-
       if (element.namespaceURI === SVG_NAMESPACE) {
         // The only way to switch from HTML namespace to SVG
         // is via <svg>. If it happens via any other tag, then
         // it should be killed.
         if (parent.namespaceURI === HTML_NAMESPACE) {
           return tagName === 'svg';
-        } // The only way to switch from MathML to SVG is via`
+        }
+
+        // The only way to switch from MathML to SVG is via`
         // svg if parent is either <annotation-xml> or MathML
         // text integration points.
-
-
         if (parent.namespaceURI === MATHML_NAMESPACE) {
           return tagName === 'svg' && (parentTagName === 'annotation-xml' || MATHML_TEXT_INTEGRATION_POINTS[parentTagName]);
-        } // We only allow elements that are defined in SVG
+        }
+
+        // We only allow elements that are defined in SVG
         // spec. All others are disallowed in SVG namespace.
-
-
         return Boolean(ALL_SVG_TAGS[tagName]);
       }
-
       if (element.namespaceURI === MATHML_NAMESPACE) {
         // The only way to switch from HTML namespace to MathML
         // is via <math>. If it happens via any other tag, then
         // it should be killed.
         if (parent.namespaceURI === HTML_NAMESPACE) {
           return tagName === 'math';
-        } // The only way to switch from SVG to MathML is via
+        }
+
+        // The only way to switch from SVG to MathML is via
         // <math> and HTML integration points
-
-
         if (parent.namespaceURI === SVG_NAMESPACE) {
           return tagName === 'math' && HTML_INTEGRATION_POINTS[parentTagName];
-        } // We only allow elements that are defined in MathML
+        }
+
+        // We only allow elements that are defined in MathML
         // spec. All others are disallowed in MathML namespace.
-
-
         return Boolean(ALL_MATHML_TAGS[tagName]);
       }
-
       if (element.namespaceURI === HTML_NAMESPACE) {
         // The only way to switch from SVG to HTML is via
         // HTML integration points, and from MathML to HTML
@@ -848,39 +791,36 @@ return /******/ (() => { // webpackBootstrap
         if (parent.namespaceURI === SVG_NAMESPACE && !HTML_INTEGRATION_POINTS[parentTagName]) {
           return false;
         }
-
         if (parent.namespaceURI === MATHML_NAMESPACE && !MATHML_TEXT_INTEGRATION_POINTS[parentTagName]) {
           return false;
-        } // We disallow tags that are specific for MathML
+        }
+
+        // We disallow tags that are specific for MathML
         // or SVG and should never appear in HTML namespace
-
-
         return !ALL_MATHML_TAGS[tagName] && (COMMON_SVG_AND_HTML_ELEMENTS[tagName] || !ALL_SVG_TAGS[tagName]);
-      } // For XHTML and XML documents that support custom namespaces
+      }
 
-
+      // For XHTML and XML documents that support custom namespaces
       if (PARSER_MEDIA_TYPE === 'application/xhtml+xml' && ALLOWED_NAMESPACES[element.namespaceURI]) {
         return true;
-      } // The code should never reach this place (this means
+      }
+
+      // The code should never reach this place (this means
       // that the element somehow got namespace that is not
       // HTML, SVG, MathML or allowed via ALLOWED_NAMESPACES).
       // Return false just in case.
-
-
       return false;
     };
+
     /**
      * _forceRemove
      *
      * @param  {Node} node a DOM node
      */
-
-
     const _forceRemove = function _forceRemove(node) {
       arrayPush(DOMPurify.removed, {
         element: node
       });
-
       try {
         // eslint-disable-next-line unicorn/prefer-dom-node-remove
         node.parentNode.removeChild(node);
@@ -888,14 +828,13 @@ return /******/ (() => { // webpackBootstrap
         node.remove();
       }
     };
+
     /**
      * _removeAttribute
      *
      * @param  {String} name an Attribute name
      * @param  {Node} node a DOM node
      */
-
-
     const _removeAttribute = function _removeAttribute(name, node) {
       try {
         arrayPush(DOMPurify.removed, {
@@ -908,9 +847,9 @@ return /******/ (() => { // webpackBootstrap
           from: node
         });
       }
+      node.removeAttribute(name);
 
-      node.removeAttribute(name); // We void attribute values for unremovable "is"" attributes
-
+      // We void attribute values for unremovable "is"" attributes
       if (name === 'is' && !ALLOWED_ATTR[name]) {
         if (RETURN_DOM || RETURN_DOM_FRAGMENT) {
           try {
@@ -923,19 +862,17 @@ return /******/ (() => { // webpackBootstrap
         }
       }
     };
+
     /**
      * _initDocument
      *
      * @param  {String} dirty a string of dirty markup
      * @return {Document} a DOM, filled with the dirty markup
      */
-
-
     const _initDocument = function _initDocument(dirty) {
       /* Create a HTML document */
       let doc = null;
       let leadingWhitespace = null;
-
       if (FORCE_BODY) {
         dirty = '<remove></remove>' + dirty;
       } else {
@@ -943,83 +880,74 @@ return /******/ (() => { // webpackBootstrap
         const matches = stringMatch(dirty, /^[\r\n\t ]+/);
         leadingWhitespace = matches && matches[0];
       }
-
       if (PARSER_MEDIA_TYPE === 'application/xhtml+xml' && NAMESPACE === HTML_NAMESPACE) {
         // Root of XHTML doc must contain xmlns declaration (see https://www.w3.org/TR/xhtml1/normative.html#strict)
         dirty = '<html xmlns="http://www.w3.org/1999/xhtml"><head></head><body>' + dirty + '</body></html>';
       }
-
       const dirtyPayload = trustedTypesPolicy ? trustedTypesPolicy.createHTML(dirty) : dirty;
       /*
        * Use the DOMParser API by default, fallback later if needs be
        * DOMParser not work for svg when has multiple root element.
        */
-
       if (NAMESPACE === HTML_NAMESPACE) {
         try {
           doc = new DOMParser().parseFromString(dirtyPayload, PARSER_MEDIA_TYPE);
         } catch (_) {}
       }
+
       /* Use createHTMLDocument in case DOMParser is not available */
-
-
       if (!doc || !doc.documentElement) {
         doc = implementation.createDocument(NAMESPACE, 'template', null);
-
         try {
           doc.documentElement.innerHTML = IS_EMPTY_INPUT ? emptyHTML : dirtyPayload;
-        } catch (_) {// Syntax error if dirtyPayload is invalid xml
+        } catch (_) {
+          // Syntax error if dirtyPayload is invalid xml
         }
       }
-
       const body = doc.body || doc.documentElement;
-
       if (dirty && leadingWhitespace) {
         body.insertBefore(document.createTextNode(leadingWhitespace), body.childNodes[0] || null);
       }
+
       /* Work on whole document or just its body */
-
-
       if (NAMESPACE === HTML_NAMESPACE) {
         return getElementsByTagName.call(doc, WHOLE_DOCUMENT ? 'html' : 'body')[0];
       }
-
       return WHOLE_DOCUMENT ? doc.documentElement : body;
     };
+
     /**
      * Creates a NodeIterator object that you can use to traverse filtered lists of nodes or elements in a document.
      *
      * @param  {Node} root The root element or node to start traversing on.
      * @return {NodeIterator} The created NodeIterator
      */
-
-
     const _createNodeIterator = function _createNodeIterator(root) {
-      return createNodeIterator.call(root.ownerDocument || root, root, // eslint-disable-next-line no-bitwise
+      return createNodeIterator.call(root.ownerDocument || root, root,
+      // eslint-disable-next-line no-bitwise
       NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_COMMENT | NodeFilter.SHOW_TEXT, null);
     };
+
     /**
      * _isClobbered
      *
      * @param  {Node} elm element to check for clobbering attacks
      * @return {Boolean} true if clobbered, false if safe
      */
-
-
     const _isClobbered = function _isClobbered(elm) {
       return elm instanceof HTMLFormElement && (typeof elm.nodeName !== 'string' || typeof elm.textContent !== 'string' || typeof elm.removeChild !== 'function' || !(elm.attributes instanceof NamedNodeMap) || typeof elm.removeAttribute !== 'function' || typeof elm.setAttribute !== 'function' || typeof elm.namespaceURI !== 'string' || typeof elm.insertBefore !== 'function' || typeof elm.hasChildNodes !== 'function');
     };
+
     /**
      * Checks whether the given object is a DOM node.
      *
      * @param  {Node} object object to check whether it's a DOM node
      * @return {Boolean} true is object is a DOM node
      */
-
-
     const _isNode = function _isNode(object) {
       return typeof Node === 'function' && object instanceof Node;
     };
+
     /**
      * _executeHook
      * Execute user configurable hooks
@@ -1028,17 +956,15 @@ return /******/ (() => { // webpackBootstrap
      * @param  {Node} currentNode node to work on with the hook
      * @param  {Object} data additional hook parameters
      */
-
-
     const _executeHook = function _executeHook(entryPoint, currentNode, data) {
       if (!hooks[entryPoint]) {
         return;
       }
-
       arrayForEach(hooks[entryPoint], hook => {
         hook.call(DOMPurify, currentNode, data, CONFIG);
       });
     };
+
     /**
      * _sanitizeElements
      *
@@ -1049,99 +975,79 @@ return /******/ (() => { // webpackBootstrap
      * @param   {Node} currentNode to check for permission to exist
      * @return  {Boolean} true if node was killed, false if left alive
      */
-
-
     const _sanitizeElements = function _sanitizeElements(currentNode) {
       let content = null;
+
       /* Execute a hook if present */
-
       _executeHook('beforeSanitizeElements', currentNode, null);
+
       /* Check if element is clobbered or can clobber */
-
-
       if (_isClobbered(currentNode)) {
         _forceRemove(currentNode);
-
         return true;
       }
+
       /* Now let's check the element's type and name */
-
-
       const tagName = transformCaseFunc(currentNode.nodeName);
-      /* Execute a hook if present */
 
+      /* Execute a hook if present */
       _executeHook('uponSanitizeElement', currentNode, {
         tagName,
         allowedTags: ALLOWED_TAGS
       });
+
       /* Detect mXSS attempts abusing namespace confusion */
-
-
       if (currentNode.hasChildNodes() && !_isNode(currentNode.firstElementChild) && regExpTest(/<[/\w]/g, currentNode.innerHTML) && regExpTest(/<[/\w]/g, currentNode.textContent)) {
         _forceRemove(currentNode);
-
         return true;
       }
+
       /* Remove element if anything forbids its presence */
-
-
       if (!ALLOWED_TAGS[tagName] || FORBID_TAGS[tagName]) {
         /* Check if we have a custom element to handle */
         if (!FORBID_TAGS[tagName] && _isBasicCustomElement(tagName)) {
           if (CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof RegExp && regExpTest(CUSTOM_ELEMENT_HANDLING.tagNameCheck, tagName)) {
             return false;
           }
-
           if (CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof Function && CUSTOM_ELEMENT_HANDLING.tagNameCheck(tagName)) {
             return false;
           }
         }
+
         /* Keep content except for bad-listed elements */
-
-
         if (KEEP_CONTENT && !FORBID_CONTENTS[tagName]) {
           const parentNode = getParentNode(currentNode) || currentNode.parentNode;
           const childNodes = getChildNodes(currentNode) || currentNode.childNodes;
-
           if (childNodes && parentNode) {
             const childCount = childNodes.length;
-
             for (let i = childCount - 1; i >= 0; --i) {
               parentNode.insertBefore(cloneNode(childNodes[i], true), getNextSibling(currentNode));
             }
           }
         }
-
         _forceRemove(currentNode);
-
         return true;
       }
+
       /* Check whether element has a valid namespace */
-
-
       if (currentNode instanceof Element && !_checkValidNamespace(currentNode)) {
         _forceRemove(currentNode);
-
         return true;
       }
+
       /* Make sure that older browsers don't get fallback-tag mXSS */
-
-
       if ((tagName === 'noscript' || tagName === 'noembed' || tagName === 'noframes') && regExpTest(/<\/no(script|embed|frames)/i, currentNode.innerHTML)) {
         _forceRemove(currentNode);
-
         return true;
       }
+
       /* Sanitize element content to be template-safe */
-
-
       if (SAFE_FOR_TEMPLATES && currentNode.nodeType === 3) {
         /* Get the element's text content */
         content = currentNode.textContent;
         arrayForEach([MUSTACHE_EXPR, ERB_EXPR, TMPLIT_EXPR], expr => {
           content = stringReplace(content, expr, ' ');
         });
-
         if (currentNode.textContent !== content) {
           arrayPush(DOMPurify.removed, {
             element: currentNode.cloneNode()
@@ -1149,13 +1055,12 @@ return /******/ (() => { // webpackBootstrap
           currentNode.textContent = content;
         }
       }
+
       /* Execute a hook if present */
-
-
       _executeHook('afterSanitizeElements', currentNode, null);
-
       return false;
     };
+
     /**
      * _isValidAttribute
      *
@@ -1165,36 +1070,34 @@ return /******/ (() => { // webpackBootstrap
      * @return {Boolean} Returns true if `value` is valid, otherwise false.
      */
     // eslint-disable-next-line complexity
-
-
     const _isValidAttribute = function _isValidAttribute(lcTag, lcName, value) {
       /* Make sure attribute cannot clobber */
       if (SANITIZE_DOM && (lcName === 'id' || lcName === 'name') && (value in document || value in formElement)) {
         return false;
       }
+
       /* Allow valid data-* attributes: At least one character after "-"
           (https://html.spec.whatwg.org/multipage/dom.html#embedding-custom-non-visible-data-with-the-data-*-attributes)
           XML-compatible (https://html.spec.whatwg.org/multipage/infrastructure.html#xml-compatible and http://www.w3.org/TR/xml/#d0e804)
           We don't need to check the value; it's always URI safe. */
-
-
       if (ALLOW_DATA_ATTR && !FORBID_ATTR[lcName] && regExpTest(DATA_ATTR, lcName)) ; else if (ALLOW_ARIA_ATTR && regExpTest(ARIA_ATTR, lcName)) ; else if (!ALLOWED_ATTR[lcName] || FORBID_ATTR[lcName]) {
-        if ( // First condition does a very basic check if a) it's basically a valid custom element tagname AND
+        if (
+        // First condition does a very basic check if a) it's basically a valid custom element tagname AND
         // b) if the tagName passes whatever the user has configured for CUSTOM_ELEMENT_HANDLING.tagNameCheck
         // and c) if the attribute name passes whatever the user has configured for CUSTOM_ELEMENT_HANDLING.attributeNameCheck
-        _isBasicCustomElement(lcTag) && (CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof RegExp && regExpTest(CUSTOM_ELEMENT_HANDLING.tagNameCheck, lcTag) || CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof Function && CUSTOM_ELEMENT_HANDLING.tagNameCheck(lcTag)) && (CUSTOM_ELEMENT_HANDLING.attributeNameCheck instanceof RegExp && regExpTest(CUSTOM_ELEMENT_HANDLING.attributeNameCheck, lcName) || CUSTOM_ELEMENT_HANDLING.attributeNameCheck instanceof Function && CUSTOM_ELEMENT_HANDLING.attributeNameCheck(lcName)) || // Alternative, second condition checks if it's an `is`-attribute, AND
+        _isBasicCustomElement(lcTag) && (CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof RegExp && regExpTest(CUSTOM_ELEMENT_HANDLING.tagNameCheck, lcTag) || CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof Function && CUSTOM_ELEMENT_HANDLING.tagNameCheck(lcTag)) && (CUSTOM_ELEMENT_HANDLING.attributeNameCheck instanceof RegExp && regExpTest(CUSTOM_ELEMENT_HANDLING.attributeNameCheck, lcName) || CUSTOM_ELEMENT_HANDLING.attributeNameCheck instanceof Function && CUSTOM_ELEMENT_HANDLING.attributeNameCheck(lcName)) ||
+        // Alternative, second condition checks if it's an `is`-attribute, AND
         // the value passes whatever the user has configured for CUSTOM_ELEMENT_HANDLING.tagNameCheck
         lcName === 'is' && CUSTOM_ELEMENT_HANDLING.allowCustomizedBuiltInElements && (CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof RegExp && regExpTest(CUSTOM_ELEMENT_HANDLING.tagNameCheck, value) || CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof Function && CUSTOM_ELEMENT_HANDLING.tagNameCheck(value))) ; else {
           return false;
         }
         /* Check value is safe. First, is attr inert? If so, is safe */
-
       } else if (URI_SAFE_ATTRIBUTES[lcName]) ; else if (regExpTest(IS_ALLOWED_URI$1, stringReplace(value, ATTR_WHITESPACE, ''))) ; else if ((lcName === 'src' || lcName === 'xlink:href' || lcName === 'href') && lcTag !== 'script' && stringIndexOf(value, 'data:') === 0 && DATA_URI_TAGS[lcTag]) ; else if (ALLOW_UNKNOWN_PROTOCOLS && !regExpTest(IS_SCRIPT_OR_DATA, stringReplace(value, ATTR_WHITESPACE, ''))) ; else if (value) {
         return false;
       } else ;
-
       return true;
     };
+
     /**
      * _isBasicCustomElement
      * checks if at least one dash is included in tagName, and it's not the first char
@@ -1203,11 +1106,10 @@ return /******/ (() => { // webpackBootstrap
      * @param {string} tagName name of the tag of the node to sanitize
      * @returns {boolean} Returns true if the tag name meets the basic criteria for a custom element, otherwise false.
      */
-
-
     const _isBasicCustomElement = function _isBasicCustomElement(tagName) {
       return tagName.indexOf('-') > 0;
     };
+
     /**
      * _sanitizeAttributes
      *
@@ -1218,21 +1120,17 @@ return /******/ (() => { // webpackBootstrap
      *
      * @param  {Node} currentNode to sanitize
      */
-
-
     const _sanitizeAttributes = function _sanitizeAttributes(currentNode) {
       /* Execute a hook if present */
       _executeHook('beforeSanitizeAttributes', currentNode, null);
-
       const {
         attributes
       } = currentNode;
-      /* Check if we have attributes; if not we might have a text node */
 
+      /* Check if we have attributes; if not we might have a text node */
       if (!attributes) {
         return;
       }
-
       const hookEvent = {
         attrName: '',
         attrValue: '',
@@ -1240,8 +1138,8 @@ return /******/ (() => { // webpackBootstrap
         allowedAttributes: ALLOWED_ATTR
       };
       let l = attributes.length;
-      /* Go backwards over all attributes; safely remove bad ones */
 
+      /* Go backwards over all attributes; safely remove bad ones */
       while (l--) {
         const attr = attributes[l];
         const {
@@ -1251,70 +1149,58 @@ return /******/ (() => { // webpackBootstrap
         } = attr;
         const lcName = transformCaseFunc(name);
         let value = name === 'value' ? attrValue : stringTrim(attrValue);
-        /* Execute a hook if present */
 
+        /* Execute a hook if present */
         hookEvent.attrName = lcName;
         hookEvent.attrValue = value;
         hookEvent.keepAttr = true;
         hookEvent.forceKeepAttr = undefined; // Allows developers to see this is a property they can set
-
         _executeHook('uponSanitizeAttribute', currentNode, hookEvent);
-
         value = hookEvent.attrValue;
         /* Did the hooks approve of the attribute? */
-
         if (hookEvent.forceKeepAttr) {
           continue;
         }
+
         /* Remove attribute */
-
-
         _removeAttribute(name, currentNode);
+
         /* Did the hooks approve of the attribute? */
-
-
         if (!hookEvent.keepAttr) {
           continue;
         }
+
         /* Work around a security issue in jQuery 3.0 */
-
-
         if (!ALLOW_SELF_CLOSE_IN_ATTR && regExpTest(/\/>/i, value)) {
           _removeAttribute(name, currentNode);
-
           continue;
         }
+
         /* Sanitize attribute content to be template-safe */
-
-
         if (SAFE_FOR_TEMPLATES) {
           arrayForEach([MUSTACHE_EXPR, ERB_EXPR, TMPLIT_EXPR], expr => {
             value = stringReplace(value, expr, ' ');
           });
         }
+
         /* Is `value` valid for this attribute? */
-
-
         const lcTag = transformCaseFunc(currentNode.nodeName);
-
         if (!_isValidAttribute(lcTag, lcName, value)) {
           continue;
         }
+
         /* Full DOM Clobbering protection via namespace isolation,
          * Prefix id and name attributes with `user-content-`
          */
-
-
         if (SANITIZE_NAMED_PROPS && (lcName === 'id' || lcName === 'name')) {
           // Remove the attribute with this value
-          _removeAttribute(name, currentNode); // Prefix the value and later re-create the attribute with the sanitized value
+          _removeAttribute(name, currentNode);
 
-
+          // Prefix the value and later re-create the attribute with the sanitized value
           value = SANITIZE_NAMED_PROPS_PREFIX + value;
         }
+
         /* Handle attributes that require Trusted Types */
-
-
         if (trustedTypesPolicy && typeof trustedTypes === 'object' && typeof trustedTypes.getAttributeType === 'function') {
           if (namespaceURI) ; else {
             switch (trustedTypes.getAttributeType(lcTag, lcName)) {
@@ -1323,7 +1209,6 @@ return /******/ (() => { // webpackBootstrap
                   value = trustedTypesPolicy.createHTML(value);
                   break;
                 }
-
               case 'TrustedScriptURL':
                 {
                   value = trustedTypesPolicy.createScriptURL(value);
@@ -1332,9 +1217,8 @@ return /******/ (() => { // webpackBootstrap
             }
           }
         }
+
         /* Handle invalid data-* attribute set by try-catching it */
-
-
         try {
           if (namespaceURI) {
             currentNode.setAttributeNS(namespaceURI, name, value);
@@ -1342,56 +1226,47 @@ return /******/ (() => { // webpackBootstrap
             /* Fallback to setAttribute() for browser-unrecognized namespaces e.g. "x-schema". */
             currentNode.setAttribute(name, value);
           }
-
           arrayPop(DOMPurify.removed);
         } catch (_) {}
       }
+
       /* Execute a hook if present */
-
-
       _executeHook('afterSanitizeAttributes', currentNode, null);
     };
+
     /**
      * _sanitizeShadowDOM
      *
      * @param  {DocumentFragment} fragment to iterate over recursively
      */
-
-
     const _sanitizeShadowDOM = function _sanitizeShadowDOM(fragment) {
       let shadowNode = null;
-
       const shadowIterator = _createNodeIterator(fragment);
+
       /* Execute a hook if present */
-
-
       _executeHook('beforeSanitizeShadowDOM', fragment, null);
-
       while (shadowNode = shadowIterator.nextNode()) {
         /* Execute a hook if present */
         _executeHook('uponSanitizeShadowNode', shadowNode, null);
+
         /* Sanitize tags and elements */
-
-
         if (_sanitizeElements(shadowNode)) {
           continue;
         }
+
         /* Deep shadow DOM detected */
-
-
         if (shadowNode.content instanceof DocumentFragment) {
           _sanitizeShadowDOM(shadowNode.content);
         }
+
         /* Check attributes, sanitize if necessary */
-
-
         _sanitizeAttributes(shadowNode);
       }
+
       /* Execute a hook if present */
-
-
       _executeHook('afterSanitizeShadowDOM', fragment, null);
     };
+
     /**
      * Sanitize
      * Public method providing core sanitation functionality
@@ -1400,8 +1275,6 @@ return /******/ (() => { // webpackBootstrap
      * @param {Object} cfg object
      */
     // eslint-disable-next-line complexity
-
-
     DOMPurify.sanitize = function (dirty) {
       let cfg = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
       let body = null;
@@ -1411,19 +1284,15 @@ return /******/ (() => { // webpackBootstrap
       /* Make sure we have a string to sanitize.
         DO NOT return early, as this will return the wrong type if
         the user has requested a DOM object rather than a string */
-
       IS_EMPTY_INPUT = !dirty;
-
       if (IS_EMPTY_INPUT) {
         dirty = '<!-->';
       }
+
       /* Stringify, in case dirty is an object */
-
-
       if (typeof dirty !== 'string' && !_isNode(dirty)) {
         if (typeof dirty.toString === 'function') {
           dirty = dirty.toString();
-
           if (typeof dirty !== 'string') {
             throw typeErrorCreate('dirty is not a string, aborting');
           }
@@ -1431,33 +1300,28 @@ return /******/ (() => { // webpackBootstrap
           throw typeErrorCreate('toString is not a function');
         }
       }
+
       /* Return dirty HTML if DOMPurify cannot run */
-
-
       if (!DOMPurify.isSupported) {
         return dirty;
       }
+
       /* Assign config vars */
-
-
       if (!SET_CONFIG) {
         _parseConfig(cfg);
       }
+
       /* Clean up removed elements */
-
-
       DOMPurify.removed = [];
-      /* Check if dirty is correctly typed for IN_PLACE */
 
+      /* Check if dirty is correctly typed for IN_PLACE */
       if (typeof dirty === 'string') {
         IN_PLACE = false;
       }
-
       if (IN_PLACE) {
         /* Do some early pre-sanitization to avoid unsafe root nodes */
         if (dirty.nodeName) {
           const tagName = transformCaseFunc(dirty.nodeName);
-
           if (!ALLOWED_TAGS[tagName] || FORBID_TAGS[tagName]) {
             throw typeErrorCreate('root node is forbidden and cannot be sanitized in-place');
           }
@@ -1467,7 +1331,6 @@ return /******/ (() => { // webpackBootstrap
            elements being stripped by the parser */
         body = _initDocument('<!---->');
         importedNode = body.ownerDocument.importNode(dirty, true);
-
         if (importedNode.nodeType === 1 && importedNode.nodeName === 'BODY') {
           /* Node is already a body, use as is */
           body = importedNode;
@@ -1479,62 +1342,54 @@ return /******/ (() => { // webpackBootstrap
         }
       } else {
         /* Exit directly if we have nothing to do */
-        if (!RETURN_DOM && !SAFE_FOR_TEMPLATES && !WHOLE_DOCUMENT && // eslint-disable-next-line unicorn/prefer-includes
+        if (!RETURN_DOM && !SAFE_FOR_TEMPLATES && !WHOLE_DOCUMENT &&
+        // eslint-disable-next-line unicorn/prefer-includes
         dirty.indexOf('<') === -1) {
           return trustedTypesPolicy && RETURN_TRUSTED_TYPE ? trustedTypesPolicy.createHTML(dirty) : dirty;
         }
+
         /* Initialize the document to work on */
-
-
         body = _initDocument(dirty);
-        /* Check we have a DOM node from the data */
 
+        /* Check we have a DOM node from the data */
         if (!body) {
           return RETURN_DOM ? null : RETURN_TRUSTED_TYPE ? emptyHTML : '';
         }
       }
+
       /* Remove first element node (ours) if FORCE_BODY is set */
-
-
       if (body && FORCE_BODY) {
         _forceRemove(body.firstChild);
       }
+
       /* Get node iterator */
-
-
       const nodeIterator = _createNodeIterator(IN_PLACE ? dirty : body);
+
       /* Now start iterating over the created document */
-
-
       while (currentNode = nodeIterator.nextNode()) {
         /* Sanitize tags and elements */
         if (_sanitizeElements(currentNode)) {
           continue;
         }
+
         /* Shadow DOM detected, sanitize it */
-
-
         if (currentNode.content instanceof DocumentFragment) {
           _sanitizeShadowDOM(currentNode.content);
         }
+
         /* Check attributes, sanitize if necessary */
-
-
         _sanitizeAttributes(currentNode);
       }
+
       /* If we sanitized `dirty` in-place, return it. */
-
-
       if (IN_PLACE) {
         return dirty;
       }
+
       /* Return sanitized string or DOM */
-
-
       if (RETURN_DOM) {
         if (RETURN_DOM_FRAGMENT) {
           returnNode = createDocumentFragment.call(body.ownerDocument);
-
           while (body.firstChild) {
             // eslint-disable-next-line unicorn/prefer-dom-node-append
             returnNode.appendChild(body.firstChild);
@@ -1542,7 +1397,6 @@ return /******/ (() => { // webpackBootstrap
         } else {
           returnNode = body;
         }
-
         if (ALLOWED_ATTR.shadowroot || ALLOWED_ATTR.shadowrootmode) {
           /*
             AdoptNode() is not used because internal state is not reset
@@ -1553,53 +1407,46 @@ return /******/ (() => { // webpackBootstrap
           */
           returnNode = importNode.call(originalDocument, returnNode, true);
         }
-
         return returnNode;
       }
-
       let serializedHTML = WHOLE_DOCUMENT ? body.outerHTML : body.innerHTML;
-      /* Serialize doctype if allowed */
 
+      /* Serialize doctype if allowed */
       if (WHOLE_DOCUMENT && ALLOWED_TAGS['!doctype'] && body.ownerDocument && body.ownerDocument.doctype && body.ownerDocument.doctype.name && regExpTest(DOCTYPE_NAME, body.ownerDocument.doctype.name)) {
         serializedHTML = '<!DOCTYPE ' + body.ownerDocument.doctype.name + '>\n' + serializedHTML;
       }
+
       /* Sanitize final string template-safe */
-
-
       if (SAFE_FOR_TEMPLATES) {
         arrayForEach([MUSTACHE_EXPR, ERB_EXPR, TMPLIT_EXPR], expr => {
           serializedHTML = stringReplace(serializedHTML, expr, ' ');
         });
       }
-
       return trustedTypesPolicy && RETURN_TRUSTED_TYPE ? trustedTypesPolicy.createHTML(serializedHTML) : serializedHTML;
     };
+
     /**
      * Public method to set the configuration once
      * setConfig
      *
      * @param {Object} cfg configuration object
      */
-
-
     DOMPurify.setConfig = function () {
       let cfg = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
       _parseConfig(cfg);
-
       SET_CONFIG = true;
     };
+
     /**
      * Public method to remove the configuration
      * clearConfig
      *
      */
-
-
     DOMPurify.clearConfig = function () {
       CONFIG = null;
       SET_CONFIG = false;
     };
+
     /**
      * Public method to check if an attribute value is valid.
      * Uses last set config, if any. Otherwise, uses config defaults.
@@ -1610,18 +1457,16 @@ return /******/ (() => { // webpackBootstrap
      * @param  {String} value Attribute value.
      * @return {Boolean} Returns true if `value` is valid. Otherwise, returns false.
      */
-
-
     DOMPurify.isValidAttribute = function (tag, attr, value) {
       /* Initialize shared config vars if necessary. */
       if (!CONFIG) {
         _parseConfig({});
       }
-
       const lcTag = transformCaseFunc(tag);
       const lcName = transformCaseFunc(attr);
       return _isValidAttribute(lcTag, lcName, value);
     };
+
     /**
      * AddHook
      * Public method to add DOMPurify hooks
@@ -1629,16 +1474,14 @@ return /******/ (() => { // webpackBootstrap
      * @param {String} entryPoint entry point for the hook to add
      * @param {Function} hookFunction function to execute
      */
-
-
     DOMPurify.addHook = function (entryPoint, hookFunction) {
       if (typeof hookFunction !== 'function') {
         return;
       }
-
       hooks[entryPoint] = hooks[entryPoint] || [];
       arrayPush(hooks[entryPoint], hookFunction);
     };
+
     /**
      * RemoveHook
      * Public method to remove a DOMPurify hook at a given entryPoint
@@ -1647,39 +1490,33 @@ return /******/ (() => { // webpackBootstrap
      * @param {String} entryPoint entry point for the hook to remove
      * @return {Function} removed(popped) hook
      */
-
-
     DOMPurify.removeHook = function (entryPoint) {
       if (hooks[entryPoint]) {
         return arrayPop(hooks[entryPoint]);
       }
     };
+
     /**
      * RemoveHooks
      * Public method to remove all DOMPurify hooks at a given entryPoint
      *
      * @param  {String} entryPoint entry point for the hooks to remove
      */
-
-
     DOMPurify.removeHooks = function (entryPoint) {
       if (hooks[entryPoint]) {
         hooks[entryPoint] = [];
       }
     };
+
     /**
      * RemoveAllHooks
      * Public method to remove all DOMPurify hooks
      */
-
-
     DOMPurify.removeAllHooks = function () {
       hooks = {};
     };
-
     return DOMPurify;
   }
-
   var purify = createDOMPurify();
 
   return purify;
@@ -11831,13 +11668,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 function InvalidBeatCountException_toPropertyKey(t) { var i = InvalidBeatCountException_toPrimitive(t, "string"); return "symbol" == InvalidBeatCountException_typeof(i) ? i : String(i); }
 function InvalidBeatCountException_toPrimitive(t, r) { if ("object" != InvalidBeatCountException_typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != InvalidBeatCountException_typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+function _callSuper(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
 function _possibleConstructorReturn(self, call) { if (call && (InvalidBeatCountException_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
 function _wrapNativeSuper(Class) { var _cache = typeof Map === "function" ? new Map() : undefined; _wrapNativeSuper = function _wrapNativeSuper(Class) { if (Class === null || !_isNativeFunction(Class)) return Class; if (typeof Class !== "function") { throw new TypeError("Super expression must either be null or a function"); } if (typeof _cache !== "undefined") { if (_cache.has(Class)) return _cache.get(Class); _cache.set(Class, Wrapper); } function Wrapper() { return _construct(Class, arguments, _getPrototypeOf(this).constructor); } Wrapper.prototype = Object.create(Class.prototype, { constructor: { value: Wrapper, enumerable: false, writable: true, configurable: true } }); return _setPrototypeOf(Wrapper, Class); }; return _wrapNativeSuper(Class); }
-function _construct(Parent, args, Class) { if (_isNativeReflectConstruct()) { _construct = Reflect.construct.bind(); } else { _construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) _setPrototypeOf(instance, Class.prototype); return instance; }; } return _construct.apply(null, arguments); }
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function _construct(t, e, r) { if (_isNativeReflectConstruct()) return Reflect.construct.apply(null, arguments); var o = [null]; o.push.apply(o, e); var p = new (t.bind.apply(t, o))(); return r && _setPrototypeOf(p, r.prototype), p; }
+function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
 function _isNativeFunction(fn) { try { return Function.toString.call(fn).indexOf("[native code]") !== -1; } catch (e) { return typeof fn === "function"; } }
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
@@ -11845,7 +11682,6 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 var InvalidBeatCountException_InvalidBeatCountException = /*#__PURE__*/(/* unused pure expression or super */ null && (function (_Error) {
   _inherits(InvalidBeatCountException, _Error);
-  var _super = _createSuper(InvalidBeatCountException);
   function InvalidBeatCountException() {
     var _this;
     var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
@@ -11866,7 +11702,7 @@ var InvalidBeatCountException_InvalidBeatCountException = /*#__PURE__*/(/* unuse
     if (!beatCount || !_isFinite(beatCount)) {
       throw new TypeError('InvalidBeatCountException cannot be created without beatCount, received: ' + beatCount);
     }
-    _this = _super.call(this);
+    _this = _callSuper(this, InvalidBeatCountException);
     _this.name = 'InvalidBeatCountException';
     _this.string = string;
     _this.duration = duration;
@@ -11884,20 +11720,19 @@ function InvalidChordRepetitionException_createClass(Constructor, protoProps, st
 function InvalidChordRepetitionException_toPropertyKey(t) { var i = InvalidChordRepetitionException_toPrimitive(t, "string"); return "symbol" == InvalidChordRepetitionException_typeof(i) ? i : String(i); }
 function InvalidChordRepetitionException_toPrimitive(t, r) { if ("object" != InvalidChordRepetitionException_typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != InvalidChordRepetitionException_typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 function InvalidChordRepetitionException_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function InvalidChordRepetitionException_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) InvalidChordRepetitionException_setPrototypeOf(subClass, superClass); }
-function InvalidChordRepetitionException_createSuper(Derived) { var hasNativeReflectConstruct = InvalidChordRepetitionException_isNativeReflectConstruct(); return function _createSuperInternal() { var Super = InvalidChordRepetitionException_getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = InvalidChordRepetitionException_getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return InvalidChordRepetitionException_possibleConstructorReturn(this, result); }; }
+function InvalidChordRepetitionException_callSuper(t, o, e) { return o = InvalidChordRepetitionException_getPrototypeOf(o), InvalidChordRepetitionException_possibleConstructorReturn(t, InvalidChordRepetitionException_isNativeReflectConstruct() ? Reflect.construct(o, e || [], InvalidChordRepetitionException_getPrototypeOf(t).constructor) : o.apply(t, e)); }
 function InvalidChordRepetitionException_possibleConstructorReturn(self, call) { if (call && (InvalidChordRepetitionException_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return InvalidChordRepetitionException_assertThisInitialized(self); }
 function InvalidChordRepetitionException_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+function InvalidChordRepetitionException_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) InvalidChordRepetitionException_setPrototypeOf(subClass, superClass); }
 function InvalidChordRepetitionException_wrapNativeSuper(Class) { var _cache = typeof Map === "function" ? new Map() : undefined; InvalidChordRepetitionException_wrapNativeSuper = function _wrapNativeSuper(Class) { if (Class === null || !InvalidChordRepetitionException_isNativeFunction(Class)) return Class; if (typeof Class !== "function") { throw new TypeError("Super expression must either be null or a function"); } if (typeof _cache !== "undefined") { if (_cache.has(Class)) return _cache.get(Class); _cache.set(Class, Wrapper); } function Wrapper() { return InvalidChordRepetitionException_construct(Class, arguments, InvalidChordRepetitionException_getPrototypeOf(this).constructor); } Wrapper.prototype = Object.create(Class.prototype, { constructor: { value: Wrapper, enumerable: false, writable: true, configurable: true } }); return InvalidChordRepetitionException_setPrototypeOf(Wrapper, Class); }; return InvalidChordRepetitionException_wrapNativeSuper(Class); }
-function InvalidChordRepetitionException_construct(Parent, args, Class) { if (InvalidChordRepetitionException_isNativeReflectConstruct()) { InvalidChordRepetitionException_construct = Reflect.construct.bind(); } else { InvalidChordRepetitionException_construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) InvalidChordRepetitionException_setPrototypeOf(instance, Class.prototype); return instance; }; } return InvalidChordRepetitionException_construct.apply(null, arguments); }
-function InvalidChordRepetitionException_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function InvalidChordRepetitionException_construct(t, e, r) { if (InvalidChordRepetitionException_isNativeReflectConstruct()) return Reflect.construct.apply(null, arguments); var o = [null]; o.push.apply(o, e); var p = new (t.bind.apply(t, o))(); return r && InvalidChordRepetitionException_setPrototypeOf(p, r.prototype), p; }
+function InvalidChordRepetitionException_isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (InvalidChordRepetitionException_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
 function InvalidChordRepetitionException_isNativeFunction(fn) { try { return Function.toString.call(fn).indexOf("[native code]") !== -1; } catch (e) { return typeof fn === "function"; } }
 function InvalidChordRepetitionException_setPrototypeOf(o, p) { InvalidChordRepetitionException_setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return InvalidChordRepetitionException_setPrototypeOf(o, p); }
 function InvalidChordRepetitionException_getPrototypeOf(o) { InvalidChordRepetitionException_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return InvalidChordRepetitionException_getPrototypeOf(o); }
 
 var InvalidChordRepetitionException_InvalidChordRepetitionException = /*#__PURE__*/(/* unused pure expression or super */ null && (function (_Error) {
   InvalidChordRepetitionException_inherits(InvalidChordRepetitionException, _Error);
-  var _super = InvalidChordRepetitionException_createSuper(InvalidChordRepetitionException);
   function InvalidChordRepetitionException() {
     var _this;
     var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
@@ -11906,7 +11741,7 @@ var InvalidChordRepetitionException_InvalidChordRepetitionException = /*#__PURE_
     if (!string || !_isString(string)) {
       throw new TypeError('InvalidChordRepetitionException cannot be created without chord string, received: ' + string);
     }
-    _this = _super.call(this);
+    _this = InvalidChordRepetitionException_callSuper(this, InvalidChordRepetitionException);
     _this.name = 'InvalidChordRepetitionException';
     _this.string = string;
     return _this;
@@ -11921,13 +11756,13 @@ function InvalidSubBeatGroupException_createClass(Constructor, protoProps, stati
 function InvalidSubBeatGroupException_toPropertyKey(t) { var i = InvalidSubBeatGroupException_toPrimitive(t, "string"); return "symbol" == InvalidSubBeatGroupException_typeof(i) ? i : String(i); }
 function InvalidSubBeatGroupException_toPrimitive(t, r) { if ("object" != InvalidSubBeatGroupException_typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != InvalidSubBeatGroupException_typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 function InvalidSubBeatGroupException_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function InvalidSubBeatGroupException_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) InvalidSubBeatGroupException_setPrototypeOf(subClass, superClass); }
-function InvalidSubBeatGroupException_createSuper(Derived) { var hasNativeReflectConstruct = InvalidSubBeatGroupException_isNativeReflectConstruct(); return function _createSuperInternal() { var Super = InvalidSubBeatGroupException_getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = InvalidSubBeatGroupException_getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return InvalidSubBeatGroupException_possibleConstructorReturn(this, result); }; }
+function InvalidSubBeatGroupException_callSuper(t, o, e) { return o = InvalidSubBeatGroupException_getPrototypeOf(o), InvalidSubBeatGroupException_possibleConstructorReturn(t, InvalidSubBeatGroupException_isNativeReflectConstruct() ? Reflect.construct(o, e || [], InvalidSubBeatGroupException_getPrototypeOf(t).constructor) : o.apply(t, e)); }
 function InvalidSubBeatGroupException_possibleConstructorReturn(self, call) { if (call && (InvalidSubBeatGroupException_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return InvalidSubBeatGroupException_assertThisInitialized(self); }
 function InvalidSubBeatGroupException_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+function InvalidSubBeatGroupException_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) InvalidSubBeatGroupException_setPrototypeOf(subClass, superClass); }
 function InvalidSubBeatGroupException_wrapNativeSuper(Class) { var _cache = typeof Map === "function" ? new Map() : undefined; InvalidSubBeatGroupException_wrapNativeSuper = function _wrapNativeSuper(Class) { if (Class === null || !InvalidSubBeatGroupException_isNativeFunction(Class)) return Class; if (typeof Class !== "function") { throw new TypeError("Super expression must either be null or a function"); } if (typeof _cache !== "undefined") { if (_cache.has(Class)) return _cache.get(Class); _cache.set(Class, Wrapper); } function Wrapper() { return InvalidSubBeatGroupException_construct(Class, arguments, InvalidSubBeatGroupException_getPrototypeOf(this).constructor); } Wrapper.prototype = Object.create(Class.prototype, { constructor: { value: Wrapper, enumerable: false, writable: true, configurable: true } }); return InvalidSubBeatGroupException_setPrototypeOf(Wrapper, Class); }; return InvalidSubBeatGroupException_wrapNativeSuper(Class); }
-function InvalidSubBeatGroupException_construct(Parent, args, Class) { if (InvalidSubBeatGroupException_isNativeReflectConstruct()) { InvalidSubBeatGroupException_construct = Reflect.construct.bind(); } else { InvalidSubBeatGroupException_construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) InvalidSubBeatGroupException_setPrototypeOf(instance, Class.prototype); return instance; }; } return InvalidSubBeatGroupException_construct.apply(null, arguments); }
-function InvalidSubBeatGroupException_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function InvalidSubBeatGroupException_construct(t, e, r) { if (InvalidSubBeatGroupException_isNativeReflectConstruct()) return Reflect.construct.apply(null, arguments); var o = [null]; o.push.apply(o, e); var p = new (t.bind.apply(t, o))(); return r && InvalidSubBeatGroupException_setPrototypeOf(p, r.prototype), p; }
+function InvalidSubBeatGroupException_isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (InvalidSubBeatGroupException_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
 function InvalidSubBeatGroupException_isNativeFunction(fn) { try { return Function.toString.call(fn).indexOf("[native code]") !== -1; } catch (e) { return typeof fn === "function"; } }
 function InvalidSubBeatGroupException_setPrototypeOf(o, p) { InvalidSubBeatGroupException_setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return InvalidSubBeatGroupException_setPrototypeOf(o, p); }
 function InvalidSubBeatGroupException_getPrototypeOf(o) { InvalidSubBeatGroupException_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return InvalidSubBeatGroupException_getPrototypeOf(o); }
@@ -11935,7 +11770,6 @@ function InvalidSubBeatGroupException_getPrototypeOf(o) { InvalidSubBeatGroupExc
 
 var InvalidSubBeatGroupException_InvalidSubBeatGroupException = /*#__PURE__*/(/* unused pure expression or super */ null && (function (_Error) {
   InvalidSubBeatGroupException_inherits(InvalidSubBeatGroupException, _Error);
-  var _super = InvalidSubBeatGroupException_createSuper(InvalidSubBeatGroupException);
   function InvalidSubBeatGroupException() {
     var _this;
     var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
@@ -11952,7 +11786,7 @@ var InvalidSubBeatGroupException_InvalidSubBeatGroupException = /*#__PURE__*/(/*
     if (!_isFinite(position)) {
       throw new TypeError('InvalidSubBeatGroupException cannot be created without symbol position, received: ' + position);
     }
-    _this = _super.call(this);
+    _this = InvalidSubBeatGroupException_callSuper(this, InvalidSubBeatGroupException);
     _this.name = 'InvalidSubBeatGroupException';
     _this.chordLine = chordLine;
     _this.symbol = symbol;
@@ -11969,20 +11803,19 @@ function InvalidBarRepeatException_createClass(Constructor, protoProps, staticPr
 function InvalidBarRepeatException_toPropertyKey(t) { var i = InvalidBarRepeatException_toPrimitive(t, "string"); return "symbol" == InvalidBarRepeatException_typeof(i) ? i : String(i); }
 function InvalidBarRepeatException_toPrimitive(t, r) { if ("object" != InvalidBarRepeatException_typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != InvalidBarRepeatException_typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 function InvalidBarRepeatException_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function InvalidBarRepeatException_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) InvalidBarRepeatException_setPrototypeOf(subClass, superClass); }
-function InvalidBarRepeatException_createSuper(Derived) { var hasNativeReflectConstruct = InvalidBarRepeatException_isNativeReflectConstruct(); return function _createSuperInternal() { var Super = InvalidBarRepeatException_getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = InvalidBarRepeatException_getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return InvalidBarRepeatException_possibleConstructorReturn(this, result); }; }
+function InvalidBarRepeatException_callSuper(t, o, e) { return o = InvalidBarRepeatException_getPrototypeOf(o), InvalidBarRepeatException_possibleConstructorReturn(t, InvalidBarRepeatException_isNativeReflectConstruct() ? Reflect.construct(o, e || [], InvalidBarRepeatException_getPrototypeOf(t).constructor) : o.apply(t, e)); }
 function InvalidBarRepeatException_possibleConstructorReturn(self, call) { if (call && (InvalidBarRepeatException_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return InvalidBarRepeatException_assertThisInitialized(self); }
 function InvalidBarRepeatException_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+function InvalidBarRepeatException_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) InvalidBarRepeatException_setPrototypeOf(subClass, superClass); }
 function InvalidBarRepeatException_wrapNativeSuper(Class) { var _cache = typeof Map === "function" ? new Map() : undefined; InvalidBarRepeatException_wrapNativeSuper = function _wrapNativeSuper(Class) { if (Class === null || !InvalidBarRepeatException_isNativeFunction(Class)) return Class; if (typeof Class !== "function") { throw new TypeError("Super expression must either be null or a function"); } if (typeof _cache !== "undefined") { if (_cache.has(Class)) return _cache.get(Class); _cache.set(Class, Wrapper); } function Wrapper() { return InvalidBarRepeatException_construct(Class, arguments, InvalidBarRepeatException_getPrototypeOf(this).constructor); } Wrapper.prototype = Object.create(Class.prototype, { constructor: { value: Wrapper, enumerable: false, writable: true, configurable: true } }); return InvalidBarRepeatException_setPrototypeOf(Wrapper, Class); }; return InvalidBarRepeatException_wrapNativeSuper(Class); }
-function InvalidBarRepeatException_construct(Parent, args, Class) { if (InvalidBarRepeatException_isNativeReflectConstruct()) { InvalidBarRepeatException_construct = Reflect.construct.bind(); } else { InvalidBarRepeatException_construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) InvalidBarRepeatException_setPrototypeOf(instance, Class.prototype); return instance; }; } return InvalidBarRepeatException_construct.apply(null, arguments); }
-function InvalidBarRepeatException_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function InvalidBarRepeatException_construct(t, e, r) { if (InvalidBarRepeatException_isNativeReflectConstruct()) return Reflect.construct.apply(null, arguments); var o = [null]; o.push.apply(o, e); var p = new (t.bind.apply(t, o))(); return r && InvalidBarRepeatException_setPrototypeOf(p, r.prototype), p; }
+function InvalidBarRepeatException_isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (InvalidBarRepeatException_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
 function InvalidBarRepeatException_isNativeFunction(fn) { try { return Function.toString.call(fn).indexOf("[native code]") !== -1; } catch (e) { return typeof fn === "function"; } }
 function InvalidBarRepeatException_setPrototypeOf(o, p) { InvalidBarRepeatException_setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return InvalidBarRepeatException_setPrototypeOf(o, p); }
 function InvalidBarRepeatException_getPrototypeOf(o) { InvalidBarRepeatException_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return InvalidBarRepeatException_getPrototypeOf(o); }
 
 var InvalidBarRepeatException_InvalidBarRepeatException = /*#__PURE__*/(/* unused pure expression or super */ null && (function (_Error) {
   InvalidBarRepeatException_inherits(InvalidBarRepeatException, _Error);
-  var _super = InvalidBarRepeatException_createSuper(InvalidBarRepeatException);
   function InvalidBarRepeatException() {
     var _this;
     var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
@@ -11991,7 +11824,7 @@ var InvalidBarRepeatException_InvalidBarRepeatException = /*#__PURE__*/(/* unuse
     if (!string || !_isString(string)) {
       throw new TypeError('InvalidBarRepeatException cannot be created without chord string, received: ' + string);
     }
-    _this = _super.call(this);
+    _this = InvalidBarRepeatException_callSuper(this, InvalidBarRepeatException);
     _this.name = 'InvalidBarRepeatException';
     _this.string = string;
     return _this;
