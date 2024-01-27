@@ -205,7 +205,6 @@ describe('renderChordLyricLine', () => {
 				'Marcia Martienne',
 				'Bm7 Bm7.. D7/F#..',
 				'_Voir ma bouche a_vide',
-				//
 				//|Bm7            |Bm7.. D7/F#. |
 				// Voir ma bouche avide
 				[
