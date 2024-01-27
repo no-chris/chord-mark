@@ -20,7 +20,6 @@ describe('renderChordLyricLine', () => {
 					['|', ''],
 				],
 			],
-			/**/
 			[
 				'Longer chord line, 2',
 				'C G',
@@ -200,6 +199,30 @@ describe('renderChordLyricLine', () => {
 					[' ', ''],
 					['|', ''],
 				],
+			],
+			/**/
+			[
+				'Marcia Martienne',
+				'Bm7 Bm7.. D7/F#..',
+				'_Voir ma bouche a_vide',
+				//
+				//|Bm7            |Bm7.. D7/F#. |
+				// Voir ma bouche avide
+				[
+					['|', ' '],
+					['Bm7 ', 'Voir'],
+					[' ', ' '],
+					['  ', 'ma'],
+					[' ', ' '],
+					['      ', 'bouche'],
+					[' ', ' '],
+					['|Bm7..', 'avide'],
+					[' ', ''],
+					['D7/F#..', ''],
+					[' ', ''],
+					['|', ''],
+				],
+				{ printChordsDuration: 'always' },
 			],
 			/* */
 		])('%s', (title, chordLine, lyricLine, pairs, options) => {

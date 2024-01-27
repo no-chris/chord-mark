@@ -124,15 +124,21 @@ function getAllBreakpoints(allChordTokens, allLyricTokens) {
 		lyricLineBreakPoints
 	);
 
-	const longestLineBreakpoints =
-		_last(chordLineBreakPoints) > _last(lyricLineBreakPoints)
-			? chordLineBreakPoints
-			: lyricLineBreakPoints;
+	let shortestLineBreakpoints;
+	let longestLineBreakpoints;
 
-	const lastBreakpoint = _last(allBreakpoints);
-	const remainingBreakpoints = longestLineBreakpoints.slice(
-		longestLineBreakpoints.indexOf(lastBreakpoint) + 1
+	if (_last(chordLineBreakPoints) > _last(lyricLineBreakPoints)) {
+		longestLineBreakpoints = chordLineBreakPoints;
+		shortestLineBreakpoints = lyricLineBreakPoints;
+	} else {
+		longestLineBreakpoints = lyricLineBreakPoints;
+		shortestLineBreakpoints = chordLineBreakPoints;
+	}
+
+	const remainingBreakpoints = longestLineBreakpoints.filter(
+		(bp) => bp > _last(shortestLineBreakpoints)
 	);
+
 	if (remainingBreakpoints.length) {
 		allBreakpoints.push(...remainingBreakpoints);
 	}
