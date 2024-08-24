@@ -293,7 +293,7 @@ function setSubBeatInfo(allBars, subBeatGroupsChordCount) {
 	allBars.forEach((bar, barIndex) => {
 		bar.allChords.forEach((chord) => {
 			if (chord.isInSubBeatGroup) {
-				const chordBeatId = barIndex + chord.beat;
+				const chordBeatId = '' + barIndex + chord.beat;
 				if (chordBeatId !== previousChordBeatId) {
 					subBeatGroupIndex++;
 					subBeatChordIndex = 0;
