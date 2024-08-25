@@ -1,6 +1,6 @@
 {
 	"name": "documentation",
-	"version": "0.16.2",
+	"version": "0.16.3",
 	"private": true,
 	"description": "ChordMark documentation",
 	"author": "Christophe Noël <touffi51@gmail.com>",
@@ -38,7 +38,7 @@
 		"@docusaurus/preset-classic": "^3.1.1",
 		"@mdx-js/react": "^3.0.0",
 		"@svgr/webpack": "^8.1.0",
-		"chord-mark": "^0.16.2",
+		"chord-mark": "^0.16.3",
 		"clsx": "^2.1.0",
 		"dompurify": "^3.0.8",
 		"file-loader": "^6.2.0",

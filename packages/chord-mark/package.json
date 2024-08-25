@@ -1,6 +1,6 @@
 {
 	"name": "chord-mark",
-	"version": "0.16.2",
+	"version": "0.16.3",
 	"description": "ChordMark - chord charts parser and renderer",
 	"main": "src/chordMark.js",
 	"author": "Christophe Noël",
