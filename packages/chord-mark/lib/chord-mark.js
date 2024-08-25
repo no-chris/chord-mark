@@ -11654,7 +11654,7 @@ function setSubBeatInfo(allBars, subBeatGroupsChordCount) {
   allBars.forEach(function (bar, barIndex) {
     bar.allChords.forEach(function (chord) {
       if (chord.isInSubBeatGroup) {
-        var chordBeatId = barIndex + chord.beat;
+        var chordBeatId = '' + barIndex + chord.beat;
         if (chordBeatId !== previousChordBeatId) {
           subBeatGroupIndex++;
           subBeatChordIndex = 0;

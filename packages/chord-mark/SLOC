@@ -20,8 +20,8 @@ Tests:
 
 ---------- Result ------------
 
-            Physical :  9325
-              Source :  8377
+            Physical :  9331
+              Source :  8383
              Comment :  224
  Single-line comment :  27
        Block comment :  197
@@ -38,8 +38,8 @@ Total:
 
 ---------- Result ------------
 
-            Physical :  12755
-              Source :  10910
+            Physical :  12761
+              Source :  10916
              Comment :  698
  Single-line comment :  66
        Block comment :  632
