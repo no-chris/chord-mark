@@ -1,4 +1,3 @@
-/* eslint-env node */
 //const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const path = require('path');

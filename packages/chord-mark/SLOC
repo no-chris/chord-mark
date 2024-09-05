@@ -2,10 +2,10 @@ Source code:
 
 ---------- Result ------------
 
-            Physical :  3430
+            Physical :  3431
               Source :  2533
-             Comment :  474
- Single-line comment :  39
+             Comment :  475
+ Single-line comment :  40
        Block comment :  435
                Mixed :  19
  Empty block comment :  0
@@ -38,10 +38,10 @@ Total:
 
 ---------- Result ------------
 
-            Physical :  12761
+            Physical :  12762
               Source :  10916
-             Comment :  698
- Single-line comment :  66
+             Comment :  699
+ Single-line comment :  67
        Block comment :  632
                Mixed :  33
  Empty block comment :  0

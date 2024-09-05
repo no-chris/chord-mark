@@ -12,6 +12,7 @@ import lineTpl from './tpl/line.js';
  * @param {Array} sectionWrapperClasses
  * @returns {String} rendered html
  */
+// eslint-disable-next-line complexity
 export default function render(
 	line,
 	{

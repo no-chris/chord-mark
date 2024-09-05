@@ -164,17 +164,17 @@ export default function songLinesFactory() {
 	function getChordLine(string) {
 		let line;
 		try {
-			const model = parseChordLine(string, {
+			const lineModel = parseChordLine(string, {
 				timeSignature: currentTimeSignature,
 				originalKey: currentKey,
 			});
 			line = {
 				string,
 				type: lineTypes.CHORD,
-				model,
+				model: lineModel,
 			};
 			addPreviousChordLine(line);
-		} catch (e) {
+		} catch {
 			line = getLyricLine(string);
 		}
 		return line;

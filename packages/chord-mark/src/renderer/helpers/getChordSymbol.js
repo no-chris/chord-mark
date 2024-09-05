@@ -5,17 +5,17 @@ import { chordRendererFactory } from 'chord-symbol';
 const defaultRenderChord = chordRendererFactory();
 
 /**
- * @param {Chord|String} model
+ * @param {Chord|String} lineModel
  * @param {Function} renderChord
  * @returns {string}
  */
-export default function (model, renderChord = defaultRenderChord) {
-	switch (model) {
+export default function (lineModel, renderChord = defaultRenderChord) {
+	switch (lineModel) {
 		case syntax.noChord:
 			return symbols.noChordSymbol;
 		case symbols.barRepeat:
 			return symbols.barRepeat;
 		default:
-			return renderChord(model);
+			return renderChord(lineModel);
 	}
 }

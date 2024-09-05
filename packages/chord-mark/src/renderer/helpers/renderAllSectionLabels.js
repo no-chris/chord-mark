@@ -21,23 +21,23 @@ export default function renderAllSectionsLabels(
 
 	allLines.forEach((/** SongSectionLabelLine */ line) => {
 		if (line.type === lineTypes.SECTION_LABEL) {
-			const { model, index, indexWithoutMultiply } = line;
-			const labelRaw = labelsMapping[model.label]
-				? labelsMapping[model.label]
-				: model.label;
+			const { model: lineModel, index, indexWithoutMultiply } = line;
+			const labelRaw = labelsMapping[lineModel.label]
+				? labelsMapping[lineModel.label]
+				: lineModel.label;
 
 			let rendered = labelRaw[0].toUpperCase() + labelRaw.substring(1);
 			let multiplier;
 
-			if (sectionsStats[model.label] > 1) {
+			if (sectionsStats[lineModel.label] > 1) {
 				rendered += ' ';
 				rendered += expandSectionMultiply
 					? index
 					: indexWithoutMultiply;
 			}
 
-			if (!expandSectionMultiply && model.multiplyTimes) {
-				multiplier = 'x' + model.multiplyTimes;
+			if (!expandSectionMultiply && lineModel.multiplyTimes) {
+				multiplier = 'x' + lineModel.multiplyTimes;
 			}
 
 			line.model.rendered = {

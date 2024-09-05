@@ -48,7 +48,7 @@ import { defaultTimeSignature } from '../../parser/syntax';
  * @param {Boolean} options.wrapChordLyricLines
  * @returns {String} rendered HTML
  */
-// eslint-disable-next-line max-lines-per-function
+// eslint-disable-next-line max-lines-per-function,complexity
 export default function renderSong(
 	parsedSong,
 	{
