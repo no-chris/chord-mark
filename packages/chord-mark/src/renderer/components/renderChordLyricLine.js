@@ -25,11 +25,16 @@ const breakPointsClasses = [
  * - refactoring entirely the chord/lyrics line rendering to implement the small screen renderer
  * @param {String} chordLine - html of a rendered chord line
  * @param {String} lyricLine - html of a rendered lyric line
+ * @param {Object} [windowObject] - A JSDOM window object for using chordmark in NodeJs
  * @returns {String} rendered html
  */
-export default function renderChordLyricLine(chordLine, lyricLine) {
-	const allChordTokens = getAllChordTokens(chordLine);
-	const allLyricTokens = getAllLyricTokens(lyricLine);
+export default function renderChordLyricLine(
+	chordLine,
+	lyricLine,
+	windowObject
+) {
+	const allChordTokens = getAllChordTokens(chordLine, windowObject);
+	const allLyricTokens = getAllLyricTokens(lyricLine, windowObject);
 
 	const allBreakPoints = getAllBreakpoints(allChordTokens, allLyricTokens);
 
@@ -42,8 +47,8 @@ export default function renderChordLyricLine(chordLine, lyricLine) {
 	return chordLyricLineTpl({ chordLyricsPairs });
 }
 
-function getAllChordTokens(chordLine) {
-	const chordLineNodes = htmlToElement(chordLine);
+function getAllChordTokens(chordLine, windowObject) {
+	const chordLineNodes = htmlToElement(chordLine, windowObject);
 
 	const allChordTokens = [];
 	// using an object as a counter instead of an integer
@@ -90,9 +95,9 @@ function getToken(text, textIndex, html) {
 	};
 }
 
-function getAllLyricTokens(lyricLine) {
+function getAllLyricTokens(lyricLine, windowObject) {
 	const allTextNodes = [];
-	const textLyricLine = stripTags(lyricLine);
+	const textLyricLine = stripTags(lyricLine, windowObject);
 
 	let textToken = '';
 

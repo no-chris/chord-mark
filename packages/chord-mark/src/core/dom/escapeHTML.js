@@ -1,5 +1,5 @@
-import domPurify from 'dompurify';
+import getDomPurify from './getDomPurify.js';
 
-export default function escapeHTML(unescaped) {
-	return domPurify.sanitize(unescaped);
+export default function escapeHTML(unescaped, windowObject) {
+	return getDomPurify(windowObject).sanitize(unescaped);
 }
