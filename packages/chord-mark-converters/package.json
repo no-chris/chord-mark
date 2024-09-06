@@ -30,6 +30,6 @@
 		"dompurify": "^3.1.6"
 	},
 	"scripts": {
-		"build": "webpack"
+		"build": "npx webpack"
 	}
 }
