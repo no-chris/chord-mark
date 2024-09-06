@@ -8,6 +8,7 @@ module.exports = {
 	coveragePathIgnorePatterns: [
 		'node_modules',
 		'packages/documentation',
+		'packages/chord-mark-jsdom',
 		'packages/chord-mark-themes',
 	],
 	coverageReporters: ['json', 'lcov', 'text', 'clover'],
