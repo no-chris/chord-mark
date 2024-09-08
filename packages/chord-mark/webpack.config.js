@@ -20,8 +20,6 @@ const config = {
 		path: path.resolve(__dirname, buildDir),
 		library: 'chord-mark',
 		libraryTarget: 'umd',
-		// https://github.com/webpack/webpack/pull/8625
-		//globalObject: "typeof self !== 'undefined' ? self : this",
 	},
 
 	optimization: {
