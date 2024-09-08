@@ -5,5 +5,5 @@ module.exports = {
 	...baseConfig,
 	displayName: packageJson.name,
 	rootDir: __dirname,
-	testEnvironment: 'jsdom',
+	testEnvironment: 'node',
 };

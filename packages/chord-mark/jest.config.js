@@ -4,6 +4,6 @@ const packageJson = require('./package');
 module.exports = {
 	...baseConfig,
 	displayName: packageJson.name,
-
-	rootDir: '../..',
+	rootDir: __dirname,
+	testEnvironment: 'jsdom',
 };

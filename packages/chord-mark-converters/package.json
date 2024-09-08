@@ -24,10 +24,12 @@
 		"url": "https://github.com/no-chris/chord-mark/issues"
 	},
 	"dependencies": {
-		"chord-mark": "^0.16.3",
 		"chord-symbol": "4.0.0",
 		"chord-symbol-ultimateguitar": "4.0.0",
 		"dompurify": "^3.1.6"
+	},
+	"devDependencies": {
+		"chord-mark": "^0.16.3"
 	},
 	"scripts": {
 		"build": "npx webpack"
