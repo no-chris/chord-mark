@@ -12,7 +12,9 @@
 		"test": "tests"
 	},
 	"files": [
-		"lib"
+		"lib",
+		"src",
+		"tests"
 	],
 	"repository": {
 		"type": "git",
