@@ -14,8 +14,8 @@ describe('chordMarkJsDom', () => {
 			'<span class="cmChordLine">' +
 			'<span class="cmChordLineOffset">      </span>' +
 			'<span class="cmBarSeparator">|</span>' +
-			'<span class="cmChordSymbol">C</span>              ' +
-			'<span class="cmChordSymbol">G</span>               ' +
+			'<span class="cmChordSymbol">D</span>              ' +
+			'<span class="cmChordSymbol">A</span>               ' +
 			'<span class="cmBarSeparator">|</span></span>' +
 			'</p>' +
 			'<p class="cmLine">' +
@@ -23,6 +23,8 @@ describe('chordMarkJsDom', () => {
 			'</p>' +
 			'</div>';
 
-		expect(renderSong(parseSong(input))).toBe(output);
+		expect(renderSong(parseSong(input), { transposeValue: 2 })).toBe(
+			output
+		);
 	});
 });
