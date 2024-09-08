@@ -1,5 +1,3 @@
-todo: remove dompurify dependency in converters?
-
 # ChordMark jsdom
 
 A nodeJs-compatible version of ChordMark, to use for server-side use-cases such as SSR.
