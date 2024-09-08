@@ -8633,15 +8633,20 @@ var isArray_default = /*#__PURE__*/__webpack_require__.n(isArray);
 // EXTERNAL MODULE: ../../node_modules/dompurify/dist/purify.js
 var purify = __webpack_require__(1651);
 var purify_default = /*#__PURE__*/__webpack_require__.n(purify);
+;// CONCATENATED MODULE: ./src/core/dom/getDomPurify.js
+
+/* harmony default export */ const getDomPurify = (function (windowObject) {
+  return windowObject ? purify_default()(windowObject) : (purify_default());
+});
 ;// CONCATENATED MODULE: ./src/core/dom/escapeHTML.js
 
-function escapeHTML(unescaped) {
-  return purify_default().sanitize(unescaped);
+function escapeHTML(unescaped, windowObject) {
+  return getDomPurify(windowObject).sanitize(unescaped);
 }
 ;// CONCATENATED MODULE: ./src/core/dom/stripTags.js
 
-function stripTags(html) {
-  return purify_default().sanitize(html, {
+function stripTags(html, windowObject) {
+  return getDomPurify(windowObject).sanitize(html, {
     ALLOWED_TAGS: ['#text'],
     KEEP_CONTENT: true
   });
@@ -12602,16 +12607,24 @@ function getAllKeysInSong(allLines, allChords) {
 
 /**
  * @param {string|array} songSrc
+ * @param {Object} [options]
+ * @param {Object} [options.windowObject] - A JSDOM window object for using chordmark in NodeJs
  * @returns {Song}
  */
 function parseSong(songSrc) {
+  var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+    windowObject = _ref.windowObject;
   var songArray = !isArray_default()(songSrc) ? songSrc.split('\n') : songSrc;
   var songLines = songLinesFactory();
 
   /**
    * @type {SongLine[]}
    */
-  songArray.map(escapeHTML).map(stripTags).forEach(songLines.addLine);
+  songArray.map(function (line) {
+    return escapeHTML(line, windowObject);
+  }).map(function (line) {
+    return stripTags(line, windowObject);
+  }).forEach(songLines.addLine);
   songLines.flagPositionedChords();
   var allLines = songLines.asArray();
   var allChords = getAllChordsInSong(allLines);
@@ -13215,8 +13228,8 @@ var intersection = __webpack_require__(8150);
 var intersection_default = /*#__PURE__*/__webpack_require__.n(intersection);
 ;// CONCATENATED MODULE: ./src/core/dom/htmlToElement.js
 
-function htmlToElement(html) {
-  return purify_default().sanitize(html, {
+function htmlToElement(html, windowObject) {
+  return getDomPurify(windowObject).sanitize(html, {
     RETURN_DOM_FRAGMENT: true
   }).firstChild;
 }
@@ -13248,19 +13261,20 @@ var breakPointsClasses = ['cmChordSymbol', 'cmTimeSignature',
  * - refactoring entirely the chord/lyrics line rendering to implement the small screen renderer
  * @param {String} chordLine - html of a rendered chord line
  * @param {String} lyricLine - html of a rendered lyric line
+ * @param {Object} [windowObject] - A JSDOM window object for using chordmark in NodeJs
  * @returns {String} rendered html
  */
-function renderChordLyricLine(chordLine, lyricLine) {
-  var allChordTokens = getAllChordTokens(chordLine);
-  var allLyricTokens = getAllLyricTokens(lyricLine);
+function renderChordLyricLine(chordLine, lyricLine, windowObject) {
+  var allChordTokens = getAllChordTokens(chordLine, windowObject);
+  var allLyricTokens = getAllLyricTokens(lyricLine, windowObject);
   var allBreakPoints = getAllBreakpoints(allChordTokens, allLyricTokens);
   var chordLyricsPairs = getChordLyricsPairs(allBreakPoints, allChordTokens, allLyricTokens);
   return chordLyricLine({
     chordLyricsPairs: chordLyricsPairs
   });
 }
-function getAllChordTokens(chordLine) {
-  var chordLineNodes = htmlToElement(chordLine);
+function getAllChordTokens(chordLine, windowObject) {
+  var chordLineNodes = htmlToElement(chordLine, windowObject);
   var allChordTokens = [];
   // using an object as a counter instead of an integer
   // so the counter can be used in a recursive loop
@@ -13307,9 +13321,9 @@ function getToken(text, textIndex, html) {
     html: html
   };
 }
-function getAllLyricTokens(lyricLine) {
+function getAllLyricTokens(lyricLine, windowObject) {
   var allTextNodes = [];
-  var textLyricLine = stripTags(lyricLine);
+  var textLyricLine = stripTags(lyricLine, windowObject);
   var textToken = '';
   Array.from(textLyricLine).forEach(function (char, charIndex) {
     if (char === ' ') {
@@ -13757,6 +13771,7 @@ var barHasMultiplePositionedChords = function barHasMultiplePositionedChords(lin
  * do not allow inline time signatures to be printed (e.g. Ultimate Guitar)
  * @param {Number} options.transposeValue
  * @param {Boolean} options.useShortNamings
+ * @param {Object} [options.windowObject] - A JSDOM window object for using chordmark in NodeJs
  * @param {Boolean} options.wrapChordLyricLines
  * @returns {String} rendered HTML
  */
@@ -13797,6 +13812,8 @@ function renderSong(parsedSong) {
     transposeValue = _ref$transposeValue === void 0 ? 0 : _ref$transposeValue,
     _ref$useShortNamings = _ref.useShortNamings,
     useShortNamings = _ref$useShortNamings === void 0 ? true : _ref$useShortNamings,
+    _ref$windowObject = _ref.windowObject,
+    windowObject = _ref$windowObject === void 0 ? undefined : _ref$windowObject,
     _ref$wrapChordLyricLi = _ref.wrapChordLyricLines,
     wrapChordLyricLines = _ref$wrapChordLyricLi === void 0 ? false : _ref$wrapChordLyricLi;
   var allLines = parsedSong.allLines,
@@ -13949,7 +13966,7 @@ function renderSong(parsedSong) {
           chartType: chartType
         });
         if (chordLineToMerge) {
-          rendered = renderChordLyricLine(chordLineToMerge, rendered);
+          rendered = renderChordLyricLine(chordLineToMerge, rendered, windowObject);
           chordLineToMerge = '';
         }
       }
