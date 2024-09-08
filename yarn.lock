@@ -7984,7 +7984,7 @@ __metadata:
     chord-mark: "npm:^0.16.3"
     chord-symbol: "npm:4.0.0"
     chord-symbol-ultimateguitar: "npm:4.0.0"
-    dompurify: "npm:^3.1.6"
+    striptags: "npm:^3.2.0"
   languageName: unknown
   linkType: soft
 
@@ -20756,6 +20756,13 @@ __metadata:
   version: 2.0.1
   resolution: "strip-json-comments@npm:2.0.1"
   checksum: b509231cbdee45064ff4f9fd73609e2bcc4e84a4d508e9dd0f31f70356473fde18abfb5838c17d56fb236f5a06b102ef115438de0600b749e818a35fbbc48c43
+  languageName: node
+  linkType: hard
+
+"striptags@npm:^3.2.0":
+  version: 3.2.0
+  resolution: "striptags@npm:3.2.0"
+  checksum: 72c8eea03c04ca8522511caf44ffd2bde4b5f36cbeb5d43140906c0a7ee19e98b3341bf96370ccb643e55972587eafac772d4a3f7f526d3045c2cf36270511e6
   languageName: node
   linkType: hard
 
