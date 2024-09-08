@@ -1,3 +1,7 @@
+/**
+ * @jest-environment node
+ */
+// we run this test in pure nodejs to make sure the package does not rely on the DOM
 import convert2ChordMark from '../src/convert2ChordMark';
 
 const chordProInput = `MySong

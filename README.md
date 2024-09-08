@@ -28,6 +28,7 @@ Want to give it a try? Head over to the [5 minutes tutorial](https://chordmark.n
 | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
 | [chord-mark](https://github.com/no-chris/chord-mark/tree/master/packages/chord-mark)                       | The core library for parsing and rendering songs |
 | [chord-mark-converters](https://github.com/no-chris/chord-mark/tree/master/packages/chord-mark-converters) | Convert to and from ChordMark format             |
+| [chord-mark-jsdom](https://github.com/no-chris/chord-mark/tree/master/packages/chord-mark-jsdom)           | Use ChordMark server-side in nodeJs              |
 | [chord-mark-themes](https://github.com/no-chris/chord-mark/tree/master/packages/chord-mark-themes)         | A set of themes to style `chord-mark` output     |
 | [documentation](https://github.com/no-chris/chord-mark/tree/master/packages/documentation)                 | The documentation website                        |
 

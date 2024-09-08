@@ -1,8 +1,5 @@
-import domPurify from 'dompurify';
+import striptags from 'striptags';
 
 export default function stripTags(html) {
-	return domPurify.sanitize(html, {
-		ALLOWED_TAGS: ['#text'],
-		KEEP_CONTENT: true,
-	});
+	return striptags(html);
 }

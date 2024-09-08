@@ -8519,6 +8519,246 @@ var without = baseRest(function(array, values) {
 module.exports = without;
 
 
+/***/ }),
+
+/***/ 5747:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+var __WEBPACK_AMD_DEFINE_RESULT__;
+
+(function (global) {
+
+    // minimal symbol polyfill for IE11 and others
+    if (typeof Symbol !== 'function') {
+        var Symbol = function(name) {
+            return name;
+        }
+
+        Symbol.nonNative = true;
+    }
+
+    const STATE_PLAINTEXT = Symbol('plaintext');
+    const STATE_HTML      = Symbol('html');
+    const STATE_COMMENT   = Symbol('comment');
+
+    const ALLOWED_TAGS_REGEX  = /<(\w*)>/g;
+    const NORMALIZE_TAG_REGEX = /<\/?([^\s\/>]+)/;
+
+    function striptags(html, allowable_tags, tag_replacement) {
+        html            = html || '';
+        allowable_tags  = allowable_tags || [];
+        tag_replacement = tag_replacement || '';
+
+        let context = init_context(allowable_tags, tag_replacement);
+
+        return striptags_internal(html, context);
+    }
+
+    function init_striptags_stream(allowable_tags, tag_replacement) {
+        allowable_tags  = allowable_tags || [];
+        tag_replacement = tag_replacement || '';
+
+        let context = init_context(allowable_tags, tag_replacement);
+
+        return function striptags_stream(html) {
+            return striptags_internal(html || '', context);
+        };
+    }
+
+    striptags.init_streaming_mode = init_striptags_stream;
+
+    function init_context(allowable_tags, tag_replacement) {
+        allowable_tags = parse_allowable_tags(allowable_tags);
+
+        return {
+            allowable_tags : allowable_tags,
+            tag_replacement: tag_replacement,
+
+            state         : STATE_PLAINTEXT,
+            tag_buffer    : '',
+            depth         : 0,
+            in_quote_char : ''
+        };
+    }
+
+    function striptags_internal(html, context) {
+        if (typeof html != "string") {
+            throw new TypeError("'html' parameter must be a string");
+        }
+
+        let allowable_tags  = context.allowable_tags;
+        let tag_replacement = context.tag_replacement;
+
+        let state         = context.state;
+        let tag_buffer    = context.tag_buffer;
+        let depth         = context.depth;
+        let in_quote_char = context.in_quote_char;
+        let output        = '';
+
+        for (let idx = 0, length = html.length; idx < length; idx++) {
+            let char = html[idx];
+
+            if (state === STATE_PLAINTEXT) {
+                switch (char) {
+                    case '<':
+                        state       = STATE_HTML;
+                        tag_buffer += char;
+                        break;
+
+                    default:
+                        output += char;
+                        break;
+                }
+            }
+
+            else if (state === STATE_HTML) {
+                switch (char) {
+                    case '<':
+                        // ignore '<' if inside a quote
+                        if (in_quote_char) {
+                            break;
+                        }
+
+                        // we're seeing a nested '<'
+                        depth++;
+                        break;
+
+                    case '>':
+                        // ignore '>' if inside a quote
+                        if (in_quote_char) {
+                            break;
+                        }
+
+                        // something like this is happening: '<<>>'
+                        if (depth) {
+                            depth--;
+
+                            break;
+                        }
+
+                        // this is closing the tag in tag_buffer
+                        in_quote_char = '';
+                        state         = STATE_PLAINTEXT;
+                        tag_buffer   += '>';
+
+                        if (allowable_tags.has(normalize_tag(tag_buffer))) {
+                            output += tag_buffer;
+                        } else {
+                            output += tag_replacement;
+                        }
+
+                        tag_buffer = '';
+                        break;
+
+                    case '"':
+                    case '\'':
+                        // catch both single and double quotes
+
+                        if (char === in_quote_char) {
+                            in_quote_char = '';
+                        } else {
+                            in_quote_char = in_quote_char || char;
+                        }
+
+                        tag_buffer += char;
+                        break;
+
+                    case '-':
+                        if (tag_buffer === '<!-') {
+                            state = STATE_COMMENT;
+                        }
+
+                        tag_buffer += char;
+                        break;
+
+                    case ' ':
+                    case '\n':
+                        if (tag_buffer === '<') {
+                            state      = STATE_PLAINTEXT;
+                            output    += '< ';
+                            tag_buffer = '';
+
+                            break;
+                        }
+
+                        tag_buffer += char;
+                        break;
+
+                    default:
+                        tag_buffer += char;
+                        break;
+                }
+            }
+
+            else if (state === STATE_COMMENT) {
+                switch (char) {
+                    case '>':
+                        if (tag_buffer.slice(-2) == '--') {
+                            // close the comment
+                            state = STATE_PLAINTEXT;
+                        }
+
+                        tag_buffer = '';
+                        break;
+
+                    default:
+                        tag_buffer += char;
+                        break;
+                }
+            }
+        }
+
+        // save the context for future iterations
+        context.state         = state;
+        context.tag_buffer    = tag_buffer;
+        context.depth         = depth;
+        context.in_quote_char = in_quote_char;
+
+        return output;
+    }
+
+    function parse_allowable_tags(allowable_tags) {
+        let tag_set = new Set();
+
+        if (typeof allowable_tags === 'string') {
+            let match;
+
+            while ((match = ALLOWED_TAGS_REGEX.exec(allowable_tags))) {
+                tag_set.add(match[1]);
+            }
+        }
+
+        else if (!Symbol.nonNative &&
+                 typeof allowable_tags[Symbol.iterator] === 'function') {
+
+            tag_set = new Set(allowable_tags);
+        }
+
+        else if (typeof allowable_tags.forEach === 'function') {
+            // IE11 compatible
+            allowable_tags.forEach(tag_set.add, tag_set);
+        }
+
+        return tag_set;
+    }
+
+    function normalize_tag(tag_buffer) {
+        let match = NORMALIZE_TAG_REGEX.exec(tag_buffer);
+
+        return match ? match[1].toLowerCase() : null;
+    }
+
+    if (true) {
+        // AMD
+        !(__WEBPACK_AMD_DEFINE_RESULT__ = (function module_factory() { return striptags; }).call(exports, __webpack_require__, exports, module),
+		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+    }
+
+    else {}
+}(this));
+
+
 /***/ })
 
 /******/ 	});
@@ -8627,16 +8867,13 @@ __webpack_require__.d(__webpack_exports__, {
   convert2ChordMark: () => (/* reexport */ src_convert2ChordMark)
 });
 
-// EXTERNAL MODULE: ../../node_modules/dompurify/dist/purify.js
-var purify = __webpack_require__(1651);
-var purify_default = /*#__PURE__*/__webpack_require__.n(purify);
+// EXTERNAL MODULE: ../../node_modules/striptags/src/striptags.js
+var striptags = __webpack_require__(5747);
+var striptags_default = /*#__PURE__*/__webpack_require__.n(striptags);
 ;// CONCATENATED MODULE: ./src/helpers/stripTags.js
 
 function stripTags_stripTags(html) {
-  return purify_default().sanitize(html, {
-    ALLOWED_TAGS: ['#text'],
-    KEEP_CONTENT: true
-  });
+  return striptags_default()(html);
 }
 ;// CONCATENATED MODULE: ../../node_modules/chord-symbol/src/helpers/chain.js
 /**
@@ -11545,15 +11782,22 @@ var looksLikeChordPro = function looksLikeChordPro(allLines) {
   return chordsLyricsLines.length > chordLines.length;
 };
 /* harmony default export */ const src_convert2ChordMark = (convert2ChordMark);
+// EXTERNAL MODULE: ../../node_modules/dompurify/dist/purify.js
+var purify = __webpack_require__(1651);
+;// CONCATENATED MODULE: ../chord-mark/src/core/dom/getDomPurify.js
+
+/* harmony default export */ const dom_getDomPurify = (function (windowObject) {
+  return windowObject ? createDOMPurify(windowObject) : createDOMPurify;
+});
 ;// CONCATENATED MODULE: ../chord-mark/src/core/dom/escapeHTML.js
 
-function escapeHTML_escapeHTML(unescaped) {
-  return domPurify.sanitize(unescaped);
+function escapeHTML_escapeHTML(unescaped, windowObject) {
+  return getDomPurify(windowObject).sanitize(unescaped);
 }
 ;// CONCATENATED MODULE: ../chord-mark/src/core/dom/stripTags.js
 
-function dom_stripTags_stripTags(html) {
-  return domPurify.sanitize(html, {
+function dom_stripTags_stripTags(html, windowObject) {
+  return getDomPurify(windowObject).sanitize(html, {
     ALLOWED_TAGS: ['#text'],
     KEEP_CONTENT: true
   });
@@ -13015,16 +13259,24 @@ function getAllKeysInSong_getAllKeysInSong(allLines, allChords) {
 
 /**
  * @param {string|array} songSrc
+ * @param {Object} [options]
+ * @param {Object} [options.windowObject] - A JSDOM window object for using chordmark in NodeJs
  * @returns {Song}
  */
 function parseSong(songSrc) {
+  var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+    windowObject = _ref.windowObject;
   var songArray = !_isArray(songSrc) ? songSrc.split('\n') : songSrc;
   var songLines = songLinesFactory();
 
   /**
    * @type {SongLine[]}
    */
-  songArray.map(escapeHTML).map(stripTags).forEach(songLines.addLine);
+  songArray.map(function (line) {
+    return escapeHTML(line, windowObject);
+  }).map(function (line) {
+    return stripTags(line, windowObject);
+  }).forEach(songLines.addLine);
   songLines.flagPositionedChords();
   var allLines = songLines.asArray();
   var allChords = getAllChordsInSong(allLines);
@@ -13560,8 +13812,8 @@ function renderChordLine(chordLineModel) {
 var intersection = __webpack_require__(8150);
 ;// CONCATENATED MODULE: ../chord-mark/src/core/dom/htmlToElement.js
 
-function htmlToElement_htmlToElement(html) {
-  return domPurify.sanitize(html, {
+function htmlToElement_htmlToElement(html, windowObject) {
+  return getDomPurify(windowObject).sanitize(html, {
     RETURN_DOM_FRAGMENT: true
   }).firstChild;
 }
@@ -13593,19 +13845,20 @@ var breakPointsClasses = (/* unused pure expression or super */ null && (['cmCho
  * - refactoring entirely the chord/lyrics line rendering to implement the small screen renderer
  * @param {String} chordLine - html of a rendered chord line
  * @param {String} lyricLine - html of a rendered lyric line
+ * @param {Object} [windowObject] - A JSDOM window object for using chordmark in NodeJs
  * @returns {String} rendered html
  */
-function renderChordLyricLine_renderChordLyricLine(chordLine, lyricLine) {
-  var allChordTokens = getAllChordTokens(chordLine);
-  var allLyricTokens = getAllLyricTokens(lyricLine);
+function renderChordLyricLine_renderChordLyricLine(chordLine, lyricLine, windowObject) {
+  var allChordTokens = getAllChordTokens(chordLine, windowObject);
+  var allLyricTokens = getAllLyricTokens(lyricLine, windowObject);
   var allBreakPoints = getAllBreakpoints(allChordTokens, allLyricTokens);
   var chordLyricsPairs = getChordLyricsPairs(allBreakPoints, allChordTokens, allLyricTokens);
   return chordLyricLineTpl({
     chordLyricsPairs: chordLyricsPairs
   });
 }
-function getAllChordTokens(chordLine) {
-  var chordLineNodes = htmlToElement(chordLine);
+function getAllChordTokens(chordLine, windowObject) {
+  var chordLineNodes = htmlToElement(chordLine, windowObject);
   var allChordTokens = [];
   // using an object as a counter instead of an integer
   // so the counter can be used in a recursive loop
@@ -13652,9 +13905,9 @@ function getToken(text, textIndex, html) {
     html: html
   };
 }
-function getAllLyricTokens(lyricLine) {
+function getAllLyricTokens(lyricLine, windowObject) {
   var allTextNodes = [];
-  var textLyricLine = stripTags(lyricLine);
+  var textLyricLine = stripTags(lyricLine, windowObject);
   var textToken = '';
   Array.from(textLyricLine).forEach(function (char, charIndex) {
     if (char === ' ') {
@@ -13951,6 +14204,7 @@ var barHasMultiplePositionedChords = function barHasMultiplePositionedChords(lin
  * do not allow inline time signatures to be printed (e.g. Ultimate Guitar)
  * @param {Number} options.transposeValue
  * @param {Boolean} options.useShortNamings
+ * @param {Object} [options.windowObject] - A JSDOM window object for using chordmark in NodeJs
  * @param {Boolean} options.wrapChordLyricLines
  * @returns {String} rendered HTML
  */
@@ -13991,6 +14245,8 @@ function renderSong(parsedSong) {
     transposeValue = _ref$transposeValue === void 0 ? 0 : _ref$transposeValue,
     _ref$useShortNamings = _ref.useShortNamings,
     useShortNamings = _ref$useShortNamings === void 0 ? true : _ref$useShortNamings,
+    _ref$windowObject = _ref.windowObject,
+    windowObject = _ref$windowObject === void 0 ? undefined : _ref$windowObject,
     _ref$wrapChordLyricLi = _ref.wrapChordLyricLines,
     wrapChordLyricLines = _ref$wrapChordLyricLi === void 0 ? false : _ref$wrapChordLyricLi;
   var allLines = parsedSong.allLines,
@@ -14143,7 +14399,7 @@ function renderSong(parsedSong) {
           chartType: chartType
         });
         if (chordLineToMerge) {
-          rendered = renderChordLyricLine(chordLineToMerge, rendered);
+          rendered = renderChordLyricLine(chordLineToMerge, rendered, windowObject);
           chordLineToMerge = '';
         }
       }

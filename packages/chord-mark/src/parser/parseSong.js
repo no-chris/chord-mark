@@ -33,9 +33,11 @@ import getAllKeysInSong from './getAllKeysInSong';
 
 /**
  * @param {string|array} songSrc
+ * @param {Object} [options]
+ * @param {Object} [options.windowObject] - A JSDOM window object for using chordmark in NodeJs
  * @returns {Song}
  */
-export default function parseSong(songSrc) {
+export default function parseSong(songSrc, { windowObject } = {}) {
 	const songArray = !_isArray(songSrc) ? songSrc.split('\n') : songSrc;
 
 	const songLines = songLinesFactory();
@@ -43,7 +45,10 @@ export default function parseSong(songSrc) {
 	/**
 	 * @type {SongLine[]}
 	 */
-	songArray.map(escapeHTML).map(stripTags).forEach(songLines.addLine);
+	songArray
+		.map((line) => escapeHTML(line, windowObject))
+		.map((line) => stripTags(line, windowObject))
+		.forEach(songLines.addLine);
 
 	songLines.flagPositionedChords();
 

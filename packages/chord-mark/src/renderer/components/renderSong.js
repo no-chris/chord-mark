@@ -45,6 +45,7 @@ import { defaultTimeSignature } from '../../parser/syntax';
  * do not allow inline time signatures to be printed (e.g. Ultimate Guitar)
  * @param {Number} options.transposeValue
  * @param {Boolean} options.useShortNamings
+ * @param {Object} [options.windowObject] - A JSDOM window object for using chordmark in NodeJs
  * @param {Boolean} options.wrapChordLyricLines
  * @returns {String} rendered HTML
  */
@@ -69,6 +70,7 @@ export default function renderSong(
 		symbolType = 'chord',
 		transposeValue = 0,
 		useShortNamings = true,
+		windowObject = undefined,
 		wrapChordLyricLines = false,
 	} = {}
 ) {
@@ -285,7 +287,8 @@ export default function renderSong(
 						if (chordLineToMerge) {
 							rendered = renderChordLyricLine(
 								chordLineToMerge,
-								rendered
+								rendered,
+								windowObject
 							);
 							chordLineToMerge = '';
 						}
