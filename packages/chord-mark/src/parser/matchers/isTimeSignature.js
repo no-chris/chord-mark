@@ -21,6 +21,6 @@ const allowedTimeSignatures = [
 	'12/8',
 ];
 
-export default function isTimeSignatureString(string) {
+export default function isTimeSignature(string) {
 	return allowedTimeSignatures.includes(string);
 }

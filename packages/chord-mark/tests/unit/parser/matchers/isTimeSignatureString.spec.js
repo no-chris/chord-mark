@@ -1,8 +1,8 @@
-import isTimeSignatureString from '../../../../src/parser/matchers/isTimeSignatureString';
+import isTimeSignature from '../../../../src/parser/matchers/isTimeSignature';
 
-describe('isTimeSignatureString', () => {
+describe('isTimeSignatureS', () => {
 	test('Module', () => {
-		expect(isTimeSignatureString).toBeInstanceOf(Function);
+		expect(isTimeSignature).toBeInstanceOf(Function);
 	});
 });
 
@@ -37,6 +37,6 @@ describe.each([
 	['13/8', false],
 ])('Time signature string %s', (tsString, result) => {
 	test('Correctly detect time signature', () => {
-		expect(isTimeSignatureString(tsString)).toEqual(result);
+		expect(isTimeSignature(tsString)).toEqual(result);
 	});
 });

@@ -3,7 +3,7 @@ import clearSpaces from '../helper/clearSpaces';
 
 import syntax from '../syntax';
 import isChord from './isChord';
-import isTimeSignatureString from './isTimeSignatureString';
+import isTimeSignature from './isTimeSignature';
 
 const chordBeatCountSymbols = new RegExp(
 	_escapeRegExp(syntax.chordBeatCount) + '*$',
@@ -30,8 +30,7 @@ export default function isChordLine(line = '') {
 				isChord(clean) ||
 				(potentialChordToken.match(barRepeatSymbols) && index > 0) ||
 				clean === syntax.noChord ||
-				(isTimeSignatureString(potentialChordToken) &&
-					allTokens.length > 1)
+				(isTimeSignature(potentialChordToken) && allTokens.length > 1)
 			);
 		});
 }

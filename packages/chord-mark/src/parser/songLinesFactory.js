@@ -6,7 +6,7 @@ import isChordLine from './matchers/isChordLine';
 import isChordLineRepeater from './matchers/isChordLineRepeater';
 import isEmptyLine from './matchers/isEmptyLine';
 import isSectionLabel from './matchers/isSectionLabel';
-import isTimeSignature from './matchers/isTimeSignatureString';
+import isTimeSignature from './matchers/isTimeSignature';
 
 import parseChordLine from './parseChordLine';
 import parseKeyDeclaration from './parseKeyDeclaration';
