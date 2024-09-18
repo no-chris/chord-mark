@@ -1,4 +1,4 @@
-import isTimeSignatureString from './matchers/isTimeSignatureString';
+import isTimeSignature from './matchers/isTimeSignature';
 
 /**
  * @typedef {Object} TimeSignature
@@ -14,7 +14,7 @@ import isTimeSignatureString from './matchers/isTimeSignatureString';
  * @returns {TimeSignature}
  */
 export default function parseTimeSignature(string) {
-	if (!isTimeSignatureString(string)) {
+	if (!isTimeSignature(string)) {
 		throw new TypeError(
 			'Expected time signature string, received: ' + string
 		);

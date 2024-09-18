@@ -6,7 +6,7 @@ import _cloneDeep from 'lodash/cloneDeep';
 import syntax, { defaultTimeSignature } from './syntax';
 import clearSpaces from './helper/clearSpaces';
 
-import isTimeSignatureString from './matchers/isTimeSignatureString';
+import isTimeSignature from './matchers/isTimeSignature';
 import parseChord from './parseChord';
 import parseTimeSignature from './parseTimeSignature';
 
@@ -90,7 +90,7 @@ export default function parseChordLine(
 	allTokens.forEach((token, tokenIndex) => {
 		if (token.match(barRepeatSymbols)) {
 			repeatPreviousBars(token);
-		} else if (isTimeSignatureString(token)) {
+		} else if (isTimeSignature(token)) {
 			changeTimeSignature(token);
 		} else {
 			parseChordToken(token);
