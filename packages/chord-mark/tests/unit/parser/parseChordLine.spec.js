@@ -19,6 +19,7 @@ describe('parseChordLine', () => {
 	});
 });
 
+const ts1_4 = parseTimeSignature('1/4');
 const ts2_4 = parseTimeSignature('2/4');
 const ts3_4 = parseTimeSignature('3/4');
 const ts4_4 = parseTimeSignature('4/4');
@@ -1100,76 +1101,51 @@ describe.each([
 		},
 	],
 	[
-		'2 sub-beat groups over 2 bars of 2/4',
-		'C. [F G] [F G] C.',
-		ts2_4,
+		'sub-beat group in a single beat measure',
+		'1/4 [NC A] 4/4 E',
+		ts4_4,
 		{
 			allBars: [
 				{
 					allChords: [
 						{
-							string: 'C.',
-							model: { symbol: 'C' },
-							duration: 1,
-							beat: 1,
-							isInSubBeatGroup: false,
-						},
-						{
-							string: '[F',
-							model: { symbol: 'F' },
+							string: '[NC',
+							model: 'NC',
 							duration: 0.5,
-							beat: 2,
+							beat: 1,
 							isInSubBeatGroup: true,
 							isFirstOfSubBeat: true,
 							isLastOfSubBeat: false,
 						},
 						{
-							string: 'G]',
-							model: { symbol: 'G' },
+							string: 'A]',
+							model: { symbol: 'A' },
 							duration: 0.5,
-							beat: 2,
+							beat: 1,
 							isInSubBeatGroup: true,
 							isFirstOfSubBeat: false,
 							isLastOfSubBeat: true,
 						},
 					],
-					timeSignature: ts2_4,
+					timeSignature: ts1_4,
 					isRepeated: false,
-					hasUnevenChordsDurations: true,
-					lineHadTimeSignatureChange: false,
+					hasUnevenChordsDurations: false,
+					lineHadTimeSignatureChange: true,
 				},
 				{
 					allChords: [
 						{
-							string: '[F',
-							model: { symbol: 'F' },
-							duration: 0.5,
+							string: 'E',
+							model: { symbol: 'E' },
+							duration: 4,
 							beat: 1,
-							isInSubBeatGroup: true,
-							isFirstOfSubBeat: true,
-							isLastOfSubBeat: false,
-						},
-						{
-							string: 'G]',
-							model: { symbol: 'G' },
-							duration: 0.5,
-							beat: 1,
-							isInSubBeatGroup: true,
-							isFirstOfSubBeat: false,
-							isLastOfSubBeat: true,
-						},
-						{
-							string: 'C.',
-							model: { symbol: 'C' },
-							duration: 1,
-							beat: 2,
 							isInSubBeatGroup: false,
 						},
 					],
-					timeSignature: ts2_4,
+					timeSignature: ts4_4,
 					isRepeated: false,
-					hasUnevenChordsDurations: true,
-					lineHadTimeSignatureChange: false,
+					hasUnevenChordsDurations: false,
+					lineHadTimeSignatureChange: true,
 				},
 			],
 			originalKey: {},
