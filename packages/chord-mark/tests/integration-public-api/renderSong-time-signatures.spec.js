@@ -33,8 +33,7 @@ describe('renderSong - time signatures', () => {
 		test('prints inline time signatures by default', () => {
 			const text = toText(render(input));
 			const lines = text.split('\n');
-			expect(lines[1]).toContain('2/4');
-			expect(lines[1]).toContain('4/4');
+			expect(lines[1]).toBe('|2/4 G     |4/4 Am          |');
 		});
 
 		test('prints inline time signatures when explicitly true', () => {
@@ -42,8 +41,7 @@ describe('renderSong - time signatures', () => {
 				render(input, { printInlineTimeSignatures: true })
 			);
 			const lines = text.split('\n');
-			expect(lines[1]).toContain('2/4 G');
-			expect(lines[1]).toContain('4/4 Am');
+			expect(lines[1]).toBe('|2/4 G     |4/4 Am          |');
 		});
 
 		test('hides inline time signatures when false', () => {

@@ -65,11 +65,19 @@ describe('parseSong - keys', () => {
 		});
 	});
 
-	test('key affects chord parsing in allChords', () => {
+	test('key affects originalKey on chord lines', () => {
 		const parsed = parseSong(
 			song('key G', 'C.. G..', 'key Am', 'Am.. Dm..')
 		);
-		expect(parsed.allChords.length).toBeGreaterThan(0);
+		const chordLines = parsed.allLines.filter(
+			(l) => l.type === 'chord'
+		);
+		expect(chordLines).toHaveLength(2);
+		expect(chordLines[0].model.originalKey.string).toBe('G');
+		expect(chordLines[0].model.originalKey.accidental).toBe('sharp');
+		expect(chordLines[1].model.originalKey.string).toBe('Am');
+		expect(chordLines[1].model.originalKey.accidental).toBe('flat');
+		expect(parsed.allChords).toHaveLength(4);
 	});
 
 	test('no key declaration results in empty explicit keys', () => {

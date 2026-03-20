@@ -36,24 +36,36 @@ describe('parseSong - sections', () => {
 		expect(sectionLabels[1].model.label).toBe('c');
 	});
 
-	test('section copy repeats chord lines', () => {
+	test('section copy repeats chord and lyric lines', () => {
 		const parsed = parseSong(sectionCopy());
 		const sectionLabels = parsed.allLines.filter(
 			(l) => l.type === 'sectionLabel'
 		);
 		expect(sectionLabels).toHaveLength(3);
 
-		// Copied sections should have chords from auto-repeat
+		// Each section gets its own chord line (original + 2 copies)
 		const chordLines = parsed.allLines.filter((l) => l.type === 'chord');
-		expect(chordLines.length).toBeGreaterThanOrEqual(2);
+		expect(chordLines).toHaveLength(3);
+		// Copied chord lines have the same content
+		expect(chordLines[1].string).toBe('C G');
+		expect(chordLines[2].string).toBe('C G');
 	});
 
-	test('section copy marks lines as isFromSectionCopy', () => {
+	test('section copy marks exactly the copied lines as isFromSectionCopy', () => {
 		const parsed = parseSong(sectionCopy());
 		const copiedLines = parsed.allLines.filter(
 			(l) => l.isFromSectionCopy
 		);
-		expect(copiedLines.length).toBeGreaterThan(0);
+		// 2 copied sections × 3 lines each (sectionLabel + chord + lyric)
+		expect(copiedLines).toHaveLength(6);
+		expect(copiedLines.map((l) => l.type)).toEqual([
+			'sectionLabel',
+			'chord',
+			'lyric',
+			'sectionLabel',
+			'chord',
+			'lyric',
+		]);
 	});
 
 	test('section multiply x2 duplicates section lines', () => {
@@ -67,12 +79,18 @@ describe('parseSong - sections', () => {
 		expect(sectionLabels[1].isFromSectionMultiply).toBe(true);
 	});
 
-	test('section multiply marks lines as isFromSectionMultiply', () => {
+	test('section multiply marks exactly the multiplied lines', () => {
 		const parsed = parseSong(sectionMultiply());
 		const multipliedLines = parsed.allLines.filter(
 			(l) => l.isFromSectionMultiply
 		);
-		expect(multipliedLines.length).toBeGreaterThan(0);
+		// x2 creates 1 additional copy: sectionLabel + chord + lyric = 3 lines
+		expect(multipliedLines).toHaveLength(3);
+		expect(multipliedLines.map((l) => l.type)).toEqual([
+			'sectionLabel',
+			'chord',
+			'lyric',
+		]);
 	});
 
 	test('parses custom section label', () => {
@@ -93,13 +111,16 @@ describe('parseSong - sections', () => {
 		expect(sectionLabels[2].index).toBe(3);
 	});
 
-	test('auto-repeat chords marks lines as isFromAutoRepeatChords', () => {
+	test('auto-repeat chords marks exactly the repeated chord line', () => {
 		const parsed = parseSong(
 			song('#v', 'C G', 'line1', '', '#v', 'line2')
 		);
 		const autoRepeatLines = parsed.allLines.filter(
 			(l) => l.isFromAutoRepeatChords
 		);
-		expect(autoRepeatLines.length).toBeGreaterThan(0);
+		// Only the chord line in verse 2 is auto-repeated
+		expect(autoRepeatLines).toHaveLength(1);
+		expect(autoRepeatLines[0].type).toBe('chord');
+		expect(autoRepeatLines[0].string).toBe('C G');
 	});
 });

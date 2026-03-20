@@ -48,7 +48,7 @@ describe('parseSong - chords', () => {
 	});
 
 	test('parses chord line repeat (%%)', () => {
-		// %% repeats the 2nd-to-last chord line (% = last, %% = 2nd-to-last)
+		// %% repeats the 2nd-to-last chord line
 		const parsed = parseSong(
 			song('C.. G..', 'First line', 'Am.. F..', 'Second line', '%%')
 		);
@@ -57,6 +57,9 @@ describe('parseSong - chords', () => {
 		expect(chordLines[0].isFromChordLineRepeater).toBeFalsy();
 		expect(chordLines[1].isFromChordLineRepeater).toBeFalsy();
 		expect(chordLines[2].isFromChordLineRepeater).toBe(true);
+		// %% repeats the 1st chord line (C.. G..), not the 2nd (Am.. F..)
+		expect(chordLines[2].model.allBars[0].allChords[0].string).toBe('C..');
+		expect(chordLines[2].model.allBars[0].allChords[1].string).toBe('G..');
 	});
 
 	test('parses no-chord (NC)', () => {
