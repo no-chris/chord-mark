@@ -33,19 +33,162 @@ describe('renderSong - bar split across lines', () => {
 				'|A...  \n' + 'line 1\n' + 'B.  |C  |\n' + 'line 2'
 			);
 		});
+
+		test('continuation line contains only the continuation bar', () => {
+			const text = toText(
+				render(song('A D... \\', 'line 1', 'G.', 'line 2'), {
+					alignBars: false,
+				})
+			);
+			expect(text).toBe(
+				'|A  |D...  \n' +
+					'line 1\n' +
+					'G.  |\n' +
+					'line 2'
+			);
+		});
+
+		test('continuation-only line merges in chords-only mode', () => {
+			const text = toText(
+				render(song('A D... \\', 'line 1', 'G.', 'line 2'), {
+					chartType: 'chords',
+					alignBars: false,
+				})
+			);
+			expect(text).toBe('|A  |D...  G.  |');
+		});
+
+		test('continuation-only line with printBarSeparators=never', () => {
+			const text = toText(
+				render(song('A D... \\', 'line 1', 'G.', 'line 2'), {
+					alignBars: false,
+					printBarSeparators: 'never',
+				})
+			);
+			expect(text).toBe(
+				'A  D...  \n' +
+					'line 1\n' +
+					'G.\n' +
+					'line 2'
+			);
+		});
+
+		test('continuation-only line with alignBars', () => {
+			const text = toText(
+				render(song('A D... \\', 'line 1', 'G.', 'line 2'), {
+					alignBars: true,
+				})
+			);
+			expect(text).toBe(
+				'|A     |D...    \n' +
+					'line 1\n' +
+					'G.  |\n' +
+					'line 2'
+			);
+		});
 	});
 
-	describe('split with positioned chords', () => {
-		test('aligns chords with lyrics on both lines', () => {
+	describe('continuation-only line with positioned chords', () => {
+		test('aligns continuation-only bar with lyrics', () => {
 			const text = toText(
 				render(
 					song(
 						'A D... \\',
-						'_ Lorem ipsum dolor _sit amet,',
-						'G. C',
-						'_Con _sectetur adipiscing elit'
+						'_Lorem _ipsum dolor sit amet',
+						'G.',
+						'_Consectetur'
 					)
 				)
+			);
+			expect(text).toBe(
+				'|A    |D...                \n' +
+					' Lorem ipsum dolor sit amet\n' +
+					'G.         |\n' +
+					'Consectetur'
+			);
+		});
+
+		test('aligns continuation-only bar with printBarSeparators=never', () => {
+			const text = toText(
+				render(
+					song(
+						'A D... \\',
+						'_Lorem _ipsum dolor sit amet',
+						'G.',
+						'_Consectetur'
+					),
+					{ printBarSeparators: 'never' }
+				)
+			);
+			expect(text).toBe(
+				'A     D...                \n' +
+					'Lorem ipsum dolor sit amet\n' +
+					'G.\n' +
+					'Consectetur'
+			);
+		});
+	});
+
+	describe('split with positioned chords', () => {
+		const splitInput = song(
+			'A D... \\',
+			'_ Lorem ipsum dolor _sit amet,',
+			'G. C',
+			'_Con _sectetur adipiscing elit'
+		);
+
+		test('aligns chords with lyrics on both lines', () => {
+			const text = toText(render(splitInput));
+			expect(text).toBe(
+				'|A                 |D...     \n' +
+					'  Lorem ipsum dolor sit amet,\n' +
+					'G. |C                       |\n' +
+					'Con sectetur adipiscing elit'
+			);
+		});
+
+		test('aligns with printBarSeparators=never', () => {
+			const text = toText(
+				render(splitInput, { printBarSeparators: 'never' })
+			);
+			expect(text).toBe(
+				'A                  D...     \n' +
+					' Lorem ipsum dolor sit amet,\n' +
+					'G.  C\n' +
+					'Con sectetur adipiscing elit'
+			);
+		});
+
+		test('aligns with printChordsDuration=never', () => {
+			const text = toText(
+				render(splitInput, { printChordsDuration: 'never' })
+			);
+			expect(text).toBe(
+				'|A                 |D...     \n' +
+					'  Lorem ipsum dolor sit amet,\n' +
+					'G. |C                       |\n' +
+					'Con sectetur adipiscing elit'
+			);
+		});
+
+		test('aligns with printBarSeparators=never and printChordsDuration=never', () => {
+			const text = toText(
+				render(splitInput, {
+					printBarSeparators: 'never',
+					printChordsDuration: 'never',
+				})
+			);
+			expect(text).toBe(
+				'A                  D...     \n' +
+					' Lorem ipsum dolor sit amet,\n' +
+					'G.  C\n' +
+					'Con sectetur adipiscing elit'
+			);
+		});
+
+		test('aligns with printChordsDuration=always', () => {
+			const text = toText(
+				render(splitInput, { printChordsDuration: 'always' })
 			);
 			expect(text).toBe(
 				'|A                 |D...     \n' +
@@ -343,6 +486,190 @@ describe('renderSong - bar split across lines', () => {
 			expect(chordLines[1].model.allBars[0].isContinuation).toBe(true);
 			expect(chordLines[2].model.hasContinuation).toBe(false);
 			expect(chordLines[2].model.allBars[0].isContinuation).toBe(true);
+		});
+	});
+
+	describe('auto-repeat chords with bar split', () => {
+		test('full render of auto-repeated split section', () => {
+			const text = toText(
+				render(
+					song(
+						'#v',
+						'A D... \\',
+						'Lorem ipsum',
+						'G. C',
+						'Consectetur',
+						'#v',
+						'New lyrics',
+						'New lyrics2'
+					),
+					{ alignBars: false }
+				)
+			);
+			expect(text).toBe(
+				'Verse 1\n' +
+					'|A  |D...  \n' +
+					'Lorem ipsum\n' +
+					'G.  |C  |\n' +
+					'Consectetur\n' +
+					'Verse 2\n' +
+					'|A  |D...  \n' +
+					'New lyrics\n' +
+					'G.  |C  |\n' +
+					'New lyrics2'
+			);
+		});
+
+		test('full render of overridden split line', () => {
+			const text = toText(
+				render(
+					song(
+						'#v',
+						'A D... \\',
+						'Lorem ipsum',
+						'G. C',
+						'Consectetur',
+						'#v',
+						'E F',
+						'New lyrics',
+						'New lyrics2'
+					),
+					{ alignBars: false }
+				)
+			);
+			expect(text).toBe(
+				'Verse 1\n' +
+					'|A  |D...  \n' +
+					'Lorem ipsum\n' +
+					'G.  |C  |\n' +
+					'Consectetur\n' +
+					'Verse 2\n' +
+					'|E  |F  |\n' +
+					'New lyrics\n' +
+					'New lyrics2'
+			);
+		});
+
+		test('full render of overridden continuation line', () => {
+			const text = toText(
+				render(
+					song(
+						'#v',
+						'A D... \\',
+						'Lorem ipsum',
+						'G. C',
+						'Consectetur',
+						'#v',
+						'New lyrics',
+						'E. F',
+						'New lyrics2'
+					),
+					{ alignBars: false }
+				)
+			);
+			expect(text).toBe(
+				'Verse 1\n' +
+					'|A  |D...  \n' +
+					'Lorem ipsum\n' +
+					'G.  |C  |\n' +
+					'Consectetur\n' +
+					'Verse 2\n' +
+					'|A  |D...  \n' +
+					'New lyrics\n' +
+					'E.  |F  |\n' +
+					'New lyrics2'
+			);
+		});
+	});
+
+	describe('even beat count split', () => {
+		test('splits a bar with even beats on each side', () => {
+			const text = toText(
+				render(song('G C.. \\', 'line 1', 'D.. G', 'line 2'), {
+					alignBars: false,
+				})
+			);
+			expect(text).toBe(
+				'|G  |C..  \n' +
+					'line 1\n' +
+					'D..  |G  |\n' +
+					'line 2'
+			);
+		});
+
+		test('even beat split merges in chords-only mode', () => {
+			const text = toText(
+				render(song('G C.. \\', 'line 1', 'D.. G', 'line 2'), {
+					chartType: 'chords',
+					alignBars: false,
+				})
+			);
+			expect(text).toBe('|G  |C..  D..  |G  |');
+		});
+
+		test('even beat split parser flags are correct', () => {
+			const parsed = parseSong(song('G C.. \\', 'line 1', 'D.. G'));
+			const chordLines = parsed.allLines.filter(
+				(l) => l.type === 'chord'
+			);
+			expect(chordLines.length).toBe(2);
+			expect(chordLines[0].model.hasContinuation).toBe(true);
+			expect(chordLines[1].model.allBars[0].isContinuation).toBe(true);
+		});
+	});
+
+	describe('split with printChordsDuration', () => {
+		test('durations are always printed on incomplete and continuation bars even with never', () => {
+			const text = toText(
+				render(
+					song('A D... \\', 'Lorem ipsum', 'G. C', 'Consectetur'),
+					{ printChordsDuration: 'never', alignBars: false }
+				)
+			);
+			// D... and G. must keep their dots even with printChordsDuration='never'
+			expect(text).toBe(
+				'|A  |D...  \n' +
+					'Lorem ipsum\n' +
+					'G.  |C  |\n' +
+					'Consectetur'
+			);
+		});
+
+		test('durations on complete bars are hidden with never', () => {
+			const text = toText(
+				render(
+					song(
+						'A.. B.. D... \\',
+						'Lorem ipsum',
+						'G. C',
+						'Consectetur'
+					),
+					{ printChordsDuration: 'never', alignBars: false }
+				)
+			);
+			// A.. B.. is a complete bar with uneven durations → hidden with 'never'
+			// D... (incomplete) and G. (continuation) must keep dots
+			expect(text).toBe(
+				'|A  B  |D...  \n' +
+					'Lorem ipsum\n' +
+					'G.  |C  |\n' +
+					'Consectetur'
+			);
+		});
+
+		test('durations on split bars are printed with always', () => {
+			const text = toText(
+				render(
+					song('A D... \\', 'Lorem ipsum', 'G. C', 'Consectetur'),
+					{ printChordsDuration: 'always', alignBars: false }
+				)
+			);
+			expect(text).toBe(
+				'|A  |D...  \n' +
+					'Lorem ipsum\n' +
+					'G.  |C  |\n' +
+					'Consectetur'
+			);
 		});
 	});
 

@@ -266,7 +266,30 @@ export default function songLinesFactory() {
 
 			while (shouldRepeatLineFromBlueprint(blueprintLine, line)) {
 				if (blueprintLine.type === lineTypes.CHORD) {
-					addPreviousChordLine(_cloneDeep(blueprintLine));
+					const bpModel = blueprintLine.model;
+					const isBlueprintSplitLine =
+						bpModel.hasContinuation;
+					const isBlueprintContinuationLine =
+						bpModel.allBars?.length > 0 &&
+						bpModel.allBars[0].isContinuation;
+
+					if (isBlueprintSplitLine) {
+						pendingBarContext = _cloneDeep(
+							bpModel.pendingBar
+						);
+						pendingSplitLineIndex = allLines.length;
+					} else if (isBlueprintContinuationLine) {
+						if (pendingBarContext !== null) {
+							pendingBarContext = null;
+							pendingSplitLineIndex = null;
+						} else {
+							blueprintIndex++;
+							blueprintLine = blueprint[blueprintIndex];
+							continue;
+						}
+					} else {
+						addPreviousChordLine(_cloneDeep(blueprintLine));
+					}
 				}
 				repeatedLine = {
 					..._cloneDeep(blueprintLine),

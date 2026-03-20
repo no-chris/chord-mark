@@ -129,6 +129,98 @@ describe('bar split invalidation', () => {
 	});
 });
 
+describe('bar split with auto-repeat chords', () => {
+	test('both split + continuation auto-repeat with correct flags', () => {
+		const songLines = songLinesFactory();
+		// First verse: split chord lines
+		['#v', 'A D... \\', 'lyrics', 'G. C', 'lyrics2'].forEach(
+			songLines.addLine
+		);
+		// Second verse: only lyrics → chords auto-repeat from blueprint
+		['#v', 'new lyrics', 'new lyrics2'].forEach(songLines.addLine);
+
+		const allLines = songLines.asArray();
+		// Find the auto-repeated chord lines in second verse
+		const autoRepeated = allLines.filter(
+			(l) => l.isFromAutoRepeatChords && l.type === 'chord'
+		);
+		expect(autoRepeated.length).toBe(2);
+		expect(autoRepeated[0].model.hasContinuation).toBe(true);
+		expect(autoRepeated[1].model.allBars[0].isContinuation).toBe(true);
+	});
+
+	test('override split line → orphaned continuation skipped', () => {
+		const songLines = songLinesFactory();
+		// First verse: split chord lines
+		['#v', 'A D... \\', 'lyrics', 'G. C', 'lyrics2'].forEach(
+			songLines.addLine
+		);
+		// Second verse: user provides a normal chord line instead of split
+		['#v', 'E F', 'new lyrics2'].forEach(songLines.addLine);
+
+		const allLines = songLines.asArray();
+		// The continuation from blueprint should be skipped
+		const autoRepeated = allLines.filter(
+			(l) => l.isFromAutoRepeatChords && l.type === 'chord'
+		);
+		expect(autoRepeated.length).toBe(0);
+	});
+
+	test('override continuation with compatible chords → continuation works', () => {
+		const songLines = songLinesFactory();
+		// First verse: split chord lines
+		['#v', 'A D... \\', 'lyrics', 'G. C', 'lyrics2'].forEach(
+			songLines.addLine
+		);
+		// Second verse: split auto-repeats, user provides compatible continuation
+		['#v', 'lyrics', 'E. F', 'new lyrics2'].forEach(songLines.addLine);
+
+		const allLines = songLines.asArray();
+		// Split should auto-repeat, setting pendingBarContext
+		const autoRepeated = allLines.filter(
+			(l) => l.isFromAutoRepeatChords && l.type === 'chord'
+		);
+		expect(autoRepeated.length).toBe(1);
+		expect(autoRepeated[0].model.hasContinuation).toBe(true);
+
+		// User-typed continuation should have isContinuation
+		const userChordLines = allLines.filter(
+			(l) => !l.isFromAutoRepeatChords && l.type === 'chord'
+		);
+		// Last user chord line in second verse is the continuation
+		const continuationLine = userChordLines[userChordLines.length - 1];
+		expect(continuationLine.model.allBars[0].isContinuation).toBe(true);
+	});
+
+	test('override continuation with incompatible chords → both fall back to lyric', () => {
+		const songLines = songLinesFactory();
+		// First verse: split chord lines
+		['#v', 'A D... \\', 'lyrics', 'G. C', 'lyrics2'].forEach(
+			songLines.addLine
+		);
+		// Second verse: split auto-repeats, user provides incompatible continuation
+		// D... = 3 beats pending 1 beat. G.. = 2 beats → too many
+		['#v', 'lyrics', 'G.. C', 'new lyrics2'].forEach(songLines.addLine);
+
+		const allLines = songLines.asArray();
+		// The split line should be invalidated (reverted to lyric)
+		// and the incompatible continuation should also be lyric
+		const secondVerseLines = allLines.slice(
+			allLines.findIndex(
+				(l, i) =>
+					i > 0 &&
+					l.type === 'sectionLabel' &&
+					l.model.label === 'v'
+			) + 1
+		);
+		// No chord lines in second verse
+		const chordLinesInSecondVerse = secondVerseLines.filter(
+			(l) => l.type === 'chord'
+		);
+		expect(chordLinesInSecondVerse.length).toBe(0);
+	});
+});
+
 describe('Force lyric line symbol', () => {
 	test('Correctly detects a forced lyric line', () => {
 		const input = [':Ah', ':C G', ':Fish'];
