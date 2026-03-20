@@ -25,29 +25,57 @@ describe('renderSong - filtering (chartType)', () => {
 
 	test('chartType="all" shows chords and lyrics', () => {
 		const text = toText(render(input, { chartType: 'all', alignBars: true }));
-		expect(text).toContain('A7');
-		expect(text).toContain('v1-line-1');
-		expect(text).toContain('v2-line-1');
+		expect(text).toBe(
+			'Verse 1\n' +
+			'|A7     |%      |%      |%      |\n' +
+			'v1-line-1\n' +
+			'|D7     |%      |A7     |%      |\n' +
+			'v1-line-2\n' +
+			'|E7     |D7     |A7     |E7     |\n' +
+			'v1-line-3\n' +
+			'\n' +
+			'Verse 2\n' +
+			'|A7     |%      |%      |%      |\n' +
+			'v2-line-1\n' +
+			'|D7     |%      |A7     |%      |\n' +
+			'v2-line-2\n' +
+			'|E7     |D7     |A7     |E7     |\n' +
+			'v2-line-3\n'
+		);
 	});
 
-	test('chartType="chords" shows only chords', () => {
+	test('chartType="chords" shows only chords and section labels', () => {
 		const text = toText(
 			render(input, { chartType: 'chords', alignBars: true })
 		);
-		expect(text).toContain('A7');
-		expect(text).not.toContain('v1-line-1');
-		expect(text).not.toContain('v2-line-1');
-		// Section labels still shown
-		expect(text).toContain('Verse');
+		expect(text).toBe(
+			'Verse 1\n' +
+			'|A7     |%      |%      |%      |\n' +
+			'|D7     |%      |A7     |%      |\n' +
+			'|E7     |D7     |A7     |E7     |\n' +
+			'\n' +
+			'Verse 2\n' +
+			'|A7     |%      |%      |%      |\n' +
+			'|D7     |%      |A7     |%      |\n' +
+			'|E7     |D7     |A7     |E7     |\n'
+		);
 	});
 
-	test('chartType="lyrics" shows only lyrics', () => {
+	test('chartType="lyrics" shows only lyrics and section labels', () => {
 		const text = toText(
 			render(input, { chartType: 'lyrics', alignBars: true })
 		);
-		expect(text).not.toContain('A7');
-		expect(text).toContain('v1-line-1');
-		expect(text).toContain('v2-line-1');
+		expect(text).toBe(
+			'Verse 1\n' +
+			'v1-line-1\n' +
+			'v1-line-2\n' +
+			'v1-line-3\n' +
+			'\n' +
+			'Verse 2\n' +
+			'v2-line-1\n' +
+			'v2-line-2\n' +
+			'v2-line-3\n'
+		);
 	});
 
 	test('chartType="chordsFirstLyricLine" shows chords and first lyric line per section', () => {
@@ -57,11 +85,18 @@ describe('renderSong - filtering (chartType)', () => {
 				alignBars: true,
 			})
 		);
-		expect(text).toContain('A7');
-		expect(text).toContain('v1-line-1');
-		expect(text).not.toContain('v1-line-2');
-		expect(text).not.toContain('v1-line-3');
-		expect(text).toContain('v2-line-1');
-		expect(text).not.toContain('v2-line-2');
+		expect(text).toBe(
+			'Verse 1\n' +
+			'|A7     |%      |%      |%      |\n' +
+			'v1-line-1\n' +
+			'|D7     |%      |A7     |%      |\n' +
+			'|E7     |D7     |A7     |E7     |\n' +
+			'\n' +
+			'Verse 2\n' +
+			'|A7     |%      |%      |%      |\n' +
+			'v2-line-1\n' +
+			'|D7     |%      |A7     |%      |\n' +
+			'|E7     |D7     |A7     |E7     |\n'
+		);
 	});
 });

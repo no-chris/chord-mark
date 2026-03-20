@@ -9,12 +9,12 @@ function render(input, options = {}) {
 describe('renderSong - time signatures', () => {
 	test('renders standalone time signature line', () => {
 		const text = toText(render(song('4/4', 'C')));
-		expect(text).toContain('4/4');
+		expect(text).toBe('4/4\n|C     |');
 	});
 
 	test('renders 3/4 time signature', () => {
 		const text = toText(render(song('3/4', 'C. D. E.')));
-		expect(text).toContain('3/4');
+		expect(text).toBe('3/4\n|C  D  E|');
 	});
 
 	describe('printInlineTimeSignatures', () => {
@@ -26,15 +26,18 @@ describe('renderSong - time signatures', () => {
 
 		test('prints inline time signatures by default', () => {
 			const text = toText(render(input));
-			expect(text).toContain('2/4');
-			expect(text).toContain('4/4');
+			const lines = text.split('\n');
+			expect(lines[1]).toContain('2/4');
+			expect(lines[1]).toContain('4/4');
 		});
 
 		test('prints inline time signatures when explicitly true', () => {
 			const text = toText(
 				render(input, { printInlineTimeSignatures: true })
 			);
-			expect(text).toContain('2/4');
+			const lines = text.split('\n');
+			expect(lines[1]).toContain('2/4 G');
+			expect(lines[1]).toContain('4/4 Am');
 		});
 
 		test('hides inline time signatures when false', () => {
@@ -42,9 +45,10 @@ describe('renderSong - time signatures', () => {
 				render(input, { printInlineTimeSignatures: false })
 			);
 			const lines = text.split('\n');
-			// Chord line should not contain time signatures
 			expect(lines[1]).not.toContain('2/4');
 			expect(lines[1]).not.toContain('4/4');
+			expect(lines[1]).toContain('G');
+			expect(lines[1]).toContain('Am');
 		});
 	});
 
@@ -59,7 +63,12 @@ describe('renderSong - time signatures', () => {
 		const text = toText(
 			render(input, { printInlineTimeSignatures: true })
 		);
-		expect(text).toContain('3/8');
-		expect(text).toContain('6/8');
+		expect(text).toBe(
+			'6/8\n' +
+			'|Em                  |D       C |\n' +
+			'   So close no matter how far\n' +
+			'|3/8 D     |6/8 Em  |% |\n' +
+			'      But I     know'
+		);
 	});
 });

@@ -87,8 +87,17 @@ describe('parseSong - chords', () => {
 	test('parses multiple sub-beat groups', () => {
 		const parsed = parseSong(song('C.. [Am G] [F E]'));
 		const bar = parsed.allLines[0].model.allBars[0];
-		const subBeatChords = bar.allChords.filter((c) => c.isInSubBeatGroup);
-		expect(subBeatChords.length).toBe(4);
+		expect(bar.allChords).toHaveLength(5);
+		expect(bar.allChords[0].isInSubBeatGroup).toBe(false);
+		expect(bar.allChords[0].string).toBe('C..');
+		expect(bar.allChords[1].isInSubBeatGroup).toBe(true);
+		expect(bar.allChords[1].isFirstOfSubBeat).toBe(true);
+		expect(bar.allChords[2].isInSubBeatGroup).toBe(true);
+		expect(bar.allChords[2].isLastOfSubBeat).toBe(true);
+		expect(bar.allChords[3].isInSubBeatGroup).toBe(true);
+		expect(bar.allChords[3].isFirstOfSubBeat).toBe(true);
+		expect(bar.allChords[4].isInSubBeatGroup).toBe(true);
+		expect(bar.allChords[4].isLastOfSubBeat).toBe(true);
 	});
 
 	test('parses positioned chords with _ markers', () => {
@@ -96,14 +105,13 @@ describe('parseSong - chords', () => {
 		expect(parsed.allLines[0].type).toBe('chord');
 		expect(parsed.allLines[0].model.hasPositionedChords).toBe(true);
 		expect(parsed.allLines[1].type).toBe('lyric');
-		expect(parsed.allLines[1].model.chordPositions.length).toBeGreaterThan(
-			0
-		);
+		expect(parsed.allLines[1].model.chordPositions).toEqual([0, 8, 10, 13, 22]);
+		expect(parsed.allLines[1].model.lyrics).toBe(' Mother Mary comes to me');
 	});
 
 	test('allChords aggregates unique chords with occurrences and duration', () => {
 		const parsed = parseSong(song('C G C Am'));
-		expect(parsed.allChords.length).toBeGreaterThanOrEqual(2);
+		expect(parsed.allChords).toHaveLength(3);
 		const chordC = parsed.allChords.find(
 			(c) => c.model.formatted.rootNote === 'C' && !c.model.formatted.bassNote
 		);
@@ -114,10 +122,11 @@ describe('parseSong - chords', () => {
 
 	test('allChords marks first and last chord', () => {
 		const parsed = parseSong(song('C G Am'));
-		const first = parsed.allChords.find((c) => c.isFirst);
-		const last = parsed.allChords.find((c) => c.isLast);
-		expect(first).toBeDefined();
-		expect(last).toBeDefined();
+		expect(parsed.allChords).toHaveLength(3);
+		expect(parsed.allChords[0].isFirst).toBe(true);
+		expect(parsed.allChords[0].model.formatted.rootNote).toBe('C');
+		expect(parsed.allChords[2].isLast).toBe(true);
+		expect(parsed.allChords[2].model.formatted.rootNote).toBe('A');
 	});
 
 	test('chord beat property indicates position in bar', () => {

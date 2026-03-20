@@ -16,8 +16,7 @@ describe('renderSong - chords', () => {
 		const text = toText(
 			render(song('C.. G..'), { alignBars: false })
 		);
-		expect(text).toContain('C');
-		expect(text).toContain('G');
+		expect(text).toBe('|C  G  |');
 	});
 
 	test('renders multiple bars', () => {
@@ -31,14 +30,14 @@ describe('renderSong - chords', () => {
 		const text = toText(
 			render(song('C G Am %'), { alignBars: false })
 		);
-		expect(text).toContain('%');
+		expect(text).toBe('|C  |G  |Am  |%  |');
 	});
 
 	test('renders NC chord', () => {
 		const text = toText(
 			render(song('C NC'), { alignBars: false })
 		);
-		expect(text).toContain('NC');
+		expect(text).toBe('|C  |NC  |');
 	});
 
 	describe('printChordsDuration', () => {
@@ -48,7 +47,7 @@ describe('renderSong - chords', () => {
 			const text = toText(
 				render(input, { printChordsDuration: 'never', alignBars: true })
 			);
-			expect(text).not.toContain('.');
+			expect(text).toBe('4/4\n|A7  B    |');
 		});
 
 		test('="uneven" shows dots for uneven durations', () => {
@@ -58,8 +57,7 @@ describe('renderSong - chords', () => {
 					alignBars: true,
 				})
 			);
-			expect(text).toContain('A7.');
-			expect(text).toContain('B...');
+			expect(text).toBe('4/4\n|A7.  B...    |');
 		});
 
 		test('="always" shows dots for all chords', () => {
@@ -69,8 +67,7 @@ describe('renderSong - chords', () => {
 					alignBars: true,
 				})
 			);
-			expect(text).toContain('A7..');
-			expect(text).toContain('B..');
+			expect(text).toBe('4/4\n|A7..   B..   |');
 		});
 	});
 
@@ -84,9 +81,12 @@ describe('renderSong - chords', () => {
 
 		test('="always" shows bar separators', () => {
 			const text = toText(
-				render(song('C G'), { printBarSeparators: 'always' })
+				render(song('C G'), {
+					printBarSeparators: 'always',
+					alignBars: false,
+				})
 			);
-			expect(text).toContain('|');
+			expect(text).toBe('|C  |G  |');
 		});
 
 		test('="grids" shows separators only for non-positioned chord lines', () => {
@@ -99,10 +99,11 @@ describe('renderSong - chords', () => {
 			);
 			const text = toText(render(input, { printBarSeparators: 'grids' }));
 			const lines = text.split('\n');
-			// Non-positioned line should have bar separators
-			expect(lines[3]).toContain('|');
-			// Positioned line should not
+			// Positioned line should not have bar separators
 			expect(lines[1]).not.toContain('|');
+			// Non-positioned line should have bar separators
+			expect(lines[3]).toContain('|D7');
+			expect(lines[3]).toBe('|D7     |%     |A7     |%     |');
 		});
 	});
 
@@ -110,6 +111,6 @@ describe('renderSong - chords', () => {
 		const text = toText(
 			render(song('A7 % % %'), { alignBars: true })
 		);
-		expect(text).toContain('%');
+		expect(text).toBe('|A7     |%     |%     |%     |');
 	});
 });

@@ -46,18 +46,18 @@ describe('renderSong - sub-beats', () => {
 		const text = toText(
 			render(input2, { printSubBeatDelimiters: true })
 		);
-		expect(text).toContain('No');
-		expect(text).toContain('cry');
+		expect(text).toBe(
+			'|C..  [F C/E] [Dm7 C] |C G |\n    No woman   no  cry'
+		);
 	});
 
 	test('sub-beats in 3/4 time', () => {
-		const input3 = song('3/4', 'C. [Am G]');
 		const text = toText(
-			render(input3, {
+			render(song('3/4', 'C. [Am G]'), {
 				printSubBeatDelimiters: true,
 				alignBars: false,
 			})
 		);
-		expect(text).toContain('[Am G]');
+		expect(text).toBe('3/4\nC. [Am G]');
 	});
 });

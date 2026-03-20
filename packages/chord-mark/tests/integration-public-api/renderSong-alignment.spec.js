@@ -9,16 +9,10 @@ function render(input, options = {}) {
 describe('renderSong - alignment', () => {
 	describe('alignBars', () => {
 		test('aligned bars pad shorter chords with spaces', () => {
-			const textAligned = toText(
+			const text = toText(
 				render(song('C G Am F'), { alignBars: true })
 			);
-			const textNonAligned = toText(
-				render(song('C G Am F'), { alignBars: false })
-			);
-			// Aligned output is wider because shorter chords get padded
-			expect(textAligned.length).toBeGreaterThan(textNonAligned.length);
-			// Aligned bars have consistent padding
-			expect(textAligned).toBe('|C     |G     |Am     |F     |');
+			expect(text).toBe('|C     |G     |Am     |F     |');
 		});
 
 		test('non-aligned bars use simple spacing', () => {
@@ -39,11 +33,9 @@ describe('renderSong - alignment', () => {
 			const text = toText(
 				render(input, { alignChordsWithLyrics: true })
 			);
-			const lines = text.split('\n');
-			// Chord line should be aligned with lyrics
-			expect(lines[1]).toContain('C...');
-			expect(lines[1]).toContain('CM7.');
-			expect(lines[1]).toContain('F');
+			expect(text).toBe(
+				"Verse\n|C...            CM7. |F  |\n Imagine there's no heaven"
+			);
 		});
 
 		test('ignores _ positions when disabled', () => {
@@ -52,14 +44,12 @@ describe('renderSong - alignment', () => {
 				'C... CM7. F',
 				"_Imagine there's _no hea_ven"
 			);
-			const textEnabled = toText(
-				render(input, { alignChordsWithLyrics: true })
-			);
-			const textDisabled = toText(
+			const text = toText(
 				render(input, { alignChordsWithLyrics: false })
 			);
-			// Different alignment produces different output
-			expect(textEnabled).not.toEqual(textDisabled);
+			expect(text).toBe(
+				"Verse\n|C...    CM7.|F     |\nImagine there's no heaven"
+			);
 		});
 
 		test('positioned chords strip _ from lyrics', () => {

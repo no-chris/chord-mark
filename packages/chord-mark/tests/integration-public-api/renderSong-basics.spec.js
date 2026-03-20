@@ -9,30 +9,25 @@ function render(input, options = {}) {
 describe('renderSong - basics', () => {
 	test('renders with default options', () => {
 		const rendered = render(song('C G', 'A lyric line'));
-		expect(rendered).toContain('<div');
-		expect(rendered).toContain('</div>');
+		const text = toText(rendered);
+		expect(text).toBe('|C     |G     |\nA lyric line');
 	});
 
 	test('renders lyrics-only song', () => {
-		const rendered = render(
-			song('First line', '', 'Second line')
-		);
-		const text = toText(rendered);
-		expect(text).toContain('First line');
-		expect(text).toContain('Second line');
+		const text = toText(render(song('First line', '', 'Second line')));
+		expect(text).toBe('First line\n\nSecond line');
 	});
 
 	test('renders empty lines', () => {
-		const rendered = render(song('line1', '', 'line2'));
-		const text = toText(rendered);
+		const text = toText(render(song('line1', '', 'line2')));
 		expect(text).toBe('line1\n\nline2');
 	});
 
 	test('renders chord line with lyrics', () => {
-		const rendered = render(song('C G', 'A lyric'), { alignBars: false });
-		const text = toText(rendered);
-		expect(text).toContain('|C  |G  |');
-		expect(text).toContain('A lyric');
+		const text = toText(
+			render(song('C G', 'A lyric'), { alignBars: false })
+		);
+		expect(text).toBe('|C  |G  |\nA lyric');
 	});
 
 	test('output is wrapped in song template div', () => {
@@ -45,11 +40,6 @@ describe('renderSong - basics', () => {
 		const rendered = render(song('C G', 'A line'));
 		const pTags = rendered.match(/<p/g);
 		expect(pTags.length).toBe(2);
-	});
-
-	test('renders line with cmLine CSS class', () => {
-		const rendered = render(song('C'));
-		expect(rendered).toContain('cmLine');
 	});
 
 	test('renders chord line with cmChordLine CSS class', () => {

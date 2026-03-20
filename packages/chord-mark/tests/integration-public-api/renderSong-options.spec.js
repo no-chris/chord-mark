@@ -22,8 +22,7 @@ describe('renderSong - options', () => {
 			const text = toText(
 				render(song('key C', 'C G'), { alignBars: false })
 			);
-			expect(text).toContain('C');
-			expect(text).toContain('G');
+			expect(text).toBe('key: C\n|C  |G  |');
 		});
 
 		test('roman renders roman numerals', () => {
@@ -32,10 +31,9 @@ describe('renderSong - options', () => {
 					symbolType: 'roman',
 				})
 			);
-			expect(text).toContain('I');
-			expect(text).toContain('ii');
-			expect(text).toContain('IV');
-			expect(text).toContain('V');
+			expect(text).toBe(
+				'key: C\n|I     |ii     |IV     |V     |'
+			);
 		});
 
 		test('roman with multiple keys', () => {
@@ -45,10 +43,15 @@ describe('renderSong - options', () => {
 					{ symbolType: 'roman' }
 				)
 			);
-			// First key: C => I, ii, IV, V, vii°
-			expect(text).toContain('vii°');
-			// Second key: G => IV, v, bVII, I
-			expect(text).toContain('♭VII');
+			const lines = text.split('\n');
+			expect(lines[0]).toBe('key: C');
+			expect(lines[1]).toBe(
+				'|I      |ii     |IV       |V     |vii°     |'
+			);
+			expect(lines[2]).toBe('key: G');
+			expect(lines[3]).toBe(
+				'|IV     |v      |♭VII     |I     |?°       |'
+			);
 		});
 	});
 
@@ -63,8 +66,9 @@ describe('renderSong - options', () => {
 				})
 			);
 			const lines = text.split('\n');
-			// Single chord line should have no dots
 			expect(lines[1]).not.toContain('.');
+			expect(lines[2]).not.toContain('.');
+			expect(lines[3]).not.toContain('.');
 		});
 
 		test('="uneven"', () => {
@@ -74,11 +78,13 @@ describe('renderSong - options', () => {
 					alignBars: true,
 				})
 			);
-			// Uneven duration line should show dots
-			expect(text).toContain('A7.');
-			expect(text).toContain('B...');
-			// Even duration line should not show dots
 			const lines = text.split('\n');
+			// Single chord: no dots (nothing is uneven)
+			expect(lines[1]).not.toContain('.');
+			// Uneven durations: dots shown
+			expect(lines[2]).toContain('A7.');
+			expect(lines[2]).toContain('B...');
+			// Even durations: no dots
 			expect(lines[3]).not.toContain('.');
 		});
 
@@ -89,9 +95,12 @@ describe('renderSong - options', () => {
 					alignBars: true,
 				})
 			);
+			const lines = text.split('\n');
+			// Single chord: still no dots (only 1 chord, nothing to show)
+			expect(lines[1]).not.toContain('.');
 			// Even duration line should also show dots
-			expect(text).toContain('A7..');
-			expect(text).toContain('B..');
+			expect(lines[3]).toContain('A7..');
+			expect(lines[3]).toContain('B..');
 		});
 	});
 });
