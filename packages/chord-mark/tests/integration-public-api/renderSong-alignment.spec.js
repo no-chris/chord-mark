@@ -34,7 +34,9 @@ describe('renderSong - alignment', () => {
 				render(input, { alignChordsWithLyrics: true })
 			);
 			expect(text).toBe(
-				"Verse\n|C...            CM7. |F  |\n Imagine there's no heaven"
+				'Verse\n' +
+				'|C...            CM7. |F  |\n' +
+				" Imagine there's no heaven"
 			);
 		});
 
@@ -48,7 +50,9 @@ describe('renderSong - alignment', () => {
 				render(input, { alignChordsWithLyrics: false })
 			);
 			expect(text).toBe(
-				"Verse\n|C...    CM7.|F     |\nImagine there's no heaven"
+				'Verse\n' +
+				'|C...    CM7.|F     |\n' +
+				"Imagine there's no heaven"
 			);
 		});
 

@@ -22,7 +22,10 @@ describe('renderSong - options', () => {
 			const text = toText(
 				render(song('key C', 'C G'), { alignBars: false })
 			);
-			expect(text).toBe('key: C\n|C  |G  |');
+			expect(text).toBe(
+				'key: C\n' +
+				'|C  |G  |'
+			);
 		});
 
 		test('roman renders roman numerals', () => {
@@ -32,7 +35,8 @@ describe('renderSong - options', () => {
 				})
 			);
 			expect(text).toBe(
-				'key: C\n|I     |ii     |IV     |V     |'
+				'key: C\n' +
+				'|I     |ii     |IV     |V     |'
 			);
 		});
 

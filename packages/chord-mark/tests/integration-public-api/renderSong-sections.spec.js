@@ -43,12 +43,19 @@ describe('renderSong - sections', () => {
 
 		test('repeated sections get numbered', () => {
 			const text = toText(render(song('#v', '#v', '#v')));
-			expect(text).toBe('Verse 1\nVerse 2\nVerse 3');
+			expect(text).toBe(
+				'Verse 1\n' +
+				'Verse 2\n' +
+				'Verse 3'
+			);
 		});
 
 		test('different section types are not numbered if unique', () => {
 			const text = toText(render(song('#v', '#c')));
-			expect(text).toBe('Verse\nChorus');
+			expect(text).toBe(
+				'Verse\n' +
+				'Chorus'
+			);
 		});
 	});
 
@@ -114,7 +121,12 @@ describe('renderSong - sections', () => {
 			const text = toText(
 				render(input, { expandSectionMultiply: true })
 			);
-			expect(text).toBe('Verse 1\nVerse 2\nVerse 3\nVerse 4');
+			expect(text).toBe(
+				'Verse 1\n' +
+				'Verse 2\n' +
+				'Verse 3\n' +
+				'Verse 4'
+			);
 		});
 	});
 

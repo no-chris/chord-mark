@@ -47,7 +47,8 @@ describe('renderSong - sub-beats', () => {
 			render(input2, { printSubBeatDelimiters: true })
 		);
 		expect(text).toBe(
-			'|C..  [F C/E] [Dm7 C] |C G |\n    No woman   no  cry'
+			'|C..  [F C/E] [Dm7 C] |C G |\n' +
+			'    No woman   no  cry'
 		);
 	});
 
@@ -58,6 +59,9 @@ describe('renderSong - sub-beats', () => {
 				alignBars: false,
 			})
 		);
-		expect(text).toBe('3/4\nC. [Am G]');
+		expect(text).toBe(
+			'3/4\n' +
+			'C. [Am G]'
+		);
 	});
 });

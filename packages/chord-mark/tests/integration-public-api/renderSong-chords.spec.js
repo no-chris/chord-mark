@@ -47,7 +47,10 @@ describe('renderSong - chords', () => {
 			const text = toText(
 				render(input, { printChordsDuration: 'never', alignBars: true })
 			);
-			expect(text).toBe('4/4\n|A7  B    |');
+			expect(text).toBe(
+				'4/4\n' +
+				'|A7  B    |'
+			);
 		});
 
 		test('="uneven" shows dots for uneven durations', () => {
@@ -57,7 +60,10 @@ describe('renderSong - chords', () => {
 					alignBars: true,
 				})
 			);
-			expect(text).toBe('4/4\n|A7.  B...    |');
+			expect(text).toBe(
+				'4/4\n' +
+				'|A7.  B...    |'
+			);
 		});
 
 		test('="always" shows dots for all chords', () => {
@@ -67,7 +73,10 @@ describe('renderSong - chords', () => {
 					alignBars: true,
 				})
 			);
-			expect(text).toBe('4/4\n|A7..   B..   |');
+			expect(text).toBe(
+				'4/4\n' +
+				'|A7..   B..   |'
+			);
 		});
 	});
 

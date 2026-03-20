@@ -10,24 +10,38 @@ describe('renderSong - basics', () => {
 	test('renders with default options', () => {
 		const rendered = render(song('C G', 'A lyric line'));
 		const text = toText(rendered);
-		expect(text).toBe('|C     |G     |\nA lyric line');
+		expect(text).toBe(
+			'|C     |G     |\n' +
+			'A lyric line'
+		);
 	});
 
 	test('renders lyrics-only song', () => {
 		const text = toText(render(song('First line', '', 'Second line')));
-		expect(text).toBe('First line\n\nSecond line');
+		expect(text).toBe(
+			'First line\n' +
+			'\n' +
+			'Second line'
+		);
 	});
 
 	test('renders empty lines', () => {
 		const text = toText(render(song('line1', '', 'line2')));
-		expect(text).toBe('line1\n\nline2');
+		expect(text).toBe(
+			'line1\n' +
+			'\n' +
+			'line2'
+		);
 	});
 
 	test('renders chord line with lyrics', () => {
 		const text = toText(
 			render(song('C G', 'A lyric'), { alignBars: false })
 		);
-		expect(text).toBe('|C  |G  |\nA lyric');
+		expect(text).toBe(
+			'|C  |G  |\n' +
+			'A lyric'
+		);
 	});
 
 	test('output is wrapped in song template div', () => {

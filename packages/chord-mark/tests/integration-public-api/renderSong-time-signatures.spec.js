@@ -9,12 +9,18 @@ function render(input, options = {}) {
 describe('renderSong - time signatures', () => {
 	test('renders standalone time signature line', () => {
 		const text = toText(render(song('4/4', 'C')));
-		expect(text).toBe('4/4\n|C     |');
+		expect(text).toBe(
+			'4/4\n' +
+			'|C     |'
+		);
 	});
 
 	test('renders 3/4 time signature', () => {
 		const text = toText(render(song('3/4', 'C. D. E.')));
-		expect(text).toBe('3/4\n|C  D  E|');
+		expect(text).toBe(
+			'3/4\n' +
+			'|C  D  E|'
+		);
 	});
 
 	describe('printInlineTimeSignatures', () => {

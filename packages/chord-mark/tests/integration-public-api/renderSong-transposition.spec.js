@@ -100,10 +100,12 @@ describe('renderSong - transposition', () => {
 					alignBars: false,
 				})
 			);
-			expect(text).toContain('key: C#m');
-			expect(text).toContain('|C#m  |A  |B  |C#m  |');
-			expect(text).toContain('key: Cm');
-			expect(text).toContain('|Cm7  |G7  |Db  |');
+			expect(text).toBe(
+				'key: C#m\n' +
+				'|C#m  |A  |B  |C#m  |\n' +
+				'key: Cm\n' +
+				'|Cm7  |G7  |Db  |'
+			);
 		});
 	});
 
@@ -119,8 +121,16 @@ describe('renderSong - transposition', () => {
 				'And the second one in the key of G!'
 			);
 			const text = toText(render(input, { alignBars: false }));
-			expect(text).toContain('|Dm7  |G7  |C  |%  |');
-			expect(text).toContain('|Am7  |D7  |G  |%  |');
+			expect(text).toBe(
+				'key: C\n' +
+				'Verse 1\n' +
+				'|Dm7  |G7  |C  |%  |\n' +
+				'The first verse is in the key of C\n' +
+				'key: G\n' +
+				'Verse 2\n' +
+				'|Am7  |D7  |G  |%  |\n' +
+				'And the second one in the key of G!'
+			);
 		});
 
 		test('transposes repeated chord lines (%%)', () => {
@@ -133,8 +143,14 @@ describe('renderSong - transposition', () => {
 				'%'
 			);
 			const text = toText(render(input, { alignBars: false }));
-			expect(text).toContain('|Am7  |D7  |G  |%  |');
-			expect(text).toContain('|D7  |%  |G  |%  |');
+			expect(text).toBe(
+				'key: C\n' +
+				'|Dm7  |G7  |C  |%  |\n' +
+				'|G7  |%  |C  |%  |\n' +
+				'key: G\n' +
+				'|Am7  |D7  |G  |%  |\n' +
+				'|D7  |%  |G  |%  |'
+			);
 		});
 	});
 
