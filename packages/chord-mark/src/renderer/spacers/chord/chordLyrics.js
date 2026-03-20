@@ -63,9 +63,15 @@ export default function space(
 							symbols.spacesAfterTimeSignature
 						: '';
 
-				const shouldOffsetLyricsLine =
+				const isBarContinuation = bar.isContinuation;
+			const isLastBarOfContinuedLine =
+				barIndex === chordLine.allBars.length - 1 &&
+				chordLine.hasContinuation;
+
+			const shouldOffsetLyricsLine =
 					barIndex === 0 &&
 					chordIndex === 0 &&
+					!isBarContinuation &&
 					lyricsLine.chordPositions[0] === 0;
 
 				chordToken = getChordToken(bar, chord, shouldOffsetLyricsLine);
@@ -86,14 +92,16 @@ export default function space(
 					chord.spacesAfter = getChordSpacesAfter(
 						isLastChordOfBar,
 						isLastLyricToken,
-						isFollowedBySubBeatGroup
+						isFollowedBySubBeatGroup,
+						isLastBarOfContinuedLine
 					);
 				} else {
 					chord.spacesAfter = chordSpaceAfterDefault;
 					lyricToken += symbols.lyricsSpacer.repeat(
 						getLyricSpacesAfter(
 							isLastChordOfBar,
-							isFollowedBySubBeatGroup
+							isFollowedBySubBeatGroup,
+							isLastBarOfContinuedLine
 						)
 					);
 				}
@@ -167,12 +175,16 @@ export default function space(
 	function getChordSpacesAfter(
 		isLastChordOfBar,
 		isLastLyricToken,
-		isFollowedBySubBeatGroup
+		isFollowedBySubBeatGroup,
+		isLastBarOfContinuedLine
 	) {
 		let spacesAfter = lyricToken.length - chordToken.length;
 
 		const shouldMakeRoomForBarSep =
-			isLastChordOfBar && shouldPrintBarSeparators && !isLastLyricToken;
+			isLastChordOfBar &&
+			shouldPrintBarSeparators &&
+			!isLastLyricToken &&
+			!isLastBarOfContinuedLine;
 
 		const shouldMakeRoomForSubBeatOpener =
 			!isLastChordOfBar &&
@@ -189,11 +201,19 @@ export default function space(
 		return spacesAfter;
 	}
 
-	function getLyricSpacesAfter(isLastChordOfBar, isFollowedBySubBeatGroup) {
+	function getLyricSpacesAfter(
+		isLastChordOfBar,
+		isFollowedBySubBeatGroup,
+		isLastBarOfContinuedLine
+	) {
 		let lyricsSpaceAfter =
 			chordToken.length - lyricToken.length + chordSpaceAfterDefault;
 
-		if (isLastChordOfBar && shouldPrintBarSeparators) {
+		if (
+			isLastChordOfBar &&
+			shouldPrintBarSeparators &&
+			!isLastBarOfContinuedLine
+		) {
 			lyricsSpaceAfter++;
 		} else if (isFollowedBySubBeatGroup) {
 			lyricsSpaceAfter++;

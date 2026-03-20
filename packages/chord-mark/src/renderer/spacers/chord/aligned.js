@@ -24,7 +24,7 @@ export default function space(
 	const chordLine = _cloneDeep(chordLineInput);
 
 	chordLine.allBars.forEach((bar, barIndex) => {
-		if (bar.lineHadTimeSignatureChange) {
+		if (bar.lineHadTimeSignatureChange || bar.isContinuation) {
 			spaceBar(bar);
 		} else {
 			bar.allChords.forEach((chord) => {

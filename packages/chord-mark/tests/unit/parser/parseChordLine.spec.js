@@ -57,6 +57,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 
@@ -90,6 +92,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 
@@ -130,6 +134,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 
@@ -177,6 +183,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 
@@ -218,6 +226,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 
@@ -266,6 +276,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 
@@ -321,6 +333,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 
@@ -384,6 +398,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 
@@ -410,6 +426,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 
@@ -443,6 +461,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 
@@ -476,6 +496,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 
@@ -516,6 +538,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 
@@ -572,6 +596,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 
@@ -598,6 +624,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 
@@ -624,6 +652,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 
@@ -650,6 +680,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 
@@ -683,6 +715,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 
@@ -761,6 +795,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 
@@ -832,6 +868,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 
@@ -901,6 +939,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 
@@ -942,6 +982,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 	[
@@ -985,6 +1027,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 	[
@@ -1037,6 +1081,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 	[
@@ -1098,6 +1144,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 	[
@@ -1149,6 +1197,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 	[
@@ -1196,6 +1246,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 	[
@@ -1265,6 +1317,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 	[
@@ -1334,6 +1388,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 	[
@@ -1374,6 +1430,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 ])('%s: %s', (title, input, timeSignature, expected) => {

@@ -1,3 +1,6 @@
+/* eslint-disable max-lines */
+import _cloneDeep from 'lodash/cloneDeep';
+
 import getMaxBeatsWidth from '../spacers/chord/getMaxBeatsWidth';
 
 import simpleChordSpacer from '../spacers/chord/simple';
@@ -100,6 +103,10 @@ export default function renderSong(
 		symbolType,
 	});
 
+	if (['chords', 'chordsFirstLyricLine'].includes(chartType)) {
+		allLines = mergeBarSplitLines(allLines);
+	}
+
 	allLines = renderAllSectionsLabels(allLines, {
 		expandSectionMultiply,
 	});
@@ -125,8 +132,15 @@ export default function renderSong(
 
 	function addPrintChordsDurationsFlag(line) {
 		if (line.type === lineTypes.CHORD) {
-			line.model.allBars.forEach((bar) => {
-				bar.shouldPrintChordsDuration = shouldPrintChordsDuration(bar);
+			line.model.allBars.forEach((bar, barIndex, allBars) => {
+				const isIncompleteBar =
+					line.model.hasContinuation &&
+					barIndex === allBars.length - 1;
+				const isContinuationBar = bar.isContinuation;
+				bar.shouldPrintChordsDuration =
+					isIncompleteBar ||
+					isContinuationBar ||
+					shouldPrintChordsDuration(bar);
 			});
 		}
 		return line;
@@ -312,6 +326,62 @@ export default function renderSong(
 				})
 				.filter(Boolean)
 		);
+	}
+
+	function mergeBarSplitLines(lines) {
+		const result = [];
+		for (let i = 0; i < lines.length; i++) {
+			const line = lines[i];
+			if (
+				line.type === lineTypes.CHORD &&
+				line.model.hasContinuation
+			) {
+				// Find the next chord line
+				const nextChordIndex = lines.findIndex(
+					(l, j) => j > i && l.type === lineTypes.CHORD
+				);
+				if (nextChordIndex !== -1) {
+					const continuationLine = lines[nextChordIndex];
+					lines.splice(nextChordIndex, 1);
+
+					const mergedModel = _cloneDeep(line.model);
+					mergedModel.hasContinuation = false;
+					mergedModel.pendingBar = null;
+
+					const contBars = _cloneDeep(
+						continuationLine.model.allBars
+					);
+
+					// Merge the incomplete bar (last of line 1) with
+					// the continuation bar (first of line 2) into one bar
+					const incompleteBar =
+						mergedModel.allBars[mergedModel.allBars.length - 1];
+					const contFirstBar = contBars.shift();
+
+					incompleteBar.allChords.push(
+						...contFirstBar.allChords
+					);
+					incompleteBar.hasUnevenChordsDurations =
+						incompleteBar.allChords.length > 1 &&
+						incompleteBar.allChords.some(
+							(c) =>
+								c.duration !==
+								incompleteBar.allChords[0].duration
+						);
+
+					mergedModel.allBars.push(...contBars);
+					result.push({
+						...line,
+						model: mergedModel,
+					});
+				} else {
+					result.push(line);
+				}
+			} else {
+				result.push(line);
+			}
+		}
+		return result;
 	}
 
 	function shouldAlignChordsWithLyrics(line) {

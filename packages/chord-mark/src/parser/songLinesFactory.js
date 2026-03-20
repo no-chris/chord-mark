@@ -80,6 +80,8 @@ export default function songLinesFactory() {
 	let previousChordLines = [];
 	let previousSectionLabelLine;
 
+	let pendingBarContext = null;
+
 	let blueprint = [];
 	let blueprintIndex = 0;
 
@@ -167,14 +169,24 @@ export default function songLinesFactory() {
 			const lineModel = parseChordLine(string, {
 				timeSignature: currentTimeSignature,
 				originalKey: currentKey,
+				continueBar: pendingBarContext,
 			});
 			line = {
 				string,
 				type: lineTypes.CHORD,
 				model: lineModel,
 			};
-			addPreviousChordLine(line);
+			if (lineModel.hasContinuation) {
+				pendingBarContext = lineModel.pendingBar;
+			} else {
+				const wasContinuation = pendingBarContext !== null;
+				pendingBarContext = null;
+				if (!wasContinuation) {
+					addPreviousChordLine(line);
+				}
+			}
 		} catch {
+			pendingBarContext = null;
 			line = getLyricLine(string);
 		}
 		return line;
@@ -350,18 +362,23 @@ export default function songLinesFactory() {
 		addLine(lineSrc, lineIndex, allSrcLines) {
 			let line;
 			if (isTimeSignature(lineSrc)) {
+				pendingBarContext = null;
 				line = getTimeSignatureLine(lineSrc);
 			} else if (isSectionLabel(lineSrc)) {
+				pendingBarContext = null;
 				line = getSectionLabelLine(lineSrc, lineIndex, allSrcLines);
 			} else if (isChordLine(lineSrc)) {
 				line = getChordLine(lineSrc);
 			} else if (isChordLineRepeater(lineSrc)) {
 				line = getRepeatedChordLine(lineSrc);
 			} else if (isEmptyLine(lineSrc)) {
+				pendingBarContext = null;
 				line = getEmptyLine(lineSrc);
 			} else if (isKeyDeclaration(lineSrc)) {
+				pendingBarContext = null;
 				line = getKeyDeclarationLine(lineSrc);
 			} else {
+				// Lyric lines don't clear pendingBarContext — they're expected between split chord lines
 				line = getLyricLine(lineSrc);
 			}
 

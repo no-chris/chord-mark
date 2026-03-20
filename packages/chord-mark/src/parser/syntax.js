@@ -11,6 +11,7 @@ export default {
 	sectionLabel: '#',
 	subBeatOpener: '[',
 	subBeatCloser: ']',
+	barSplitMarker: '\\',
 };
 
 export const defaultTimeSignature = parseTimeSignature('4/4');
