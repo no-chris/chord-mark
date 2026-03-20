@@ -122,6 +122,63 @@ describe('renderSong - bar split across lines', () => {
 			const parsed = parseSong(song('A... [B \\'));
 			expect(parsed.allLines[0].type).toBe('lyric');
 		});
+
+		test('backslash in the middle of a line falls back to lyric', () => {
+			const parsed = parseSong(song('A \\ D'));
+			expect(parsed.allLines[0].type).toBe('lyric');
+		});
+
+		test('split followed by section label invalidates split', () => {
+			const parsed = parseSong(song('A D... \\', '#v', 'C'));
+			expect(parsed.allLines[0].type).toBe('lyric');
+			expect(parsed.allLines[1].type).toBe('sectionLabel');
+			expect(parsed.allLines[2].type).toBe('chord');
+		});
+
+		test('split followed by time signature invalidates split', () => {
+			const parsed = parseSong(song('A D... \\', '3/4'));
+			expect(parsed.allLines[0].type).toBe('lyric');
+			expect(parsed.allLines[1].type).toBe('timeSignature');
+		});
+
+		test('split followed by key declaration invalidates split', () => {
+			const parsed = parseSong(song('A D... \\', 'key C'));
+			expect(parsed.allLines[0].type).toBe('lyric');
+			expect(parsed.allLines[1].type).toBe('keyDeclaration');
+		});
+
+		test('split followed by empty line invalidates split', () => {
+			const parsed = parseSong(song('A D... \\', '', 'C'));
+			expect(parsed.allLines[0].type).toBe('lyric');
+			expect(parsed.allLines[1].type).toBe('emptyLine');
+		});
+
+		test('split followed by chord line repeater invalidates split', () => {
+			const parsed = parseSong(song('C', 'A D... \\', '%'));
+			expect(parsed.allLines[1].type).toBe('lyric');
+			// % repeats C (the previous valid chord line), not the split line
+			expect(parsed.allLines[2].type).toBe('chord');
+		});
+
+		test('split + lyric + section invalidates split', () => {
+			const parsed = parseSong(
+				song('A D... \\', 'some lyrics', '#v', 'C')
+			);
+			expect(parsed.allLines[0].type).toBe('lyric');
+			expect(parsed.allLines[1].type).toBe('lyric');
+			expect(parsed.allLines[2].type).toBe('sectionLabel');
+			expect(parsed.allLines[3].type).toBe('chord');
+		});
+
+		test('wrong beat count on continuation falls back to lyric', () => {
+			// D... = 3 beats, leaves 1 beat pending.
+			// G.. = 2 beats on continuation => 3+2=5 > 4, too many beats
+			const parsed = parseSong(
+				song('A D... \\', 'lyric', 'G.. C')
+			);
+			expect(parsed.allLines[0].type).toBe('lyric');
+			expect(parsed.allLines[2].type).toBe('lyric');
+		});
 	});
 
 	describe('parser output structure', () => {
@@ -179,15 +236,15 @@ describe('renderSong - bar split across lines', () => {
 		});
 	});
 
-	describe('chords-only with no continuation line', () => {
-		test('renders split line without merge if no continuation chord line follows', () => {
-			const text = toText(
-				render(song('A D... \\', 'Lorem ipsum'), {
-					chartType: 'chords',
-					alignBars: false,
-				})
-			);
-			expect(text).toBe('|A  |D...  ');
+	describe('split without continuation', () => {
+		test('split line at end of song falls back to lyric', () => {
+			const parsed = parseSong(song('A D... \\'));
+			expect(parsed.allLines[0].type).toBe('lyric');
+		});
+
+		test('split line followed only by lyric falls back to lyric', () => {
+			const parsed = parseSong(song('A D... \\', 'Lorem ipsum'));
+			expect(parsed.allLines[0].type).toBe('lyric');
 		});
 	});
 
@@ -206,6 +263,86 @@ describe('renderSong - bar split across lines', () => {
 					'C.  |D  |\n' +
 					'line 2'
 			);
+		});
+	});
+
+	describe('chained split edge cases', () => {
+		test('split on a complete bar in continuation falls back to lyric', () => {
+			// G... = 3 beats, then C. completes bar → \ on complete bar → error
+			const parsed = parseSong(song('G... \\', 'lyric', 'C. \\'));
+			expect(parsed.allLines[0].type).toBe('lyric');
+			expect(parsed.allLines[2].type).toBe('lyric');
+		});
+
+		test('complete bar before split marker falls back to lyric', () => {
+			// G... D. = 4 beats = complete bar → \ is meaningless
+			const parsed = parseSong(song('G... D. \\'));
+			expect(parsed.allLines[0].type).toBe('lyric');
+		});
+	});
+
+	describe('chained splits', () => {
+		test('two consecutive splits render correctly', () => {
+			const text = toText(
+				render(
+					song(
+						'C G... \\',
+						'line 1',
+						'D. A D... \\',
+						'line 2',
+						'G. C',
+						'line 3'
+					),
+					{ alignBars: false }
+				)
+			);
+			expect(text).toBe(
+				'|C  |G...  \n' +
+					'line 1\n' +
+					'D.  |A  |D...  \n' +
+					'line 2\n' +
+					'G.  |C  |\n' +
+					'line 3'
+			);
+		});
+
+		test('chained splits merge in chords-only mode', () => {
+			const text = toText(
+				render(
+					song(
+						'C G... \\',
+						'line 1',
+						'D. A D... \\',
+						'line 2',
+						'G. C',
+						'line 3'
+					),
+					{ chartType: 'chords', alignBars: false }
+				)
+			);
+			expect(text).toBe('|C  |G...  D.  |A  |D...  G.  |C  |');
+		});
+
+		test('parser flags are correct for chained splits', () => {
+			const parsed = parseSong(
+				song(
+					'C G... \\',
+					'line 1',
+					'D. A D... \\',
+					'line 2',
+					'G. C',
+					'line 3'
+				)
+			);
+			const chordLines = parsed.allLines.filter(
+				(l) => l.type === 'chord'
+			);
+			expect(chordLines.length).toBe(3);
+			expect(chordLines[0].model.hasContinuation).toBe(true);
+			expect(chordLines[1].model.hasContinuation).toBe(true);
+			expect(chordLines[1].model.allBars[0].isContinuation).toBe(true);
+			expect(chordLines[2].model.hasContinuation).toBe(false);
+			expect(chordLines[2].model.allBars[0].isContinuation).toBe(true);
 		});
 	});
 

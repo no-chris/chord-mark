@@ -336,46 +336,47 @@ export default function renderSong(
 				line.type === lineTypes.CHORD &&
 				line.model.hasContinuation
 			) {
-				// Find the next chord line
 				const nextChordIndex = lines.findIndex(
 					(l, j) => j > i && l.type === lineTypes.CHORD
 				);
-				if (nextChordIndex !== -1) {
-					const continuationLine = lines[nextChordIndex];
-					lines.splice(nextChordIndex, 1);
+				const continuationLine = lines[nextChordIndex];
+				lines.splice(nextChordIndex, 1);
 
-					const mergedModel = _cloneDeep(line.model);
-					mergedModel.hasContinuation = false;
-					mergedModel.pendingBar = null;
+				const mergedModel = _cloneDeep(line.model);
+				mergedModel.hasContinuation =
+					continuationLine.model.hasContinuation;
+				mergedModel.pendingBar = null;
 
-					const contBars = _cloneDeep(
-						continuationLine.model.allBars
+				const contBars = _cloneDeep(
+					continuationLine.model.allBars
+				);
+
+				// Merge the incomplete bar (last of line 1) with
+				// the continuation bar (first of line 2) into one bar
+				const incompleteBar =
+					mergedModel.allBars[mergedModel.allBars.length - 1];
+				const contFirstBar = contBars.shift();
+
+				incompleteBar.allChords.push(...contFirstBar.allChords);
+				incompleteBar.hasUnevenChordsDurations =
+					incompleteBar.allChords.length > 1 &&
+					incompleteBar.allChords.some(
+						(c) =>
+							c.duration !==
+							incompleteBar.allChords[0].duration
 					);
 
-					// Merge the incomplete bar (last of line 1) with
-					// the continuation bar (first of line 2) into one bar
-					const incompleteBar =
-						mergedModel.allBars[mergedModel.allBars.length - 1];
-					const contFirstBar = contBars.shift();
+				mergedModel.allBars.push(...contBars);
 
-					incompleteBar.allChords.push(
-						...contFirstBar.allChords
-					);
-					incompleteBar.hasUnevenChordsDurations =
-						incompleteBar.allChords.length > 1 &&
-						incompleteBar.allChords.some(
-							(c) =>
-								c.duration !==
-								incompleteBar.allChords[0].duration
-						);
+				const mergedLine = { ...line, model: mergedModel };
 
-					mergedModel.allBars.push(...contBars);
-					result.push({
-						...line,
-						model: mergedModel,
-					});
+				if (mergedModel.hasContinuation) {
+					// Continuation line was itself a split — update
+					// in-place and re-process this index
+					lines[i] = mergedLine;
+					i--;
 				} else {
-					result.push(line);
+					result.push(mergedLine);
 				}
 			} else {
 				result.push(line);

@@ -81,6 +81,16 @@ export default function songLinesFactory() {
 	let previousSectionLabelLine;
 
 	let pendingBarContext = null;
+	let pendingSplitLineIndex = null;
+
+	function invalidatePendingSplit() {
+		if (pendingSplitLineIndex !== null) {
+			const splitLine = allLines[pendingSplitLineIndex];
+			allLines[pendingSplitLineIndex] = getLyricLine(splitLine.string);
+		}
+		pendingBarContext = null;
+		pendingSplitLineIndex = null;
+	}
 
 	let blueprint = [];
 	let blueprintIndex = 0;
@@ -178,15 +188,17 @@ export default function songLinesFactory() {
 			};
 			if (lineModel.hasContinuation) {
 				pendingBarContext = lineModel.pendingBar;
+				pendingSplitLineIndex = allLines.length; // will be pushed next
 			} else {
 				const wasContinuation = pendingBarContext !== null;
 				pendingBarContext = null;
+				pendingSplitLineIndex = null;
 				if (!wasContinuation) {
 					addPreviousChordLine(line);
 				}
 			}
 		} catch {
-			pendingBarContext = null;
+			invalidatePendingSplit();
 			line = getLyricLine(string);
 		}
 		return line;
@@ -362,20 +374,21 @@ export default function songLinesFactory() {
 		addLine(lineSrc, lineIndex, allSrcLines) {
 			let line;
 			if (isTimeSignature(lineSrc)) {
-				pendingBarContext = null;
+				invalidatePendingSplit();
 				line = getTimeSignatureLine(lineSrc);
 			} else if (isSectionLabel(lineSrc)) {
-				pendingBarContext = null;
+				invalidatePendingSplit();
 				line = getSectionLabelLine(lineSrc, lineIndex, allSrcLines);
 			} else if (isChordLine(lineSrc)) {
 				line = getChordLine(lineSrc);
 			} else if (isChordLineRepeater(lineSrc)) {
+				invalidatePendingSplit();
 				line = getRepeatedChordLine(lineSrc);
 			} else if (isEmptyLine(lineSrc)) {
-				pendingBarContext = null;
+				invalidatePendingSplit();
 				line = getEmptyLine(lineSrc);
 			} else if (isKeyDeclaration(lineSrc)) {
-				pendingBarContext = null;
+				invalidatePendingSplit();
 				line = getKeyDeclarationLine(lineSrc);
 			} else {
 				// Lyric lines don't clear pendingBarContext — they're expected between split chord lines
@@ -394,6 +407,7 @@ export default function songLinesFactory() {
 		 * returns {SongLine[]}
 		 */
 		asArray() {
+			invalidatePendingSplit();
 			return _cloneDeep(allLines);
 		},
 
