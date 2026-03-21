@@ -693,7 +693,28 @@ describe('renderSong - bar split across lines', () => {
 					alignBars: false,
 				})
 			);
+			expect(text).toBe('|G  |C  D  |\n' + '|G  |');
+		});
+
+		test('even beat split merged in chords-only mode shows dots with always', () => {
+			const text = toText(
+				render(song('G C.. \\', 'line 1', 'D.. G', 'line 2'), {
+					chartType: 'chords',
+					printChordsDuration: 'always',
+					alignBars: false,
+				})
+			);
 			expect(text).toBe('|G  |C..  D..  |\n' + '|G  |');
+		});
+
+		test('uneven beat split merged in chords-only mode shows dots', () => {
+			const text = toText(
+				render(song('G C... \\', 'line 1', 'D. G', 'line 2'), {
+					chartType: 'chords',
+					alignBars: false,
+				})
+			);
+			expect(text).toBe('|G  |C...  D.  |\n' + '|G  |');
 		});
 
 		test('even beat split parser flags are correct', () => {

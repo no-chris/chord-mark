@@ -103,6 +103,7 @@ export default function renderSong(
 
 	if (['chords', 'chordsFirstLyricLine'].includes(chartType)) {
 		allLines = mergeBarSplitLines(allLines);
+		allLines = allLines.map(addPrintChordsDurationsFlag);
 	}
 
 	allLines = renderAllSectionsLabels(allLines, {
