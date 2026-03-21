@@ -182,6 +182,7 @@ export default function parseChordLine(
 		if (
 			currentBeatCount === 0 &&
 			previousBar &&
+			!previousBar.isContinuation &&
 			_isEqual(timeSignature, previousBar.timeSignature)
 		) {
 			const repeatedBar = _cloneDeep(previousBar);

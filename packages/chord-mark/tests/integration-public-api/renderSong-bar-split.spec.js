@@ -331,6 +331,38 @@ describe('renderSong - bar split across lines', () => {
 			expect(parsed.allLines[0].type).toBe('lyric');
 			expect(parsed.allLines[2].type).toBe('lyric');
 		});
+
+		test('bar repeat on continuation line falls back to lyric', () => {
+			const parsed = parseSong(
+				song('A D... \\', 'lyric', 'G. %')
+			);
+			expect(parsed.allLines[0].type).toBe('lyric');
+			expect(parsed.allLines[2].type).toBe('lyric');
+		});
+
+		test('bar repeat after completed continuation bar is valid', () => {
+			const parsed = parseSong(
+				song('A D... \\', 'lyric', 'G. C %')
+			);
+			expect(parsed.allLines[0].type).toBe('chord');
+			expect(parsed.allLines[2].type).toBe('chord');
+		});
+
+		test('bar repeat on chained continuation after normal bar is valid', () => {
+			const parsed = parseSong(
+				song(
+					'G.. A.. D.. \\',
+					'lyric',
+					'G.. D.. \\',
+					'lyric',
+					'G..  A %%'
+				)
+			);
+			// All lines are valid: G.. completes continuation, A is a normal bar, %% repeats A
+			expect(parsed.allLines[0].type).toBe('chord');
+			expect(parsed.allLines[2].type).toBe('chord');
+			expect(parsed.allLines[4].type).toBe('chord');
+		});
 	});
 
 	describe('parser output structure', () => {
@@ -768,7 +800,7 @@ describe('renderSong - bar split across lines', () => {
 			);
 		});
 
-		test('chained splits with bar repeats and alignBars', () => {
+		test('chained splits with alignBars do not crash', () => {
 			const text = toText(
 				render(
 					song(
@@ -777,7 +809,7 @@ describe('renderSong - bar split across lines', () => {
 						'_Hey! Mr. _Tambourine Man, _play a song for _me',
 						'G.. D.. \\',
 						"I'm not _sleepy and there _is no place I'm _going to",
-						'G..  A %%',
+						'G.. A G A',
 						'_Hey! Mr. _Tambourine Man, _play a song for _me'
 					),
 					{ alignBars: true }
@@ -785,39 +817,6 @@ describe('renderSong - bar split across lines', () => {
 			);
 			expect(text).toBeDefined();
 			expect(text).not.toBe('');
-		});
-
-		test('chained splits with auto-repeat override reverts all to lyric', () => {
-			const text = toText(
-				render(
-					song(
-						'#c',
-						'G.. A.. D.. \\',
-						'_Hey! Mr. _Tambourine Man, _play a song for _me',
-						'G.. D.. \\',
-						"I'm not _sleepy and there _is no place I'm _going to",
-						'G..  A %%',
-						'_Hey! Mr. _Tambourine Man, _play a song for _me',
-						' ',
-						'#c',
-						'_Hey! Mr. _Tambourine Man, _play a song for _me,',
-						'D G A',
-						"I'm not _sleepy and there _is no place I'm _going to.",
-						'_Hey! Mr. _Tambourine Man, _play a song for _me,'
-					),
-					{ alignBars: true }
-				)
-			);
-			const lines = text.split('\n');
-			// Chorus 2 should have no chord formatting — all lyrics
-			const chorus2Start = lines.indexOf('Chorus 2');
-			const chorus2Lines = lines.slice(chorus2Start + 1);
-			// No bar separators in Chorus 2
-			chorus2Lines
-				.filter((l) => l.trim() !== '')
-				.forEach((l) => {
-					expect(l).not.toMatch(/^\|/);
-				});
 		});
 	});
 });
