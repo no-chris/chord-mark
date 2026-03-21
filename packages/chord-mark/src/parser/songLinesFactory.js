@@ -267,6 +267,19 @@ export default function songLinesFactory() {
 		const isContinuationLine =
 			bpModel.allBars?.length > 0 && bpModel.allBars[0].isContinuation;
 
+		// Check continuation first — a chained split is both continuation AND split
+		if (isContinuationLine) {
+			const isCompatible =
+				pendingBarContext !== null &&
+				pendingBarContext.currentBeatCount ===
+					blueprintPendingBeatCount;
+			if (!isCompatible) {
+				invalidatePendingSplit();
+				return 'skip';
+			}
+			pendingBarContext = null;
+			pendingSplitLineIndex = null;
+		}
 		if (isSplitLine) {
 			blueprintPendingBeatCount =
 				bpModel.pendingBar?.currentBeatCount;
@@ -275,17 +288,8 @@ export default function songLinesFactory() {
 			return 'repeat';
 		}
 		if (isContinuationLine) {
-			const isCompatible =
-				pendingBarContext !== null &&
-				pendingBarContext.currentBeatCount ===
-					blueprintPendingBeatCount;
-			if (isCompatible) {
-				pendingBarContext = null;
-				pendingSplitLineIndex = null;
-				return 'repeat';
-			}
-			invalidatePendingSplit();
-			return 'skip';
+			// Continuation-only (not a split) — already validated above
+			return 'repeat';
 		}
 		addPreviousChordLine(_cloneDeep(blueprintLine));
 		return 'repeat';

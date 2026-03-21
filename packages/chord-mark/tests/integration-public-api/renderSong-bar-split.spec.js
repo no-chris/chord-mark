@@ -767,5 +767,57 @@ describe('renderSong - bar split across lines', () => {
 					'Consectetur'
 			);
 		});
+
+		test('chained splits with bar repeats and alignBars', () => {
+			const text = toText(
+				render(
+					song(
+						'#c',
+						'G.. A.. D.. \\',
+						'_Hey! Mr. _Tambourine Man, _play a song for _me',
+						'G.. D.. \\',
+						"I'm not _sleepy and there _is no place I'm _going to",
+						'G..  A %%',
+						'_Hey! Mr. _Tambourine Man, _play a song for _me'
+					),
+					{ alignBars: true }
+				)
+			);
+			expect(text).toBeDefined();
+			expect(text).not.toBe('');
+		});
+
+		test('chained splits with auto-repeat override reverts all to lyric', () => {
+			const text = toText(
+				render(
+					song(
+						'#c',
+						'G.. A.. D.. \\',
+						'_Hey! Mr. _Tambourine Man, _play a song for _me',
+						'G.. D.. \\',
+						"I'm not _sleepy and there _is no place I'm _going to",
+						'G..  A %%',
+						'_Hey! Mr. _Tambourine Man, _play a song for _me',
+						' ',
+						'#c',
+						'_Hey! Mr. _Tambourine Man, _play a song for _me,',
+						'D G A',
+						"I'm not _sleepy and there _is no place I'm _going to.",
+						'_Hey! Mr. _Tambourine Man, _play a song for _me,'
+					),
+					{ alignBars: true }
+				)
+			);
+			const lines = text.split('\n');
+			// Chorus 2 should have no chord formatting — all lyrics
+			const chorus2Start = lines.indexOf('Chorus 2');
+			const chorus2Lines = lines.slice(chorus2Start + 1);
+			// No bar separators in Chorus 2
+			chorus2Lines
+				.filter((l) => l.trim() !== '')
+				.forEach((l) => {
+					expect(l).not.toMatch(/^\|/);
+				});
+		});
 	});
 });

@@ -26,7 +26,7 @@ export default function space(
 	chordLine.allBars.forEach((bar, barIndex) => {
 		if (bar.lineHadTimeSignatureChange || bar.isContinuation) {
 			spaceBar(bar);
-		} else {
+		} else if (maxBeatsWidth[barIndex]) {
 			bar.allChords.forEach((chord) => {
 				const beatString = getBeatString(bar, chord.beat, {
 					shouldPrintSubBeatDelimiters,
@@ -52,6 +52,8 @@ export default function space(
 					chord.spacesAfter = symbols.spacesAfterDefault;
 				}
 			});
+		} else {
+			spaceBar(bar);
 		}
 	});
 
