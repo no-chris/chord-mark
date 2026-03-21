@@ -73,6 +73,39 @@ A sub-beat group definition is invalid if it contains chord duration markers, a 
 	src={'Invalid:\nC.. G. [B. A7.]\nC.. G. [B]\nC.. G. [B C/E Am G F]'}
 />
 
+## Splitting a bar across lines
+
+Sometimes a bar straddles two lyric phrases.
+Use the `\` marker at the end of a chord line to split a bar across two lines, so each part can be aligned with its own lyrics.
+
+<TabbedChordMark
+	src={
+		'A D... \\\n_ Lorem ipsum dolor _sit amet,\nG. C\n_Con _sectetur adipiscing elit'
+	}
+/>
+
+The `\` marker must be a space-separated token at the end of the chord line. The beat count of the incomplete bar will be completed on the next chord line.
+
+<TabbedChordMark
+	src={'A... \\\nFirst line\nB. C\nSecond line'}
+/>
+
+In chords-only mode, split bars are automatically merged back into a single line:
+
+<TabbedChordMark
+	src={
+		'A D... \\\n_ Lorem ipsum dolor _sit amet,\nG. C\n_Con _sectetur adipiscing elit'
+	}
+	options={{ chartType: 'chords' }}
+/>
+
+A few rules apply:
+
+-   the beat count must add up: the continuation line completes the pending bar
+-   sub-beat groups `[...]` cannot span a split
+-   split lines are not available for `%` chord line repeats
+-   `\` on a complete bar is invalid
+
 ## Time signature
 
 If your song is not in 4/4, you can just specify the time signature on a separate line.

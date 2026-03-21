@@ -2,6 +2,7 @@ import parseTimeSignature from './parseTimeSignature';
 
 export default {
 	barRepeat: '%',
+	barSplitMarker: '\\',
 	chordBeatCount: '.',
 	chordLineRepeat: '%',
 	chordPositionMarker: '_',
@@ -11,7 +12,6 @@ export default {
 	sectionLabel: '#',
 	subBeatOpener: '[',
 	subBeatCloser: ']',
-	barSplitMarker: '\\',
 };
 
 export const defaultTimeSignature = parseTimeSignature('4/4');

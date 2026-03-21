@@ -1,6 +1,9 @@
 import mergeBarSplitLines from '../../../../src/renderer/helpers/mergeBarSplitLines';
 
-function chordLine(allBars, { hasContinuation = false, pendingBar = null } = {}) {
+function chordLine(
+	allBars,
+	{ hasContinuation = false, pendingBar = null } = {}
+) {
 	return {
 		type: 'chord',
 		model: { allBars, hasContinuation, pendingBar },
@@ -9,7 +12,10 @@ function chordLine(allBars, { hasContinuation = false, pendingBar = null } = {})
 
 function bar(chords, { isContinuation = false } = {}) {
 	return {
-		allChords: chords.map((c) => ({ symbol: c.symbol, duration: c.duration })),
+		allChords: chords.map((c) => ({
+			symbol: c.symbol,
+			duration: c.duration,
+		})),
 		isContinuation,
 		hasUnevenChordsDurations: false,
 	};
@@ -37,14 +43,11 @@ describe('mergeBarSplitLines', () => {
 
 	test('merges incomplete bar with continuation bar', () => {
 		const lines = [
-			chordLine(
-				[bar([chord('A')]), bar([chord('D', 3)])],
-				{ hasContinuation: true }
-			),
+			chordLine([bar([chord('A')]), bar([chord('D', 3)])], {
+				hasContinuation: true,
+			}),
 			lyricLine('lyrics'),
-			chordLine([
-				bar([chord('G', 1)], { isContinuation: true }),
-			]),
+			chordLine([bar([chord('G', 1)], { isContinuation: true })]),
 			lyricLine('lyrics 2'),
 		];
 		const result = mergeBarSplitLines(lines);
@@ -65,10 +68,9 @@ describe('mergeBarSplitLines', () => {
 
 	test('remaining bars from continuation go to separate line', () => {
 		const lines = [
-			chordLine(
-				[bar([chord('A')]), bar([chord('D', 3)])],
-				{ hasContinuation: true }
-			),
+			chordLine([bar([chord('A')]), bar([chord('D', 3)])], {
+				hasContinuation: true,
+			}),
 			lyricLine('lyrics'),
 			chordLine([
 				bar([chord('G', 1)], { isContinuation: true }),
@@ -96,10 +98,9 @@ describe('mergeBarSplitLines', () => {
 
 	test('chained splits merge correctly across three lines', () => {
 		const lines = [
-			chordLine(
-				[bar([chord('C')]), bar([chord('G', 3)])],
-				{ hasContinuation: true }
-			),
+			chordLine([bar([chord('C')]), bar([chord('G', 3)])], {
+				hasContinuation: true,
+			}),
 			lyricLine('line 1'),
 			chordLine(
 				[
@@ -140,13 +141,8 @@ describe('mergeBarSplitLines', () => {
 
 	test('sets hasUnevenChordsDurations on merged bar', () => {
 		const lines = [
-			chordLine(
-				[bar([chord('D', 3)])],
-				{ hasContinuation: true }
-			),
-			chordLine([
-				bar([chord('G', 1)], { isContinuation: true }),
-			]),
+			chordLine([bar([chord('D', 3)])], { hasContinuation: true }),
+			chordLine([bar([chord('G', 1)], { isContinuation: true })]),
 		];
 		const result = mergeBarSplitLines(lines);
 
@@ -156,13 +152,8 @@ describe('mergeBarSplitLines', () => {
 
 	test('even durations do not flag hasUnevenChordsDurations', () => {
 		const lines = [
-			chordLine(
-				[bar([chord('C', 2)])],
-				{ hasContinuation: true }
-			),
-			chordLine([
-				bar([chord('D', 2)], { isContinuation: true }),
-			]),
+			chordLine([bar([chord('C', 2)])], { hasContinuation: true }),
+			chordLine([bar([chord('D', 2)], { isContinuation: true })]),
 		];
 		const result = mergeBarSplitLines(lines);
 
@@ -172,15 +163,12 @@ describe('mergeBarSplitLines', () => {
 
 	test('skips non-chord lines between split and continuation', () => {
 		const lines = [
-			chordLine(
-				[bar([chord('A')]), bar([chord('D', 3)])],
-				{ hasContinuation: true }
-			),
+			chordLine([bar([chord('A')]), bar([chord('D', 3)])], {
+				hasContinuation: true,
+			}),
 			lyricLine('lyric 1'),
 			lyricLine('lyric 2'),
-			chordLine([
-				bar([chord('G', 1)], { isContinuation: true }),
-			]),
+			chordLine([bar([chord('G', 1)], { isContinuation: true })]),
 		];
 		const result = mergeBarSplitLines(lines);
 
@@ -193,13 +181,11 @@ describe('mergeBarSplitLines', () => {
 	test('clears pendingBar on merged model', () => {
 		const pendingBar = { currentBeatCount: 3 };
 		const lines = [
-			chordLine(
-				[bar([chord('D', 3)])],
-				{ hasContinuation: true, pendingBar }
-			),
-			chordLine([
-				bar([chord('G', 1)], { isContinuation: true }),
-			]),
+			chordLine([bar([chord('D', 3)])], {
+				hasContinuation: true,
+				pendingBar,
+			}),
+			chordLine([bar([chord('G', 1)], { isContinuation: true })]),
 		];
 		const result = mergeBarSplitLines(lines);
 		expect(result[0].model.pendingBar).toBeNull();
