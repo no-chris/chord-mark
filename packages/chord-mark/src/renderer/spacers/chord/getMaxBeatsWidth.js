@@ -26,6 +26,8 @@ export default function getMaxBeatsWidth(
 		.forEach((line) => {
 			line.model.allBars
 				.filter(
+					// Continuation bars start mid-bar, so their beat positions
+					// don't correspond to bar-index columns and would skew max widths
 					(bar) =>
 						!bar.lineHadTimeSignatureChange && !bar.isContinuation
 				)

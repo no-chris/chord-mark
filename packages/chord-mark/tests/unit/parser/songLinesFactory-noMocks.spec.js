@@ -219,6 +219,194 @@ describe('bar split with auto-repeat chords', () => {
 		);
 		expect(chordLinesInSecondVerse.length).toBe(0);
 	});
+
+	test('override split with different pending beats → blueprint continuation skipped and split invalidated', () => {
+		const songLines = songLinesFactory();
+		// Blueprint: A D... \ (1 beat pending) / G. C (1 beat continuation)
+		['#v', 'A D... \\', 'lyrics', 'G. C', 'lyrics2'].forEach(
+			songLines.addLine
+		);
+		// Override split: A C.. \ (2 beats pending) → blueprint G. C expects 1 beat
+		['#v', 'A C.. \\', 'lyrics', 'lyrics2'].forEach(songLines.addLine);
+
+		const allLines = songLines.asArray();
+		const secondVerseLines = allLines.slice(
+			allLines.findIndex(
+				(l, i) =>
+					i > 0 &&
+					l.type === 'sectionLabel' &&
+					l.model.label === 'v'
+			) + 1
+		);
+		// Split invalidated (no matching continuation), continuation skipped
+		const chordLinesInSecondVerse = secondVerseLines.filter(
+			(l) => l.type === 'chord'
+		);
+		expect(chordLinesInSecondVerse.length).toBe(0);
+	});
+
+	test('override split with different pending beats + compatible user continuation → works', () => {
+		const songLines = songLinesFactory();
+		// Blueprint: A D... \ (1 beat pending) / G. C
+		['#v', 'A D... \\', 'lyrics', 'G. C', 'lyrics2'].forEach(
+			songLines.addLine
+		);
+		// Override split: A C.. \ (2 beats pending)
+		// User provides compatible continuation: D.. F (2 beats fills the 2 pending)
+		['#v', 'A C.. \\', 'lyrics', 'D.. F', 'lyrics2'].forEach(
+			songLines.addLine
+		);
+
+		const allLines = songLines.asArray();
+		const secondVerseLines = allLines.slice(
+			allLines.findIndex(
+				(l, i) =>
+					i > 0 &&
+					l.type === 'sectionLabel' &&
+					l.model.label === 'v'
+			) + 1
+		);
+		const chordLinesInSecondVerse = secondVerseLines.filter(
+			(l) => l.type === 'chord'
+		);
+		expect(chordLinesInSecondVerse.length).toBe(2);
+		expect(chordLinesInSecondVerse[0].model.hasContinuation).toBe(true);
+		expect(
+			chordLinesInSecondVerse[1].model.allBars[0].isContinuation
+		).toBe(true);
+	});
+
+	test('override both split and continuation with incompatible beats → all fall back to lyric', () => {
+		const songLines = songLinesFactory();
+		// Blueprint: A D... \ (1 beat pending) / G. C
+		['#v', 'A D... \\', 'lyrics', 'G. C', 'lyrics2'].forEach(
+			songLines.addLine
+		);
+		// Override split: A C.. \ (2 beats pending)
+		// Override continuation: G. F (1 beat → needs 2)
+		['#v', 'A C.. \\', 'lyrics', 'G. F', 'lyrics2'].forEach(
+			songLines.addLine
+		);
+
+		const allLines = songLines.asArray();
+		const secondVerseLines = allLines.slice(
+			allLines.findIndex(
+				(l, i) =>
+					i > 0 &&
+					l.type === 'sectionLabel' &&
+					l.model.label === 'v'
+			) + 1
+		);
+		const chordLinesInSecondVerse = secondVerseLines.filter(
+			(l) => l.type === 'chord'
+		);
+		expect(chordLinesInSecondVerse.length).toBe(0);
+	});
+});
+
+describe('bar split with multiple auto-repeat sections', () => {
+	function getVerseLines(allLines, verseNumber) {
+		let seen = 0;
+		let start = -1;
+		for (let i = 0; i < allLines.length; i++) {
+			if (
+				allLines[i].type === 'sectionLabel' &&
+				allLines[i].model.label === 'v'
+			) {
+				seen++;
+				if (seen === verseNumber) {
+					start = i + 1;
+				} else if (seen === verseNumber + 1) {
+					return allLines.slice(start, i);
+				}
+			}
+		}
+		return start >= 0 ? allLines.slice(start) : [];
+	}
+
+	test('v2=auto-repeat, v3=override split → v3 skips orphaned continuation', () => {
+		const songLines = songLinesFactory();
+		['#v', 'A D... \\', 'lyrics', 'G. C', 'lyrics2'].forEach(
+			songLines.addLine
+		);
+		['#v', 'new lyrics', 'new lyrics2'].forEach(songLines.addLine);
+		['#v', 'E F', 'more lyrics', 'more lyrics2'].forEach(
+			songLines.addLine
+		);
+		const allLines = songLines.asArray();
+
+		const v2 = getVerseLines(allLines, 2);
+		const v2Chords = v2.filter((l) => l.type === 'chord');
+		expect(v2Chords.length).toBe(2);
+		expect(v2Chords[0].isFromAutoRepeatChords).toBe(true);
+
+		const v3 = getVerseLines(allLines, 3);
+		const v3Chords = v3.filter((l) => l.type === 'chord');
+		expect(v3Chords.length).toBe(1);
+		expect(v3Chords[0].string).toBe('E F');
+	});
+
+	test('v2=override split, v3=auto-repeat → v3 gets full auto-repeat', () => {
+		const songLines = songLinesFactory();
+		['#v', 'A D... \\', 'lyrics', 'G. C', 'lyrics2'].forEach(
+			songLines.addLine
+		);
+		['#v', 'E F', 'new lyrics', 'new lyrics2'].forEach(
+			songLines.addLine
+		);
+		['#v', 'more lyrics', 'more lyrics2'].forEach(songLines.addLine);
+		const allLines = songLines.asArray();
+
+		const v3 = getVerseLines(allLines, 3);
+		const v3Chords = v3.filter((l) => l.type === 'chord');
+		expect(v3Chords.length).toBe(2);
+		expect(v3Chords[0].isFromAutoRepeatChords).toBe(true);
+		expect(v3Chords[0].model.hasContinuation).toBe(true);
+		expect(v3Chords[1].isFromAutoRepeatChords).toBe(true);
+		expect(v3Chords[1].model.allBars[0].isContinuation).toBe(true);
+	});
+
+	test('v2=incompatible continuation, v3=auto-repeat → v3 gets full auto-repeat', () => {
+		const songLines = songLinesFactory();
+		['#v', 'A D... \\', 'lyrics', 'G. C', 'lyrics2'].forEach(
+			songLines.addLine
+		);
+		['#v', 'new lyrics', 'G.. C', 'new lyrics2'].forEach(
+			songLines.addLine
+		);
+		['#v', 'more lyrics', 'more lyrics2'].forEach(songLines.addLine);
+		const allLines = songLines.asArray();
+
+		const v2 = getVerseLines(allLines, 2);
+		const v2Chords = v2.filter((l) => l.type === 'chord');
+		expect(v2Chords.length).toBe(0);
+
+		const v3 = getVerseLines(allLines, 3);
+		const v3Chords = v3.filter((l) => l.type === 'chord');
+		expect(v3Chords.length).toBe(2);
+		expect(v3Chords[0].isFromAutoRepeatChords).toBe(true);
+		expect(v3Chords[0].model.hasContinuation).toBe(true);
+	});
+
+	test('v2=auto-repeat, v3=override continuation → split auto-repeats, user provides continuation', () => {
+		const songLines = songLinesFactory();
+		['#v', 'A D... \\', 'lyrics', 'G. C', 'lyrics2'].forEach(
+			songLines.addLine
+		);
+		['#v', 'new lyrics', 'new lyrics2'].forEach(songLines.addLine);
+		['#v', 'more lyrics', 'E. F', 'more lyrics2'].forEach(
+			songLines.addLine
+		);
+		const allLines = songLines.asArray();
+
+		const v3 = getVerseLines(allLines, 3);
+		const v3Chords = v3.filter((l) => l.type === 'chord');
+		expect(v3Chords.length).toBe(2);
+		expect(v3Chords[0].isFromAutoRepeatChords).toBe(true);
+		expect(v3Chords[0].model.hasContinuation).toBe(true);
+		expect(v3Chords[1].isFromAutoRepeatChords).toBeFalsy();
+		expect(v3Chords[1].model.allBars[0].isContinuation).toBe(true);
+	});
 });
 
 describe('Force lyric line symbol', () => {

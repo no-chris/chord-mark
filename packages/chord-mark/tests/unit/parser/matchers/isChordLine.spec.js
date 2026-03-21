@@ -48,17 +48,19 @@ describe.each([
 	['A % 2/4', true],
 	['A 2/4 %', true], // duh! This is rejected at parsing time
 
-	// bar split marker
+	// bar split marker — valid
 	['A \\', true],
 	['A D... \\', true],
 	['A.. B.. \\', true],
 	['A \\  ', true], // trailing spaces after marker
+	['A % \\', true], // bar repeat then split
+
+	// bar split marker — invalid
 	['A \\ D \\', false], // mid-line + end: mid-line \ is not a chord
 	['A \\ D', false],
 	['\\ A', false],
 	['\\', false],
 	['A\\', false], // no space before marker
-	['A % \\', true], // bar repeat then split
 
 	[undefined, false],
 	['', false],

@@ -135,8 +135,7 @@ export default function parseChordLine(
 		}
 	});
 
-	if (hasContinuation && currentBeatCount === 0 && allBars.length > 0) {
-		// The last bar was complete, so continuation is meaningless
+	if (isContinuationOnCompleteBar()) {
 		throw new InvalidBeatCountException({
 			string: chord.string,
 			duration: chord.duration,
@@ -146,7 +145,7 @@ export default function parseChordLine(
 	}
 
 	let pendingBar = null;
-	if (hasContinuation && currentBeatCount > 0) {
+	if (hasIncompleteBarToContinue()) {
 		// Push the incomplete bar to allBars for rendering on this line
 		bar.timeSignature = timeSignature;
 		bar.lineHadTimeSignatureChange = lineHadTimeSignatureChange;
@@ -170,6 +169,14 @@ export default function parseChordLine(
 		hasContinuation,
 		pendingBar,
 	};
+
+	function isContinuationOnCompleteBar() {
+		return hasContinuation && currentBeatCount === 0 && allBars.length > 0;
+	}
+
+	function hasIncompleteBarToContinue() {
+		return hasContinuation && currentBeatCount > 0;
+	}
 
 	function repeatPreviousBars(token) {
 		if (

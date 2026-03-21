@@ -1,6 +1,3 @@
-/* eslint-disable max-lines */
-import _cloneDeep from 'lodash/cloneDeep';
-
 import getMaxBeatsWidth from '../spacers/chord/getMaxBeatsWidth';
 
 import simpleChordSpacer from '../spacers/chord/simple';
@@ -19,6 +16,7 @@ import renderTimeSignature from './renderTimeSignature';
 import songTpl from './tpl/song.js';
 import renderAllSectionsLabels from '../helpers/renderAllSectionLabels';
 import renderAllChords from '../helpers/renderAllChords';
+import mergeBarSplitLines from '../helpers/mergeBarSplitLines';
 
 import lineTypes from '../../parser/lineTypes';
 import replaceRepeatedBars from '../replaceRepeatedBars';
@@ -326,63 +324,6 @@ export default function renderSong(
 				})
 				.filter(Boolean)
 		);
-	}
-
-	function mergeBarSplitLines(lines) {
-		const result = [];
-		for (let i = 0; i < lines.length; i++) {
-			const line = lines[i];
-			if (
-				line.type === lineTypes.CHORD &&
-				line.model.hasContinuation
-			) {
-				const nextChordIndex = lines.findIndex(
-					(l, j) => j > i && l.type === lineTypes.CHORD
-				);
-				const continuationLine = lines[nextChordIndex];
-				lines.splice(nextChordIndex, 1);
-
-				const mergedModel = _cloneDeep(line.model);
-				mergedModel.hasContinuation =
-					continuationLine.model.hasContinuation;
-				mergedModel.pendingBar = null;
-
-				const contBars = _cloneDeep(
-					continuationLine.model.allBars
-				);
-
-				// Merge the incomplete bar (last of line 1) with
-				// the continuation bar (first of line 2) into one bar
-				const incompleteBar =
-					mergedModel.allBars[mergedModel.allBars.length - 1];
-				const contFirstBar = contBars.shift();
-
-				incompleteBar.allChords.push(...contFirstBar.allChords);
-				incompleteBar.hasUnevenChordsDurations =
-					incompleteBar.allChords.length > 1 &&
-					incompleteBar.allChords.some(
-						(c) =>
-							c.duration !==
-							incompleteBar.allChords[0].duration
-					);
-
-				mergedModel.allBars.push(...contBars);
-
-				const mergedLine = { ...line, model: mergedModel };
-
-				if (mergedModel.hasContinuation) {
-					// Continuation line was itself a split — update
-					// in-place and re-process this index
-					lines[i] = mergedLine;
-					i--;
-				} else {
-					result.push(mergedLine);
-				}
-			} else {
-				result.push(line);
-			}
-		}
-		return result;
 	}
 
 	function shouldAlignChordsWithLyrics(line) {

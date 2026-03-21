@@ -30,7 +30,10 @@ describe('renderSong - bar split across lines', () => {
 				})
 			);
 			expect(text).toBe(
-				'|A...  \n' + 'line 1\n' + 'B.  |C  |\n' + 'line 2'
+				'|A...  \n' +
+					'line 1\n' +
+					'B.  |C  |\n' +
+					'line 2'
 			);
 		});
 
@@ -207,7 +210,10 @@ describe('renderSong - bar split across lines', () => {
 					{ chartType: 'chords', alignBars: false }
 				)
 			);
-			expect(text).toBe('|A  |D...  G.  |C  |');
+			expect(text).toBe(
+				'|A  |D...  G.  |\n' +
+					'|C  |'
+			);
 		});
 
 		test('merges split bar with multiple bars before split', () => {
@@ -217,7 +223,10 @@ describe('renderSong - bar split across lines', () => {
 					{ chartType: 'chords', alignBars: false }
 				)
 			);
-			expect(text).toBe('|A  |D...  G.  |C  |E  |');
+			expect(text).toBe(
+				'|A  |D...  G.  |\n' +
+					'|C  |E  |'
+			);
 		});
 	});
 
@@ -463,7 +472,11 @@ describe('renderSong - bar split across lines', () => {
 					{ chartType: 'chords', alignBars: false }
 				)
 			);
-			expect(text).toBe('|C  |G...  D.  |A  |D...  G.  |C  |');
+			expect(text).toBe(
+				'|C  |G...  D.  |\n' +
+					'|A  |D...  G.  |\n' +
+					'|C  |'
+			);
 		});
 
 		test('parser flags are correct for chained splits', () => {
@@ -580,6 +593,69 @@ describe('renderSong - bar split across lines', () => {
 					'New lyrics2'
 			);
 		});
+
+		test('override split with different pending beats invalidates split', () => {
+			const text = toText(
+				render(
+					song(
+						'#v',
+						'A D... \\',
+						'Lorem ipsum',
+						'G. C',
+						'Consectetur',
+						'#v',
+						'A C.. \\',
+						'New lyrics',
+						'New lyrics2'
+					),
+					{ alignBars: false }
+				)
+			);
+			// A C.. \ becomes lyric (blueprint continuation incompatible)
+			expect(text).toBe(
+				'Verse 1\n' +
+					'|A  |D...  \n' +
+					'Lorem ipsum\n' +
+					'G.  |C  |\n' +
+					'Consectetur\n' +
+					'Verse 2\n' +
+					'A C.. \\\n' +
+					'New lyrics\n' +
+					'New lyrics2'
+			);
+		});
+
+		test('override split with different pending beats + user continuation works', () => {
+			const text = toText(
+				render(
+					song(
+						'#v',
+						'A D... \\',
+						'Lorem ipsum',
+						'G. C',
+						'Consectetur',
+						'#v',
+						'A C.. \\',
+						'New lyrics',
+						'D.. F',
+						'New lyrics2'
+					),
+					{ alignBars: false }
+				)
+			);
+			expect(text).toBe(
+				'Verse 1\n' +
+					'|A  |D...  \n' +
+					'Lorem ipsum\n' +
+					'G.  |C  |\n' +
+					'Consectetur\n' +
+					'Verse 2\n' +
+					'|A  |C..  \n' +
+					'New lyrics\n' +
+					'D..  |F  |\n' +
+					'New lyrics2'
+			);
+		});
 	});
 
 	describe('even beat count split', () => {
@@ -604,7 +680,10 @@ describe('renderSong - bar split across lines', () => {
 					alignBars: false,
 				})
 			);
-			expect(text).toBe('|G  |C..  D..  |G  |');
+			expect(text).toBe(
+				'|G  |C..  D..  |\n' +
+					'|G  |'
+			);
 		});
 
 		test('even beat split parser flags are correct', () => {

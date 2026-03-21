@@ -92,6 +92,7 @@ export default function songLinesFactory() {
 		pendingSplitLineIndex = null;
 	}
 
+	let blueprintPendingBeatCount = null;
 	let blueprint = [];
 	let blueprintIndex = 0;
 
@@ -156,6 +157,7 @@ export default function songLinesFactory() {
 				? getNthOfLabel(allLines, currentSection.label, 1)
 				: [];
 		blueprintIndex = 0;
+		blueprintPendingBeatCount = null;
 
 		return line;
 	}
@@ -259,6 +261,36 @@ export default function songLinesFactory() {
 		return sectionsStats[label];
 	}
 
+	function handleBlueprintChordLine(blueprintLine) {
+		const bpModel = blueprintLine.model;
+		const isSplitLine = bpModel.hasContinuation;
+		const isContinuationLine =
+			bpModel.allBars?.length > 0 && bpModel.allBars[0].isContinuation;
+
+		if (isSplitLine) {
+			blueprintPendingBeatCount =
+				bpModel.pendingBar?.currentBeatCount;
+			pendingBarContext = _cloneDeep(bpModel.pendingBar);
+			pendingSplitLineIndex = allLines.length;
+			return 'repeat';
+		}
+		if (isContinuationLine) {
+			const isCompatible =
+				pendingBarContext !== null &&
+				pendingBarContext.currentBeatCount ===
+					blueprintPendingBeatCount;
+			if (isCompatible) {
+				pendingBarContext = null;
+				pendingSplitLineIndex = null;
+				return 'repeat';
+			}
+			invalidatePendingSplit();
+			return 'skip';
+		}
+		addPreviousChordLine(_cloneDeep(blueprintLine));
+		return 'repeat';
+	}
+
 	function repeatLinesFromBlueprint(line) {
 		if (blueprint.length && line.type !== lineTypes.SECTION_LABEL) {
 			let blueprintLine = blueprint[blueprintIndex];
@@ -266,29 +298,12 @@ export default function songLinesFactory() {
 
 			while (shouldRepeatLineFromBlueprint(blueprintLine, line)) {
 				if (blueprintLine.type === lineTypes.CHORD) {
-					const bpModel = blueprintLine.model;
-					const isBlueprintSplitLine =
-						bpModel.hasContinuation;
-					const isBlueprintContinuationLine =
-						bpModel.allBars?.length > 0 &&
-						bpModel.allBars[0].isContinuation;
-
-					if (isBlueprintSplitLine) {
-						pendingBarContext = _cloneDeep(
-							bpModel.pendingBar
-						);
-						pendingSplitLineIndex = allLines.length;
-					} else if (isBlueprintContinuationLine) {
-						if (pendingBarContext !== null) {
-							pendingBarContext = null;
-							pendingSplitLineIndex = null;
-						} else {
-							blueprintIndex++;
-							blueprintLine = blueprint[blueprintIndex];
-							continue;
-						}
-					} else {
-						addPreviousChordLine(_cloneDeep(blueprintLine));
+					const action =
+						handleBlueprintChordLine(blueprintLine);
+					if (action === 'skip') {
+						blueprintIndex++;
+						blueprintLine = blueprint[blueprintIndex];
+						continue;
 					}
 				}
 				repeatedLine = {
@@ -414,7 +429,6 @@ export default function songLinesFactory() {
 				invalidatePendingSplit();
 				line = getKeyDeclarationLine(lineSrc);
 			} else {
-				// Lyric lines don't clear pendingBarContext — they're expected between split chord lines
 				line = getLyricLine(lineSrc);
 			}
 
