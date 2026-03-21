@@ -15,11 +15,12 @@ describe('renderSong - bar split across lines', () => {
 					{ alignBars: false }
 				)
 			);
+			// prettier-ignore
 			expect(text).toBe(
 				'|A  |D...  \n' +
-					'Lorem ipsum\n' +
-					'G.  |C  |\n' +
-					'Consectetur'
+				'Lorem ipsum\n' +
+				'G.  |C  |\n' +
+				'Consectetur'
 			);
 		});
 
@@ -30,10 +31,7 @@ describe('renderSong - bar split across lines', () => {
 				})
 			);
 			expect(text).toBe(
-				'|A...  \n' +
-					'line 1\n' +
-					'B.  |C  |\n' +
-					'line 2'
+				'|A...  \n' + 'line 1\n' + 'B.  |C  |\n' + 'line 2'
 			);
 		});
 
@@ -44,10 +42,7 @@ describe('renderSong - bar split across lines', () => {
 				})
 			);
 			expect(text).toBe(
-				'|A  |D...  \n' +
-					'line 1\n' +
-					'G.  |\n' +
-					'line 2'
+				'|A  |D...  \n' + 'line 1\n' + 'G.  |\n' + 'line 2'
 			);
 		});
 
@@ -68,12 +63,7 @@ describe('renderSong - bar split across lines', () => {
 					printBarSeparators: 'never',
 				})
 			);
-			expect(text).toBe(
-				'A  D...  \n' +
-					'line 1\n' +
-					'G.\n' +
-					'line 2'
-			);
+			expect(text).toBe('A  D...  \n' + 'line 1\n' + 'G.\n' + 'line 2');
 		});
 
 		test('continuation-only line with alignBars', () => {
@@ -83,10 +73,7 @@ describe('renderSong - bar split across lines', () => {
 				})
 			);
 			expect(text).toBe(
-				'|A     |D...    \n' +
-					'line 1\n' +
-					'G.  |\n' +
-					'line 2'
+				'|A     |D...    \n' + 'line 1\n' + 'G.  |\n' + 'line 2'
 			);
 		});
 	});
@@ -103,11 +90,12 @@ describe('renderSong - bar split across lines', () => {
 					)
 				)
 			);
+			// prettier-ignore
 			expect(text).toBe(
 				'|A    |D...                \n' +
-					' Lorem ipsum dolor sit amet\n' +
-					'G.         |\n' +
-					'Consectetur'
+				' Lorem ipsum dolor sit amet\n' +
+				'G.         |\n' +
+				'Consectetur'
 			);
 		});
 
@@ -123,11 +111,12 @@ describe('renderSong - bar split across lines', () => {
 					{ printBarSeparators: 'never' }
 				)
 			);
+			// prettier-ignore
 			expect(text).toBe(
 				'A     D...                \n' +
-					'Lorem ipsum dolor sit amet\n' +
-					'G.\n' +
-					'Consectetur'
+				'Lorem ipsum dolor sit amet\n' +
+				'G.\n' +
+				'Consectetur'
 			);
 		});
 	});
@@ -142,11 +131,12 @@ describe('renderSong - bar split across lines', () => {
 
 		test('aligns chords with lyrics on both lines', () => {
 			const text = toText(render(splitInput));
+			// prettier-ignore
 			expect(text).toBe(
 				'|A                 |D...     \n' +
-					'  Lorem ipsum dolor sit amet,\n' +
-					'G. |C                       |\n' +
-					'Con sectetur adipiscing elit'
+				'  Lorem ipsum dolor sit amet,\n' +
+				'G. |C                       |\n' +
+				'Con sectetur adipiscing elit'
 			);
 		});
 
@@ -154,11 +144,12 @@ describe('renderSong - bar split across lines', () => {
 			const text = toText(
 				render(splitInput, { printBarSeparators: 'never' })
 			);
+			// prettier-ignore
 			expect(text).toBe(
 				'A                  D...     \n' +
-					' Lorem ipsum dolor sit amet,\n' +
-					'G.  C\n' +
-					'Con sectetur adipiscing elit'
+				' Lorem ipsum dolor sit amet,\n' +
+				'G.  C\n' +
+				'Con sectetur adipiscing elit'
 			);
 		});
 
@@ -166,11 +157,12 @@ describe('renderSong - bar split across lines', () => {
 			const text = toText(
 				render(splitInput, { printChordsDuration: 'never' })
 			);
+			// prettier-ignore
 			expect(text).toBe(
 				'|A                 |D...     \n' +
-					'  Lorem ipsum dolor sit amet,\n' +
-					'G. |C                       |\n' +
-					'Con sectetur adipiscing elit'
+				'  Lorem ipsum dolor sit amet,\n' +
+				'G. |C                       |\n' +
+				'Con sectetur adipiscing elit'
 			);
 		});
 
@@ -181,11 +173,12 @@ describe('renderSong - bar split across lines', () => {
 					printChordsDuration: 'never',
 				})
 			);
+			// prettier-ignore
 			expect(text).toBe(
 				'A                  D...     \n' +
-					' Lorem ipsum dolor sit amet,\n' +
-					'G.  C\n' +
-					'Con sectetur adipiscing elit'
+				' Lorem ipsum dolor sit amet,\n' +
+				'G.  C\n' +
+				'Con sectetur adipiscing elit'
 			);
 		});
 
@@ -193,11 +186,12 @@ describe('renderSong - bar split across lines', () => {
 			const text = toText(
 				render(splitInput, { printChordsDuration: 'always' })
 			);
+			// prettier-ignore
 			expect(text).toBe(
 				'|A                 |D...     \n' +
-					'  Lorem ipsum dolor sit amet,\n' +
-					'G. |C                       |\n' +
-					'Con sectetur adipiscing elit'
+				'  Lorem ipsum dolor sit amet,\n' +
+				'G. |C                       |\n' +
+				'Con sectetur adipiscing elit'
 			);
 		});
 	});
@@ -210,10 +204,7 @@ describe('renderSong - bar split across lines', () => {
 					{ chartType: 'chords', alignBars: false }
 				)
 			);
-			expect(text).toBe(
-				'|A  |D...  G.  |\n' +
-					'|C  |'
-			);
+			expect(text).toBe('|A  |D...  G.  |\n' + '|C  |');
 		});
 
 		test('merges split bar with multiple bars before split', () => {
@@ -223,10 +214,7 @@ describe('renderSong - bar split across lines', () => {
 					{ chartType: 'chords', alignBars: false }
 				)
 			);
-			expect(text).toBe(
-				'|A  |D...  G.  |\n' +
-					'|C  |E  |'
-			);
+			expect(text).toBe('|A  |D...  G.  |\n' + '|C  |E  |');
 		});
 	});
 
@@ -253,10 +241,7 @@ describe('renderSong - bar split across lines', () => {
 				)
 			);
 			expect(text).toBe(
-				'A  D...  \n' +
-					'Lorem ipsum\n' +
-					'G.  C\n' +
-					'Consectetur'
+				'A  D...  \n' + 'Lorem ipsum\n' + 'G.  C\n' + 'Consectetur'
 			);
 		});
 	});
@@ -325,25 +310,19 @@ describe('renderSong - bar split across lines', () => {
 		test('wrong beat count on continuation falls back to lyric', () => {
 			// D... = 3 beats, leaves 1 beat pending.
 			// G.. = 2 beats on continuation => 3+2=5 > 4, too many beats
-			const parsed = parseSong(
-				song('A D... \\', 'lyric', 'G.. C')
-			);
+			const parsed = parseSong(song('A D... \\', 'lyric', 'G.. C'));
 			expect(parsed.allLines[0].type).toBe('lyric');
 			expect(parsed.allLines[2].type).toBe('lyric');
 		});
 
 		test('bar repeat on continuation line falls back to lyric', () => {
-			const parsed = parseSong(
-				song('A D... \\', 'lyric', 'G. %')
-			);
+			const parsed = parseSong(song('A D... \\', 'lyric', 'G. %'));
 			expect(parsed.allLines[0].type).toBe('lyric');
 			expect(parsed.allLines[2].type).toBe('lyric');
 		});
 
 		test('bar repeat after completed continuation bar is valid', () => {
-			const parsed = parseSong(
-				song('A D... \\', 'lyric', 'G. C %')
-			);
+			const parsed = parseSong(song('A D... \\', 'lyric', 'G. C %'));
 			expect(parsed.allLines[0].type).toBe('chord');
 			expect(parsed.allLines[2].type).toBe('chord');
 		});
@@ -440,12 +419,13 @@ describe('renderSong - bar split across lines', () => {
 					alignBars: false,
 				})
 			);
+			// prettier-ignore
 			expect(text).toBe(
 				'5/4\n' +
-					'|A..  B..  \n' +
-					'line 1\n' +
-					'C.  |D  |\n' +
-					'line 2'
+				'|A..  B..  \n' +
+				'line 1\n' +
+				'C.  |D  |\n' +
+				'line 2'
 			);
 		});
 	});
@@ -480,13 +460,14 @@ describe('renderSong - bar split across lines', () => {
 					{ alignBars: false }
 				)
 			);
+			// prettier-ignore
 			expect(text).toBe(
 				'|C  |G...  \n' +
-					'line 1\n' +
-					'D.  |A  |D...  \n' +
-					'line 2\n' +
-					'G.  |C  |\n' +
-					'line 3'
+				'line 1\n' +
+				'D.  |A  |D...  \n' +
+				'line 2\n' +
+				'G.  |C  |\n' +
+				'line 3'
 			);
 		});
 
@@ -505,9 +486,7 @@ describe('renderSong - bar split across lines', () => {
 				)
 			);
 			expect(text).toBe(
-				'|C  |G...  D.  |\n' +
-					'|A  |D...  G.  |\n' +
-					'|C  |'
+				'|C  |G...  D.  |\n' + '|A  |D...  G.  |\n' + '|C  |'
 			);
 		});
 
@@ -551,17 +530,18 @@ describe('renderSong - bar split across lines', () => {
 					{ alignBars: false }
 				)
 			);
+			// prettier-ignore
 			expect(text).toBe(
 				'Verse 1\n' +
-					'|A  |D...  \n' +
-					'Lorem ipsum\n' +
-					'G.  |C  |\n' +
-					'Consectetur\n' +
-					'Verse 2\n' +
-					'|A  |D...  \n' +
-					'New lyrics\n' +
-					'G.  |C  |\n' +
-					'New lyrics2'
+				'|A  |D...  \n' +
+				'Lorem ipsum\n' +
+				'G.  |C  |\n' +
+				'Consectetur\n' +
+				'Verse 2\n' +
+				'|A  |D...  \n' +
+				'New lyrics\n' +
+				'G.  |C  |\n' +
+				'New lyrics2'
 			);
 		});
 
@@ -582,16 +562,17 @@ describe('renderSong - bar split across lines', () => {
 					{ alignBars: false }
 				)
 			);
+			// prettier-ignore
 			expect(text).toBe(
 				'Verse 1\n' +
-					'|A  |D...  \n' +
-					'Lorem ipsum\n' +
-					'G.  |C  |\n' +
-					'Consectetur\n' +
-					'Verse 2\n' +
-					'|E  |F  |\n' +
-					'New lyrics\n' +
-					'New lyrics2'
+				'|A  |D...  \n' +
+				'Lorem ipsum\n' +
+				'G.  |C  |\n' +
+				'Consectetur\n' +
+				'Verse 2\n' +
+				'|E  |F  |\n' +
+				'New lyrics\n' +
+				'New lyrics2'
 			);
 		});
 
@@ -612,17 +593,18 @@ describe('renderSong - bar split across lines', () => {
 					{ alignBars: false }
 				)
 			);
+			// prettier-ignore
 			expect(text).toBe(
 				'Verse 1\n' +
-					'|A  |D...  \n' +
-					'Lorem ipsum\n' +
-					'G.  |C  |\n' +
-					'Consectetur\n' +
-					'Verse 2\n' +
-					'|A  |D...  \n' +
-					'New lyrics\n' +
-					'E.  |F  |\n' +
-					'New lyrics2'
+				'|A  |D...  \n' +
+				'Lorem ipsum\n' +
+				'G.  |C  |\n' +
+				'Consectetur\n' +
+				'Verse 2\n' +
+				'|A  |D...  \n' +
+				'New lyrics\n' +
+				'E.  |F  |\n' +
+				'New lyrics2'
 			);
 		});
 
@@ -644,16 +626,17 @@ describe('renderSong - bar split across lines', () => {
 				)
 			);
 			// A C.. \ becomes lyric (blueprint continuation incompatible)
+			// prettier-ignore
 			expect(text).toBe(
 				'Verse 1\n' +
-					'|A  |D...  \n' +
-					'Lorem ipsum\n' +
-					'G.  |C  |\n' +
-					'Consectetur\n' +
-					'Verse 2\n' +
-					'A C.. \\\n' +
-					'New lyrics\n' +
-					'New lyrics2'
+				'|A  |D...  \n' +
+				'Lorem ipsum\n' +
+				'G.  |C  |\n' +
+				'Consectetur\n' +
+				'Verse 2\n' +
+				'A C.. \\\n' +
+				'New lyrics\n' +
+				'New lyrics2'
 			);
 		});
 
@@ -675,17 +658,18 @@ describe('renderSong - bar split across lines', () => {
 					{ alignBars: false }
 				)
 			);
+			// prettier-ignore
 			expect(text).toBe(
 				'Verse 1\n' +
-					'|A  |D...  \n' +
-					'Lorem ipsum\n' +
-					'G.  |C  |\n' +
-					'Consectetur\n' +
-					'Verse 2\n' +
-					'|A  |C..  \n' +
-					'New lyrics\n' +
-					'D..  |F  |\n' +
-					'New lyrics2'
+				'|A  |D...  \n' +
+				'Lorem ipsum\n' +
+				'G.  |C  |\n' +
+				'Consectetur\n' +
+				'Verse 2\n' +
+				'|A  |C..  \n' +
+				'New lyrics\n' +
+				'D..  |F  |\n' +
+				'New lyrics2'
 			);
 		});
 	});
@@ -698,10 +682,7 @@ describe('renderSong - bar split across lines', () => {
 				})
 			);
 			expect(text).toBe(
-				'|G  |C..  \n' +
-					'line 1\n' +
-					'D..  |G  |\n' +
-					'line 2'
+				'|G  |C..  \n' + 'line 1\n' + 'D..  |G  |\n' + 'line 2'
 			);
 		});
 
@@ -712,10 +693,7 @@ describe('renderSong - bar split across lines', () => {
 					alignBars: false,
 				})
 			);
-			expect(text).toBe(
-				'|G  |C..  D..  |\n' +
-					'|G  |'
-			);
+			expect(text).toBe('|G  |C..  D..  |\n' + '|G  |');
 		});
 
 		test('even beat split parser flags are correct', () => {
@@ -738,11 +716,12 @@ describe('renderSong - bar split across lines', () => {
 				)
 			);
 			// D... and G. must keep their dots even with printChordsDuration='never'
+			// prettier-ignore
 			expect(text).toBe(
 				'|A  |D...  \n' +
-					'Lorem ipsum\n' +
-					'G.  |C  |\n' +
-					'Consectetur'
+				'Lorem ipsum\n' +
+				'G.  |C  |\n' +
+				'Consectetur'
 			);
 		});
 
@@ -760,11 +739,12 @@ describe('renderSong - bar split across lines', () => {
 			);
 			// A.. B.. is a complete bar with uneven durations → hidden with 'never'
 			// D... (incomplete) and G. (continuation) must keep dots
+			// prettier-ignore
 			expect(text).toBe(
 				'|A  B  |D...  \n' +
-					'Lorem ipsum\n' +
-					'G.  |C  |\n' +
-					'Consectetur'
+				'Lorem ipsum\n' +
+				'G.  |C  |\n' +
+				'Consectetur'
 			);
 		});
 
@@ -775,11 +755,12 @@ describe('renderSong - bar split across lines', () => {
 					{ printChordsDuration: 'always', alignBars: false }
 				)
 			);
+			// prettier-ignore
 			expect(text).toBe(
 				'|A  |D...  \n' +
-					'Lorem ipsum\n' +
-					'G.  |C  |\n' +
-					'Consectetur'
+				'Lorem ipsum\n' +
+				'G.  |C  |\n' +
+				'Consectetur'
 			);
 		});
 	});
@@ -792,11 +773,12 @@ describe('renderSong - bar split across lines', () => {
 					{ alignBars: true }
 				)
 			);
+			// prettier-ignore
 			expect(text).toBe(
 				'|A     |D...    \n' +
-					'Lorem ipsum\n' +
-					'G.  |C        |\n' +
-					'Consectetur'
+				'Lorem ipsum\n' +
+				'G.  |C        |\n' +
+				'Consectetur'
 			);
 		});
 
