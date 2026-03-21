@@ -37,7 +37,7 @@ import { defaultTimeSignature } from '../../parser/syntax';
  * @param {Boolean} options.expandSectionCopy
  * @param {Boolean} options.expandSectionMultiply
  * @param {Boolean|('none'|'max'|'core')} options.simplifyChords
- * @param {('never'|'uneven'|'always')} options.printChordsDuration
+ * @param {('never'|'uneven'|'always')} options.printChordsDuration - TODO: rename 'uneven' to 'auto' in a separate PR
  * @param {('never'|'grids'|'always')} options.printBarSeparators - mainly useful when converting a ChordMark file to a format that
  * do not allow bar separators to be printed (e.g. Ultimate Guitar)
  * @param {Boolean} options.printSubBeatDelimiters - mainly useful when converting a ChordMark file to a format that
@@ -136,9 +136,9 @@ export default function renderSong(
 					line.model.hasContinuation &&
 					barIndex === allBars.length - 1;
 				const isContinuationBar = bar.isContinuation;
+				const isSplitBar = isIncompleteBar || isContinuationBar;
 				bar.shouldPrintChordsDuration =
-					isIncompleteBar ||
-					isContinuationBar ||
+					(isSplitBar && printChordsDuration !== 'never') ||
 					shouldPrintChordsDuration(bar);
 			});
 		}

@@ -159,9 +159,9 @@ describe('renderSong - bar split across lines', () => {
 			);
 			// prettier-ignore
 			expect(text).toBe(
-				'|A                 |D...     \n' +
+				'|A                 |D        \n' +
 				'  Lorem ipsum dolor sit amet,\n' +
-				'G. |C                       |\n' +
+				'G  |C                       |\n' +
 				'Con sectetur adipiscing elit'
 			);
 		});
@@ -175,9 +175,9 @@ describe('renderSong - bar split across lines', () => {
 			);
 			// prettier-ignore
 			expect(text).toBe(
-				'A                  D...     \n' +
+				'A                  D        \n' +
 				' Lorem ipsum dolor sit amet,\n' +
-				'G.  C\n' +
+				'G   C\n' +
 				'Con sectetur adipiscing elit'
 			);
 		});
@@ -729,24 +729,23 @@ describe('renderSong - bar split across lines', () => {
 	});
 
 	describe('split with printChordsDuration', () => {
-		test('durations are always printed on incomplete and continuation bars even with never', () => {
+		test('never hides durations on split bars too', () => {
 			const text = toText(
 				render(
 					song('A D... \\', 'Lorem ipsum', 'G. C', 'Consectetur'),
 					{ printChordsDuration: 'never', alignBars: false }
 				)
 			);
-			// D... and G. must keep their dots even with printChordsDuration='never'
 			// prettier-ignore
 			expect(text).toBe(
-				'|A  |D...  \n' +
+				'|A  |D  \n' +
 				'Lorem ipsum\n' +
-				'G.  |C  |\n' +
+				'G  |C  |\n' +
 				'Consectetur'
 			);
 		});
 
-		test('durations on complete bars are hidden with never', () => {
+		test('never hides durations on both complete and split bars', () => {
 			const text = toText(
 				render(
 					song(
@@ -758,18 +757,16 @@ describe('renderSong - bar split across lines', () => {
 					{ printChordsDuration: 'never', alignBars: false }
 				)
 			);
-			// A.. B.. is a complete bar with uneven durations → hidden with 'never'
-			// D... (incomplete) and G. (continuation) must keep dots
 			// prettier-ignore
 			expect(text).toBe(
-				'|A  B  |D...  \n' +
+				'|A  B  |D  \n' +
 				'Lorem ipsum\n' +
-				'G.  |C  |\n' +
+				'G  |C  |\n' +
 				'Consectetur'
 			);
 		});
 
-		test('durations on split bars are printed with always', () => {
+		test('always shows durations on split bars', () => {
 			const text = toText(
 				render(
 					song('A D... \\', 'Lorem ipsum', 'G. C', 'Consectetur'),
