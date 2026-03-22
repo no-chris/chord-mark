@@ -55,15 +55,19 @@ describe('mergeBarSplitLines', () => {
 		expect(result.length).toBe(3);
 		// Merged chord line
 		expect(result[0].type).toBe('chord');
+		expect(result[0].model.allBars.length).toBe(2);
+		expect(result[0].model.allBars[0].allChords[0].symbol).toBe('A');
 		const mergedBar = result[0].model.allBars[1];
 		expect(mergedBar.allChords.length).toBe(2);
 		expect(mergedBar.allChords[0].symbol).toBe('D');
 		expect(mergedBar.allChords[1].symbol).toBe('G');
 		// hasContinuation cleared after merge
-		expect(result[0].model.hasContinuation).toBeFalsy();
+		expect(result[0].model.hasContinuation).toBe(false);
 		// Lyrics preserved
 		expect(result[1].type).toBe('lyric');
+		expect(result[1].string).toBe('lyrics');
 		expect(result[2].type).toBe('lyric');
+		expect(result[2].string).toBe('lyrics 2');
 	});
 
 	test('remaining bars from continuation go to separate line', () => {
@@ -84,9 +88,15 @@ describe('mergeBarSplitLines', () => {
 		expect(result.length).toBe(4);
 		// Merged line: |A| |D G|
 		expect(result[0].model.allBars.length).toBe(2);
+		expect(result[0].model.allBars[0].allChords[0].symbol).toBe('A');
+		const mergedBar = result[0].model.allBars[1];
+		expect(mergedBar.allChords.length).toBe(2);
+		expect(mergedBar.allChords[0].symbol).toBe('D');
+		expect(mergedBar.allChords[1].symbol).toBe('G');
 		expect(result[0].model.hasContinuation).toBe(false);
 		// Lyric line
 		expect(result[1].type).toBe('lyric');
+		expect(result[1].string).toBe('lyrics');
 		// Remaining bars: |C| |E|
 		expect(result[2].type).toBe('chord');
 		expect(result[2].model.allBars.length).toBe(2);
@@ -94,6 +104,7 @@ describe('mergeBarSplitLines', () => {
 		expect(result[2].model.allBars[1].allChords[0].symbol).toBe('E');
 		// Second lyrics
 		expect(result[3].type).toBe('lyric');
+		expect(result[3].string).toBe('lyrics 2');
 	});
 
 	test('chained splits merge correctly across three lines', () => {
@@ -119,24 +130,34 @@ describe('mergeBarSplitLines', () => {
 		];
 		const result = mergeBarSplitLines(lines);
 
+		expect(result.length).toBe(6);
 		// Line 1 merged: |C| |G D|
 		expect(result[0].model.allBars.length).toBe(2);
+		expect(result[0].model.allBars[0].allChords[0].symbol).toBe('C');
 		expect(result[0].model.allBars[1].allChords.length).toBe(2);
+		expect(result[0].model.allBars[1].allChords[0].symbol).toBe('G');
+		expect(result[0].model.allBars[1].allChords[1].symbol).toBe('D');
 		expect(result[0].model.hasContinuation).toBe(false);
 		// Lyric 1
 		expect(result[1].type).toBe('lyric');
+		expect(result[1].string).toBe('line 1');
 		// Remaining from first continuation becomes new split: |A| |D2|
 		// which merges with third chord line: |A| |D2 G2|
 		expect(result[2].model.allBars.length).toBe(2);
+		expect(result[2].model.allBars[0].allChords[0].symbol).toBe('A');
 		expect(result[2].model.allBars[1].allChords.length).toBe(2);
+		expect(result[2].model.allBars[1].allChords[0].symbol).toBe('D2');
+		expect(result[2].model.allBars[1].allChords[1].symbol).toBe('G2');
 		expect(result[2].model.hasContinuation).toBe(false);
 		// Lyric 2
 		expect(result[3].type).toBe('lyric');
+		expect(result[3].string).toBe('line 2');
 		// Remaining from second continuation: |C2|
 		expect(result[4].model.allBars.length).toBe(1);
 		expect(result[4].model.allBars[0].allChords[0].symbol).toBe('C2');
 		// Lyric 3
 		expect(result[5].type).toBe('lyric');
+		expect(result[5].string).toBe('line 3');
 	});
 
 	test('sets hasUnevenChordsDurations on merged bar', () => {
@@ -173,9 +194,18 @@ describe('mergeBarSplitLines', () => {
 		const result = mergeBarSplitLines(lines);
 
 		expect(result.length).toBe(3);
+		// Merged chord line: |A| |D G|
 		expect(result[0].type).toBe('chord');
+		expect(result[0].model.allBars.length).toBe(2);
+		const mergedBar = result[0].model.allBars[1];
+		expect(mergedBar.allChords.length).toBe(2);
+		expect(mergedBar.allChords[0].symbol).toBe('D');
+		expect(mergedBar.allChords[1].symbol).toBe('G');
+		// Lyrics preserved in order
 		expect(result[1].type).toBe('lyric');
+		expect(result[1].string).toBe('lyric 1');
 		expect(result[2].type).toBe('lyric');
+		expect(result[2].string).toBe('lyric 2');
 	});
 
 	test('clears pendingBar on merged model', () => {
