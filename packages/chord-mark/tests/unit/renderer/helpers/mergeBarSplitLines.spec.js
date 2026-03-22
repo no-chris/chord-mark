@@ -182,18 +182,17 @@ describe('mergeBarSplitLines', () => {
 		expect(mergedBar.hasUnevenChordsDurations).toBe(false);
 	});
 
-	test('skips non-chord lines between split and continuation', () => {
+	test('skips single lyric line between split and continuation', () => {
 		const lines = [
 			chordLine([bar([chord('A')]), bar([chord('D', 3)])], {
 				hasContinuation: true,
 			}),
 			lyricLine('lyric 1'),
-			lyricLine('lyric 2'),
 			chordLine([bar([chord('G', 1)], { isContinuation: true })]),
 		];
 		const result = mergeBarSplitLines(lines);
 
-		expect(result.length).toBe(3);
+		expect(result.length).toBe(2);
 		// Merged chord line: |A| |D G|
 		expect(result[0].type).toBe('chord');
 		expect(result[0].model.allBars.length).toBe(2);
@@ -201,11 +200,9 @@ describe('mergeBarSplitLines', () => {
 		expect(mergedBar.allChords.length).toBe(2);
 		expect(mergedBar.allChords[0].symbol).toBe('D');
 		expect(mergedBar.allChords[1].symbol).toBe('G');
-		// Lyrics preserved in order
+		// Lyric preserved
 		expect(result[1].type).toBe('lyric');
 		expect(result[1].string).toBe('lyric 1');
-		expect(result[2].type).toBe('lyric');
-		expect(result[2].string).toBe('lyric 2');
 	});
 
 	test('clears pendingBar on merged model', () => {

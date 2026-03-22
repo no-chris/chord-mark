@@ -82,6 +82,7 @@ export default function songLinesFactory() {
 
 	let pendingBarContext = null;
 	let pendingSplitLineIndex = null;
+	let splitLyricLineCount = 0;
 
 	function invalidatePendingSplit() {
 		if (pendingSplitLineIndex !== null) {
@@ -90,6 +91,7 @@ export default function songLinesFactory() {
 		}
 		pendingBarContext = null;
 		pendingSplitLineIndex = null;
+		splitLyricLineCount = 0;
 	}
 
 	let blueprintPendingBeatCount = null;
@@ -191,10 +193,12 @@ export default function songLinesFactory() {
 			if (lineModel.hasContinuation) {
 				pendingBarContext = lineModel.pendingBar;
 				pendingSplitLineIndex = allLines.length; // will be pushed next
+				splitLyricLineCount = 0;
 			} else {
 				const wasContinuation = pendingBarContext !== null;
 				pendingBarContext = null;
 				pendingSplitLineIndex = null;
+				splitLyricLineCount = 0;
 				if (!wasContinuation) {
 					addPreviousChordLine(line);
 				}
@@ -279,6 +283,7 @@ export default function songLinesFactory() {
 			}
 			pendingBarContext = null;
 			pendingSplitLineIndex = null;
+			splitLyricLineCount = 0;
 		}
 		if (isSplitLine) {
 			blueprintPendingBeatCount =
@@ -433,6 +438,12 @@ export default function songLinesFactory() {
 				invalidatePendingSplit();
 				line = getKeyDeclarationLine(lineSrc);
 			} else {
+				if (pendingSplitLineIndex !== null) {
+					splitLyricLineCount++;
+					if (splitLyricLineCount > 1) {
+						invalidatePendingSplit();
+					}
+				}
 				line = getLyricLine(lineSrc);
 			}
 

@@ -73,7 +73,7 @@ describe('renderSong - bar split across lines', () => {
 				})
 			);
 			expect(text).toBe(
-				'|A     |D...    \n' + 'line 1\n' + 'G.  |\n' + 'line 2'
+				'|A     |D...     \n' + 'line 1\n' + 'G.    |\n' + 'line 2'
 			);
 		});
 	});
@@ -295,6 +295,17 @@ describe('renderSong - bar split across lines', () => {
 			expect(parsed.allLines[1].type).toBe('lyric');
 			// % repeats C (the previous valid chord line), not the split line
 			expect(parsed.allLines[2].type).toBe('chord');
+		});
+
+		test('split + 2 lyric lines invalidates split', () => {
+			const parsed = parseSong(
+				song('A D... \\', 'lyric 1', 'lyric 2', 'C', 'Consectetur')
+			);
+			expect(parsed.allLines[0].type).toBe('lyric');
+			expect(parsed.allLines[1].type).toBe('lyric');
+			expect(parsed.allLines[2].type).toBe('lyric');
+			expect(parsed.allLines[3].type).toBe('chord');
+			expect(parsed.allLines[4].type).toBe('lyric');
 		});
 
 		test('split + lyric + section invalidates split', () => {
@@ -793,9 +804,9 @@ describe('renderSong - bar split across lines', () => {
 			);
 			// prettier-ignore
 			expect(text).toBe(
-				'|A     |D...    \n' +
+				'|A     |D...     \n' +
 				'Lorem ipsum\n' +
-				'G.  |C        |\n' +
+				'G.    |C        |\n' +
 				'Consectetur'
 			);
 		});
