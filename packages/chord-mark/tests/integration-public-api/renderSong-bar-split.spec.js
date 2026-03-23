@@ -66,6 +66,18 @@ describe('renderSong - bar split across lines', () => {
 			expect(text).toBe('A  D...  \n' + 'line 1\n' + 'G.\n' + 'line 2');
 		});
 
+		test('printBarSeparators=never with full split+continuation', () => {
+			const text = toText(
+				render(
+					song('A D... \\', 'Lorem ipsum', 'G. C', 'Consectetur'),
+					{ alignBars: false, printBarSeparators: 'never' }
+				)
+			);
+			expect(text).toBe(
+				'A  D...  \n' + 'Lorem ipsum\n' + 'G.  C\n' + 'Consectetur'
+			);
+		});
+
 		test('continuation-only line with alignBars', () => {
 			const text = toText(
 				render(song('A D... \\', 'line 1', 'G.', 'line 2'), {
@@ -194,6 +206,24 @@ describe('renderSong - bar split across lines', () => {
 				'Con sectetur adipiscing elit'
 			);
 		});
+
+		test('split with positioned chords and alignChordsWithLyrics disabled', () => {
+			const text = toText(
+				render(
+					song(
+						'A D... \\',
+						'_ Lorem ipsum dolor _sit amet,',
+						'G. C',
+						'_Con _sectetur'
+					),
+					{ alignChordsWithLyrics: false, alignBars: false }
+				)
+			);
+			// With alignChordsWithLyrics: false, standard bar alignment
+			const lines = text.split('\n');
+			expect(lines[0]).toBe('|A  |D...  ');
+			expect(lines[2]).toBe('G.  |C  |');
+		});
 	});
 
 	describe('chords-only mode merge', () => {
@@ -215,34 +245,6 @@ describe('renderSong - bar split across lines', () => {
 				)
 			);
 			expect(text).toBe('|A  |D...  G.  |\n' + '|C  |E  |');
-		});
-	});
-
-	describe('split with bar separators', () => {
-		test('no bar separator at split point', () => {
-			const text = toText(
-				render(
-					song('A D... \\', 'Lorem ipsum', 'G. C', 'Consectetur'),
-					{ alignBars: false }
-				)
-			);
-			// Line 1 should NOT end with |
-			const lines = text.split('\n');
-			expect(lines[0]).not.toMatch(/\|$/);
-			// Line 3 (continuation) should NOT start with |
-			expect(lines[2]).not.toMatch(/^\|/);
-		});
-
-		test('printBarSeparators=never still works', () => {
-			const text = toText(
-				render(
-					song('A D... \\', 'Lorem ipsum', 'G. C', 'Consectetur'),
-					{ alignBars: false, printBarSeparators: 'never' }
-				)
-			);
-			expect(text).toBe(
-				'A  D...  \n' + 'Lorem ipsum\n' + 'G.  C\n' + 'Consectetur'
-			);
 		});
 	});
 
@@ -352,6 +354,33 @@ describe('renderSong - bar split across lines', () => {
 			expect(parsed.allLines[0].type).toBe('chord');
 			expect(parsed.allLines[2].type).toBe('chord');
 			expect(parsed.allLines[4].type).toBe('chord');
+		});
+
+		test('forced lyric : on continuation invalidates split', () => {
+			const parsed = parseSong(song('A D... \\', 'lyric', ':G. C'));
+			// :G. fails chord detection → lyric → invalidates split
+			expect(parsed.allLines[0].type).toBe('lyric');
+			expect(parsed.allLines[1].type).toBe('lyric');
+			expect(parsed.allLines[2].type).toBe('lyric');
+		});
+
+		test('two lyric lines invalidate split (render)', () => {
+			const text = toText(
+				render(
+					song(
+						'A D... \\',
+						'lyric 1',
+						'lyric 2',
+						'E F',
+						'lyric 3'
+					),
+					{ alignBars: false }
+				)
+			);
+			// Split invalidated: first line becomes literal lyric text
+			expect(text).toContain('A D... \\');
+			// E F is a standalone chord line (not continuation)
+			expect(text).toContain('|E  |F  |');
 		});
 	});
 
@@ -683,6 +712,30 @@ describe('renderSong - bar split across lines', () => {
 				'New lyrics2'
 			);
 		});
+
+		test('empty section auto-repeats split (no lyrics)', () => {
+			const text = toText(
+				render(
+					song(
+						'#v',
+						'A D... \\',
+						'Lorem ipsum',
+						'G. C',
+						'Consectetur',
+						'#v'
+					),
+					{ alignBars: false }
+				)
+			);
+			// Section 2 has no content → auto-repeats blueprint including split
+			const lines = text.split('\n');
+			expect(lines[0]).toBe('Verse 1');
+			expect(lines[5]).toBe('Verse 2');
+			// Repeated section should contain chord lines
+			const verse2Text = text.slice(text.indexOf('Verse 2'));
+			expect(verse2Text).toContain('D...');
+			expect(verse2Text).toContain('G.');
+		});
 	});
 
 	describe('even beat count split', () => {
@@ -828,6 +881,168 @@ describe('renderSong - bar split across lines', () => {
 			);
 			expect(text).toBeDefined();
 			expect(text).not.toBe('');
+		});
+	});
+
+	describe('sub-beat groups with splits', () => {
+		test('sub-beat group in complete bar before split', () => {
+			const text = toText(
+				render(
+					song('A... [B C] D... \\', 'line 1', 'G. E', 'line 2'),
+					{ alignBars: false }
+				)
+			);
+			// A...(3)+[B C](1)=4 beats = complete bar. D...(3) pending 1.
+			// G.(1) completes. E = full bar.
+			// prettier-ignore
+			expect(text).toBe(
+				'|A...  [B C]  |D...  \n' +
+				'line 1\n' +
+				'G.  |E  |\n' +
+				'line 2'
+			);
+		});
+
+		test('sub-beat group after continuation completes', () => {
+			const text = toText(
+				render(
+					song(
+						'A D... \\',
+						'line 1',
+						'G. C.. [E F] D.',
+						'line 2'
+					),
+					{ alignBars: false }
+				)
+			);
+			// G.(1) completes. C..(2)+[E F](1)+D.(1) = 4 = full bar.
+			// prettier-ignore
+			expect(text).toBe(
+				'|A  |D...  \n' +
+				'line 1\n' +
+				'G.  |C..  [E F]  D.  |\n' +
+				'line 2'
+			);
+		});
+
+		test('sub-beat group completing the continuation in 5/4', () => {
+			const text = toText(
+				render(
+					song('5/4', 'A.... \\', 'line 1', '[G C] D', 'line 2'),
+					{ alignBars: false }
+				)
+			);
+			// A....(4) in 5/4, pending 1. [G C](1) completes. D = full bar.
+			// prettier-ignore
+			expect(text).toBe(
+				'5/4\n' +
+				'|A....  \n' +
+				'line 1\n' +
+				'[G C]  |D  |\n' +
+				'line 2'
+			);
+		});
+	});
+
+	describe('time signatures with splits', () => {
+		test('3/4 time with split', () => {
+			const text = toText(
+				render(
+					song('3/4', 'A.. \\', 'line 1', 'G. C', 'line 2'),
+					{ alignBars: false }
+				)
+			);
+			// A..(2) in 3/4, pending 1. G.(1) completes. C = 3 beats = full bar.
+			// prettier-ignore
+			expect(text).toBe(
+				'3/4\n' +
+				'|A..  \n' +
+				'line 1\n' +
+				'G.  |C  |\n' +
+				'line 2'
+			);
+		});
+
+		test('inline time sig change on split line', () => {
+			const text = toText(
+				render(
+					song('A 3/4 G.. \\', 'line 1', 'D. C', 'line 2'),
+					{ alignBars: false }
+				)
+			);
+			// A = 4 beats in 4/4 (complete). 3/4 change. G..(2) pending 1.
+			// D.(1) completes. C = 3 beats = full bar.
+			// prettier-ignore
+			expect(text).toBe(
+				'|A  |3/4 G..  \n' +
+				'line 1\n' +
+				'3/4 D.  |C  |\n' +
+				'line 2'
+			);
+		});
+
+		test('time sig change after continuation completes', () => {
+			const text = toText(
+				render(
+					song(
+						'A D... \\',
+						'line 1',
+						'G. 3/4 C.. D.',
+						'line 2'
+					),
+					{ alignBars: false }
+				)
+			);
+			// G.(1) completes 4/4 continuation. 3/4 change. C..(2)+D.(1)=3 = full bar.
+			// prettier-ignore
+			expect(text).toBe(
+				'|A  |D...  \n' +
+				'line 1\n' +
+				'G.  |3/4 C..  D.  |\n' +
+				'line 2'
+			);
+		});
+	});
+
+	describe('bar repeat rendering with split', () => {
+		test('bar repeat on continuation after completion', () => {
+			const text = toText(
+				render(
+					song('A D... \\', 'line 1', 'G. C %', 'line 2'),
+					{ alignBars: false }
+				)
+			);
+			// G.(1) completes, C = normal bar, % repeats C.
+			// prettier-ignore
+			expect(text).toBe(
+				'|A  |D...  \n' +
+				'line 1\n' +
+				'G.  |C  |%  |\n' +
+				'line 2'
+			);
+		});
+
+		test('%% after normal line following split pair', () => {
+			const text = toText(
+				render(
+					song(
+						'A D... \\',
+						'line 1',
+						'G. C',
+						'line 2',
+						'E F',
+						'line 3',
+						'%%',
+						'line 4'
+					),
+					{ alignBars: false }
+				)
+			);
+			// Split pair not stored in previousChordLines.
+			// E F is stored → %% repeats E F (renders as %% symbol).
+			const lines = text.split('\n');
+			expect(lines[4]).toBe('|E  |F  |');
+			expect(lines[6]).toBe('%%');
 		});
 	});
 });
