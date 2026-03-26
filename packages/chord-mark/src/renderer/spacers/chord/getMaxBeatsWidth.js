@@ -23,6 +23,7 @@ export default function getMaxBeatsWidth(
 	allLines
 		.filter((line) => line.type === lineTypes.CHORD)
 		.filter((line) => !shouldAlignChordsWithLyrics(line))
+		.filter((line) => !line.model.allBars[0]?.isContinuation)
 		.forEach((line) => {
 			line.model.allBars
 				.forEach((bar, barIndex) => {

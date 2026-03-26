@@ -221,7 +221,9 @@ export default function renderSong(
 	function spaceChordLine(line, lineIndex) {
 		if (line.type === lineTypes.CHORD) {
 			let spaced =
-				alignBars && !shouldAlignChordsWithLyrics(line)
+				alignBars &&
+				!shouldAlignChordsWithLyrics(line) &&
+				!line.model.allBars[0]?.isContinuation
 					? alignedChordSpacer(line.model, maxBeatsWidth, {
 							shouldPrintBarSeparators: shouldPrintBarSeparators(
 								line.model

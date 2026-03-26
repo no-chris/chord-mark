@@ -30,8 +30,12 @@ describe('renderSong - bar split across lines', () => {
 					alignBars: false,
 				})
 			);
+			// prettier-ignore
 			expect(text).toBe(
-				'|A...  \n' + 'line 1\n' + 'B.  |C  |\n' + 'line 2'
+				'|A...  \n' + 
+				'line 1\n' + 
+				'B.  |C  |\n' + 
+				'line 2'
 			);
 		});
 
@@ -41,8 +45,12 @@ describe('renderSong - bar split across lines', () => {
 					alignBars: false,
 				})
 			);
+			// prettier-ignore
 			expect(text).toBe(
-				'|A  |D...  \n' + 'line 1\n' + 'G.  |\n' + 'line 2'
+				'|A  |D...  \n' + 
+				'line 1\n' + 
+				'G.  |\n' + 
+				'line 2'
 			);
 		});
 
@@ -63,7 +71,13 @@ describe('renderSong - bar split across lines', () => {
 					printBarSeparators: 'never',
 				})
 			);
-			expect(text).toBe('A  D...  \n' + 'line 1\n' + 'G.\n' + 'line 2');
+			// prettier-ignore
+			expect(text).toBe(
+				'A  D...  \n' + 
+				'line 1\n' + 
+				'G.\n' + 
+				'line 2'
+			);
 		});
 
 		test('printBarSeparators=never with full split+continuation', () => {
@@ -73,8 +87,12 @@ describe('renderSong - bar split across lines', () => {
 					{ alignBars: false, printBarSeparators: 'never' }
 				)
 			);
+			// prettier-ignore
 			expect(text).toBe(
-				'A  D...  \n' + 'Lorem ipsum\n' + 'G.  C\n' + 'Consectetur'
+				'A  D...  \n' + 
+				'Lorem ipsum\n' + 
+				'G.  C\n' + 
+				'Consectetur'
 			);
 		});
 
@@ -84,8 +102,15 @@ describe('renderSong - bar split across lines', () => {
 					alignBars: true,
 				})
 			);
+			// Continuation lines use simple spacing — aligning them would
+			// be misleading since the continuation bar occupies a different
+			// musical position than the bar at the same column index above.
+			// prettier-ignore
 			expect(text).toBe(
-				'|A     |D...     \n' + 'line 1\n' + 'G.    |\n' + 'line 2'
+				'|A     |D...    \n' +
+				'line 1\n' +
+				'G.  |\n' +
+				'line 2'
 			);
 		});
 	});
@@ -98,7 +123,7 @@ describe('renderSong - bar split across lines', () => {
 						'A D... \\',
 						'_Lorem _ipsum dolor sit amet',
 						'G.',
-						'_Consectetur'
+						'oh _Consectetur'
 					)
 				)
 			);
@@ -106,8 +131,8 @@ describe('renderSong - bar split across lines', () => {
 			expect(text).toBe(
 				'|A    |D...                \n' +
 				' Lorem ipsum dolor sit amet\n' +
-				'G.         |\n' +
-				'Consectetur'
+				'   G.         |\n' +
+				'oh Consectetur'
 			);
 		});
 
@@ -118,7 +143,7 @@ describe('renderSong - bar split across lines', () => {
 						'A D... \\',
 						'_Lorem _ipsum dolor sit amet',
 						'G.',
-						'_Consectetur'
+						'oh _Consectetur'
 					),
 					{ printBarSeparators: 'never' }
 				)
@@ -127,8 +152,8 @@ describe('renderSong - bar split across lines', () => {
 			expect(text).toBe(
 				'A     D...                \n' +
 				'Lorem ipsum dolor sit amet\n' +
-				'G.\n' +
-				'Consectetur'
+				'   G.\n' +
+				'oh Consectetur'
 			);
 		});
 	});
@@ -219,14 +244,27 @@ describe('renderSong - bar split across lines', () => {
 					{ alignChordsWithLyrics: false, alignBars: false }
 				)
 			);
-			// With alignChordsWithLyrics: false, standard bar alignment
-			const lines = text.split('\n');
-			expect(lines[0]).toBe('|A  |D...  ');
-			expect(lines[2]).toBe('G.  |C  |');
+			// prettier-ignore
+			expect(text).toBe(
+				'|A  |D...  \n' +
+				'Lorem ipsum dolor sit amet,\n' +
+				'G.  |C  |\n' +
+				'Con sectetur'
+			);
 		});
 	});
 
 	describe('chords-only mode merge', () => {
+		test('continuation-only merge followed by chord line has no empty line', () => {
+			const text = toText(
+				render(song('A D... \\', 'lyric1', 'G.', 'lyric2', 'A D'), {
+					chartType: 'chords',
+					alignBars: false,
+				})
+			);
+			expect(text).toBe('|A  |D...  G.  |\n' + '|A  |D  |');
+		});
+
 		test('merges split bar onto one line with chartType=chords', () => {
 			const text = toText(
 				render(
@@ -234,7 +272,11 @@ describe('renderSong - bar split across lines', () => {
 					{ chartType: 'chords', alignBars: false }
 				)
 			);
-			expect(text).toBe('|A  |D...  G.  |\n' + '|C  |');
+			// prettier-ignore
+			expect(text).toBe(
+				'|A  |D...  G.  |\n' + 
+				'|C  |'
+			);
 		});
 
 		test('merges split bar with multiple bars before split', () => {
@@ -244,7 +286,11 @@ describe('renderSong - bar split across lines', () => {
 					{ chartType: 'chords', alignBars: false }
 				)
 			);
-			expect(text).toBe('|A  |D...  G.  |\n' + '|C  |E  |');
+			// prettier-ignore
+			expect(text).toBe(
+				'|A  |D...  G.  |\n' + 
+				'|C  |E  |'
+			);
 		});
 	});
 
@@ -265,6 +311,15 @@ describe('renderSong - bar split across lines', () => {
 		test('backslash in the middle of a line falls back to lyric', () => {
 			const parsed = parseSong(song('A \\ D'));
 			expect(parsed.allLines[0].type).toBe('lyric');
+		});
+
+		test('split without lyric before continuation invalidates split', () => {
+			const parsed = parseSong(song('A D... \\', 'G. C', 'lyric'));
+			// No lyric line between split and continuation — invalid.
+			// G. C also fails without continuation context (G. = 1 beat).
+			expect(parsed.allLines[0].type).toBe('lyric');
+			expect(parsed.allLines[1].type).toBe('lyric');
+			expect(parsed.allLines[2].type).toBe('lyric');
 		});
 
 		test('split followed by section label invalidates split', () => {
@@ -367,20 +422,21 @@ describe('renderSong - bar split across lines', () => {
 		test('two lyric lines invalidate split (render)', () => {
 			const text = toText(
 				render(
-					song(
-						'A D... \\',
-						'lyric 1',
-						'lyric 2',
-						'E F',
-						'lyric 3'
-					),
+					song('A D... \\', 'lyric 1', 'lyric 2', 'E F', 'lyric 3'),
 					{ alignBars: false }
 				)
 			);
 			// Split invalidated: first line becomes literal lyric text
 			expect(text).toContain('A D... \\');
-			// E F is a standalone chord line (not continuation)
 			expect(text).toContain('|E  |F  |');
+			// prettier-ignore
+			expect(text).toBe(
+				'A D... \\\n' +
+				'lyric 1\n' +
+				'lyric 2\n' +
+				'|E  |F  |\n' +
+				'lyric 3'
+			);
 		});
 	});
 
@@ -437,6 +493,26 @@ describe('renderSong - bar split across lines', () => {
 			const lastLine = parsed.allLines[parsed.allLines.length - 1];
 			expect(lastLine.type).toBe('lyric');
 		});
+
+		test('%% after split + normal chord line falls back to lyric', () => {
+			const parsed = parseSong(
+				song(
+					'A D... \\',
+					'lyric 1',
+					'G. C',
+					'lyric 2',
+					'D',
+					'lyric 3',
+					'%%',
+					'lyric 4'
+				)
+			);
+			// D is a standalone chord line after the split pair,
+			// but %% needs 2 previous chord lines and only 1 is stored
+			const lines = parsed.allLines;
+			expect(lines[4].type).toBe('chord'); // D
+			expect(lines[6].type).toBe('lyric'); // %% falls back
+		});
 	});
 
 	describe('split without continuation', () => {
@@ -465,6 +541,22 @@ describe('renderSong - bar split across lines', () => {
 				'|A..  B..  \n' +
 				'line 1\n' +
 				'C.  |D  |\n' +
+				'line 2'
+			);
+		});
+
+		test('handles four chords in the split bar, two on each side', () => {
+			// A. B. = 2 beats, leaving 2 pending. C. D. completes the bar.
+			const text = toText(
+				render(song('A. B. \\', 'line 1', 'C. D. E', 'line 2'), {
+					alignBars: false,
+				})
+			);
+			// prettier-ignore
+			expect(text).toBe(
+				'|A.  B.  \n' +
+				'line 1\n' +
+				'C.  D.  |E  |\n' +
 				'line 2'
 			);
 		});
@@ -525,8 +617,11 @@ describe('renderSong - bar split across lines', () => {
 					{ chartType: 'chords', alignBars: false }
 				)
 			);
+			// prettier-ignore
 			expect(text).toBe(
-				'|C  |G...  D.  |\n' + '|A  |D...  G.  |\n' + '|C  |'
+				'|C  |G...  D.  |\n' + 
+				'|A  |D...  G.  |\n' + 
+				'|C  |'
 			);
 		});
 
@@ -745,8 +840,12 @@ describe('renderSong - bar split across lines', () => {
 					alignBars: false,
 				})
 			);
+			// prettier-ignore
 			expect(text).toBe(
-				'|G  |C..  \n' + 'line 1\n' + 'D..  |G  |\n' + 'line 2'
+				'|G  |C..  \n' + 
+				'line 1\n' + 
+				'D..  |G  |\n' + 
+				'line 2'
 			);
 		});
 
@@ -757,7 +856,11 @@ describe('renderSong - bar split across lines', () => {
 					alignBars: false,
 				})
 			);
-			expect(text).toBe('|G  |C  D  |\n' + '|G  |');
+			// prettier-ignore
+			expect(text).toBe(
+				'|G  |C  D  |\n' + 
+				'|G  |'
+			);
 		});
 
 		test('even beat split merged in chords-only mode shows dots with always', () => {
@@ -768,7 +871,11 @@ describe('renderSong - bar split across lines', () => {
 					alignBars: false,
 				})
 			);
-			expect(text).toBe('|G  |C..  D..  |\n' + '|G  |');
+			// prettier-ignore
+			expect(text).toBe(
+				'|G  |C..  D..  |\n' + 
+				'|G  |'
+			);
 		});
 
 		test('uneven beat split merged in chords-only mode shows dots', () => {
@@ -778,7 +885,11 @@ describe('renderSong - bar split across lines', () => {
 					alignBars: false,
 				})
 			);
-			expect(text).toBe('|G  |C...  D.  |\n' + '|G  |');
+			// prettier-ignore
+			expect(text).toBe(
+				'|G  |C...  D.  |\n' + 
+				'|G  |'
+			);
 		});
 
 		test('even beat split parser flags are correct', () => {
@@ -848,6 +959,13 @@ describe('renderSong - bar split across lines', () => {
 	});
 
 	describe('split with alignBars', () => {
+		// Continuation lines are excluded from the alignment algorithm and
+		// use simple spacing. Aligning them would be misleading: the
+		// continuation bar (e.g. G.) is the tail of a split bar, not the
+		// same bar as the one at the same column index on the split line.
+		// Bars after the continuation are also semantically shifted, so
+		// column alignment cannot be meaningful.
+
 		test('aligned bars work with split', () => {
 			const text = toText(
 				render(
@@ -857,14 +975,14 @@ describe('renderSong - bar split across lines', () => {
 			);
 			// prettier-ignore
 			expect(text).toBe(
-				'|A     |D...     \n' +
+				'|A     |D...    \n' +
 				'Lorem ipsum\n' +
-				'G.    |C        |\n' +
+				'G.  |C  |\n' +
 				'Consectetur'
 			);
 		});
 
-		test('chained splits with alignBars do not crash', () => {
+		test('bugfix: chained splits with alignBars do not crash', () => {
 			const text = toText(
 				render(
 					song(
@@ -887,10 +1005,9 @@ describe('renderSong - bar split across lines', () => {
 	describe('sub-beat groups with splits', () => {
 		test('sub-beat group in complete bar before split', () => {
 			const text = toText(
-				render(
-					song('A... [B C] D... \\', 'line 1', 'G. E', 'line 2'),
-					{ alignBars: false }
-				)
+				render(song('A... [B C] D... \\', 'line 1', 'G. E', 'line 2'), {
+					alignBars: false,
+				})
 			);
 			// A...(3)+[B C](1)=4 beats = complete bar. D...(3) pending 1.
 			// G.(1) completes. E = full bar.
@@ -906,12 +1023,7 @@ describe('renderSong - bar split across lines', () => {
 		test('sub-beat group after continuation completes', () => {
 			const text = toText(
 				render(
-					song(
-						'A D... \\',
-						'line 1',
-						'G. C.. [E F] D.',
-						'line 2'
-					),
+					song('A D... \\', 'line 1', 'G. C.. [E F] D.', 'line 2'),
 					{ alignBars: false }
 				)
 			);
@@ -927,10 +1039,9 @@ describe('renderSong - bar split across lines', () => {
 
 		test('sub-beat group completing the continuation in 5/4', () => {
 			const text = toText(
-				render(
-					song('5/4', 'A.... \\', 'line 1', '[G C] D', 'line 2'),
-					{ alignBars: false }
-				)
+				render(song('5/4', 'A.... \\', 'line 1', '[G C] D', 'line 2'), {
+					alignBars: false,
+				})
 			);
 			// A....(4) in 5/4, pending 1. [G C](1) completes. D = full bar.
 			// prettier-ignore
@@ -947,10 +1058,9 @@ describe('renderSong - bar split across lines', () => {
 	describe('time signatures with splits', () => {
 		test('3/4 time with split', () => {
 			const text = toText(
-				render(
-					song('3/4', 'A.. \\', 'line 1', 'G. C', 'line 2'),
-					{ alignBars: false }
-				)
+				render(song('3/4', 'A.. \\', 'line 1', 'G. C', 'line 2'), {
+					alignBars: false,
+				})
 			);
 			// A..(2) in 3/4, pending 1. G.(1) completes. C = 3 beats = full bar.
 			// prettier-ignore
@@ -965,10 +1075,9 @@ describe('renderSong - bar split across lines', () => {
 
 		test('inline time sig change on split line', () => {
 			const text = toText(
-				render(
-					song('A 3/4 G.. \\', 'line 1', 'D. C', 'line 2'),
-					{ alignBars: false }
-				)
+				render(song('A 3/4 G.. \\', 'line 1', 'D. C', 'line 2'), {
+					alignBars: false,
+				})
 			);
 			// A = 4 beats in 4/4 (complete). 3/4 change. G..(2) pending 1.
 			// D.(1) completes. C = 3 beats = full bar.
@@ -983,15 +1092,9 @@ describe('renderSong - bar split across lines', () => {
 
 		test('time sig change after continuation completes', () => {
 			const text = toText(
-				render(
-					song(
-						'A D... \\',
-						'line 1',
-						'G. 3/4 C.. D.',
-						'line 2'
-					),
-					{ alignBars: false }
-				)
+				render(song('A D... \\', 'line 1', 'G. 3/4 C.. D.', 'line 2'), {
+					alignBars: false,
+				})
 			);
 			// G.(1) completes 4/4 continuation. 3/4 change. C..(2)+D.(1)=3 = full bar.
 			// prettier-ignore
@@ -1007,10 +1110,9 @@ describe('renderSong - bar split across lines', () => {
 	describe('bar repeat rendering with split', () => {
 		test('bar repeat on continuation after completion', () => {
 			const text = toText(
-				render(
-					song('A D... \\', 'line 1', 'G. C %', 'line 2'),
-					{ alignBars: false }
-				)
+				render(song('A D... \\', 'line 1', 'G. C %', 'line 2'), {
+					alignBars: false,
+				})
 			);
 			// G.(1) completes, C = normal bar, % repeats C.
 			// prettier-ignore

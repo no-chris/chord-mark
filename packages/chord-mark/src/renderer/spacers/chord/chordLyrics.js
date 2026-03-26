@@ -116,7 +116,7 @@ export default function space(
 	if (shouldOffsetChordLine(lyricsLine)) {
 		const chordLineOffset = lyricsLine.chordPositions[0];
 		chordLine.offset = chordLineOffset;
-		if (shouldPrintBarSeparators) {
+		if (shouldPrintBarSeparators && !chordLine.allBars[0]?.isContinuation) {
 			chordLine.offset--;
 		}
 		spacedLyricsLine =

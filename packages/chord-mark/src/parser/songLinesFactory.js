@@ -179,6 +179,9 @@ export default function songLinesFactory() {
 	 */
 	function getChordLine(string) {
 		let line;
+		if (pendingBarContext !== null && splitLyricLineCount === 0) {
+			invalidatePendingSplit();
+		}
 		try {
 			const lineModel = parseChordLine(string, {
 				timeSignature: currentTimeSignature,
@@ -290,6 +293,7 @@ export default function songLinesFactory() {
 				bpModel.pendingBar?.currentBeatCount;
 			pendingBarContext = _cloneDeep(bpModel.pendingBar);
 			pendingSplitLineIndex = allLines.length;
+			splitLyricLineCount = 0;
 			return 'repeat';
 		}
 		if (isContinuationLine) {
@@ -438,16 +442,20 @@ export default function songLinesFactory() {
 				invalidatePendingSplit();
 				line = getKeyDeclarationLine(lineSrc);
 			} else {
-				if (pendingSplitLineIndex !== null) {
-					splitLyricLineCount++;
-					if (splitLyricLineCount > 1) {
-						invalidatePendingSplit();
-					}
-				}
 				line = getLyricLine(lineSrc);
 			}
 
 			repeatLinesFromBlueprint(line);
+
+			if (
+				line.type === lineTypes.LYRIC &&
+				pendingSplitLineIndex !== null
+			) {
+				splitLyricLineCount++;
+				if (splitLyricLineCount > 1) {
+					invalidatePendingSplit();
+				}
+			}
 
 			allLines.push(line);
 
