@@ -84,19 +84,9 @@ export default function songLinesFactory() {
 	let pendingSplitLineIndex = null;
 	let splitLyricLineCount = 0;
 
-	function invalidatePendingSplit() {
-		if (pendingSplitLineIndex !== null) {
-			const splitLine = allLines[pendingSplitLineIndex];
-			allLines[pendingSplitLineIndex] = getLyricLine(splitLine.string);
-		}
-		pendingBarContext = null;
-		pendingSplitLineIndex = null;
-		splitLyricLineCount = 0;
-	}
-
-	let blueprintPendingBeatCount = null;
 	let blueprint = [];
 	let blueprintIndex = 0;
+	let blueprintPendingBeatCount = null;
 
 	let shouldMultiplySection = false;
 	let shouldCopySection = false;
@@ -268,42 +258,6 @@ export default function songLinesFactory() {
 		return sectionsStats[label];
 	}
 
-	function handleBlueprintChordLine(blueprintLine) {
-		const bpModel = blueprintLine.model;
-		const isSplitLine = bpModel.hasContinuation;
-		const isContinuationLine =
-			bpModel.allBars?.length > 0 && bpModel.allBars[0].isContinuation;
-
-		// Check continuation first — a chained split is both continuation AND split
-		if (isContinuationLine) {
-			const isCompatible =
-				pendingBarContext !== null &&
-				pendingBarContext.currentBeatCount ===
-					blueprintPendingBeatCount;
-			if (!isCompatible) {
-				invalidatePendingSplit();
-				return 'skip';
-			}
-			pendingBarContext = null;
-			pendingSplitLineIndex = null;
-			splitLyricLineCount = 0;
-		}
-		if (isSplitLine) {
-			blueprintPendingBeatCount =
-				bpModel.pendingBar?.currentBeatCount;
-			pendingBarContext = _cloneDeep(bpModel.pendingBar);
-			pendingSplitLineIndex = allLines.length;
-			splitLyricLineCount = 0;
-			return 'repeat';
-		}
-		if (isContinuationLine) {
-			// Continuation-only (not a split) — already validated above
-			return 'repeat';
-		}
-		addPreviousChordLine(_cloneDeep(blueprintLine));
-		return 'repeat';
-	}
-
 	function repeatLinesFromBlueprint(line) {
 		if (blueprint.length && line.type !== lineTypes.SECTION_LABEL) {
 			let blueprintLine = blueprint[blueprintIndex];
@@ -311,8 +265,7 @@ export default function songLinesFactory() {
 
 			while (shouldRepeatLineFromBlueprint(blueprintLine, line)) {
 				if (blueprintLine.type === lineTypes.CHORD) {
-					const action =
-						handleBlueprintChordLine(blueprintLine);
+					const action = getBlueprintChordLineAction(blueprintLine);
 					if (action === 'skip') {
 						blueprintIndex++;
 						blueprintLine = blueprint[blueprintIndex];
@@ -339,6 +292,37 @@ export default function songLinesFactory() {
 			blueprintLine.type !== currentLine.type &&
 			currentLine.type !== lineTypes.EMPTY_LINE
 		);
+	}
+
+	function getBlueprintChordLineAction(blueprintLine) {
+		const bpModel = blueprintLine.model;
+		const isSplitLine = bpModel.hasContinuation;
+		const isContinuationLine =
+			bpModel.allBars?.length > 0 && bpModel.allBars[0].isContinuation;
+
+		// Check continuation first — a chained split is both continuation AND split
+		if (isContinuationLine) {
+			const isCompatible =
+				pendingBarContext !== null &&
+				pendingBarContext.currentBeatCount ===
+					blueprintPendingBeatCount;
+			if (!isCompatible) {
+				invalidatePendingSplit();
+				return 'skip';
+			}
+			pendingBarContext = null;
+			pendingSplitLineIndex = null;
+			splitLyricLineCount = 0;
+		}
+		if (isSplitLine) {
+			blueprintPendingBeatCount = bpModel.pendingBar?.currentBeatCount;
+			pendingBarContext = _cloneDeep(bpModel.pendingBar);
+			pendingSplitLineIndex = allLines.length;
+			splitLyricLineCount = 0;
+		} else if (!isContinuationLine) {
+			addPreviousChordLine(_cloneDeep(blueprintLine));
+		}
+		return 'repeat';
 	}
 
 	function copySection() {
@@ -419,6 +403,16 @@ export default function songLinesFactory() {
 				allLines.push(..._cloneDeep(toMultiply));
 			}
 		}
+	}
+
+	function invalidatePendingSplit() {
+		if (pendingSplitLineIndex !== null) {
+			const splitLine = allLines[pendingSplitLineIndex];
+			allLines[pendingSplitLineIndex] = getLyricLine(splitLine.string);
+		}
+		pendingBarContext = null;
+		pendingSplitLineIndex = null;
+		splitLyricLineCount = 0;
 	}
 
 	return {
