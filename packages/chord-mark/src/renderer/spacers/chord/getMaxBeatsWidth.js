@@ -23,13 +23,11 @@ export default function getMaxBeatsWidth(
 	allLines
 		.filter((line) => line.type === lineTypes.CHORD)
 		.filter((line) => !shouldAlignChordsWithLyrics(line))
-		.filter((line) => !line.model.allBars[0]?.isContinuation)
+		.filter((line) => !isContinuationLine(line))
 		.forEach((line) => {
 			line.model.allBars
 				.forEach((bar, barIndex) => {
-					// Continuation bars start mid-bar, so their beat positions
-					// don't correspond to bar-index columns and would skew max widths
-					if (bar.lineHadTimeSignatureChange || bar.isContinuation) {
+					if (bar.lineHadTimeSignatureChange) {
 						return;
 					}
 					if (!maxBeatsWidth[barIndex]) {
@@ -60,3 +58,5 @@ export default function getMaxBeatsWidth(
 
 	return maxBeatsWidth;
 }
+
+const isContinuationLine = (line) => line.model.allBars[0]?.isContinuation;

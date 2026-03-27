@@ -223,7 +223,7 @@ export default function renderSong(
 			let spaced =
 				alignBars &&
 				!shouldAlignChordsWithLyrics(line) &&
-				!line.model.allBars[0]?.isContinuation
+				!isContinuationLine(line)
 					? alignedChordSpacer(line.model, maxBeatsWidth, {
 							shouldPrintBarSeparators: shouldPrintBarSeparators(
 								line.model
@@ -344,6 +344,10 @@ export default function renderSong(
 			wrapChordLyricLines &&
 			shouldAlignChordsWithLyrics(line)
 		);
+	}
+
+	function isContinuationLine(line) {
+		return line.model.allBars[0]?.isContinuation;
 	}
 
 	/**

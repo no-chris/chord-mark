@@ -64,11 +64,11 @@ export default function space(
 						: '';
 
 				const isBarContinuation = bar.isContinuation;
-			const isLastBarOfContinuedLine =
-				barIndex === chordLine.allBars.length - 1 &&
-				chordLine.hasContinuation;
+				const isLastBarOfContinuedLine =
+					barIndex === chordLine.allBars.length - 1 &&
+					chordLine.hasContinuation;
 
-			const shouldOffsetLyricsLine =
+				const shouldOffsetLyricsLine =
 					barIndex === 0 &&
 					chordIndex === 0 &&
 					!isBarContinuation &&
@@ -115,8 +115,10 @@ export default function space(
 
 	if (shouldOffsetChordLine(lyricsLine)) {
 		const chordLineOffset = lyricsLine.chordPositions[0];
+		const hasLeadingBarSeparator =
+			shouldPrintBarSeparators && !chordLine.allBars[0]?.isContinuation;
 		chordLine.offset = chordLineOffset;
-		if (shouldPrintBarSeparators && !chordLine.allBars[0]?.isContinuation) {
+		if (hasLeadingBarSeparator) {
 			chordLine.offset--;
 		}
 		spacedLyricsLine =
