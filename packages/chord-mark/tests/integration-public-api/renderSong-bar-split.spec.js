@@ -295,6 +295,11 @@ describe('renderSong - bar split across lines', () => {
 	});
 
 	describe('error cases', () => {
+		test('backslash alone on a line falls back to lyric', () => {
+			const parsed = parseSong(song('\\'));
+			expect(parsed.allLines[0].type).toBe('lyric');
+		});
+
 		test('backslash on a complete bar falls back to lyric', () => {
 			const parsed = parseSong(song('A D \\'));
 			// A D fills 4+4=8 beats which is 2 bars, but the last bar (D)

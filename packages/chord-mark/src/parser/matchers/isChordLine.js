@@ -50,7 +50,7 @@ const hasBarSplitMarker = (line) => {
 const stripBarSplitMarker = (line) => {
 	if (!hasBarSplitMarker(line)) return line;
 	const trimmed = line.trimEnd();
-	return trimmed.substring(0, trimmed.length - 1).trimEnd();
+	return trimmed.slice(0, -1).trimEnd();
 };
 
 const cleanToken = (token) => {

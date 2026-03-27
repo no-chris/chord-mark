@@ -348,7 +348,7 @@ function hasTooFewBeats(currentBeatCount, barBeatCount, isLast) {
 	return isLast && currentBeatCount < barBeatCount;
 }
 
-function hasUnevenChordsDurations(bar) {
+export function hasUnevenChordsDurations(bar) {
 	let firstChordDuration = bar.allChords[0].duration;
 	return bar.allChords.some((chord) => chord.duration !== firstChordDuration);
 }

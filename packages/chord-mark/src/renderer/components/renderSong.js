@@ -88,23 +88,23 @@ export default function renderSong(
 		simplifyChords,
 		useShortNamings,
 	})
-		.map(addPrintChordsDurationsFlag)
 		.map(addPrintBarTimeSignatureFlag)
 		.filter(shouldRenderLine)
 		.map((line) => {
 			return replaceRepeatedBars(line, { alignChordsWithLyrics });
 		});
 
+	if (['chords', 'chordsFirstLyricLine'].includes(chartType)) {
+		allLines = mergeBarSplitLines(allLines);
+	}
+
+	allLines = allLines.map(addPrintChordsDurationsFlag);
+
 	const maxBeatsWidth = getMaxBeatsWidth(allLines, {
 		shouldAlignChordsWithLyrics,
 		shouldPrintSubBeatDelimiters,
 		symbolType,
 	});
-
-	if (['chords', 'chordsFirstLyricLine'].includes(chartType)) {
-		allLines = mergeBarSplitLines(allLines);
-		allLines = allLines.map(addPrintChordsDurationsFlag);
-	}
 
 	allLines = renderAllSectionsLabels(allLines, {
 		expandSectionMultiply,

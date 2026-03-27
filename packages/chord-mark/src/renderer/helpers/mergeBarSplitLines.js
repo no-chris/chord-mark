@@ -1,6 +1,7 @@
 import _cloneDeep from 'lodash/cloneDeep';
 
 import lineTypes from '../../parser/lineTypes';
+import { hasUnevenChordsDurations } from '../../parser/parseChordLine';
 
 /**
  * In chords-only mode, merge split chord lines back into single lines.
@@ -43,11 +44,7 @@ export default function mergeBarSplitLines(lines) {
 			incompleteBar.allChords.push(...contFirstBar.allChords);
 			incompleteBar.hasUnevenChordsDurations =
 				incompleteBar.allChords.length > 1 &&
-				incompleteBar.allChords.some(
-					(c) =>
-						c.duration !==
-						incompleteBar.allChords[0].duration
-				);
+				hasUnevenChordsDurations(incompleteBar);
 
 			// Remaining bars from the continuation stay on their own line
 			if (contBars.length > 0) {
