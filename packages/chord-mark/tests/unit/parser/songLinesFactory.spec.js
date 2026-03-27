@@ -144,16 +144,19 @@ describe('timeSignature', () => {
 		expect(parseChordLine.mock.calls[0][1]).toEqual({
 			timeSignature: ts6_8,
 			originalKey: {},
+			continueBar: null,
 		});
 		expect(parseChordLine.mock.calls[1][0]).toEqual('C.. G..');
 		expect(parseChordLine.mock.calls[1][1]).toEqual({
 			timeSignature: ts4_4,
 			originalKey: {},
+			continueBar: null,
 		});
 		expect(parseChordLine.mock.calls[2][0]).toEqual('D D C A');
 		expect(parseChordLine.mock.calls[2][1]).toEqual({
 			timeSignature: ts3_4,
 			originalKey: {},
+			continueBar: null,
 		});
 	});
 });

@@ -16,6 +16,7 @@ import renderTimeSignature from './renderTimeSignature';
 import songTpl from './tpl/song.js';
 import renderAllSectionsLabels from '../helpers/renderAllSectionLabels';
 import renderAllChords from '../helpers/renderAllChords';
+import mergeBarSplitLines from '../helpers/mergeBarSplitLines';
 
 import lineTypes from '../../parser/lineTypes';
 import replaceRepeatedBars from '../replaceRepeatedBars';
@@ -36,7 +37,7 @@ import { defaultTimeSignature } from '../../parser/syntax';
  * @param {Boolean} options.expandSectionCopy
  * @param {Boolean} options.expandSectionMultiply
  * @param {Boolean|('none'|'max'|'core')} options.simplifyChords
- * @param {('never'|'uneven'|'always')} options.printChordsDuration
+ * @param {('never'|'uneven'|'always')} options.printChordsDuration - TODO: rename 'uneven' to 'auto' in a separate PR
  * @param {('never'|'grids'|'always')} options.printBarSeparators - mainly useful when converting a ChordMark file to a format that
  * do not allow bar separators to be printed (e.g. Ultimate Guitar)
  * @param {Boolean} options.printSubBeatDelimiters - mainly useful when converting a ChordMark file to a format that
@@ -87,12 +88,17 @@ export default function renderSong(
 		simplifyChords,
 		useShortNamings,
 	})
-		.map(addPrintChordsDurationsFlag)
 		.map(addPrintBarTimeSignatureFlag)
 		.filter(shouldRenderLine)
 		.map((line) => {
 			return replaceRepeatedBars(line, { alignChordsWithLyrics });
 		});
+
+	if (['chords', 'chordsFirstLyricLine'].includes(chartType)) {
+		allLines = mergeBarSplitLines(allLines);
+	}
+
+	allLines = allLines.map(addPrintChordsDurationsFlag);
 
 	const maxBeatsWidth = getMaxBeatsWidth(allLines, {
 		shouldAlignChordsWithLyrics,
@@ -125,8 +131,15 @@ export default function renderSong(
 
 	function addPrintChordsDurationsFlag(line) {
 		if (line.type === lineTypes.CHORD) {
-			line.model.allBars.forEach((bar) => {
-				bar.shouldPrintChordsDuration = shouldPrintChordsDuration(bar);
+			line.model.allBars.forEach((bar, barIndex, allBars) => {
+				const isIncompleteBar =
+					line.model.hasContinuation &&
+					barIndex === allBars.length - 1;
+				const isContinuationBar = bar.isContinuation;
+				const isSplitBar = isIncompleteBar || isContinuationBar;
+				bar.shouldPrintChordsDuration =
+					(isSplitBar && printChordsDuration !== 'never') ||
+					shouldPrintChordsDuration(bar);
 			});
 		}
 		return line;
@@ -208,7 +221,9 @@ export default function renderSong(
 	function spaceChordLine(line, lineIndex) {
 		if (line.type === lineTypes.CHORD) {
 			let spaced =
-				alignBars && !shouldAlignChordsWithLyrics(line)
+				alignBars &&
+				!shouldAlignChordsWithLyrics(line) &&
+				!isContinuationLine(line)
 					? alignedChordSpacer(line.model, maxBeatsWidth, {
 							shouldPrintBarSeparators: shouldPrintBarSeparators(
 								line.model
@@ -239,14 +254,12 @@ export default function renderSong(
 		}
 	}
 
-	// eslint-disable-next-line max-lines-per-function
 	function renderAllLines() {
 		let lineIsInASection = false;
 		let chordLineToMerge;
 
 		return (
 			allLines
-				// eslint-disable-next-line max-lines-per-function
 				.map((line, i) => {
 					let rendered;
 					let shouldOpenSection = false;
@@ -329,6 +342,10 @@ export default function renderSong(
 			wrapChordLyricLines &&
 			shouldAlignChordsWithLyrics(line)
 		);
+	}
+
+	function isContinuationLine(line) {
+		return line.model.allBars[0]?.isContinuation;
 	}
 
 	/**

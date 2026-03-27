@@ -57,6 +57,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 
@@ -90,6 +92,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 
@@ -130,6 +134,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 
@@ -177,6 +183,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 
@@ -218,6 +226,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 
@@ -266,6 +276,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 
@@ -321,6 +333,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 
@@ -384,6 +398,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 
@@ -410,6 +426,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 
@@ -443,6 +461,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 
@@ -476,6 +496,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 
@@ -516,6 +538,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 
@@ -572,6 +596,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 
@@ -598,6 +624,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 
@@ -624,6 +652,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 
@@ -650,6 +680,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 
@@ -683,6 +715,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 
@@ -761,6 +795,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 
@@ -832,6 +868,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 
@@ -901,6 +939,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 
@@ -942,6 +982,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 	[
@@ -985,6 +1027,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 	[
@@ -1037,6 +1081,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 	[
@@ -1098,6 +1144,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 	[
@@ -1149,6 +1197,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 	[
@@ -1196,6 +1246,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 	[
@@ -1265,6 +1317,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 	[
@@ -1334,6 +1388,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 	[
@@ -1374,6 +1430,8 @@ describe.each([
 				},
 			],
 			originalKey: {},
+			hasContinuation: false,
+			pendingBar: null,
 		},
 	],
 ])('%s: %s', (title, input, timeSignature, expected) => {
@@ -1546,6 +1604,49 @@ describe.each([
 
 	test('Throw InvalidBarRepeatException', () => {
 		expect(throwingFn).toThrow(InvalidBarRepeatException);
+	});
+});
+
+describe('Bar repeat with continueBar', () => {
+
+	test('bar repeat of continuation bar throws InvalidBarRepeatException', () => {
+		// G. completes the continuation bar (3+1=4 beats), % tries to repeat it
+		// but the continuation bar has isContinuation, so it should throw
+		expect(() => {
+			parseChordLine('G. %', {
+				continueBar: { currentBeatCount: 3, timeSignature: ts4_4 },
+			});
+		}).toThrow(InvalidBarRepeatException);
+	});
+
+	test('bar repeat after normal bar following continuation is valid', () => {
+		// G. completes the continuation (3+1=4), C is a new normal bar (4 beats),
+		// % repeats C — valid because previousBar is C, not the continuation bar
+		const parsed = parseChordLine('G. C %', {
+			continueBar: { currentBeatCount: 3, timeSignature: ts4_4 },
+		});
+		expect(parsed.allBars.length).toBe(3);
+		expect(parsed.allBars[2].isRepeated).toBe(true);
+	});
+
+	test('continuation on complete bar throws InvalidBeatCountException', () => {
+		// G. completes the bar (3+1=4), then \ on complete bar is invalid
+		expect(() => {
+			parseChordLine('G. \\', {
+				continueBar: { currentBeatCount: 3, timeSignature: ts4_4 },
+			});
+		}).toThrow(InvalidBeatCountException);
+	});
+});
+
+describe('Bar split (hasContinuation)', () => {
+	test('incomplete bar with multiple chords sets hasUnevenChordsDurations', () => {
+		// 5/4: A.. B. = 2+1 = 3 beats pending, bar has 2 chords with uneven durations
+		const parsed = parseChordLine('A.. B. \\', { timeSignature: ts5_4 });
+		expect(parsed.hasContinuation).toBe(true);
+		expect(parsed.pendingBar).toBeTruthy();
+		expect(parsed.allBars.length).toBe(1);
+		expect(parsed.allBars[0].hasUnevenChordsDurations).toBe(true);
 	});
 });
 

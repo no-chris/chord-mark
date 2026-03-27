@@ -1,4 +1,4 @@
-/*eslint-disable max-lines-per-function,max-lines */
+/*eslint-disable max-lines-per-function */
 import _cloneDeep from 'lodash/cloneDeep';
 import lineTypes from './lineTypes';
 
@@ -80,8 +80,13 @@ export default function songLinesFactory() {
 	let previousChordLines = [];
 	let previousSectionLabelLine;
 
+	let pendingBarContext = null;
+	let pendingSplitLineIndex = null;
+	let splitLyricLineCount = 0;
+
 	let blueprint = [];
 	let blueprintIndex = 0;
+	let blueprintPendingBeatCount = null;
 
 	let shouldMultiplySection = false;
 	let shouldCopySection = false;
@@ -144,6 +149,7 @@ export default function songLinesFactory() {
 				? getNthOfLabel(allLines, currentSection.label, 1)
 				: [];
 		blueprintIndex = 0;
+		blueprintPendingBeatCount = null;
 
 		return line;
 	}
@@ -163,18 +169,35 @@ export default function songLinesFactory() {
 	 */
 	function getChordLine(string) {
 		let line;
+		if (pendingBarContext !== null && splitLyricLineCount === 0) {
+			invalidatePendingSplit();
+		}
 		try {
 			const lineModel = parseChordLine(string, {
 				timeSignature: currentTimeSignature,
 				originalKey: currentKey,
+				continueBar: pendingBarContext,
 			});
 			line = {
 				string,
 				type: lineTypes.CHORD,
 				model: lineModel,
 			};
-			addPreviousChordLine(line);
+			if (lineModel.hasContinuation) {
+				pendingBarContext = lineModel.pendingBar;
+				pendingSplitLineIndex = allLines.length; // will be pushed next
+				splitLyricLineCount = 0;
+			} else {
+				const wasContinuation = pendingBarContext !== null;
+				pendingBarContext = null;
+				pendingSplitLineIndex = null;
+				splitLyricLineCount = 0;
+				if (!wasContinuation) {
+					addPreviousChordLine(line);
+				}
+			}
 		} catch {
+			invalidatePendingSplit();
 			line = getLyricLine(string);
 		}
 		return line;
@@ -242,7 +265,12 @@ export default function songLinesFactory() {
 
 			while (shouldRepeatLineFromBlueprint(blueprintLine, line)) {
 				if (blueprintLine.type === lineTypes.CHORD) {
-					addPreviousChordLine(_cloneDeep(blueprintLine));
+					const action = getBlueprintChordLineAction(blueprintLine);
+					if (action === 'skip') {
+						blueprintIndex++;
+						blueprintLine = blueprint[blueprintIndex];
+						continue;
+					}
 				}
 				repeatedLine = {
 					..._cloneDeep(blueprintLine),
@@ -264,6 +292,37 @@ export default function songLinesFactory() {
 			blueprintLine.type !== currentLine.type &&
 			currentLine.type !== lineTypes.EMPTY_LINE
 		);
+	}
+
+	function getBlueprintChordLineAction(blueprintLine) {
+		const bpModel = blueprintLine.model;
+		const isSplitLine = bpModel.hasContinuation;
+		const isContinuationLine =
+			bpModel.allBars?.length > 0 && bpModel.allBars[0].isContinuation;
+
+		// Check continuation first — a chained split is both continuation AND split
+		if (isContinuationLine) {
+			const isCompatible =
+				pendingBarContext !== null &&
+				pendingBarContext.currentBeatCount ===
+					blueprintPendingBeatCount;
+			if (!isCompatible) {
+				invalidatePendingSplit();
+				return 'skip';
+			}
+			pendingBarContext = null;
+			pendingSplitLineIndex = null;
+			splitLyricLineCount = 0;
+		}
+		if (isSplitLine) {
+			blueprintPendingBeatCount = bpModel.pendingBar?.currentBeatCount;
+			pendingBarContext = _cloneDeep(bpModel.pendingBar);
+			pendingSplitLineIndex = allLines.length;
+			splitLyricLineCount = 0;
+		} else if (!isContinuationLine) {
+			addPreviousChordLine(_cloneDeep(blueprintLine));
+		}
+		return 'repeat';
 	}
 
 	function copySection() {
@@ -346,26 +405,51 @@ export default function songLinesFactory() {
 		}
 	}
 
+	function invalidatePendingSplit() {
+		if (pendingSplitLineIndex !== null) {
+			const splitLine = allLines[pendingSplitLineIndex];
+			allLines[pendingSplitLineIndex] = getLyricLine(splitLine.string);
+		}
+		pendingBarContext = null;
+		pendingSplitLineIndex = null;
+		splitLyricLineCount = 0;
+	}
+
 	return {
 		addLine(lineSrc, lineIndex, allSrcLines) {
 			let line;
 			if (isTimeSignature(lineSrc)) {
+				invalidatePendingSplit();
 				line = getTimeSignatureLine(lineSrc);
 			} else if (isSectionLabel(lineSrc)) {
+				invalidatePendingSplit();
 				line = getSectionLabelLine(lineSrc, lineIndex, allSrcLines);
 			} else if (isChordLine(lineSrc)) {
 				line = getChordLine(lineSrc);
 			} else if (isChordLineRepeater(lineSrc)) {
+				invalidatePendingSplit();
 				line = getRepeatedChordLine(lineSrc);
 			} else if (isEmptyLine(lineSrc)) {
+				invalidatePendingSplit();
 				line = getEmptyLine(lineSrc);
 			} else if (isKeyDeclaration(lineSrc)) {
+				invalidatePendingSplit();
 				line = getKeyDeclarationLine(lineSrc);
 			} else {
 				line = getLyricLine(lineSrc);
 			}
 
 			repeatLinesFromBlueprint(line);
+
+			if (
+				line.type === lineTypes.LYRIC &&
+				pendingSplitLineIndex !== null
+			) {
+				splitLyricLineCount++;
+				if (splitLyricLineCount > 1) {
+					invalidatePendingSplit();
+				}
+			}
 
 			allLines.push(line);
 
@@ -377,6 +461,7 @@ export default function songLinesFactory() {
 		 * returns {SongLine[]}
 		 */
 		asArray() {
+			invalidatePendingSplit();
 			return _cloneDeep(allLines);
 		},
 

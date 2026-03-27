@@ -14,7 +14,11 @@ import InvalidBeatCountException from './exceptions/InvalidBeatCountException';
 import InvalidChordRepetitionException from './exceptions/InvalidChordRepetitionException';
 import InvalidSubBeatGroupException from './exceptions/InvalidSubBeatGroupException';
 import InvalidBarRepeatException from './exceptions/InvalidBarRepeatException';
-import { getParseableChordLine, cleanToken } from './matchers/isChordLine';
+import {
+	getParseableChordLine,
+	cleanToken,
+	hasBarSplitMarker,
+} from './matchers/isChordLine';
 
 const chordBeatCountSymbols = new RegExp(
 	_escapeRegExp(syntax.chordBeatCount),
@@ -62,12 +66,22 @@ const barRepeatSymbols = new RegExp(
  * @param {Object} options
  * @param {TimeSignature} options.timeSignature
  * @param {KeyDeclaration} options.originalKey
+ * @param {Object} [options.continueBar] - pending bar state from a previous line ending with \
+ * @param {Number} options.continueBar.currentBeatCount
+ * @param {ChordLineChord[]} options.continueBar.allChords
+ * @param {TimeSignature} options.continueBar.timeSignature
  * @returns {ChordLine}
  */
 export default function parseChordLine(
 	chordLine,
-	{ timeSignature = defaultTimeSignature, originalKey = {} } = {}
+	{
+		timeSignature = defaultTimeSignature,
+		originalKey = {},
+		continueBar,
+	} = {}
 ) {
+	const hasContinuation = hasBarSplitMarker(chordLine);
+
 	let { beatCount } = timeSignature;
 
 	const allBars = [];
@@ -82,6 +96,14 @@ export default function parseChordLine(
 	let isInSubBeatGroup = false;
 	let subBeatGroupIndex = 0;
 	let lineHadTimeSignatureChange = false;
+	let isContinuationBar = false;
+
+	if (continueBar) {
+		currentBeatCount = continueBar.currentBeatCount;
+		timeSignature = continueBar.timeSignature;
+		beatCount = timeSignature.beatCount;
+		isContinuationBar = true;
+	}
 
 	checkSubBeatConsistency(chordLine);
 
@@ -98,27 +120,69 @@ export default function parseChordLine(
 			if (shouldChangeBar(currentBeatCount, beatCount)) {
 				changeBar();
 			} else {
-				checkInvalidBeatCount(
-					chord,
-					currentBeatCount,
-					beatCount,
-					allTokens.length === tokenIndex + 1
-				);
+				const isLast = allTokens.length === tokenIndex + 1;
+				if (isLast && hasContinuation) {
+					// incomplete bar is expected — don't check beat count
+				} else {
+					checkInvalidBeatCount(
+						chord,
+						currentBeatCount,
+						beatCount,
+						isLast
+					);
+				}
 			}
 		}
 	});
+
+	if (isContinuationOnCompleteBar()) {
+		throw new InvalidBeatCountException({
+			string: chord.string,
+			duration: chord.duration,
+			currentBeatCount: beatCount,
+			beatCount,
+		});
+	}
+
+	let pendingBar = null;
+	if (hasIncompleteBarToContinue()) {
+		// Push the incomplete bar to allBars for rendering on this line
+		bar.timeSignature = timeSignature;
+		bar.lineHadTimeSignatureChange = lineHadTimeSignatureChange;
+		bar.hasUnevenChordsDurations =
+			bar.allChords.length > 1 ? hasUnevenChordsDurations(bar) : false;
+		bar.isRepeated = false;
+		allBars.push(_cloneDeep(bar));
+
+		// Also store pending state for the next line to continue
+		pendingBar = {
+			currentBeatCount,
+			timeSignature: _cloneDeep(timeSignature),
+		};
+	}
 
 	setSubBeatInfo(allBars, subBeatGroupsChordCount);
 
 	return {
 		allBars,
 		originalKey,
+		hasContinuation,
+		pendingBar,
 	};
+
+	function isContinuationOnCompleteBar() {
+		return hasContinuation && currentBeatCount === 0 && allBars.length > 0;
+	}
+
+	function hasIncompleteBarToContinue() {
+		return hasContinuation && currentBeatCount > 0;
+	}
 
 	function repeatPreviousBars(token) {
 		if (
 			currentBeatCount === 0 &&
 			previousBar &&
+			!previousBar.isContinuation &&
 			_isEqual(timeSignature, previousBar.timeSignature)
 		) {
 			const repeatedBar = _cloneDeep(previousBar);
@@ -195,6 +259,10 @@ export default function parseChordLine(
 		bar.timeSignature = timeSignature;
 		bar.lineHadTimeSignatureChange = lineHadTimeSignatureChange;
 		bar.hasUnevenChordsDurations = hasUnevenChordsDurations(bar);
+		if (isContinuationBar) {
+			bar.isContinuation = true;
+			isContinuationBar = false;
+		}
 		const barClone = _cloneDeep(bar);
 
 		bar.isRepeated = _isEqual(bar, previousBar);
@@ -280,7 +348,7 @@ function hasTooFewBeats(currentBeatCount, barBeatCount, isLast) {
 	return isLast && currentBeatCount < barBeatCount;
 }
 
-function hasUnevenChordsDurations(bar) {
+export function hasUnevenChordsDurations(bar) {
 	let firstChordDuration = bar.allChords[0].duration;
 	return bar.allChords.some((chord) => chord.duration !== firstChordDuration);
 }

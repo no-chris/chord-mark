@@ -2,6 +2,7 @@ import parseTimeSignature from './parseTimeSignature';
 
 export default {
 	barRepeat: '%',
+	barSplitMarker: '\\',
 	chordBeatCount: '.',
 	chordLineRepeat: '%',
 	chordPositionMarker: '_',

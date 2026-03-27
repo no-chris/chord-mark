@@ -23,7 +23,8 @@ export default function renderChordLine(
 	} = {}
 ) {
 	const allBarsRendered = chordLineModel.allBars.map((bar, i) => {
-		const isLastBar = !chordLineModel.allBars[i + 1];
+		const isLastBar =
+			!chordLineModel.allBars[i + 1] && !chordLineModel.hasContinuation;
 		const shouldPrintTimeSignature =
 			shouldPrintInlineTimeSignatures && bar.shouldPrintBarTimeSignature;
 		return renderBarContent(bar, isLastBar, {
@@ -40,8 +41,13 @@ export default function renderChordLine(
 			})
 		: '';
 
+	const firstBar = chordLineModel.allBars[0];
+	const startSep =
+		firstBar && firstBar.isContinuation ? '' : barSeparator;
+	const endSep = chordLineModel.hasContinuation ? '' : barSeparator;
+
 	const chordLine =
-		barSeparator + allBarsRendered.join(barSeparator) + barSeparator;
+		startSep + allBarsRendered.join(barSeparator) + endSep;
 
 	const chordLineOffset = symbols.chordLineOffsetSpacer.repeat(
 		chordLineModel.offset || 0

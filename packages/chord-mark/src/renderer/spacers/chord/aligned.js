@@ -24,35 +24,39 @@ export default function space(
 	const chordLine = _cloneDeep(chordLineInput);
 
 	chordLine.allBars.forEach((bar, barIndex) => {
-		if (bar.lineHadTimeSignatureChange) {
+		if (
+			bar.lineHadTimeSignatureChange ||
+			bar.isContinuation ||
+			!maxBeatsWidth[barIndex]
+		) {
 			spaceBar(bar);
-		} else {
-			bar.allChords.forEach((chord) => {
-				const beatString = getBeatString(bar, chord.beat, {
-					shouldPrintSubBeatDelimiters,
-					symbolType,
-				});
-
-				if (chord.isInSubBeatGroup && !chord.isLastOfSubBeat) {
-					chord.spacesWithin = 0;
-					chord.spacesAfter = symbols.spacesAfterSubBeatDefault;
-				} else {
-					chord.spacesWithin =
-						maxBeatsWidth[barIndex][chord.beat] - beatString.length;
-					chord.spacesAfter = 0;
-				}
-
-				if (shouldFillEmptyBeats(bar, chord)) {
-					chord.spacesAfter =
-						symbols.spacesAfterDefault +
-						getEmptyBeatsWidth(bar, chord, maxBeatsWidth[barIndex]);
-				}
-
-				if (shouldSpaceLastBeat(bar, chord, shouldPrintBarSeparators)) {
-					chord.spacesAfter = symbols.spacesAfterDefault;
-				}
-			});
+			return;
 		}
+		bar.allChords.forEach((chord) => {
+			const beatString = getBeatString(bar, chord.beat, {
+				shouldPrintSubBeatDelimiters,
+				symbolType,
+			});
+
+			if (chord.isInSubBeatGroup && !chord.isLastOfSubBeat) {
+				chord.spacesWithin = 0;
+				chord.spacesAfter = symbols.spacesAfterSubBeatDefault;
+			} else {
+				chord.spacesWithin =
+					maxBeatsWidth[barIndex][chord.beat] - beatString.length;
+				chord.spacesAfter = 0;
+			}
+
+			if (shouldFillEmptyBeats(bar, chord)) {
+				chord.spacesAfter =
+					symbols.spacesAfterDefault +
+					getEmptyBeatsWidth(bar, chord, maxBeatsWidth[barIndex]);
+			}
+
+			if (shouldSpaceLastBeat(bar, chord, shouldPrintBarSeparators)) {
+				chord.spacesAfter = symbols.spacesAfterDefault;
+			}
+		});
 	});
 
 	return chordLine;

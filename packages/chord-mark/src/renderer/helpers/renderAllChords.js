@@ -7,7 +7,6 @@ import {
 	getSemitonesBetweenKeys,
 } from '../../parser/helper/keyHelpers';
 
-// eslint-disable-next-line max-lines-per-function
 export default function renderAllChords(
 	allLines,
 	detectedKey,

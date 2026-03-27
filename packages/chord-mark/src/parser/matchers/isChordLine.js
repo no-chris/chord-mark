@@ -36,7 +36,21 @@ export default function isChordLine(line = '') {
 }
 
 const getParseableChordLine = (chordLine) => {
-	return chordLine.replaceAll('add ', 'add');
+	return stripBarSplitMarker(chordLine).replaceAll('add ', 'add');
+};
+
+const hasBarSplitMarker = (line) => {
+	const trimmed = line.trimEnd();
+	return (
+		trimmed.endsWith(' ' + syntax.barSplitMarker) ||
+		trimmed === syntax.barSplitMarker
+	);
+};
+
+const stripBarSplitMarker = (line) => {
+	if (!hasBarSplitMarker(line)) return line;
+	const trimmed = line.trimEnd();
+	return trimmed.slice(0, -1).trimEnd();
 };
 
 const cleanToken = (token) => {
@@ -58,4 +72,4 @@ const removeSubBeatDelimiters = (token) => {
 	return clean;
 };
 
-export { getParseableChordLine, cleanToken };
+export { getParseableChordLine, cleanToken, hasBarSplitMarker };
