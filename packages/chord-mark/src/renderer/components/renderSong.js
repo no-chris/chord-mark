@@ -254,14 +254,12 @@ export default function renderSong(
 		}
 	}
 
-	// eslint-disable-next-line max-lines-per-function
 	function renderAllLines() {
 		let lineIsInASection = false;
 		let chordLineToMerge;
 
 		return (
 			allLines
-				// eslint-disable-next-line max-lines-per-function
 				.map((line, i) => {
 					let rendered;
 					let shouldOpenSection = false;

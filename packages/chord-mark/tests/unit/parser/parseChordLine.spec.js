@@ -1608,7 +1608,6 @@ describe.each([
 });
 
 describe('Bar repeat with continueBar', () => {
-	const ts4_4 = parseTimeSignature('4/4');
 
 	test('bar repeat of continuation bar throws InvalidBarRepeatException', () => {
 		// G. completes the continuation bar (3+1=4 beats), % tries to repeat it
@@ -1643,7 +1642,6 @@ describe('Bar repeat with continueBar', () => {
 describe('Bar split (hasContinuation)', () => {
 	test('incomplete bar with multiple chords sets hasUnevenChordsDurations', () => {
 		// 5/4: A.. B. = 2+1 = 3 beats pending, bar has 2 chords with uneven durations
-		const ts5_4 = parseTimeSignature('5/4');
 		const parsed = parseChordLine('A.. B. \\', { timeSignature: ts5_4 });
 		expect(parsed.hasContinuation).toBe(true);
 		expect(parsed.pendingBar).toBeTruthy();

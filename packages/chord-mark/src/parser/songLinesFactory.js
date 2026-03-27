@@ -1,4 +1,4 @@
-/*eslint-disable max-lines-per-function,max-lines */
+/*eslint-disable max-lines-per-function */
 import _cloneDeep from 'lodash/cloneDeep';
 import lineTypes from './lineTypes';
 
