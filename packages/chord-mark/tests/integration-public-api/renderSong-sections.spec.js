@@ -144,7 +144,7 @@ describe('renderSong - sections', () => {
 				render(input, { autoRepeatChords: true, alignBars: false })
 			);
 			expect(text).toContain('|C  |G  |');
-			expect(text.match(/\|C  \|G  \|/g).length).toBe(2);
+			expect(text.match(/\|C {2}\|G {2}\|/g).length).toBe(2);
 		});
 
 		test('does not repeat chords when false', () => {

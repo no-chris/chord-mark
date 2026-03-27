@@ -4,11 +4,6 @@ import {
 	singleChord,
 	multipleChords,
 	multipleBars,
-	barRepeat,
-	chordLineRepeat,
-	noChord,
-	subBeatGroup,
-	multipleSubBeatGroups,
 	positionedChords,
 } from './fixtures/songs';
 
