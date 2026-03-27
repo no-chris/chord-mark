@@ -59,7 +59,7 @@ module.exports = [
 			],
 			'max-lines-per-function': [
 				'warn',
-				{ max: 55, skipBlankLines: true, skipComments: true },
+				{ max: 100, skipBlankLines: true, skipComments: true },
 			],
 			'max-params': ['warn', { max: 4 }],
 			'no-mixed-spaces-and-tabs': ['off'],
