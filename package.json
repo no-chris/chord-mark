@@ -32,7 +32,7 @@
 		"jest": "^30.3.0",
 		"jest-environment-jsdom": "^30.3.0",
 		"jest-environment-node": "^30.3.0",
-		"lerna": "^8.1.8",
+		"lerna": "^9.0.7",
 		"mini-css-extract-plugin": "^2.10.2",
 		"prettier": "^3.3.3",
 		"raw-loader": "^4.0.2",
