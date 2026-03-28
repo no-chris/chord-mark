@@ -28,6 +28,6 @@
 	},
 	"dependencies": {
 		"chord-mark": "^0.17.0",
-		"jsdom": "^25.0.0"
+		"jsdom": "^25"
 	}
 }
