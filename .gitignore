@@ -1,4 +1,5 @@
 node_modules
+.yarn/install-state.gz
 coverage
 **/lib/report.html
 
