@@ -51,16 +51,12 @@ describe('renderSong - transposition', () => {
 
 	describe('accidentalsType', () => {
 		test('auto uses key-appropriate accidental (flat)', () => {
-			const text = toText(
-				render(song('F F A#'), { alignBars: false })
-			);
+			const text = toText(render(song('F F A#'), { alignBars: false }));
 			expect(text).toBe('|F  |%  |Bb  |');
 		});
 
 		test('auto uses key-appropriate accidental (sharp)', () => {
-			const text = toText(
-				render(song('G G Gb'), { alignBars: false })
-			);
+			const text = toText(render(song('G G Gb'), { alignBars: false }));
 			expect(text).toBe('|G  |%  |F#  |');
 		});
 
@@ -87,12 +83,7 @@ describe('renderSong - transposition', () => {
 
 	describe('explicit key + transpose', () => {
 		test('auto accidentals', () => {
-			const input = song(
-				'key Dm',
-				'Dm A# C Dm',
-				'key C#m',
-				'C#m7 G#7 D'
-			);
+			const input = song('key Dm', 'Dm A# C Dm', 'key C#m', 'C#m7 G#7 D');
 			const text = toText(
 				render(input, {
 					accidentalsType: 'auto',
@@ -102,9 +93,9 @@ describe('renderSong - transposition', () => {
 			);
 			expect(text).toBe(
 				'key: C#m\n' +
-				'|C#m  |A  |B  |C#m  |\n' +
-				'key: Cm\n' +
-				'|Cm7  |G7  |Db  |'
+					'|C#m  |A  |B  |C#m  |\n' +
+					'key: Cm\n' +
+					'|Cm7  |G7  |Db  |'
 			);
 		});
 	});
@@ -123,13 +114,13 @@ describe('renderSong - transposition', () => {
 			const text = toText(render(input, { alignBars: false }));
 			expect(text).toBe(
 				'key: C\n' +
-				'Verse 1\n' +
-				'|Dm7  |G7  |C  |%  |\n' +
-				'The first verse is in the key of C\n' +
-				'key: G\n' +
-				'Verse 2\n' +
-				'|Am7  |D7  |G  |%  |\n' +
-				'And the second one in the key of G!'
+					'Verse 1\n' +
+					'|Dm7  |G7  |C  |%  |\n' +
+					'The first verse is in the key of C\n' +
+					'key: G\n' +
+					'Verse 2\n' +
+					'|Am7  |D7  |G  |%  |\n' +
+					'And the second one in the key of G!'
 			);
 		});
 
@@ -145,11 +136,11 @@ describe('renderSong - transposition', () => {
 			const text = toText(render(input, { alignBars: false }));
 			expect(text).toBe(
 				'key: C\n' +
-				'|Dm7  |G7  |C  |%  |\n' +
-				'|G7  |%  |C  |%  |\n' +
-				'key: G\n' +
-				'|Am7  |D7  |G  |%  |\n' +
-				'|D7  |%  |G  |%  |'
+					'|Dm7  |G7  |C  |%  |\n' +
+					'|G7  |%  |C  |%  |\n' +
+					'key: G\n' +
+					'|Am7  |D7  |G  |%  |\n' +
+					'|D7  |%  |G  |%  |'
 			);
 		});
 	});

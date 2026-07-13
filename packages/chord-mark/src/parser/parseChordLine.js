@@ -74,11 +74,7 @@ const barRepeatSymbols = new RegExp(
  */
 export default function parseChordLine(
 	chordLine,
-	{
-		timeSignature = defaultTimeSignature,
-		originalKey = {},
-		continueBar,
-	} = {}
+	{ timeSignature = defaultTimeSignature, originalKey = {}, continueBar } = {}
 ) {
 	const hasContinuation = hasBarSplitMarker(chordLine);
 

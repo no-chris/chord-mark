@@ -9,16 +9,16 @@ ChordMark charts are usable by all musicians, whether they sing or not, whether 
 
 ChordMark is both:
 
--   a grammar to write chords charts in a fast, efficient and accurate way, encoding lyrics, chords and rhythm information.
--   an Open Source Javascript module, `chord-mark`, allowing to process ChordMark files and to format them with a high degree of customization.
+- a grammar to write chords charts in a fast, efficient and accurate way, encoding lyrics, chords and rhythm information.
+- an Open Source Javascript module, `chord-mark`, allowing to process ChordMark files and to format them with a high degree of customization.
 
 ChordMark is supported by [Chord Chart Studio](https://chord-chart-studio.netlify.app/), a free, web-based, ChordMark native editor, that showcases all the possibilities of the format.
 
 ChordMark has some unique features that make it stand out from other chord charts formats:
 
--   it focuses on writability, allowing writing chord charts faster than ever
--   it offers higher precision in the song transcription, thanks to its ability to encode rhythm information
--   it allows customizing the rendering for each band member (and not only the one that sings)
+- it focuses on writability, allowing writing chord charts faster than ever
+- it offers higher precision in the song transcription, thanks to its ability to encode rhythm information
+- it allows customizing the rendering for each band member (and not only the one that sings)
 
 Want to give it a try? Head over to the [5 minutes tutorial](https://chordmark.netlify.app/docs/getting-started).
 

@@ -25,35 +25,34 @@ export default function getMaxBeatsWidth(
 		.filter((line) => !shouldAlignChordsWithLyrics(line))
 		.filter((line) => !isContinuationLine(line))
 		.forEach((line) => {
-			line.model.allBars
-				.forEach((bar, barIndex) => {
-					if (bar.lineHadTimeSignatureChange) {
-						return;
-					}
-					if (!maxBeatsWidth[barIndex]) {
-						maxBeatsWidth[barIndex] = {};
+			line.model.allBars.forEach((bar, barIndex) => {
+				if (bar.lineHadTimeSignatureChange) {
+					return;
+				}
+				if (!maxBeatsWidth[barIndex]) {
+					maxBeatsWidth[barIndex] = {};
 
-						for (let i = 1; i <= bar.timeSignature.beatCount; i++) {
-							maxBeatsWidth[barIndex][i] = 0;
-						}
+					for (let i = 1; i <= bar.timeSignature.beatCount; i++) {
+						maxBeatsWidth[barIndex][i] = 0;
 					}
+				}
 
-					bar.allChords
-						.filter(
-							(chord) =>
-								!chord.isInSubBeatGroup || chord.isLastOfSubBeat
-						)
-						.forEach((chord) => {
-							const beatString = getBeatString(bar, chord.beat, {
-								shouldPrintSubBeatDelimiters,
-								symbolType,
-							});
-							maxBeatsWidth[barIndex][chord.beat] = Math.max(
-								maxBeatsWidth[barIndex][chord.beat],
-								beatString.length
-							);
+				bar.allChords
+					.filter(
+						(chord) =>
+							!chord.isInSubBeatGroup || chord.isLastOfSubBeat
+					)
+					.forEach((chord) => {
+						const beatString = getBeatString(bar, chord.beat, {
+							shouldPrintSubBeatDelimiters,
+							symbolType,
 						});
-				});
+						maxBeatsWidth[barIndex][chord.beat] = Math.max(
+							maxBeatsWidth[barIndex][chord.beat],
+							beatString.length
+						);
+					});
+			});
 		});
 
 	return maxBeatsWidth;

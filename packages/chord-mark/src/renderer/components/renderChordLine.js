@@ -42,12 +42,10 @@ export default function renderChordLine(
 		: '';
 
 	const firstBar = chordLineModel.allBars[0];
-	const startSep =
-		firstBar && firstBar.isContinuation ? '' : barSeparator;
+	const startSep = firstBar && firstBar.isContinuation ? '' : barSeparator;
 	const endSep = chordLineModel.hasContinuation ? '' : barSeparator;
 
-	const chordLine =
-		startSep + allBarsRendered.join(barSeparator) + endSep;
+	const chordLine = startSep + allBarsRendered.join(barSeparator) + endSep;
 
 	const chordLineOffset = symbols.chordLineOffsetSpacer.repeat(
 		chordLineModel.offset || 0

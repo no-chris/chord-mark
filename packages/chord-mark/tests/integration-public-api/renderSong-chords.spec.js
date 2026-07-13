@@ -13,30 +13,22 @@ describe('renderSong - chords', () => {
 	});
 
 	test('renders multiple chords in one bar', () => {
-		const text = toText(
-			render(song('C.. G..'), { alignBars: false })
-		);
+		const text = toText(render(song('C.. G..'), { alignBars: false }));
 		expect(text).toBe('|C  G  |');
 	});
 
 	test('renders multiple bars', () => {
-		const text = toText(
-			render(song('C G Am F'), { alignBars: false })
-		);
+		const text = toText(render(song('C G Am F'), { alignBars: false }));
 		expect(text).toBe('|C  |G  |Am  |F  |');
 	});
 
 	test('renders bar repeat as %', () => {
-		const text = toText(
-			render(song('C G Am %'), { alignBars: false })
-		);
+		const text = toText(render(song('C G Am %'), { alignBars: false }));
 		expect(text).toBe('|C  |G  |Am  |%  |');
 	});
 
 	test('renders NC chord', () => {
-		const text = toText(
-			render(song('C NC'), { alignBars: false })
-		);
+		const text = toText(render(song('C NC'), { alignBars: false }));
 		expect(text).toBe('|C  |NC  |');
 	});
 
@@ -47,10 +39,7 @@ describe('renderSong - chords', () => {
 			const text = toText(
 				render(input, { printChordsDuration: 'never', alignBars: true })
 			);
-			expect(text).toBe(
-				'4/4\n' +
-				'|A7  B    |'
-			);
+			expect(text).toBe('4/4\n' + '|A7  B    |');
 		});
 
 		test('="uneven" shows dots for uneven durations', () => {
@@ -60,10 +49,7 @@ describe('renderSong - chords', () => {
 					alignBars: true,
 				})
 			);
-			expect(text).toBe(
-				'4/4\n' +
-				'|A7.  B...    |'
-			);
+			expect(text).toBe('4/4\n' + '|A7.  B...    |');
 		});
 
 		test('="always" shows dots for all chords', () => {
@@ -73,10 +59,7 @@ describe('renderSong - chords', () => {
 					alignBars: true,
 				})
 			);
-			expect(text).toBe(
-				'4/4\n' +
-				'|A7..   B..   |'
-			);
+			expect(text).toBe('4/4\n' + '|A7..   B..   |');
 		});
 	});
 
@@ -117,9 +100,7 @@ describe('renderSong - chords', () => {
 	});
 
 	test('renders repeated bars with %', () => {
-		const text = toText(
-			render(song('A7 % % %'), { alignBars: true })
-		);
+		const text = toText(render(song('A7 % % %'), { alignBars: true }));
 		expect(text).toBe('|A7     |%     |%     |%     |');
 	});
 });

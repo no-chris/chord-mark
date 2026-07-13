@@ -51,26 +51,26 @@ By default, ChordMark does not come with any CSS styling.
 You can either use the `chord-mark-themes` module or design your own themes.
 The following list of CSS classes are available:
 
--   `cmSong`
--   `cmSection`
--   `cmSection-xxx`, where `xxx` is the section name
--   `cmLine`
--   `cmLine--isFromAutoRepeatChords`
--   `cmLine--isFromChordLineRepeater`
--   `cmLine--isFromSectionCopy`
--   `cmLine--isFromSectionMultiply`
--   `cmChordLine`
--   `cmChordLineOffset`
--   `cmBarSeparator`
--   `cmChordSymbol`
--   `cmChordDuration`
--   `cmEmptyLine`
--   `cmLyricLine`
--   `cmSectionLabel`
--   `cmSectionMultiplier`
--   `cmTimeSignature`
--   `cmSubBeatGroupOpener`
--   `cmSubBeatGroupCloser`
+- `cmSong`
+- `cmSection`
+- `cmSection-xxx`, where `xxx` is the section name
+- `cmLine`
+- `cmLine--isFromAutoRepeatChords`
+- `cmLine--isFromChordLineRepeater`
+- `cmLine--isFromSectionCopy`
+- `cmLine--isFromSectionMultiply`
+- `cmChordLine`
+- `cmChordLineOffset`
+- `cmBarSeparator`
+- `cmChordSymbol`
+- `cmChordDuration`
+- `cmEmptyLine`
+- `cmLyricLine`
+- `cmSectionLabel`
+- `cmSectionMultiplier`
+- `cmTimeSignature`
+- `cmSubBeatGroupOpener`
+- `cmSubBeatGroupCloser`
 
 ## Breaking changes
 

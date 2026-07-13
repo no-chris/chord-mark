@@ -1608,7 +1608,6 @@ describe.each([
 });
 
 describe('Bar repeat with continueBar', () => {
-
 	test('bar repeat of continuation bar throws InvalidBarRepeatException', () => {
 		// G. completes the continuation bar (3+1=4 beats), % tries to repeat it
 		// but the continuation bar has isContinuation, so it should throw

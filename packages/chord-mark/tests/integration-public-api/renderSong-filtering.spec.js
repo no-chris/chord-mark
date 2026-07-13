@@ -24,23 +24,25 @@ describe('renderSong - filtering (chartType)', () => {
 	);
 
 	test('chartType="all" shows chords and lyrics', () => {
-		const text = toText(render(input, { chartType: 'all', alignBars: true }));
+		const text = toText(
+			render(input, { chartType: 'all', alignBars: true })
+		);
 		expect(text).toBe(
 			'Verse 1\n' +
-			'|A7     |%      |%      |%      |\n' +
-			'v1-line-1\n' +
-			'|D7     |%      |A7     |%      |\n' +
-			'v1-line-2\n' +
-			'|E7     |D7     |A7     |E7     |\n' +
-			'v1-line-3\n' +
-			'\n' +
-			'Verse 2\n' +
-			'|A7     |%      |%      |%      |\n' +
-			'v2-line-1\n' +
-			'|D7     |%      |A7     |%      |\n' +
-			'v2-line-2\n' +
-			'|E7     |D7     |A7     |E7     |\n' +
-			'v2-line-3\n'
+				'|A7     |%      |%      |%      |\n' +
+				'v1-line-1\n' +
+				'|D7     |%      |A7     |%      |\n' +
+				'v1-line-2\n' +
+				'|E7     |D7     |A7     |E7     |\n' +
+				'v1-line-3\n' +
+				'\n' +
+				'Verse 2\n' +
+				'|A7     |%      |%      |%      |\n' +
+				'v2-line-1\n' +
+				'|D7     |%      |A7     |%      |\n' +
+				'v2-line-2\n' +
+				'|E7     |D7     |A7     |E7     |\n' +
+				'v2-line-3\n'
 		);
 	});
 
@@ -50,14 +52,14 @@ describe('renderSong - filtering (chartType)', () => {
 		);
 		expect(text).toBe(
 			'Verse 1\n' +
-			'|A7     |%      |%      |%      |\n' +
-			'|D7     |%      |A7     |%      |\n' +
-			'|E7     |D7     |A7     |E7     |\n' +
-			'\n' +
-			'Verse 2\n' +
-			'|A7     |%      |%      |%      |\n' +
-			'|D7     |%      |A7     |%      |\n' +
-			'|E7     |D7     |A7     |E7     |\n'
+				'|A7     |%      |%      |%      |\n' +
+				'|D7     |%      |A7     |%      |\n' +
+				'|E7     |D7     |A7     |E7     |\n' +
+				'\n' +
+				'Verse 2\n' +
+				'|A7     |%      |%      |%      |\n' +
+				'|D7     |%      |A7     |%      |\n' +
+				'|E7     |D7     |A7     |E7     |\n'
 		);
 	});
 
@@ -67,14 +69,14 @@ describe('renderSong - filtering (chartType)', () => {
 		);
 		expect(text).toBe(
 			'Verse 1\n' +
-			'v1-line-1\n' +
-			'v1-line-2\n' +
-			'v1-line-3\n' +
-			'\n' +
-			'Verse 2\n' +
-			'v2-line-1\n' +
-			'v2-line-2\n' +
-			'v2-line-3\n'
+				'v1-line-1\n' +
+				'v1-line-2\n' +
+				'v1-line-3\n' +
+				'\n' +
+				'Verse 2\n' +
+				'v2-line-1\n' +
+				'v2-line-2\n' +
+				'v2-line-3\n'
 		);
 	});
 
@@ -87,16 +89,16 @@ describe('renderSong - filtering (chartType)', () => {
 		);
 		expect(text).toBe(
 			'Verse 1\n' +
-			'|A7     |%      |%      |%      |\n' +
-			'v1-line-1\n' +
-			'|D7     |%      |A7     |%      |\n' +
-			'|E7     |D7     |A7     |E7     |\n' +
-			'\n' +
-			'Verse 2\n' +
-			'|A7     |%      |%      |%      |\n' +
-			'v2-line-1\n' +
-			'|D7     |%      |A7     |%      |\n' +
-			'|E7     |D7     |A7     |E7     |\n'
+				'|A7     |%      |%      |%      |\n' +
+				'v1-line-1\n' +
+				'|D7     |%      |A7     |%      |\n' +
+				'|E7     |D7     |A7     |E7     |\n' +
+				'\n' +
+				'Verse 2\n' +
+				'|A7     |%      |%      |%      |\n' +
+				'v2-line-1\n' +
+				'|D7     |%      |A7     |%      |\n' +
+				'|E7     |D7     |A7     |E7     |\n'
 		);
 	});
 });

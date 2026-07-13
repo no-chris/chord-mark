@@ -21,17 +21,13 @@ describe('renderSong - sub-beats', () => {
 	});
 
 	test('prints sub-beat delimiters when explicitly true', () => {
-		const text = toText(
-			render(input, { printSubBeatDelimiters: true })
-		);
+		const text = toText(render(input, { printSubBeatDelimiters: true }));
 		expect(text).toContain('[F C/E]');
 		expect(text).toContain('[Dm7 C]');
 	});
 
 	test('hides sub-beat delimiters when false', () => {
-		const text = toText(
-			render(input, { printSubBeatDelimiters: false })
-		);
+		const text = toText(render(input, { printSubBeatDelimiters: false }));
 		expect(text).not.toContain('[');
 		expect(text).not.toContain(']');
 		expect(text).toContain('F C/E');
@@ -43,12 +39,9 @@ describe('renderSong - sub-beats', () => {
 			'C.. [F C/E] [Dm7 C] C.. G..',
 			'_ No _wo_man _no _cry'
 		);
-		const text = toText(
-			render(input2, { printSubBeatDelimiters: true })
-		);
+		const text = toText(render(input2, { printSubBeatDelimiters: true }));
 		expect(text).toBe(
-			'|C..  [F C/E] [Dm7 C] |C G |\n' +
-			'    No woman   no  cry'
+			'|C..  [F C/E] [Dm7 C] |C G |\n' + '    No woman   no  cry'
 		);
 	});
 
@@ -59,9 +52,6 @@ describe('renderSong - sub-beats', () => {
 				alignBars: false,
 			})
 		);
-		expect(text).toBe(
-			'3/4\n' +
-			'C. [Am G]'
-		);
+		expect(text).toBe('3/4\n' + 'C. [Am G]');
 	});
 });

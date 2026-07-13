@@ -10,9 +10,7 @@ describe('renderSong - options', () => {
 	describe('chordSymbolRenderer', () => {
 		test('uses custom chord symbol renderer', () => {
 			const chordSymbolRenderer = () => 'Custom';
-			const text = toText(
-				render(song('A B C'), { chordSymbolRenderer })
-			);
+			const text = toText(render(song('A B C'), { chordSymbolRenderer }));
 			expect(text).toBe('|Custom     |Custom     |Custom     |');
 		});
 	});
@@ -22,10 +20,7 @@ describe('renderSong - options', () => {
 			const text = toText(
 				render(song('key C', 'C G'), { alignBars: false })
 			);
-			expect(text).toBe(
-				'key: C\n' +
-				'|C  |G  |'
-			);
+			expect(text).toBe('key: C\n' + '|C  |G  |');
 		});
 
 		test('roman renders roman numerals', () => {
@@ -34,18 +29,14 @@ describe('renderSong - options', () => {
 					symbolType: 'roman',
 				})
 			);
-			expect(text).toBe(
-				'key: C\n' +
-				'|I     |ii     |IV     |V     |'
-			);
+			expect(text).toBe('key: C\n' + '|I     |ii     |IV     |V     |');
 		});
 
 		test('roman with multiple keys', () => {
 			const text = toText(
-				render(
-					song('key C', 'C Dm F G B°', 'key G', 'C Dm F G B°'),
-					{ symbolType: 'roman' }
-				)
+				render(song('key C', 'C Dm F G B°', 'key G', 'C Dm F G B°'), {
+					symbolType: 'roman',
+				})
 			);
 			const lines = text.split('\n');
 			expect(lines[0]).toBe('key: C');

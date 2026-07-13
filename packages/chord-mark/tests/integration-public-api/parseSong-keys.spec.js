@@ -69,9 +69,7 @@ describe('parseSong - keys', () => {
 		const parsed = parseSong(
 			song('key G', 'C.. G..', 'key Am', 'Am.. Dm..')
 		);
-		const chordLines = parsed.allLines.filter(
-			(l) => l.type === 'chord'
-		);
+		const chordLines = parsed.allLines.filter((l) => l.type === 'chord');
 		expect(chordLines).toHaveLength(2);
 		expect(chordLines[0].model.originalKey.string).toBe('G');
 		expect(chordLines[0].model.originalKey.accidental).toBe('sharp');

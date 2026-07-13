@@ -9,16 +9,12 @@ function render(input, options = {}) {
 describe('renderSong - alignment', () => {
 	describe('alignBars', () => {
 		test('aligned bars pad shorter chords with spaces', () => {
-			const text = toText(
-				render(song('C G Am F'), { alignBars: true })
-			);
+			const text = toText(render(song('C G Am F'), { alignBars: true }));
 			expect(text).toBe('|C     |G     |Am     |F     |');
 		});
 
 		test('non-aligned bars use simple spacing', () => {
-			const text = toText(
-				render(song('C G Am F'), { alignBars: false })
-			);
+			const text = toText(render(song('C G Am F'), { alignBars: false }));
 			expect(text).toBe('|C  |G  |Am  |F  |');
 		});
 	});
@@ -28,15 +24,13 @@ describe('renderSong - alignment', () => {
 			const input = song(
 				'#v',
 				'C... CM7. F',
-				'_Imagine there\'s _no hea_ven'
+				"_Imagine there's _no hea_ven"
 			);
-			const text = toText(
-				render(input, { alignChordsWithLyrics: true })
-			);
+			const text = toText(render(input, { alignChordsWithLyrics: true }));
 			expect(text).toBe(
 				'Verse\n' +
-				'|C...            CM7. |F  |\n' +
-				" Imagine there's no heaven"
+					'|C...            CM7. |F  |\n' +
+					" Imagine there's no heaven"
 			);
 		});
 
@@ -51,16 +45,13 @@ describe('renderSong - alignment', () => {
 			);
 			expect(text).toBe(
 				'Verse\n' +
-				'|C...    CM7.|F     |\n' +
-				"Imagine there's no heaven"
+					'|C...    CM7.|F     |\n' +
+					"Imagine there's no heaven"
 			);
 		});
 
 		test('positioned chords strip _ from lyrics', () => {
-			const input = song(
-				'C... CM7. F',
-				"_Imagine there's _no hea_ven"
-			);
+			const input = song('C... CM7. F', "_Imagine there's _no hea_ven");
 			const text = toText(render(input));
 			expect(text).toContain("Imagine there's no heaven");
 			expect(text).not.toContain('_');

@@ -208,9 +208,7 @@ describe('bar split with auto-repeat chords', () => {
 		const secondVerseLines = allLines.slice(
 			allLines.findIndex(
 				(l, i) =>
-					i > 0 &&
-					l.type === 'sectionLabel' &&
-					l.model.label === 'v'
+					i > 0 && l.type === 'sectionLabel' && l.model.label === 'v'
 			) + 1
 		);
 		// No chord lines in second verse
@@ -233,9 +231,7 @@ describe('bar split with auto-repeat chords', () => {
 		const secondVerseLines = allLines.slice(
 			allLines.findIndex(
 				(l, i) =>
-					i > 0 &&
-					l.type === 'sectionLabel' &&
-					l.model.label === 'v'
+					i > 0 && l.type === 'sectionLabel' && l.model.label === 'v'
 			) + 1
 		);
 		// Split invalidated (no matching continuation), continuation skipped
@@ -261,9 +257,7 @@ describe('bar split with auto-repeat chords', () => {
 		const secondVerseLines = allLines.slice(
 			allLines.findIndex(
 				(l, i) =>
-					i > 0 &&
-					l.type === 'sectionLabel' &&
-					l.model.label === 'v'
+					i > 0 && l.type === 'sectionLabel' && l.model.label === 'v'
 			) + 1
 		);
 		const chordLinesInSecondVerse = secondVerseLines.filter(
@@ -271,9 +265,9 @@ describe('bar split with auto-repeat chords', () => {
 		);
 		expect(chordLinesInSecondVerse.length).toBe(2);
 		expect(chordLinesInSecondVerse[0].model.hasContinuation).toBe(true);
-		expect(
-			chordLinesInSecondVerse[1].model.allBars[0].isContinuation
-		).toBe(true);
+		expect(chordLinesInSecondVerse[1].model.allBars[0].isContinuation).toBe(
+			true
+		);
 	});
 
 	test('override both split and continuation with incompatible beats → all fall back to lyric', () => {
@@ -292,9 +286,7 @@ describe('bar split with auto-repeat chords', () => {
 		const secondVerseLines = allLines.slice(
 			allLines.findIndex(
 				(l, i) =>
-					i > 0 &&
-					l.type === 'sectionLabel' &&
-					l.model.label === 'v'
+					i > 0 && l.type === 'sectionLabel' && l.model.label === 'v'
 			) + 1
 		);
 		const chordLinesInSecondVerse = secondVerseLines.filter(
@@ -330,9 +322,7 @@ describe('bar split with multiple auto-repeat sections', () => {
 			songLines.addLine
 		);
 		['#v', 'new lyrics', 'new lyrics2'].forEach(songLines.addLine);
-		['#v', 'E F', 'more lyrics', 'more lyrics2'].forEach(
-			songLines.addLine
-		);
+		['#v', 'E F', 'more lyrics', 'more lyrics2'].forEach(songLines.addLine);
 		const allLines = songLines.asArray();
 
 		const v2 = getVerseLines(allLines, 2);
@@ -351,9 +341,7 @@ describe('bar split with multiple auto-repeat sections', () => {
 		['#v', 'A D... \\', 'lyrics', 'G. C', 'lyrics2'].forEach(
 			songLines.addLine
 		);
-		['#v', 'E F', 'new lyrics', 'new lyrics2'].forEach(
-			songLines.addLine
-		);
+		['#v', 'E F', 'new lyrics', 'new lyrics2'].forEach(songLines.addLine);
 		['#v', 'more lyrics', 'more lyrics2'].forEach(songLines.addLine);
 		const allLines = songLines.asArray();
 
@@ -371,9 +359,7 @@ describe('bar split with multiple auto-repeat sections', () => {
 		['#v', 'A D... \\', 'lyrics', 'G. C', 'lyrics2'].forEach(
 			songLines.addLine
 		);
-		['#v', 'new lyrics', 'G.. C', 'new lyrics2'].forEach(
-			songLines.addLine
-		);
+		['#v', 'new lyrics', 'G.. C', 'new lyrics2'].forEach(songLines.addLine);
 		['#v', 'more lyrics', 'more lyrics2'].forEach(songLines.addLine);
 		const allLines = songLines.asArray();
 

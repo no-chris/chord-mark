@@ -9,20 +9,14 @@ function render(input, options = {}) {
 describe('renderSong - advanced', () => {
 	describe('wrapChordLyricLines', () => {
 		test('wraps chord+lyric pairs when enabled', () => {
-			const input = song(
-				'C... CM7. F',
-				"_Imagine there's _no hea_ven"
-			);
+			const input = song('C... CM7. F', "_Imagine there's _no hea_ven");
 			const rendered = render(input, { wrapChordLyricLines: true });
 			// When wrapped, chord and lyric lines are merged into a single element
 			expect(rendered).toContain('cmChordLyricLine');
 		});
 
 		test('does not wrap when disabled (default)', () => {
-			const input = song(
-				'C... CM7. F',
-				"_Imagine there's _no hea_ven"
-			);
+			const input = song('C... CM7. F', "_Imagine there's _no hea_ven");
 			const rendered = render(input, { wrapChordLyricLines: false });
 			expect(rendered).not.toContain('cmChordLyricLine');
 		});
@@ -76,9 +70,7 @@ describe('renderSong - advanced', () => {
 
 		test('renders multiple key declarations', () => {
 			const text = toText(
-				render(
-					song('key C', 'C G', 'line', 'key G', 'G D', 'line')
-				)
+				render(song('key C', 'C G', 'line', 'key G', 'G D', 'line'))
 			);
 			expect(text).toContain('key: C');
 			expect(text).toContain('key: G');
@@ -110,10 +102,9 @@ describe('renderSong - advanced', () => {
 		});
 
 		test('isFromSectionCopy class', () => {
-			const rendered = render(
-				song('#v', 'C G', 'line', '#v'),
-				{ expandSectionCopy: true }
-			);
+			const rendered = render(song('#v', 'C G', 'line', '#v'), {
+				expandSectionCopy: true,
+			});
 			expect(rendered).toContain('cmLine--isFromSectionCopy');
 		});
 	});

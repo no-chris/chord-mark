@@ -43,34 +43,19 @@ describe('renderSong - sections', () => {
 
 		test('repeated sections get numbered', () => {
 			const text = toText(render(song('#v', '#v', '#v')));
-			expect(text).toBe(
-				'Verse 1\n' +
-				'Verse 2\n' +
-				'Verse 3'
-			);
+			expect(text).toBe('Verse 1\n' + 'Verse 2\n' + 'Verse 3');
 		});
 
 		test('different section types are not numbered if unique', () => {
 			const text = toText(render(song('#v', '#c')));
-			expect(text).toBe(
-				'Verse\n' +
-				'Chorus'
-			);
+			expect(text).toBe('Verse\n' + 'Chorus');
 		});
 	});
 
 	describe('expandSectionCopy', () => {
 		test('copies section content when true', () => {
-			const input = song(
-				'#v',
-				'A B',
-				'verseLine',
-				'#v',
-				'#v'
-			);
-			const text = toText(
-				render(input, { expandSectionCopy: true })
-			);
+			const input = song('#v', 'A B', 'verseLine', '#v', '#v');
+			const text = toText(render(input, { expandSectionCopy: true }));
 			expect(text).toContain('Verse 1');
 			expect(text).toContain('Verse 2');
 			expect(text).toContain('Verse 3');
@@ -79,16 +64,8 @@ describe('renderSong - sections', () => {
 		});
 
 		test('only shows label when false', () => {
-			const input = song(
-				'#v',
-				'A B',
-				'verseLine',
-				'#v',
-				'#v'
-			);
-			const text = toText(
-				render(input, { expandSectionCopy: false })
-			);
+			const input = song('#v', 'A B', 'verseLine', '#v', '#v');
+			const text = toText(render(input, { expandSectionCopy: false }));
 			expect(text).toContain('Verse 1');
 			expect(text).toContain('Verse 2');
 			expect(text).toContain('Verse 3');
@@ -99,9 +76,7 @@ describe('renderSong - sections', () => {
 	describe('expandSectionMultiply', () => {
 		test('repeats section when true', () => {
 			const input = song('#v x2', 'A B', 'verseLine1');
-			const text = toText(
-				render(input, { expandSectionMultiply: true })
-			);
+			const text = toText(render(input, { expandSectionMultiply: true }));
 			expect(text).toContain('Verse 1');
 			expect(text).toContain('Verse 2');
 			expect(text.match(/verseLine1/g).length).toBe(2);
@@ -118,28 +93,16 @@ describe('renderSong - sections', () => {
 
 		test('numbers sections incrementally', () => {
 			const input = song('#v', '#v x2', '#v');
-			const text = toText(
-				render(input, { expandSectionMultiply: true })
-			);
+			const text = toText(render(input, { expandSectionMultiply: true }));
 			expect(text).toBe(
-				'Verse 1\n' +
-				'Verse 2\n' +
-				'Verse 3\n' +
-				'Verse 4'
+				'Verse 1\n' + 'Verse 2\n' + 'Verse 3\n' + 'Verse 4'
 			);
 		});
 	});
 
 	describe('autoRepeatChords', () => {
 		test('repeats chords when true', () => {
-			const input = song(
-				'#v',
-				'C G',
-				'line1',
-				'',
-				'#v',
-				'line2'
-			);
+			const input = song('#v', 'C G', 'line1', '', '#v', 'line2');
 			const text = toText(
 				render(input, { autoRepeatChords: true, alignBars: false })
 			);
@@ -148,17 +111,8 @@ describe('renderSong - sections', () => {
 		});
 
 		test('does not repeat chords when false', () => {
-			const input = song(
-				'#v',
-				'C G',
-				'line1',
-				'',
-				'#v',
-				'line2'
-			);
-			const text = toText(
-				render(input, { autoRepeatChords: false })
-			);
+			const input = song('#v', 'C G', 'line1', '', '#v', 'line2');
+			const text = toText(render(input, { autoRepeatChords: false }));
 			expect(text.match(/\|C/g).length).toBe(1);
 		});
 	});

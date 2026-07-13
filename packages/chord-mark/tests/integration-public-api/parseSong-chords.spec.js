@@ -103,15 +103,21 @@ describe('parseSong - chords', () => {
 		expect(parsed.allLines[0].type).toBe('chord');
 		expect(parsed.allLines[0].model.hasPositionedChords).toBe(true);
 		expect(parsed.allLines[1].type).toBe('lyric');
-		expect(parsed.allLines[1].model.chordPositions).toEqual([0, 8, 10, 13, 22]);
-		expect(parsed.allLines[1].model.lyrics).toBe(' Mother Mary comes to me');
+		expect(parsed.allLines[1].model.chordPositions).toEqual([
+			0, 8, 10, 13, 22,
+		]);
+		expect(parsed.allLines[1].model.lyrics).toBe(
+			' Mother Mary comes to me'
+		);
 	});
 
 	test('allChords aggregates unique chords with occurrences and duration', () => {
 		const parsed = parseSong(song('C G C Am'));
 		expect(parsed.allChords).toHaveLength(3);
 		const chordC = parsed.allChords.find(
-			(c) => c.model.formatted.rootNote === 'C' && !c.model.formatted.bassNote
+			(c) =>
+				c.model.formatted.rootNote === 'C' &&
+				!c.model.formatted.bassNote
 		);
 		expect(chordC).toBeDefined();
 		expect(chordC.occurrences).toBe(2);

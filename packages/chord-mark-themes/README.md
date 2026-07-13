@@ -44,16 +44,16 @@ Wrap ChordMark's output:
 
 You can adjust the font size using one of the utilities classes below:
 
--   `cmSong--fontSize-5`
--   `cmSong--fontSize-4`
--   `cmSong--fontSize-3`
--   `cmSong--fontSize-2`
--   `cmSong--fontSize-1`
--   `cmSong--fontSize1`
--   `cmSong--fontSize2`
--   `cmSong--fontSize3`
--   `cmSong--fontSize4`
--   `cmSong--fontSize5`
+- `cmSong--fontSize-5`
+- `cmSong--fontSize-4`
+- `cmSong--fontSize-3`
+- `cmSong--fontSize-2`
+- `cmSong--fontSize-1`
+- `cmSong--fontSize1`
+- `cmSong--fontSize2`
+- `cmSong--fontSize3`
+- `cmSong--fontSize4`
+- `cmSong--fontSize5`
 
 They need to be added to the wrapper:
 

@@ -258,73 +258,70 @@ export default function renderSong(
 		let lineIsInASection = false;
 		let chordLineToMerge;
 
-		return (
-			allLines
-				.map((line, i) => {
-					let rendered;
-					let shouldOpenSection = false;
-					let sectionWrapperClasses = [];
-					let shouldClosePriorSection;
+		return allLines
+			.map((line, i) => {
+				let rendered;
+				let shouldOpenSection = false;
+				let sectionWrapperClasses = [];
+				let shouldClosePriorSection;
 
-					if (line.type === lineTypes.CHORD) {
-						rendered = renderChordLineModel(line.model, {
-							symbolType,
-							shouldPrintBarSeparators: shouldPrintBarSeparators(
-								line.model
-							),
-							shouldPrintSubBeatDelimiters,
-							shouldPrintInlineTimeSignatures,
-						});
-						if (shouldMergeChordLine(line, allLines[i + 1])) {
-							chordLineToMerge = rendered;
-							rendered = false;
-						}
-					} else if (line.type === lineTypes.EMPTY_LINE) {
-						rendered = renderEmptyLine();
-					} else if (line.type === lineTypes.SECTION_LABEL) {
-						shouldOpenSection = true;
-						shouldClosePriorSection = lineIsInASection;
-						lineIsInASection = true;
-
-						sectionWrapperClasses = getSectionWrapperClasses(line);
-						rendered = renderSectionLabelLine(line);
-					} else if (line.type === lineTypes.TIME_SIGNATURE) {
-						rendered = renderTimeSignature(line);
-					} else if (line.type === lineTypes.KEY_DECLARATION) {
-						rendered = renderKeyDeclaration(line);
-					} else {
-						rendered = renderLyricLine(line, {
-							alignChordsWithLyrics,
-							chartType,
-						});
-						if (chordLineToMerge) {
-							rendered = renderChordLyricLine(
-								chordLineToMerge,
-								rendered,
-								windowObject
-							);
-							chordLineToMerge = '';
-						}
+				if (line.type === lineTypes.CHORD) {
+					rendered = renderChordLineModel(line.model, {
+						symbolType,
+						shouldPrintBarSeparators: shouldPrintBarSeparators(
+							line.model
+						),
+						shouldPrintSubBeatDelimiters,
+						shouldPrintInlineTimeSignatures,
+					});
+					if (shouldMergeChordLine(line, allLines[i + 1])) {
+						chordLineToMerge = rendered;
+						rendered = false;
 					}
+				} else if (line.type === lineTypes.EMPTY_LINE) {
+					rendered = renderEmptyLine();
+				} else if (line.type === lineTypes.SECTION_LABEL) {
+					shouldOpenSection = true;
+					shouldClosePriorSection = lineIsInASection;
+					lineIsInASection = true;
 
-					return (
-						rendered &&
-						renderLine(rendered, {
-							isFromSectionMultiply: line.isFromSectionMultiply,
-							isFromAutoRepeatChords: line.isFromAutoRepeatChords,
-							isFromChordLineRepeater:
-								line.isFromChordLineRepeater,
-							isFromSectionCopy: line.isFromSectionCopy,
-							shouldOpenSection,
-							shouldClosePriorSection,
-							shouldCloseFinalSection:
-								isLastLine(i) && lineIsInASection,
-							sectionWrapperClasses,
-						})
-					);
-				})
-				.filter(Boolean)
-		);
+					sectionWrapperClasses = getSectionWrapperClasses(line);
+					rendered = renderSectionLabelLine(line);
+				} else if (line.type === lineTypes.TIME_SIGNATURE) {
+					rendered = renderTimeSignature(line);
+				} else if (line.type === lineTypes.KEY_DECLARATION) {
+					rendered = renderKeyDeclaration(line);
+				} else {
+					rendered = renderLyricLine(line, {
+						alignChordsWithLyrics,
+						chartType,
+					});
+					if (chordLineToMerge) {
+						rendered = renderChordLyricLine(
+							chordLineToMerge,
+							rendered,
+							windowObject
+						);
+						chordLineToMerge = '';
+					}
+				}
+
+				return (
+					rendered &&
+					renderLine(rendered, {
+						isFromSectionMultiply: line.isFromSectionMultiply,
+						isFromAutoRepeatChords: line.isFromAutoRepeatChords,
+						isFromChordLineRepeater: line.isFromChordLineRepeater,
+						isFromSectionCopy: line.isFromSectionCopy,
+						shouldOpenSection,
+						shouldClosePriorSection,
+						shouldCloseFinalSection:
+							isLastLine(i) && lineIsInASection,
+						sectionWrapperClasses,
+					})
+				);
+			})
+			.filter(Boolean);
 	}
 
 	function shouldAlignChordsWithLyrics(line) {

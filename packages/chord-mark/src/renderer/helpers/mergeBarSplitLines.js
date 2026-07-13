@@ -16,10 +16,7 @@ export default function mergeBarSplitLines(lines) {
 	const result = [];
 	for (let i = 0; i < lines.length; i++) {
 		const line = lines[i];
-		if (
-			line.type === lineTypes.CHORD &&
-			line.model.hasContinuation
-		) {
+		if (line.type === lineTypes.CHORD && line.model.hasContinuation) {
 			const nextChordIndex = lines.findIndex(
 				(l, j) => j > i && l.type === lineTypes.CHORD
 			);
@@ -31,9 +28,7 @@ export default function mergeBarSplitLines(lines) {
 				continuationLine.model.hasContinuation;
 			mergedModel.pendingBar = null;
 
-			const contBars = _cloneDeep(
-				continuationLine.model.allBars
-			);
+			const contBars = _cloneDeep(continuationLine.model.allBars);
 
 			// Merge the incomplete bar (last of line 1) with
 			// the continuation bar (first of line 2) into one bar
@@ -48,14 +43,11 @@ export default function mergeBarSplitLines(lines) {
 
 			// Remaining bars from the continuation stay on their own line
 			if (contBars.length > 0) {
-				const remainingModel = _cloneDeep(
-					continuationLine.model
-				);
+				const remainingModel = _cloneDeep(continuationLine.model);
 				remainingModel.allBars = contBars;
 				remainingModel.hasContinuation =
 					continuationLine.model.hasContinuation;
-				remainingModel.pendingBar =
-					continuationLine.model.pendingBar;
+				remainingModel.pendingBar = continuationLine.model.pendingBar;
 				lines.splice(nextChordIndex, 0, {
 					...continuationLine,
 					model: remainingModel,

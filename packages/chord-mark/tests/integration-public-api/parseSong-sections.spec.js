@@ -53,9 +53,7 @@ describe('parseSong - sections', () => {
 
 	test('section copy marks exactly the copied lines as isFromSectionCopy', () => {
 		const parsed = parseSong(sectionCopy());
-		const copiedLines = parsed.allLines.filter(
-			(l) => l.isFromSectionCopy
-		);
+		const copiedLines = parsed.allLines.filter((l) => l.isFromSectionCopy);
 		// 2 copied sections × 3 lines each (sectionLabel + chord + lyric)
 		expect(copiedLines).toHaveLength(6);
 		expect(copiedLines.map((l) => l.type)).toEqual([
@@ -112,9 +110,7 @@ describe('parseSong - sections', () => {
 	});
 
 	test('auto-repeat chords marks exactly the repeated chord line', () => {
-		const parsed = parseSong(
-			song('#v', 'C G', 'line1', '', '#v', 'line2')
-		);
+		const parsed = parseSong(song('#v', 'C G', 'line1', '', '#v', 'line2'));
 		const autoRepeatLines = parsed.allLines.filter(
 			(l) => l.isFromAutoRepeatChords
 		);
