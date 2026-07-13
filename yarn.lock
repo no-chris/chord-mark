@@ -9692,7 +9692,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "chord-mark-converters@workspace:packages/chord-mark-converters"
   dependencies:
-    chord-mark: "npm:^0.17.0"
+    chord-mark: "npm:^0.18.0"
     chord-symbol: "npm:4.0.0"
     chord-symbol-ultimateguitar: "npm:4.0.0"
     striptags: "npm:^3.2.0"
@@ -9703,7 +9703,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "chord-mark-jsdom@workspace:packages/chord-mark-jsdom"
   dependencies:
-    chord-mark: "npm:^0.17.0"
+    chord-mark: "npm:^0.18.0"
     jsdom: "npm:^25"
   languageName: unknown
   linkType: soft
@@ -9752,7 +9752,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"chord-mark@npm:^0.17.0, chord-mark@workspace:^, chord-mark@workspace:packages/chord-mark":
+"chord-mark@npm:^0.18.0, chord-mark@workspace:^, chord-mark@workspace:packages/chord-mark":
   version: 0.0.0-use.local
   resolution: "chord-mark@workspace:packages/chord-mark"
   dependencies:
@@ -11255,7 +11255,7 @@ __metadata:
     "@docusaurus/preset-classic": "npm:^3.9.2"
     "@mdx-js/react": "npm:^3.1.1"
     "@svgr/webpack": "npm:^8.1.0"
-    chord-mark: "npm:^0.17.0"
+    chord-mark: "npm:^0.18.0"
     clsx: "npm:^2.1.1"
     docusaurus-plugin-sass: "npm:^0.2.5"
     dompurify: "npm:^3.3.3"

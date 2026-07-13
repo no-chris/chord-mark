@@ -1,6 +1,6 @@
 {
 	"name": "chord-mark-jsdom",
-	"version": "0.17.0",
+	"version": "0.18.0",
 	"description": "NodeJs compatible version of ChordMark",
 	"author": "Christophe Noël <touffi51@gmail.com>",
 	"homepage": "https://github.com/no-chris/chord-mark/tree/main/packages/chord-mark-jsdom#readme",
@@ -27,7 +27,7 @@
 		"url": "https://github.com/no-chris/chord-mark/issues"
 	},
 	"dependencies": {
-		"chord-mark": "^0.17.0",
+		"chord-mark": "^0.18.0",
 		"jsdom": "^25"
 	}
 }
